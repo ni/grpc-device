@@ -15,7 +15,6 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-
 class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));

@@ -7,7 +7,6 @@
 #ifndef NIRFMXLTE_GRPC_CLIENT_H
 #define NIRFMXLTE_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nirfmxlte.grpc.pb.h>

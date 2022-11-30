@@ -11,7 +11,6 @@
 
 namespace nirfmxbluetooth_grpc {
 
-
 class NiRFmxBluetoothLibraryInterface {
  public:
   virtual ~NiRFmxBluetoothLibraryInterface() {}

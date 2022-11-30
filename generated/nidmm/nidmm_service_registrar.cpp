@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nidmm_service.h"
 #include "nidmm_service_registrar.h"
 

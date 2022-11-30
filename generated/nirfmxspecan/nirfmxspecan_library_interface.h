@@ -11,7 +11,6 @@
 
 namespace nirfmxspecan_grpc {
 
-
 class NiRFmxSpecAnLibraryInterface {
  public:
   virtual ~NiRFmxSpecAnLibraryInterface() {}

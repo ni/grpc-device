@@ -169,7 +169,6 @@ NiFgenLibrary::~NiFgenLibrary()
 
 ViStatus NiFgenLibrary::AbortGeneration(ViSession vi)
 {
-
   if (!function_pointers_.AbortGeneration) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_AbortGeneration.");
   }
@@ -182,7 +181,6 @@ ViStatus NiFgenLibrary::AbortGeneration(ViSession vi)
 
 ViStatus NiFgenLibrary::AdjustSampleClockRelativeDelay(ViSession vi, ViReal64 adjustmentTime)
 {
-
   if (!function_pointers_.AdjustSampleClockRelativeDelay) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_AdjustSampleClockRelativeDelay.");
   }
@@ -195,7 +193,6 @@ ViStatus NiFgenLibrary::AdjustSampleClockRelativeDelay(ViSession vi, ViReal64 ad
 
 ViStatus NiFgenLibrary::AllocateNamedWaveform(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 waveformSize)
 {
-
   if (!function_pointers_.AllocateNamedWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_AllocateNamedWaveform.");
   }
@@ -208,7 +205,6 @@ ViStatus NiFgenLibrary::AllocateNamedWaveform(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::AllocateWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt32* waveformHandle)
 {
-
   if (!function_pointers_.AllocateWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_AllocateWaveform.");
   }
@@ -221,7 +217,6 @@ ViStatus NiFgenLibrary::AllocateWaveform(ViSession vi, ViConstString channelName
 
 ViStatus NiFgenLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CheckAttributeViBoolean.");
   }
@@ -234,7 +229,6 @@ ViStatus NiFgenLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString chan
 
 ViStatus NiFgenLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CheckAttributeViInt32.");
   }
@@ -247,7 +241,6 @@ ViStatus NiFgenLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::CheckAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CheckAttributeViInt64.");
   }
@@ -260,7 +253,6 @@ ViStatus NiFgenLibrary::CheckAttributeViInt64(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CheckAttributeViReal64.");
   }
@@ -273,7 +265,6 @@ ViStatus NiFgenLibrary::CheckAttributeViReal64(ViSession vi, ViConstString chann
 
 ViStatus NiFgenLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CheckAttributeViSession.");
   }
@@ -286,7 +277,6 @@ ViStatus NiFgenLibrary::CheckAttributeViSession(ViSession vi, ViConstString chan
 
 ViStatus NiFgenLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CheckAttributeViString.");
   }
@@ -299,7 +289,6 @@ ViStatus NiFgenLibrary::CheckAttributeViString(ViSession vi, ViConstString chann
 
 ViStatus NiFgenLibrary::ClearArbMemory(ViSession vi)
 {
-
   if (!function_pointers_.ClearArbMemory) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ClearArbMemory.");
   }
@@ -312,7 +301,6 @@ ViStatus NiFgenLibrary::ClearArbMemory(ViSession vi)
 
 ViStatus NiFgenLibrary::ClearArbSequence(ViSession vi, ViInt32 sequenceHandle)
 {
-
   if (!function_pointers_.ClearArbSequence) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ClearArbSequence.");
   }
@@ -325,7 +313,6 @@ ViStatus NiFgenLibrary::ClearArbSequence(ViSession vi, ViInt32 sequenceHandle)
 
 ViStatus NiFgenLibrary::ClearArbWaveform(ViSession vi, ViInt32 waveformHandle)
 {
-
   if (!function_pointers_.ClearArbWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ClearArbWaveform.");
   }
@@ -338,7 +325,6 @@ ViStatus NiFgenLibrary::ClearArbWaveform(ViSession vi, ViInt32 waveformHandle)
 
 ViStatus NiFgenLibrary::ClearError(ViSession vi)
 {
-
   if (!function_pointers_.ClearError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ClearError.");
   }
@@ -351,7 +337,6 @@ ViStatus NiFgenLibrary::ClearError(ViSession vi)
 
 ViStatus NiFgenLibrary::ClearFreqList(ViSession vi, ViInt32 frequencyListHandle)
 {
-
   if (!function_pointers_.ClearFreqList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ClearFreqList.");
   }
@@ -364,7 +349,6 @@ ViStatus NiFgenLibrary::ClearFreqList(ViSession vi, ViInt32 frequencyListHandle)
 
 ViStatus NiFgenLibrary::ClearInterchangeWarnings(ViSession vi)
 {
-
   if (!function_pointers_.ClearInterchangeWarnings) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ClearInterchangeWarnings.");
   }
@@ -377,7 +361,6 @@ ViStatus NiFgenLibrary::ClearInterchangeWarnings(ViSession vi)
 
 ViStatus NiFgenLibrary::ClearUserStandardWaveform(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.ClearUserStandardWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ClearUserStandardWaveform.");
   }
@@ -390,7 +373,6 @@ ViStatus NiFgenLibrary::ClearUserStandardWaveform(ViSession vi, ViConstString ch
 
 ViStatus NiFgenLibrary::Close(ViSession vi)
 {
-
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_close.");
   }
@@ -403,7 +385,6 @@ ViStatus NiFgenLibrary::Close(ViSession vi)
 
 ViStatus NiFgenLibrary::Commit(ViSession vi)
 {
-
   if (!function_pointers_.Commit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_Commit.");
   }
@@ -416,7 +397,6 @@ ViStatus NiFgenLibrary::Commit(ViSession vi)
 
 ViStatus NiFgenLibrary::ConfigureAmplitude(ViSession vi, ViConstString channelName, ViReal64 amplitude)
 {
-
   if (!function_pointers_.ConfigureAmplitude) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureAmplitude.");
   }
@@ -429,7 +409,6 @@ ViStatus NiFgenLibrary::ConfigureAmplitude(ViSession vi, ViConstString channelNa
 
 ViStatus NiFgenLibrary::ConfigureArbSequence(ViSession vi, ViConstString channelName, ViInt32 sequenceHandle, ViReal64 gain, ViReal64 offset)
 {
-
   if (!function_pointers_.ConfigureArbSequence) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureArbSequence.");
   }
@@ -442,7 +421,6 @@ ViStatus NiFgenLibrary::ConfigureArbSequence(ViSession vi, ViConstString channel
 
 ViStatus NiFgenLibrary::ConfigureArbWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViReal64 gain, ViReal64 offset)
 {
-
   if (!function_pointers_.ConfigureArbWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureArbWaveform.");
   }
@@ -455,7 +433,6 @@ ViStatus NiFgenLibrary::ConfigureArbWaveform(ViSession vi, ViConstString channel
 
 ViStatus NiFgenLibrary::ConfigureChannels(ViSession vi, ViConstString channels)
 {
-
   if (!function_pointers_.ConfigureChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureChannels.");
   }
@@ -468,7 +445,6 @@ ViStatus NiFgenLibrary::ConfigureChannels(ViSession vi, ViConstString channels)
 
 ViStatus NiFgenLibrary::ConfigureClockMode(ViSession vi, ViInt32 clockMode)
 {
-
   if (!function_pointers_.ConfigureClockMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureClockMode.");
   }
@@ -481,7 +457,6 @@ ViStatus NiFgenLibrary::ConfigureClockMode(ViSession vi, ViInt32 clockMode)
 
 ViStatus NiFgenLibrary::ConfigureCustomFIRFilterCoefficients(ViSession vi, ViConstString channelName, ViInt32 numberOfCoefficients, ViReal64 coefficientsArray[])
 {
-
   if (!function_pointers_.ConfigureCustomFIRFilterCoefficients) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureCustomFIRFilterCoefficients.");
   }
@@ -494,7 +469,6 @@ ViStatus NiFgenLibrary::ConfigureCustomFIRFilterCoefficients(ViSession vi, ViCon
 
 ViStatus NiFgenLibrary::ConfigureDigitalEdgeScriptTrigger(ViSession vi, ViConstString triggerId, ViConstString source, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeScriptTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureDigitalEdgeScriptTrigger.");
   }
@@ -507,7 +481,6 @@ ViStatus NiFgenLibrary::ConfigureDigitalEdgeScriptTrigger(ViSession vi, ViConstS
 
 ViStatus NiFgenLibrary::ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstString source, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureDigitalEdgeStartTrigger.");
   }
@@ -520,7 +493,6 @@ ViStatus NiFgenLibrary::ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstSt
 
 ViStatus NiFgenLibrary::ConfigureDigitalLevelScriptTrigger(ViSession vi, ViConstString triggerId, ViConstString source, ViInt32 triggerWhen)
 {
-
   if (!function_pointers_.ConfigureDigitalLevelScriptTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureDigitalLevelScriptTrigger.");
   }
@@ -533,7 +505,6 @@ ViStatus NiFgenLibrary::ConfigureDigitalLevelScriptTrigger(ViSession vi, ViConst
 
 ViStatus NiFgenLibrary::ConfigureFreqList(ViSession vi, ViConstString channelName, ViInt32 frequencyListHandle, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 startPhase)
 {
-
   if (!function_pointers_.ConfigureFreqList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureFreqList.");
   }
@@ -546,7 +517,6 @@ ViStatus NiFgenLibrary::ConfigureFreqList(ViSession vi, ViConstString channelNam
 
 ViStatus NiFgenLibrary::ConfigureFrequency(ViSession vi, ViConstString channelName, ViReal64 frequency)
 {
-
   if (!function_pointers_.ConfigureFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureFrequency.");
   }
@@ -559,7 +529,6 @@ ViStatus NiFgenLibrary::ConfigureFrequency(ViSession vi, ViConstString channelNa
 
 ViStatus NiFgenLibrary::ConfigureOperationMode(ViSession vi, ViConstString channelName, ViInt32 operationMode)
 {
-
   if (!function_pointers_.ConfigureOperationMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureOperationMode.");
   }
@@ -572,7 +541,6 @@ ViStatus NiFgenLibrary::ConfigureOperationMode(ViSession vi, ViConstString chann
 
 ViStatus NiFgenLibrary::ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled)
 {
-
   if (!function_pointers_.ConfigureOutputEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureOutputEnabled.");
   }
@@ -585,7 +553,6 @@ ViStatus NiFgenLibrary::ConfigureOutputEnabled(ViSession vi, ViConstString chann
 
 ViStatus NiFgenLibrary::ConfigureOutputImpedance(ViSession vi, ViConstString channelName, ViReal64 impedance)
 {
-
   if (!function_pointers_.ConfigureOutputImpedance) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureOutputImpedance.");
   }
@@ -598,7 +565,6 @@ ViStatus NiFgenLibrary::ConfigureOutputImpedance(ViSession vi, ViConstString cha
 
 ViStatus NiFgenLibrary::ConfigureOutputMode(ViSession vi, ViInt32 outputMode)
 {
-
   if (!function_pointers_.ConfigureOutputMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureOutputMode.");
   }
@@ -611,7 +577,6 @@ ViStatus NiFgenLibrary::ConfigureOutputMode(ViSession vi, ViInt32 outputMode)
 
 ViStatus NiFgenLibrary::ConfigureP2PEndpointFullnessStartTrigger(ViSession vi, ViInt32 p2pEndpointFullnessLevel)
 {
-
   if (!function_pointers_.ConfigureP2PEndpointFullnessStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureP2PEndpointFullnessStartTrigger.");
   }
@@ -624,7 +589,6 @@ ViStatus NiFgenLibrary::ConfigureP2PEndpointFullnessStartTrigger(ViSession vi, V
 
 ViStatus NiFgenLibrary::ConfigureReferenceClock(ViSession vi, ViConstString referenceClockSource, ViReal64 referenceClockFrequency)
 {
-
   if (!function_pointers_.ConfigureReferenceClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureReferenceClock.");
   }
@@ -637,7 +601,6 @@ ViStatus NiFgenLibrary::ConfigureReferenceClock(ViSession vi, ViConstString refe
 
 ViStatus NiFgenLibrary::ConfigureSampleClockSource(ViSession vi, ViConstString sampleClockSource)
 {
-
   if (!function_pointers_.ConfigureSampleClockSource) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureSampleClockSource.");
   }
@@ -650,7 +613,6 @@ ViStatus NiFgenLibrary::ConfigureSampleClockSource(ViSession vi, ViConstString s
 
 ViStatus NiFgenLibrary::ConfigureSampleRate(ViSession vi, ViReal64 sampleRate)
 {
-
   if (!function_pointers_.ConfigureSampleRate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureSampleRate.");
   }
@@ -663,7 +625,6 @@ ViStatus NiFgenLibrary::ConfigureSampleRate(ViSession vi, ViReal64 sampleRate)
 
 ViStatus NiFgenLibrary::ConfigureSoftwareEdgeScriptTrigger(ViSession vi, ViConstString triggerId)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeScriptTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureSoftwareEdgeScriptTrigger.");
   }
@@ -676,7 +637,6 @@ ViStatus NiFgenLibrary::ConfigureSoftwareEdgeScriptTrigger(ViSession vi, ViConst
 
 ViStatus NiFgenLibrary::ConfigureSoftwareEdgeStartTrigger(ViSession vi)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureSoftwareEdgeStartTrigger.");
   }
@@ -689,7 +649,6 @@ ViStatus NiFgenLibrary::ConfigureSoftwareEdgeStartTrigger(ViSession vi)
 
 ViStatus NiFgenLibrary::ConfigureStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveform, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 frequency, ViReal64 startPhase)
 {
-
   if (!function_pointers_.ConfigureStandardWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureStandardWaveform.");
   }
@@ -702,7 +661,6 @@ ViStatus NiFgenLibrary::ConfigureStandardWaveform(ViSession vi, ViConstString ch
 
 ViStatus NiFgenLibrary::ConfigureSynchronization(ViSession vi, ViConstString channelName, ViInt32 synchronizationSource)
 {
-
   if (!function_pointers_.ConfigureSynchronization) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureSynchronization.");
   }
@@ -715,7 +673,6 @@ ViStatus NiFgenLibrary::ConfigureSynchronization(ViSession vi, ViConstString cha
 
 ViStatus NiFgenLibrary::ConfigureTriggerMode(ViSession vi, ViConstString channelName, ViInt32 triggerMode)
 {
-
   if (!function_pointers_.ConfigureTriggerMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ConfigureTriggerMode.");
   }
@@ -728,7 +685,6 @@ ViStatus NiFgenLibrary::ConfigureTriggerMode(ViSession vi, ViConstString channel
 
 ViStatus NiFgenLibrary::CreateAdvancedArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32 sampleCountsArray[], ViInt32 markerLocationArray[], ViInt32 coercedMarkersArray[], ViInt32* sequenceHandle)
 {
-
   if (!function_pointers_.CreateAdvancedArbSequence) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateAdvancedArbSequence.");
   }
@@ -741,7 +697,6 @@ ViStatus NiFgenLibrary::CreateAdvancedArbSequence(ViSession vi, ViInt32 sequence
 
 ViStatus NiFgenLibrary::CreateArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32* sequenceHandle)
 {
-
   if (!function_pointers_.CreateArbSequence) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateArbSequence.");
   }
@@ -754,7 +709,6 @@ ViStatus NiFgenLibrary::CreateArbSequence(ViSession vi, ViInt32 sequenceLength, 
 
 ViStatus NiFgenLibrary::CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle)
 {
-
   if (!function_pointers_.CreateFreqList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateFreqList.");
   }
@@ -767,7 +721,6 @@ ViStatus NiFgenLibrary::CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 f
 
 ViStatus NiFgenLibrary::CreateWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct waveformDataArray[], ViInt32* waveformHandle)
 {
-
   if (!function_pointers_.CreateWaveformComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformComplexF64.");
   }
@@ -780,7 +733,6 @@ ViStatus NiFgenLibrary::CreateWaveformComplexF64(ViSession vi, ViConstString cha
 
 ViStatus NiFgenLibrary::CreateWaveformF64(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle)
 {
-
   if (!function_pointers_.CreateWaveformF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformF64.");
   }
@@ -793,7 +745,6 @@ ViStatus NiFgenLibrary::CreateWaveformF64(ViSession vi, ViConstString channelNam
 
 ViStatus NiFgenLibrary::CreateWaveformFromFileF64(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle)
 {
-
   if (!function_pointers_.CreateWaveformFromFileF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformFromFileF64.");
   }
@@ -806,7 +757,6 @@ ViStatus NiFgenLibrary::CreateWaveformFromFileF64(ViSession vi, ViConstString ch
 
 ViStatus NiFgenLibrary::CreateWaveformFromFileHWS(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle)
 {
-
   if (!function_pointers_.CreateWaveformFromFileHWS) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformFromFileHWS.");
   }
@@ -819,7 +769,6 @@ ViStatus NiFgenLibrary::CreateWaveformFromFileHWS(ViSession vi, ViConstString ch
 
 ViStatus NiFgenLibrary::CreateWaveformFromFileI16(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle)
 {
-
   if (!function_pointers_.CreateWaveformFromFileI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformFromFileI16.");
   }
@@ -832,7 +781,6 @@ ViStatus NiFgenLibrary::CreateWaveformFromFileI16(ViSession vi, ViConstString ch
 
 ViStatus NiFgenLibrary::CreateWaveformI16(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle)
 {
-
   if (!function_pointers_.CreateWaveformI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformI16.");
   }
@@ -845,7 +793,6 @@ ViStatus NiFgenLibrary::CreateWaveformI16(ViSession vi, ViConstString channelNam
 
 ViStatus NiFgenLibrary::DefineUserStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[])
 {
-
   if (!function_pointers_.DefineUserStandardWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_DefineUserStandardWaveform.");
   }
@@ -858,7 +805,6 @@ ViStatus NiFgenLibrary::DefineUserStandardWaveform(ViSession vi, ViConstString c
 
 ViStatus NiFgenLibrary::DeleteNamedWaveform(ViSession vi, ViConstString channelName, ViConstString waveformName)
 {
-
   if (!function_pointers_.DeleteNamedWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_DeleteNamedWaveform.");
   }
@@ -871,7 +817,6 @@ ViStatus NiFgenLibrary::DeleteNamedWaveform(ViSession vi, ViConstString channelN
 
 ViStatus NiFgenLibrary::DeleteScript(ViSession vi, ViConstString channelName, ViConstString scriptName)
 {
-
   if (!function_pointers_.DeleteScript) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_DeleteScript.");
   }
@@ -884,7 +829,6 @@ ViStatus NiFgenLibrary::DeleteScript(ViSession vi, ViConstString channelName, Vi
 
 ViStatus NiFgenLibrary::Disable(ViSession vi)
 {
-
   if (!function_pointers_.Disable) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_Disable.");
   }
@@ -897,7 +841,6 @@ ViStatus NiFgenLibrary::Disable(ViSession vi)
 
 ViStatus NiFgenLibrary::DisableAnalogFilter(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.DisableAnalogFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_DisableAnalogFilter.");
   }
@@ -910,7 +853,6 @@ ViStatus NiFgenLibrary::DisableAnalogFilter(ViSession vi, ViConstString channelN
 
 ViStatus NiFgenLibrary::DisableDigitalFilter(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.DisableDigitalFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_DisableDigitalFilter.");
   }
@@ -923,7 +865,6 @@ ViStatus NiFgenLibrary::DisableDigitalFilter(ViSession vi, ViConstString channel
 
 ViStatus NiFgenLibrary::DisableDigitalPatterning(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.DisableDigitalPatterning) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_DisableDigitalPatterning.");
   }
@@ -936,7 +877,6 @@ ViStatus NiFgenLibrary::DisableDigitalPatterning(ViSession vi, ViConstString cha
 
 ViStatus NiFgenLibrary::DisableScriptTrigger(ViSession vi, ViConstString triggerId)
 {
-
   if (!function_pointers_.DisableScriptTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_DisableScriptTrigger.");
   }
@@ -949,7 +889,6 @@ ViStatus NiFgenLibrary::DisableScriptTrigger(ViSession vi, ViConstString trigger
 
 ViStatus NiFgenLibrary::DisableStartTrigger(ViSession vi)
 {
-
   if (!function_pointers_.DisableStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_DisableStartTrigger.");
   }
@@ -962,7 +901,6 @@ ViStatus NiFgenLibrary::DisableStartTrigger(ViSession vi)
 
 ViStatus NiFgenLibrary::EnableAnalogFilter(ViSession vi, ViConstString channelName, ViReal64 filterCorrectionFrequency)
 {
-
   if (!function_pointers_.EnableAnalogFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_EnableAnalogFilter.");
   }
@@ -975,7 +913,6 @@ ViStatus NiFgenLibrary::EnableAnalogFilter(ViSession vi, ViConstString channelNa
 
 ViStatus NiFgenLibrary::EnableDigitalFilter(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.EnableDigitalFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_EnableDigitalFilter.");
   }
@@ -988,7 +925,6 @@ ViStatus NiFgenLibrary::EnableDigitalFilter(ViSession vi, ViConstString channelN
 
 ViStatus NiFgenLibrary::EnableDigitalPatterning(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.EnableDigitalPatterning) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_EnableDigitalPatterning.");
   }
@@ -1001,7 +937,6 @@ ViStatus NiFgenLibrary::EnableDigitalPatterning(ViSession vi, ViConstString chan
 
 ViStatus NiFgenLibrary::ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
 {
-
   if (!function_pointers_.ErrorHandler) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ErrorHandler.");
   }
@@ -1014,7 +949,6 @@ ViStatus NiFgenLibrary::ErrorHandler(ViSession vi, ViStatus errorCode, ViChar er
 
 ViStatus NiFgenLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
 {
-
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_error_message.");
   }
@@ -1027,7 +961,6 @@ ViStatus NiFgenLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar er
 
 ViStatus NiFgenLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256])
 {
-
   if (!function_pointers_.ErrorQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_error_query.");
   }
@@ -1040,7 +973,6 @@ ViStatus NiFgenLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar erro
 
 ViStatus NiFgenLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
-
   if (!function_pointers_.ExportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ExportAttributeConfigurationBuffer.");
   }
@@ -1053,7 +985,6 @@ ViStatus NiFgenLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32
 
 ViStatus NiFgenLibrary::ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath)
 {
-
   if (!function_pointers_.ExportAttributeConfigurationFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ExportAttributeConfigurationFile.");
   }
@@ -1066,7 +997,6 @@ ViStatus NiFgenLibrary::ExportAttributeConfigurationFile(ViSession vi, ViConstSt
 
 ViStatus NiFgenLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal)
 {
-
   if (!function_pointers_.ExportSignal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ExportSignal.");
   }
@@ -1079,7 +1009,6 @@ ViStatus NiFgenLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString
 
 ViStatus NiFgenLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetAttributeViBoolean.");
   }
@@ -1092,7 +1021,6 @@ ViStatus NiFgenLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetAttributeViInt32.");
   }
@@ -1105,7 +1033,6 @@ ViStatus NiFgenLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelN
 
 ViStatus NiFgenLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetAttributeViInt64.");
   }
@@ -1118,7 +1045,6 @@ ViStatus NiFgenLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelN
 
 ViStatus NiFgenLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetAttributeViReal64.");
   }
@@ -1131,7 +1057,6 @@ ViStatus NiFgenLibrary::GetAttributeViReal64(ViSession vi, ViConstString channel
 
 ViStatus NiFgenLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetAttributeViSession.");
   }
@@ -1144,7 +1069,6 @@ ViStatus NiFgenLibrary::GetAttributeViSession(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[])
 {
-
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetAttributeViString.");
   }
@@ -1157,7 +1081,6 @@ ViStatus NiFgenLibrary::GetAttributeViString(ViSession vi, ViConstString channel
 
 ViStatus NiFgenLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[])
 {
-
   if (!function_pointers_.GetChannelName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetChannelName.");
   }
@@ -1170,7 +1093,6 @@ ViStatus NiFgenLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 buff
 
 ViStatus NiFgenLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[])
 {
-
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetError.");
   }
@@ -1183,7 +1105,6 @@ ViStatus NiFgenLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 erro
 
 ViStatus NiFgenLibrary::GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
 {
-
   if (!function_pointers_.GetExtCalLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetExtCalLastDateAndTime.");
   }
@@ -1196,7 +1117,6 @@ ViStatus NiFgenLibrary::GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, Vi
 
 ViStatus NiFgenLibrary::GetExtCalLastTemp(ViSession vi, ViReal64* temperature)
 {
-
   if (!function_pointers_.GetExtCalLastTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetExtCalLastTemp.");
   }
@@ -1209,7 +1129,6 @@ ViStatus NiFgenLibrary::GetExtCalLastTemp(ViSession vi, ViReal64* temperature)
 
 ViStatus NiFgenLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* months)
 {
-
   if (!function_pointers_.GetExtCalRecommendedInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetExtCalRecommendedInterval.");
   }
@@ -1222,7 +1141,6 @@ ViStatus NiFgenLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* mont
 
 ViStatus NiFgenLibrary::GetFIRFilterCoefficients(ViSession vi, ViConstString channelName, ViInt32 arraySize, ViReal64 coefficientsArray[], ViInt32* numberOfCoefficientsRead)
 {
-
   if (!function_pointers_.GetFIRFilterCoefficients) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetFIRFilterCoefficients.");
   }
@@ -1235,7 +1153,6 @@ ViStatus NiFgenLibrary::GetFIRFilterCoefficients(ViSession vi, ViConstString cha
 
 ViStatus NiFgenLibrary::GetHardwareState(ViSession vi, ViInt32* state)
 {
-
   if (!function_pointers_.GetHardwareState) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetHardwareState.");
   }
@@ -1248,7 +1165,6 @@ ViStatus NiFgenLibrary::GetHardwareState(ViSession vi, ViInt32* state)
 
 ViStatus NiFgenLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
 {
-
   if (!function_pointers_.GetNextCoercionRecord) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetNextCoercionRecord.");
   }
@@ -1261,7 +1177,6 @@ ViStatus NiFgenLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, 
 
 ViStatus NiFgenLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
 {
-
   if (!function_pointers_.GetNextInterchangeWarning) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetNextInterchangeWarning.");
   }
@@ -1274,7 +1189,6 @@ ViStatus NiFgenLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSi
 
 ViStatus NiFgenLibrary::GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
 {
-
   if (!function_pointers_.GetSelfCalLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetSelfCalLastDateAndTime.");
   }
@@ -1287,7 +1201,6 @@ ViStatus NiFgenLibrary::GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, V
 
 ViStatus NiFgenLibrary::GetSelfCalLastTemp(ViSession vi, ViReal64* temperature)
 {
-
   if (!function_pointers_.GetSelfCalLastTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetSelfCalLastTemp.");
   }
@@ -1300,7 +1213,6 @@ ViStatus NiFgenLibrary::GetSelfCalLastTemp(ViSession vi, ViReal64* temperature)
 
 ViStatus NiFgenLibrary::GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported)
 {
-
   if (!function_pointers_.GetSelfCalSupported) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetSelfCalSupported.");
   }
@@ -1313,7 +1225,6 @@ ViStatus NiFgenLibrary::GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupp
 
 ViStatus NiFgenLibrary::GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle)
 {
-
   if (!function_pointers_.GetStreamEndpointHandle) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetStreamEndpointHandle.");
   }
@@ -1326,7 +1237,6 @@ ViStatus NiFgenLibrary::GetStreamEndpointHandle(ViSession vi, ViConstString stre
 
 ViStatus NiFgenLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
-
   if (!function_pointers_.ImportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ImportAttributeConfigurationBuffer.");
   }
@@ -1339,7 +1249,6 @@ ViStatus NiFgenLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32
 
 ViStatus NiFgenLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath)
 {
-
   if (!function_pointers_.ImportAttributeConfigurationFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ImportAttributeConfigurationFile.");
   }
@@ -1352,7 +1261,6 @@ ViStatus NiFgenLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstSt
 
 ViStatus NiFgenLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
 {
-
   if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_init.");
   }
@@ -1365,7 +1273,6 @@ ViStatus NiFgenLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean r
 
 ViStatus NiFgenLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi)
 {
-
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_InitWithOptions.");
   }
@@ -1378,7 +1285,6 @@ ViStatus NiFgenLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, 
 
 ViStatus NiFgenLibrary::InitializeWithChannels(ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi)
 {
-
   if (!function_pointers_.InitializeWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_InitializeWithChannels.");
   }
@@ -1391,7 +1297,6 @@ ViStatus NiFgenLibrary::InitializeWithChannels(ViRsrc resourceName, ViString cha
 
 ViStatus NiFgenLibrary::InitiateGeneration(ViSession vi)
 {
-
   if (!function_pointers_.InitiateGeneration) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_InitiateGeneration.");
   }
@@ -1404,7 +1309,6 @@ ViStatus NiFgenLibrary::InitiateGeneration(ViSession vi)
 
 ViStatus NiFgenLibrary::InvalidateAllAttributes(ViSession vi)
 {
-
   if (!function_pointers_.InvalidateAllAttributes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_InvalidateAllAttributes.");
   }
@@ -1417,7 +1321,6 @@ ViStatus NiFgenLibrary::InvalidateAllAttributes(ViSession vi)
 
 ViStatus NiFgenLibrary::IsDone(ViSession vi, ViBoolean* done)
 {
-
   if (!function_pointers_.IsDone) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_IsDone.");
   }
@@ -1430,7 +1333,6 @@ ViStatus NiFgenLibrary::IsDone(ViSession vi, ViBoolean* done)
 
 ViStatus NiFgenLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 {
-
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_LockSession.");
   }
@@ -1439,7 +1341,6 @@ ViStatus NiFgenLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 
 ViStatus NiFgenLibrary::ManualEnableP2PStream(ViSession vi, ViConstString endpointName)
 {
-
   if (!function_pointers_.ManualEnableP2PStream) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ManualEnableP2PStream.");
   }
@@ -1452,7 +1353,6 @@ ViStatus NiFgenLibrary::ManualEnableP2PStream(ViSession vi, ViConstString endpoi
 
 ViStatus NiFgenLibrary::QueryArbSeqCapabilities(ViSession vi, ViInt32* maximumNumberOfSequences, ViInt32* minimumSequenceLength, ViInt32* maximumSequenceLength, ViInt32* maximumLoopCount)
 {
-
   if (!function_pointers_.QueryArbSeqCapabilities) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_QueryArbSeqCapabilities.");
   }
@@ -1465,7 +1365,6 @@ ViStatus NiFgenLibrary::QueryArbSeqCapabilities(ViSession vi, ViInt32* maximumNu
 
 ViStatus NiFgenLibrary::QueryArbWfmCapabilities(ViSession vi, ViInt32* maximumNumberOfWaveforms, ViInt32* waveformQuantum, ViInt32* minimumWaveformSize, ViInt32* maximumWaveformSize)
 {
-
   if (!function_pointers_.QueryArbWfmCapabilities) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_QueryArbWfmCapabilities.");
   }
@@ -1478,7 +1377,6 @@ ViStatus NiFgenLibrary::QueryArbWfmCapabilities(ViSession vi, ViInt32* maximumNu
 
 ViStatus NiFgenLibrary::QueryFreqListCapabilities(ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum)
 {
-
   if (!function_pointers_.QueryFreqListCapabilities) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_QueryFreqListCapabilities.");
   }
@@ -1491,7 +1389,6 @@ ViStatus NiFgenLibrary::QueryFreqListCapabilities(ViSession vi, ViInt32* maximum
 
 ViStatus NiFgenLibrary::ReadCurrentTemperature(ViSession vi, ViReal64* temperature)
 {
-
   if (!function_pointers_.ReadCurrentTemperature) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ReadCurrentTemperature.");
   }
@@ -1504,7 +1401,6 @@ ViStatus NiFgenLibrary::ReadCurrentTemperature(ViSession vi, ViReal64* temperatu
 
 ViStatus NiFgenLibrary::Reset(ViSession vi)
 {
-
   if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_reset.");
   }
@@ -1517,7 +1413,6 @@ ViStatus NiFgenLibrary::Reset(ViSession vi)
 
 ViStatus NiFgenLibrary::ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId)
 {
-
   if (!function_pointers_.ResetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ResetAttribute.");
   }
@@ -1530,7 +1425,6 @@ ViStatus NiFgenLibrary::ResetAttribute(ViSession vi, ViConstString channelName, 
 
 ViStatus NiFgenLibrary::ResetDevice(ViSession vi)
 {
-
   if (!function_pointers_.ResetDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ResetDevice.");
   }
@@ -1543,7 +1437,6 @@ ViStatus NiFgenLibrary::ResetDevice(ViSession vi)
 
 ViStatus NiFgenLibrary::ResetInterchangeCheck(ViSession vi)
 {
-
   if (!function_pointers_.ResetInterchangeCheck) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ResetInterchangeCheck.");
   }
@@ -1556,7 +1449,6 @@ ViStatus NiFgenLibrary::ResetInterchangeCheck(ViSession vi)
 
 ViStatus NiFgenLibrary::ResetWithDefaults(ViSession vi)
 {
-
   if (!function_pointers_.ResetWithDefaults) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ResetWithDefaults.");
   }
@@ -1569,7 +1461,6 @@ ViStatus NiFgenLibrary::ResetWithDefaults(ViSession vi)
 
 ViStatus NiFgenLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256])
 {
-
   if (!function_pointers_.RevisionQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_revision_query.");
   }
@@ -1582,7 +1473,6 @@ ViStatus NiFgenLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevis
 
 ViStatus NiFgenLibrary::RouteSignalOut(ViSession vi, ViConstString channelName, ViInt32 routeSignalFrom, ViInt32 routeSignalTo)
 {
-
   if (!function_pointers_.RouteSignalOut) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_RouteSignalOut.");
   }
@@ -1595,7 +1485,6 @@ ViStatus NiFgenLibrary::RouteSignalOut(ViSession vi, ViConstString channelName, 
 
 ViStatus NiFgenLibrary::SelfCal(ViSession vi)
 {
-
   if (!function_pointers_.SelfCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SelfCal.");
   }
@@ -1608,7 +1497,6 @@ ViStatus NiFgenLibrary::SelfCal(ViSession vi)
 
 ViStatus NiFgenLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
 {
-
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_self_test.");
   }
@@ -1621,7 +1509,6 @@ ViStatus NiFgenLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar s
 
 ViStatus NiFgenLibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViString triggerId)
 {
-
   if (!function_pointers_.SendSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SendSoftwareEdgeTrigger.");
   }
@@ -1634,7 +1521,6 @@ ViStatus NiFgenLibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, V
 
 ViStatus NiFgenLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetAttributeViBoolean.");
   }
@@ -1647,7 +1533,6 @@ ViStatus NiFgenLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetAttributeViInt32.");
   }
@@ -1660,7 +1545,6 @@ ViStatus NiFgenLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelN
 
 ViStatus NiFgenLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetAttributeViInt64.");
   }
@@ -1673,7 +1557,6 @@ ViStatus NiFgenLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelN
 
 ViStatus NiFgenLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetAttributeViReal64.");
   }
@@ -1686,7 +1569,6 @@ ViStatus NiFgenLibrary::SetAttributeViReal64(ViSession vi, ViConstString channel
 
 ViStatus NiFgenLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetAttributeViSession.");
   }
@@ -1699,7 +1581,6 @@ ViStatus NiFgenLibrary::SetAttributeViSession(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetAttributeViString.");
   }
@@ -1712,7 +1593,6 @@ ViStatus NiFgenLibrary::SetAttributeViString(ViSession vi, ViConstString channel
 
 ViStatus NiFgenLibrary::SetNamedWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset)
 {
-
   if (!function_pointers_.SetNamedWaveformNextWritePosition) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetNamedWaveformNextWritePosition.");
   }
@@ -1725,7 +1605,6 @@ ViStatus NiFgenLibrary::SetNamedWaveformNextWritePosition(ViSession vi, ViConstS
 
 ViStatus NiFgenLibrary::SetWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset)
 {
-
   if (!function_pointers_.SetWaveformNextWritePosition) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetWaveformNextWritePosition.");
   }
@@ -1738,7 +1617,6 @@ ViStatus NiFgenLibrary::SetWaveformNextWritePosition(ViSession vi, ViConstString
 
 ViStatus NiFgenLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 {
-
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_UnlockSession.");
   }
@@ -1747,7 +1625,6 @@ ViStatus NiFgenLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 
 ViStatus NiFgenLibrary::WaitUntilDone(ViSession vi, ViInt32 maxTime)
 {
-
   if (!function_pointers_.WaitUntilDone) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WaitUntilDone.");
   }
@@ -1760,7 +1637,6 @@ ViStatus NiFgenLibrary::WaitUntilDone(ViSession vi, ViInt32 maxTime)
 
 ViStatus NiFgenLibrary::WriteBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViInt16 data[])
 {
-
   if (!function_pointers_.WriteBinary16Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteBinary16Waveform.");
   }
@@ -1773,7 +1649,6 @@ ViStatus NiFgenLibrary::WriteBinary16Waveform(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::WriteComplexBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, NIComplexI16_struct data[])
 {
-
   if (!function_pointers_.WriteComplexBinary16Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteComplexBinary16Waveform.");
   }
@@ -1786,7 +1661,6 @@ ViStatus NiFgenLibrary::WriteComplexBinary16Waveform(ViSession vi, ViConstString
 
 ViStatus NiFgenLibrary::WriteNamedWaveformComplexF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, NIComplexNumber_struct data[])
 {
-
   if (!function_pointers_.WriteNamedWaveformComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteNamedWaveformComplexF64.");
   }
@@ -1799,7 +1673,6 @@ ViStatus NiFgenLibrary::WriteNamedWaveformComplexF64(ViSession vi, ViConstString
 
 ViStatus NiFgenLibrary::WriteNamedWaveformComplexI16(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, NIComplexI16_struct data[])
 {
-
   if (!function_pointers_.WriteNamedWaveformComplexI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteNamedWaveformComplexI16.");
   }
@@ -1812,7 +1685,6 @@ ViStatus NiFgenLibrary::WriteNamedWaveformComplexI16(ViSession vi, ViConstString
 
 ViStatus NiFgenLibrary::WriteNamedWaveformF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViReal64 data[])
 {
-
   if (!function_pointers_.WriteNamedWaveformF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteNamedWaveformF64.");
   }
@@ -1825,7 +1697,6 @@ ViStatus NiFgenLibrary::WriteNamedWaveformF64(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::WriteNamedWaveformI16(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViInt16 data[])
 {
-
   if (!function_pointers_.WriteNamedWaveformI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteNamedWaveformI16.");
   }
@@ -1838,7 +1709,6 @@ ViStatus NiFgenLibrary::WriteNamedWaveformI16(ViSession vi, ViConstString channe
 
 ViStatus NiFgenLibrary::WriteP2PEndpointI16(ViSession vi, ViConstString endpointName, ViInt32 numberOfSamples, ViInt16 endpointData[])
 {
-
   if (!function_pointers_.WriteP2PEndpointI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteP2PEndpointI16.");
   }
@@ -1851,7 +1721,6 @@ ViStatus NiFgenLibrary::WriteP2PEndpointI16(ViSession vi, ViConstString endpoint
 
 ViStatus NiFgenLibrary::WriteScript(ViSession vi, ViConstString channelName, ViConstString script)
 {
-
   if (!function_pointers_.WriteScript) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteScript.");
   }
@@ -1864,7 +1733,6 @@ ViStatus NiFgenLibrary::WriteScript(ViSession vi, ViConstString channelName, ViC
 
 ViStatus NiFgenLibrary::WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[])
 {
-
   if (!function_pointers_.WriteWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteWaveform.");
   }
@@ -1877,7 +1745,6 @@ ViStatus NiFgenLibrary::WriteWaveform(ViSession vi, ViConstString channelName, V
 
 ViStatus NiFgenLibrary::WriteWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle)
 {
-
   if (!function_pointers_.WriteWaveformComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteWaveformComplexF64.");
   }

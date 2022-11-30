@@ -11,7 +11,6 @@
 
 namespace nitclk_grpc {
 
-
 class NiTClkLibraryInterface {
  public:
   virtual ~NiTClkLibraryInterface() {}

@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nifake_service.h"
 #include "nifake_service_registrar.h"
 

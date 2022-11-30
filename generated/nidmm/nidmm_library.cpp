@@ -125,7 +125,6 @@ NiDmmLibrary::~NiDmmLibrary()
 
 ViStatus NiDmmLibrary::Abort(ViSession vi)
 {
-
   if (!function_pointers_.Abort) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_Abort.");
   }
@@ -138,7 +137,6 @@ ViStatus NiDmmLibrary::Abort(ViSession vi)
 
 ViStatus NiDmmLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_CheckAttributeViBoolean.");
   }
@@ -151,7 +149,6 @@ ViStatus NiDmmLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString chann
 
 ViStatus NiDmmLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_CheckAttributeViInt32.");
   }
@@ -164,7 +161,6 @@ ViStatus NiDmmLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channel
 
 ViStatus NiDmmLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_CheckAttributeViReal64.");
   }
@@ -177,7 +173,6 @@ ViStatus NiDmmLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channe
 
 ViStatus NiDmmLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_CheckAttributeViSession.");
   }
@@ -190,7 +185,6 @@ ViStatus NiDmmLibrary::CheckAttributeViSession(ViSession vi, ViConstString chann
 
 ViStatus NiDmmLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
 {
-
   if (!function_pointers_.CheckAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_CheckAttributeViString.");
   }
@@ -203,7 +197,6 @@ ViStatus NiDmmLibrary::CheckAttributeViString(ViSession vi, ViConstString channe
 
 ViStatus NiDmmLibrary::ClearError(ViSession vi)
 {
-
   if (!function_pointers_.ClearError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ClearError.");
   }
@@ -216,7 +209,6 @@ ViStatus NiDmmLibrary::ClearError(ViSession vi)
 
 ViStatus NiDmmLibrary::ClearInterchangeWarnings(ViSession vi)
 {
-
   if (!function_pointers_.ClearInterchangeWarnings) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ClearInterchangeWarnings.");
   }
@@ -229,7 +221,6 @@ ViStatus NiDmmLibrary::ClearInterchangeWarnings(ViSession vi)
 
 ViStatus NiDmmLibrary::Close(ViSession vi)
 {
-
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_close.");
   }
@@ -242,7 +233,6 @@ ViStatus NiDmmLibrary::Close(ViSession vi)
 
 ViStatus NiDmmLibrary::ConfigureACBandwidth(ViSession vi, ViReal64 acMinimumFrequencyHz, ViReal64 acMaximumFrequencyHz)
 {
-
   if (!function_pointers_.ConfigureACBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureACBandwidth.");
   }
@@ -255,7 +245,6 @@ ViStatus NiDmmLibrary::ConfigureACBandwidth(ViSession vi, ViReal64 acMinimumFreq
 
 ViStatus NiDmmLibrary::ConfigureADCCalibration(ViSession vi, ViInt32 adcCalibration)
 {
-
   if (!function_pointers_.ConfigureADCCalibration) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureADCCalibration.");
   }
@@ -268,7 +257,6 @@ ViStatus NiDmmLibrary::ConfigureADCCalibration(ViSession vi, ViInt32 adcCalibrat
 
 ViStatus NiDmmLibrary::ConfigureAutoZeroMode(ViSession vi, ViInt32 autoZeroMode)
 {
-
   if (!function_pointers_.ConfigureAutoZeroMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureAutoZeroMode.");
   }
@@ -281,7 +269,6 @@ ViStatus NiDmmLibrary::ConfigureAutoZeroMode(ViSession vi, ViInt32 autoZeroMode)
 
 ViStatus NiDmmLibrary::ConfigureCableCompType(ViSession vi, ViInt32 cableCompType)
 {
-
   if (!function_pointers_.ConfigureCableCompType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureCableCompType.");
   }
@@ -294,7 +281,6 @@ ViStatus NiDmmLibrary::ConfigureCableCompType(ViSession vi, ViInt32 cableCompTyp
 
 ViStatus NiDmmLibrary::ConfigureCurrentSource(ViSession vi, ViReal64 currentSource)
 {
-
   if (!function_pointers_.ConfigureCurrentSource) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureCurrentSource.");
   }
@@ -307,7 +293,6 @@ ViStatus NiDmmLibrary::ConfigureCurrentSource(ViSession vi, ViReal64 currentSour
 
 ViStatus NiDmmLibrary::ConfigureFixedRefJunction(ViSession vi, ViReal64 fixedReferenceJunction)
 {
-
   if (!function_pointers_.ConfigureFixedRefJunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureFixedRefJunction.");
   }
@@ -320,7 +305,6 @@ ViStatus NiDmmLibrary::ConfigureFixedRefJunction(ViSession vi, ViReal64 fixedRef
 
 ViStatus NiDmmLibrary::ConfigureFrequencyVoltageRange(ViSession vi, ViReal64 voltageRange)
 {
-
   if (!function_pointers_.ConfigureFrequencyVoltageRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureFrequencyVoltageRange.");
   }
@@ -333,7 +317,6 @@ ViStatus NiDmmLibrary::ConfigureFrequencyVoltageRange(ViSession vi, ViReal64 vol
 
 ViStatus NiDmmLibrary::ConfigureMeasCompleteDest(ViSession vi, ViInt32 measCompleteDestination)
 {
-
   if (!function_pointers_.ConfigureMeasCompleteDest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureMeasCompleteDest.");
   }
@@ -346,7 +329,6 @@ ViStatus NiDmmLibrary::ConfigureMeasCompleteDest(ViSession vi, ViInt32 measCompl
 
 ViStatus NiDmmLibrary::ConfigureMeasCompleteSlope(ViSession vi, ViInt32 measCompleteSlope)
 {
-
   if (!function_pointers_.ConfigureMeasCompleteSlope) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureMeasCompleteSlope.");
   }
@@ -359,7 +341,6 @@ ViStatus NiDmmLibrary::ConfigureMeasCompleteSlope(ViSession vi, ViInt32 measComp
 
 ViStatus NiDmmLibrary::ConfigureMeasurementAbsolute(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute)
 {
-
   if (!function_pointers_.ConfigureMeasurementAbsolute) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureMeasurementAbsolute.");
   }
@@ -372,7 +353,6 @@ ViStatus NiDmmLibrary::ConfigureMeasurementAbsolute(ViSession vi, ViInt32 measur
 
 ViStatus NiDmmLibrary::ConfigureMeasurementDigits(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionDigits)
 {
-
   if (!function_pointers_.ConfigureMeasurementDigits) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureMeasurementDigits.");
   }
@@ -385,7 +365,6 @@ ViStatus NiDmmLibrary::ConfigureMeasurementDigits(ViSession vi, ViInt32 measurem
 
 ViStatus NiDmmLibrary::ConfigureMultiPoint(ViSession vi, ViInt32 triggerCount, ViInt32 sampleCount, ViInt32 sampleTrigger, ViReal64 sampleInterval)
 {
-
   if (!function_pointers_.ConfigureMultiPoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureMultiPoint.");
   }
@@ -398,7 +377,6 @@ ViStatus NiDmmLibrary::ConfigureMultiPoint(ViSession vi, ViInt32 triggerCount, V
 
 ViStatus NiDmmLibrary::ConfigureOffsetCompOhms(ViSession vi, ViInt32 offsetCompOhms)
 {
-
   if (!function_pointers_.ConfigureOffsetCompOhms) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureOffsetCompOhms.");
   }
@@ -411,7 +389,6 @@ ViStatus NiDmmLibrary::ConfigureOffsetCompOhms(ViSession vi, ViInt32 offsetCompO
 
 ViStatus NiDmmLibrary::ConfigureOpenCableCompValues(ViSession vi, ViReal64 conductance, ViReal64 susceptance)
 {
-
   if (!function_pointers_.ConfigureOpenCableCompValues) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureOpenCableCompValues.");
   }
@@ -424,7 +401,6 @@ ViStatus NiDmmLibrary::ConfigureOpenCableCompValues(ViSession vi, ViReal64 condu
 
 ViStatus NiDmmLibrary::ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerLineFrequencyHz)
 {
-
   if (!function_pointers_.ConfigurePowerLineFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigurePowerLineFrequency.");
   }
@@ -437,7 +413,6 @@ ViStatus NiDmmLibrary::ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerL
 
 ViStatus NiDmmLibrary::ConfigureRTDCustom(ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC)
 {
-
   if (!function_pointers_.ConfigureRTDCustom) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureRTDCustom.");
   }
@@ -450,7 +425,6 @@ ViStatus NiDmmLibrary::ConfigureRTDCustom(ViSession vi, ViReal64 rtdA, ViReal64 
 
 ViStatus NiDmmLibrary::ConfigureRTDType(ViSession vi, ViInt32 rtdType, ViReal64 rtdResistance)
 {
-
   if (!function_pointers_.ConfigureRTDType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureRTDType.");
   }
@@ -463,7 +437,6 @@ ViStatus NiDmmLibrary::ConfigureRTDType(ViSession vi, ViInt32 rtdType, ViReal64 
 
 ViStatus NiDmmLibrary::ConfigureSampleTriggerSlope(ViSession vi, ViInt32 sampleTriggerSlope)
 {
-
   if (!function_pointers_.ConfigureSampleTriggerSlope) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureSampleTriggerSlope.");
   }
@@ -476,7 +449,6 @@ ViStatus NiDmmLibrary::ConfigureSampleTriggerSlope(ViSession vi, ViInt32 sampleT
 
 ViStatus NiDmmLibrary::ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance)
 {
-
   if (!function_pointers_.ConfigureShortCableCompValues) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureShortCableCompValues.");
   }
@@ -489,7 +461,6 @@ ViStatus NiDmmLibrary::ConfigureShortCableCompValues(ViSession vi, ViReal64 resi
 
 ViStatus NiDmmLibrary::ConfigureThermistorCustom(ViSession vi, ViReal64 thermistorA, ViReal64 thermistorB, ViReal64 thermistorC)
 {
-
   if (!function_pointers_.ConfigureThermistorCustom) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureThermistorCustom.");
   }
@@ -502,7 +473,6 @@ ViStatus NiDmmLibrary::ConfigureThermistorCustom(ViSession vi, ViReal64 thermist
 
 ViStatus NiDmmLibrary::ConfigureThermistorType(ViSession vi, ViInt32 thermistorType)
 {
-
   if (!function_pointers_.ConfigureThermistorType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureThermistorType.");
   }
@@ -515,7 +485,6 @@ ViStatus NiDmmLibrary::ConfigureThermistorType(ViSession vi, ViInt32 thermistorT
 
 ViStatus NiDmmLibrary::ConfigureThermocouple(ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType)
 {
-
   if (!function_pointers_.ConfigureThermocouple) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureThermocouple.");
   }
@@ -528,7 +497,6 @@ ViStatus NiDmmLibrary::ConfigureThermocouple(ViSession vi, ViInt32 thermocoupleT
 
 ViStatus NiDmmLibrary::ConfigureTransducerType(ViSession vi, ViInt32 transducerType)
 {
-
   if (!function_pointers_.ConfigureTransducerType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureTransducerType.");
   }
@@ -541,7 +509,6 @@ ViStatus NiDmmLibrary::ConfigureTransducerType(ViSession vi, ViInt32 transducerT
 
 ViStatus NiDmmLibrary::ConfigureTrigger(ViSession vi, ViInt32 triggerSource, ViReal64 triggerDelay)
 {
-
   if (!function_pointers_.ConfigureTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureTrigger.");
   }
@@ -554,7 +521,6 @@ ViStatus NiDmmLibrary::ConfigureTrigger(ViSession vi, ViInt32 triggerSource, ViR
 
 ViStatus NiDmmLibrary::ConfigureTriggerSlope(ViSession vi, ViInt32 triggerSlope)
 {
-
   if (!function_pointers_.ConfigureTriggerSlope) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureTriggerSlope.");
   }
@@ -567,7 +533,6 @@ ViStatus NiDmmLibrary::ConfigureTriggerSlope(ViSession vi, ViInt32 triggerSlope)
 
 ViStatus NiDmmLibrary::ConfigureWaveformAcquisition(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 rate, ViInt32 waveformPoints)
 {
-
   if (!function_pointers_.ConfigureWaveformAcquisition) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureWaveformAcquisition.");
   }
@@ -580,7 +545,6 @@ ViStatus NiDmmLibrary::ConfigureWaveformAcquisition(ViSession vi, ViInt32 measur
 
 ViStatus NiDmmLibrary::ConfigureWaveformCoupling(ViSession vi, ViInt32 waveformCoupling)
 {
-
   if (!function_pointers_.ConfigureWaveformCoupling) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureWaveformCoupling.");
   }
@@ -593,7 +557,6 @@ ViStatus NiDmmLibrary::ConfigureWaveformCoupling(ViSession vi, ViInt32 waveformC
 
 ViStatus NiDmmLibrary::Control(ViSession vi, ViInt32 controlAction)
 {
-
   if (!function_pointers_.Control) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_Control.");
   }
@@ -606,7 +569,6 @@ ViStatus NiDmmLibrary::Control(ViSession vi, ViInt32 controlAction)
 
 ViStatus NiDmmLibrary::Disable(ViSession vi)
 {
-
   if (!function_pointers_.Disable) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_Disable.");
   }
@@ -619,7 +581,6 @@ ViStatus NiDmmLibrary::Disable(ViSession vi)
 
 ViStatus NiDmmLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[])
 {
-
   if (!function_pointers_.ExportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ExportAttributeConfigurationBuffer.");
   }
@@ -632,7 +593,6 @@ ViStatus NiDmmLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 
 
 ViStatus NiDmmLibrary::ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath)
 {
-
   if (!function_pointers_.ExportAttributeConfigurationFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ExportAttributeConfigurationFile.");
   }
@@ -645,7 +605,6 @@ ViStatus NiDmmLibrary::ExportAttributeConfigurationFile(ViSession vi, ViConstStr
 
 ViStatus NiDmmLibrary::Fetch(ViSession vi, ViInt32 maximumTime, ViReal64* reading)
 {
-
   if (!function_pointers_.Fetch) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_Fetch.");
   }
@@ -658,7 +617,6 @@ ViStatus NiDmmLibrary::Fetch(ViSession vi, ViInt32 maximumTime, ViReal64* readin
 
 ViStatus NiDmmLibrary::FetchMultiPoint(ViSession vi, ViInt32 maximumTime, ViInt32 arraySize, ViReal64 readingArray[], ViInt32* actualNumberOfPoints)
 {
-
   if (!function_pointers_.FetchMultiPoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_FetchMultiPoint.");
   }
@@ -671,7 +629,6 @@ ViStatus NiDmmLibrary::FetchMultiPoint(ViSession vi, ViInt32 maximumTime, ViInt3
 
 ViStatus NiDmmLibrary::FetchWaveform(ViSession vi, ViInt32 maximumTime, ViInt32 arraySize, ViReal64 waveformArray[], ViInt32* actualNumberOfPoints)
 {
-
   if (!function_pointers_.FetchWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_FetchWaveform.");
   }
@@ -684,7 +641,6 @@ ViStatus NiDmmLibrary::FetchWaveform(ViSession vi, ViInt32 maximumTime, ViInt32 
 
 ViStatus NiDmmLibrary::GetApertureTimeInfo(ViSession vi, ViReal64* apertureTime, ViInt32* apertureTimeUnits)
 {
-
   if (!function_pointers_.GetApertureTimeInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetApertureTimeInfo.");
   }
@@ -697,7 +653,6 @@ ViStatus NiDmmLibrary::GetApertureTimeInfo(ViSession vi, ViReal64* apertureTime,
 
 ViStatus NiDmmLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetAttributeViBoolean.");
   }
@@ -710,7 +665,6 @@ ViStatus NiDmmLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channel
 
 ViStatus NiDmmLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetAttributeViInt32.");
   }
@@ -723,7 +677,6 @@ ViStatus NiDmmLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelNa
 
 ViStatus NiDmmLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetAttributeViReal64.");
   }
@@ -736,7 +689,6 @@ ViStatus NiDmmLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelN
 
 ViStatus NiDmmLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetAttributeViSession.");
   }
@@ -749,7 +701,6 @@ ViStatus NiDmmLibrary::GetAttributeViSession(ViSession vi, ViConstString channel
 
 ViStatus NiDmmLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[])
 {
-
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetAttributeViString.");
   }
@@ -762,7 +713,6 @@ ViStatus NiDmmLibrary::GetAttributeViString(ViSession vi, ViConstString channelN
 
 ViStatus NiDmmLibrary::GetAutoRangeValue(ViSession vi, ViReal64* actualRange)
 {
-
   if (!function_pointers_.GetAutoRangeValue) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetAutoRangeValue.");
   }
@@ -775,7 +725,6 @@ ViStatus NiDmmLibrary::GetAutoRangeValue(ViSession vi, ViReal64* actualRange)
 
 ViStatus NiDmmLibrary::GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute)
 {
-
   if (!function_pointers_.GetCalDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetCalDateAndTime.");
   }
@@ -788,7 +737,6 @@ ViStatus NiDmmLibrary::GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32*
 
 ViStatus NiDmmLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[])
 {
-
   if (!function_pointers_.GetChannelName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetChannelName.");
   }
@@ -801,7 +749,6 @@ ViStatus NiDmmLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 buffe
 
 ViStatus NiDmmLibrary::GetDevTemp(ViSession vi, ViString options, ViReal64* temperature)
 {
-
   if (!function_pointers_.GetDevTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetDevTemp.");
   }
@@ -814,7 +761,6 @@ ViStatus NiDmmLibrary::GetDevTemp(ViSession vi, ViString options, ViReal64* temp
 
 ViStatus NiDmmLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[])
 {
-
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetError.");
   }
@@ -827,7 +773,6 @@ ViStatus NiDmmLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 buffe
 
 ViStatus NiDmmLibrary::GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[])
 {
-
   if (!function_pointers_.GetErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetErrorMessage.");
   }
@@ -840,7 +785,6 @@ ViStatus NiDmmLibrary::GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32
 
 ViStatus NiDmmLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* months)
 {
-
   if (!function_pointers_.GetExtCalRecommendedInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetExtCalRecommendedInterval.");
   }
@@ -853,7 +797,6 @@ ViStatus NiDmmLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* month
 
 ViStatus NiDmmLibrary::GetLastCalTemp(ViSession vi, ViInt32 calType, ViReal64* temperature)
 {
-
   if (!function_pointers_.GetLastCalTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetLastCalTemp.");
   }
@@ -866,7 +809,6 @@ ViStatus NiDmmLibrary::GetLastCalTemp(ViSession vi, ViInt32 calType, ViReal64* t
 
 ViStatus NiDmmLibrary::GetMeasurementPeriod(ViSession vi, ViReal64* period)
 {
-
   if (!function_pointers_.GetMeasurementPeriod) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetMeasurementPeriod.");
   }
@@ -879,7 +821,6 @@ ViStatus NiDmmLibrary::GetMeasurementPeriod(ViSession vi, ViReal64* period)
 
 ViStatus NiDmmLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
 {
-
   if (!function_pointers_.GetNextCoercionRecord) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetNextCoercionRecord.");
   }
@@ -892,7 +833,6 @@ ViStatus NiDmmLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, V
 
 ViStatus NiDmmLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
 {
-
   if (!function_pointers_.GetNextInterchangeWarning) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetNextInterchangeWarning.");
   }
@@ -905,7 +845,6 @@ ViStatus NiDmmLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSiz
 
 ViStatus NiDmmLibrary::GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported)
 {
-
   if (!function_pointers_.GetSelfCalSupported) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetSelfCalSupported.");
   }
@@ -918,7 +857,6 @@ ViStatus NiDmmLibrary::GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSuppo
 
 ViStatus NiDmmLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[])
 {
-
   if (!function_pointers_.ImportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ImportAttributeConfigurationBuffer.");
   }
@@ -931,7 +869,6 @@ ViStatus NiDmmLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 
 
 ViStatus NiDmmLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath)
 {
-
   if (!function_pointers_.ImportAttributeConfigurationFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ImportAttributeConfigurationFile.");
   }
@@ -944,7 +881,6 @@ ViStatus NiDmmLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstStr
 
 ViStatus NiDmmLibrary::Init(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
 {
-
   if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_init.");
   }
@@ -957,7 +893,6 @@ ViStatus NiDmmLibrary::Init(ViString resourceName, ViBoolean idQuery, ViBoolean 
 
 ViStatus NiDmmLibrary::InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi)
 {
-
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_InitWithOptions.");
   }
@@ -970,7 +905,6 @@ ViStatus NiDmmLibrary::InitWithOptions(ViString resourceName, ViBoolean idQuery,
 
 ViStatus NiDmmLibrary::Initiate(ViSession vi)
 {
-
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_Initiate.");
   }
@@ -983,7 +917,6 @@ ViStatus NiDmmLibrary::Initiate(ViSession vi)
 
 ViStatus NiDmmLibrary::InvalidateAllAttributes(ViSession vi)
 {
-
   if (!function_pointers_.InvalidateAllAttributes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_InvalidateAllAttributes.");
   }
@@ -996,7 +929,6 @@ ViStatus NiDmmLibrary::InvalidateAllAttributes(ViSession vi)
 
 ViStatus NiDmmLibrary::IsOverRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange)
 {
-
   if (!function_pointers_.IsOverRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_IsOverRange.");
   }
@@ -1009,7 +941,6 @@ ViStatus NiDmmLibrary::IsOverRange(ViSession vi, ViReal64 measurementValue, ViBo
 
 ViStatus NiDmmLibrary::IsUnderRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange)
 {
-
   if (!function_pointers_.IsUnderRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_IsUnderRange.");
   }
@@ -1022,7 +953,6 @@ ViStatus NiDmmLibrary::IsUnderRange(ViSession vi, ViReal64 measurementValue, ViB
 
 ViStatus NiDmmLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 {
-
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_LockSession.");
   }
@@ -1031,7 +961,6 @@ ViStatus NiDmmLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 
 ViStatus NiDmmLibrary::PerformOpenCableComp(ViSession vi, ViReal64* conductance, ViReal64* susceptance)
 {
-
   if (!function_pointers_.PerformOpenCableComp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_PerformOpenCableComp.");
   }
@@ -1044,7 +973,6 @@ ViStatus NiDmmLibrary::PerformOpenCableComp(ViSession vi, ViReal64* conductance,
 
 ViStatus NiDmmLibrary::PerformShortCableComp(ViSession vi, ViReal64* resistance, ViReal64* reactance)
 {
-
   if (!function_pointers_.PerformShortCableComp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_PerformShortCableComp.");
   }
@@ -1057,7 +985,6 @@ ViStatus NiDmmLibrary::PerformShortCableComp(ViSession vi, ViReal64* resistance,
 
 ViStatus NiDmmLibrary::Read(ViSession vi, ViInt32 maximumTime, ViReal64* reading)
 {
-
   if (!function_pointers_.Read) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_Read.");
   }
@@ -1070,7 +997,6 @@ ViStatus NiDmmLibrary::Read(ViSession vi, ViInt32 maximumTime, ViReal64* reading
 
 ViStatus NiDmmLibrary::ReadMultiPoint(ViSession vi, ViInt32 maximumTime, ViInt32 arraySize, ViReal64 readingArray[], ViInt32* actualNumberOfPoints)
 {
-
   if (!function_pointers_.ReadMultiPoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ReadMultiPoint.");
   }
@@ -1083,7 +1009,6 @@ ViStatus NiDmmLibrary::ReadMultiPoint(ViSession vi, ViInt32 maximumTime, ViInt32
 
 ViStatus NiDmmLibrary::ReadStatus(ViSession vi, ViInt32* acquisitionBacklog, ViInt16* acquisitionStatus)
 {
-
   if (!function_pointers_.ReadStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ReadStatus.");
   }
@@ -1096,7 +1021,6 @@ ViStatus NiDmmLibrary::ReadStatus(ViSession vi, ViInt32* acquisitionBacklog, ViI
 
 ViStatus NiDmmLibrary::ReadWaveform(ViSession vi, ViInt32 maximumTime, ViInt32 arraySize, ViReal64 waveformArray[], ViInt32* actualNumberOfPoints)
 {
-
   if (!function_pointers_.ReadWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ReadWaveform.");
   }
@@ -1109,7 +1033,6 @@ ViStatus NiDmmLibrary::ReadWaveform(ViSession vi, ViInt32 maximumTime, ViInt32 a
 
 ViStatus NiDmmLibrary::Reset(ViSession vi)
 {
-
   if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_reset.");
   }
@@ -1122,7 +1045,6 @@ ViStatus NiDmmLibrary::Reset(ViSession vi)
 
 ViStatus NiDmmLibrary::ResetInterchangeCheck(ViSession vi)
 {
-
   if (!function_pointers_.ResetInterchangeCheck) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ResetInterchangeCheck.");
   }
@@ -1135,7 +1057,6 @@ ViStatus NiDmmLibrary::ResetInterchangeCheck(ViSession vi)
 
 ViStatus NiDmmLibrary::ResetWithDefaults(ViSession vi)
 {
-
   if (!function_pointers_.ResetWithDefaults) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ResetWithDefaults.");
   }
@@ -1148,7 +1069,6 @@ ViStatus NiDmmLibrary::ResetWithDefaults(ViSession vi)
 
 ViStatus NiDmmLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256])
 {
-
   if (!function_pointers_.RevisionQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_revision_query.");
   }
@@ -1161,7 +1081,6 @@ ViStatus NiDmmLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevisi
 
 ViStatus NiDmmLibrary::SelfCal(ViSession vi)
 {
-
   if (!function_pointers_.SelfCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SelfCal.");
   }
@@ -1174,7 +1093,6 @@ ViStatus NiDmmLibrary::SelfCal(ViSession vi)
 
 ViStatus NiDmmLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
 {
-
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_self_test.");
   }
@@ -1187,7 +1105,6 @@ ViStatus NiDmmLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar se
 
 ViStatus NiDmmLibrary::SendSoftwareTrigger(ViSession vi)
 {
-
   if (!function_pointers_.SendSoftwareTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SendSoftwareTrigger.");
   }
@@ -1200,7 +1117,6 @@ ViStatus NiDmmLibrary::SendSoftwareTrigger(ViSession vi)
 
 ViStatus NiDmmLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SetAttributeViBoolean.");
   }
@@ -1213,7 +1129,6 @@ ViStatus NiDmmLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channel
 
 ViStatus NiDmmLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SetAttributeViInt32.");
   }
@@ -1226,7 +1141,6 @@ ViStatus NiDmmLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelNa
 
 ViStatus NiDmmLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SetAttributeViReal64.");
   }
@@ -1239,7 +1153,6 @@ ViStatus NiDmmLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelN
 
 ViStatus NiDmmLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SetAttributeViSession.");
   }
@@ -1252,7 +1165,6 @@ ViStatus NiDmmLibrary::SetAttributeViSession(ViSession vi, ViConstString channel
 
 ViStatus NiDmmLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SetAttributeViString.");
   }
@@ -1265,7 +1177,6 @@ ViStatus NiDmmLibrary::SetAttributeViString(ViSession vi, ViConstString channelN
 
 ViStatus NiDmmLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 {
-
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_UnlockSession.");
   }

@@ -15,7 +15,6 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-
 class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));

@@ -7,7 +7,6 @@
 #ifndef NIFAKE_GRPC_CLIENT_H
 #define NIFAKE_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nifake.grpc.pb.h>

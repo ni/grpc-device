@@ -7,7 +7,6 @@
 #ifndef NIMXLCTERMINALADAPTOR_RESTRICTED_GRPC_CLIENT_H
 #define NIMXLCTERMINALADAPTOR_RESTRICTED_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nimxlcterminaladaptor_restricted.grpc.pb.h>

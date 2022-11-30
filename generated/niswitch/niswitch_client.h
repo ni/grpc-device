@@ -7,7 +7,6 @@
 #ifndef NISWITCH_GRPC_CLIENT_H
 #define NISWITCH_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <niswitch.grpc.pb.h>

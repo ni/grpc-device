@@ -7,7 +7,6 @@
 #ifndef NIDIGITALPATTERN_GRPC_CLIENT_H
 #define NIDIGITALPATTERN_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nidigitalpattern.grpc.pb.h>

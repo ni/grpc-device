@@ -12,7 +12,6 @@
 
 namespace nixnet_grpc {
 
-
 class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
  public:
   NiXnetLibrary();

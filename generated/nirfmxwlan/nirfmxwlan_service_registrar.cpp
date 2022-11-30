@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nirfmxwlan_service.h"
 #include "nirfmxwlan_service_registrar.h"
 

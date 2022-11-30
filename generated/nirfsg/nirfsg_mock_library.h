@@ -15,7 +15,6 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-
 class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));

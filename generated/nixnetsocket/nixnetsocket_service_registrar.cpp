@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nixnetsocket_service.h"
 #include "nixnetsocket_service_registrar.h"
 

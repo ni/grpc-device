@@ -11,7 +11,6 @@
 
 namespace nifake_extension_grpc {
 
-
 class NiFakeExtensionLibraryInterface {
  public:
   virtual ~NiFakeExtensionLibraryInterface() {}

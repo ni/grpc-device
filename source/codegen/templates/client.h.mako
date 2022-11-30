@@ -27,7 +27,6 @@ pb_alias = client_helpers.protobuf_namespace_alias()
 #ifndef ${include_guard_name}
 #define ${include_guard_name}
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <${config["module_name"]}.grpc.pb.h>

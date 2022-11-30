@@ -11,7 +11,6 @@
 
 namespace nidmm_grpc {
 
-
 class NiDmmLibraryInterface {
  public:
   virtual ~NiDmmLibraryInterface() {}

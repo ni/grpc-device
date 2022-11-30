@@ -55,7 +55,6 @@ NimxlcTerminalAdaptorRestrictedLibrary::~NimxlcTerminalAdaptorRestrictedLibrary(
 
 nimxlc_Session NimxlcTerminalAdaptorRestrictedLibrary::createSession(const char hostname[], nierr_Status* c_status)
 {
-
   if (!function_pointers_.createSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_createSession.");
   }
@@ -64,7 +63,6 @@ nimxlc_Session NimxlcTerminalAdaptorRestrictedLibrary::createSession(const char 
 
 void NimxlcTerminalAdaptorRestrictedLibrary::destroySession(nimxlc_Session session)
 {
-
   if (!function_pointers_.destroySession) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_destroySession.");
   }
@@ -73,7 +71,6 @@ void NimxlcTerminalAdaptorRestrictedLibrary::destroySession(nimxlc_Session sessi
 
 void NimxlcTerminalAdaptorRestrictedLibrary::refreshTerminalCache(nimxlc_Session session, nierr_Status* c_status)
 {
-
   if (!function_pointers_.refreshTerminalCache) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_refreshTerminalCache.");
   }
@@ -82,7 +79,6 @@ void NimxlcTerminalAdaptorRestrictedLibrary::refreshTerminalCache(nimxlc_Session
 
 bool NimxlcTerminalAdaptorRestrictedLibrary::hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* c_status)
 {
-
   if (!function_pointers_.hasTerminalInformationChanged) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_hasTerminalInformationChanged.");
   }
@@ -91,7 +87,6 @@ bool NimxlcTerminalAdaptorRestrictedLibrary::hasTerminalInformationChanged(nimxl
 
 uint32_t NimxlcTerminalAdaptorRestrictedLibrary::getSystemChangeNumber(nimxlc_Session session, nierr_Status* c_status)
 {
-
   if (!function_pointers_.getSystemChangeNumber) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_getSystemChangeNumber.");
   }
@@ -100,7 +95,6 @@ uint32_t NimxlcTerminalAdaptorRestrictedLibrary::getSystemChangeNumber(nimxlc_Se
 
 nimxlc_DeviceContainer NimxlcTerminalAdaptorRestrictedLibrary::getDeviceContainer(nimxlc_Session session, nierr_Status* c_status)
 {
-
   if (!function_pointers_.getDeviceContainer) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_getDeviceContainer.");
   }
@@ -109,7 +103,6 @@ nimxlc_DeviceContainer NimxlcTerminalAdaptorRestrictedLibrary::getDeviceContaine
 
 nimxlc_DeviceIterator NimxlcTerminalAdaptorRestrictedLibrary::DeviceContainer_begin(nimxlc_DeviceContainer container)
 {
-
   if (!function_pointers_.DeviceContainer_begin) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_DeviceContainer_begin.");
   }
@@ -118,7 +111,6 @@ nimxlc_DeviceIterator NimxlcTerminalAdaptorRestrictedLibrary::DeviceContainer_be
 
 void NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_next(nimxlc_DeviceIterator* iterator)
 {
-
   if (!function_pointers_.DeviceIterator_next) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_DeviceIterator_next.");
   }
@@ -127,7 +119,6 @@ void NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_next(nimxlc_DeviceIt
 
 nimxlc_TerminalContainer NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_getTerminalContainer(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus)
 {
-
   if (!function_pointers_.DeviceIterator_getTerminalContainer) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_DeviceIterator_getTerminalContainer.");
   }
@@ -136,7 +127,6 @@ nimxlc_TerminalContainer NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_
 
 const char* NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_getDeviceName(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus)
 {
-
   if (!function_pointers_.DeviceIterator_getDeviceName) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_DeviceIterator_getDeviceName.");
   }
@@ -145,7 +135,6 @@ const char* NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_getDeviceName
 
 bool NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_supportsOnBoardClock(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus)
 {
-
   if (!function_pointers_.DeviceIterator_supportsOnBoardClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_DeviceIterator_supportsOnBoardClock.");
   }
@@ -154,7 +143,6 @@ bool NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_supportsOnBoardClock
 
 bool NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_isEnd(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator)
 {
-
   if (!function_pointers_.DeviceIterator_isEnd) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_DeviceIterator_isEnd.");
   }
@@ -163,7 +151,6 @@ bool NimxlcTerminalAdaptorRestrictedLibrary::DeviceIterator_isEnd(nimxlc_DeviceC
 
 void NimxlcTerminalAdaptorRestrictedLibrary::DeviceContainer_destroy(nimxlc_DeviceContainer container)
 {
-
   if (!function_pointers_.DeviceContainer_destroy) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_DeviceContainer_destroy.");
   }
@@ -172,7 +159,6 @@ void NimxlcTerminalAdaptorRestrictedLibrary::DeviceContainer_destroy(nimxlc_Devi
 
 nimxlc_TerminalIterator NimxlcTerminalAdaptorRestrictedLibrary::TerminalContainer_begin(nimxlc_TerminalContainer container)
 {
-
   if (!function_pointers_.TerminalContainer_begin) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_TerminalContainer_begin.");
   }
@@ -181,7 +167,6 @@ nimxlc_TerminalIterator NimxlcTerminalAdaptorRestrictedLibrary::TerminalContaine
 
 void NimxlcTerminalAdaptorRestrictedLibrary::TerminalIterator_next(nimxlc_TerminalIterator* iterator)
 {
-
   if (!function_pointers_.TerminalIterator_next) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_TerminalIterator_next.");
   }
@@ -190,7 +175,6 @@ void NimxlcTerminalAdaptorRestrictedLibrary::TerminalIterator_next(nimxlc_Termin
 
 bool NimxlcTerminalAdaptorRestrictedLibrary::TerminalIterator_isEnd(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator)
 {
-
   if (!function_pointers_.TerminalIterator_isEnd) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_TerminalIterator_isEnd.");
   }
@@ -199,7 +183,6 @@ bool NimxlcTerminalAdaptorRestrictedLibrary::TerminalIterator_isEnd(nimxlc_Termi
 
 void NimxlcTerminalAdaptorRestrictedLibrary::TerminalContainer_destroy(nimxlc_TerminalContainer container)
 {
-
   if (!function_pointers_.TerminalContainer_destroy) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_TerminalContainer_destroy.");
   }
@@ -208,7 +191,6 @@ void NimxlcTerminalAdaptorRestrictedLibrary::TerminalContainer_destroy(nimxlc_Te
 
 const char* NimxlcTerminalAdaptorRestrictedLibrary::TerminalIterator_getTerminalName(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus)
 {
-
   if (!function_pointers_.TerminalIterator_getTerminalName) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_TerminalIterator_getTerminalName.");
   }
@@ -217,7 +199,6 @@ const char* NimxlcTerminalAdaptorRestrictedLibrary::TerminalIterator_getTerminal
 
 const char* NimxlcTerminalAdaptorRestrictedLibrary::TerminalIterator_getVisibility(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus)
 {
-
   if (!function_pointers_.TerminalIterator_getVisibility) {
     throw nidevice_grpc::LibraryLoadException("Could not find nimxlc_ta_nimxlc_TerminalIterator_getVisibility.");
   }

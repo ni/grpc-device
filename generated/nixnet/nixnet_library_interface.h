@@ -11,7 +11,6 @@
 
 namespace nixnet_grpc {
 
-
 class NiXnetLibraryInterface {
  public:
   virtual ~NiXnetLibraryInterface() {}

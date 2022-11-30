@@ -18,7 +18,6 @@ repository_type_to_config = service_helpers.list_session_repository_handle_types
 #include <server/core_services_registrar.h>
 #include <server/session_repository.h>
 
-
 % for config in driver_configs:
 <%
   module_name = config["module_name"]

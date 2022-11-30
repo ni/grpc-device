@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nirfsg_service.h"
 #include "nirfsg_service_registrar.h"
 

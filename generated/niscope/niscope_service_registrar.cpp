@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "niscope_service.h"
 #include "niscope_service_registrar.h"
 

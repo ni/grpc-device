@@ -7,7 +7,6 @@
 #ifndef NIFAKE_NON_IVI_GRPC_CLIENT_H
 #define NIFAKE_NON_IVI_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nifake_non_ivi.grpc.pb.h>

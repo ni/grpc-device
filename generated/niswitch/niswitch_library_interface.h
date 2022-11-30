@@ -11,7 +11,6 @@
 
 namespace niswitch_grpc {
 
-
 class NiSwitchLibraryInterface {
  public:
   virtual ~NiSwitchLibraryInterface() {}

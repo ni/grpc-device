@@ -187,7 +187,6 @@ NiDCPowerLibrary::~NiDCPowerLibrary()
 
 ViStatus NiDCPowerLibrary::Abort(ViSession vi)
 {
-
   if (!function_pointers_.Abort) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_Abort.");
   }
@@ -200,7 +199,6 @@ ViStatus NiDCPowerLibrary::Abort(ViSession vi)
 
 ViStatus NiDCPowerLibrary::AbortWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.AbortWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_AbortWithChannels.");
   }
@@ -213,7 +211,6 @@ ViStatus NiDCPowerLibrary::AbortWithChannels(ViSession vi, ViConstString channel
 
 ViStatus NiDCPowerLibrary::CalSelfCalibrate(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.CalSelfCalibrate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CalSelfCalibrate.");
   }
@@ -226,7 +223,6 @@ ViStatus NiDCPowerLibrary::CalSelfCalibrate(ViSession vi, ViConstString channelN
 
 ViStatus NiDCPowerLibrary::ClearError(ViSession vi)
 {
-
   if (!function_pointers_.ClearError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ClearError.");
   }
@@ -239,7 +235,6 @@ ViStatus NiDCPowerLibrary::ClearError(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ClearInterchangeWarnings(ViSession vi)
 {
-
   if (!function_pointers_.ClearInterchangeWarnings) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ClearInterchangeWarnings.");
   }
@@ -252,7 +247,6 @@ ViStatus NiDCPowerLibrary::ClearInterchangeWarnings(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ClearLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason)
 {
-
   if (!function_pointers_.ClearLatchedOutputCutoffState) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ClearLatchedOutputCutoffState.");
   }
@@ -265,7 +259,6 @@ ViStatus NiDCPowerLibrary::ClearLatchedOutputCutoffState(ViSession vi, ViConstSt
 
 ViStatus NiDCPowerLibrary::Close(ViSession vi)
 {
-
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_close.");
   }
@@ -278,7 +271,6 @@ ViStatus NiDCPowerLibrary::Close(ViSession vi)
 
 ViStatus NiDCPowerLibrary::Commit(ViSession vi)
 {
-
   if (!function_pointers_.Commit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_Commit.");
   }
@@ -291,7 +283,6 @@ ViStatus NiDCPowerLibrary::Commit(ViSession vi)
 
 ViStatus NiDCPowerLibrary::CommitWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.CommitWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CommitWithChannels.");
   }
@@ -304,7 +295,6 @@ ViStatus NiDCPowerLibrary::CommitWithChannels(ViSession vi, ViConstString channe
 
 ViStatus NiDCPowerLibrary::ConfigureApertureTime(ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units)
 {
-
   if (!function_pointers_.ConfigureApertureTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureApertureTime.");
   }
@@ -317,7 +307,6 @@ ViStatus NiDCPowerLibrary::ConfigureApertureTime(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::ConfigureAutoZero(ViSession vi, ViConstString channelName, ViInt32 autoZero)
 {
-
   if (!function_pointers_.ConfigureAutoZero) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureAutoZero.");
   }
@@ -330,7 +319,6 @@ ViStatus NiDCPowerLibrary::ConfigureAutoZero(ViSession vi, ViConstString channel
 
 ViStatus NiDCPowerLibrary::ConfigureCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level)
 {
-
   if (!function_pointers_.ConfigureCurrentLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureCurrentLevel.");
   }
@@ -343,7 +331,6 @@ ViStatus NiDCPowerLibrary::ConfigureCurrentLevel(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::ConfigureCurrentLevelRange(ViSession vi, ViConstString channelName, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigureCurrentLevelRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureCurrentLevelRange.");
   }
@@ -356,7 +343,6 @@ ViStatus NiDCPowerLibrary::ConfigureCurrentLevelRange(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::ConfigureCurrentLimit(ViSession vi, ViConstString channelName, ViInt32 behavior, ViReal64 limit)
 {
-
   if (!function_pointers_.ConfigureCurrentLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureCurrentLimit.");
   }
@@ -369,7 +355,6 @@ ViStatus NiDCPowerLibrary::ConfigureCurrentLimit(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::ConfigureCurrentLimitRange(ViSession vi, ViConstString channelName, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigureCurrentLimitRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureCurrentLimitRange.");
   }
@@ -382,7 +367,6 @@ ViStatus NiDCPowerLibrary::ConfigureCurrentLimitRange(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeMeasureTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeMeasureTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeMeasureTrigger.");
   }
@@ -395,7 +379,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeMeasureTrigger(ViSession vi, ViCo
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeMeasureTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeMeasureTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeMeasureTriggerWithChannels.");
   }
@@ -408,7 +391,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeMeasureTriggerWithChannels(ViSess
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgePulseTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgePulseTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgePulseTrigger.");
   }
@@ -421,7 +403,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgePulseTrigger(ViSession vi, ViCons
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgePulseTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgePulseTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgePulseTriggerWithChannels.");
   }
@@ -434,7 +415,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgePulseTriggerWithChannels(ViSessio
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeSequenceAdvanceTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeSequenceAdvanceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeSequenceAdvanceTrigger.");
   }
@@ -447,7 +427,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeSequenceAdvanceTrigger(ViSession 
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels.");
   }
@@ -460,7 +439,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannel
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeShutdownTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeShutdownTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeShutdownTriggerWithChannels.");
   }
@@ -473,7 +451,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeShutdownTriggerWithChannels(ViSes
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeSourceTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeSourceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeSourceTrigger.");
   }
@@ -486,7 +463,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeSourceTrigger(ViSession vi, ViCon
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeSourceTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeSourceTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeSourceTriggerWithChannels.");
   }
@@ -499,7 +475,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeSourceTriggerWithChannels(ViSessi
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeStartTrigger.");
   }
@@ -512,7 +487,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeStartTrigger(ViSession vi, ViCons
 
 ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeStartTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge)
 {
-
   if (!function_pointers_.ConfigureDigitalEdgeStartTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeStartTriggerWithChannels.");
   }
@@ -525,7 +499,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeStartTriggerWithChannels(ViSessio
 
 ViStatus NiDCPowerLibrary::ConfigureLCRCompensation(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[])
 {
-
   if (!function_pointers_.ConfigureLCRCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureLCRCompensation.");
   }
@@ -538,7 +511,6 @@ ViStatus NiDCPowerLibrary::ConfigureLCRCompensation(ViSession vi, ViConstString 
 
 ViStatus NiDCPowerLibrary::ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[])
 {
-
   if (!function_pointers_.ConfigureLCRCustomCableCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureLCRCustomCableCompensation.");
   }
@@ -551,7 +523,6 @@ ViStatus NiDCPowerLibrary::ConfigureLCRCustomCableCompensation(ViSession vi, ViC
 
 ViStatus NiDCPowerLibrary::ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled)
 {
-
   if (!function_pointers_.ConfigureOutputEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureOutputEnabled.");
   }
@@ -564,7 +535,6 @@ ViStatus NiDCPowerLibrary::ConfigureOutputEnabled(ViSession vi, ViConstString ch
 
 ViStatus NiDCPowerLibrary::ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function)
 {
-
   if (!function_pointers_.ConfigureOutputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureOutputFunction.");
   }
@@ -577,7 +547,6 @@ ViStatus NiDCPowerLibrary::ConfigureOutputFunction(ViSession vi, ViConstString c
 
 ViStatus NiDCPowerLibrary::ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigureOutputRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureOutputRange.");
   }
@@ -590,7 +559,6 @@ ViStatus NiDCPowerLibrary::ConfigureOutputRange(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance)
 {
-
   if (!function_pointers_.ConfigureOutputResistance) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureOutputResistance.");
   }
@@ -603,7 +571,6 @@ ViStatus NiDCPowerLibrary::ConfigureOutputResistance(ViSession vi, ViConstString
 
 ViStatus NiDCPowerLibrary::ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit)
 {
-
   if (!function_pointers_.ConfigureOvp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureOVP.");
   }
@@ -616,7 +583,6 @@ ViStatus NiDCPowerLibrary::ConfigureOvp(ViSession vi, ViConstString channelName,
 
 ViStatus NiDCPowerLibrary::ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerlineFrequency)
 {
-
   if (!function_pointers_.ConfigurePowerLineFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePowerLineFrequency.");
   }
@@ -629,7 +595,6 @@ ViStatus NiDCPowerLibrary::ConfigurePowerLineFrequency(ViSession vi, ViReal64 po
 
 ViStatus NiDCPowerLibrary::ConfigurePulseBiasCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level)
 {
-
   if (!function_pointers_.ConfigurePulseBiasCurrentLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseBiasCurrentLevel.");
   }
@@ -642,7 +607,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseBiasCurrentLevel(ViSession vi, ViConstS
 
 ViStatus NiDCPowerLibrary::ConfigurePulseBiasCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 limit)
 {
-
   if (!function_pointers_.ConfigurePulseBiasCurrentLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseBiasCurrentLimit.");
   }
@@ -655,7 +619,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseBiasCurrentLimit(ViSession vi, ViConstS
 
 ViStatus NiDCPowerLibrary::ConfigurePulseBiasVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 level)
 {
-
   if (!function_pointers_.ConfigurePulseBiasVoltageLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseBiasVoltageLevel.");
   }
@@ -668,7 +631,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseBiasVoltageLevel(ViSession vi, ViConstS
 
 ViStatus NiDCPowerLibrary::ConfigurePulseBiasVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit)
 {
-
   if (!function_pointers_.ConfigurePulseBiasVoltageLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseBiasVoltageLimit.");
   }
@@ -681,7 +643,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseBiasVoltageLimit(ViSession vi, ViConstS
 
 ViStatus NiDCPowerLibrary::ConfigurePulseCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level)
 {
-
   if (!function_pointers_.ConfigurePulseCurrentLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseCurrentLevel.");
   }
@@ -694,7 +655,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseCurrentLevel(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::ConfigurePulseCurrentLevelRange(ViSession vi, ViConstString channelName, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigurePulseCurrentLevelRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseCurrentLevelRange.");
   }
@@ -707,7 +667,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseCurrentLevelRange(ViSession vi, ViConst
 
 ViStatus NiDCPowerLibrary::ConfigurePulseCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 limit)
 {
-
   if (!function_pointers_.ConfigurePulseCurrentLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseCurrentLimit.");
   }
@@ -720,7 +679,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseCurrentLimit(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::ConfigurePulseCurrentLimitRange(ViSession vi, ViConstString channelName, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigurePulseCurrentLimitRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseCurrentLimitRange.");
   }
@@ -733,7 +691,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseCurrentLimitRange(ViSession vi, ViConst
 
 ViStatus NiDCPowerLibrary::ConfigurePulseVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 level)
 {
-
   if (!function_pointers_.ConfigurePulseVoltageLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseVoltageLevel.");
   }
@@ -746,7 +703,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseVoltageLevel(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::ConfigurePulseVoltageLevelRange(ViSession vi, ViConstString channelName, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigurePulseVoltageLevelRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseVoltageLevelRange.");
   }
@@ -759,7 +715,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseVoltageLevelRange(ViSession vi, ViConst
 
 ViStatus NiDCPowerLibrary::ConfigurePulseVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit)
 {
-
   if (!function_pointers_.ConfigurePulseVoltageLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseVoltageLimit.");
   }
@@ -772,7 +727,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseVoltageLimit(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::ConfigurePulseVoltageLimitRange(ViSession vi, ViConstString channelName, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigurePulseVoltageLimitRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigurePulseVoltageLimitRange.");
   }
@@ -785,7 +739,6 @@ ViStatus NiDCPowerLibrary::ConfigurePulseVoltageLimitRange(ViSession vi, ViConst
 
 ViStatus NiDCPowerLibrary::ConfigureSense(ViSession vi, ViConstString channelName, ViInt32 sense)
 {
-
   if (!function_pointers_.ConfigureSense) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSense.");
   }
@@ -798,7 +751,6 @@ ViStatus NiDCPowerLibrary::ConfigureSense(ViSession vi, ViConstString channelNam
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeMeasureTrigger(ViSession vi)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeMeasureTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeMeasureTrigger.");
   }
@@ -811,7 +763,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeMeasureTrigger(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeMeasureTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeMeasureTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeMeasureTriggerWithChannels.");
   }
@@ -824,7 +775,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeMeasureTriggerWithChannels(ViSes
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgePulseTrigger(ViSession vi)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgePulseTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgePulseTrigger.");
   }
@@ -837,7 +787,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgePulseTrigger(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgePulseTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgePulseTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgePulseTriggerWithChannels.");
   }
@@ -850,7 +799,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgePulseTriggerWithChannels(ViSessi
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeSequenceAdvanceTrigger(ViSession vi)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeSequenceAdvanceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeSequenceAdvanceTrigger.");
   }
@@ -863,7 +811,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeSequenceAdvanceTrigger(ViSession
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels.");
   }
@@ -876,7 +823,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChanne
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeShutdownTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeShutdownTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeShutdownTriggerWithChannels.");
   }
@@ -889,7 +835,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeShutdownTriggerWithChannels(ViSe
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeSourceTrigger(ViSession vi)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeSourceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeSourceTrigger.");
   }
@@ -902,7 +847,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeSourceTrigger(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeSourceTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeSourceTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeSourceTriggerWithChannels.");
   }
@@ -915,7 +859,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeSourceTriggerWithChannels(ViSess
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeStartTrigger(ViSession vi)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeStartTrigger.");
   }
@@ -928,7 +871,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeStartTrigger(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeStartTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.ConfigureSoftwareEdgeStartTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSoftwareEdgeStartTriggerWithChannels.");
   }
@@ -941,7 +883,6 @@ ViStatus NiDCPowerLibrary::ConfigureSoftwareEdgeStartTriggerWithChannels(ViSessi
 
 ViStatus NiDCPowerLibrary::ConfigureSourceMode(ViSession vi, ViInt32 sourceMode)
 {
-
   if (!function_pointers_.ConfigureSourceMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSourceMode.");
   }
@@ -954,7 +895,6 @@ ViStatus NiDCPowerLibrary::ConfigureSourceMode(ViSession vi, ViInt32 sourceMode)
 
 ViStatus NiDCPowerLibrary::ConfigureSourceModeWithChannels(ViSession vi, ViConstString channelName, ViInt32 sourceMode)
 {
-
   if (!function_pointers_.ConfigureSourceModeWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureSourceModeWithChannels.");
   }
@@ -967,7 +907,6 @@ ViStatus NiDCPowerLibrary::ConfigureSourceModeWithChannels(ViSession vi, ViConst
 
 ViStatus NiDCPowerLibrary::ConfigureVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 level)
 {
-
   if (!function_pointers_.ConfigureVoltageLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureVoltageLevel.");
   }
@@ -980,7 +919,6 @@ ViStatus NiDCPowerLibrary::ConfigureVoltageLevel(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::ConfigureVoltageLevelRange(ViSession vi, ViConstString channelName, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigureVoltageLevelRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureVoltageLevelRange.");
   }
@@ -993,7 +931,6 @@ ViStatus NiDCPowerLibrary::ConfigureVoltageLevelRange(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::ConfigureVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit)
 {
-
   if (!function_pointers_.ConfigureVoltageLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureVoltageLimit.");
   }
@@ -1006,7 +943,6 @@ ViStatus NiDCPowerLibrary::ConfigureVoltageLimit(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::ConfigureVoltageLimitRange(ViSession vi, ViConstString channelName, ViReal64 range)
 {
-
   if (!function_pointers_.ConfigureVoltageLimitRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureVoltageLimitRange.");
   }
@@ -1019,7 +955,6 @@ ViStatus NiDCPowerLibrary::ConfigureVoltageLimitRange(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence)
 {
-
   if (!function_pointers_.CreateAdvancedSequence) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequence.");
   }
@@ -1032,7 +967,6 @@ ViStatus NiDCPowerLibrary::CreateAdvancedSequence(ViSession vi, ViConstString se
 
 ViStatus NiDCPowerLibrary::CreateAdvancedSequenceCommitStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep)
 {
-
   if (!function_pointers_.CreateAdvancedSequenceCommitStepWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequenceCommitStepWithChannels.");
   }
@@ -1045,7 +979,6 @@ ViStatus NiDCPowerLibrary::CreateAdvancedSequenceCommitStepWithChannels(ViSessio
 
 ViStatus NiDCPowerLibrary::CreateAdvancedSequenceStep(ViSession vi, ViBoolean setAsActiveStep)
 {
-
   if (!function_pointers_.CreateAdvancedSequenceStep) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequenceStep.");
   }
@@ -1058,7 +991,6 @@ ViStatus NiDCPowerLibrary::CreateAdvancedSequenceStep(ViSession vi, ViBoolean se
 
 ViStatus NiDCPowerLibrary::CreateAdvancedSequenceStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep)
 {
-
   if (!function_pointers_.CreateAdvancedSequenceStepWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequenceStepWithChannels.");
   }
@@ -1071,7 +1003,6 @@ ViStatus NiDCPowerLibrary::CreateAdvancedSequenceStepWithChannels(ViSession vi, 
 
 ViStatus NiDCPowerLibrary::CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence)
 {
-
   if (!function_pointers_.CreateAdvancedSequenceWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CreateAdvancedSequenceWithChannels.");
   }
@@ -1084,7 +1015,6 @@ ViStatus NiDCPowerLibrary::CreateAdvancedSequenceWithChannels(ViSession vi, ViCo
 
 ViStatus NiDCPowerLibrary::DeleteAdvancedSequence(ViSession vi, ViConstString sequenceName)
 {
-
   if (!function_pointers_.DeleteAdvancedSequence) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DeleteAdvancedSequence.");
   }
@@ -1097,7 +1027,6 @@ ViStatus NiDCPowerLibrary::DeleteAdvancedSequence(ViSession vi, ViConstString se
 
 ViStatus NiDCPowerLibrary::DeleteAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName)
 {
-
   if (!function_pointers_.DeleteAdvancedSequenceWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DeleteAdvancedSequenceWithChannels.");
   }
@@ -1110,7 +1039,6 @@ ViStatus NiDCPowerLibrary::DeleteAdvancedSequenceWithChannels(ViSession vi, ViCo
 
 ViStatus NiDCPowerLibrary::Disable(ViSession vi)
 {
-
   if (!function_pointers_.Disable) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_Disable.");
   }
@@ -1123,7 +1051,6 @@ ViStatus NiDCPowerLibrary::Disable(ViSession vi)
 
 ViStatus NiDCPowerLibrary::DisablePulseTrigger(ViSession vi)
 {
-
   if (!function_pointers_.DisablePulseTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisablePulseTrigger.");
   }
@@ -1136,7 +1063,6 @@ ViStatus NiDCPowerLibrary::DisablePulseTrigger(ViSession vi)
 
 ViStatus NiDCPowerLibrary::DisablePulseTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.DisablePulseTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisablePulseTriggerWithChannels.");
   }
@@ -1149,7 +1075,6 @@ ViStatus NiDCPowerLibrary::DisablePulseTriggerWithChannels(ViSession vi, ViConst
 
 ViStatus NiDCPowerLibrary::DisableSequenceAdvanceTrigger(ViSession vi)
 {
-
   if (!function_pointers_.DisableSequenceAdvanceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisableSequenceAdvanceTrigger.");
   }
@@ -1162,7 +1087,6 @@ ViStatus NiDCPowerLibrary::DisableSequenceAdvanceTrigger(ViSession vi)
 
 ViStatus NiDCPowerLibrary::DisableSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.DisableSequenceAdvanceTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisableSequenceAdvanceTriggerWithChannels.");
   }
@@ -1175,7 +1099,6 @@ ViStatus NiDCPowerLibrary::DisableSequenceAdvanceTriggerWithChannels(ViSession v
 
 ViStatus NiDCPowerLibrary::DisableShutdownTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.DisableShutdownTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisableShutdownTriggerWithChannels.");
   }
@@ -1188,7 +1111,6 @@ ViStatus NiDCPowerLibrary::DisableShutdownTriggerWithChannels(ViSession vi, ViCo
 
 ViStatus NiDCPowerLibrary::DisableSourceTrigger(ViSession vi)
 {
-
   if (!function_pointers_.DisableSourceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisableSourceTrigger.");
   }
@@ -1201,7 +1123,6 @@ ViStatus NiDCPowerLibrary::DisableSourceTrigger(ViSession vi)
 
 ViStatus NiDCPowerLibrary::DisableSourceTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.DisableSourceTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisableSourceTriggerWithChannels.");
   }
@@ -1214,7 +1135,6 @@ ViStatus NiDCPowerLibrary::DisableSourceTriggerWithChannels(ViSession vi, ViCons
 
 ViStatus NiDCPowerLibrary::DisableStartTrigger(ViSession vi)
 {
-
   if (!function_pointers_.DisableStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisableStartTrigger.");
   }
@@ -1227,7 +1147,6 @@ ViStatus NiDCPowerLibrary::DisableStartTrigger(ViSession vi)
 
 ViStatus NiDCPowerLibrary::DisableStartTriggerWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.DisableStartTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_DisableStartTriggerWithChannels.");
   }
@@ -1240,7 +1159,6 @@ ViStatus NiDCPowerLibrary::DisableStartTriggerWithChannels(ViSession vi, ViConst
 
 ViStatus NiDCPowerLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
 {
-
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_error_message.");
   }
@@ -1253,7 +1171,6 @@ ViStatus NiDCPowerLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar
 
 ViStatus NiDCPowerLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256])
 {
-
   if (!function_pointers_.ErrorQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_error_query.");
   }
@@ -1266,7 +1183,6 @@ ViStatus NiDCPowerLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar e
 
 ViStatus NiDCPowerLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[])
 {
-
   if (!function_pointers_.ExportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ExportAttributeConfigurationBuffer.");
   }
@@ -1279,7 +1195,6 @@ ViStatus NiDCPowerLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViIn
 
 ViStatus NiDCPowerLibrary::ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath)
 {
-
   if (!function_pointers_.ExportAttributeConfigurationFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ExportAttributeConfigurationFile.");
   }
@@ -1292,7 +1207,6 @@ ViStatus NiDCPowerLibrary::ExportAttributeConfigurationFile(ViSession vi, ViCons
 
 ViStatus NiDCPowerLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal)
 {
-
   if (!function_pointers_.ExportSignal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ExportSignal.");
   }
@@ -1305,7 +1219,6 @@ ViStatus NiDCPowerLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstStr
 
 ViStatus NiDCPowerLibrary::ExportSignalWithChannels(ViSession vi, ViConstString channelName, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal)
 {
-
   if (!function_pointers_.ExportSignalWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ExportSignalWithChannels.");
   }
@@ -1318,7 +1231,6 @@ ViStatus NiDCPowerLibrary::ExportSignalWithChannels(ViSession vi, ViConstString 
 
 ViStatus NiDCPowerLibrary::FetchMultiple(ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount)
 {
-
   if (!function_pointers_.FetchMultiple) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_FetchMultiple.");
   }
@@ -1331,7 +1243,6 @@ ViStatus NiDCPowerLibrary::FetchMultiple(ViSession vi, ViConstString channelName
 
 ViStatus NiDCPowerLibrary::FetchMultipleLCR(ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, NILCRMeasurement_struct measurements[], ViInt32* actualCount)
 {
-
   if (!function_pointers_.FetchMultipleLCR) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_FetchMultipleLCR.");
   }
@@ -1344,7 +1255,6 @@ ViStatus NiDCPowerLibrary::FetchMultipleLCR(ViSession vi, ViConstString channelN
 
 ViStatus NiDCPowerLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetAttributeViBoolean.");
   }
@@ -1357,7 +1267,6 @@ ViStatus NiDCPowerLibrary::GetAttributeViBoolean(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetAttributeViInt32.");
   }
@@ -1370,7 +1279,6 @@ ViStatus NiDCPowerLibrary::GetAttributeViInt32(ViSession vi, ViConstString chann
 
 ViStatus NiDCPowerLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetAttributeViInt64.");
   }
@@ -1383,7 +1291,6 @@ ViStatus NiDCPowerLibrary::GetAttributeViInt64(ViSession vi, ViConstString chann
 
 ViStatus NiDCPowerLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetAttributeViReal64.");
   }
@@ -1396,7 +1303,6 @@ ViStatus NiDCPowerLibrary::GetAttributeViReal64(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetAttributeViSession.");
   }
@@ -1409,7 +1315,6 @@ ViStatus NiDCPowerLibrary::GetAttributeViSession(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[])
 {
-
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetAttributeViString.");
   }
@@ -1422,7 +1327,6 @@ ViStatus NiDCPowerLibrary::GetAttributeViString(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelName[])
 {
-
   if (!function_pointers_.GetChannelName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetChannelName.");
   }
@@ -1435,7 +1339,6 @@ ViStatus NiDCPowerLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 b
 
 ViStatus NiDCPowerLibrary::GetChannelNameFromString(ViSession vi, ViConstString index, ViInt32 bufferSize, ViChar channelName[])
 {
-
   if (!function_pointers_.GetChannelNameFromString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetChannelNameFromString.");
   }
@@ -1448,7 +1351,6 @@ ViStatus NiDCPowerLibrary::GetChannelNameFromString(ViSession vi, ViConstString 
 
 ViStatus NiDCPowerLibrary::GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[])
 {
-
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetError.");
   }
@@ -1461,7 +1363,6 @@ ViStatus NiDCPowerLibrary::GetError(ViSession vi, ViStatus* code, ViInt32 buffer
 
 ViStatus NiDCPowerLibrary::GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
 {
-
   if (!function_pointers_.GetExtCalLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetExtCalLastDateAndTime.");
   }
@@ -1474,7 +1375,6 @@ ViStatus NiDCPowerLibrary::GetExtCalLastDateAndTime(ViSession vi, ViInt32* year,
 
 ViStatus NiDCPowerLibrary::GetExtCalLastTemp(ViSession vi, ViReal64* temperature)
 {
-
   if (!function_pointers_.GetExtCalLastTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetExtCalLastTemp.");
   }
@@ -1487,7 +1387,6 @@ ViStatus NiDCPowerLibrary::GetExtCalLastTemp(ViSession vi, ViReal64* temperature
 
 ViStatus NiDCPowerLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* months)
 {
-
   if (!function_pointers_.GetExtCalRecommendedInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetExtCalRecommendedInterval.");
   }
@@ -1500,7 +1399,6 @@ ViStatus NiDCPowerLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* m
 
 ViStatus NiDCPowerLibrary::GetLCRCompensationData(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[])
 {
-
   if (!function_pointers_.GetLCRCompensationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetLCRCompensationData.");
   }
@@ -1513,7 +1411,6 @@ ViStatus NiDCPowerLibrary::GetLCRCompensationData(ViSession vi, ViConstString ch
 
 ViStatus NiDCPowerLibrary::GetLCRCompensationLastDateAndTime(ViSession vi, ViConstString channelName, ViInt32 compensationType, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
 {
-
   if (!function_pointers_.GetLCRCompensationLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetLCRCompensationLastDateAndTime.");
   }
@@ -1526,7 +1423,6 @@ ViStatus NiDCPowerLibrary::GetLCRCompensationLastDateAndTime(ViSession vi, ViCon
 
 ViStatus NiDCPowerLibrary::GetLCRCustomCableCompensationData(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[])
 {
-
   if (!function_pointers_.GetLCRCustomCableCompensationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetLCRCustomCableCompensationData.");
   }
@@ -1539,7 +1435,6 @@ ViStatus NiDCPowerLibrary::GetLCRCustomCableCompensationData(ViSession vi, ViCon
 
 ViStatus NiDCPowerLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
 {
-
   if (!function_pointers_.GetNextCoercionRecord) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetNextCoercionRecord.");
   }
@@ -1552,7 +1447,6 @@ ViStatus NiDCPowerLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSiz
 
 ViStatus NiDCPowerLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
 {
-
   if (!function_pointers_.GetNextInterchangeWarning) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetNextInterchangeWarning.");
   }
@@ -1565,7 +1459,6 @@ ViStatus NiDCPowerLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 buffe
 
 ViStatus NiDCPowerLibrary::GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
 {
-
   if (!function_pointers_.GetSelfCalLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetSelfCalLastDateAndTime.");
   }
@@ -1578,7 +1471,6 @@ ViStatus NiDCPowerLibrary::GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year
 
 ViStatus NiDCPowerLibrary::GetSelfCalLastTemp(ViSession vi, ViReal64* temperature)
 {
-
   if (!function_pointers_.GetSelfCalLastTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetSelfCalLastTemp.");
   }
@@ -1591,7 +1483,6 @@ ViStatus NiDCPowerLibrary::GetSelfCalLastTemp(ViSession vi, ViReal64* temperatur
 
 ViStatus NiDCPowerLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[])
 {
-
   if (!function_pointers_.ImportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ImportAttributeConfigurationBuffer.");
   }
@@ -1604,7 +1495,6 @@ ViStatus NiDCPowerLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViIn
 
 ViStatus NiDCPowerLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath)
 {
-
   if (!function_pointers_.ImportAttributeConfigurationFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ImportAttributeConfigurationFile.");
   }
@@ -1617,7 +1507,6 @@ ViStatus NiDCPowerLibrary::ImportAttributeConfigurationFile(ViSession vi, ViCons
 
 ViStatus NiDCPowerLibrary::InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi)
 {
-
   if (!function_pointers_.InitializeWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_InitializeWithChannels.");
   }
@@ -1630,7 +1519,6 @@ ViStatus NiDCPowerLibrary::InitializeWithChannels(ViRsrc resourceName, ViConstSt
 
 ViStatus NiDCPowerLibrary::InitializeWithIndependentChannels(ViRsrc resourceName, ViBoolean reset, ViConstString optionString, ViSession* vi)
 {
-
   if (!function_pointers_.InitializeWithIndependentChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_InitializeWithIndependentChannels.");
   }
@@ -1643,7 +1531,6 @@ ViStatus NiDCPowerLibrary::InitializeWithIndependentChannels(ViRsrc resourceName
 
 ViStatus NiDCPowerLibrary::Initiate(ViSession vi)
 {
-
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_Initiate.");
   }
@@ -1656,7 +1543,6 @@ ViStatus NiDCPowerLibrary::Initiate(ViSession vi)
 
 ViStatus NiDCPowerLibrary::InitiateWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.InitiateWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_InitiateWithChannels.");
   }
@@ -1669,7 +1555,6 @@ ViStatus NiDCPowerLibrary::InitiateWithChannels(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::InvalidateAllAttributes(ViSession vi)
 {
-
   if (!function_pointers_.InvalidateAllAttributes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_InvalidateAllAttributes.");
   }
@@ -1682,7 +1567,6 @@ ViStatus NiDCPowerLibrary::InvalidateAllAttributes(ViSession vi)
 
 ViStatus NiDCPowerLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 {
-
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_LockSession.");
   }
@@ -1691,7 +1575,6 @@ ViStatus NiDCPowerLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 
 ViStatus NiDCPowerLibrary::Measure(ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement)
 {
-
   if (!function_pointers_.Measure) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_Measure.");
   }
@@ -1704,7 +1587,6 @@ ViStatus NiDCPowerLibrary::Measure(ViSession vi, ViConstString channelName, ViIn
 
 ViStatus NiDCPowerLibrary::MeasureMultiple(ViSession vi, ViConstString channelName, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[])
 {
-
   if (!function_pointers_.MeasureMultiple) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_MeasureMultiple.");
   }
@@ -1717,7 +1599,6 @@ ViStatus NiDCPowerLibrary::MeasureMultiple(ViSession vi, ViConstString channelNa
 
 ViStatus NiDCPowerLibrary::MeasureMultipleLCR(ViSession vi, ViConstString channelName, NILCRMeasurement_struct measurements[])
 {
-
   if (!function_pointers_.MeasureMultipleLCR) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_MeasureMultipleLCR.");
   }
@@ -1730,7 +1611,6 @@ ViStatus NiDCPowerLibrary::MeasureMultipleLCR(ViSession vi, ViConstString channe
 
 ViStatus NiDCPowerLibrary::ParseChannelCount(ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels)
 {
-
   if (!function_pointers_.ParseChannelCount) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ParseChannelCount.");
   }
@@ -1739,7 +1619,6 @@ ViStatus NiDCPowerLibrary::ParseChannelCount(ViSession vi, ViConstString channel
 
 ViStatus NiDCPowerLibrary::PerformLCRLoadCompensation(ViSession vi, ViConstString channelName, ViInt32 numCompensationSpots, NILCRLoadCompensationSpot_struct compensationSpots[])
 {
-
   if (!function_pointers_.PerformLCRLoadCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_PerformLCRLoadCompensation.");
   }
@@ -1752,7 +1631,6 @@ ViStatus NiDCPowerLibrary::PerformLCRLoadCompensation(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::PerformLCROpenCompensation(ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[])
 {
-
   if (!function_pointers_.PerformLCROpenCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_PerformLCROpenCompensation.");
   }
@@ -1765,7 +1643,6 @@ ViStatus NiDCPowerLibrary::PerformLCROpenCompensation(ViSession vi, ViConstStrin
 
 ViStatus NiDCPowerLibrary::PerformLCROpenCustomCableCompensation(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.PerformLCROpenCustomCableCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_PerformLCROpenCustomCableCompensation.");
   }
@@ -1778,7 +1655,6 @@ ViStatus NiDCPowerLibrary::PerformLCROpenCustomCableCompensation(ViSession vi, V
 
 ViStatus NiDCPowerLibrary::PerformLCRShortCompensation(ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[])
 {
-
   if (!function_pointers_.PerformLCRShortCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_PerformLCRShortCompensation.");
   }
@@ -1791,7 +1667,6 @@ ViStatus NiDCPowerLibrary::PerformLCRShortCompensation(ViSession vi, ViConstStri
 
 ViStatus NiDCPowerLibrary::PerformLCRShortCustomCableCompensation(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.PerformLCRShortCustomCableCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_PerformLCRShortCustomCableCompensation.");
   }
@@ -1804,7 +1679,6 @@ ViStatus NiDCPowerLibrary::PerformLCRShortCustomCableCompensation(ViSession vi, 
 
 ViStatus NiDCPowerLibrary::QueryInCompliance(ViSession vi, ViConstString channelName, ViBoolean* inCompliance)
 {
-
   if (!function_pointers_.QueryInCompliance) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_QueryInCompliance.");
   }
@@ -1817,7 +1691,6 @@ ViStatus NiDCPowerLibrary::QueryInCompliance(ViSession vi, ViConstString channel
 
 ViStatus NiDCPowerLibrary::QueryLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason, ViBoolean* outputCutoffState)
 {
-
   if (!function_pointers_.QueryLatchedOutputCutoffState) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_QueryLatchedOutputCutoffState.");
   }
@@ -1830,7 +1703,6 @@ ViStatus NiDCPowerLibrary::QueryLatchedOutputCutoffState(ViSession vi, ViConstSt
 
 ViStatus NiDCPowerLibrary::QueryMaxCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit)
 {
-
   if (!function_pointers_.QueryMaxCurrentLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_QueryMaxCurrentLimit.");
   }
@@ -1843,7 +1715,6 @@ ViStatus NiDCPowerLibrary::QueryMaxCurrentLimit(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::QueryMaxVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel)
 {
-
   if (!function_pointers_.QueryMaxVoltageLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_QueryMaxVoltageLevel.");
   }
@@ -1856,7 +1727,6 @@ ViStatus NiDCPowerLibrary::QueryMaxVoltageLevel(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::QueryMinCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* minCurrentLimit)
 {
-
   if (!function_pointers_.QueryMinCurrentLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_QueryMinCurrentLimit.");
   }
@@ -1869,7 +1739,6 @@ ViStatus NiDCPowerLibrary::QueryMinCurrentLimit(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::QueryOutputState(ViSession vi, ViConstString channelName, ViInt32 outputState, ViBoolean* inState)
 {
-
   if (!function_pointers_.QueryOutputState) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_QueryOutputState.");
   }
@@ -1882,7 +1751,6 @@ ViStatus NiDCPowerLibrary::QueryOutputState(ViSession vi, ViConstString channelN
 
 ViStatus NiDCPowerLibrary::ReadCurrentTemperature(ViSession vi, ViReal64* temperature)
 {
-
   if (!function_pointers_.ReadCurrentTemperature) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ReadCurrentTemperature.");
   }
@@ -1895,7 +1763,6 @@ ViStatus NiDCPowerLibrary::ReadCurrentTemperature(ViSession vi, ViReal64* temper
 
 ViStatus NiDCPowerLibrary::Reset(ViSession vi)
 {
-
   if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_reset.");
   }
@@ -1908,7 +1775,6 @@ ViStatus NiDCPowerLibrary::Reset(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ResetDevice(ViSession vi)
 {
-
   if (!function_pointers_.ResetDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ResetDevice.");
   }
@@ -1921,7 +1787,6 @@ ViStatus NiDCPowerLibrary::ResetDevice(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ResetInterchangeCheck(ViSession vi)
 {
-
   if (!function_pointers_.ResetInterchangeCheck) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ResetInterchangeCheck.");
   }
@@ -1934,7 +1799,6 @@ ViStatus NiDCPowerLibrary::ResetInterchangeCheck(ViSession vi)
 
 ViStatus NiDCPowerLibrary::ResetWithChannels(ViSession vi, ViConstString channelName)
 {
-
   if (!function_pointers_.ResetWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ResetWithChannels.");
   }
@@ -1947,7 +1811,6 @@ ViStatus NiDCPowerLibrary::ResetWithChannels(ViSession vi, ViConstString channel
 
 ViStatus NiDCPowerLibrary::ResetWithDefaults(ViSession vi)
 {
-
   if (!function_pointers_.ResetWithDefaults) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ResetWithDefaults.");
   }
@@ -1960,7 +1823,6 @@ ViStatus NiDCPowerLibrary::ResetWithDefaults(ViSession vi)
 
 ViStatus NiDCPowerLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256])
 {
-
   if (!function_pointers_.RevisionQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_revision_query.");
   }
@@ -1973,7 +1835,6 @@ ViStatus NiDCPowerLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRe
 
 ViStatus NiDCPowerLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
 {
-
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_self_test.");
   }
@@ -1986,7 +1847,6 @@ ViStatus NiDCPowerLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViCha
 
 ViStatus NiDCPowerLibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger)
 {
-
   if (!function_pointers_.SendSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SendSoftwareEdgeTrigger.");
   }
@@ -1999,7 +1859,6 @@ ViStatus NiDCPowerLibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger
 
 ViStatus NiDCPowerLibrary::SendSoftwareEdgeTriggerWithChannels(ViSession vi, ViConstString channelName, ViInt32 trigger)
 {
-
   if (!function_pointers_.SendSoftwareEdgeTriggerWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SendSoftwareEdgeTriggerWithChannels.");
   }
@@ -2012,7 +1871,6 @@ ViStatus NiDCPowerLibrary::SendSoftwareEdgeTriggerWithChannels(ViSession vi, ViC
 
 ViStatus NiDCPowerLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetAttributeViBoolean.");
   }
@@ -2025,7 +1883,6 @@ ViStatus NiDCPowerLibrary::SetAttributeViBoolean(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetAttributeViInt32.");
   }
@@ -2038,7 +1895,6 @@ ViStatus NiDCPowerLibrary::SetAttributeViInt32(ViSession vi, ViConstString chann
 
 ViStatus NiDCPowerLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetAttributeViInt64.");
   }
@@ -2051,7 +1907,6 @@ ViStatus NiDCPowerLibrary::SetAttributeViInt64(ViSession vi, ViConstString chann
 
 ViStatus NiDCPowerLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetAttributeViReal64.");
   }
@@ -2064,7 +1919,6 @@ ViStatus NiDCPowerLibrary::SetAttributeViReal64(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetAttributeViSession.");
   }
@@ -2077,7 +1931,6 @@ ViStatus NiDCPowerLibrary::SetAttributeViSession(ViSession vi, ViConstString cha
 
 ViStatus NiDCPowerLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetAttributeViString.");
   }
@@ -2090,7 +1943,6 @@ ViStatus NiDCPowerLibrary::SetAttributeViString(ViSession vi, ViConstString chan
 
 ViStatus NiDCPowerLibrary::SetSequence(ViSession vi, ViConstString channelName, ViReal64 values[], ViReal64 sourceDelays[], ViUInt32 size)
 {
-
   if (!function_pointers_.SetSequence) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetSequence.");
   }
@@ -2103,7 +1955,6 @@ ViStatus NiDCPowerLibrary::SetSequence(ViSession vi, ViConstString channelName, 
 
 ViStatus NiDCPowerLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 {
-
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_UnlockSession.");
   }
@@ -2112,7 +1963,6 @@ ViStatus NiDCPowerLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 
 ViStatus NiDCPowerLibrary::WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout)
 {
-
   if (!function_pointers_.WaitForEvent) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_WaitForEvent.");
   }
@@ -2125,7 +1975,6 @@ ViStatus NiDCPowerLibrary::WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 
 
 ViStatus NiDCPowerLibrary::WaitForEventWithChannels(ViSession vi, ViConstString channelName, ViInt32 eventId, ViReal64 timeout)
 {
-
   if (!function_pointers_.WaitForEventWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_WaitForEventWithChannels.");
   }

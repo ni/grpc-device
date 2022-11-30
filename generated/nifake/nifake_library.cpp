@@ -125,7 +125,6 @@ NiFakeLibrary::~NiFakeLibrary()
 
 ViStatus NiFakeLibrary::Abort(ViSession vi)
 {
-
   if (!function_pointers_.Abort) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_Abort.");
   }
@@ -138,7 +137,6 @@ ViStatus NiFakeLibrary::Abort(ViSession vi)
 
 ViStatus NiFakeLibrary::AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 count, ViReal64 delays[])
 {
-
   if (!function_pointers_.AcceptListOfDurationsInSeconds) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_AcceptListOfDurationsInSeconds.");
   }
@@ -151,7 +149,6 @@ ViStatus NiFakeLibrary::AcceptListOfDurationsInSeconds(ViSession vi, ViInt32 cou
 
 ViStatus NiFakeLibrary::AcceptViSessionArray(ViUInt32 sessionCount, ViSession sessionArray[])
 {
-
   if (!function_pointers_.AcceptViSessionArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_AcceptViSessionArray.");
   }
@@ -164,7 +161,6 @@ ViStatus NiFakeLibrary::AcceptViSessionArray(ViUInt32 sessionCount, ViSession se
 
 ViStatus NiFakeLibrary::AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[])
 {
-
   if (!function_pointers_.AcceptViUInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_AcceptViUInt32Array.");
   }
@@ -177,7 +173,6 @@ ViStatus NiFakeLibrary::AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUI
 
 ViStatus NiFakeLibrary::BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[])
 {
-
   if (!function_pointers_.BoolArrayInputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_BoolArrayInputFunction.");
   }
@@ -190,7 +185,6 @@ ViStatus NiFakeLibrary::BoolArrayInputFunction(ViSession vi, ViInt32 numberOfEle
 
 ViStatus NiFakeLibrary::BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[])
 {
-
   if (!function_pointers_.BoolArrayOutputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_BoolArrayOutputFunction.");
   }
@@ -203,7 +197,6 @@ ViStatus NiFakeLibrary::BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfEl
 
 ViStatus NiFakeLibrary::Close(ViSession vi)
 {
-
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_close.");
   }
@@ -216,7 +209,6 @@ ViStatus NiFakeLibrary::Close(ViSession vi)
 
 ViStatus NiFakeLibrary::CloseExtCal(ViSession vi, ViInt32 action)
 {
-
   if (!function_pointers_.CloseExtCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_CloseExtCal.");
   }
@@ -229,7 +221,6 @@ ViStatus NiFakeLibrary::CloseExtCal(ViSession vi, ViInt32 action)
 
 ViStatus NiFakeLibrary::CommandWithReservedParam(ViSession vi, ViBoolean* reserved)
 {
-
   if (!function_pointers_.CommandWithReservedParam) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_CommandWithReservedParam.");
   }
@@ -242,7 +233,6 @@ ViStatus NiFakeLibrary::CommandWithReservedParam(ViSession vi, ViBoolean* reserv
 
 ViStatus NiFakeLibrary::Control4022(ViString resourceName, ViInt32 configuration)
 {
-
   if (!function_pointers_.Control4022) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_4022Control.");
   }
@@ -255,7 +245,6 @@ ViStatus NiFakeLibrary::Control4022(ViString resourceName, ViInt32 configuration
 
 ViStatus NiFakeLibrary::CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[])
 {
-
   if (!function_pointers_.CreateConfigurationList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_CreateConfigurationList.");
   }
@@ -268,7 +257,6 @@ ViStatus NiFakeLibrary::CreateConfigurationList(ViInt32 numberOfListAttributes, 
 
 ViStatus NiFakeLibrary::CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut)
 {
-
   if (!function_pointers_.CustomNestedStructRoundtrip) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_CustomNestedStructRoundtrip.");
   }
@@ -281,7 +269,6 @@ ViStatus NiFakeLibrary::CustomNestedStructRoundtrip(CustomStructNestedTypedef_st
 
 ViStatus NiFakeLibrary::DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[])
 {
-
   if (!function_pointers_.DoubleAllTheNums) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_DoubleAllTheNums.");
   }
@@ -294,7 +281,6 @@ ViStatus NiFakeLibrary::DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViRe
 
 ViStatus NiFakeLibrary::EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[])
 {
-
   if (!function_pointers_.EnumArrayOutputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_EnumArrayOutputFunction.");
   }
@@ -307,7 +293,6 @@ ViStatus NiFakeLibrary::EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfEl
 
 ViStatus NiFakeLibrary::EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle)
 {
-
   if (!function_pointers_.EnumInputFunctionWithDefaults) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_EnumInputFunctionWithDefaults.");
   }
@@ -320,7 +305,6 @@ ViStatus NiFakeLibrary::EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTur
 
 ViStatus NiFakeLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
 {
-
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_error_message.");
   }
@@ -333,7 +317,6 @@ ViStatus NiFakeLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar er
 
 ViStatus NiFakeLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
-
   if (!function_pointers_.ExportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ExportAttributeConfigurationBuffer.");
   }
@@ -346,7 +329,6 @@ ViStatus NiFakeLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32
 
 ViStatus NiFakeLibrary::FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples)
 {
-
   if (!function_pointers_.FetchWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_FetchWaveform.");
   }
@@ -359,7 +341,6 @@ ViStatus NiFakeLibrary::FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViR
 
 ViStatus NiFakeLibrary::GetABoolean(ViSession vi, ViBoolean* aBoolean)
 {
-
   if (!function_pointers_.GetABoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetABoolean.");
   }
@@ -372,7 +353,6 @@ ViStatus NiFakeLibrary::GetABoolean(ViSession vi, ViBoolean* aBoolean)
 
 ViStatus NiFakeLibrary::GetANumber(ViSession vi, ViInt16* aNumber)
 {
-
   if (!function_pointers_.GetANumber) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetANumber.");
   }
@@ -385,7 +365,6 @@ ViStatus NiFakeLibrary::GetANumber(ViSession vi, ViInt16* aNumber)
 
 ViStatus NiFakeLibrary::GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256])
 {
-
   if (!function_pointers_.GetAStringOfFixedMaximumSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAStringOfFixedMaximumSize.");
   }
@@ -398,7 +377,6 @@ ViStatus NiFakeLibrary::GetAStringOfFixedMaximumSize(ViSession vi, ViChar aStrin
 
 ViStatus NiFakeLibrary::GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[])
 {
-
   if (!function_pointers_.GetAnIviDanceString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceString.");
   }
@@ -411,7 +389,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, Vi
 
 ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize)
 {
-
   if (!function_pointers_.GetAnIviDanceWithATwistArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistArray.");
   }
@@ -424,7 +401,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArray(ViSession vi, ViConstString
 
 ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize)
 {
-
   if (!function_pointers_.GetAnIviDanceWithATwistArrayOfCustomType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistArrayOfCustomType.");
   }
@@ -437,7 +413,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, V
 
 ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArrayWithInputArray(ViInt32 dataIn[], ViInt32 arraySizeIn, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize)
 {
-
   if (!function_pointers_.GetAnIviDanceWithATwistArrayWithInputArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistArrayWithInputArray.");
   }
@@ -450,7 +425,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArrayWithInputArray(ViInt32 dataI
 
 ViStatus NiFakeLibrary::GetAnIviDanceWithATwistByteArray(ViInt32 bufferSize, ViInt8 arrayOut[], ViInt32* actualSize)
 {
-
   if (!function_pointers_.GetAnIviDanceWithATwistByteArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistByteArray.");
   }
@@ -463,7 +437,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistByteArray(ViInt32 bufferSize, ViI
 
 ViStatus NiFakeLibrary::GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize)
 {
-
   if (!function_pointers_.GetAnIviDanceWithATwistString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistString.");
   }
@@ -476,7 +449,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistString(ViSession vi, ViInt32 buff
 
 ViStatus NiFakeLibrary::GetAnIviDanceWithATwistStringStrlenBug(ViInt32 bufferSize, ViChar stringOut[], ViInt32* actualSize)
 {
-
   if (!function_pointers_.GetAnIviDanceWithATwistStringStrlenBug) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistStringStrlenBug.");
   }
@@ -489,7 +461,6 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistStringStrlenBug(ViInt32 bufferSiz
 
 ViStatus NiFakeLibrary::GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut)
 {
-
   if (!function_pointers_.GetArraySizeForCustomCode) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetArraySizeForCustomCode.");
   }
@@ -502,7 +473,6 @@ ViStatus NiFakeLibrary::GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut
 
 ViStatus NiFakeLibrary::GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[])
 {
-
   if (!function_pointers_.GetArrayUsingIviDance) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetArrayUsingIviDance.");
   }
@@ -515,7 +485,6 @@ ViStatus NiFakeLibrary::GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, V
 
 ViStatus NiFakeLibrary::GetArrayViUInt8WithEnum(ViSession vi, ViInt32 arrayLen, ViUInt8 uInt8EnumArray[])
 {
-
   if (!function_pointers_.GetArrayViUInt8WithEnum) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetArrayViUInt8WithEnum.");
   }
@@ -528,7 +497,6 @@ ViStatus NiFakeLibrary::GetArrayViUInt8WithEnum(ViSession vi, ViInt32 arrayLen, 
 
 ViStatus NiFakeLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAttributeViBoolean.");
   }
@@ -541,7 +509,6 @@ ViStatus NiFakeLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channe
 
 ViStatus NiFakeLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAttributeViInt32.");
   }
@@ -554,7 +521,6 @@ ViStatus NiFakeLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelN
 
 ViStatus NiFakeLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAttributeViInt64.");
   }
@@ -567,7 +533,6 @@ ViStatus NiFakeLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelN
 
 ViStatus NiFakeLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAttributeViReal64.");
   }
@@ -580,7 +545,6 @@ ViStatus NiFakeLibrary::GetAttributeViReal64(ViSession vi, ViConstString channel
 
 ViStatus NiFakeLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue)
 {
-
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAttributeViSession.");
   }
@@ -593,7 +557,6 @@ ViStatus NiFakeLibrary::GetAttributeViSession(ViSession vi, ViConstString channe
 
 ViStatus NiFakeLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[])
 {
-
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAttributeViString.");
   }
@@ -606,7 +569,6 @@ ViStatus NiFakeLibrary::GetAttributeViString(ViSession vi, ViConstString channel
 
 ViStatus NiFakeLibrary::GetBitfieldAsEnumArray(ViInt64* flags)
 {
-
   if (!function_pointers_.GetBitfieldAsEnumArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetBitfieldAsEnumArray.");
   }
@@ -619,7 +581,6 @@ ViStatus NiFakeLibrary::GetBitfieldAsEnumArray(ViInt64* flags)
 
 ViStatus NiFakeLibrary::GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute)
 {
-
   if (!function_pointers_.GetCalDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetCalDateAndTime.");
   }
@@ -632,7 +593,6 @@ ViStatus NiFakeLibrary::GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32
 
 ViStatus NiFakeLibrary::GetCalInterval(ViSession vi, ViInt32* months)
 {
-
   if (!function_pointers_.GetCalInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetCalInterval.");
   }
@@ -645,7 +605,6 @@ ViStatus NiFakeLibrary::GetCalInterval(ViSession vi, ViInt32* months)
 
 ViStatus NiFakeLibrary::GetCustomType(ViSession vi, CustomStruct* cs)
 {
-
   if (!function_pointers_.GetCustomType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetCustomType.");
   }
@@ -658,7 +617,6 @@ ViStatus NiFakeLibrary::GetCustomType(ViSession vi, CustomStruct* cs)
 
 ViStatus NiFakeLibrary::GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[])
 {
-
   if (!function_pointers_.GetCustomTypeArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetCustomTypeArray.");
   }
@@ -671,7 +629,6 @@ ViStatus NiFakeLibrary::GetCustomTypeArray(ViSession vi, ViInt32 numberOfElement
 
 ViStatus NiFakeLibrary::GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle)
 {
-
   if (!function_pointers_.GetEnumValue) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetEnumValue.");
   }
@@ -684,7 +641,6 @@ ViStatus NiFakeLibrary::GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* 
 
 ViStatus NiFakeLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[])
 {
-
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetError.");
   }
@@ -697,7 +653,6 @@ ViStatus NiFakeLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 buff
 
 ViStatus NiFakeLibrary::GetViInt32Array(ViSession vi, ViInt32 arrayLen, ViInt32 int32Array[])
 {
-
   if (!function_pointers_.GetViInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetViInt32Array.");
   }
@@ -710,7 +665,6 @@ ViStatus NiFakeLibrary::GetViInt32Array(ViSession vi, ViInt32 arrayLen, ViInt32 
 
 ViStatus NiFakeLibrary::GetViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[])
 {
-
   if (!function_pointers_.GetViUInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetViUInt32Array.");
   }
@@ -723,7 +677,6 @@ ViStatus NiFakeLibrary::GetViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt3
 
 ViStatus NiFakeLibrary::GetViUInt8(ViSession vi, ViUInt8* aUint8Number)
 {
-
   if (!function_pointers_.GetViUInt8) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetViUInt8.");
   }
@@ -736,7 +689,6 @@ ViStatus NiFakeLibrary::GetViUInt8(ViSession vi, ViUInt8* aUint8Number)
 
 ViStatus NiFakeLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
-
   if (!function_pointers_.ImportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ImportAttributeConfigurationBuffer.");
   }
@@ -749,7 +701,6 @@ ViStatus NiFakeLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32
 
 ViStatus NiFakeLibrary::InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi)
 {
-
   if (!function_pointers_.InitExtCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_InitExtCal.");
   }
@@ -762,7 +713,6 @@ ViStatus NiFakeLibrary::InitExtCal(ViRsrc resourceName, ViString calibrationPass
 
 ViStatus NiFakeLibrary::InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
 {
-
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_InitWithOptions.");
   }
@@ -775,7 +725,6 @@ ViStatus NiFakeLibrary::InitWithOptions(ViString resourceName, ViBoolean idQuery
 
 ViStatus NiFakeLibrary::InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2)
 {
-
   if (!function_pointers_.InitWithVarArgs) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_InitWithVarArgs.");
   }
@@ -788,7 +737,6 @@ ViStatus NiFakeLibrary::InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViCo
 
 ViStatus NiFakeLibrary::Initiate(ViSession vi)
 {
-
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_Initiate.");
   }
@@ -797,7 +745,6 @@ ViStatus NiFakeLibrary::Initiate(ViSession vi)
 
 ViStatus NiFakeLibrary::MethodUsingEnumWithGrpcNameValues(ViInt32 usingEnum)
 {
-
   if (!function_pointers_.MethodUsingEnumWithGrpcNameValues) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MethodUsingEnumWithGrpcNameValues.");
   }
@@ -810,7 +757,6 @@ ViStatus NiFakeLibrary::MethodUsingEnumWithGrpcNameValues(ViInt32 usingEnum)
 
 ViStatus NiFakeLibrary::MethodUsingWholeAndFractionalNumbers(ViInt32* wholeNumber, ViReal64* fractionalNumber)
 {
-
   if (!function_pointers_.MethodUsingWholeAndFractionalNumbers) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MethodUsingWholeAndFractionalNumbers.");
   }
@@ -823,7 +769,6 @@ ViStatus NiFakeLibrary::MethodUsingWholeAndFractionalNumbers(ViInt32* wholeNumbe
 
 ViStatus NiFakeLibrary::MethodUsingWholeMappedNumbers(ViReal64* wholeNumber)
 {
-
   if (!function_pointers_.MethodUsingWholeMappedNumbers) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MethodUsingWholeMappedNumbers.");
   }
@@ -836,7 +781,6 @@ ViStatus NiFakeLibrary::MethodUsingWholeMappedNumbers(ViReal64* wholeNumber)
 
 ViStatus NiFakeLibrary::MethodWithGetLastErrorParam()
 {
-
   if (!function_pointers_.MethodWithGetLastErrorParam) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MethodWithGetLastErrorParam.");
   }
@@ -849,7 +793,6 @@ ViStatus NiFakeLibrary::MethodWithGetLastErrorParam()
 
 ViStatus NiFakeLibrary::MethodWithGrpcFieldNumber(ViInt32 attributeValue)
 {
-
   if (!function_pointers_.MethodWithGrpcFieldNumber) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MethodWithGrpcFieldNumber.");
   }
@@ -862,7 +805,6 @@ ViStatus NiFakeLibrary::MethodWithGrpcFieldNumber(ViInt32 attributeValue)
 
 ViStatus NiFakeLibrary::MethodWithGrpcOnlyParam(ViInt32 simpleParam, ViInt32* grpcOnlyParam)
 {
-
   if (!function_pointers_.MethodWithGrpcOnlyParam) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MethodWithGrpcOnlyParam.");
   }
@@ -875,7 +817,6 @@ ViStatus NiFakeLibrary::MethodWithGrpcOnlyParam(ViInt32 simpleParam, ViInt32* gr
 
 ViStatus NiFakeLibrary::MethodWithProtoOnlyParameter()
 {
-
   if (!function_pointers_.MethodWithProtoOnlyParameter) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MethodWithProtoOnlyParameter.");
   }
@@ -888,7 +829,6 @@ ViStatus NiFakeLibrary::MethodWithProtoOnlyParameter()
 
 ViStatus NiFakeLibrary::MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[])
 {
-
   if (!function_pointers_.MultipleArrayTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MultipleArrayTypes.");
   }
@@ -901,7 +841,6 @@ ViStatus NiFakeLibrary::MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize
 
 ViStatus NiFakeLibrary::MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size)
 {
-
   if (!function_pointers_.MultipleArraysSameSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MultipleArraysSameSize.");
   }
@@ -914,7 +853,6 @@ ViStatus NiFakeLibrary::MultipleArraysSameSize(ViSession vi, ViReal64 values1[],
 
 ViStatus NiFakeLibrary::MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size)
 {
-
   if (!function_pointers_.MultipleArraysSameSizeWithOptional) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MultipleArraysSameSizeWithOptional.");
   }
@@ -927,7 +865,6 @@ ViStatus NiFakeLibrary::MultipleArraysSameSizeWithOptional(ViSession vi, ViReal6
 
 ViStatus NiFakeLibrary::OneInputFunction(ViSession vi, ViInt32 aNumber)
 {
-
   if (!function_pointers_.OneInputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_OneInputFunction.");
   }
@@ -940,7 +877,6 @@ ViStatus NiFakeLibrary::OneInputFunction(ViSession vi, ViInt32 aNumber)
 
 ViStatus NiFakeLibrary::ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString)
 {
-
   if (!function_pointers_.ParametersAreMultipleTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ParametersAreMultipleTypes.");
   }
@@ -953,7 +889,6 @@ ViStatus NiFakeLibrary::ParametersAreMultipleTypes(ViSession vi, ViBoolean aBool
 
 ViStatus NiFakeLibrary::PoorlyNamedSimpleFunction(ViSession vi)
 {
-
   if (!function_pointers_.PoorlyNamedSimpleFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_PoorlyNamedSimpleFunction.");
   }
@@ -966,7 +901,6 @@ ViStatus NiFakeLibrary::PoorlyNamedSimpleFunction(ViSession vi)
 
 ViStatus NiFakeLibrary::Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading)
 {
-
   if (!function_pointers_.Read) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_Read.");
   }
@@ -979,7 +913,6 @@ ViStatus NiFakeLibrary::Read(ViSession vi, ViReal64 maximumTime, ViReal64* readi
 
 ViStatus NiFakeLibrary::ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* bufferSize)
 {
-
   if (!function_pointers_.ReadDataWithInOutIviTwist) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReadDataWithInOutIviTwist.");
   }
@@ -992,7 +925,6 @@ ViStatus NiFakeLibrary::ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* buffe
 
 ViStatus NiFakeLibrary::ReadDataWithMultipleIviTwistParamSets(ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize, ViInt32 otherBufferSize, ViInt32 otherArrayOut[], ViInt32* otherActualSize)
 {
-
   if (!function_pointers_.ReadDataWithMultipleIviTwistParamSets) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReadDataWithMultipleIviTwistParamSets.");
   }
@@ -1005,7 +937,6 @@ ViStatus NiFakeLibrary::ReadDataWithMultipleIviTwistParamSets(ViInt32 bufferSize
 
 ViStatus NiFakeLibrary::ReadFromChannel(ViSession vi, ViConstString channelName, ViInt32 maximumTime, ViReal64* reading)
 {
-
   if (!function_pointers_.ReadFromChannel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReadFromChannel.");
   }
@@ -1018,7 +949,6 @@ ViStatus NiFakeLibrary::ReadFromChannel(ViSession vi, ViConstString channelName,
 
 ViStatus NiFakeLibrary::ReturnANumberAndAString(ViSession vi, ViInt16* aNumber, ViChar aString[256])
 {
-
   if (!function_pointers_.ReturnANumberAndAString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReturnANumberAndAString.");
   }
@@ -1031,7 +961,6 @@ ViStatus NiFakeLibrary::ReturnANumberAndAString(ViSession vi, ViInt16* aNumber, 
 
 ViStatus NiFakeLibrary::ReturnDurationInSeconds(ViSession vi, ViReal64* timedelta)
 {
-
   if (!function_pointers_.ReturnDurationInSeconds) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReturnDurationInSeconds.");
   }
@@ -1044,7 +973,6 @@ ViStatus NiFakeLibrary::ReturnDurationInSeconds(ViSession vi, ViReal64* timedelt
 
 ViStatus NiFakeLibrary::ReturnListOfDurationsInSeconds(ViSession vi, ViInt32 numberOfElements, ViReal64 timedeltas[])
 {
-
   if (!function_pointers_.ReturnListOfDurationsInSeconds) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReturnListOfDurationsInSeconds.");
   }
@@ -1057,7 +985,6 @@ ViStatus NiFakeLibrary::ReturnListOfDurationsInSeconds(ViSession vi, ViInt32 num
 
 ViStatus NiFakeLibrary::ReturnMultipleTypes(ViSession vi, ViBoolean* aBoolean, ViInt32* anInt32, ViInt64* anInt64, ViInt16* anIntEnum, ViReal64* aFloat, ViReal64* aFloatEnum, ViInt32 arraySize, ViReal64 anArray[], ViInt32 stringSize, ViChar aString[])
 {
-
   if (!function_pointers_.ReturnMultipleTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReturnMultipleTypes.");
   }
@@ -1070,7 +997,6 @@ ViStatus NiFakeLibrary::ReturnMultipleTypes(ViSession vi, ViBoolean* aBoolean, V
 
 ViStatus NiFakeLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
 {
-
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_self_test.");
   }
@@ -1079,7 +1005,6 @@ ViStatus NiFakeLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar s
 
 ViStatus NiFakeLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViBoolean.");
   }
@@ -1092,7 +1017,6 @@ ViStatus NiFakeLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channe
 
 ViStatus NiFakeLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViInt32.");
   }
@@ -1105,7 +1029,6 @@ ViStatus NiFakeLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelN
 
 ViStatus NiFakeLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViInt64.");
   }
@@ -1118,7 +1041,6 @@ ViStatus NiFakeLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelN
 
 ViStatus NiFakeLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViReal64.");
   }
@@ -1131,7 +1053,6 @@ ViStatus NiFakeLibrary::SetAttributeViReal64(ViSession vi, ViConstString channel
 
 ViStatus NiFakeLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue)
 {
-
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetAttributeViString.");
   }
@@ -1144,7 +1065,6 @@ ViStatus NiFakeLibrary::SetAttributeViString(ViSession vi, ViConstString channel
 
 ViStatus NiFakeLibrary::SetCustomType(ViSession vi, CustomStruct cs)
 {
-
   if (!function_pointers_.SetCustomType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetCustomType.");
   }
@@ -1157,7 +1077,6 @@ ViStatus NiFakeLibrary::SetCustomType(ViSession vi, CustomStruct cs)
 
 ViStatus NiFakeLibrary::SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[])
 {
-
   if (!function_pointers_.SetCustomTypeArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetCustomTypeArray.");
   }
@@ -1170,7 +1089,6 @@ ViStatus NiFakeLibrary::SetCustomTypeArray(ViSession vi, ViInt32 numberOfElement
 
 ViStatus NiFakeLibrary::StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName)
 {
-
   if (!function_pointers_.StringValuedEnumInputFunctionWithDefaults) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_StringValuedEnumInputFunctionWithDefaults.");
   }
@@ -1183,7 +1101,6 @@ ViStatus NiFakeLibrary::StringValuedEnumInputFunctionWithDefaults(ViSession vi, 
 
 ViStatus NiFakeLibrary::TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString)
 {
-
   if (!function_pointers_.TwoInputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_TwoInputFunction.");
   }
@@ -1196,7 +1113,6 @@ ViStatus NiFakeLibrary::TwoInputFunction(ViSession vi, ViReal64 aNumber, ViStrin
 
 ViStatus NiFakeLibrary::Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output)
 {
-
   if (!function_pointers_.Use64BitNumber) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_Use64BitNumber.");
   }
@@ -1209,7 +1125,6 @@ ViStatus NiFakeLibrary::Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* out
 
 ViStatus NiFakeLibrary::UseATwoDimensionParameter(ViSession vi, ViInt32 array[], ViInt32 arrayLengths[], ViInt32 arraySize)
 {
-
   if (!function_pointers_.UseATwoDimensionParameter) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_UseATwoDimensionParameter.");
   }
@@ -1222,7 +1137,6 @@ ViStatus NiFakeLibrary::UseATwoDimensionParameter(ViSession vi, ViInt32 array[],
 
 ViStatus NiFakeLibrary::ViInt16ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[])
 {
-
   if (!function_pointers_.ViInt16ArrayInputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ViInt16ArrayInputFunction.");
   }
@@ -1235,7 +1149,6 @@ ViStatus NiFakeLibrary::ViInt16ArrayInputFunction(ViSession vi, ViInt32 numberOf
 
 ViStatus NiFakeLibrary::ViUInt8ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[])
 {
-
   if (!function_pointers_.ViUInt8ArrayInputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ViUInt8ArrayInputFunction.");
   }
@@ -1248,7 +1161,6 @@ ViStatus NiFakeLibrary::ViUInt8ArrayInputFunction(ViSession vi, ViInt32 numberOf
 
 ViStatus NiFakeLibrary::ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[])
 {
-
   if (!function_pointers_.ViUInt8ArrayOutputFunction) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ViUInt8ArrayOutputFunction.");
   }
@@ -1261,7 +1173,6 @@ ViStatus NiFakeLibrary::ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberO
 
 ViStatus NiFakeLibrary::WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[])
 {
-
   if (!function_pointers_.WriteWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_WriteWaveform.");
   }

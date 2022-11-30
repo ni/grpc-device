@@ -15,7 +15,6 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-
 class NiRFmxBluetoothMockLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibraryInterface {
  public:
   MOCK_METHOD(int32, ACPCfgAveraging, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount), (override));

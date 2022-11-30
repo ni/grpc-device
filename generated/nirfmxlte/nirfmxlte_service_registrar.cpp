@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nirfmxlte_service.h"
 #include "nirfmxlte_service_registrar.h"
 

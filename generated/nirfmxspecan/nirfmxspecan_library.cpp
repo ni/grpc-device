@@ -449,7 +449,6 @@ NiRFmxSpecAnLibrary::~NiRFmxSpecAnLibrary()
 
 int32 NiRFmxSpecAnLibrary::ACPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.ACPCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgAveraging.");
   }
@@ -462,7 +461,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgAveraging(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::ACPCfgCarrierAndOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth, int32 numberOfOffsets, float64 channelSpacing)
 {
-
   if (!function_pointers_.ACPCfgCarrierAndOffsets) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgCarrierAndOffsets.");
   }
@@ -475,7 +473,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgCarrierAndOffsets(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::ACPCfgCarrierFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency)
 {
-
   if (!function_pointers_.ACPCfgCarrierFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgCarrierFrequency.");
   }
@@ -488,7 +485,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgCarrierFrequency(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::ACPCfgCarrierIntegrationBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth)
 {
-
   if (!function_pointers_.ACPCfgCarrierIntegrationBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgCarrierIntegrationBandwidth.");
   }
@@ -501,7 +497,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgCarrierIntegrationBandwidth(niRFmxInstrHandle i
 
 int32 NiRFmxSpecAnLibrary::ACPCfgCarrierMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 carrierMode)
 {
-
   if (!function_pointers_.ACPCfgCarrierMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgCarrierMode.");
   }
@@ -514,7 +509,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgCarrierMode(niRFmxInstrHandle instrumentHandle,
 
 int32 NiRFmxSpecAnLibrary::ACPCfgCarrierRRCFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rrcFilterEnabled, float64 rrcAlpha)
 {
-
   if (!function_pointers_.ACPCfgCarrierRRCFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgCarrierRRCFilter.");
   }
@@ -527,7 +521,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgCarrierRRCFilter(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::ACPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
 {
-
   if (!function_pointers_.ACPCfgFFT) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgFFT.");
   }
@@ -540,7 +533,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgFFT(niRFmxInstrHandle instrumentHandle, char se
 
 int32 NiRFmxSpecAnLibrary::ACPCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
 {
-
   if (!function_pointers_.ACPCfgMeasurementMethod) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgMeasurementMethod.");
   }
@@ -553,7 +545,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgMeasurementMethod(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::ACPCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)
 {
-
   if (!function_pointers_.ACPCfgNoiseCompensationEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgNoiseCompensationEnabled.");
   }
@@ -566,7 +557,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgNoiseCompensationEnabled(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::ACPCfgNumberOfCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers)
 {
-
   if (!function_pointers_.ACPCfgNumberOfCarriers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgNumberOfCarriers.");
   }
@@ -579,7 +569,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgNumberOfCarriers(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::ACPCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfOffsets)
 {
-
   if (!function_pointers_.ACPCfgNumberOfOffsets) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgNumberOfOffsets.");
   }
@@ -592,7 +581,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgNumberOfOffsets(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffset(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetFrequency, int32 offsetSideband, int32 offsetEnabled)
 {
-
   if (!function_pointers_.ACPCfgOffset) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffset.");
   }
@@ -605,7 +593,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffset(niRFmxInstrHandle instrumentHandle, char
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetFrequency[], int32 offsetSideband[], int32 offsetEnabled[], int32 numberOfElements)
 {
-
   if (!function_pointers_.ACPCfgOffsetArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetArray.");
   }
@@ -618,7 +605,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetArray(niRFmxInstrHandle instrumentHandle,
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetFrequencyDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 offsetFrequencyDefinition)
 {
-
   if (!function_pointers_.ACPCfgOffsetFrequencyDefinition) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetFrequencyDefinition.");
   }
@@ -631,7 +617,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetFrequencyDefinition(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetIntegrationBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth)
 {
-
   if (!function_pointers_.ACPCfgOffsetIntegrationBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetIntegrationBandwidth.");
   }
@@ -644,7 +629,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetIntegrationBandwidth(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetIntegrationBandwidthArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth[], int32 numberOfElements)
 {
-
   if (!function_pointers_.ACPCfgOffsetIntegrationBandwidthArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetIntegrationBandwidthArray.");
   }
@@ -657,7 +641,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetIntegrationBandwidthArray(niRFmxInstrHand
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetPowerReference(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 offsetReferenceCarrier, int32 offsetReferenceSpecific)
 {
-
   if (!function_pointers_.ACPCfgOffsetPowerReference) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetPowerReference.");
   }
@@ -670,7 +653,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetPowerReference(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetPowerReferenceArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 offsetPowerReferenceCarrier[], int32 offsetPowerReferenceSpecific[], int32 numberOfElements)
 {
-
   if (!function_pointers_.ACPCfgOffsetPowerReferenceArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetPowerReferenceArray.");
   }
@@ -683,7 +665,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetPowerReferenceArray(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetRRCFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rrcFilterEnabled, float64 rrcAlpha)
 {
-
   if (!function_pointers_.ACPCfgOffsetRRCFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetRRCFilter.");
   }
@@ -696,7 +677,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetRRCFilter(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetRRCFilterArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rrcFilterEnabled[], float64 rrcAlpha[], int32 numberOfElements)
 {
-
   if (!function_pointers_.ACPCfgOffsetRRCFilterArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetRRCFilterArray.");
   }
@@ -709,7 +689,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetRRCFilterArray(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetRelativeAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 relativeAttenuation)
 {
-
   if (!function_pointers_.ACPCfgOffsetRelativeAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetRelativeAttenuation.");
   }
@@ -722,7 +701,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetRelativeAttenuation(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::ACPCfgOffsetRelativeAttenuationArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 relativeAttenuation[], int32 numberOfElements)
 {
-
   if (!function_pointers_.ACPCfgOffsetRelativeAttenuationArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgOffsetRelativeAttenuationArray.");
   }
@@ -735,7 +713,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgOffsetRelativeAttenuationArray(niRFmxInstrHandl
 
 int32 NiRFmxSpecAnLibrary::ACPCfgPowerUnits(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 powerUnits)
 {
-
   if (!function_pointers_.ACPCfgPowerUnits) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgPowerUnits.");
   }
@@ -748,7 +725,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgPowerUnits(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::ACPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
 {
-
   if (!function_pointers_.ACPCfgRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgRBWFilter.");
   }
@@ -761,7 +737,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::ACPCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
 {
-
   if (!function_pointers_.ACPCfgSweepTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgSweepTime.");
   }
@@ -774,7 +749,6 @@ int32 NiRFmxSpecAnLibrary::ACPCfgSweepTime(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::ACPFetchAbsolutePowersTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 absolutePowersTrace[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.ACPFetchAbsolutePowersTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPFetchAbsolutePowersTrace.");
   }
@@ -787,7 +761,6 @@ int32 NiRFmxSpecAnLibrary::ACPFetchAbsolutePowersTrace(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::ACPFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* totalRelativePower, float64* carrierOffset, float64* integrationBandwidth)
 {
-
   if (!function_pointers_.ACPFetchCarrierMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPFetchCarrierMeasurement.");
   }
@@ -800,7 +773,6 @@ int32 NiRFmxSpecAnLibrary::ACPFetchCarrierMeasurement(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::ACPFetchFrequencyResolution(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* frequencyResolution)
 {
-
   if (!function_pointers_.ACPFetchFrequencyResolution) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPFetchFrequencyResolution.");
   }
@@ -813,7 +785,6 @@ int32 NiRFmxSpecAnLibrary::ACPFetchFrequencyResolution(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::ACPFetchOffsetMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerRelativePower, float64* upperRelativePower, float64* lowerAbsolutePower, float64* upperAbsolutePower)
 {
-
   if (!function_pointers_.ACPFetchOffsetMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPFetchOffsetMeasurement.");
   }
@@ -826,7 +797,6 @@ int32 NiRFmxSpecAnLibrary::ACPFetchOffsetMeasurement(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::ACPFetchOffsetMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 lowerRelativePower[], float64 upperRelativePower[], float64 lowerAbsolutePower[], float64 upperAbsolutePower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.ACPFetchOffsetMeasurementArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPFetchOffsetMeasurementArray.");
   }
@@ -839,7 +809,6 @@ int32 NiRFmxSpecAnLibrary::ACPFetchOffsetMeasurementArray(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::ACPFetchRelativePowersTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 relativePowersTrace[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.ACPFetchRelativePowersTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPFetchRelativePowersTrace.");
   }
@@ -852,7 +821,6 @@ int32 NiRFmxSpecAnLibrary::ACPFetchRelativePowersTrace(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.ACPFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPFetchSpectrum.");
   }
@@ -865,7 +833,6 @@ int32 NiRFmxSpecAnLibrary::ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::ACPFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
 {
-
   if (!function_pointers_.ACPFetchTotalCarrierPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPFetchTotalCarrierPower.");
   }
@@ -878,7 +845,6 @@ int32 NiRFmxSpecAnLibrary::ACPFetchTotalCarrierPower(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::ACPRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* carrierAbsolutePower, float64* offsetCh0LowerRelativePower, float64* offsetCh0UpperRelativePower, float64* offsetCh1LowerRelativePower, float64* offsetCh1UpperRelativePower)
 {
-
   if (!function_pointers_.ACPRead) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPRead.");
   }
@@ -891,7 +857,6 @@ int32 NiRFmxSpecAnLibrary::ACPRead(niRFmxInstrHandle instrumentHandle, char sele
 
 int32 NiRFmxSpecAnLibrary::ACPValidateNoiseCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* noiseCalibrationDataValid)
 {
-
   if (!function_pointers_.ACPValidateNoiseCalibrationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPValidateNoiseCalibrationData.");
   }
@@ -904,7 +869,6 @@ int32 NiRFmxSpecAnLibrary::ACPValidateNoiseCalibrationData(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgAMToAMCurveFit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 amToAMCurveFitOrder, int32 amToAMCurveFitType)
 {
-
   if (!function_pointers_.AMPMCfgAMToAMCurveFit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgAMToAMCurveFit.");
   }
@@ -917,7 +881,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgAMToAMCurveFit(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgAMToPMCurveFit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 amToPMCurveFitOrder, int32 amToPMCurveFitType)
 {
-
   if (!function_pointers_.AMPMCfgAMToPMCurveFit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgAMToPMCurveFit.");
   }
@@ -930,7 +893,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgAMToPMCurveFit(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
 {
-
   if (!function_pointers_.AMPMCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgAveraging.");
   }
@@ -943,7 +905,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgAveraging(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgCompressionPoints(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 compressionPointEnabled, float64 compressionLevel[], int32 arraySize)
 {
-
   if (!function_pointers_.AMPMCfgCompressionPoints) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgCompressionPoints.");
   }
@@ -956,7 +917,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgCompressionPoints(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgDUTAverageInputPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutAverageInputPower)
 {
-
   if (!function_pointers_.AMPMCfgDUTAverageInputPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgDUTAverageInputPower.");
   }
@@ -969,7 +929,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgDUTAverageInputPower(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
 {
-
   if (!function_pointers_.AMPMCfgMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgMeasurementInterval.");
   }
@@ -982,7 +941,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgMeasurementInterval(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgMeasurementSampleRate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sampleRateMode, float64 sampleRate)
 {
-
   if (!function_pointers_.AMPMCfgMeasurementSampleRate) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgMeasurementSampleRate.");
   }
@@ -995,7 +953,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgMeasurementSampleRate(niRFmxInstrHandle instru
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgReferencePowerType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referencePowerType)
 {
-
   if (!function_pointers_.AMPMCfgReferencePowerType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgReferencePowerType.");
   }
@@ -1008,7 +965,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgReferencePowerType(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
 {
-
   if (!function_pointers_.AMPMCfgReferenceWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgReferenceWaveform.");
   }
@@ -1021,7 +977,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgReferenceWaveform(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMethod)
 {
-
   if (!function_pointers_.AMPMCfgSynchronizationMethod) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgSynchronizationMethod.");
   }
@@ -1034,7 +989,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgSynchronizationMethod(niRFmxInstrHandle instru
 
 int32 NiRFmxSpecAnLibrary::AMPMCfgThreshold(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 thresholdLevel, int32 thresholdType)
 {
-
   if (!function_pointers_.AMPMCfgThreshold) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgThreshold.");
   }
@@ -1047,7 +1001,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgThreshold(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchAMToAMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 referencePowers[], float32 measuredAMToAM[], float32 curveFitAMToAM[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.AMPMFetchAMToAMTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchAMToAMTrace.");
   }
@@ -1060,7 +1013,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchAMToAMTrace(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchAMToPMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 referencePowers[], float32 measuredAMToPM[], float32 curveFitAMToPM[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.AMPMFetchAMToPMTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchAMToPMTrace.");
   }
@@ -1073,7 +1025,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchAMToPMTrace(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchCompressionPoints(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 inputCompressionPoint[], float64 outputCompressionPoint[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.AMPMFetchCompressionPoints) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchCompressionPoints.");
   }
@@ -1086,7 +1037,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchCompressionPoints(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchCurveFitCoefficients(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 amToAMCoefficients[], float32 amToPMCoefficients[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.AMPMFetchCurveFitCoefficients) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchCurveFitCoefficients.");
   }
@@ -1099,7 +1049,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchCurveFitCoefficients(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchCurveFitResidual(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* amToAMResidual, float64* amToPMResidual)
 {
-
   if (!function_pointers_.AMPMFetchCurveFitResidual) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchCurveFitResidual.");
   }
@@ -1112,7 +1061,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchCurveFitResidual(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchDUTCharacteristics(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanLinearGain, float64* onedBCompressionPoint, float64* meanRMSEVM)
 {
-
   if (!function_pointers_.AMPMFetchDUTCharacteristics) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchDUTCharacteristics.");
   }
@@ -1125,7 +1073,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchDUTCharacteristics(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* gainErrorRange, float64* phaseErrorRange, float64* meanPhaseError)
 {
-
   if (!function_pointers_.AMPMFetchError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchError.");
   }
@@ -1138,7 +1085,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchError(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedMeanAcquiredWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.AMPMFetchProcessedMeanAcquiredWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform.");
   }
@@ -1151,7 +1097,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedMeanAcquiredWaveform(niRFmxInstrHan
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.AMPMFetchProcessedReferenceWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchProcessedReferenceWaveform.");
   }
@@ -1164,7 +1109,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedReferenceWaveform(niRFmxInstrHandle
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchRelativePhaseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 relativePhase[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.AMPMFetchRelativePhaseTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchRelativePhaseTrace.");
   }
@@ -1177,7 +1121,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchRelativePhaseTrace(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchRelativePowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 relativePower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.AMPMFetchRelativePowerTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchRelativePowerTrace.");
   }
@@ -1190,7 +1133,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchRelativePowerTrace(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
 {
-
   if (!function_pointers_.AbortMeasurements) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AbortMeasurements.");
   }
@@ -1203,7 +1145,6 @@ int32 NiRFmxSpecAnLibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle,
 
 int32 NiRFmxSpecAnLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
 {
-
   if (!function_pointers_.AnalyzeIQ1Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeIQ1Waveform.");
   }
@@ -1216,7 +1157,6 @@ int32 NiRFmxSpecAnLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
 {
-
   if (!function_pointers_.AnalyzeSpectrum1Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeSpectrum1Waveform.");
   }
@@ -1229,7 +1169,6 @@ int32 NiRFmxSpecAnLibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 bandwidth, float64 measurementInterval, float64* referenceLevel)
 {
-
   if (!function_pointers_.AutoLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AutoLevel.");
   }
@@ -1242,7 +1181,6 @@ int32 NiRFmxSpecAnLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char se
 
 int32 NiRFmxSpecAnLibrary::BuildCarrierString(char selectorString[], int32 carrierNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-
   if (!function_pointers_.BuildCarrierString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildCarrierString2.");
   }
@@ -1255,7 +1193,6 @@ int32 NiRFmxSpecAnLibrary::BuildCarrierString(char selectorString[], int32 carri
 
 int32 NiRFmxSpecAnLibrary::BuildHarmonicString(char selectorString[], int32 harmonicNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-
   if (!function_pointers_.BuildHarmonicString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildHarmonicString2.");
   }
@@ -1268,7 +1205,6 @@ int32 NiRFmxSpecAnLibrary::BuildHarmonicString(char selectorString[], int32 harm
 
 int32 NiRFmxSpecAnLibrary::BuildIntermodString(char selectorString[], int32 intermodNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-
   if (!function_pointers_.BuildIntermodString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildIntermodString.");
   }
@@ -1281,7 +1217,6 @@ int32 NiRFmxSpecAnLibrary::BuildIntermodString(char selectorString[], int32 inte
 
 int32 NiRFmxSpecAnLibrary::BuildListStepString(char listName[], char resultName[], int32 stepNumber, int32 selectorStringLength, char selectorString[])
 {
-
   if (!function_pointers_.BuildListStepString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildListStepString.");
   }
@@ -1294,7 +1229,6 @@ int32 NiRFmxSpecAnLibrary::BuildListStepString(char listName[], char resultName[
 
 int32 NiRFmxSpecAnLibrary::BuildListString(char listName[], char resultName[], int32 selectorStringLength, char selectorString[])
 {
-
   if (!function_pointers_.BuildListString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildListString.");
   }
@@ -1307,7 +1241,6 @@ int32 NiRFmxSpecAnLibrary::BuildListString(char listName[], char resultName[], i
 
 int32 NiRFmxSpecAnLibrary::BuildMarkerString(char selectorString[], int32 markerNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-
   if (!function_pointers_.BuildMarkerString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildMarkerString2.");
   }
@@ -1320,7 +1253,6 @@ int32 NiRFmxSpecAnLibrary::BuildMarkerString(char selectorString[], int32 marker
 
 int32 NiRFmxSpecAnLibrary::BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-
   if (!function_pointers_.BuildOffsetString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildOffsetString2.");
   }
@@ -1333,7 +1265,6 @@ int32 NiRFmxSpecAnLibrary::BuildOffsetString(char selectorString[], int32 offset
 
 int32 NiRFmxSpecAnLibrary::BuildRangeSpurString(char signalName[], char resultName[], int32 rangeNumber, int32 spurNumber, int32 selectorStringLength, char selectorString[])
 {
-
   if (!function_pointers_.BuildRangeSpurString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildRangeSpurString.");
   }
@@ -1346,7 +1277,6 @@ int32 NiRFmxSpecAnLibrary::BuildRangeSpurString(char signalName[], char resultNa
 
 int32 NiRFmxSpecAnLibrary::BuildRangeString(char selectorString[], int32 rangeNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-
   if (!function_pointers_.BuildRangeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildRangeString2.");
   }
@@ -1359,7 +1289,6 @@ int32 NiRFmxSpecAnLibrary::BuildRangeString(char selectorString[], int32 rangeNu
 
 int32 NiRFmxSpecAnLibrary::BuildSegmentString(char selectorString[], int32 segmentNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-
   if (!function_pointers_.BuildSegmentString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildSegmentString.");
   }
@@ -1372,7 +1301,6 @@ int32 NiRFmxSpecAnLibrary::BuildSegmentString(char selectorString[], int32 segme
 
 int32 NiRFmxSpecAnLibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
 {
-
   if (!function_pointers_.BuildSignalString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildSignalString.");
   }
@@ -1385,7 +1313,6 @@ int32 NiRFmxSpecAnLibrary::BuildSignalString(char signalName[], char resultName[
 
 int32 NiRFmxSpecAnLibrary::BuildSpurString(char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-
   if (!function_pointers_.BuildSpurString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildSpurString2.");
   }
@@ -1398,7 +1325,6 @@ int32 NiRFmxSpecAnLibrary::BuildSpurString(char selectorString[], int32 spurNumb
 
 int32 NiRFmxSpecAnLibrary::CCDFCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
 {
-
   if (!function_pointers_.CCDFCfgMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFCfgMeasurementInterval.");
   }
@@ -1411,7 +1337,6 @@ int32 NiRFmxSpecAnLibrary::CCDFCfgMeasurementInterval(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::CCDFCfgNumberOfRecords(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfRecords)
 {
-
   if (!function_pointers_.CCDFCfgNumberOfRecords) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFCfgNumberOfRecords.");
   }
@@ -1424,7 +1349,6 @@ int32 NiRFmxSpecAnLibrary::CCDFCfgNumberOfRecords(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::CCDFCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rbw, int32 rbwFilterType, float64 rrcAlpha)
 {
-
   if (!function_pointers_.CCDFCfgRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFCfgRBWFilter.");
   }
@@ -1437,7 +1361,6 @@ int32 NiRFmxSpecAnLibrary::CCDFCfgRBWFilter(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::CCDFCfgThreshold(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 thresholdLevel, int32 thresholdType)
 {
-
   if (!function_pointers_.CCDFCfgThreshold) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFCfgThreshold.");
   }
@@ -1450,7 +1373,6 @@ int32 NiRFmxSpecAnLibrary::CCDFCfgThreshold(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::CCDFFetchBasicPowerProbabilities(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* tenPercentPower, float64* onePercentPower, float64* oneTenthPercentPower, float64* oneHundredthPercentPower, float64* oneThousandthPercentPower, float64* oneTenThousandthPercentPower)
 {
-
   if (!function_pointers_.CCDFFetchBasicPowerProbabilities) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFFetchBasicPowerProbabilities.");
   }
@@ -1463,7 +1385,6 @@ int32 NiRFmxSpecAnLibrary::CCDFFetchBasicPowerProbabilities(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::CCDFFetchGaussianProbabilitiesTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 gaussianProbabilities[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.CCDFFetchGaussianProbabilitiesTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFFetchGaussianProbabilitiesTrace.");
   }
@@ -1476,7 +1397,6 @@ int32 NiRFmxSpecAnLibrary::CCDFFetchGaussianProbabilitiesTrace(niRFmxInstrHandle
 
 int32 NiRFmxSpecAnLibrary::CCDFFetchPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanPower, float64* meanPowerPercentile, float64* peakPower, int32* measuredSamplesCount)
 {
-
   if (!function_pointers_.CCDFFetchPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFFetchPower.");
   }
@@ -1489,7 +1409,6 @@ int32 NiRFmxSpecAnLibrary::CCDFFetchPower(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::CCDFFetchProbabilitiesTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 probabilities[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.CCDFFetchProbabilitiesTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFFetchProbabilitiesTrace.");
   }
@@ -1502,7 +1421,6 @@ int32 NiRFmxSpecAnLibrary::CCDFFetchProbabilitiesTrace(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::CCDFRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanPower, float64* meanPowerPercentile, float64* peakPower, int32* measuredSamplesCount)
 {
-
   if (!function_pointers_.CCDFRead) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CCDFRead.");
   }
@@ -1515,7 +1433,6 @@ int32 NiRFmxSpecAnLibrary::CCDFRead(niRFmxInstrHandle instrumentHandle, char sel
 
 int32 NiRFmxSpecAnLibrary::CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.CHPCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgAveraging.");
   }
@@ -1528,7 +1445,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::CHPCfgCarrierOffset(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency)
 {
-
   if (!function_pointers_.CHPCfgCarrierOffset) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgCarrierOffset.");
   }
@@ -1541,7 +1457,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgCarrierOffset(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::CHPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
 {
-
   if (!function_pointers_.CHPCfgFFT) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgFFT.");
   }
@@ -1554,7 +1469,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgFFT(niRFmxInstrHandle instrumentHandle, char se
 
 int32 NiRFmxSpecAnLibrary::CHPCfgIntegrationBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth)
 {
-
   if (!function_pointers_.CHPCfgIntegrationBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgIntegrationBandwidth.");
   }
@@ -1567,7 +1481,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgIntegrationBandwidth(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::CHPCfgNumberOfCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers)
 {
-
   if (!function_pointers_.CHPCfgNumberOfCarriers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgNumberOfCarriers.");
   }
@@ -1580,7 +1493,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgNumberOfCarriers(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::CHPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
 {
-
   if (!function_pointers_.CHPCfgRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgRBWFilter.");
   }
@@ -1593,7 +1505,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::CHPCfgRRCFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rrcFilterEnabled, float64 rrcAlpha)
 {
-
   if (!function_pointers_.CHPCfgRRCFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgRRCFilter.");
   }
@@ -1606,7 +1517,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgRRCFilter(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::CHPCfgSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span)
 {
-
   if (!function_pointers_.CHPCfgSpan) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgSpan.");
   }
@@ -1619,7 +1529,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgSpan(niRFmxInstrHandle instrumentHandle, char s
 
 int32 NiRFmxSpecAnLibrary::CHPCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
 {
-
   if (!function_pointers_.CHPCfgSweepTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgSweepTime.");
   }
@@ -1632,7 +1541,6 @@ int32 NiRFmxSpecAnLibrary::CHPCfgSweepTime(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::CHPFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* psd, float64* relativePower)
 {
-
   if (!function_pointers_.CHPFetchCarrierMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPFetchCarrierMeasurement.");
   }
@@ -1645,7 +1553,6 @@ int32 NiRFmxSpecAnLibrary::CHPFetchCarrierMeasurement(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::CHPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.CHPFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPFetchSpectrum.");
   }
@@ -1658,7 +1565,6 @@ int32 NiRFmxSpecAnLibrary::CHPFetchSpectrum(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::CHPFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
 {
-
   if (!function_pointers_.CHPFetchTotalCarrierPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPFetchTotalCarrierPower.");
   }
@@ -1671,7 +1577,6 @@ int32 NiRFmxSpecAnLibrary::CHPFetchTotalCarrierPower(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::CHPRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* psd)
 {
-
   if (!function_pointers_.CHPRead) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPRead.");
   }
@@ -1684,7 +1589,6 @@ int32 NiRFmxSpecAnLibrary::CHPRead(niRFmxInstrHandle instrumentHandle, char sele
 
 int32 NiRFmxSpecAnLibrary::CHPValidateNoiseCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* noiseCalibrationDataValid)
 {
-
   if (!function_pointers_.CHPValidateNoiseCalibrationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPValidateNoiseCalibrationData.");
   }
@@ -1697,7 +1601,6 @@ int32 NiRFmxSpecAnLibrary::CHPValidateNoiseCalibrationData(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger)
 {
-
   if (!function_pointers_.CfgDigitalEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgDigitalEdgeTrigger.");
   }
@@ -1710,7 +1613,6 @@ int32 NiRFmxSpecAnLibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation)
 {
-
   if (!function_pointers_.CfgExternalAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgExternalAttenuation.");
   }
@@ -1723,7 +1625,6 @@ int32 NiRFmxSpecAnLibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency)
 {
-
   if (!function_pointers_.CfgFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgFrequency.");
   }
@@ -1736,7 +1637,6 @@ int32 NiRFmxSpecAnLibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char
 
 int32 NiRFmxSpecAnLibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
 {
-
   if (!function_pointers_.CfgFrequencyReference) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgFrequencyReference.");
   }
@@ -1749,7 +1649,6 @@ int32 NiRFmxSpecAnLibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char iqPowerEdgeSource[], float64 iqPowerEdgeLevel, int32 iqPowerEdgeSlope, float64 triggerDelay, int32 triggerMinQuietTimeMode, float64 triggerMinQuietTimeDuration, int32 enableTrigger)
 {
-
   if (!function_pointers_.CfgIQPowerEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgIQPowerEdgeTrigger.");
   }
@@ -1762,7 +1661,6 @@ int32 NiRFmxSpecAnLibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
 {
-
   if (!function_pointers_.CfgMechanicalAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgMechanicalAttenuation.");
   }
@@ -1775,7 +1673,6 @@ int32 NiRFmxSpecAnLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::CfgRF(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency, float64 referenceLevel, float64 externalAttenuation)
 {
-
   if (!function_pointers_.CfgRF) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgRF.");
   }
@@ -1788,7 +1685,6 @@ int32 NiRFmxSpecAnLibrary::CfgRF(niRFmxInstrHandle instrumentHandle, char select
 
 int32 NiRFmxSpecAnLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
 {
-
   if (!function_pointers_.CfgRFAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgRFAttenuation.");
   }
@@ -1801,7 +1697,6 @@ int32 NiRFmxSpecAnLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
 {
-
   if (!function_pointers_.CfgReferenceLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgReferenceLevel.");
   }
@@ -1814,7 +1709,6 @@ int32 NiRFmxSpecAnLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle,
 
 int32 NiRFmxSpecAnLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
 {
-
   if (!function_pointers_.CfgSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CfgSoftwareEdgeTrigger.");
   }
@@ -1827,7 +1721,6 @@ int32 NiRFmxSpecAnLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone)
 {
-
   if (!function_pointers_.CheckMeasurementStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CheckMeasurementStatus.");
   }
@@ -1840,7 +1733,6 @@ int32 NiRFmxSpecAnLibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
 {
-
   if (!function_pointers_.ClearAllNamedResults) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ClearAllNamedResults.");
   }
@@ -1853,7 +1745,6 @@ int32 NiRFmxSpecAnLibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
 {
-
   if (!function_pointers_.ClearNamedResult) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ClearNamedResult.");
   }
@@ -1866,7 +1757,6 @@ int32 NiRFmxSpecAnLibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::ClearNoiseCalibrationDatabase(niRFmxInstrHandle instrumentHandle, char selectorString[])
 {
-
   if (!function_pointers_.ClearNoiseCalibrationDatabase) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ClearNoiseCalibrationDatabase.");
   }
@@ -1879,7 +1769,6 @@ int32 NiRFmxSpecAnLibrary::ClearNoiseCalibrationDatabase(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
 {
-
   if (!function_pointers_.CloneSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CloneSignalConfiguration.");
   }
@@ -1892,7 +1781,6 @@ int32 NiRFmxSpecAnLibrary::CloneSignalConfiguration(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
 {
-
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_Close.");
   }
@@ -1905,7 +1793,6 @@ int32 NiRFmxSpecAnLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 force
 
 int32 NiRFmxSpecAnLibrary::Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
 {
-
   if (!function_pointers_.Commit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_Commit.");
   }
@@ -1918,7 +1805,6 @@ int32 NiRFmxSpecAnLibrary::Commit(niRFmxInstrHandle instrumentHandle, char selec
 
 int32 NiRFmxSpecAnLibrary::CreateList(niRFmxInstrHandle instrumentHandle, char listName[])
 {
-
   if (!function_pointers_.CreateList) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CreateList.");
   }
@@ -1931,7 +1817,6 @@ int32 NiRFmxSpecAnLibrary::CreateList(niRFmxInstrHandle instrumentHandle, char l
 
 int32 NiRFmxSpecAnLibrary::CreateListStep(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* createdStepIndex)
 {
-
   if (!function_pointers_.CreateListStep) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CreateListStep.");
   }
@@ -1944,7 +1829,6 @@ int32 NiRFmxSpecAnLibrary::CreateListStep(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
 {
-
   if (!function_pointers_.CreateSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CreateSignalConfiguration.");
   }
@@ -1957,7 +1841,6 @@ int32 NiRFmxSpecAnLibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortion(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, NIComplexSingle waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
 {
-
   if (!function_pointers_.DPDApplyDigitalPredistortion) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyDigitalPredistortion.");
   }
@@ -1970,7 +1853,6 @@ int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortion(niRFmxInstrHandle instru
 
 int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioning(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, NIComplexSingle waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
 {
-
   if (!function_pointers_.DPDApplyPreDPDSignalConditioning) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyPreDPDSignalConditioning.");
   }
@@ -1983,7 +1865,6 @@ int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioning(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDConfigurationInput(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 configurationInput)
 {
-
   if (!function_pointers_.DPDCfgApplyDPDConfigurationInput) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDConfigurationInput.");
   }
@@ -1996,7 +1877,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDConfigurationInput(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDLookupTableCorrectionType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 lutCorrectionType)
 {
-
   if (!function_pointers_.DPDCfgApplyDPDLookupTableCorrectionType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDLookupTableCorrectionType.");
   }
@@ -2009,7 +1889,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDLookupTableCorrectionType(niRFmxInstrHa
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDMemoryModelCorrectionType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 memoryModelCorrectionType)
 {
-
   if (!function_pointers_.DPDCfgApplyDPDMemoryModelCorrectionType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDMemoryModelCorrectionType.");
   }
@@ -2022,7 +1901,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDMemoryModelCorrectionType(niRFmxInstrHa
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexSingle dpdPolynomial[], int32 arraySize)
 {
-
   if (!function_pointers_.DPDCfgApplyDPDUserDPDPolynomial) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial.");
   }
@@ -2035,7 +1913,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomial(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], NIComplexSingle lutComplexGains[], int32 arraySize)
 {
-
   if (!function_pointers_.DPDCfgApplyDPDUserLookupTable) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserLookupTable.");
   }
@@ -2048,7 +1925,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTable(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::DPDCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
 {
-
   if (!function_pointers_.DPDCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgAveraging.");
   }
@@ -2061,7 +1937,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgAveraging(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::DPDCfgDPDModel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dpdModel)
 {
-
   if (!function_pointers_.DPDCfgDPDModel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgDPDModel.");
   }
@@ -2074,7 +1949,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgDPDModel(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::DPDCfgDUTAverageInputPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutAverageInputPower)
 {
-
   if (!function_pointers_.DPDCfgDUTAverageInputPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgDUTAverageInputPower.");
   }
@@ -2087,7 +1961,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgDUTAverageInputPower(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::DPDCfgGeneralizedMemoryPolynomialCrossTerms(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 memoryPolynomialLeadOrder, int32 memoryPolynomialLagOrder, int32 memoryPolynomialLeadMemoryDepth, int32 memoryPolynomialLagMemoryDepth, int32 memoryPolynomialMaximumLead, int32 memoryPolynomialMaximumLag)
 {
-
   if (!function_pointers_.DPDCfgGeneralizedMemoryPolynomialCrossTerms) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgGeneralizedMemoryPolynomialCrossTerms.");
   }
@@ -2100,7 +1973,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgGeneralizedMemoryPolynomialCrossTerms(niRFmxIns
 
 int32 NiRFmxSpecAnLibrary::DPDCfgIterativeDPDEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 iterativeDPDEnabled)
 {
-
   if (!function_pointers_.DPDCfgIterativeDPDEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgIterativeDPDEnabled.");
   }
@@ -2113,7 +1985,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgIterativeDPDEnabled(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableAMToAMCurveFit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 amToAMCurveFitOrder, int32 amToAMCurveFitType)
 {
-
   if (!function_pointers_.DPDCfgLookupTableAMToAMCurveFit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgLookupTableAMToAMCurveFit.");
   }
@@ -2126,7 +1997,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableAMToAMCurveFit(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableAMToPMCurveFit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 amToPMCurveFitOrder, int32 amToPMCurveFitType)
 {
-
   if (!function_pointers_.DPDCfgLookupTableAMToPMCurveFit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgLookupTableAMToPMCurveFit.");
   }
@@ -2139,7 +2009,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableAMToPMCurveFit(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableStepSize(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 stepSize)
 {
-
   if (!function_pointers_.DPDCfgLookupTableStepSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgLookupTableStepSize.");
   }
@@ -2152,7 +2021,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableStepSize(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableThreshold(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 thresholdLevel, int32 thresholdType)
 {
-
   if (!function_pointers_.DPDCfgLookupTableThreshold) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgLookupTableThreshold.");
   }
@@ -2165,7 +2033,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableThreshold(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 lookupTableType)
 {
-
   if (!function_pointers_.DPDCfgLookupTableType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgLookupTableType.");
   }
@@ -2178,7 +2045,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgLookupTableType(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::DPDCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
 {
-
   if (!function_pointers_.DPDCfgMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgMeasurementInterval.");
   }
@@ -2191,7 +2057,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgMeasurementInterval(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::DPDCfgMeasurementSampleRate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sampleRateMode, float64 sampleRate)
 {
-
   if (!function_pointers_.DPDCfgMeasurementSampleRate) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgMeasurementSampleRate.");
   }
@@ -2204,7 +2069,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgMeasurementSampleRate(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::DPDCfgMemoryPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 memoryPolynomialOrder, int32 memoryPolynomialMemoryDepth)
 {
-
   if (!function_pointers_.DPDCfgMemoryPolynomial) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgMemoryPolynomial.");
   }
@@ -2217,7 +2081,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgMemoryPolynomial(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::DPDCfgPreviousDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexSingle previousDPDPolynomial[], int32 arraySize)
 {
-
   if (!function_pointers_.DPDCfgPreviousDPDPolynomial) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgPreviousDPDPolynomial.");
   }
@@ -2230,7 +2093,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgPreviousDPDPolynomial(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
 {
-
   if (!function_pointers_.DPDCfgReferenceWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgReferenceWaveform.");
   }
@@ -2243,7 +2105,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::DPDCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMethod)
 {
-
   if (!function_pointers_.DPDCfgSynchronizationMethod) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgSynchronizationMethod.");
   }
@@ -2256,7 +2117,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgSynchronizationMethod(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR)
 {
-
   if (!function_pointers_.DPDFetchApplyDPDPreCFRPAPR) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR.");
   }
@@ -2269,7 +2129,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::DPDFetchAverageGain(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageGain)
 {
-
   if (!function_pointers_.DPDFetchAverageGain) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchAverageGain.");
   }
@@ -2282,7 +2141,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchAverageGain(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dpdPolynomial[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.DPDFetchDPDPolynomial) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchDPDPolynomial.");
   }
@@ -2295,7 +2153,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::DPDFetchLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], NIComplexSingle complexGains[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.DPDFetchLookupTable) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchLookupTable.");
   }
@@ -2308,7 +2165,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchLookupTable(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::DPDFetchNMSE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* nmse)
 {
-
   if (!function_pointers_.DPDFetchNMSE) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchNMSE.");
   }
@@ -2321,7 +2177,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchNMSE(niRFmxInstrHandle instrumentHandle, char
 
 int32 NiRFmxSpecAnLibrary::DPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.DPDFetchProcessedMeanAcquiredWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform.");
   }
@@ -2334,7 +2189,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHand
 
 int32 NiRFmxSpecAnLibrary::DPDFetchProcessedReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.DPDFetchProcessedReferenceWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchProcessedReferenceWaveform.");
   }
@@ -2347,7 +2201,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchProcessedReferenceWaveform(niRFmxInstrHandle 
 
 int32 NiRFmxSpecAnLibrary::DeleteList(niRFmxInstrHandle instrumentHandle, char listName[])
 {
-
   if (!function_pointers_.DeleteList) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DeleteList.");
   }
@@ -2360,7 +2213,6 @@ int32 NiRFmxSpecAnLibrary::DeleteList(niRFmxInstrHandle instrumentHandle, char l
 
 int32 NiRFmxSpecAnLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
 {
-
   if (!function_pointers_.DeleteSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DeleteSignalConfiguration.");
   }
@@ -2373,7 +2225,6 @@ int32 NiRFmxSpecAnLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[])
 {
-
   if (!function_pointers_.DisableTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DisableTrigger.");
   }
@@ -2386,7 +2237,6 @@ int32 NiRFmxSpecAnLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::FCntCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.FCntCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntCfgAveraging.");
   }
@@ -2399,7 +2249,6 @@ int32 NiRFmxSpecAnLibrary::FCntCfgAveraging(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::FCntCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
 {
-
   if (!function_pointers_.FCntCfgMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntCfgMeasurementInterval.");
   }
@@ -2412,7 +2261,6 @@ int32 NiRFmxSpecAnLibrary::FCntCfgMeasurementInterval(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::FCntCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rbw, int32 rbwFilterType, float64 rrcAlpha)
 {
-
   if (!function_pointers_.FCntCfgRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntCfgRBWFilter.");
   }
@@ -2425,7 +2273,6 @@ int32 NiRFmxSpecAnLibrary::FCntCfgRBWFilter(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::FCntCfgThreshold(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 thresholdLevel, int32 thresholdType)
 {
-
   if (!function_pointers_.FCntCfgThreshold) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntCfgThreshold.");
   }
@@ -2438,7 +2285,6 @@ int32 NiRFmxSpecAnLibrary::FCntCfgThreshold(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::FCntFetchAllanDeviation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* allanDeviation)
 {
-
   if (!function_pointers_.FCntFetchAllanDeviation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntFetchAllanDeviation.");
   }
@@ -2451,7 +2297,6 @@ int32 NiRFmxSpecAnLibrary::FCntFetchAllanDeviation(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::FCntFetchFrequencyTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequencyTrace[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.FCntFetchFrequencyTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntFetchFrequencyTrace.");
   }
@@ -2464,7 +2309,6 @@ int32 NiRFmxSpecAnLibrary::FCntFetchFrequencyTrace(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::FCntFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRelativeFrequency, float64* averageAbsoluteFrequency, float64* meanPhase)
 {
-
   if (!function_pointers_.FCntFetchMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntFetchMeasurement.");
   }
@@ -2477,7 +2321,6 @@ int32 NiRFmxSpecAnLibrary::FCntFetchMeasurement(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::FCntFetchPhaseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseTrace[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.FCntFetchPhaseTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntFetchPhaseTrace.");
   }
@@ -2490,7 +2333,6 @@ int32 NiRFmxSpecAnLibrary::FCntFetchPhaseTrace(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::FCntFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 powerTrace[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.FCntFetchPowerTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntFetchPowerTrace.");
   }
@@ -2503,7 +2345,6 @@ int32 NiRFmxSpecAnLibrary::FCntFetchPowerTrace(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::FCntRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRelativeFrequency, float64* averageAbsoluteFrequency, float64* meanPhase)
 {
-
   if (!function_pointers_.FCntRead) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_FCntRead.");
   }
@@ -2516,7 +2357,6 @@ int32 NiRFmxSpecAnLibrary::FCntRead(niRFmxInstrHandle instrumentHandle, char sel
 
 int32 NiRFmxSpecAnLibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
 {
-
   if (!function_pointers_.GetAllNamedResultNames) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAllNamedResultNames.");
   }
@@ -2529,7 +2369,6 @@ int32 NiRFmxSpecAnLibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
 {
-
   if (!function_pointers_.GetAttributeF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeF32.");
   }
@@ -2542,7 +2381,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeF32Array.");
   }
@@ -2555,7 +2393,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
 {
-
   if (!function_pointers_.GetAttributeF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeF64.");
   }
@@ -2568,7 +2405,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeF64Array.");
   }
@@ -2581,7 +2417,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
 {
-
   if (!function_pointers_.GetAttributeI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI16.");
   }
@@ -2594,7 +2429,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
 {
-
   if (!function_pointers_.GetAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI32.");
   }
@@ -2607,7 +2441,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeI32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI32Array.");
   }
@@ -2620,7 +2453,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
 {
-
   if (!function_pointers_.GetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI64.");
   }
@@ -2633,7 +2465,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI64Array.");
   }
@@ -2646,7 +2477,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
 {
-
   if (!function_pointers_.GetAttributeI8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI8.");
   }
@@ -2659,7 +2489,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeI8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI8Array.");
   }
@@ -2672,7 +2501,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeNIComplexDoubleArray.");
   }
@@ -2685,7 +2513,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeNIComplexSingleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeNIComplexSingleArray.");
   }
@@ -2698,7 +2525,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
 {
-
   if (!function_pointers_.GetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeString.");
   }
@@ -2711,7 +2537,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
 {
-
   if (!function_pointers_.GetAttributeU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeU16.");
   }
@@ -2724,7 +2549,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
 {
-
   if (!function_pointers_.GetAttributeU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeU32.");
   }
@@ -2737,7 +2561,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeU32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeU32Array.");
   }
@@ -2750,7 +2573,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeU64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeU64Array.");
   }
@@ -2763,7 +2585,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
 {
-
   if (!function_pointers_.GetAttributeU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeU8.");
   }
@@ -2776,7 +2597,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeU8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeU8Array.");
   }
@@ -2789,7 +2609,6 @@ int32 NiRFmxSpecAnLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
 {
-
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetError.");
   }
@@ -2802,7 +2621,6 @@ int32 NiRFmxSpecAnLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* e
 
 int32 NiRFmxSpecAnLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
 {
-
   if (!function_pointers_.GetErrorString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetErrorString.");
   }
@@ -2815,7 +2633,6 @@ int32 NiRFmxSpecAnLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, in
 
 int32 NiRFmxSpecAnLibrary::HarmCfgAutoHarmonics(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 autoHarmonicsSetupEnabled)
 {
-
   if (!function_pointers_.HarmCfgAutoHarmonics) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmCfgAutoHarmonics.");
   }
@@ -2828,7 +2645,6 @@ int32 NiRFmxSpecAnLibrary::HarmCfgAutoHarmonics(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::HarmCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.HarmCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmCfgAveraging.");
   }
@@ -2841,7 +2657,6 @@ int32 NiRFmxSpecAnLibrary::HarmCfgAveraging(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::HarmCfgFundamentalMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
 {
-
   if (!function_pointers_.HarmCfgFundamentalMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmCfgFundamentalMeasurementInterval.");
   }
@@ -2854,7 +2669,6 @@ int32 NiRFmxSpecAnLibrary::HarmCfgFundamentalMeasurementInterval(niRFmxInstrHand
 
 int32 NiRFmxSpecAnLibrary::HarmCfgFundamentalRBW(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rbw, int32 rbwFilterType, float64 rrcAlpha)
 {
-
   if (!function_pointers_.HarmCfgFundamentalRBW) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmCfgFundamentalRBW.");
   }
@@ -2867,7 +2681,6 @@ int32 NiRFmxSpecAnLibrary::HarmCfgFundamentalRBW(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::HarmCfgHarmonic(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 harmonicOrder, float64 harmonicBandwidth, int32 harmonicEnabled, float64 harmonicMeasurementInterval)
 {
-
   if (!function_pointers_.HarmCfgHarmonic) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmCfgHarmonic.");
   }
@@ -2880,7 +2693,6 @@ int32 NiRFmxSpecAnLibrary::HarmCfgHarmonic(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::HarmCfgHarmonicArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 harmonicOrder[], float64 harmonicBandwidth[], int32 harmonicEnabled[], float64 harmonicMeasurementInterval[], int32 numberOfElements)
 {
-
   if (!function_pointers_.HarmCfgHarmonicArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmCfgHarmonicArray.");
   }
@@ -2893,7 +2705,6 @@ int32 NiRFmxSpecAnLibrary::HarmCfgHarmonicArray(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::HarmCfgNumberOfHarmonics(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfHarmonics)
 {
-
   if (!function_pointers_.HarmCfgNumberOfHarmonics) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmCfgNumberOfHarmonics.");
   }
@@ -2906,7 +2717,6 @@ int32 NiRFmxSpecAnLibrary::HarmCfgNumberOfHarmonics(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::HarmFetchHarmonicMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRelativePower, float64* averageAbsolutePower, float64* rbw, float64* frequency)
 {
-
   if (!function_pointers_.HarmFetchHarmonicMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmFetchHarmonicMeasurement.");
   }
@@ -2919,7 +2729,6 @@ int32 NiRFmxSpecAnLibrary::HarmFetchHarmonicMeasurement(niRFmxInstrHandle instru
 
 int32 NiRFmxSpecAnLibrary::HarmFetchHarmonicMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 averageRelativePower[], float64 averageAbsolutePower[], float64 rbw[], float64 frequency[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.HarmFetchHarmonicMeasurementArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmFetchHarmonicMeasurementArray.");
   }
@@ -2932,7 +2741,6 @@ int32 NiRFmxSpecAnLibrary::HarmFetchHarmonicMeasurementArray(niRFmxInstrHandle i
 
 int32 NiRFmxSpecAnLibrary::HarmFetchHarmonicPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.HarmFetchHarmonicPowerTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmFetchHarmonicPowerTrace.");
   }
@@ -2945,7 +2753,6 @@ int32 NiRFmxSpecAnLibrary::HarmFetchHarmonicPowerTrace(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::HarmFetchTHD(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalHarmonicDistortion, float64* averageFundamentalPower, float64* fundamentalFrequency)
 {
-
   if (!function_pointers_.HarmFetchTHD) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmFetchTHD.");
   }
@@ -2958,7 +2765,6 @@ int32 NiRFmxSpecAnLibrary::HarmFetchTHD(niRFmxInstrHandle instrumentHandle, char
 
 int32 NiRFmxSpecAnLibrary::HarmRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalHarmonicDistortion, float64* averageFundamentalPower)
 {
-
   if (!function_pointers_.HarmRead) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_HarmRead.");
   }
@@ -2971,7 +2777,6 @@ int32 NiRFmxSpecAnLibrary::HarmRead(niRFmxInstrHandle instrumentHandle, char sel
 
 int32 NiRFmxSpecAnLibrary::IMCfgAutoIntermodsSetup(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 autoIntermodsSetupEnabled, int32 maximumIntermodOrder)
 {
-
   if (!function_pointers_.IMCfgAutoIntermodsSetup) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgAutoIntermodsSetup.");
   }
@@ -2984,7 +2789,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgAutoIntermodsSetup(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::IMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.IMCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgAveraging.");
   }
@@ -2997,7 +2801,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgAveraging(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::IMCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
 {
-
   if (!function_pointers_.IMCfgFFT) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgFFT.");
   }
@@ -3010,7 +2813,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgFFT(niRFmxInstrHandle instrumentHandle, char sel
 
 int32 NiRFmxSpecAnLibrary::IMCfgFrequencyDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 frequencyDefinition)
 {
-
   if (!function_pointers_.IMCfgFrequencyDefinition) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgFrequencyDefinition.");
   }
@@ -3023,7 +2825,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgFrequencyDefinition(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::IMCfgFundamentalTones(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 lowerToneFrequency, float64 upperToneFrequency)
 {
-
   if (!function_pointers_.IMCfgFundamentalTones) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgFundamentalTones.");
   }
@@ -3036,7 +2837,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgFundamentalTones(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::IMCfgIntermod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 intermodOrder, float64 lowerIntermodFrequency, float64 upperIntermodFrequency, int32 intermodSide, int32 intermodEnabled)
 {
-
   if (!function_pointers_.IMCfgIntermod) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgIntermod.");
   }
@@ -3049,7 +2849,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgIntermod(niRFmxInstrHandle instrumentHandle, cha
 
 int32 NiRFmxSpecAnLibrary::IMCfgIntermodArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 intermodOrder[], float64 lowerIntermodFrequency[], float64 upperIntermodFrequency[], int32 intermodSide[], int32 intermodEnabled[], int32 numberOfElements)
 {
-
   if (!function_pointers_.IMCfgIntermodArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgIntermodArray.");
   }
@@ -3062,7 +2861,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgIntermodArray(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::IMCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
 {
-
   if (!function_pointers_.IMCfgMeasurementMethod) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgMeasurementMethod.");
   }
@@ -3075,7 +2873,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgMeasurementMethod(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::IMCfgNumberOfIntermods(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfIntermods)
 {
-
   if (!function_pointers_.IMCfgNumberOfIntermods) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgNumberOfIntermods.");
   }
@@ -3088,7 +2885,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgNumberOfIntermods(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::IMCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
 {
-
   if (!function_pointers_.IMCfgRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgRBWFilter.");
   }
@@ -3101,7 +2897,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgRBWFilter(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::IMCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
 {
-
   if (!function_pointers_.IMCfgSweepTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMCfgSweepTime.");
   }
@@ -3114,7 +2909,6 @@ int32 NiRFmxSpecAnLibrary::IMCfgSweepTime(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::IMFetchFundamentalMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerTonePower, float64* upperTonePower)
 {
-
   if (!function_pointers_.IMFetchFundamentalMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchFundamentalMeasurement.");
   }
@@ -3127,7 +2921,6 @@ int32 NiRFmxSpecAnLibrary::IMFetchFundamentalMeasurement(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::IMFetchInterceptPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* worstCaseOutputInterceptPower, float64* lowerOutputInterceptPower, float64* upperOutputInterceptPower)
 {
-
   if (!function_pointers_.IMFetchInterceptPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchInterceptPower.");
   }
@@ -3140,7 +2933,6 @@ int32 NiRFmxSpecAnLibrary::IMFetchInterceptPower(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::IMFetchInterceptPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 worstCaseOutputInterceptPower[], float64 lowerOutputInterceptPower[], float64 upperOutputInterceptPower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.IMFetchInterceptPowerArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchInterceptPowerArray.");
   }
@@ -3153,7 +2945,6 @@ int32 NiRFmxSpecAnLibrary::IMFetchInterceptPowerArray(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodPower, float64* upperIntermodPower)
 {
-
   if (!function_pointers_.IMFetchIntermodMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchIntermodMeasurement.");
   }
@@ -3166,7 +2957,6 @@ int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurement(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodPower[], float64 upperIntermodPower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.IMFetchIntermodMeasurementArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchIntermodMeasurementArray.");
   }
@@ -3179,7 +2969,6 @@ int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurementArray(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::IMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 spectrumIndex, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.IMFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchSpectrum.");
   }
@@ -3192,7 +2981,6 @@ int32 NiRFmxSpecAnLibrary::IMFetchSpectrum(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::IQCfgAcquisition(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 sampleRate, int32 numberOfRecords, float64 acquisitionTime, float64 pretriggerTime)
 {
-
   if (!function_pointers_.IQCfgAcquisition) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQCfgAcquisition.");
   }
@@ -3205,7 +2993,6 @@ int32 NiRFmxSpecAnLibrary::IQCfgAcquisition(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::IQCfgBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 bandwidthAuto, float64 bandwidth)
 {
-
   if (!function_pointers_.IQCfgBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQCfgBandwidth.");
   }
@@ -3218,7 +3005,6 @@ int32 NiRFmxSpecAnLibrary::IQCfgBandwidth(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.IQFetchData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQFetchData.");
   }
@@ -3231,7 +3017,6 @@ int32 NiRFmxSpecAnLibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char 
 
 int32 NiRFmxSpecAnLibrary::IQGetRecordsDone(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* recordsDone)
 {
-
   if (!function_pointers_.IQGetRecordsDone) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQGetRecordsDone.");
   }
@@ -3244,7 +3029,6 @@ int32 NiRFmxSpecAnLibrary::IQGetRecordsDone(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession)
 {
-
   if (!function_pointers_.Initialize) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_Initialize.");
   }
@@ -3257,7 +3041,6 @@ int32 NiRFmxSpecAnLibrary::Initialize(char resourceName[], char optionString[], 
 
 int32 NiRFmxSpecAnLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
 {
-
   if (!function_pointers_.InitializeFromNIRFSASession) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_InitializeFromNIRFSASession.");
   }
@@ -3270,7 +3053,6 @@ int32 NiRFmxSpecAnLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niR
 
 int32 NiRFmxSpecAnLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
 {
-
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_Initiate.");
   }
@@ -3283,7 +3065,6 @@ int32 NiRFmxSpecAnLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char sel
 
 int32 NiRFmxSpecAnLibrary::MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers)
 {
-
   if (!function_pointers_.MarkerCfgNumberOfMarkers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgNumberOfMarkers.");
   }
@@ -3296,7 +3077,6 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::MarkerCfgPeakExcursion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 peakExcursionEnabled, float64 peakExcursion)
 {
-
   if (!function_pointers_.MarkerCfgPeakExcursion) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgPeakExcursion.");
   }
@@ -3309,7 +3089,6 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgPeakExcursion(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::MarkerCfgReferenceMarker(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceMarker)
 {
-
   if (!function_pointers_.MarkerCfgReferenceMarker) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgReferenceMarker.");
   }
@@ -3322,7 +3101,6 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgReferenceMarker(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::MarkerCfgThreshold(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 threshold)
 {
-
   if (!function_pointers_.MarkerCfgThreshold) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgThreshold.");
   }
@@ -3335,7 +3113,6 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgThreshold(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::MarkerCfgTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 trace)
 {
-
   if (!function_pointers_.MarkerCfgTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgTrace.");
   }
@@ -3348,7 +3125,6 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgTrace(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType)
 {
-
   if (!function_pointers_.MarkerCfgType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgType.");
   }
@@ -3361,7 +3137,6 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgType(niRFmxInstrHandle instrumentHandle, cha
 
 int32 NiRFmxSpecAnLibrary::MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation)
 {
-
   if (!function_pointers_.MarkerCfgXLocation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgXLocation.");
   }
@@ -3374,7 +3149,6 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation)
 {
-
   if (!function_pointers_.MarkerFetchXY) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerFetchXY.");
   }
@@ -3387,7 +3161,6 @@ int32 NiRFmxSpecAnLibrary::MarkerFetchXY(niRFmxInstrHandle instrumentHandle, cha
 
 int32 NiRFmxSpecAnLibrary::MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound)
 {
-
   if (!function_pointers_.MarkerNextPeak) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerNextPeak.");
   }
@@ -3400,7 +3173,6 @@ int32 NiRFmxSpecAnLibrary::MarkerNextPeak(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks)
 {
-
   if (!function_pointers_.MarkerPeakSearch) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerPeakSearch.");
   }
@@ -3413,7 +3185,6 @@ int32 NiRFmxSpecAnLibrary::MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::NFCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
 {
-
   if (!function_pointers_.NFCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgAveraging.");
   }
@@ -3426,7 +3197,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgAveraging(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::NFCfgCalibrationLoss(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationLossCompensationEnabled, float64 calibrationLossFrequency[], float64 calibrationLoss[], float64 calibrationLossTemperature, int32 arraySize)
 {
-
   if (!function_pointers_.NFCfgCalibrationLoss) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgCalibrationLoss.");
   }
@@ -3439,7 +3209,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgCalibrationLoss(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::NFCfgColdSourceDUTSParameters(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutsParametersFrequency[], float64 duts21[], float64 duts12[], float64 duts11[], float64 duts22[], int32 arraySize)
 {
-
   if (!function_pointers_.NFCfgColdSourceDUTSParameters) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgColdSourceDUTSParameters.");
   }
@@ -3452,7 +3221,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgColdSourceDUTSParameters(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::NFCfgColdSourceInputTermination(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 terminationVSWR[], float64 terminationVSWRFrequency[], float64 terminationTemperature, int32 arraySize)
 {
-
   if (!function_pointers_.NFCfgColdSourceInputTermination) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgColdSourceInputTermination.");
   }
@@ -3465,7 +3233,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgColdSourceInputTermination(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::NFCfgColdSourceMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 coldSourceMode)
 {
-
   if (!function_pointers_.NFCfgColdSourceMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgColdSourceMode.");
   }
@@ -3478,7 +3245,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgColdSourceMode(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::NFCfgDUTInputLoss(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, float64 dutInputLossFrequency[], float64 dutInputLoss[], float64 dutInputLossTemperature, int32 arraySize)
 {
-
   if (!function_pointers_.NFCfgDUTInputLoss) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgDUTInputLoss.");
   }
@@ -3491,7 +3257,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgDUTInputLoss(niRFmxInstrHandle instrumentHandle,
 
 int32 NiRFmxSpecAnLibrary::NFCfgDUTOutputLoss(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutOutputLossCompensationEnabled, float64 dutOutputLossFrequency[], float64 dutOutputLoss[], float64 dutOutputLossTemperature, int32 arraySize)
 {
-
   if (!function_pointers_.NFCfgDUTOutputLoss) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgDUTOutputLoss.");
   }
@@ -3504,7 +3269,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgDUTOutputLoss(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::NFCfgFrequencyList(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequencyList[], int32 arraySize)
 {
-
   if (!function_pointers_.NFCfgFrequencyList) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgFrequencyList.");
   }
@@ -3517,7 +3281,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgFrequencyList(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::NFCfgFrequencyListStartStopPoints(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency, int32 numberOfPoints)
 {
-
   if (!function_pointers_.NFCfgFrequencyListStartStopPoints) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgFrequencyList_StartStopPoints.");
   }
@@ -3530,7 +3293,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgFrequencyListStartStopPoints(niRFmxInstrHandle i
 
 int32 NiRFmxSpecAnLibrary::NFCfgFrequencyListStartStopStep(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency, float64 stepSize)
 {
-
   if (!function_pointers_.NFCfgFrequencyListStartStopStep) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgFrequencyList_StartStopStep.");
   }
@@ -3543,7 +3305,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgFrequencyListStartStopStep(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::NFCfgMeasurementBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementBandwidth)
 {
-
   if (!function_pointers_.NFCfgMeasurementBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgMeasurementBandwidth.");
   }
@@ -3556,7 +3317,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgMeasurementBandwidth(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::NFCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
 {
-
   if (!function_pointers_.NFCfgMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgMeasurementInterval.");
   }
@@ -3569,7 +3329,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgMeasurementInterval(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::NFCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
 {
-
   if (!function_pointers_.NFCfgMeasurementMethod) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgMeasurementMethod.");
   }
@@ -3582,7 +3341,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgMeasurementMethod(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::NFCfgYFactorMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 yFactorMode)
 {
-
   if (!function_pointers_.NFCfgYFactorMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgYFactorMode.");
   }
@@ -3595,7 +3353,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgYFactorMode(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::NFCfgYFactorNoiseSourceENR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 enrFrequency[], float64 enr[], float64 coldTemperature, float64 offTemperature, int32 arraySize)
 {
-
   if (!function_pointers_.NFCfgYFactorNoiseSourceENR) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgYFactorNoiseSourceENR.");
   }
@@ -3608,7 +3365,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgYFactorNoiseSourceENR(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::NFCfgYFactorNoiseSourceLoss(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseSourceLossCompensationEnabled, float64 noiseSourceLossFrequency[], float64 noiseSourceLoss[], float64 noiseSourceLossTemperature, int32 arraySize)
 {
-
   if (!function_pointers_.NFCfgYFactorNoiseSourceLoss) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgYFactorNoiseSourceLoss.");
   }
@@ -3621,7 +3377,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgYFactorNoiseSourceLoss(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::NFCfgYFactorNoiseSourceSettlingTime(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 settlingTime)
 {
-
   if (!function_pointers_.NFCfgYFactorNoiseSourceSettlingTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFCfgYFactorNoiseSourceSettlingTime.");
   }
@@ -3634,7 +3389,6 @@ int32 NiRFmxSpecAnLibrary::NFCfgYFactorNoiseSourceSettlingTime(niRFmxInstrHandle
 
 int32 NiRFmxSpecAnLibrary::NFClearCalibrationDatabase(niRFmxInstrHandle instrumentHandle, char calibrationSetupID[])
 {
-
   if (!function_pointers_.NFClearCalibrationDatabase) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFClearCalibrationDatabase.");
   }
@@ -3647,7 +3401,6 @@ int32 NiRFmxSpecAnLibrary::NFClearCalibrationDatabase(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::NFFetchAnalyzerNoiseFigure(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 analyzerNoiseFigure[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.NFFetchAnalyzerNoiseFigure) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFFetchAnalyzerNoiseFigure.");
   }
@@ -3660,7 +3413,6 @@ int32 NiRFmxSpecAnLibrary::NFFetchAnalyzerNoiseFigure(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::NFFetchColdSourcePower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 coldSourcePower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.NFFetchColdSourcePower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFFetchColdSourcePower.");
   }
@@ -3673,7 +3425,6 @@ int32 NiRFmxSpecAnLibrary::NFFetchColdSourcePower(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::NFFetchDUTNoiseFigureAndGain(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 dutNoiseFigure[], float64 dutNoiseTemperature[], float64 dutGain[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.NFFetchDUTNoiseFigureAndGain) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFFetchDUTNoiseFigureAndGain.");
   }
@@ -3686,7 +3437,6 @@ int32 NiRFmxSpecAnLibrary::NFFetchDUTNoiseFigureAndGain(niRFmxInstrHandle instru
 
 int32 NiRFmxSpecAnLibrary::NFFetchYFactorPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 hotPower[], float64 coldPower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.NFFetchYFactorPowers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFFetchYFactorPowers.");
   }
@@ -3699,7 +3449,6 @@ int32 NiRFmxSpecAnLibrary::NFFetchYFactorPowers(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::NFFetchYFactors(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 measurementYFactor[], float64 calibrationYFactor[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.NFFetchYFactors) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFFetchYFactors.");
   }
@@ -3712,7 +3461,6 @@ int32 NiRFmxSpecAnLibrary::NFFetchYFactors(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel)
 {
-
   if (!function_pointers_.NFRecommendReferenceLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFRecommendReferenceLevel.");
   }
@@ -3725,7 +3473,6 @@ int32 NiRFmxSpecAnLibrary::NFRecommendReferenceLevel(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::NFValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid)
 {
-
   if (!function_pointers_.NFValidateCalibrationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFValidateCalibrationData.");
   }
@@ -3738,7 +3485,6 @@ int32 NiRFmxSpecAnLibrary::NFValidateCalibrationData(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.OBWCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWCfgAveraging.");
   }
@@ -3751,7 +3497,6 @@ int32 NiRFmxSpecAnLibrary::OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::OBWCfgBandwidthPercentage(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 bandwidthPercentage)
 {
-
   if (!function_pointers_.OBWCfgBandwidthPercentage) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWCfgBandwidthPercentage.");
   }
@@ -3764,7 +3509,6 @@ int32 NiRFmxSpecAnLibrary::OBWCfgBandwidthPercentage(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::OBWCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
 {
-
   if (!function_pointers_.OBWCfgFFT) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWCfgFFT.");
   }
@@ -3777,7 +3521,6 @@ int32 NiRFmxSpecAnLibrary::OBWCfgFFT(niRFmxInstrHandle instrumentHandle, char se
 
 int32 NiRFmxSpecAnLibrary::OBWCfgPowerUnits(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 powerUnits)
 {
-
   if (!function_pointers_.OBWCfgPowerUnits) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWCfgPowerUnits.");
   }
@@ -3790,7 +3533,6 @@ int32 NiRFmxSpecAnLibrary::OBWCfgPowerUnits(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::OBWCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
 {
-
   if (!function_pointers_.OBWCfgRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWCfgRBWFilter.");
   }
@@ -3803,7 +3545,6 @@ int32 NiRFmxSpecAnLibrary::OBWCfgRBWFilter(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::OBWCfgSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span)
 {
-
   if (!function_pointers_.OBWCfgSpan) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWCfgSpan.");
   }
@@ -3816,7 +3557,6 @@ int32 NiRFmxSpecAnLibrary::OBWCfgSpan(niRFmxInstrHandle instrumentHandle, char s
 
 int32 NiRFmxSpecAnLibrary::OBWCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
 {
-
   if (!function_pointers_.OBWCfgSweepTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWCfgSweepTime.");
   }
@@ -3829,7 +3569,6 @@ int32 NiRFmxSpecAnLibrary::OBWCfgSweepTime(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::OBWFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* occupiedBandwidth, float64* averagePower, float64* frequencyResolution, float64* startFrequency, float64* stopFrequency)
 {
-
   if (!function_pointers_.OBWFetchMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWFetchMeasurement.");
   }
@@ -3842,7 +3581,6 @@ int32 NiRFmxSpecAnLibrary::OBWFetchMeasurement(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::OBWFetchSpectrumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.OBWFetchSpectrumTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWFetchSpectrumTrace.");
   }
@@ -3855,7 +3593,6 @@ int32 NiRFmxSpecAnLibrary::OBWFetchSpectrumTrace(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::OBWRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* occupiedBandwidth, float64* averagePower, float64* frequencyResolution, float64* startFrequency, float64* stopFrequency)
 {
-
   if (!function_pointers_.OBWRead) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_OBWRead.");
   }
@@ -3868,7 +3605,6 @@ int32 NiRFmxSpecAnLibrary::OBWRead(niRFmxInstrHandle instrumentHandle, char sele
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementBandwidth)
 {
-
   if (!function_pointers_.PAVTCfgMeasurementBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgMeasurementBandwidth.");
   }
@@ -3881,7 +3617,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementBandwidth(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurermentOffset, float64 measurermentLength)
 {
-
   if (!function_pointers_.PAVTCfgMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgMeasurementInterval.");
   }
@@ -3894,7 +3629,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementInterval(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementIntervalMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementIntervalMode)
 {
-
   if (!function_pointers_.PAVTCfgMeasurementIntervalMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgMeasurementIntervalMode.");
   }
@@ -3907,7 +3641,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementIntervalMode(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementLocationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementLocationType)
 {
-
   if (!function_pointers_.PAVTCfgMeasurementLocationType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgMeasurementLocationType.");
   }
@@ -3920,7 +3653,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementLocationType(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgNumberOfSegments(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfSegments)
 {
-
   if (!function_pointers_.PAVTCfgNumberOfSegments) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgNumberOfSegments.");
   }
@@ -3933,7 +3665,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgNumberOfSegments(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 segmentMeasurementOffset, float64 segmentMeasurementLength)
 {
-
   if (!function_pointers_.PAVTCfgSegmentMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgSegmentMeasurementInterval.");
   }
@@ -3946,7 +3677,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentMeasurementInterval(niRFmxInstrHandle i
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentMeasurementIntervalArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 segmentMeasurementOffset[], float64 segmentMeasurementLength[], int32 numberOfElements)
 {
-
   if (!function_pointers_.PAVTCfgSegmentMeasurementIntervalArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgSegmentMeasurementIntervalArray.");
   }
@@ -3959,7 +3689,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentMeasurementIntervalArray(niRFmxInstrHan
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentStartTimeList(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 segmentStartTime[], int32 numberOfElements)
 {
-
   if (!function_pointers_.PAVTCfgSegmentStartTimeList) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgSegmentStartTimeList.");
   }
@@ -3972,7 +3701,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentStartTimeList(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentStartTimeStep(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfSegments, float64 segment0StartTime, float64 segmentInterval)
 {
-
   if (!function_pointers_.PAVTCfgSegmentStartTimeStep) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgSegmentStartTimeStep.");
   }
@@ -3985,7 +3713,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentStartTimeStep(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 segmentType)
 {
-
   if (!function_pointers_.PAVTCfgSegmentType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgSegmentType.");
   }
@@ -3998,7 +3725,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentType(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentTypeArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 segmentType[], int32 numberOfElements)
 {
-
   if (!function_pointers_.PAVTCfgSegmentTypeArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgSegmentTypeArray.");
   }
@@ -4011,7 +3737,6 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgSegmentTypeArray(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::PAVTFetchAmplitudeTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 amplitude[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.PAVTFetchAmplitudeTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTFetchAmplitudeTrace.");
   }
@@ -4024,7 +3749,6 @@ int32 NiRFmxSpecAnLibrary::PAVTFetchAmplitudeTrace(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::PAVTFetchPhaseAndAmplitude(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRelativePhase, float64* meanRelativeAmplitude, float64* meanAbsolutePhase, float64* meanAbsoluteAmplitude)
 {
-
   if (!function_pointers_.PAVTFetchPhaseAndAmplitude) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTFetchPhaseAndAmplitude.");
   }
@@ -4037,7 +3761,6 @@ int32 NiRFmxSpecAnLibrary::PAVTFetchPhaseAndAmplitude(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::PAVTFetchPhaseAndAmplitudeArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 meanRelativePhase[], float64 meanRelativeAmplitude[], float64 meanAbsolutePhase[], float64 meanAbsoluteAmplitude[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.PAVTFetchPhaseAndAmplitudeArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTFetchPhaseAndAmplitudeArray.");
   }
@@ -4050,7 +3773,6 @@ int32 NiRFmxSpecAnLibrary::PAVTFetchPhaseAndAmplitudeArray(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::PAVTFetchPhaseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 phase[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.PAVTFetchPhaseTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTFetchPhaseTrace.");
   }
@@ -4063,7 +3785,6 @@ int32 NiRFmxSpecAnLibrary::PAVTFetchPhaseTrace(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgAutoRange(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency, float64 rbwPercentage)
 {
-
   if (!function_pointers_.PhaseNoiseCfgAutoRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgAutoRange.");
   }
@@ -4076,7 +3797,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgAutoRange(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgAveragingMultiplier(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingMultiplier)
 {
-
   if (!function_pointers_.PhaseNoiseCfgAveragingMultiplier) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgAveragingMultiplier.");
   }
@@ -4089,7 +3809,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgAveragingMultiplier(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgCancellation(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 cancellationEnabled, float64 cancellationThreshold, float32 frequency[], float32 referencePhaseNoise[], int32 arraySize)
 {
-
   if (!function_pointers_.PhaseNoiseCfgCancellation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgCancellation.");
   }
@@ -4102,7 +3821,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgCancellation(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgIntegratedNoise(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 integratedNoiseRangeDefinition, float64 integratedNoiseStartFrequency[], float64 integratedNoiseStopFrequency[], int32 arraySize)
 {
-
   if (!function_pointers_.PhaseNoiseCfgIntegratedNoise) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgIntegratedNoise.");
   }
@@ -4115,7 +3833,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgIntegratedNoise(niRFmxInstrHandle instru
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgNumberOfRanges(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfRanges)
 {
-
   if (!function_pointers_.PhaseNoiseCfgNumberOfRanges) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgNumberOfRanges.");
   }
@@ -4128,7 +3845,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgNumberOfRanges(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgRangeArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rangeStartFrequency[], float64 rangeStopFrequency[], float64 rangeRBWPercentage[], int32 rangeAveragingCount[], int32 numberOfElements)
 {
-
   if (!function_pointers_.PhaseNoiseCfgRangeArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgRangeArray.");
   }
@@ -4141,7 +3857,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgRangeArray(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgRangeDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rangeDefinition)
 {
-
   if (!function_pointers_.PhaseNoiseCfgRangeDefinition) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgRangeDefinition.");
   }
@@ -4154,7 +3869,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgRangeDefinition(niRFmxInstrHandle instru
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgSmoothing(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 smoothingType, float64 smoothingPercentage)
 {
-
   if (!function_pointers_.PhaseNoiseCfgSmoothing) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgSmoothing.");
   }
@@ -4167,7 +3881,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgSmoothing(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgSpotNoiseFrequencyList(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequencyList[], int32 arraySize)
 {
-
   if (!function_pointers_.PhaseNoiseCfgSpotNoiseFrequencyList) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgSpotNoiseFrequencyList.");
   }
@@ -4180,7 +3893,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgSpotNoiseFrequencyList(niRFmxInstrHandle
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgSpurRemoval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spurRemovalEnabled, float64 peakExcursion)
 {
-
   if (!function_pointers_.PhaseNoiseCfgSpurRemoval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseCfgSpurRemoval.");
   }
@@ -4193,7 +3905,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseCfgSpurRemoval(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* carrierFrequency, float64* carrierPower)
 {
-
   if (!function_pointers_.PhaseNoiseFetchCarrierMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseFetchCarrierMeasurement.");
   }
@@ -4206,7 +3917,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchCarrierMeasurement(niRFmxInstrHandle i
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchIntegratedNoise(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 integratedPhaseNoise[], float64 residualPMInRadian[], float64 residualPMInDegree[], float64 residualFM[], float64 jitter[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.PhaseNoiseFetchIntegratedNoise) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseFetchIntegratedNoise.");
   }
@@ -4219,7 +3929,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchIntegratedNoise(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchMeasuredLogPlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 frequency[], float32 measuredPhaseNoise[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.PhaseNoiseFetchMeasuredLogPlotTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseFetchMeasuredLogPlotTrace.");
   }
@@ -4232,7 +3941,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchMeasuredLogPlotTrace(niRFmxInstrHandle
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchSmoothedLogPlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 frequency[], float32 smoothedPhaseNoise[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.PhaseNoiseFetchSmoothedLogPlotTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseFetchSmoothedLogPlotTrace.");
   }
@@ -4245,7 +3953,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchSmoothedLogPlotTrace(niRFmxInstrHandle
 
 int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchSpotNoise(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 spotPhaseNoise[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.PhaseNoiseFetchSpotNoise) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseFetchSpotNoise.");
   }
@@ -4258,7 +3965,6 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchSpotNoise(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
 {
-
   if (!function_pointers_.ResetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ResetAttribute.");
   }
@@ -4271,7 +3977,6 @@ int32 NiRFmxSpecAnLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
 {
-
   if (!function_pointers_.ResetToDefault) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ResetToDefault.");
   }
@@ -4284,7 +3989,6 @@ int32 NiRFmxSpecAnLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.SEMCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgAveraging.");
   }
@@ -4297,7 +4001,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SEMCfgCarrierChannelBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierChannelBandwidth)
 {
-
   if (!function_pointers_.SEMCfgCarrierChannelBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgCarrierChannelBandwidth.");
   }
@@ -4310,7 +4013,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgCarrierChannelBandwidth(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::SEMCfgCarrierEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 carrierEnabled)
 {
-
   if (!function_pointers_.SEMCfgCarrierEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgCarrierEnabled.");
   }
@@ -4323,7 +4025,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgCarrierEnabled(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SEMCfgCarrierFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency)
 {
-
   if (!function_pointers_.SEMCfgCarrierFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgCarrierFrequency.");
   }
@@ -4336,7 +4037,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgCarrierFrequency(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::SEMCfgCarrierIntegrationBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth)
 {
-
   if (!function_pointers_.SEMCfgCarrierIntegrationBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgCarrierIntegrationBandwidth.");
   }
@@ -4349,7 +4049,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgCarrierIntegrationBandwidth(niRFmxInstrHandle i
 
 int32 NiRFmxSpecAnLibrary::SEMCfgCarrierRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
 {
-
   if (!function_pointers_.SEMCfgCarrierRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgCarrierRBWFilter.");
   }
@@ -4362,7 +4061,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgCarrierRBWFilter(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::SEMCfgCarrierRRCFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rrcFilterEnabled, float64 rrcAlpha)
 {
-
   if (!function_pointers_.SEMCfgCarrierRRCFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgCarrierRRCFilter.");
   }
@@ -4375,7 +4073,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgCarrierRRCFilter(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::SEMCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
 {
-
   if (!function_pointers_.SEMCfgFFT) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgFFT.");
   }
@@ -4388,7 +4085,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgFFT(niRFmxInstrHandle instrumentHandle, char se
 
 int32 NiRFmxSpecAnLibrary::SEMCfgNumberOfCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers)
 {
-
   if (!function_pointers_.SEMCfgNumberOfCarriers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgNumberOfCarriers.");
   }
@@ -4401,7 +4097,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgNumberOfCarriers(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::SEMCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfOffsets)
 {
-
   if (!function_pointers_.SEMCfgNumberOfOffsets) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgNumberOfOffsets.");
   }
@@ -4414,7 +4109,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgNumberOfOffsets(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetAbsoluteLimit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 absoluteLimitMode, float64 absoluteLimitStart, float64 absoluteLimitStop)
 {
-
   if (!function_pointers_.SEMCfgOffsetAbsoluteLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetAbsoluteLimit.");
   }
@@ -4427,7 +4121,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetAbsoluteLimit(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetAbsoluteLimitArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 absoluteLimitMode[], float64 absoluteLimitStart[], float64 absoluteLimitStop[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SEMCfgOffsetAbsoluteLimitArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetAbsoluteLimitArray.");
   }
@@ -4440,7 +4133,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetAbsoluteLimitArray(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetBandwidthIntegral(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 bandwidthIntegral)
 {
-
   if (!function_pointers_.SEMCfgOffsetBandwidthIntegral) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetBandwidthIntegral.");
   }
@@ -4453,7 +4145,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetBandwidthIntegral(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetStartFrequency, float64 offsetStopFrequency, int32 offsetEnabled, int32 offsetSideband)
 {
-
   if (!function_pointers_.SEMCfgOffsetFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetFrequency.");
   }
@@ -4466,7 +4157,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetFrequency(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetFrequencyArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetStartFrequency[], float64 offsetStopFrequency[], int32 offsetEnabled[], int32 offsetSideband[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SEMCfgOffsetFrequencyArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetFrequencyArray.");
   }
@@ -4479,7 +4169,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetFrequencyArray(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetFrequencyDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 offsetFrequencyDefinition)
 {
-
   if (!function_pointers_.SEMCfgOffsetFrequencyDefinition) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetFrequencyDefinition.");
   }
@@ -4492,7 +4181,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetFrequencyDefinition(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetLimitFailMask(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 limitFailMask)
 {
-
   if (!function_pointers_.SEMCfgOffsetLimitFailMask) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetLimitFailMask.");
   }
@@ -4505,7 +4193,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetLimitFailMask(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
 {
-
   if (!function_pointers_.SEMCfgOffsetRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetRBWFilter.");
   }
@@ -4518,7 +4205,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRBWFilter(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRBWFilterArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto[], float64 rbw[], int32 rbwFilterType[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SEMCfgOffsetRBWFilterArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetRBWFilterArray.");
   }
@@ -4531,7 +4217,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRBWFilterArray(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRelativeAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 relativeAttenuation)
 {
-
   if (!function_pointers_.SEMCfgOffsetRelativeAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetRelativeAttenuation.");
   }
@@ -4544,7 +4229,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRelativeAttenuation(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRelativeAttenuationArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 relativeAttenuation[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SEMCfgOffsetRelativeAttenuationArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetRelativeAttenuationArray.");
   }
@@ -4557,7 +4241,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRelativeAttenuationArray(niRFmxInstrHandl
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRelativeLimit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 relativeLimitMode, float64 relativeLimitStart, float64 relativeLimitStop)
 {
-
   if (!function_pointers_.SEMCfgOffsetRelativeLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetRelativeLimit.");
   }
@@ -4570,7 +4253,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRelativeLimit(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRelativeLimitArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 relativeLimitMode[], float64 relativeLimitStart[], float64 relativeLimitStop[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SEMCfgOffsetRelativeLimitArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgOffsetRelativeLimitArray.");
   }
@@ -4583,7 +4265,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgOffsetRelativeLimitArray(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::SEMCfgPowerUnits(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 powerUnits)
 {
-
   if (!function_pointers_.SEMCfgPowerUnits) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgPowerUnits.");
   }
@@ -4596,7 +4277,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgPowerUnits(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::SEMCfgReferenceType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceType)
 {
-
   if (!function_pointers_.SEMCfgReferenceType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgReferenceType.");
   }
@@ -4609,7 +4289,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgReferenceType(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::SEMCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
 {
-
   if (!function_pointers_.SEMCfgSweepTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMCfgSweepTime.");
   }
@@ -4622,7 +4301,6 @@ int32 NiRFmxSpecAnLibrary::SEMCfgSweepTime(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SEMFetchAbsoluteMaskTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 absoluteMask[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SEMFetchAbsoluteMaskTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchAbsoluteMaskTrace.");
   }
@@ -4635,7 +4313,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchAbsoluteMaskTrace(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SEMFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* peakAbsolutePower, float64* peakFrequency, float64* totalRelativePower)
 {
-
   if (!function_pointers_.SEMFetchCarrierMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchCarrierMeasurement.");
   }
@@ -4648,7 +4325,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchCarrierMeasurement(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::SEMFetchCompositeMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* compositeMeasurementStatus)
 {
-
   if (!function_pointers_.SEMFetchCompositeMeasurementStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchCompositeMeasurementStatus.");
   }
@@ -4661,7 +4337,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchCompositeMeasurementStatus(niRFmxInstrHandle 
 
 int32 NiRFmxSpecAnLibrary::SEMFetchFrequencyResolution(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* frequencyResolution)
 {
-
   if (!function_pointers_.SEMFetchFrequencyResolution) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchFrequencyResolution.");
   }
@@ -4674,7 +4349,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchFrequencyResolution(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::SEMFetchLowerOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
 {
-
   if (!function_pointers_.SEMFetchLowerOffsetMargin) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchLowerOffsetMargin.");
   }
@@ -4687,7 +4361,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchLowerOffsetMargin(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SEMFetchLowerOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SEMFetchLowerOffsetMarginArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchLowerOffsetMarginArray.");
   }
@@ -4700,7 +4373,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchLowerOffsetMarginArray(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::SEMFetchLowerOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalAbsolutePower, float64* totalRelativePower, float64* peakAbsolutePower, float64* peakFrequency, float64* peakRelativePower)
 {
-
   if (!function_pointers_.SEMFetchLowerOffsetPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchLowerOffsetPower.");
   }
@@ -4713,7 +4385,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchLowerOffsetPower(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::SEMFetchLowerOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 totalAbsolutePower[], float64 totalRelativePower[], float64 peakAbsolutePower[], float64 peakFrequency[], float64 peakRelativePower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SEMFetchLowerOffsetPowerArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchLowerOffsetPowerArray.");
   }
@@ -4726,7 +4397,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchLowerOffsetPowerArray(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::SEMFetchRelativeMaskTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 relativeMask[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SEMFetchRelativeMaskTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchRelativeMaskTrace.");
   }
@@ -4739,7 +4409,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchRelativeMaskTrace(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SEMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SEMFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchSpectrum.");
   }
@@ -4752,7 +4421,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchSpectrum(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::SEMFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
 {
-
   if (!function_pointers_.SEMFetchTotalCarrierPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchTotalCarrierPower.");
   }
@@ -4765,7 +4433,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchTotalCarrierPower(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SEMFetchUpperOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
 {
-
   if (!function_pointers_.SEMFetchUpperOffsetMargin) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchUpperOffsetMargin.");
   }
@@ -4778,7 +4445,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchUpperOffsetMargin(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SEMFetchUpperOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SEMFetchUpperOffsetMarginArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchUpperOffsetMarginArray.");
   }
@@ -4791,7 +4457,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchUpperOffsetMarginArray(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::SEMFetchUpperOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalAbsolutePower, float64* totalRelativePower, float64* peakAbsolutePower, float64* peakFrequency, float64* peakRelativePower)
 {
-
   if (!function_pointers_.SEMFetchUpperOffsetPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchUpperOffsetPower.");
   }
@@ -4804,7 +4469,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchUpperOffsetPower(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::SEMFetchUpperOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 totalAbsolutePower[], float64 totalRelativePower[], float64 peakAbsolutePower[], float64 peakFrequency[], float64 peakRelativePower[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SEMFetchUpperOffsetPowerArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SEMFetchUpperOffsetPowerArray.");
   }
@@ -4817,7 +4481,6 @@ int32 NiRFmxSpecAnLibrary::SEMFetchUpperOffsetPowerArray(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
 {
-
   if (!function_pointers_.SelectMeasurements) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SelectMeasurements.");
   }
@@ -4830,7 +4493,6 @@ int32 NiRFmxSpecAnLibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
 {
-
   if (!function_pointers_.SendSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SendSoftwareEdgeTrigger.");
   }
@@ -4843,7 +4505,6 @@ int32 NiRFmxSpecAnLibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
 {
-
   if (!function_pointers_.SetAttributeF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeF32.");
   }
@@ -4856,7 +4517,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeF32Array.");
   }
@@ -4869,7 +4529,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
 {
-
   if (!function_pointers_.SetAttributeF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeF64.");
   }
@@ -4882,7 +4541,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeF64Array.");
   }
@@ -4895,7 +4553,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
 {
-
   if (!function_pointers_.SetAttributeI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI16.");
   }
@@ -4908,7 +4565,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
 {
-
   if (!function_pointers_.SetAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI32.");
   }
@@ -4921,7 +4577,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeI32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI32Array.");
   }
@@ -4934,7 +4589,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
 {
-
   if (!function_pointers_.SetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI64.");
   }
@@ -4947,7 +4601,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI64Array.");
   }
@@ -4960,7 +4613,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
 {
-
   if (!function_pointers_.SetAttributeI8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI8.");
   }
@@ -4973,7 +4625,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeI8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI8Array.");
   }
@@ -4986,7 +4637,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeNIComplexDoubleArray.");
   }
@@ -4999,7 +4649,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeNIComplexSingleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeNIComplexSingleArray.");
   }
@@ -5012,7 +4661,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
 {
-
   if (!function_pointers_.SetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeString.");
   }
@@ -5025,7 +4673,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
 {
-
   if (!function_pointers_.SetAttributeU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeU16.");
   }
@@ -5038,7 +4685,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
 {
-
   if (!function_pointers_.SetAttributeU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeU32.");
   }
@@ -5051,7 +4697,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeU32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeU32Array.");
   }
@@ -5064,7 +4709,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeU64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeU64Array.");
   }
@@ -5077,7 +4721,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
 {
-
   if (!function_pointers_.SetAttributeU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeU8.");
   }
@@ -5090,7 +4733,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
 {
-
   if (!function_pointers_.SetAttributeU8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeU8Array.");
   }
@@ -5103,7 +4745,6 @@ int32 NiRFmxSpecAnLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.SpectrumCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgAveraging.");
   }
@@ -5116,7 +4757,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgAveraging(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints)
 {
-
   if (!function_pointers_.SpectrumCfgDetector) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgDetector.");
   }
@@ -5129,7 +4769,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgDetector(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
 {
-
   if (!function_pointers_.SpectrumCfgFFT) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgFFT.");
   }
@@ -5142,7 +4781,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgFFT(niRFmxInstrHandle instrumentHandle, ch
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgFrequencyStartStop(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency)
 {
-
   if (!function_pointers_.SpectrumCfgFrequencyStartStop) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgFrequencyStartStop.");
   }
@@ -5155,7 +4793,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgFrequencyStartStop(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)
 {
-
   if (!function_pointers_.SpectrumCfgNoiseCompensationEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgNoiseCompensationEnabled.");
   }
@@ -5168,7 +4805,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgNoiseCompensationEnabled(niRFmxInstrHandle
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgPowerUnits(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spectrumPowerUnits)
 {
-
   if (!function_pointers_.SpectrumCfgPowerUnits) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgPowerUnits.");
   }
@@ -5181,7 +4817,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgPowerUnits(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
 {
-
   if (!function_pointers_.SpectrumCfgRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgRBWFilter.");
   }
@@ -5194,7 +4829,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgRBWFilter(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span)
 {
-
   if (!function_pointers_.SpectrumCfgSpan) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgSpan.");
   }
@@ -5207,7 +4841,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgSpan(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
 {
-
   if (!function_pointers_.SpectrumCfgSweepTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgSweepTime.");
   }
@@ -5220,7 +4853,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgSweepTime(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgVBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 vbwAuto, float64 vbw, float64 vbwToRBWRatio)
 {
-
   if (!function_pointers_.SpectrumCfgVBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgVBWFilter.");
   }
@@ -5233,7 +4865,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgVBWFilter(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SpectrumFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakAmplitude, float64* peakFrequency, float64* frequencyResolution)
 {
-
   if (!function_pointers_.SpectrumFetchMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumFetchMeasurement.");
   }
@@ -5246,7 +4877,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumFetchMeasurement(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::SpectrumFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SpectrumFetchPowerTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumFetchPowerTrace.");
   }
@@ -5259,7 +4889,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumFetchPowerTrace(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxSpecAnLibrary::SpectrumFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SpectrumFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumFetchSpectrum.");
   }
@@ -5272,7 +4901,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumFetchSpectrum(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SpectrumRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SpectrumRead) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumRead.");
   }
@@ -5285,7 +4913,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumRead(niRFmxInstrHandle instrumentHandle, char
 
 int32 NiRFmxSpecAnLibrary::SpectrumValidateNoiseCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* noiseCalibrationDataValid)
 {
-
   if (!function_pointers_.SpectrumValidateNoiseCalibrationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumValidateNoiseCalibrationData.");
   }
@@ -5298,7 +4925,6 @@ int32 NiRFmxSpecAnLibrary::SpectrumValidateNoiseCalibrationData(niRFmxInstrHandl
 
 int32 NiRFmxSpecAnLibrary::SpurCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.SpurCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgAveraging.");
   }
@@ -5311,7 +4937,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgAveraging(niRFmxInstrHandle instrumentHandle, 
 
 int32 NiRFmxSpecAnLibrary::SpurCfgFFTWindowType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow)
 {
-
   if (!function_pointers_.SpurCfgFFTWindowType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgFFTWindowType.");
   }
@@ -5324,7 +4949,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgFFTWindowType(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SpurCfgNumberOfRanges(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfRanges)
 {
-
   if (!function_pointers_.SpurCfgNumberOfRanges) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgNumberOfRanges.");
   }
@@ -5337,7 +4961,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgNumberOfRanges(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeAbsoluteLimit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 absoluteLimitMode, float64 absoluteLimitStart, float64 absoluteLimitStop)
 {
-
   if (!function_pointers_.SpurCfgRangeAbsoluteLimit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeAbsoluteLimit.");
   }
@@ -5350,7 +4973,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeAbsoluteLimit(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeAbsoluteLimitArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 absoluteLimitMode[], float64 absoluteLimitStart[], float64 absoluteLimitStop[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangeAbsoluteLimitArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeAbsoluteLimitArray.");
   }
@@ -5363,7 +4985,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeAbsoluteLimitArray(niRFmxInstrHandle inst
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints)
 {
-
   if (!function_pointers_.SpurCfgRangeDetector) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeDetector.");
   }
@@ -5376,7 +4997,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeDetector(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeDetectorArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType[], int32 detectorPoints[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangeDetectorArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeDetectorArray.");
   }
@@ -5389,7 +5009,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeDetectorArray(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency, int32 rangeEnabled)
 {
-
   if (!function_pointers_.SpurCfgRangeFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeFrequency.");
   }
@@ -5402,7 +5021,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeFrequency(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeFrequencyArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency[], float64 stopFrequency[], int32 rangeEnabled[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangeFrequencyArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeFrequencyArray.");
   }
@@ -5415,7 +5033,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeFrequencyArray(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeNumberOfSpursToReport(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfSpursToReport)
 {
-
   if (!function_pointers_.SpurCfgRangeNumberOfSpursToReport) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeNumberOfSpursToReport.");
   }
@@ -5428,7 +5045,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeNumberOfSpursToReport(niRFmxInstrHandle i
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeNumberOfSpursToReportArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfSpursToReport[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangeNumberOfSpursToReportArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeNumberOfSpursToReportArray.");
   }
@@ -5441,7 +5057,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeNumberOfSpursToReportArray(niRFmxInstrHan
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangePeakCriteria(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 threshold, float64 excursion)
 {
-
   if (!function_pointers_.SpurCfgRangePeakCriteria) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangePeakCriteria.");
   }
@@ -5454,7 +5069,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangePeakCriteria(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangePeakCriteriaArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 threshold[], float64 excursion[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangePeakCriteriaArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangePeakCriteriaArray.");
   }
@@ -5467,7 +5081,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangePeakCriteriaArray(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeRBWArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto[], float64 rbw[], int32 rbwFilterType[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangeRBWArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeRBWArray.");
   }
@@ -5480,7 +5093,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeRBWArray(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
 {
-
   if (!function_pointers_.SpurCfgRangeRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeRBWFilter.");
   }
@@ -5493,7 +5105,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeRBWFilter(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeRelativeAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 relativeAttenuation)
 {
-
   if (!function_pointers_.SpurCfgRangeRelativeAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeRelativeAttenuation.");
   }
@@ -5506,7 +5117,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeRelativeAttenuation(niRFmxInstrHandle ins
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeRelativeAttenuationArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 relativeAttenuation[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangeRelativeAttenuationArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeRelativeAttenuationArray.");
   }
@@ -5519,7 +5129,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeRelativeAttenuationArray(niRFmxInstrHandl
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
 {
-
   if (!function_pointers_.SpurCfgRangeSweepTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeSweepTime.");
   }
@@ -5532,7 +5141,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeSweepTime(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeSweepTimeArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto[], float64 sweepTimeInterval[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangeSweepTimeArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeSweepTimeArray.");
   }
@@ -5545,7 +5153,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeSweepTimeArray(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeVBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 vbwAuto, float64 vbw, float64 vbwToRBWRatio)
 {
-
   if (!function_pointers_.SpurCfgRangeVBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeVBWFilter.");
   }
@@ -5558,7 +5165,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeVBWFilter(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnLibrary::SpurCfgRangeVBWFilterArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 vbwAuto[], float64 vbw[], float64 vbwToRBWRatio[], int32 numberOfElements)
 {
-
   if (!function_pointers_.SpurCfgRangeVBWFilterArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgRangeVBWFilterArray.");
   }
@@ -5571,7 +5177,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgRangeVBWFilterArray(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::SpurCfgTraceRangeIndex(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 traceRangeIndex)
 {
-
   if (!function_pointers_.SpurCfgTraceRangeIndex) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurCfgTraceRangeIndex.");
   }
@@ -5584,7 +5189,6 @@ int32 NiRFmxSpecAnLibrary::SpurCfgTraceRangeIndex(niRFmxInstrHandle instrumentHa
 
 int32 NiRFmxSpecAnLibrary::SpurFetchAllSpurs(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 spurFrequency[], float64 spurAmplitude[], float64 spurMargin[], float64 spurAbsoluteLimit[], int32 spurRangeIndex[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SpurFetchAllSpurs) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurFetchAllSpurs.");
   }
@@ -5597,7 +5201,6 @@ int32 NiRFmxSpecAnLibrary::SpurFetchAllSpurs(niRFmxInstrHandle instrumentHandle,
 
 int32 NiRFmxSpecAnLibrary::SpurFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
 {
-
   if (!function_pointers_.SpurFetchMeasurementStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurFetchMeasurementStatus.");
   }
@@ -5610,7 +5213,6 @@ int32 NiRFmxSpecAnLibrary::SpurFetchMeasurementStatus(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::SpurFetchRangeAbsoluteLimitTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 absoluteLimit[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SpurFetchRangeAbsoluteLimitTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurFetchRangeAbsoluteLimitTrace.");
   }
@@ -5623,7 +5225,6 @@ int32 NiRFmxSpecAnLibrary::SpurFetchRangeAbsoluteLimitTrace(niRFmxInstrHandle in
 
 int32 NiRFmxSpecAnLibrary::SpurFetchRangeSpectrumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 rangeSpectrum[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SpurFetchRangeSpectrumTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurFetchRangeSpectrumTrace.");
   }
@@ -5636,7 +5237,6 @@ int32 NiRFmxSpecAnLibrary::SpurFetchRangeSpectrumTrace(niRFmxInstrHandle instrum
 
 int32 NiRFmxSpecAnLibrary::SpurFetchRangeStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* rangeStatus, int32* detectedSpurs)
 {
-
   if (!function_pointers_.SpurFetchRangeStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurFetchRangeStatus.");
   }
@@ -5649,7 +5249,6 @@ int32 NiRFmxSpecAnLibrary::SpurFetchRangeStatus(niRFmxInstrHandle instrumentHand
 
 int32 NiRFmxSpecAnLibrary::SpurFetchRangeStatusArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 rangeStatus[], int32 numberOfDetectedSpurs[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SpurFetchRangeStatusArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurFetchRangeStatusArray.");
   }
@@ -5662,7 +5261,6 @@ int32 NiRFmxSpecAnLibrary::SpurFetchRangeStatusArray(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::SpurFetchSpurMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* spurFrequency, float64* spurAmplitude, float64* spurMargin, float64* spurAbsoluteLimit)
 {
-
   if (!function_pointers_.SpurFetchSpurMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurFetchSpurMeasurement.");
   }
@@ -5675,7 +5273,6 @@ int32 NiRFmxSpecAnLibrary::SpurFetchSpurMeasurement(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnLibrary::SpurFetchSpurMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 spurFrequency[], float64 spurAmplitude[], float64 spurAbsoluteLimit[], float64 spurMargin[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SpurFetchSpurMeasurementArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpurFetchSpurMeasurementArray.");
   }
@@ -5688,7 +5285,6 @@ int32 NiRFmxSpecAnLibrary::SpurFetchSpurMeasurementArray(niRFmxInstrHandle instr
 
 int32 NiRFmxSpecAnLibrary::TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
 {
-
   if (!function_pointers_.TXPCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_TXPCfgAveraging.");
   }
@@ -5701,7 +5297,6 @@ int32 NiRFmxSpecAnLibrary::TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::TXPCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
 {
-
   if (!function_pointers_.TXPCfgMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_TXPCfgMeasurementInterval.");
   }
@@ -5714,7 +5309,6 @@ int32 NiRFmxSpecAnLibrary::TXPCfgMeasurementInterval(niRFmxInstrHandle instrumen
 
 int32 NiRFmxSpecAnLibrary::TXPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rbw, int32 rbwFilterType, float64 rrcAlpha)
 {
-
   if (!function_pointers_.TXPCfgRBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_TXPCfgRBWFilter.");
   }
@@ -5727,7 +5321,6 @@ int32 NiRFmxSpecAnLibrary::TXPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::TXPCfgThreshold(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 thresholdLevel, int32 thresholdType)
 {
-
   if (!function_pointers_.TXPCfgThreshold) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_TXPCfgThreshold.");
   }
@@ -5740,7 +5333,6 @@ int32 NiRFmxSpecAnLibrary::TXPCfgThreshold(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::TXPCfgVBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 vbwAuto, float64 vbw, float64 vbwToRBWRatio)
 {
-
   if (!function_pointers_.TXPCfgVBWFilter) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_TXPCfgVBWFilter.");
   }
@@ -5753,7 +5345,6 @@ int32 NiRFmxSpecAnLibrary::TXPCfgVBWFilter(niRFmxInstrHandle instrumentHandle, c
 
 int32 NiRFmxSpecAnLibrary::TXPFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageMeanPower, float64* peakToAverageRatio, float64* maximumPower, float64* minimumPower)
 {
-
   if (!function_pointers_.TXPFetchMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_TXPFetchMeasurement.");
   }
@@ -5766,7 +5357,6 @@ int32 NiRFmxSpecAnLibrary::TXPFetchMeasurement(niRFmxInstrHandle instrumentHandl
 
 int32 NiRFmxSpecAnLibrary::TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.TXPFetchPowerTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_TXPFetchPowerTrace.");
   }
@@ -5779,7 +5369,6 @@ int32 NiRFmxSpecAnLibrary::TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnLibrary::TXPRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageMeanPower, float64* peakToAverageRatio, float64* maximumPower, float64* minimumPower)
 {
-
   if (!function_pointers_.TXPRead) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_TXPRead.");
   }
@@ -5792,7 +5381,6 @@ int32 NiRFmxSpecAnLibrary::TXPRead(niRFmxInstrHandle instrumentHandle, char sele
 
 int32 NiRFmxSpecAnLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
 {
-
   if (!function_pointers_.WaitForAcquisitionComplete) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_WaitForAcquisitionComplete.");
   }
@@ -5805,7 +5393,6 @@ int32 NiRFmxSpecAnLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrume
 
 int32 NiRFmxSpecAnLibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
 {
-
   if (!function_pointers_.WaitForMeasurementComplete) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_WaitForMeasurementComplete.");
   }

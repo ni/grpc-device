@@ -7,7 +7,6 @@
 #ifndef NIDCPOWER_GRPC_CLIENT_H
 #define NIDCPOWER_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nidcpower.grpc.pb.h>

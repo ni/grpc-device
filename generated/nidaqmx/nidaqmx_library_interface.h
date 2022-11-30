@@ -11,7 +11,6 @@
 
 namespace nidaqmx_grpc {
 
-
 class NiDAQmxLibraryInterface {
  public:
   virtual ~NiDAQmxLibraryInterface() {}

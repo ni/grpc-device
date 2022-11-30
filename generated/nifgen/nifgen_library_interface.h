@@ -11,7 +11,6 @@
 
 namespace nifgen_grpc {
 
-
 class NiFgenLibraryInterface {
  public:
   virtual ~NiFgenLibraryInterface() {}

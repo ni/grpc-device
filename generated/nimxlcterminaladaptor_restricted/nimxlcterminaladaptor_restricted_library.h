@@ -12,7 +12,6 @@
 
 namespace nimxlcterminaladaptor_restricted_grpc {
 
-
 class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_restricted_grpc::NimxlcTerminalAdaptorRestrictedLibraryInterface {
  public:
   NimxlcTerminalAdaptorRestrictedLibrary();

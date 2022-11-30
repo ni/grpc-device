@@ -11,7 +11,6 @@
 
 namespace nidigitalpattern_grpc {
 
-
 class NiDigitalLibraryInterface {
  public:
   virtual ~NiDigitalLibraryInterface() {}

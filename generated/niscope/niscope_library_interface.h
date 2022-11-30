@@ -11,7 +11,6 @@
 
 namespace niscope_grpc {
 
-
 class NiScopeLibraryInterface {
  public:
   virtual ~NiScopeLibraryInterface() {}

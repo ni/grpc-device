@@ -12,7 +12,6 @@
 
 namespace nixnetsocket_grpc {
 
-
 class NiXnetSocketLibraryInterface {
  public:
   virtual ~NiXnetSocketLibraryInterface() {}

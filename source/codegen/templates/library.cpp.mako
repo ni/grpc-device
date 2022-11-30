@@ -68,7 +68,6 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
 %>\
 ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 {
-
   if (!function_pointers_.${method_name}) {
     throw nidevice_grpc::LibraryLoadException("Could not find ${c_name}.");
   }

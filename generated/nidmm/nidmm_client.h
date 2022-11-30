@@ -7,7 +7,6 @@
 #ifndef NIDMM_GRPC_CLIENT_H
 #define NIDMM_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nidmm.grpc.pb.h>

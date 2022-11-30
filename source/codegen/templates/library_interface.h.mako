@@ -24,7 +24,6 @@ include_guard_name = service_helpers.get_include_guard_name(config, "_LIBRARY_WR
 
 namespace ${config["namespace_component"]}_grpc {
 
-
 class ${service_class_prefix}LibraryInterface {
  public:
   virtual ~${service_class_prefix}LibraryInterface() {}

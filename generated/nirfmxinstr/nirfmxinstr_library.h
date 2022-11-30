@@ -12,7 +12,6 @@
 
 namespace nirfmxinstr_grpc {
 
-
 class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface {
  public:
   NiRFmxInstrLibrary();

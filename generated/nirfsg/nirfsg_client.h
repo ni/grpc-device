@@ -7,7 +7,6 @@
 #ifndef NIRFSG_GRPC_CLIENT_H
 #define NIRFSG_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nirfsg.grpc.pb.h>

@@ -11,7 +11,6 @@
 #include <server/core_services_registrar.h>
 #include <server/session_repository.h>
 
-
 #include "nidaqmx/nidaqmx_service_registrar.h"
 #include "nidcpower/nidcpower_service_registrar.h"
 #include "nidigitalpattern/nidigitalpattern_service_registrar.h"

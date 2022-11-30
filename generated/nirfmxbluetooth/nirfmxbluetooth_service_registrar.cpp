@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nirfmxbluetooth_service.h"
 #include "nirfmxbluetooth_service_registrar.h"
 

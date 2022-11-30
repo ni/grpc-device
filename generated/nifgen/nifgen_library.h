@@ -12,7 +12,6 @@
 
 namespace nifgen_grpc {
 
-
 class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
  public:
   NiFgenLibrary();

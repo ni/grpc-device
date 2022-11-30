@@ -11,7 +11,6 @@
 
 namespace nirfsg_grpc {
 
-
 class NiRFSGLibraryInterface {
  public:
   virtual ~NiRFSGLibraryInterface() {}

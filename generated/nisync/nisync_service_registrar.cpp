@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nisync_service.h"
 #include "nisync_service_registrar.h"
 

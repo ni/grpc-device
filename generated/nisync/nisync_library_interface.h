@@ -11,7 +11,6 @@
 
 namespace nisync_grpc {
 
-
 class NiSyncLibraryInterface {
  public:
   virtual ~NiSyncLibraryInterface() {}

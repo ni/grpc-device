@@ -7,7 +7,6 @@
 #ifndef NIRFMXBLUETOOTH_GRPC_CLIENT_H
 #define NIRFMXBLUETOOTH_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nirfmxbluetooth.grpc.pb.h>

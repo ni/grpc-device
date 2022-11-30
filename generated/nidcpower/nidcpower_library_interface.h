@@ -11,7 +11,6 @@
 
 namespace nidcpower_grpc {
 
-
 class NiDCPowerLibraryInterface {
  public:
   virtual ~NiDCPowerLibraryInterface() {}

@@ -8,7 +8,6 @@
 
 #include <grpcpp/server_builder.h>
 
-
 #include "nirfmxspecan_service.h"
 #include "nirfmxspecan_service_registrar.h"
 

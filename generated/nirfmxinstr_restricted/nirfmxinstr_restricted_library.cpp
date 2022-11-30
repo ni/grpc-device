@@ -73,7 +73,6 @@ NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
 
 int32 NiRFmxInstrRestrictedLibrary::ConvertForPowerUnitsUtility(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut)
 {
-
   if (!function_pointers_.ConvertForPowerUnitsUtility) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_ConvertForPowerUnitsUtility.");
   }
@@ -82,7 +81,6 @@ int32 NiRFmxInstrRestrictedLibrary::ConvertForPowerUnitsUtility(niRFmxInstrHandl
 
 int32 NiRFmxInstrRestrictedLibrary::DeleteSnapshot(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[])
 {
-
   if (!function_pointers_.DeleteSnapshot) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_DeleteSnapshot.");
   }
@@ -91,7 +89,6 @@ int32 NiRFmxInstrRestrictedLibrary::DeleteSnapshot(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxInstrRestrictedLibrary::GetActiveResultName(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState)
 {
-
   if (!function_pointers_.GetActiveResultName) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetActiveResultName.");
   }
@@ -100,7 +97,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetActiveResultName(niRFmxInstrHandle instru
 
 int32 NiRFmxInstrRestrictedLibrary::GetActiveTableName(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char activeTableName[])
 {
-
   if (!function_pointers_.GetActiveTableName) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetActiveTableName.");
   }
@@ -109,7 +105,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetActiveTableName(niRFmxInstrHandle instrum
 
 int32 NiRFmxInstrRestrictedLibrary::GetAttributeAuthor(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
 {
-
   if (!function_pointers_.GetAttributeAuthor) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeAuthor.");
   }
@@ -118,7 +113,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetAttributeAuthor(niRFmxInstrHandle instrum
 
 int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal)
 {
-
   if (!function_pointers_.GetAttributeDesiredF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeDesiredF32.");
   }
@@ -127,7 +121,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredF32(niRFmxInstrHandle ins
 
 int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredF32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeDesiredF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeDesiredF32Array.");
   }
@@ -136,7 +129,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredF32Array(niRFmxInstrHandl
 
 int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredF64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64* attrVal)
 {
-
   if (!function_pointers_.GetAttributeDesiredF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeDesiredF64.");
   }
@@ -145,7 +137,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredF64(niRFmxInstrHandle ins
 
 int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredF64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.GetAttributeDesiredF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeDesiredF64Array.");
   }
@@ -154,7 +145,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredF64Array(niRFmxInstrHandl
 
 int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredI32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32* attrVal)
 {
-
   if (!function_pointers_.GetAttributeDesiredI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeDesiredI32.");
   }
@@ -163,7 +153,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredI32(niRFmxInstrHandle ins
 
 int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredI64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int64* attrVal)
 {
-
   if (!function_pointers_.GetAttributeDesiredI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeDesiredI64.");
   }
@@ -172,7 +161,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredI64(niRFmxInstrHandle ins
 
 int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredString(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32 arraySize, char attrVal[])
 {
-
   if (!function_pointers_.GetAttributeDesiredString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeDesiredString.");
   }
@@ -181,7 +169,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetAttributeDesiredString(niRFmxInstrHandle 
 
 int32 NiRFmxInstrRestrictedLibrary::GetCalibrationPlaneEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationPlaneEnabled)
 {
-
   if (!function_pointers_.GetCalibrationPlaneEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetCalibrationPlaneEnabled.");
   }
@@ -190,7 +177,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetCalibrationPlaneEnabled(niRFmxInstrHandle
 
 int32 NiRFmxInstrRestrictedLibrary::GetCalibrationPlaneNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calibrationPlaneNames[])
 {
-
   if (!function_pointers_.GetCalibrationPlaneNames) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetCalibrationPlaneNames.");
   }
@@ -199,7 +185,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetCalibrationPlaneNames(niRFmxInstrHandle i
 
 int32 NiRFmxInstrRestrictedLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
 {
-
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetError.");
   }
@@ -208,7 +193,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetError(niRFmxInstrHandle instrumentHandle,
 
 int32 NiRFmxInstrRestrictedLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
 {
-
   if (!function_pointers_.GetErrorString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetErrorString.");
   }
@@ -217,7 +201,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetErrorString(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxInstrRestrictedLibrary::GetExternalAttenuationTableNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char externalAttenuationTableNames[])
 {
-
   if (!function_pointers_.GetExternalAttenuationTableNames) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetExternalAttenuationTableNames.");
   }
@@ -226,7 +209,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetExternalAttenuationTableNames(niRFmxInstr
 
 int32 NiRFmxInstrRestrictedLibrary::GetForceAllTracesEnabled(niRFmxInstrHandle instrumentHandle, char channelName[], int32* attrVal)
 {
-
   if (!function_pointers_.GetForceAllTracesEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetForceAllTracesEnabled.");
   }
@@ -235,7 +217,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetForceAllTracesEnabled(niRFmxInstrHandle i
 
 int32 NiRFmxInstrRestrictedLibrary::GetInitiaitedSnapshotStrings(niRFmxInstrHandle instrumentHandle, uInt64* snapshotInfoCacheIndex, int32 personalityIDArray[], int32 personalityIDArraySize, int32* personalityIDArrayActualSize, char signalNames[], int32 signalNamesSize, int32* signalNamesActualSize, char resultNames[], int32 resultNamesSize, int32* resultNamesActualSize, char snapshotIdentifiers[], int32 snapshotIdentifiersSize, int32* snapshotIdentifiersActualSize, uInt64 snapshotTimestampArray[], int32 snapshotTimestampArraySize, int32* snapshotTimestampArrayActualSize)
 {
-
   if (!function_pointers_.GetInitiaitedSnapshotStrings) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetInitiaitedSnapshotStrings.");
   }
@@ -244,7 +225,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetInitiaitedSnapshotStrings(niRFmxInstrHand
 
 int32 NiRFmxInstrRestrictedLibrary::GetLatestConfigurationSnapshot(niRFmxInstrHandle instrumentHandle, uInt64* snapshotInfoCacheIndex, int32* personalityID, char signalName[], int32 signalNameSize, int32* signalNameActualSize, char snapshotIdentifier[], int32 snapshotIdentifierSize, int32* snapshotIdentifierActualSize, int32* signalConfigurationState, uInt64* signalTimestamp)
 {
-
   if (!function_pointers_.GetLatestConfigurationSnapshot) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetLatestConfigurationSnapshot.");
   }
@@ -253,7 +233,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetLatestConfigurationSnapshot(niRFmxInstrHa
 
 int32 NiRFmxInstrRestrictedLibrary::GetOpenSessionsInformation(char resourceName[], int32 infoJsonSize, char infoJson[])
 {
-
   if (!function_pointers_.GetOpenSessionsInformation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetOpenSessionsInformation.");
   }
@@ -262,7 +241,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetOpenSessionsInformation(char resourceName
 
 int32 NiRFmxInstrRestrictedLibrary::GetPrivilegeLevel(niRFmxInstrHandle instrumentHandle, int32* isConnectionAlive, int32* privilegeLevel)
 {
-
   if (!function_pointers_.GetPrivilegeLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetPrivilegeLevel.");
   }
@@ -271,7 +249,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetPrivilegeLevel(niRFmxInstrHandle instrume
 
 int32 NiRFmxInstrRestrictedLibrary::GetRFmxVersion(niRFmxInstrHandle instrumentHandle, int32 arraySize, char RFmxVersion[])
 {
-
   if (!function_pointers_.GetRFmxVersion) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetRFmxVersion.");
   }
@@ -280,7 +257,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetRFmxVersion(niRFmxInstrHandle instrumentH
 
 int32 NiRFmxInstrRestrictedLibrary::GetSessionUniqueIdentifier(char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[])
 {
-
   if (!function_pointers_.GetSessionUniqueIdentifier) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSessionUniqueIdentifier.");
   }
@@ -289,7 +265,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetSessionUniqueIdentifier(char resourceName
 
 int32 NiRFmxInstrRestrictedLibrary::GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp)
 {
-
   if (!function_pointers_.GetSignalConfigurationState64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSignalConfigurationState64.");
   }
@@ -298,7 +273,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetSignalConfigurationState64(niRFmxInstrHan
 
 int32 NiRFmxInstrRestrictedLibrary::GetSnapshotInfoFromCache(niRFmxInstrHandle instrumentHandle, uInt64 snapshotInfoCacheIndex, int32 personalityIDArray[], int32 personalityIDArraySize, int32* personalityIDArrayActualSize, char signalNames[], int32 signalNamesSize, int32* signalNamesActualSize, char resultNames[], int32 resultNamesSize, int32* resultNamesActualSize, char snapshotIdentifiers[], int32 snapshotIdentifiersSize, int32* snapshotIdentifiersActualSize, uInt64 snapshotTimestampArray[], int32 snapshotTimestampArraySize, int32* snapshotTimestampArrayActualSize)
 {
-
   if (!function_pointers_.GetSnapshotInfoFromCache) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSnapshotInfoFromCache.");
   }
@@ -307,7 +281,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetSnapshotInfoFromCache(niRFmxInstrHandle i
 
 int32 NiRFmxInstrRestrictedLibrary::GetSnapshotState(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState)
 {
-
   if (!function_pointers_.GetSnapshotState) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSnapshotState.");
   }
@@ -316,7 +289,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetSnapshotState(niRFmxInstrHandle instrumen
 
 int32 NiRFmxInstrRestrictedLibrary::GetTracesInfoForMonitorSnapshot(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* allTracesEnabled)
 {
-
   if (!function_pointers_.GetTracesInfoForMonitorSnapshot) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetTracesInfoForMonitorSnapshot.");
   }
@@ -325,7 +297,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetTracesInfoForMonitorSnapshot(niRFmxInstrH
 
 int32 NiRFmxInstrRestrictedLibrary::LoadAllForRevert(niRFmxInstrHandle instrumentHandle, char filePath[])
 {
-
   if (!function_pointers_.LoadAllForRevert) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_LoadAllForRevert.");
   }
@@ -334,7 +305,6 @@ int32 NiRFmxInstrRestrictedLibrary::LoadAllForRevert(niRFmxInstrHandle instrumen
 
 int32 NiRFmxInstrRestrictedLibrary::LoadConfigurationsFromJSON(niRFmxInstrHandle instrumentHandle, char jsonString[], int32 arraySize)
 {
-
   if (!function_pointers_.LoadConfigurationsFromJSON) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_LoadConfigurationsFromJSON.");
   }
@@ -343,7 +313,6 @@ int32 NiRFmxInstrRestrictedLibrary::LoadConfigurationsFromJSON(niRFmxInstrHandle
 
 int32 NiRFmxInstrRestrictedLibrary::RegisterSpecialClientSnapshotInterest(char resourceName[])
 {
-
   if (!function_pointers_.RegisterSpecialClientSnapshotInterest) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_RegisterSpecialClientSnapshotInterest.");
   }
@@ -352,7 +321,6 @@ int32 NiRFmxInstrRestrictedLibrary::RegisterSpecialClientSnapshotInterest(char r
 
 int32 NiRFmxInstrRestrictedLibrary::RequestPrivilege(niRFmxInstrHandle instrumentHandle, int32 privilegeLevel)
 {
-
   if (!function_pointers_.RequestPrivilege) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_RequestPrivilege.");
   }
@@ -361,7 +329,6 @@ int32 NiRFmxInstrRestrictedLibrary::RequestPrivilege(niRFmxInstrHandle instrumen
 
 int32 NiRFmxInstrRestrictedLibrary::SaveAllForRevert(niRFmxInstrHandle instrumentHandle, char filePath[])
 {
-
   if (!function_pointers_.SaveAllForRevert) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SaveAllForRevert.");
   }
@@ -370,7 +337,6 @@ int32 NiRFmxInstrRestrictedLibrary::SaveAllForRevert(niRFmxInstrHandle instrumen
 
 int32 NiRFmxInstrRestrictedLibrary::SaveConfigurationsToJSON(niRFmxInstrHandle instrumentHandle, char signalNames[], char jsonStringOut[], int32 arraySize, int32* actualArraySize)
 {
-
   if (!function_pointers_.SaveConfigurationsToJSON) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SaveConfigurationsToJSON.");
   }
@@ -379,7 +345,6 @@ int32 NiRFmxInstrRestrictedLibrary::SaveConfigurationsToJSON(niRFmxInstrHandle i
 
 int32 NiRFmxInstrRestrictedLibrary::SetForceAllTracesEnabled(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attrVal)
 {
-
   if (!function_pointers_.SetForceAllTracesEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetForceAllTracesEnabled.");
   }
@@ -388,7 +353,6 @@ int32 NiRFmxInstrRestrictedLibrary::SetForceAllTracesEnabled(niRFmxInstrHandle i
 
 int32 NiRFmxInstrRestrictedLibrary::SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus)
 {
-
   if (!function_pointers_.SetIOTraceStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetIOTraceStatus.");
   }
@@ -397,7 +361,6 @@ int32 NiRFmxInstrRestrictedLibrary::SetIOTraceStatus(niRFmxInstrHandle instrumen
 
 int32 NiRFmxInstrRestrictedLibrary::UnregisterSpecialClientSnapshotInterest(char resourceName[])
 {
-
   if (!function_pointers_.UnregisterSpecialClientSnapshotInterest) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_UnregisterSpecialClientSnapshotInterest.");
   }

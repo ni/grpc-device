@@ -15,7 +15,6 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-
 class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInterface {
  public:
   MOCK_METHOD(int32, Close, (FakeHandle handle), (override));

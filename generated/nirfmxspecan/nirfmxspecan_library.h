@@ -12,7 +12,6 @@
 
 namespace nirfmxspecan_grpc {
 
-
 class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterface {
  public:
   NiRFmxSpecAnLibrary();

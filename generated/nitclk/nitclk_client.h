@@ -7,7 +7,6 @@
 #ifndef NITCLK_GRPC_CLIENT_H
 #define NITCLK_GRPC_CLIENT_H
 
-
 #include <grpcpp/grpcpp.h>
 
 #include <nitclk.grpc.pb.h>

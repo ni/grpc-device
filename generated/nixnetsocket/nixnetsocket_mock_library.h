@@ -15,7 +15,6 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-
 class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterface {
  public:
   MOCK_METHOD(nxSOCKET, Accept, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));

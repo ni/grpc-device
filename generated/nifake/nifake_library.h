@@ -12,7 +12,6 @@
 
 namespace nifake_grpc {
 
-
 class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
  public:
   NiFakeLibrary();

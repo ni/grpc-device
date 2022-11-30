@@ -12,7 +12,6 @@
 
 namespace nirfmxwlan_grpc {
 
-
 class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
  public:
   NiRFmxWLANLibrary();

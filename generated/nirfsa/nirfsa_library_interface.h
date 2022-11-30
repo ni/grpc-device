@@ -12,7 +12,6 @@
 
 namespace nirfsa_grpc {
 
-
 class NiRFSALibraryInterface {
  public:
   virtual ~NiRFSALibraryInterface() {}
