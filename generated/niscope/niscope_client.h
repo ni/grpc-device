@@ -92,8 +92,8 @@ GetScalingCoefficientsResponse get_scaling_coefficients(const StubPtr& stub, con
 GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_name);
 ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration);
 ImportAttributeConfigurationFileResponse import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
-InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
-InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
+InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitiateAcquisitionResponse initiate_acquisition(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ProbeCompensationSignalStartResponse probe_compensation_signal_start(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ProbeCompensationSignalStopResponse probe_compensation_signal_stop(const StubPtr& stub, const nidevice_grpc::Session& vi);

@@ -30,6 +30,22 @@ functions = {
                 'return_value': True,
                 'type': 'nxSOCKET'
             },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
+            }
         ],
         'returns': 'nxSOCKET'
     },
@@ -563,6 +579,22 @@ functions = {
                 'name': 'stack_ref',
                 'type': 'nxIpStackRef_t'
             },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
+            }
         ],
         'returns': 'int32_t'
     },
@@ -648,6 +680,22 @@ functions = {
                 'name': 'stack_ref',
                 'type': 'nxIpStackRef_t'
             },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
+            }
         ],
         'returns': 'int32_t'
     },
@@ -994,6 +1042,22 @@ functions = {
                 'return_value': True,
                 'type': 'nxSOCKET'
             },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
+            }
         ],
         'returns': 'nxSOCKET'
     },

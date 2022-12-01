@@ -18,12 +18,13 @@
 namespace nixnetsocket_grpc::experimental::client {
 
 AcceptResponse
-accept(const StubPtr& stub, const nidevice_grpc::Session& socket)
+accept(const StubPtr& stub, const nidevice_grpc::Session& socket, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = AcceptRequest{};
   request.mutable_socket()->CopyFrom(socket);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = AcceptResponse{};
 
@@ -329,13 +330,14 @@ ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 }
 
 IpStackCreateResponse
-ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config)
+ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = IpStackCreateRequest{};
   request.set_stack_name(stack_name);
   request.set_config(config);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = IpStackCreateResponse{};
 
@@ -388,12 +390,13 @@ ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 }
 
 IpStackOpenResponse
-ip_stack_open(const StubPtr& stub, const pb::string& stack_name)
+ip_stack_open(const StubPtr& stub, const pb::string& stack_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = IpStackOpenRequest{};
   request.set_stack_name(stack_name);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = IpStackOpenResponse{};
 
@@ -598,7 +601,7 @@ shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple
 }
 
 SocketResponse
-socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& protocol)
+socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& protocol, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -628,6 +631,7 @@ socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simpl
   else if (protocol_raw_ptr) {
     request.set_protocol_raw(*protocol_raw_ptr);
   }
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = SocketResponse{};
 

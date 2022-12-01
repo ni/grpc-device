@@ -1708,9 +1708,25 @@ functions = {
             },
             {
                 'direction': 'out',
-                'get_last_error': 'get_last_error_message',
+                'get_last_error': 'deprecated',
                 'name': 'errorMessage',
                 'type': 'char[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'
@@ -1734,9 +1750,25 @@ functions = {
             },
             {
                 'direction': 'out',
-                'get_last_error': 'get_last_error_message',
+                'get_last_error': 'deprecated',
                 'name': 'errorMessage',
                 'type': 'char[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'
@@ -1769,9 +1801,25 @@ functions = {
             },
             {
                 'direction': 'out',
-                'get_last_error': 'get_last_error_message',
+                'get_last_error': 'deprecated',
                 'name': 'errorMessage',
                 'type': 'char[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'

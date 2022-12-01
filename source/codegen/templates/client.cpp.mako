@@ -50,7 +50,7 @@ namespace ${namespace} {
 %>\
 %   if is_streaming:
 ${client_helpers.streaming_response_type(response_type)}
-${client_method_name}(${client_helpers.create_streaming_params(client_params)})
+${client_method_name}(${client_helpers.create_streaming_params(client_params, for_header = False)})
 {
   auto request = ${request_type}{};
 ${mako_helper.build_request(client_params)}\
@@ -59,7 +59,7 @@ ${mako_helper.build_request(client_params)}\
 }
 %   else:
 ${response_type}
-${client_method_name}(${client_helpers.create_unary_params(client_params)})
+${client_method_name}(${client_helpers.create_unary_params(client_params, for_header = False)})
 {
   ::grpc::ClientContext context;
 

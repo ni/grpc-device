@@ -97,8 +97,8 @@ GetSpectralInfoForSMTResponse get_spectral_info_for_smt(const StubPtr& stub, con
 GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint);
 GetTerminalNameResponse get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const pb::int32& buffer_size);
 GetUserDataResponse get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier);
-InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset);
-InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const pb::string& option_string);
+InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsSelfCalValidResponse is_self_cal_valid(const StubPtr& stub, const nidevice_grpc::Session& vi);
