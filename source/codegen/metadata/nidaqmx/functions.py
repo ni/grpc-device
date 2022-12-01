@@ -5635,6 +5635,22 @@ functions = {
                 'direction': 'out',
                 'name': 'task',
                 'type': 'TaskHandle'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'
@@ -5685,6 +5701,22 @@ functions = {
                 'max_length': 96,
                 'name': 'expStates',
                 'repeated_var_args': True
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'
@@ -5712,6 +5744,22 @@ functions = {
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'float64'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'
@@ -9138,6 +9186,22 @@ functions = {
                 'direction': 'out',
                 'name': 'task',
                 'type': 'TaskHandle'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'

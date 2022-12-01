@@ -4421,12 +4421,13 @@ create_table_scale(const StubPtr& stub, const pb::string& name, const std::vecto
 }
 
 CreateTaskResponse
-create_task(const StubPtr& stub, const pb::string& session_name)
+create_task(const StubPtr& stub, const pb::string& session_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateTaskRequest{};
   request.set_session_name(session_name);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = CreateTaskResponse{};
 
@@ -4438,7 +4439,7 @@ create_task(const StubPtr& stub, const pb::string& session_name)
 }
 
 CreateWatchdogTimerTaskResponse
-create_watchdog_timer_task(const StubPtr& stub, const pb::string& device_name, const pb::string& session_name, const double& timeout, const std::vector<WatchdogExpChannelsAndState>& exp_states)
+create_watchdog_timer_task(const StubPtr& stub, const pb::string& device_name, const pb::string& session_name, const double& timeout, const std::vector<WatchdogExpChannelsAndState>& exp_states, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -4447,6 +4448,7 @@ create_watchdog_timer_task(const StubPtr& stub, const pb::string& device_name, c
   request.set_session_name(session_name);
   request.set_timeout(timeout);
   copy_array(exp_states, request.mutable_exp_states());
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = CreateWatchdogTimerTaskResponse{};
 
@@ -4458,7 +4460,7 @@ create_watchdog_timer_task(const StubPtr& stub, const pb::string& device_name, c
 }
 
 CreateWatchdogTimerTaskExResponse
-create_watchdog_timer_task_ex(const StubPtr& stub, const pb::string& device_name, const pb::string& session_name, const double& timeout)
+create_watchdog_timer_task_ex(const StubPtr& stub, const pb::string& device_name, const pb::string& session_name, const double& timeout, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -4466,6 +4468,7 @@ create_watchdog_timer_task_ex(const StubPtr& stub, const pb::string& device_name
   request.set_device_name(device_name);
   request.set_session_name(session_name);
   request.set_timeout(timeout);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = CreateWatchdogTimerTaskExResponse{};
 
@@ -7278,12 +7281,13 @@ is_task_done(const StubPtr& stub, const nidevice_grpc::Session& task)
 }
 
 LoadTaskResponse
-load_task(const StubPtr& stub, const pb::string& session_name)
+load_task(const StubPtr& stub, const pb::string& session_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = LoadTaskRequest{};
   request.set_session_name(session_name);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = LoadTaskResponse{};
 

@@ -71,7 +71,7 @@ GetViUInt32ArrayResponse get_vi_uint32_array(const StubPtr& stub, const nidevice
 GetViUInt8Response get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration);
 InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& calibration_password);
-InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
+InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitWithVarArgsResponse init_with_var_args(const StubPtr& stub, const pb::string& resource_name, const std::vector<StringAndTurtle>& name_and_turtle);
 MethodUsingEnumWithGrpcNameValuesResponse method_using_enum_with_grpc_name_values(const StubPtr& stub, const simple_variant<EnumWithGrpcNameValues, pb::int32>& using_enum);
 MethodUsingWholeAndFractionalNumbersResponse method_using_whole_and_fractional_numbers(const StubPtr& stub);

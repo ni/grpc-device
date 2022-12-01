@@ -42,12 +42,14 @@ message NIMXLCTerminal {
 message CreateSessionRequest {
   string session_name = 1;
   string hostname = 2;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 3;
 }
 
 message CreateSessionResponse {
   int32 status = 1;
   NIErrStatus c_status = 2;
   nidevice_grpc.Session handle = 3;
+  bool new_session_initialized = 4;
 }
 
 message DestroySessionRequest {

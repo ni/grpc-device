@@ -399,7 +399,9 @@ namespace nixnet_grpc {
         }
       }
 
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         nxSessionRef_t session;
         auto status = library_->CreateSession(database_name, cluster_name, list, interface_name, mode, &session);
@@ -407,12 +409,13 @@ namespace nixnet_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->Clear(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
       }
       response->set_status(status);
       response->mutable_session()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -454,7 +457,9 @@ namespace nixnet_grpc {
         }
       }
 
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         nxSessionRef_t session;
         auto status = library_->CreateSessionByRef(number_of_database_ref, array_of_database_ref.data(), interface_name, mode, &session);
@@ -462,12 +467,13 @@ namespace nixnet_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->Clear(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
       }
       response->set_status(status);
       response->mutable_session()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -828,7 +834,9 @@ namespace nixnet_grpc {
     try {
       auto database_name_mbcs = convert_from_grpc<std::string>(request->database_name());
       auto database_name = database_name_mbcs.c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         nxDatabaseRef_t database;
         auto status = library_->DbOpenDatabase(database_name, &database);
@@ -836,12 +844,13 @@ namespace nixnet_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxDatabaseRef_t id) { library_->DbCloseDatabase(id, false); };
-      int status = nx_database_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = nx_database_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
       }
       response->set_status(status);
       response->mutable_database()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1474,7 +1483,9 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         nxSessionRef_t system;
         auto status = library_->SystemOpen(&system);
@@ -1482,12 +1493,13 @@ namespace nixnet_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->SystemClose(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
       }
       response->set_status(status);
       response->mutable_system()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

@@ -1489,13 +1489,14 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 InitializeResponse
-initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string)
+initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = InitializeRequest{};
   request.set_resource_name(resource_name);
   request.set_option_string(option_string);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitializeResponse{};
 
@@ -1507,12 +1508,13 @@ initialize(const StubPtr& stub, const pb::string& resource_name, const pb::strin
 }
 
 InitializeFromNIRFSASessionResponse
-initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session)
+initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = InitializeFromNIRFSASessionRequest{};
   request.mutable_nirfsa_session()->CopyFrom(nirfsa_session);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitializeFromNIRFSASessionResponse{};
 

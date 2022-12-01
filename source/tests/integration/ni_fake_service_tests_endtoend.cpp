@@ -66,7 +66,7 @@ class NiFakeServiceTests_EndToEnd : public ::testing::Test {
 
 InitWithOptionsResponse init(const client::StubPtr& stub)
 {
-  return client::init_with_options(stub, "", false, false, "", nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+  return client::init_with_options(stub, "", false, false, "");
 }
 
 TEST_F(NiFakeServiceTests_EndToEnd, PassMappedEnumToGeneratedClient_PassesStringValueToLibraryAndSucceeds)

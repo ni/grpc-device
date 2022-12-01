@@ -7279,7 +7279,9 @@ namespace nidaqmx_grpc {
     try {
       auto session_name_mbcs = convert_from_grpc<std::string>(request->session_name());
       auto session_name = session_name_mbcs.c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         TaskHandle task;
         auto status = library_->CreateTask(session_name, &task);
@@ -7287,12 +7289,13 @@ namespace nidaqmx_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_task()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -7333,7 +7336,9 @@ namespace nidaqmx_grpc {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 96 values for expStates were specified");
       }
 
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         TaskHandle task;
         auto status = ((NiDAQmxLibrary*)library_)->CreateWatchdogTimerTask(device_name, session_name, &task, timeout, get_lines_if(exp_states, 0), get_expState_if(exp_states, 0), get_lines_if(exp_states, 1), get_expState_if(exp_states, 1), get_lines_if(exp_states, 2), get_expState_if(exp_states, 2), get_lines_if(exp_states, 3), get_expState_if(exp_states, 3), get_lines_if(exp_states, 4), get_expState_if(exp_states, 4), get_lines_if(exp_states, 5), get_expState_if(exp_states, 5), get_lines_if(exp_states, 6), get_expState_if(exp_states, 6), get_lines_if(exp_states, 7), get_expState_if(exp_states, 7), get_lines_if(exp_states, 8), get_expState_if(exp_states, 8), get_lines_if(exp_states, 9), get_expState_if(exp_states, 9), get_lines_if(exp_states, 10), get_expState_if(exp_states, 10), get_lines_if(exp_states, 11), get_expState_if(exp_states, 11), get_lines_if(exp_states, 12), get_expState_if(exp_states, 12), get_lines_if(exp_states, 13), get_expState_if(exp_states, 13), get_lines_if(exp_states, 14), get_expState_if(exp_states, 14), get_lines_if(exp_states, 15), get_expState_if(exp_states, 15), get_lines_if(exp_states, 16), get_expState_if(exp_states, 16), get_lines_if(exp_states, 17), get_expState_if(exp_states, 17), get_lines_if(exp_states, 18), get_expState_if(exp_states, 18), get_lines_if(exp_states, 19), get_expState_if(exp_states, 19), get_lines_if(exp_states, 20), get_expState_if(exp_states, 20), get_lines_if(exp_states, 21), get_expState_if(exp_states, 21), get_lines_if(exp_states, 22), get_expState_if(exp_states, 22), get_lines_if(exp_states, 23), get_expState_if(exp_states, 23), get_lines_if(exp_states, 24), get_expState_if(exp_states, 24), get_lines_if(exp_states, 25), get_expState_if(exp_states, 25), get_lines_if(exp_states, 26), get_expState_if(exp_states, 26), get_lines_if(exp_states, 27), get_expState_if(exp_states, 27), get_lines_if(exp_states, 28), get_expState_if(exp_states, 28), get_lines_if(exp_states, 29), get_expState_if(exp_states, 29), get_lines_if(exp_states, 30), get_expState_if(exp_states, 30), get_lines_if(exp_states, 31), get_expState_if(exp_states, 31), get_lines_if(exp_states, 32), get_expState_if(exp_states, 32), get_lines_if(exp_states, 33), get_expState_if(exp_states, 33), get_lines_if(exp_states, 34), get_expState_if(exp_states, 34), get_lines_if(exp_states, 35), get_expState_if(exp_states, 35), get_lines_if(exp_states, 36), get_expState_if(exp_states, 36), get_lines_if(exp_states, 37), get_expState_if(exp_states, 37), get_lines_if(exp_states, 38), get_expState_if(exp_states, 38), get_lines_if(exp_states, 39), get_expState_if(exp_states, 39), get_lines_if(exp_states, 40), get_expState_if(exp_states, 40), get_lines_if(exp_states, 41), get_expState_if(exp_states, 41), get_lines_if(exp_states, 42), get_expState_if(exp_states, 42), get_lines_if(exp_states, 43), get_expState_if(exp_states, 43), get_lines_if(exp_states, 44), get_expState_if(exp_states, 44), get_lines_if(exp_states, 45), get_expState_if(exp_states, 45), get_lines_if(exp_states, 46), get_expState_if(exp_states, 46), get_lines_if(exp_states, 47), get_expState_if(exp_states, 47), get_lines_if(exp_states, 48), get_expState_if(exp_states, 48), get_lines_if(exp_states, 49), get_expState_if(exp_states, 49), get_lines_if(exp_states, 50), get_expState_if(exp_states, 50), get_lines_if(exp_states, 51), get_expState_if(exp_states, 51), get_lines_if(exp_states, 52), get_expState_if(exp_states, 52), get_lines_if(exp_states, 53), get_expState_if(exp_states, 53), get_lines_if(exp_states, 54), get_expState_if(exp_states, 54), get_lines_if(exp_states, 55), get_expState_if(exp_states, 55), get_lines_if(exp_states, 56), get_expState_if(exp_states, 56), get_lines_if(exp_states, 57), get_expState_if(exp_states, 57), get_lines_if(exp_states, 58), get_expState_if(exp_states, 58), get_lines_if(exp_states, 59), get_expState_if(exp_states, 59), get_lines_if(exp_states, 60), get_expState_if(exp_states, 60), get_lines_if(exp_states, 61), get_expState_if(exp_states, 61), get_lines_if(exp_states, 62), get_expState_if(exp_states, 62), get_lines_if(exp_states, 63), get_expState_if(exp_states, 63), get_lines_if(exp_states, 64), get_expState_if(exp_states, 64), get_lines_if(exp_states, 65), get_expState_if(exp_states, 65), get_lines_if(exp_states, 66), get_expState_if(exp_states, 66), get_lines_if(exp_states, 67), get_expState_if(exp_states, 67), get_lines_if(exp_states, 68), get_expState_if(exp_states, 68), get_lines_if(exp_states, 69), get_expState_if(exp_states, 69), get_lines_if(exp_states, 70), get_expState_if(exp_states, 70), get_lines_if(exp_states, 71), get_expState_if(exp_states, 71), get_lines_if(exp_states, 72), get_expState_if(exp_states, 72), get_lines_if(exp_states, 73), get_expState_if(exp_states, 73), get_lines_if(exp_states, 74), get_expState_if(exp_states, 74), get_lines_if(exp_states, 75), get_expState_if(exp_states, 75), get_lines_if(exp_states, 76), get_expState_if(exp_states, 76), get_lines_if(exp_states, 77), get_expState_if(exp_states, 77), get_lines_if(exp_states, 78), get_expState_if(exp_states, 78), get_lines_if(exp_states, 79), get_expState_if(exp_states, 79), get_lines_if(exp_states, 80), get_expState_if(exp_states, 80), get_lines_if(exp_states, 81), get_expState_if(exp_states, 81), get_lines_if(exp_states, 82), get_expState_if(exp_states, 82), get_lines_if(exp_states, 83), get_expState_if(exp_states, 83), get_lines_if(exp_states, 84), get_expState_if(exp_states, 84), get_lines_if(exp_states, 85), get_expState_if(exp_states, 85), get_lines_if(exp_states, 86), get_expState_if(exp_states, 86), get_lines_if(exp_states, 87), get_expState_if(exp_states, 87), get_lines_if(exp_states, 88), get_expState_if(exp_states, 88), get_lines_if(exp_states, 89), get_expState_if(exp_states, 89), get_lines_if(exp_states, 90), get_expState_if(exp_states, 90), get_lines_if(exp_states, 91), get_expState_if(exp_states, 91), get_lines_if(exp_states, 92), get_expState_if(exp_states, 92), get_lines_if(exp_states, 93), get_expState_if(exp_states, 93), get_lines_if(exp_states, 94), get_expState_if(exp_states, 94), get_lines_if(exp_states, 95), get_expState_if(exp_states, 95), get_lines_if(exp_states, 96), get_expState_if(exp_states, 96));
@@ -7341,12 +7346,13 @@ namespace nidaqmx_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_task()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -7367,7 +7373,9 @@ namespace nidaqmx_grpc {
       auto session_name_mbcs = convert_from_grpc<std::string>(request->session_name());
       auto session_name = session_name_mbcs.c_str();
       float64 timeout = request->timeout();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         TaskHandle task;
         auto status = library_->CreateWatchdogTimerTaskEx(device_name, session_name, &task, timeout);
@@ -7375,12 +7383,13 @@ namespace nidaqmx_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_task()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -12895,7 +12904,9 @@ namespace nidaqmx_grpc {
     try {
       auto session_name_mbcs = convert_from_grpc<std::string>(request->session_name());
       auto session_name = session_name_mbcs.c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         TaskHandle task;
         auto status = library_->LoadTask(session_name, &task);
@@ -12903,12 +12914,13 @@ namespace nidaqmx_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_task()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

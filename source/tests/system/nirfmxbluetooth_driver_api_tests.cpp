@@ -114,6 +114,25 @@ TEST_F(NiRFmxBluetoothDriverApiTests, Init_Close_Succeeds)
   EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
+TEST_F(NiRFmxBluetoothDriverApiTests, Init_InitAgain_NewSessionInitializedValuesDiffer)
+{
+  auto init_response = init(stub(), PXI_5663E);
+  auto session = init_response.instrument();
+  EXPECT_RESPONSE_SUCCESS(init_response);
+  EXPECT_TRUE(init_response.is_new_session());
+  EXPECT_TRUE(init_response.new_session_initialized());
+
+  auto init_response_2 = init(stub(), PXI_5663E);
+  EXPECT_RESPONSE_SUCCESS(init_response_2);
+
+  // 'is_new_session' comes from the driver and we expect that to be false since the same resource string and options were used.
+  // 'new_session_initialized' should be true here, though, since a new grpc-device session name is used. This indicates when the
+  // server calls the driver init method and a new mapping is created between the grpc-device session name and the session handle
+  // returned from the driver.
+  EXPECT_FALSE(init_response_2.is_new_session());
+  EXPECT_TRUE(init_response_2.new_session_initialized());
+}
+
 TEST_F(NiRFmxBluetoothDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();

@@ -465,7 +465,7 @@ def add_get_last_error_params_if_needed(function_data: Dict[str, Any], config: d
         parameters.append(
             {
                 "direction": "out",
-                "get_last_error": f"get_last_{get_last_error_field['name']}",
+                "get_last_error": "deprecated",
                 "name": get_last_error_field["name"],
                 "type": get_last_error_field["type"],
             }

@@ -19,7 +19,7 @@ class ParamMechanism(Enum):
     BITFIELD_AS_ENUM_ARRAY = 5
 
 
-ClientParam = namedtuple("ClientParam", ["name", "cppName", "type", "mechanism"])
+ClientParam = namedtuple("ClientParam", ["name", "cppName", "type", "mechanism", "default"])
 
 
 PROTOBUF_PRIM_TYPES = ["bool", "double", "float"]
@@ -43,8 +43,15 @@ PROTOBUF_TYPE_TO_CPP_TYPE = {
 NIDEVICE_ENUMS = ["nidevice_grpc.SessionInitializationBehavior"]
 
 
-def _to_parameter_list(client_params: List[ClientParam]) -> List[str]:
-    param_list = [f"{p.type} {p.cppName}" for p in client_params]
+def _to_parameter_for_list(client_param: ClientParam, for_header: bool) -> str:
+    if not for_header or client_param.default is None:
+        return f"{client_param.type} {client_param.cppName}"
+    else:
+        return f"{client_param.type} {client_param.cppName} = {client_param.default}"
+
+
+def _to_parameter_list(client_params: List[ClientParam], for_header: bool) -> List[str]:
+    param_list = [_to_parameter_for_list(p, for_header) for p in client_params]
 
     return param_list
 
@@ -54,17 +61,17 @@ def stub_param() -> str:
     return f"const {stub_ptr_alias()}& stub"
 
 
-def create_streaming_params(client_params: List[ClientParam]) -> str:
+def create_streaming_params(client_params: List[ClientParam], for_header: bool) -> str:
     """Build the C++ parameter list for streaming functions."""
-    params = _to_parameter_list(client_params)
+    params = _to_parameter_list(client_params, for_header)
     client_context_param = "::grpc::ClientContext& context"
     params = [stub_param()] + [client_context_param] + params
     return str.join(", ", params)
 
 
-def create_unary_params(client_params: List[ClientParam]) -> str:
+def create_unary_params(client_params: List[ClientParam], for_header: bool) -> str:
     """Build the C++ parameter list for normal functions."""
-    params = _to_parameter_list(client_params)
+    params = _to_parameter_list(client_params, for_header)
     params = [stub_param()] + params
     return str.join(", ", params)
 
@@ -140,14 +147,21 @@ def _get_param_mechanism(param: dict) -> ParamMechanism:
     return ParamMechanism.COPY
 
 
+def _get_param_default(param: dict) -> str:
+    if param["grpc_type"] == "nidevice_grpc.SessionInitializationBehavior":
+        return "nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED"
+    return None
+
+
 def _create_client_param(param: dict, enums: dict) -> ClientParam:
     name = common_helpers.get_grpc_field_name(param)
     cppname = common_helpers.get_grpc_client_field_name(param)
     param_type = _get_cpp_client_param_type(param, enums)
     param_type = _const_ref_t(param_type)
     param_mechanism = _get_param_mechanism(param)
+    param_default = _get_param_default(param)
 
-    return ClientParam(name, cppname, param_type, param_mechanism)
+    return ClientParam(name, cppname, param_type, param_mechanism, param_default)
 
 
 def _is_grpc_array(param: dict) -> bool:
