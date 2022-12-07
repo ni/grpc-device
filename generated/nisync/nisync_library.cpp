@@ -109,11 +109,7 @@ ViStatus NiSyncLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean r
   if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_init.");
   }
-#if defined(_MSC_VER)
-  return niSync_init(resourceName, idQuery, resetDevice, vi);
-#else
   return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::Close(ViSession vi)
@@ -121,11 +117,7 @@ ViStatus NiSyncLibrary::Close(ViSession vi)
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_close.");
   }
-#if defined(_MSC_VER)
-  return niSync_close(vi);
-#else
   return function_pointers_.Close(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
@@ -133,11 +125,7 @@ ViStatus NiSyncLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar er
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_error_message.");
   }
-#if defined(_MSC_VER)
-  return niSync_error_message(vi, errorCode, errorMessage);
-#else
   return function_pointers_.ErrorMessage(vi, errorCode, errorMessage);
-#endif
 }
 
 ViStatus NiSyncLibrary::Reset(ViSession vi)
@@ -145,11 +133,7 @@ ViStatus NiSyncLibrary::Reset(ViSession vi)
   if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_reset.");
   }
-#if defined(_MSC_VER)
-  return niSync_reset(vi);
-#else
   return function_pointers_.Reset(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::PersistConfig(ViSession vi)
@@ -157,11 +141,7 @@ ViStatus NiSyncLibrary::PersistConfig(ViSession vi)
   if (!function_pointers_.PersistConfig) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_PersistConfig.");
   }
-#if defined(_MSC_VER)
-  return niSync_PersistConfig(vi);
-#else
   return function_pointers_.PersistConfig(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
@@ -169,11 +149,7 @@ ViStatus NiSyncLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar s
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_self_test.");
   }
-#if defined(_MSC_VER)
-  return niSync_self_test(vi, selfTestResult, selfTestMessage);
-#else
   return function_pointers_.SelfTest(vi, selfTestResult, selfTestMessage);
-#endif
 }
 
 ViStatus NiSyncLibrary::RevisionQuery(ViSession vi, ViChar driverRevision[256], ViChar firmwareRevision[256])
@@ -181,11 +157,7 @@ ViStatus NiSyncLibrary::RevisionQuery(ViSession vi, ViChar driverRevision[256], 
   if (!function_pointers_.RevisionQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_revision_query.");
   }
-#if defined(_MSC_VER)
-  return niSync_revision_query(vi, driverRevision, firmwareRevision);
-#else
   return function_pointers_.RevisionQuery(vi, driverRevision, firmwareRevision);
-#endif
 }
 
 ViStatus NiSyncLibrary::ConnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge)
@@ -193,11 +165,7 @@ ViStatus NiSyncLibrary::ConnectTrigTerminals(ViSession vi, ViConstString srcTerm
   if (!function_pointers_.ConnectTrigTerminals) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ConnectTrigTerminals.");
   }
-#if defined(_MSC_VER)
-  return niSync_ConnectTrigTerminals(vi, srcTerminal, destTerminal, syncClock, invert, updateEdge);
-#else
   return function_pointers_.ConnectTrigTerminals(vi, srcTerminal, destTerminal, syncClock, invert, updateEdge);
-#endif
 }
 
 ViStatus NiSyncLibrary::DisconnectTrigTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal)
@@ -205,11 +173,7 @@ ViStatus NiSyncLibrary::DisconnectTrigTerminals(ViSession vi, ViConstString srcT
   if (!function_pointers_.DisconnectTrigTerminals) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisconnectTrigTerminals.");
   }
-#if defined(_MSC_VER)
-  return niSync_DisconnectTrigTerminals(vi, srcTerminal, destTerminal);
-#else
   return function_pointers_.DisconnectTrigTerminals(vi, srcTerminal, destTerminal);
-#endif
 }
 
 ViStatus NiSyncLibrary::ConnectSWTrigToTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal, ViConstString syncClock, ViInt32 invert, ViInt32 updateEdge, ViReal64 delay)
@@ -217,11 +181,7 @@ ViStatus NiSyncLibrary::ConnectSWTrigToTerminal(ViSession vi, ViConstString srcT
   if (!function_pointers_.ConnectSWTrigToTerminal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ConnectSWTrigToTerminal.");
   }
-#if defined(_MSC_VER)
-  return niSync_ConnectSWTrigToTerminal(vi, srcTerminal, destTerminal, syncClock, invert, updateEdge, delay);
-#else
   return function_pointers_.ConnectSWTrigToTerminal(vi, srcTerminal, destTerminal, syncClock, invert, updateEdge, delay);
-#endif
 }
 
 ViStatus NiSyncLibrary::DisconnectSWTrigFromTerminal(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal)
@@ -229,11 +189,7 @@ ViStatus NiSyncLibrary::DisconnectSWTrigFromTerminal(ViSession vi, ViConstString
   if (!function_pointers_.DisconnectSWTrigFromTerminal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisconnectSWTrigFromTerminal.");
   }
-#if defined(_MSC_VER)
-  return niSync_DisconnectSWTrigFromTerminal(vi, srcTerminal, destTerminal);
-#else
   return function_pointers_.DisconnectSWTrigFromTerminal(vi, srcTerminal, destTerminal);
-#endif
 }
 
 ViStatus NiSyncLibrary::SendSoftwareTrigger(ViSession vi, ViConstString srcTerminal)
@@ -241,11 +197,7 @@ ViStatus NiSyncLibrary::SendSoftwareTrigger(ViSession vi, ViConstString srcTermi
   if (!function_pointers_.SendSoftwareTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SendSoftwareTrigger.");
   }
-#if defined(_MSC_VER)
-  return niSync_SendSoftwareTrigger(vi, srcTerminal);
-#else
   return function_pointers_.SendSoftwareTrigger(vi, srcTerminal);
-#endif
 }
 
 ViStatus NiSyncLibrary::ConnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal)
@@ -253,11 +205,7 @@ ViStatus NiSyncLibrary::ConnectClkTerminals(ViSession vi, ViConstString srcTermi
   if (!function_pointers_.ConnectClkTerminals) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ConnectClkTerminals.");
   }
-#if defined(_MSC_VER)
-  return niSync_ConnectClkTerminals(vi, srcTerminal, destTerminal);
-#else
   return function_pointers_.ConnectClkTerminals(vi, srcTerminal, destTerminal);
-#endif
 }
 
 ViStatus NiSyncLibrary::DisconnectClkTerminals(ViSession vi, ViConstString srcTerminal, ViConstString destTerminal)
@@ -265,11 +213,7 @@ ViStatus NiSyncLibrary::DisconnectClkTerminals(ViSession vi, ViConstString srcTe
   if (!function_pointers_.DisconnectClkTerminals) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisconnectClkTerminals.");
   }
-#if defined(_MSC_VER)
-  return niSync_DisconnectClkTerminals(vi, srcTerminal, destTerminal);
-#else
   return function_pointers_.DisconnectClkTerminals(vi, srcTerminal, destTerminal);
-#endif
 }
 
 ViStatus NiSyncLibrary::MeasureFrequency(ViSession vi, ViConstString srcTerminal, ViReal64 duration, ViReal64* actualDuration, ViReal64* frequency, ViReal64* error)
@@ -277,11 +221,7 @@ ViStatus NiSyncLibrary::MeasureFrequency(ViSession vi, ViConstString srcTerminal
   if (!function_pointers_.MeasureFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_MeasureFrequency.");
   }
-#if defined(_MSC_VER)
-  return niSync_MeasureFrequency(vi, srcTerminal, duration, actualDuration, frequency, error);
-#else
   return function_pointers_.MeasureFrequency(vi, srcTerminal, duration, actualDuration, frequency, error);
-#endif
 }
 
 ViStatus NiSyncLibrary::MeasureFrequencyEx(ViSession vi, ViConstString srcTerminal, ViReal64 duration, ViUInt32 decimationCount, ViReal64* actualDuration, ViReal64* frequency, ViReal64* frequencyError)
@@ -289,11 +229,7 @@ ViStatus NiSyncLibrary::MeasureFrequencyEx(ViSession vi, ViConstString srcTermin
   if (!function_pointers_.MeasureFrequencyEx) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_MeasureFrequencyEx.");
   }
-#if defined(_MSC_VER)
-  return niSync_MeasureFrequencyEx(vi, srcTerminal, duration, decimationCount, actualDuration, frequency, frequencyError);
-#else
   return function_pointers_.MeasureFrequencyEx(vi, srcTerminal, duration, decimationCount, actualDuration, frequency, frequencyError);
-#endif
 }
 
 ViStatus NiSyncLibrary::Start1588(ViSession vi)
@@ -301,11 +237,7 @@ ViStatus NiSyncLibrary::Start1588(ViSession vi)
   if (!function_pointers_.Start1588) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_Start1588.");
   }
-#if defined(_MSC_VER)
-  return niSync_Start1588(vi);
-#else
   return function_pointers_.Start1588(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::Stop1588(ViSession vi)
@@ -313,11 +245,7 @@ ViStatus NiSyncLibrary::Stop1588(ViSession vi)
   if (!function_pointers_.Stop1588) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_Stop1588.");
   }
-#if defined(_MSC_VER)
-  return niSync_Stop1588(vi);
-#else
   return function_pointers_.Stop1588(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::Start8021AS(ViSession vi)
@@ -325,11 +253,7 @@ ViStatus NiSyncLibrary::Start8021AS(ViSession vi)
   if (!function_pointers_.Start8021AS) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_Start8021AS.");
   }
-#if defined(_MSC_VER)
-  return niSync_Start8021AS(vi);
-#else
   return function_pointers_.Start8021AS(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::Stop8021AS(ViSession vi)
@@ -337,11 +261,7 @@ ViStatus NiSyncLibrary::Stop8021AS(ViSession vi)
   if (!function_pointers_.Stop8021AS) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_Stop8021AS.");
   }
-#if defined(_MSC_VER)
-  return niSync_Stop8021AS(vi);
-#else
   return function_pointers_.Stop8021AS(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetTime(ViSession vi, ViInt32 timeSource, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds)
@@ -349,11 +269,7 @@ ViStatus NiSyncLibrary::SetTime(ViSession vi, ViInt32 timeSource, ViUInt32 timeS
   if (!function_pointers_.SetTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTime.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetTime(vi, timeSource, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
-#else
   return function_pointers_.SetTime(vi, timeSource, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetTime(ViSession vi, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds)
@@ -361,11 +277,7 @@ ViStatus NiSyncLibrary::GetTime(ViSession vi, ViUInt32* timeSeconds, ViUInt32* t
   if (!function_pointers_.GetTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetTime.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetTime(vi, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
-#else
   return function_pointers_.GetTime(vi, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
-#endif
 }
 
 ViStatus NiSyncLibrary::ResetFrequency(ViSession vi)
@@ -373,11 +285,7 @@ ViStatus NiSyncLibrary::ResetFrequency(ViSession vi)
   if (!function_pointers_.ResetFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ResetFrequency.");
   }
-#if defined(_MSC_VER)
-  return niSync_ResetFrequency(vi);
-#else
   return function_pointers_.ResetFrequency(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::CreateFutureTimeEvent(ViSession vi, ViConstString terminal, ViInt32 outputLevel, ViUInt32 timeSeconds, ViUInt32 timeNanoseconds, ViUInt16 timeFractionalNanoseconds)
@@ -385,11 +293,7 @@ ViStatus NiSyncLibrary::CreateFutureTimeEvent(ViSession vi, ViConstString termin
   if (!function_pointers_.CreateFutureTimeEvent) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CreateFutureTimeEvent.");
   }
-#if defined(_MSC_VER)
-  return niSync_CreateFutureTimeEvent(vi, terminal, outputLevel, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
-#else
   return function_pointers_.CreateFutureTimeEvent(vi, terminal, outputLevel, timeSeconds, timeNanoseconds, timeFractionalNanoseconds);
-#endif
 }
 
 ViStatus NiSyncLibrary::ClearFutureTimeEvents(ViSession vi, ViConstString terminal)
@@ -397,11 +301,7 @@ ViStatus NiSyncLibrary::ClearFutureTimeEvents(ViSession vi, ViConstString termin
   if (!function_pointers_.ClearFutureTimeEvents) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ClearFutureTimeEvents.");
   }
-#if defined(_MSC_VER)
-  return niSync_ClearFutureTimeEvents(vi, terminal);
-#else
   return function_pointers_.ClearFutureTimeEvents(vi, terminal);
-#endif
 }
 
 ViStatus NiSyncLibrary::EnableTimeStampTrigger(ViSession vi, ViConstString terminal, ViInt32 activeEdge)
@@ -409,11 +309,7 @@ ViStatus NiSyncLibrary::EnableTimeStampTrigger(ViSession vi, ViConstString termi
   if (!function_pointers_.EnableTimeStampTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_EnableTimeStampTrigger.");
   }
-#if defined(_MSC_VER)
-  return niSync_EnableTimeStampTrigger(vi, terminal, activeEdge);
-#else
   return function_pointers_.EnableTimeStampTrigger(vi, terminal, activeEdge);
-#endif
 }
 
 ViStatus NiSyncLibrary::EnableTimeStampTriggerWithDecimation(ViSession vi, ViConstString terminal, ViInt32 activeEdge, ViUInt32 decimationCount)
@@ -421,11 +317,7 @@ ViStatus NiSyncLibrary::EnableTimeStampTriggerWithDecimation(ViSession vi, ViCon
   if (!function_pointers_.EnableTimeStampTriggerWithDecimation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_EnableTimeStampTriggerWithDecimation.");
   }
-#if defined(_MSC_VER)
-  return niSync_EnableTimeStampTriggerWithDecimation(vi, terminal, activeEdge, decimationCount);
-#else
   return function_pointers_.EnableTimeStampTriggerWithDecimation(vi, terminal, activeEdge, decimationCount);
-#endif
 }
 
 ViStatus NiSyncLibrary::ReadTriggerTimeStamp(ViSession vi, ViConstString terminal, ViReal64 timeout, ViUInt32* timeSeconds, ViUInt32* timeNanoseconds, ViUInt16* timeFractionalNanoseconds, ViInt32* detectedEdge)
@@ -433,11 +325,7 @@ ViStatus NiSyncLibrary::ReadTriggerTimeStamp(ViSession vi, ViConstString termina
   if (!function_pointers_.ReadTriggerTimeStamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ReadTriggerTimeStamp.");
   }
-#if defined(_MSC_VER)
-  return niSync_ReadTriggerTimeStamp(vi, terminal, timeout, timeSeconds, timeNanoseconds, timeFractionalNanoseconds, detectedEdge);
-#else
   return function_pointers_.ReadTriggerTimeStamp(vi, terminal, timeout, timeSeconds, timeNanoseconds, timeFractionalNanoseconds, detectedEdge);
-#endif
 }
 
 ViStatus NiSyncLibrary::ReadMultipleTriggerTimeStamp(ViSession vi, ViConstString terminal, ViUInt32 timestampsToRead, ViReal64 timeout, ViUInt32 timeSecondsBuffer[], ViUInt32 timeNanosecondsBuffer[], ViUInt16 timeFractionalNanosecondsBuffer[], ViInt32 detectedEdgeBuffer[], ViUInt32* timestampsRead)
@@ -445,11 +333,7 @@ ViStatus NiSyncLibrary::ReadMultipleTriggerTimeStamp(ViSession vi, ViConstString
   if (!function_pointers_.ReadMultipleTriggerTimeStamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ReadMultipleTriggerTimeStamp.");
   }
-#if defined(_MSC_VER)
-  return niSync_ReadMultipleTriggerTimeStamp(vi, terminal, timestampsToRead, timeout, timeSecondsBuffer, timeNanosecondsBuffer, timeFractionalNanosecondsBuffer, detectedEdgeBuffer, timestampsRead);
-#else
   return function_pointers_.ReadMultipleTriggerTimeStamp(vi, terminal, timestampsToRead, timeout, timeSecondsBuffer, timeNanosecondsBuffer, timeFractionalNanosecondsBuffer, detectedEdgeBuffer, timestampsRead);
-#endif
 }
 
 ViStatus NiSyncLibrary::DisableTimeStampTrigger(ViSession vi, ViConstString terminal)
@@ -457,11 +341,7 @@ ViStatus NiSyncLibrary::DisableTimeStampTrigger(ViSession vi, ViConstString term
   if (!function_pointers_.DisableTimeStampTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisableTimeStampTrigger.");
   }
-#if defined(_MSC_VER)
-  return niSync_DisableTimeStampTrigger(vi, terminal);
-#else
   return function_pointers_.DisableTimeStampTrigger(vi, terminal);
-#endif
 }
 
 ViStatus NiSyncLibrary::CreateClock(ViSession vi, ViConstString terminal, ViUInt32 highTicks, ViUInt32 lowTicks, ViUInt32 startTimeSeconds, ViUInt32 startTimeNanoseconds, ViUInt16 startTimeFractionalNanoseconds, ViUInt32 stopTimeSeconds, ViUInt32 stopTimeNanoseconds, ViUInt16 stopTimeFractionalNanoseconds)
@@ -469,11 +349,7 @@ ViStatus NiSyncLibrary::CreateClock(ViSession vi, ViConstString terminal, ViUInt
   if (!function_pointers_.CreateClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CreateClock.");
   }
-#if defined(_MSC_VER)
-  return niSync_CreateClock(vi, terminal, highTicks, lowTicks, startTimeSeconds, startTimeNanoseconds, startTimeFractionalNanoseconds, stopTimeSeconds, stopTimeNanoseconds, stopTimeFractionalNanoseconds);
-#else
   return function_pointers_.CreateClock(vi, terminal, highTicks, lowTicks, startTimeSeconds, startTimeNanoseconds, startTimeFractionalNanoseconds, stopTimeSeconds, stopTimeNanoseconds, stopTimeFractionalNanoseconds);
-#endif
 }
 
 ViStatus NiSyncLibrary::ClearClock(ViSession vi, ViConstString terminal)
@@ -481,11 +357,7 @@ ViStatus NiSyncLibrary::ClearClock(ViSession vi, ViConstString terminal)
   if (!function_pointers_.ClearClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ClearClock.");
   }
-#if defined(_MSC_VER)
-  return niSync_ClearClock(vi, terminal);
-#else
   return function_pointers_.ClearClock(vi, terminal);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetTimeReferenceFreeRunning(ViSession vi)
@@ -493,11 +365,7 @@ ViStatus NiSyncLibrary::SetTimeReferenceFreeRunning(ViSession vi)
   if (!function_pointers_.SetTimeReferenceFreeRunning) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReferenceFreeRunning.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetTimeReferenceFreeRunning(vi);
-#else
   return function_pointers_.SetTimeReferenceFreeRunning(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetTimeReferenceGPS(ViSession vi)
@@ -505,11 +373,7 @@ ViStatus NiSyncLibrary::SetTimeReferenceGPS(ViSession vi)
   if (!function_pointers_.SetTimeReferenceGPS) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReferenceGPS.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetTimeReferenceGPS(vi);
-#else
   return function_pointers_.SetTimeReferenceGPS(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetTimeReferenceIRIG(ViSession vi, ViInt32 irigType, ViConstString terminalName)
@@ -517,11 +381,7 @@ ViStatus NiSyncLibrary::SetTimeReferenceIRIG(ViSession vi, ViInt32 irigType, ViC
   if (!function_pointers_.SetTimeReferenceIRIG) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReferenceIRIG.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetTimeReferenceIRIG(vi, irigType, terminalName);
-#else
   return function_pointers_.SetTimeReferenceIRIG(vi, irigType, terminalName);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetTimeReferencePPS(ViSession vi, ViConstString terminalName, ViBoolean useManualTime, ViUInt32 initialTimeSeconds, ViUInt32 initialTimeNanoseconds, ViUInt16 initialTimeFractionalNanoseconds)
@@ -529,11 +389,7 @@ ViStatus NiSyncLibrary::SetTimeReferencePPS(ViSession vi, ViConstString terminal
   if (!function_pointers_.SetTimeReferencePPS) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReferencePPS.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetTimeReferencePPS(vi, terminalName, useManualTime, initialTimeSeconds, initialTimeNanoseconds, initialTimeFractionalNanoseconds);
-#else
   return function_pointers_.SetTimeReferencePPS(vi, terminalName, useManualTime, initialTimeSeconds, initialTimeNanoseconds, initialTimeFractionalNanoseconds);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetTimeReference1588OrdinaryClock(ViSession vi)
@@ -541,11 +397,7 @@ ViStatus NiSyncLibrary::SetTimeReference1588OrdinaryClock(ViSession vi)
   if (!function_pointers_.SetTimeReference1588OrdinaryClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReference1588OrdinaryClock.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetTimeReference1588OrdinaryClock(vi);
-#else
   return function_pointers_.SetTimeReference1588OrdinaryClock(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetTimeReference8021AS(ViSession vi)
@@ -553,11 +405,7 @@ ViStatus NiSyncLibrary::SetTimeReference8021AS(ViSession vi)
   if (!function_pointers_.SetTimeReference8021AS) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetTimeReference8021AS.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetTimeReference8021AS(vi);
-#else
   return function_pointers_.SetTimeReference8021AS(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::EnableGPSTimestamping(ViSession vi)
@@ -565,11 +413,7 @@ ViStatus NiSyncLibrary::EnableGPSTimestamping(ViSession vi)
   if (!function_pointers_.EnableGPSTimestamping) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_EnableGPSTimestamping.");
   }
-#if defined(_MSC_VER)
-  return niSync_EnableGPSTimestamping(vi);
-#else
   return function_pointers_.EnableGPSTimestamping(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::EnableIRIGTimestamping(ViSession vi, ViInt32 irigType, ViConstString terminalName)
@@ -577,11 +421,7 @@ ViStatus NiSyncLibrary::EnableIRIGTimestamping(ViSession vi, ViInt32 irigType, V
   if (!function_pointers_.EnableIRIGTimestamping) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_EnableIRIGTimestamping.");
   }
-#if defined(_MSC_VER)
-  return niSync_EnableIRIGTimestamping(vi, irigType, terminalName);
-#else
   return function_pointers_.EnableIRIGTimestamping(vi, irigType, terminalName);
-#endif
 }
 
 ViStatus NiSyncLibrary::ReadLastGPSTimestamp(ViSession vi, ViUInt32* timestampSeconds, ViUInt32* timestampNanoseconds, ViUInt16* timestampFractionalNanoseconds, ViUInt32* gpsSeconds, ViUInt32* gpsNanoseconds, ViUInt16* gpsFractionalNanoseconds)
@@ -589,11 +429,7 @@ ViStatus NiSyncLibrary::ReadLastGPSTimestamp(ViSession vi, ViUInt32* timestampSe
   if (!function_pointers_.ReadLastGPSTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ReadLastGPSTimestamp.");
   }
-#if defined(_MSC_VER)
-  return niSync_ReadLastGPSTimestamp(vi, timestampSeconds, timestampNanoseconds, timestampFractionalNanoseconds, gpsSeconds, gpsNanoseconds, gpsFractionalNanoseconds);
-#else
   return function_pointers_.ReadLastGPSTimestamp(vi, timestampSeconds, timestampNanoseconds, timestampFractionalNanoseconds, gpsSeconds, gpsNanoseconds, gpsFractionalNanoseconds);
-#endif
 }
 
 ViStatus NiSyncLibrary::ReadLastIRIGTimestamp(ViSession vi, ViConstString terminal, ViUInt32* timestampSeconds, ViUInt32* timestampNanoseconds, ViUInt16* timestampFractionalNanoseconds, ViUInt32* irigbSeconds, ViUInt32* irigbNanoseconds, ViUInt16* irigbFractionalNanoseconds)
@@ -601,11 +437,7 @@ ViStatus NiSyncLibrary::ReadLastIRIGTimestamp(ViSession vi, ViConstString termin
   if (!function_pointers_.ReadLastIRIGTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ReadLastIRIGTimestamp.");
   }
-#if defined(_MSC_VER)
-  return niSync_ReadLastIRIGTimestamp(vi, terminal, timestampSeconds, timestampNanoseconds, timestampFractionalNanoseconds, irigbSeconds, irigbNanoseconds, irigbFractionalNanoseconds);
-#else
   return function_pointers_.ReadLastIRIGTimestamp(vi, terminal, timestampSeconds, timestampNanoseconds, timestampFractionalNanoseconds, irigbSeconds, irigbNanoseconds, irigbFractionalNanoseconds);
-#endif
 }
 
 ViStatus NiSyncLibrary::DisableGPSTimestamping(ViSession vi)
@@ -613,11 +445,7 @@ ViStatus NiSyncLibrary::DisableGPSTimestamping(ViSession vi)
   if (!function_pointers_.DisableGPSTimestamping) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisableGPSTimestamping.");
   }
-#if defined(_MSC_VER)
-  return niSync_DisableGPSTimestamping(vi);
-#else
   return function_pointers_.DisableGPSTimestamping(vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::DisableIRIGTimestamping(ViSession vi, ViConstString terminalName)
@@ -625,11 +453,7 @@ ViStatus NiSyncLibrary::DisableIRIGTimestamping(ViSession vi, ViConstString term
   if (!function_pointers_.DisableIRIGTimestamping) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_DisableIRIGTimestamping.");
   }
-#if defined(_MSC_VER)
-  return niSync_DisableIRIGTimestamping(vi, terminalName);
-#else
   return function_pointers_.DisableIRIGTimestamping(vi, terminalName);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetVelocity(ViSession vi, ViReal64* eastVelocity, ViReal64* northVelocity, ViReal64* upVelocity)
@@ -637,11 +461,7 @@ ViStatus NiSyncLibrary::GetVelocity(ViSession vi, ViReal64* eastVelocity, ViReal
   if (!function_pointers_.GetVelocity) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetVelocity.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetVelocity(vi, eastVelocity, northVelocity, upVelocity);
-#else
   return function_pointers_.GetVelocity(vi, eastVelocity, northVelocity, upVelocity);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetLocation(ViSession vi, ViReal64* latitude, ViReal64* longitude, ViReal64* altitude)
@@ -649,11 +469,7 @@ ViStatus NiSyncLibrary::GetLocation(ViSession vi, ViReal64* latitude, ViReal64* 
   if (!function_pointers_.GetLocation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetLocation.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetLocation(vi, latitude, longitude, altitude);
-#else
   return function_pointers_.GetLocation(vi, latitude, longitude, altitude);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetTimeReferenceNames(ViSession vi, ViUInt32 bufferSize, ViChar timeReferenceNames[])
@@ -661,11 +477,7 @@ ViStatus NiSyncLibrary::GetTimeReferenceNames(ViSession vi, ViUInt32 bufferSize,
   if (!function_pointers_.GetTimeReferenceNames) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetTimeReferenceNames.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetTimeReferenceNames(vi, bufferSize, timeReferenceNames);
-#else
   return function_pointers_.GetTimeReferenceNames(vi, bufferSize, timeReferenceNames);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32* value)
@@ -673,11 +485,7 @@ ViStatus NiSyncLibrary::GetAttributeViInt32(ViSession vi, ViConstString activeIt
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViInt32.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetAttributeViInt32(vi, activeItem, attribute, value);
-#else
   return function_pointers_.GetAttributeViInt32(vi, activeItem, attribute, value);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetAttributeViReal64(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64* value)
@@ -685,11 +493,7 @@ ViStatus NiSyncLibrary::GetAttributeViReal64(ViSession vi, ViConstString activeI
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetAttributeViReal64(vi, activeItem, attribute, value);
-#else
   return function_pointers_.GetAttributeViReal64(vi, activeItem, attribute, value);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetAttributeViBoolean(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean* value)
@@ -697,11 +501,7 @@ ViStatus NiSyncLibrary::GetAttributeViBoolean(ViSession vi, ViConstString active
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViBoolean.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetAttributeViBoolean(vi, activeItem, attribute, value);
-#else
   return function_pointers_.GetAttributeViBoolean(vi, activeItem, attribute, value);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 bufferSize, ViChar value[])
@@ -709,11 +509,7 @@ ViStatus NiSyncLibrary::GetAttributeViString(ViSession vi, ViConstString activeI
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetAttributeViString(vi, activeItem, attribute, bufferSize, value);
-#else
   return function_pointers_.GetAttributeViString(vi, activeItem, attribute, bufferSize, value);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetAttributeViInt32(ViSession vi, ViConstString activeItem, ViAttr attribute, ViInt32 value)
@@ -721,11 +517,7 @@ ViStatus NiSyncLibrary::SetAttributeViInt32(ViSession vi, ViConstString activeIt
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViInt32.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetAttributeViInt32(vi, activeItem, attribute, value);
-#else
   return function_pointers_.SetAttributeViInt32(vi, activeItem, attribute, value);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetAttributeViReal64(ViSession vi, ViConstString activeItem, ViAttr attribute, ViReal64 value)
@@ -733,11 +525,7 @@ ViStatus NiSyncLibrary::SetAttributeViReal64(ViSession vi, ViConstString activeI
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetAttributeViReal64(vi, activeItem, attribute, value);
-#else
   return function_pointers_.SetAttributeViReal64(vi, activeItem, attribute, value);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetAttributeViBoolean(ViSession vi, ViConstString activeItem, ViAttr attribute, ViBoolean value)
@@ -745,11 +533,7 @@ ViStatus NiSyncLibrary::SetAttributeViBoolean(ViSession vi, ViConstString active
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViBoolean.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetAttributeViBoolean(vi, activeItem, attribute, value);
-#else
   return function_pointers_.SetAttributeViBoolean(vi, activeItem, attribute, value);
-#endif
 }
 
 ViStatus NiSyncLibrary::SetAttributeViString(ViSession vi, ViConstString activeItem, ViAttr attribute, ViConstString value)
@@ -757,11 +541,7 @@ ViStatus NiSyncLibrary::SetAttributeViString(ViSession vi, ViConstString activeI
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_SetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niSync_SetAttributeViString(vi, activeItem, attribute, value);
-#else
   return function_pointers_.SetAttributeViString(vi, activeItem, attribute, value);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
@@ -769,11 +549,7 @@ ViStatus NiSyncLibrary::GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, Vi
   if (!function_pointers_.GetExtCalLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetExtCalLastDateAndTime.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetExtCalLastDateAndTime(vi, year, month, day, hour, minute);
-#else
   return function_pointers_.GetExtCalLastDateAndTime(vi, year, month, day, hour, minute);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetExtCalLastTemp(ViSession vi, ViReal64* temp)
@@ -781,11 +557,7 @@ ViStatus NiSyncLibrary::GetExtCalLastTemp(ViSession vi, ViReal64* temp)
   if (!function_pointers_.GetExtCalLastTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetExtCalLastTemp.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetExtCalLastTemp(vi, temp);
-#else
   return function_pointers_.GetExtCalLastTemp(vi, temp);
-#endif
 }
 
 ViStatus NiSyncLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* months)
@@ -793,11 +565,7 @@ ViStatus NiSyncLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* mont
   if (!function_pointers_.GetExtCalRecommendedInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_GetExtCalRecommendedInterval.");
   }
-#if defined(_MSC_VER)
-  return niSync_GetExtCalRecommendedInterval(vi, months);
-#else
   return function_pointers_.GetExtCalRecommendedInterval(vi, months);
-#endif
 }
 
 ViStatus NiSyncLibrary::ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword)
@@ -805,11 +573,7 @@ ViStatus NiSyncLibrary::ChangeExtCalPassword(ViSession vi, ViConstString oldPass
   if (!function_pointers_.ChangeExtCalPassword) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ChangeExtCalPassword.");
   }
-#if defined(_MSC_VER)
-  return niSync_ChangeExtCalPassword(vi, oldPassword, newPassword);
-#else
   return function_pointers_.ChangeExtCalPassword(vi, oldPassword, newPassword);
-#endif
 }
 
 ViStatus NiSyncLibrary::ReadCurrentTemperature(ViSession vi, ViReal64* temperature)
@@ -817,11 +581,7 @@ ViStatus NiSyncLibrary::ReadCurrentTemperature(ViSession vi, ViReal64* temperatu
   if (!function_pointers_.ReadCurrentTemperature) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_ReadCurrentTemperature.");
   }
-#if defined(_MSC_VER)
-  return niSync_ReadCurrentTemperature(vi, temperature);
-#else
   return function_pointers_.ReadCurrentTemperature(vi, temperature);
-#endif
 }
 
 ViStatus NiSyncLibrary::CalGetOscillatorVoltage(ViSession vi, ViReal64* voltage)
@@ -829,11 +589,7 @@ ViStatus NiSyncLibrary::CalGetOscillatorVoltage(ViSession vi, ViReal64* voltage)
   if (!function_pointers_.CalGetOscillatorVoltage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CalGetOscillatorVoltage.");
   }
-#if defined(_MSC_VER)
-  return niSync_CalGetOscillatorVoltage(vi, voltage);
-#else
   return function_pointers_.CalGetOscillatorVoltage(vi, voltage);
-#endif
 }
 
 ViStatus NiSyncLibrary::CalGetClk10PhaseVoltage(ViSession vi, ViReal64* voltage)
@@ -841,11 +597,7 @@ ViStatus NiSyncLibrary::CalGetClk10PhaseVoltage(ViSession vi, ViReal64* voltage)
   if (!function_pointers_.CalGetClk10PhaseVoltage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CalGetClk10PhaseVoltage.");
   }
-#if defined(_MSC_VER)
-  return niSync_CalGetClk10PhaseVoltage(vi, voltage);
-#else
   return function_pointers_.CalGetClk10PhaseVoltage(vi, voltage);
-#endif
 }
 
 ViStatus NiSyncLibrary::CalGetDDSStartPulsePhaseVoltage(ViSession vi, ViReal64* voltage)
@@ -853,11 +605,7 @@ ViStatus NiSyncLibrary::CalGetDDSStartPulsePhaseVoltage(ViSession vi, ViReal64* 
   if (!function_pointers_.CalGetDDSStartPulsePhaseVoltage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CalGetDDSStartPulsePhaseVoltage.");
   }
-#if defined(_MSC_VER)
-  return niSync_CalGetDDSStartPulsePhaseVoltage(vi, voltage);
-#else
   return function_pointers_.CalGetDDSStartPulsePhaseVoltage(vi, voltage);
-#endif
 }
 
 ViStatus NiSyncLibrary::CalGetDDSInitialPhase(ViSession vi, ViReal64* phase)
@@ -865,11 +613,7 @@ ViStatus NiSyncLibrary::CalGetDDSInitialPhase(ViSession vi, ViReal64* phase)
   if (!function_pointers_.CalGetDDSInitialPhase) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CalGetDDSInitialPhase.");
   }
-#if defined(_MSC_VER)
-  return niSync_CalGetDDSInitialPhase(vi, phase);
-#else
   return function_pointers_.CalGetDDSInitialPhase(vi, phase);
-#endif
 }
 
 ViStatus NiSyncLibrary::InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi)
@@ -877,11 +621,7 @@ ViStatus NiSyncLibrary::InitExtCal(ViRsrc resourceName, ViConstString password, 
   if (!function_pointers_.InitExtCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_InitExtCal.");
   }
-#if defined(_MSC_VER)
-  return niSync_InitExtCal(resourceName, password, vi);
-#else
   return function_pointers_.InitExtCal(resourceName, password, vi);
-#endif
 }
 
 ViStatus NiSyncLibrary::CloseExtCal(ViSession vi, ViInt32 action)
@@ -889,11 +629,7 @@ ViStatus NiSyncLibrary::CloseExtCal(ViSession vi, ViInt32 action)
   if (!function_pointers_.CloseExtCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CloseExtCal.");
   }
-#if defined(_MSC_VER)
-  return niSync_CloseExtCal(vi, action);
-#else
   return function_pointers_.CloseExtCal(vi, action);
-#endif
 }
 
 ViStatus NiSyncLibrary::CalAdjustOscillatorVoltage(ViSession vi, ViReal64 measuredVoltage, ViReal64* oldVoltage)
@@ -901,11 +637,7 @@ ViStatus NiSyncLibrary::CalAdjustOscillatorVoltage(ViSession vi, ViReal64 measur
   if (!function_pointers_.CalAdjustOscillatorVoltage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CalAdjustOscillatorVoltage.");
   }
-#if defined(_MSC_VER)
-  return niSync_CalAdjustOscillatorVoltage(vi, measuredVoltage, oldVoltage);
-#else
   return function_pointers_.CalAdjustOscillatorVoltage(vi, measuredVoltage, oldVoltage);
-#endif
 }
 
 ViStatus NiSyncLibrary::CalAdjustClk10PhaseVoltage(ViSession vi, ViReal64 measuredVoltage, ViReal64* oldVoltage)
@@ -913,11 +645,7 @@ ViStatus NiSyncLibrary::CalAdjustClk10PhaseVoltage(ViSession vi, ViReal64 measur
   if (!function_pointers_.CalAdjustClk10PhaseVoltage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CalAdjustClk10PhaseVoltage.");
   }
-#if defined(_MSC_VER)
-  return niSync_CalAdjustClk10PhaseVoltage(vi, measuredVoltage, oldVoltage);
-#else
   return function_pointers_.CalAdjustClk10PhaseVoltage(vi, measuredVoltage, oldVoltage);
-#endif
 }
 
 ViStatus NiSyncLibrary::CalAdjustDDSStartPulsePhaseVoltage(ViSession vi, ViReal64 measuredVoltage, ViReal64* oldVoltage)
@@ -925,11 +653,7 @@ ViStatus NiSyncLibrary::CalAdjustDDSStartPulsePhaseVoltage(ViSession vi, ViReal6
   if (!function_pointers_.CalAdjustDDSStartPulsePhaseVoltage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CalAdjustDDSStartPulsePhaseVoltage.");
   }
-#if defined(_MSC_VER)
-  return niSync_CalAdjustDDSStartPulsePhaseVoltage(vi, measuredVoltage, oldVoltage);
-#else
   return function_pointers_.CalAdjustDDSStartPulsePhaseVoltage(vi, measuredVoltage, oldVoltage);
-#endif
 }
 
 ViStatus NiSyncLibrary::CalAdjustDDSInitialPhase(ViSession vi, ViReal64 measuredPhase, ViReal64* oldPhase)
@@ -937,11 +661,7 @@ ViStatus NiSyncLibrary::CalAdjustDDSInitialPhase(ViSession vi, ViReal64 measured
   if (!function_pointers_.CalAdjustDDSInitialPhase) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSync_CalAdjustDDSInitialPhase.");
   }
-#if defined(_MSC_VER)
-  return niSync_CalAdjustDDSInitialPhase(vi, measuredPhase, oldPhase);
-#else
   return function_pointers_.CalAdjustDDSInitialPhase(vi, measuredPhase, oldPhase);
-#endif
 }
 
 }  // namespace nisync_grpc

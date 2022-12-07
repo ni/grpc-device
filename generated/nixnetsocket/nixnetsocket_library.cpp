@@ -75,11 +75,7 @@ nxSOCKET NiXnetSocketLibrary::Accept(nxSOCKET socket, nxsockaddr* addr, nxsockle
   if (!function_pointers_.Accept) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxaccept.");
   }
-#if defined(_MSC_VER)
-  return nxaccept(socket, addr, addrlen);
-#else
   return function_pointers_.Accept(socket, addr, addrlen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen)
@@ -87,11 +83,7 @@ int32_t NiXnetSocketLibrary::Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t
   if (!function_pointers_.Bind) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxbind.");
   }
-#if defined(_MSC_VER)
-  return nxbind(socket, name, namelen);
-#else
   return function_pointers_.Bind(socket, name, namelen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::Close(nxSOCKET socket)
@@ -99,11 +91,7 @@ int32_t NiXnetSocketLibrary::Close(nxSOCKET socket)
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxclose.");
   }
-#if defined(_MSC_VER)
-  return nxclose(socket);
-#else
   return function_pointers_.Close(socket);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen)
@@ -111,11 +99,7 @@ int32_t NiXnetSocketLibrary::Connect(nxSOCKET socket, nxsockaddr* name, nxsockle
   if (!function_pointers_.Connect) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxconnect.");
   }
-#if defined(_MSC_VER)
-  return nxconnect(socket, name, namelen);
-#else
   return function_pointers_.Connect(socket, name, namelen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::FdIsSet(nxSOCKET fd, nxfd_set* set)
@@ -123,11 +107,7 @@ int32_t NiXnetSocketLibrary::FdIsSet(nxSOCKET fd, nxfd_set* set)
   if (!function_pointers_.FdIsSet) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxfd_isset.");
   }
-#if defined(_MSC_VER)
-  return nxfd_isset(fd, set);
-#else
   return function_pointers_.FdIsSet(fd, set);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::FreeAddrInfo(nxaddrinfo* res)
@@ -143,11 +123,7 @@ int32_t NiXnetSocketLibrary::GetAddrInfo(nxIpStackRef_t stack_ref, const char no
   if (!function_pointers_.GetAddrInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetaddrinfo.");
   }
-#if defined(_MSC_VER)
-  return nxgetaddrinfo(stack_ref, node_api, service_api, hints, res);
-#else
   return function_pointers_.GetAddrInfo(stack_ref, node_api, service_api, hints, res);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::GetLastErrorNum()
@@ -171,11 +147,7 @@ int32_t NiXnetSocketLibrary::GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* a
   if (!function_pointers_.GetNameInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetnameinfo.");
   }
-#if defined(_MSC_VER)
-  return nxgetnameinfo(stack_ref, addr, addrlen, host, hostlen, serv, servlen, flags);
-#else
   return function_pointers_.GetNameInfo(stack_ref, addr, addrlen, host, hostlen, serv, servlen, flags);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
@@ -183,11 +155,7 @@ int32_t NiXnetSocketLibrary::GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxso
   if (!function_pointers_.GetPeerName) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetpeername.");
   }
-#if defined(_MSC_VER)
-  return nxgetpeername(socket, addr, addrlen);
-#else
   return function_pointers_.GetPeerName(socket, addr, addrlen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
@@ -195,11 +163,7 @@ int32_t NiXnetSocketLibrary::GetSockName(nxSOCKET socket, nxsockaddr* addr, nxso
   if (!function_pointers_.GetSockName) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetsockname.");
   }
-#if defined(_MSC_VER)
-  return nxgetsockname(socket, addr, addrlen);
-#else
   return function_pointers_.GetSockName(socket, addr, addrlen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen)
@@ -207,11 +171,7 @@ int32_t NiXnetSocketLibrary::GetSockOpt(nxSOCKET socket, int32_t level, int32_t 
   if (!function_pointers_.GetSockOpt) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetsockopt.");
   }
-#if defined(_MSC_VER)
-  return nxgetsockopt(socket, level, optname, optval, optlen);
-#else
   return function_pointers_.GetSockOpt(socket, level, optname, optval, optlen);
-#endif
 }
 
 uint32_t NiXnetSocketLibrary::InetAddr(nxIpStackRef_t stack_ref, const char cp[])
@@ -219,11 +179,7 @@ uint32_t NiXnetSocketLibrary::InetAddr(nxIpStackRef_t stack_ref, const char cp[]
   if (!function_pointers_.InetAddr) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxinet_addr.");
   }
-#if defined(_MSC_VER)
-  return nxinet_addr(stack_ref, cp);
-#else
   return function_pointers_.InetAddr(stack_ref, cp);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::InetAToN(nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name)
@@ -231,11 +187,7 @@ int32_t NiXnetSocketLibrary::InetAToN(nxIpStackRef_t stack_ref, const char cp[],
   if (!function_pointers_.InetAToN) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxinet_aton.");
   }
-#if defined(_MSC_VER)
-  return nxinet_aton(stack_ref, cp, name);
-#else
   return function_pointers_.InetAToN(stack_ref, cp, name);
-#endif
 }
 
 char* NiXnetSocketLibrary::InetNToA(nxIpStackRef_t stack_ref, nxin_addr inParameter)
@@ -243,11 +195,7 @@ char* NiXnetSocketLibrary::InetNToA(nxIpStackRef_t stack_ref, nxin_addr inParame
   if (!function_pointers_.InetNToA) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxinet_ntoa.");
   }
-#if defined(_MSC_VER)
-  return nxinet_ntoa(stack_ref, inParameter);
-#else
   return function_pointers_.InetNToA(stack_ref, inParameter);
-#endif
 }
 
 const char* NiXnetSocketLibrary::InetNToP(nxIpStackRef_t stack_ref, int32_t af, void* src, char dst[nxINET6_ADDRSTRLEN], nxsocklen_t size)
@@ -255,11 +203,7 @@ const char* NiXnetSocketLibrary::InetNToP(nxIpStackRef_t stack_ref, int32_t af, 
   if (!function_pointers_.InetNToP) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxinet_ntop.");
   }
-#if defined(_MSC_VER)
-  return nxinet_ntop(stack_ref, af, src, dst, size);
-#else
   return function_pointers_.InetNToP(stack_ref, af, src, dst, size);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::InetPToN(nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst)
@@ -267,11 +211,7 @@ int32_t NiXnetSocketLibrary::InetPToN(nxIpStackRef_t stack_ref, int32_t af, cons
   if (!function_pointers_.InetPToN) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxinet_pton.");
   }
-#if defined(_MSC_VER)
-  return nxinet_pton(stack_ref, af, src, dst);
-#else
   return function_pointers_.InetPToN(stack_ref, af, src, dst);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::IpStackClear(nxIpStackRef_t stack_ref)
@@ -279,11 +219,7 @@ int32_t NiXnetSocketLibrary::IpStackClear(nxIpStackRef_t stack_ref)
   if (!function_pointers_.IpStackClear) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackClear.");
   }
-#if defined(_MSC_VER)
-  return nxIpStackClear(stack_ref);
-#else
   return function_pointers_.IpStackClear(stack_ref);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref)
@@ -291,11 +227,7 @@ int32_t NiXnetSocketLibrary::IpStackCreate(char stack_name[], char config[], nxI
   if (!function_pointers_.IpStackCreate) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackCreate.");
   }
-#if defined(_MSC_VER)
-  return nxIpStackCreate(stack_name, config, stack_ref);
-#else
   return function_pointers_.IpStackCreate(stack_name, config, stack_ref);
-#endif
 }
 
 void NiXnetSocketLibrary::IpStackFreeAllStacksInfoStr(nixnetsocket_grpc::IpStackInfoString info)
@@ -319,11 +251,7 @@ int32_t NiXnetSocketLibrary::IpStackGetAllStacksInfoStr(uint32_t format, nixnets
   if (!function_pointers_.IpStackGetAllStacksInfoStr) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackGetAllStacksInfoStr.");
   }
-#if defined(_MSC_VER)
-  return nxIpStackGetAllStacksInfoStr(format, info);
-#else
   return function_pointers_.IpStackGetAllStacksInfoStr(format, info);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces)
@@ -331,11 +259,7 @@ int32_t NiXnetSocketLibrary::IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t i
   if (!function_pointers_.IpStackGetInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackGetInfo.");
   }
-#if defined(_MSC_VER)
-  return nxIpStackGetInfo(stack_ref, info_id, virtual_interfaces);
-#else
   return function_pointers_.IpStackGetInfo(stack_ref, info_id, virtual_interfaces);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::IpStackOpen(char stack_name[], nxIpStackRef_t* stack_ref)
@@ -343,11 +267,7 @@ int32_t NiXnetSocketLibrary::IpStackOpen(char stack_name[], nxIpStackRef_t* stac
   if (!function_pointers_.IpStackOpen) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackOpen.");
   }
-#if defined(_MSC_VER)
-  return nxIpStackOpen(stack_name, stack_ref);
-#else
   return function_pointers_.IpStackOpen(stack_name, stack_ref);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::IpStackWaitForInterface(nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs)
@@ -355,11 +275,7 @@ int32_t NiXnetSocketLibrary::IpStackWaitForInterface(nxIpStackRef_t stack_ref, c
   if (!function_pointers_.IpStackWaitForInterface) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackWaitForInterface.");
   }
-#if defined(_MSC_VER)
-  return nxIpStackWaitForInterface(stack_ref, localInterface, timeoutMs);
-#else
   return function_pointers_.IpStackWaitForInterface(stack_ref, localInterface, timeoutMs);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::Listen(nxSOCKET socket, int32_t backlog)
@@ -367,11 +283,7 @@ int32_t NiXnetSocketLibrary::Listen(nxSOCKET socket, int32_t backlog)
   if (!function_pointers_.Listen) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxlisten.");
   }
-#if defined(_MSC_VER)
-  return nxlisten(socket, backlog);
-#else
   return function_pointers_.Listen(socket, backlog);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags)
@@ -379,11 +291,7 @@ int32_t NiXnetSocketLibrary::Recv(nxSOCKET socket, char mem[], int32_t size, int
   if (!function_pointers_.Recv) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxrecv.");
   }
-#if defined(_MSC_VER)
-  return nxrecv(socket, mem, size, flags);
-#else
   return function_pointers_.Recv(socket, mem, size, flags);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::RecvFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen)
@@ -391,11 +299,7 @@ int32_t NiXnetSocketLibrary::RecvFrom(nxSOCKET socket, char mem[], int32_t size,
   if (!function_pointers_.RecvFrom) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxrecvfrom.");
   }
-#if defined(_MSC_VER)
-  return nxrecvfrom(socket, mem, size, flags, from, fromlen);
-#else
   return function_pointers_.RecvFrom(socket, mem, size, flags, from, fromlen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::Select(int32_t nfds, nxfd_set* readfds, nxfd_set* writefds, nxfd_set* exceptfds, nxtimeval* timeout)
@@ -403,11 +307,7 @@ int32_t NiXnetSocketLibrary::Select(int32_t nfds, nxfd_set* readfds, nxfd_set* w
   if (!function_pointers_.Select) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxselect.");
   }
-#if defined(_MSC_VER)
-  return nxselect(nfds, readfds, writefds, exceptfds, timeout);
-#else
   return function_pointers_.Select(nfds, readfds, writefds, exceptfds, timeout);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags)
@@ -415,11 +315,7 @@ int32_t NiXnetSocketLibrary::Send(nxSOCKET socket, char dataptr[], int32_t size,
   if (!function_pointers_.Send) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxsend.");
   }
-#if defined(_MSC_VER)
-  return nxsend(socket, dataptr, size, flags);
-#else
   return function_pointers_.Send(socket, dataptr, size, flags);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen)
@@ -427,11 +323,7 @@ int32_t NiXnetSocketLibrary::SendTo(nxSOCKET socket, char dataptr[], int32_t siz
   if (!function_pointers_.SendTo) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxsendto.");
   }
-#if defined(_MSC_VER)
-  return nxsendto(socket, dataptr, size, flags, to, tolen);
-#else
   return function_pointers_.SendTo(socket, dataptr, size, flags, to, tolen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::SetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen)
@@ -439,11 +331,7 @@ int32_t NiXnetSocketLibrary::SetSockOpt(nxSOCKET socket, int32_t level, int32_t 
   if (!function_pointers_.SetSockOpt) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxsetsockopt.");
   }
-#if defined(_MSC_VER)
-  return nxsetsockopt(socket, level, optname, optval, optlen);
-#else
   return function_pointers_.SetSockOpt(socket, level, optname, optval, optlen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::Shutdown(nxSOCKET socket, int32_t how)
@@ -451,11 +339,7 @@ int32_t NiXnetSocketLibrary::Shutdown(nxSOCKET socket, int32_t how)
   if (!function_pointers_.Shutdown) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxshutdown.");
   }
-#if defined(_MSC_VER)
-  return nxshutdown(socket, how);
-#else
   return function_pointers_.Shutdown(socket, how);
-#endif
 }
 
 nxSOCKET NiXnetSocketLibrary::Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t protocol)
@@ -463,11 +347,7 @@ nxSOCKET NiXnetSocketLibrary::Socket(nxIpStackRef_t stack_ref, int32_t domain, i
   if (!function_pointers_.Socket) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxsocket.");
   }
-#if defined(_MSC_VER)
-  return nxsocket(stack_ref, domain, type, protocol);
-#else
   return function_pointers_.Socket(stack_ref, domain, type, protocol);
-#endif
 }
 
 char* NiXnetSocketLibrary::StrErrR(int errnum, char buf[], size_t bufLen)
@@ -475,11 +355,7 @@ char* NiXnetSocketLibrary::StrErrR(int errnum, char buf[], size_t bufLen)
   if (!function_pointers_.StrErrR) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxstrerr_r.");
   }
-#if defined(_MSC_VER)
-  return nxstrerr_r(errnum, buf, bufLen);
-#else
   return function_pointers_.StrErrR(errnum, buf, bufLen);
-#endif
 }
 
 }  // namespace nixnetsocket_grpc

@@ -270,11 +270,7 @@ int32 NiRFmxWLANLibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, c
   if (!function_pointers_.AbortMeasurements) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AbortMeasurements.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_AbortMeasurements(instrumentHandle, selectorString);
-#else
   return function_pointers_.AbortMeasurements(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
@@ -282,11 +278,7 @@ int32 NiRFmxWLANLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, 
   if (!function_pointers_.AnalyzeIQ1Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeIQ1Waveform.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
-#else
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset)
@@ -294,11 +286,7 @@ int32 NiRFmxWLANLibrary::AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.AnalyzeNWaveformsIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeNWaveformsIQ.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
-#else
   return function_pointers_.AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset)
@@ -306,11 +294,7 @@ int32 NiRFmxWLANLibrary::AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentH
   if (!function_pointers_.AnalyzeNWaveformsSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeNWaveformsSpectrum.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_AnalyzeNWaveformsSpectrum(instrumentHandle, selectorString, resultName, x0, dx, spectrum, spectrumSize, arraySize, reset);
-#else
   return function_pointers_.AnalyzeNWaveformsSpectrum(instrumentHandle, selectorString, resultName, x0, dx, spectrum, spectrumSize, arraySize, reset);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
@@ -318,11 +302,7 @@ int32 NiRFmxWLANLibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.AnalyzeSpectrum1Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeSpectrum1Waveform.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_AnalyzeSpectrum1Waveform(instrumentHandle, selectorString, resultName, x0, dx, spectrum, arraySize, reset, reserved);
-#else
   return function_pointers_.AnalyzeSpectrum1Waveform(instrumentHandle, selectorString, resultName, x0, dx, spectrum, arraySize, reset, reserved);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
@@ -330,11 +310,7 @@ int32 NiRFmxWLANLibrary::AutoDetectSignal(niRFmxInstrHandle instrumentHandle, ch
   if (!function_pointers_.AutoDetectSignal) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AutoDetectSignal.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_AutoDetectSignal(instrumentHandle, selectorString, timeout);
-#else
   return function_pointers_.AutoDetectSignal(instrumentHandle, selectorString, timeout);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
@@ -342,11 +318,7 @@ int32 NiRFmxWLANLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char sele
   if (!function_pointers_.AutoLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AutoLevel.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_AutoLevel(instrumentHandle, selectorString, measurementInterval);
-#else
   return function_pointers_.AutoLevel(instrumentHandle, selectorString, measurementInterval);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::BuildChainString(char selectorString[], int32 chainNumber, int32 selectorStringOutLength, char selectorStringOut[])
@@ -354,11 +326,7 @@ int32 NiRFmxWLANLibrary::BuildChainString(char selectorString[], int32 chainNumb
   if (!function_pointers_.BuildChainString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_BuildChainString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_BuildChainString(selectorString, chainNumber, selectorStringOutLength, selectorStringOut);
-#else
   return function_pointers_.BuildChainString(selectorString, chainNumber, selectorStringOutLength, selectorStringOut);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::BuildGateString(char selectorString[], int32 gateNumber, int32 selectorStringOutLength, char selectorStringOut[])
@@ -366,11 +334,7 @@ int32 NiRFmxWLANLibrary::BuildGateString(char selectorString[], int32 gateNumber
   if (!function_pointers_.BuildGateString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_BuildGateString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_BuildGateString(selectorString, gateNumber, selectorStringOutLength, selectorStringOut);
-#else
   return function_pointers_.BuildGateString(selectorString, gateNumber, selectorStringOutLength, selectorStringOut);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
@@ -378,11 +342,7 @@ int32 NiRFmxWLANLibrary::BuildOffsetString(char selectorString[], int32 offsetNu
   if (!function_pointers_.BuildOffsetString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_BuildOffsetString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
-#else
   return function_pointers_.BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::BuildSegmentString(char selectorString[], int32 segmentNumber, int32 selectorStringOutLength, char selectorStringOut[])
@@ -390,11 +350,7 @@ int32 NiRFmxWLANLibrary::BuildSegmentString(char selectorString[], int32 segment
   if (!function_pointers_.BuildSegmentString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_BuildSegmentString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_BuildSegmentString(selectorString, segmentNumber, selectorStringOutLength, selectorStringOut);
-#else
   return function_pointers_.BuildSegmentString(selectorString, segmentNumber, selectorStringOutLength, selectorStringOut);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
@@ -402,11 +358,7 @@ int32 NiRFmxWLANLibrary::BuildSignalString(char signalName[], char resultName[],
   if (!function_pointers_.BuildSignalString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_BuildSignalString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
-#else
   return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::BuildStreamString(char selectorString[], int32 streamNumber, int32 selectorStringOutLength, char selectorStringOut[])
@@ -414,11 +366,7 @@ int32 NiRFmxWLANLibrary::BuildStreamString(char selectorString[], int32 streamNu
   if (!function_pointers_.BuildStreamString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_BuildStreamString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_BuildStreamString(selectorString, streamNumber, selectorStringOutLength, selectorStringOut);
-#else
   return function_pointers_.BuildStreamString(selectorString, streamNumber, selectorStringOutLength, selectorStringOut);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::BuildUserString(char selectorString[], int32 userNumber, int32 selectorStringOutLength, char selectorStringOut[])
@@ -426,11 +374,7 @@ int32 NiRFmxWLANLibrary::BuildUserString(char selectorString[], int32 userNumber
   if (!function_pointers_.BuildUserString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_BuildUserString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_BuildUserString(selectorString, userNumber, selectorStringOutLength, selectorStringOut);
-#else
   return function_pointers_.BuildUserString(selectorString, userNumber, selectorStringOutLength, selectorStringOut);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgChannelBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 channelBandwidth)
@@ -438,11 +382,7 @@ int32 NiRFmxWLANLibrary::CfgChannelBandwidth(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.CfgChannelBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgChannelBandwidth.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgChannelBandwidth(instrumentHandle, selectorString, channelBandwidth);
-#else
   return function_pointers_.CfgChannelBandwidth(instrumentHandle, selectorString, channelBandwidth);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger)
@@ -450,11 +390,7 @@ int32 NiRFmxWLANLibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.CfgDigitalEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgDigitalEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
-#else
   return function_pointers_.CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation)
@@ -462,11 +398,7 @@ int32 NiRFmxWLANLibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.CfgExternalAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgExternalAttenuation.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
-#else
   return function_pointers_.CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency)
@@ -474,11 +406,7 @@ int32 NiRFmxWLANLibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char s
   if (!function_pointers_.CfgFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgFrequency.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgFrequency(instrumentHandle, selectorString, centerFrequency);
-#else
   return function_pointers_.CfgFrequency(instrumentHandle, selectorString, centerFrequency);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgFrequencyArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency[], int32 numberOfElements)
@@ -486,11 +414,7 @@ int32 NiRFmxWLANLibrary::CfgFrequencyArray(niRFmxInstrHandle instrumentHandle, c
   if (!function_pointers_.CfgFrequencyArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgFrequencyArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgFrequencyArray(instrumentHandle, selectorString, centerFrequency, numberOfElements);
-#else
   return function_pointers_.CfgFrequencyArray(instrumentHandle, selectorString, centerFrequency, numberOfElements);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
@@ -498,11 +422,7 @@ int32 NiRFmxWLANLibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.CfgFrequencyReference) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgFrequencyReference.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
-#else
   return function_pointers_.CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char iqPowerEdgeSource[], int32 iqPowerEdgeSlope, float64 iqPowerEdgeLevel, float64 triggerDelay, int32 triggerMinQuietTimeMode, float64 triggerMinQuietTimeDuration, int32 iqPowerEdgeLevelType, int32 enableTrigger)
@@ -510,11 +430,7 @@ int32 NiRFmxWLANLibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.CfgIQPowerEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgIQPowerEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, triggerMinQuietTimeMode, triggerMinQuietTimeDuration, iqPowerEdgeLevelType, enableTrigger);
-#else
   return function_pointers_.CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, triggerMinQuietTimeMode, triggerMinQuietTimeDuration, iqPowerEdgeLevelType, enableTrigger);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
@@ -522,11 +438,7 @@ int32 NiRFmxWLANLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.CfgMechanicalAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgMechanicalAttenuation.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
-#else
   return function_pointers_.CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgNumberOfFrequencySegmentsAndReceiveChains(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfFrequencySegments, int32 numberOfReceiveChains)
@@ -534,11 +446,7 @@ int32 NiRFmxWLANLibrary::CfgNumberOfFrequencySegmentsAndReceiveChains(niRFmxInst
   if (!function_pointers_.CfgNumberOfFrequencySegmentsAndReceiveChains) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgNumberOfFrequencySegmentsAndReceiveChains.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgNumberOfFrequencySegmentsAndReceiveChains(instrumentHandle, selectorString, numberOfFrequencySegments, numberOfReceiveChains);
-#else
   return function_pointers_.CfgNumberOfFrequencySegmentsAndReceiveChains(instrumentHandle, selectorString, numberOfFrequencySegments, numberOfReceiveChains);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
@@ -546,11 +454,7 @@ int32 NiRFmxWLANLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, ch
   if (!function_pointers_.CfgRFAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgRFAttenuation.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
-#else
   return function_pointers_.CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
@@ -558,11 +462,7 @@ int32 NiRFmxWLANLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, c
   if (!function_pointers_.CfgReferenceLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgReferenceLevel.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
-#else
   return function_pointers_.CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgSelectedPortsMultiple(niRFmxInstrHandle instrumentHandle, char selectorString[], char selectedPorts[])
@@ -570,11 +470,7 @@ int32 NiRFmxWLANLibrary::CfgSelectedPortsMultiple(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.CfgSelectedPortsMultiple) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgSelectedPortsMultiple.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgSelectedPortsMultiple(instrumentHandle, selectorString, selectedPorts);
-#else
   return function_pointers_.CfgSelectedPortsMultiple(instrumentHandle, selectorString, selectedPorts);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
@@ -582,11 +478,7 @@ int32 NiRFmxWLANLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.CfgSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgSoftwareEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
-#else
   return function_pointers_.CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CfgStandard(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard)
@@ -594,11 +486,7 @@ int32 NiRFmxWLANLibrary::CfgStandard(niRFmxInstrHandle instrumentHandle, char se
   if (!function_pointers_.CfgStandard) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CfgStandard.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CfgStandard(instrumentHandle, selectorString, standard);
-#else
   return function_pointers_.CfgStandard(instrumentHandle, selectorString, standard);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone)
@@ -606,11 +494,7 @@ int32 NiRFmxWLANLibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.CheckMeasurementStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CheckMeasurementStatus.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
-#else
   return function_pointers_.CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -618,11 +502,7 @@ int32 NiRFmxWLANLibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.ClearAllNamedResults) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_ClearAllNamedResults.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_ClearAllNamedResults(instrumentHandle, selectorString);
-#else
   return function_pointers_.ClearAllNamedResults(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -630,11 +510,7 @@ int32 NiRFmxWLANLibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, ch
   if (!function_pointers_.ClearNamedResult) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_ClearNamedResult.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_ClearNamedResult(instrumentHandle, selectorString);
-#else
   return function_pointers_.ClearNamedResult(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
@@ -642,11 +518,7 @@ int32 NiRFmxWLANLibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.CloneSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CloneSignalConfiguration.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
-#else
   return function_pointers_.CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
@@ -654,11 +526,7 @@ int32 NiRFmxWLANLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDe
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_Close.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_Close(instrumentHandle, forceDestroy);
-#else
   return function_pointers_.Close(instrumentHandle, forceDestroy);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -666,11 +534,7 @@ int32 NiRFmxWLANLibrary::Commit(niRFmxInstrHandle instrumentHandle, char selecto
   if (!function_pointers_.Commit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_Commit.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_Commit(instrumentHandle, selectorString);
-#else
   return function_pointers_.Commit(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
@@ -678,11 +542,7 @@ int32 NiRFmxWLANLibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentH
   if (!function_pointers_.CreateSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_CreateSignalConfiguration.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_CreateSignalConfiguration(instrumentHandle, signalName);
-#else
   return function_pointers_.CreateSignalConfiguration(instrumentHandle, signalName);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccCfgAcquisitionLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 acquisitionLengthMode, float64 acquisitionLength)
@@ -690,11 +550,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccCfgAcquisitionLength(niRFmxInstrHandle instru
   if (!function_pointers_.DSSSModAccCfgAcquisitionLength) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccCfgAcquisitionLength.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccCfgAcquisitionLength(instrumentHandle, selectorString, acquisitionLengthMode, acquisitionLength);
-#else
   return function_pointers_.DSSSModAccCfgAcquisitionLength(instrumentHandle, selectorString, acquisitionLengthMode, acquisitionLength);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
@@ -702,11 +558,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccCfgAveraging(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.DSSSModAccCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.DSSSModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccCfgEVMUnit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 evmUnit)
@@ -714,11 +566,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccCfgEVMUnit(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.DSSSModAccCfgEVMUnit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccCfgEVMUnit.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccCfgEVMUnit(instrumentHandle, selectorString, evmUnit);
-#else
   return function_pointers_.DSSSModAccCfgEVMUnit(instrumentHandle, selectorString, evmUnit);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementOffset, int32 maximumMeasurementLength)
@@ -726,11 +574,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccCfgMeasurementLength(niRFmxInstrHandle instru
   if (!function_pointers_.DSSSModAccCfgMeasurementLength) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccCfgMeasurementLength.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccCfgMeasurementLength(instrumentHandle, selectorString, measurementOffset, maximumMeasurementLength);
-#else
   return function_pointers_.DSSSModAccCfgMeasurementLength(instrumentHandle, selectorString, measurementOffset, maximumMeasurementLength);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccCfgPowerMeasurementCustomGateArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startTime[], float64 stopTime[], int32 numberOfElements)
@@ -738,11 +582,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccCfgPowerMeasurementCustomGateArray(niRFmxInst
   if (!function_pointers_.DSSSModAccCfgPowerMeasurementCustomGateArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccCfgPowerMeasurementCustomGateArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccCfgPowerMeasurementCustomGateArray(instrumentHandle, selectorString, startTime, stopTime, numberOfElements);
-#else
   return function_pointers_.DSSSModAccCfgPowerMeasurementCustomGateArray(instrumentHandle, selectorString, startTime, stopTime, numberOfElements);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccCfgPowerMeasurementEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 powerMeasurementEnabled)
@@ -750,11 +590,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccCfgPowerMeasurementEnabled(niRFmxInstrHandle 
   if (!function_pointers_.DSSSModAccCfgPowerMeasurementEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccCfgPowerMeasurementEnabled.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccCfgPowerMeasurementEnabled(instrumentHandle, selectorString, powerMeasurementEnabled);
-#else
   return function_pointers_.DSSSModAccCfgPowerMeasurementEnabled(instrumentHandle, selectorString, powerMeasurementEnabled);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccCfgPowerMeasurementNumberOfCustomGates(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCustomGates)
@@ -762,11 +598,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccCfgPowerMeasurementNumberOfCustomGates(niRFmx
   if (!function_pointers_.DSSSModAccCfgPowerMeasurementNumberOfCustomGates) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccCfgPowerMeasurementNumberOfCustomGates.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccCfgPowerMeasurementNumberOfCustomGates(instrumentHandle, selectorString, numberOfCustomGates);
-#else
   return function_pointers_.DSSSModAccCfgPowerMeasurementNumberOfCustomGates(instrumentHandle, selectorString, numberOfCustomGates);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchAveragePowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preambleAveragePowerMean, float64* headerAveragePowerMean, float64* dataAveragePowerMean, float64* ppduAveragePowerMean)
@@ -774,11 +606,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchAveragePowers(niRFmxInstrHandle instrume
   if (!function_pointers_.DSSSModAccFetchAveragePowers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchAveragePowers.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchAveragePowers(instrumentHandle, selectorString, timeout, preambleAveragePowerMean, headerAveragePowerMean, dataAveragePowerMean, ppduAveragePowerMean);
-#else
   return function_pointers_.DSSSModAccFetchAveragePowers(instrumentHandle, selectorString, timeout, preambleAveragePowerMean, headerAveragePowerMean, dataAveragePowerMean, ppduAveragePowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
@@ -786,11 +614,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchConstellationTrace(niRFmxInstrHandle ins
   if (!function_pointers_.DSSSModAccFetchConstellationTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchConstellationTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
-#else
   return function_pointers_.DSSSModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchCustomGatePowersArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 averagePowerMean[], float64 peakPowerMaximum[], int32 arraySize, int32* actualArraySize)
@@ -798,11 +622,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchCustomGatePowersArray(niRFmxInstrHandle 
   if (!function_pointers_.DSSSModAccFetchCustomGatePowersArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchCustomGatePowersArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchCustomGatePowersArray(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum, arraySize, actualArraySize);
-#else
   return function_pointers_.DSSSModAccFetchCustomGatePowersArray(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchDecodedHeaderBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedHeaderBits[], int32 arraySize, int32* actualArraySize)
@@ -810,11 +630,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchDecodedHeaderBitsTrace(niRFmxInstrHandle
   if (!function_pointers_.DSSSModAccFetchDecodedHeaderBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchDecodedHeaderBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchDecodedHeaderBitsTrace(instrumentHandle, selectorString, timeout, decodedHeaderBits, arraySize, actualArraySize);
-#else
   return function_pointers_.DSSSModAccFetchDecodedHeaderBitsTrace(instrumentHandle, selectorString, timeout, decodedHeaderBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchDecodedPSDUBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedPSDUBits[], int32 arraySize, int32* actualArraySize)
@@ -822,11 +638,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchDecodedPSDUBitsTrace(niRFmxInstrHandle i
   if (!function_pointers_.DSSSModAccFetchDecodedPSDUBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchDecodedPSDUBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchDecodedPSDUBitsTrace(instrumentHandle, selectorString, timeout, decodedPSDUBits, arraySize, actualArraySize);
-#else
   return function_pointers_.DSSSModAccFetchDecodedPSDUBitsTrace(instrumentHandle, selectorString, timeout, decodedPSDUBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsevmMean, float64* peakEVM80211_2016Maximum, float64* peakEVM80211_2007Maximum, float64* peakEVM80211_1999Maximum, float64* frequencyErrorMean, float64* chipClockErrorMean, int32* numberOfChipsUsed)
@@ -834,11 +646,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchEVM(niRFmxInstrHandle instrumentHandle, 
   if (!function_pointers_.DSSSModAccFetchEVM) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchEVM.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchEVM(instrumentHandle, selectorString, timeout, rmsevmMean, peakEVM80211_2016Maximum, peakEVM80211_2007Maximum, peakEVM80211_1999Maximum, frequencyErrorMean, chipClockErrorMean, numberOfChipsUsed);
-#else
   return function_pointers_.DSSSModAccFetchEVM(instrumentHandle, selectorString, timeout, rmsevmMean, peakEVM80211_2016Maximum, peakEVM80211_2007Maximum, peakEVM80211_1999Maximum, frequencyErrorMean, chipClockErrorMean, numberOfChipsUsed);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchEVMPerChipMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 evmPerChipMean[], int32 arraySize, int32* actualArraySize)
@@ -846,11 +654,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchEVMPerChipMeanTrace(niRFmxInstrHandle in
   if (!function_pointers_.DSSSModAccFetchEVMPerChipMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchEVMPerChipMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchEVMPerChipMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, evmPerChipMean, arraySize, actualArraySize);
-#else
   return function_pointers_.DSSSModAccFetchEVMPerChipMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, evmPerChipMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* iqOriginOffsetMean, float64* iqGainImbalanceMean, float64* iqQuadratureErrorMean)
@@ -858,11 +662,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchIQImpairments(niRFmxInstrHandle instrume
   if (!function_pointers_.DSSSModAccFetchIQImpairments) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchIQImpairments.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchIQImpairments(instrumentHandle, selectorString, timeout, iqOriginOffsetMean, iqGainImbalanceMean, iqQuadratureErrorMean);
-#else
   return function_pointers_.DSSSModAccFetchIQImpairments(instrumentHandle, selectorString, timeout, iqOriginOffsetMean, iqGainImbalanceMean, iqQuadratureErrorMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchPPDUInformation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* dataModulationFormat, int32* payloadLength, int32* preambleType, int32* lockedClocksBit, int32* headerCRCStatus, int32* psducrcStatus)
@@ -870,11 +670,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchPPDUInformation(niRFmxInstrHandle instru
   if (!function_pointers_.DSSSModAccFetchPPDUInformation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchPPDUInformation.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchPPDUInformation(instrumentHandle, selectorString, timeout, dataModulationFormat, payloadLength, preambleType, lockedClocksBit, headerCRCStatus, psducrcStatus);
-#else
   return function_pointers_.DSSSModAccFetchPPDUInformation(instrumentHandle, selectorString, timeout, dataModulationFormat, payloadLength, preambleType, lockedClocksBit, headerCRCStatus, psducrcStatus);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DSSSModAccFetchPeakPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preamblePeakPowerMaximum, float64* headerPeakPowerMaximum, float64* dataPeakPowerMaximum, float64* ppduPeakPowerMaximum)
@@ -882,11 +678,7 @@ int32 NiRFmxWLANLibrary::DSSSModAccFetchPeakPowers(niRFmxInstrHandle instrumentH
   if (!function_pointers_.DSSSModAccFetchPeakPowers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DSSSModAccFetchPeakPowers.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DSSSModAccFetchPeakPowers(instrumentHandle, selectorString, timeout, preamblePeakPowerMaximum, headerPeakPowerMaximum, dataPeakPowerMaximum, ppduPeakPowerMaximum);
-#else
   return function_pointers_.DSSSModAccFetchPeakPowers(instrumentHandle, selectorString, timeout, preamblePeakPowerMaximum, headerPeakPowerMaximum, dataPeakPowerMaximum, ppduPeakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
@@ -894,11 +686,7 @@ int32 NiRFmxWLANLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentH
   if (!function_pointers_.DeleteSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DeleteSignalConfiguration.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DeleteSignalConfiguration(instrumentHandle, signalName);
-#else
   return function_pointers_.DeleteSignalConfiguration(instrumentHandle, signalName);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -906,11 +694,7 @@ int32 NiRFmxWLANLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.DisableTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_DisableTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_DisableTrigger(instrumentHandle, selectorString);
-#else
   return function_pointers_.DisableTrigger(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
@@ -918,11 +702,7 @@ int32 NiRFmxWLANLibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.GetAllNamedResultNames) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAllNamedResultNames.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
-#else
   return function_pointers_.GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
@@ -930,11 +710,7 @@ int32 NiRFmxWLANLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.GetAttributeF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeF32.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -942,11 +718,7 @@ int32 NiRFmxWLANLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeF32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
@@ -954,11 +726,7 @@ int32 NiRFmxWLANLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.GetAttributeF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeF64.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -966,11 +734,7 @@ int32 NiRFmxWLANLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeF64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
@@ -978,11 +742,7 @@ int32 NiRFmxWLANLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.GetAttributeI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeI16.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
@@ -990,11 +750,7 @@ int32 NiRFmxWLANLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.GetAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeI32.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1002,11 +758,7 @@ int32 NiRFmxWLANLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeI32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeI32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
@@ -1014,11 +766,7 @@ int32 NiRFmxWLANLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.GetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeI64.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1026,11 +774,7 @@ int32 NiRFmxWLANLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeI64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
@@ -1038,11 +782,7 @@ int32 NiRFmxWLANLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.GetAttributeI8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeI8.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1050,11 +790,7 @@ int32 NiRFmxWLANLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.GetAttributeI8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeI8Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1062,11 +798,7 @@ int32 NiRFmxWLANLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle inst
   if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeNIComplexDoubleArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1074,11 +806,7 @@ int32 NiRFmxWLANLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle inst
   if (!function_pointers_.GetAttributeNIComplexSingleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeNIComplexSingleArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
@@ -1086,11 +814,7 @@ int32 NiRFmxWLANLibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, 
   if (!function_pointers_.GetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
-#else
   return function_pointers_.GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
@@ -1098,11 +822,7 @@ int32 NiRFmxWLANLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.GetAttributeU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeU16.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
@@ -1110,11 +830,7 @@ int32 NiRFmxWLANLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.GetAttributeU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeU32.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1122,11 +838,7 @@ int32 NiRFmxWLANLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeU32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeU32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1134,11 +846,7 @@ int32 NiRFmxWLANLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeU64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeU64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
@@ -1146,11 +854,7 @@ int32 NiRFmxWLANLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.GetAttributeU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeU8.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1158,11 +862,7 @@ int32 NiRFmxWLANLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.GetAttributeU8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetAttributeU8Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -1170,11 +870,7 @@ int32 NiRFmxWLANLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* err
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetError.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
-#else
   return function_pointers_.GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -1182,11 +878,7 @@ int32 NiRFmxWLANLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int3
   if (!function_pointers_.GetErrorString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetErrorString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
-#else
   return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession)
@@ -1194,11 +886,7 @@ int32 NiRFmxWLANLibrary::Initialize(char resourceName[], char optionString[], ni
   if (!function_pointers_.Initialize) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_Initialize.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_Initialize(resourceName, optionString, handleOut, isNewSession);
-#else
   return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
@@ -1206,11 +894,7 @@ int32 NiRFmxWLANLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFm
   if (!function_pointers_.InitializeFromNIRFSASession) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_InitializeFromNIRFSASession.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_InitializeFromNIRFSASession(nirfsaSession, handleOut);
-#else
   return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, handleOut);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
@@ -1218,11 +902,7 @@ int32 NiRFmxWLANLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selec
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_Initiate.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_Initiate(instrumentHandle, selectorString, resultName);
-#else
   return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccAutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
@@ -1230,11 +910,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccAutoLevel(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.OFDMModAccAutoLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccAutoLevel.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccAutoLevel(instrumentHandle, selectorString, timeout);
-#else
   return function_pointers_.OFDMModAccAutoLevel(instrumentHandle, selectorString, timeout);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfg1ReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize)
@@ -1242,11 +918,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfg1ReferenceWaveform(niRFmxInstrHandle instr
   if (!function_pointers_.OFDMModAccCfg1ReferenceWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfg1ReferenceWaveform.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfg1ReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
-#else
   return function_pointers_.OFDMModAccCfg1ReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgAcquisitionLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 acquisitionLengthMode, float64 acquisitionLength)
@@ -1254,11 +926,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgAcquisitionLength(niRFmxInstrHandle instru
   if (!function_pointers_.OFDMModAccCfgAcquisitionLength) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgAcquisitionLength.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgAcquisitionLength(instrumentHandle, selectorString, acquisitionLengthMode, acquisitionLength);
-#else
   return function_pointers_.OFDMModAccCfgAcquisitionLength(instrumentHandle, selectorString, acquisitionLengthMode, acquisitionLength);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgAmplitudeTrackingEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 amplitudeTrackingEnabled)
@@ -1266,11 +934,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgAmplitudeTrackingEnabled(niRFmxInstrHandle
   if (!function_pointers_.OFDMModAccCfgAmplitudeTrackingEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgAmplitudeTrackingEnabled.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgAmplitudeTrackingEnabled(instrumentHandle, selectorString, amplitudeTrackingEnabled);
-#else
   return function_pointers_.OFDMModAccCfgAmplitudeTrackingEnabled(instrumentHandle, selectorString, amplitudeTrackingEnabled);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
@@ -1278,11 +942,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgAveraging(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.OFDMModAccCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.OFDMModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgChannelEstimationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelEstimationType)
@@ -1290,11 +950,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgChannelEstimationType(niRFmxInstrHandle in
   if (!function_pointers_.OFDMModAccCfgChannelEstimationType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgChannelEstimationType.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgChannelEstimationType(instrumentHandle, selectorString, channelEstimationType);
-#else
   return function_pointers_.OFDMModAccCfgChannelEstimationType(instrumentHandle, selectorString, channelEstimationType);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgCommonClockSourceEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 commonClockSourceEnabled)
@@ -1302,11 +958,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgCommonClockSourceEnabled(niRFmxInstrHandle
   if (!function_pointers_.OFDMModAccCfgCommonClockSourceEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgCommonClockSourceEnabled.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgCommonClockSourceEnabled(instrumentHandle, selectorString, commonClockSourceEnabled);
-#else
   return function_pointers_.OFDMModAccCfgCommonClockSourceEnabled(instrumentHandle, selectorString, commonClockSourceEnabled);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgEVMUnit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 evmUnit)
@@ -1314,11 +966,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgEVMUnit(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.OFDMModAccCfgEVMUnit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgEVMUnit.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgEVMUnit(instrumentHandle, selectorString, evmUnit);
-#else
   return function_pointers_.OFDMModAccCfgEVMUnit(instrumentHandle, selectorString, evmUnit);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgFrequencyErrorEstimationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 frequencyErrorEstimationMethod)
@@ -1326,11 +974,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgFrequencyErrorEstimationMethod(niRFmxInstr
   if (!function_pointers_.OFDMModAccCfgFrequencyErrorEstimationMethod) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgFrequencyErrorEstimationMethod.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgFrequencyErrorEstimationMethod(instrumentHandle, selectorString, frequencyErrorEstimationMethod);
-#else
   return function_pointers_.OFDMModAccCfgFrequencyErrorEstimationMethod(instrumentHandle, selectorString, frequencyErrorEstimationMethod);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementOffset, int32 maximumMeasurementLength)
@@ -1338,11 +982,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgMeasurementLength(niRFmxInstrHandle instru
   if (!function_pointers_.OFDMModAccCfgMeasurementLength) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgMeasurementLength.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgMeasurementLength(instrumentHandle, selectorString, measurementOffset, maximumMeasurementLength);
-#else
   return function_pointers_.OFDMModAccCfgMeasurementLength(instrumentHandle, selectorString, measurementOffset, maximumMeasurementLength);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgMeasurementMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMode)
@@ -1350,11 +990,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgMeasurementMode(niRFmxInstrHandle instrume
   if (!function_pointers_.OFDMModAccCfgMeasurementMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgMeasurementMode.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgMeasurementMode(instrumentHandle, selectorString, measurementMode);
-#else
   return function_pointers_.OFDMModAccCfgMeasurementMode(instrumentHandle, selectorString, measurementMode);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgNReferenceWaveforms(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], NIComplexSingle referenceWaveform[], int32 referenceWaveformSize[], int32 arraySize)
@@ -1362,11 +998,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgNReferenceWaveforms(niRFmxInstrHandle inst
   if (!function_pointers_.OFDMModAccCfgNReferenceWaveforms) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgNReferenceWaveforms.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgNReferenceWaveforms(instrumentHandle, selectorString, x0, dx, referenceWaveform, referenceWaveformSize, arraySize);
-#else
   return function_pointers_.OFDMModAccCfgNReferenceWaveforms(instrumentHandle, selectorString, x0, dx, referenceWaveform, referenceWaveformSize, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)
@@ -1374,11 +1006,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgNoiseCompensationEnabled(niRFmxInstrHandle
   if (!function_pointers_.OFDMModAccCfgNoiseCompensationEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgNoiseCompensationEnabled.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgNoiseCompensationEnabled(instrumentHandle, selectorString, noiseCompensationEnabled);
-#else
   return function_pointers_.OFDMModAccCfgNoiseCompensationEnabled(instrumentHandle, selectorString, noiseCompensationEnabled);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgOptimizeDynamicRangeForEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 optimizeDynamicRangeForEVMEnabled, double optimizeDynamicRangeForEVMMargin)
@@ -1386,11 +1014,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgOptimizeDynamicRangeForEVM(niRFmxInstrHand
   if (!function_pointers_.OFDMModAccCfgOptimizeDynamicRangeForEVM) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgOptimizeDynamicRangeForEVM.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgOptimizeDynamicRangeForEVM(instrumentHandle, selectorString, optimizeDynamicRangeForEVMEnabled, optimizeDynamicRangeForEVMMargin);
-#else
   return function_pointers_.OFDMModAccCfgOptimizeDynamicRangeForEVM(instrumentHandle, selectorString, optimizeDynamicRangeForEVMEnabled, optimizeDynamicRangeForEVMMargin);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgPhaseTrackingEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 phaseTrackingEnabled)
@@ -1398,11 +1022,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgPhaseTrackingEnabled(niRFmxInstrHandle ins
   if (!function_pointers_.OFDMModAccCfgPhaseTrackingEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgPhaseTrackingEnabled.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgPhaseTrackingEnabled(instrumentHandle, selectorString, phaseTrackingEnabled);
-#else
   return function_pointers_.OFDMModAccCfgPhaseTrackingEnabled(instrumentHandle, selectorString, phaseTrackingEnabled);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccCfgSymbolClockErrorCorrectionEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 symbolClockErrorCorrectionEnabled)
@@ -1410,11 +1030,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgSymbolClockErrorCorrectionEnabled(niRFmxIn
   if (!function_pointers_.OFDMModAccCfgSymbolClockErrorCorrectionEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgSymbolClockErrorCorrectionEnabled.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccCfgSymbolClockErrorCorrectionEnabled(instrumentHandle, selectorString, symbolClockErrorCorrectionEnabled);
-#else
   return function_pointers_.OFDMModAccCfgSymbolClockErrorCorrectionEnabled(instrumentHandle, selectorString, symbolClockErrorCorrectionEnabled);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccClearNoiseCalibrationDatabase(niRFmxInstrHandle instrumentHandle)
@@ -1422,11 +1038,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccClearNoiseCalibrationDatabase(niRFmxInstrHand
   if (!function_pointers_.OFDMModAccClearNoiseCalibrationDatabase) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccClearNoiseCalibrationDatabase.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccClearNoiseCalibrationDatabase(instrumentHandle);
-#else
   return function_pointers_.OFDMModAccClearNoiseCalibrationDatabase(instrumentHandle);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 chainDataRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -1434,11 +1046,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(niRFmx
   if (!function_pointers_.OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, chainDataRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, chainDataRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 chainPilotRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -1446,11 +1054,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(niRFm
   if (!function_pointers_.OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, chainPilotRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, chainPilotRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchChainRMSEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* chainRMSEVMMean, float64* chainDataRMSEVMMean, float64* chainPilotRMSEVMMean)
@@ -1458,11 +1062,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchChainRMSEVM(niRFmxInstrHandle instrument
   if (!function_pointers_.OFDMModAccFetchChainRMSEVM) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchChainRMSEVM.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchChainRMSEVM(instrumentHandle, selectorString, timeout, chainRMSEVMMean, chainDataRMSEVMMean, chainPilotRMSEVMMean);
-#else
   return function_pointers_.OFDMModAccFetchChainRMSEVM(instrumentHandle, selectorString, timeout, chainRMSEVMMean, chainDataRMSEVMMean, chainPilotRMSEVMMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 chainRMSEVMPerSubcarrierMean[], int32 arraySize, int32* actualArraySize)
@@ -1470,11 +1070,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(niRFmx
   if (!function_pointers_.OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, chainRMSEVMPerSubcarrierMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, chainRMSEVMPerSubcarrierMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 chainRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -1482,11 +1078,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(niRFmxInst
   if (!function_pointers_.OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, chainRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, chainRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchChannelFrequencyResponseMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 channelFrequencyResponseMeanMagnitude[], float32 channelFrequencyResponseMeanPhase[], int32 arraySize, int32* actualArraySize)
@@ -1494,11 +1086,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchChannelFrequencyResponseMeanTrace(niRFmx
   if (!function_pointers_.OFDMModAccFetchChannelFrequencyResponseMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchChannelFrequencyResponseMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchChannelFrequencyResponseMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, channelFrequencyResponseMeanMagnitude, channelFrequencyResponseMeanPhase, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchChannelFrequencyResponseMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, channelFrequencyResponseMeanMagnitude, channelFrequencyResponseMeanPhase, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchCommonPilotErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 commonPilotErrorMagnitude[], float32 commonPilotErrorPhase[], int32 arraySize, int32* actualArraySize)
@@ -1506,11 +1094,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchCommonPilotErrorTrace(niRFmxInstrHandle 
   if (!function_pointers_.OFDMModAccFetchCommonPilotErrorTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchCommonPilotErrorTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchCommonPilotErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, commonPilotErrorMagnitude, commonPilotErrorPhase, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchCommonPilotErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, commonPilotErrorMagnitude, commonPilotErrorPhase, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchCompositeRMSEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* compositeRMSEVMMean, float64* compositeDataRMSEVMMean, float64* compositePilotRMSEVMMean)
@@ -1518,11 +1102,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchCompositeRMSEVM(niRFmxInstrHandle instru
   if (!function_pointers_.OFDMModAccFetchCompositeRMSEVM) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchCompositeRMSEVM.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchCompositeRMSEVM(instrumentHandle, selectorString, timeout, compositeRMSEVMMean, compositeDataRMSEVMMean, compositePilotRMSEVMMean);
-#else
   return function_pointers_.OFDMModAccFetchCompositeRMSEVM(instrumentHandle, selectorString, timeout, compositeRMSEVMMean, compositeDataRMSEVMMean, compositePilotRMSEVMMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchCrossPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* crossPowerMean)
@@ -1530,11 +1110,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchCrossPower(niRFmxInstrHandle instrumentH
   if (!function_pointers_.OFDMModAccFetchCrossPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchCrossPower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchCrossPower(instrumentHandle, selectorString, timeout, crossPowerMean);
-#else
   return function_pointers_.OFDMModAccFetchCrossPower(instrumentHandle, selectorString, timeout, crossPowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchCustomGatePowersArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 averagePowerMean[], float64 peakPowerMaximum[], int32 arraySize, int32* actualArraySize)
@@ -1542,11 +1118,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchCustomGatePowersArray(niRFmxInstrHandle 
   if (!function_pointers_.OFDMModAccFetchCustomGatePowersArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchCustomGatePowersArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchCustomGatePowersArray(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchCustomGatePowersArray(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDataAveragePower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* dataAveragePowerMean)
@@ -1554,11 +1126,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDataAveragePower(niRFmxInstrHandle instr
   if (!function_pointers_.OFDMModAccFetchDataAveragePower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDataAveragePower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDataAveragePower(instrumentHandle, selectorString, timeout, dataAveragePowerMean);
-#else
   return function_pointers_.OFDMModAccFetchDataAveragePower(instrumentHandle, selectorString, timeout, dataAveragePowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDataConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dataConstellation[], int32 arraySize, int32* actualArraySize)
@@ -1566,11 +1134,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDataConstellationTrace(niRFmxInstrHandle
   if (!function_pointers_.OFDMModAccFetchDataConstellationTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDataConstellationTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDataConstellationTrace(instrumentHandle, selectorString, timeout, dataConstellation, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchDataConstellationTrace(instrumentHandle, selectorString, timeout, dataConstellation, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDataPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* dataPeakPowerMaximum)
@@ -1578,11 +1142,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDataPeakPower(niRFmxInstrHandle instrume
   if (!function_pointers_.OFDMModAccFetchDataPeakPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDataPeakPower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDataPeakPower(instrumentHandle, selectorString, timeout, dataPeakPowerMaximum);
-#else
   return function_pointers_.OFDMModAccFetchDataPeakPower(instrumentHandle, selectorString, timeout, dataPeakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedEHTSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedEHTSIGBits[], int32 arraySize, int32* actualArraySize)
@@ -1590,11 +1150,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedEHTSIGBitsTrace(niRFmxInstrHandle
   if (!function_pointers_.OFDMModAccFetchDecodedEHTSIGBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedEHTSIGBits, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchDecodedEHTSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedEHTSIGBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedLSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedLSIGBits[], int32 arraySize, int32* actualArraySize)
@@ -1602,11 +1158,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedLSIGBitsTrace(niRFmxInstrHandle i
   if (!function_pointers_.OFDMModAccFetchDecodedLSIGBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedLSIGBits, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchDecodedLSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedLSIGBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedPSDUBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedPSDUBits[], int32 arraySize, int32* actualArraySize)
@@ -1614,11 +1166,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedPSDUBitsTrace(niRFmxInstrHandle i
   if (!function_pointers_.OFDMModAccFetchDecodedPSDUBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedPSDUBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDecodedPSDUBitsTrace(instrumentHandle, selectorString, timeout, decodedPSDUBits, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchDecodedPSDUBitsTrace(instrumentHandle, selectorString, timeout, decodedPSDUBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedSIGBBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedSIGBBits[], int32 arraySize, int32* actualArraySize)
@@ -1626,11 +1174,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedSIGBBitsTrace(niRFmxInstrHandle i
   if (!function_pointers_.OFDMModAccFetchDecodedSIGBBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedSIGBBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDecodedSIGBBitsTrace(instrumentHandle, selectorString, timeout, decodedSIGBBits, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchDecodedSIGBBitsTrace(instrumentHandle, selectorString, timeout, decodedSIGBBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedSIGBits[], int32 arraySize, int32* actualArraySize)
@@ -1638,11 +1182,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedSIGBitsTrace(niRFmxInstrHandle in
   if (!function_pointers_.OFDMModAccFetchDecodedSIGBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedSIGBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDecodedSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedSIGBits, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchDecodedSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedSIGBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedServiceBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedServiceBits[], int32 arraySize, int32* actualArraySize)
@@ -1650,11 +1190,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedServiceBitsTrace(niRFmxInstrHandl
   if (!function_pointers_.OFDMModAccFetchDecodedServiceBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedServiceBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDecodedServiceBitsTrace(instrumentHandle, selectorString, timeout, decodedServiceBits, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchDecodedServiceBitsTrace(instrumentHandle, selectorString, timeout, decodedServiceBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedUSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedUSIGBits[], int32 arraySize, int32* actualArraySize)
@@ -1662,11 +1198,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedUSIGBitsTrace(niRFmxInstrHandle i
   if (!function_pointers_.OFDMModAccFetchDecodedUSIGBitsTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedUSIGBitsTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchDecodedUSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedUSIGBits, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchDecodedUSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedUSIGBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchEVMSubcarrierIndices(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 subcarrierIndices[], int32 arraySize, int32* actualArraySize)
@@ -1674,11 +1206,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchEVMSubcarrierIndices(niRFmxInstrHandle i
   if (!function_pointers_.OFDMModAccFetchEVMSubcarrierIndices) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchEVMSubcarrierIndices.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchEVMSubcarrierIndices(instrumentHandle, selectorString, timeout, subcarrierIndices, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchEVMSubcarrierIndices(instrumentHandle, selectorString, timeout, subcarrierIndices, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchFrequencyErrorCCDF10Percent(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* frequencyErrorCCDF10Percent)
@@ -1686,11 +1214,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchFrequencyErrorCCDF10Percent(niRFmxInstrH
   if (!function_pointers_.OFDMModAccFetchFrequencyErrorCCDF10Percent) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchFrequencyErrorCCDF10Percent.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchFrequencyErrorCCDF10Percent(instrumentHandle, selectorString, timeout, frequencyErrorCCDF10Percent);
-#else
   return function_pointers_.OFDMModAccFetchFrequencyErrorCCDF10Percent(instrumentHandle, selectorString, timeout, frequencyErrorCCDF10Percent);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchFrequencyErrorMean(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* frequencyErrorMean)
@@ -1698,11 +1222,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchFrequencyErrorMean(niRFmxInstrHandle ins
   if (!function_pointers_.OFDMModAccFetchFrequencyErrorMean) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchFrequencyErrorMean.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchFrequencyErrorMean(instrumentHandle, selectorString, timeout, frequencyErrorMean);
-#else
   return function_pointers_.OFDMModAccFetchFrequencyErrorMean(instrumentHandle, selectorString, timeout, frequencyErrorMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchGroupDelayMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 groupDelayMean[], int32 arraySize, int32* actualArraySize)
@@ -1710,11 +1230,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchGroupDelayMeanTrace(niRFmxInstrHandle in
   if (!function_pointers_.OFDMModAccFetchGroupDelayMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchGroupDelayMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchGroupDelayMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, groupDelayMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchGroupDelayMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, groupDelayMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchGuardIntervalType(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* guardIntervalType)
@@ -1722,11 +1238,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchGuardIntervalType(niRFmxInstrHandle inst
   if (!function_pointers_.OFDMModAccFetchGuardIntervalType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchGuardIntervalType.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchGuardIntervalType(instrumentHandle, selectorString, timeout, guardIntervalType);
-#else
   return function_pointers_.OFDMModAccFetchGuardIntervalType(instrumentHandle, selectorString, timeout, guardIntervalType);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqGainImbalancePerSubcarrierMean[], int32 arraySize, int32* actualArraySize)
@@ -1734,11 +1246,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(ni
   if (!function_pointers_.OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, iqGainImbalancePerSubcarrierMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, iqGainImbalancePerSubcarrierMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* relativeIQOriginOffsetMean, float64* iqGainImbalanceMean, float64* iqQuadratureErrorMean, float64* absoluteIQOriginOffsetMean, float64* iqTimingSkewMean)
@@ -1746,11 +1254,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchIQImpairments(niRFmxInstrHandle instrume
   if (!function_pointers_.OFDMModAccFetchIQImpairments) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchIQImpairments.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchIQImpairments(instrumentHandle, selectorString, timeout, relativeIQOriginOffsetMean, iqGainImbalanceMean, iqQuadratureErrorMean, absoluteIQOriginOffsetMean, iqTimingSkewMean);
-#else
   return function_pointers_.OFDMModAccFetchIQImpairments(instrumentHandle, selectorString, timeout, relativeIQOriginOffsetMean, iqGainImbalanceMean, iqQuadratureErrorMean, absoluteIQOriginOffsetMean, iqTimingSkewMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqQuadratureErrorPerSubcarrierMean[], int32 arraySize, int32* actualArraySize)
@@ -1758,11 +1262,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(
   if (!function_pointers_.OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, iqQuadratureErrorPerSubcarrierMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, iqQuadratureErrorPerSubcarrierMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchLSIGParityCheckStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* lsigParityCheckStatus)
@@ -1770,11 +1270,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchLSIGParityCheckStatus(niRFmxInstrHandle 
   if (!function_pointers_.OFDMModAccFetchLSIGParityCheckStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchLSIGParityCheckStatus.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchLSIGParityCheckStatus(instrumentHandle, selectorString, timeout, lsigParityCheckStatus);
-#else
   return function_pointers_.OFDMModAccFetchLSIGParityCheckStatus(instrumentHandle, selectorString, timeout, lsigParityCheckStatus);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchLTFSize(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* ltfSize)
@@ -1782,11 +1278,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchLTFSize(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.OFDMModAccFetchLTFSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchLTFSize.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchLTFSize(instrumentHandle, selectorString, timeout, ltfSize);
-#else
   return function_pointers_.OFDMModAccFetchLTFSize(instrumentHandle, selectorString, timeout, ltfSize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchMCSIndex(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* mcsIndex)
@@ -1794,11 +1286,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchMCSIndex(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.OFDMModAccFetchMCSIndex) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchMCSIndex.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchMCSIndex(instrumentHandle, selectorString, timeout, mcsIndex);
-#else
   return function_pointers_.OFDMModAccFetchMCSIndex(instrumentHandle, selectorString, timeout, mcsIndex);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchNumberOfHESIGBSymbols(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* numberOfHESIGBSymbols)
@@ -1806,11 +1294,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchNumberOfHESIGBSymbols(niRFmxInstrHandle 
   if (!function_pointers_.OFDMModAccFetchNumberOfHESIGBSymbols) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchNumberOfHESIGBSymbols.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchNumberOfHESIGBSymbols(instrumentHandle, selectorString, timeout, numberOfHESIGBSymbols);
-#else
   return function_pointers_.OFDMModAccFetchNumberOfHESIGBSymbols(instrumentHandle, selectorString, timeout, numberOfHESIGBSymbols);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchNumberOfSpaceTimeStreams(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* numberOfSpaceTimeStreams)
@@ -1818,11 +1302,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchNumberOfSpaceTimeStreams(niRFmxInstrHand
   if (!function_pointers_.OFDMModAccFetchNumberOfSpaceTimeStreams) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchNumberOfSpaceTimeStreams.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchNumberOfSpaceTimeStreams(instrumentHandle, selectorString, timeout, numberOfSpaceTimeStreams);
-#else
   return function_pointers_.OFDMModAccFetchNumberOfSpaceTimeStreams(instrumentHandle, selectorString, timeout, numberOfSpaceTimeStreams);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchNumberOfUsers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* numberOfUsers)
@@ -1830,11 +1310,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchNumberOfUsers(niRFmxInstrHandle instrume
   if (!function_pointers_.OFDMModAccFetchNumberOfUsers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchNumberOfUsers.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchNumberOfUsers(instrumentHandle, selectorString, timeout, numberOfUsers);
-#else
   return function_pointers_.OFDMModAccFetchNumberOfUsers(instrumentHandle, selectorString, timeout, numberOfUsers);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchNumberofSymbolsUsed(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* numberOfSymbolsUsed)
@@ -1842,11 +1318,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchNumberofSymbolsUsed(niRFmxInstrHandle in
   if (!function_pointers_.OFDMModAccFetchNumberofSymbolsUsed) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchNumberofSymbolsUsed.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchNumberofSymbolsUsed(instrumentHandle, selectorString, timeout, numberOfSymbolsUsed);
-#else
   return function_pointers_.OFDMModAccFetchNumberofSymbolsUsed(instrumentHandle, selectorString, timeout, numberOfSymbolsUsed);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPEAveragePower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peAveragePowerMean)
@@ -1854,11 +1326,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPEAveragePower(niRFmxInstrHandle instrum
   if (!function_pointers_.OFDMModAccFetchPEAveragePower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPEAveragePower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPEAveragePower(instrumentHandle, selectorString, timeout, peAveragePowerMean);
-#else
   return function_pointers_.OFDMModAccFetchPEAveragePower(instrumentHandle, selectorString, timeout, peAveragePowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPEDuration(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peDuration)
@@ -1866,11 +1334,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPEDuration(niRFmxInstrHandle instrumentH
   if (!function_pointers_.OFDMModAccFetchPEDuration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPEDuration.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPEDuration(instrumentHandle, selectorString, timeout, peDuration);
-#else
   return function_pointers_.OFDMModAccFetchPEDuration(instrumentHandle, selectorString, timeout, peDuration);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPEPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* pePeakPowerMaximum)
@@ -1878,11 +1342,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPEPeakPower(niRFmxInstrHandle instrument
   if (!function_pointers_.OFDMModAccFetchPEPeakPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPEPeakPower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPEPeakPower(instrumentHandle, selectorString, timeout, pePeakPowerMaximum);
-#else
   return function_pointers_.OFDMModAccFetchPEPeakPower(instrumentHandle, selectorString, timeout, pePeakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPPDUAveragePower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* ppduAveragePowerMean)
@@ -1890,11 +1350,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPPDUAveragePower(niRFmxInstrHandle instr
   if (!function_pointers_.OFDMModAccFetchPPDUAveragePower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPPDUAveragePower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPPDUAveragePower(instrumentHandle, selectorString, timeout, ppduAveragePowerMean);
-#else
   return function_pointers_.OFDMModAccFetchPPDUAveragePower(instrumentHandle, selectorString, timeout, ppduAveragePowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPPDUPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* ppduPeakPowerMaximum)
@@ -1902,11 +1358,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPPDUPeakPower(niRFmxInstrHandle instrume
   if (!function_pointers_.OFDMModAccFetchPPDUPeakPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPPDUPeakPower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPPDUPeakPower(instrumentHandle, selectorString, timeout, ppduPeakPowerMaximum);
-#else
   return function_pointers_.OFDMModAccFetchPPDUPeakPower(instrumentHandle, selectorString, timeout, ppduPeakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPPDUType(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* ppduType)
@@ -1914,11 +1366,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPPDUType(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.OFDMModAccFetchPPDUType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPPDUType.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPPDUType(instrumentHandle, selectorString, timeout, ppduType);
-#else
   return function_pointers_.OFDMModAccFetchPPDUType(instrumentHandle, selectorString, timeout, ppduType);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPSDUCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* psducrcStatus)
@@ -1926,11 +1374,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPSDUCRCStatus(niRFmxInstrHandle instrume
   if (!function_pointers_.OFDMModAccFetchPSDUCRCStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPSDUCRCStatus.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPSDUCRCStatus(instrumentHandle, selectorString, timeout, psducrcStatus);
-#else
   return function_pointers_.OFDMModAccFetchPSDUCRCStatus(instrumentHandle, selectorString, timeout, psducrcStatus);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPhaseNoisePSDMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseNoisePSDMean[], int32 arraySize, int32* actualArraySize)
@@ -1938,11 +1382,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPhaseNoisePSDMeanTrace(niRFmxInstrHandle
   if (!function_pointers_.OFDMModAccFetchPhaseNoisePSDMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPhaseNoisePSDMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPhaseNoisePSDMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseNoisePSDMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchPhaseNoisePSDMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseNoisePSDMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPilotConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle pilotConstellation[], int32 arraySize, int32* actualArraySize)
@@ -1950,11 +1390,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPilotConstellationTrace(niRFmxInstrHandl
   if (!function_pointers_.OFDMModAccFetchPilotConstellationTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPilotConstellationTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPilotConstellationTrace(instrumentHandle, selectorString, timeout, pilotConstellation, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchPilotConstellationTrace(instrumentHandle, selectorString, timeout, pilotConstellation, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211ac(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* vhtsigaAveragePowerMean, float64* vhtstfAveragePowerMean, float64* vhtltfAveragePowerMean, float64* vhtsigbAveragePowerMean)
@@ -1962,11 +1398,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211ac(niRFmxInstr
   if (!function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ac) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ac.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ac(instrumentHandle, selectorString, timeout, vhtsigaAveragePowerMean, vhtstfAveragePowerMean, vhtltfAveragePowerMean, vhtsigbAveragePowerMean);
-#else
   return function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ac(instrumentHandle, selectorString, timeout, vhtsigaAveragePowerMean, vhtstfAveragePowerMean, vhtltfAveragePowerMean, vhtsigbAveragePowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211ax(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigAveragePowerMean, float64* hesigaAveragePowerMean, float64* hesigbAveragePowerMean, float64* hestfAveragePowerMean, float64* heltfAveragePowerMean)
@@ -1974,11 +1406,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211ax(niRFmxInstr
   if (!function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ax) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ax.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ax(instrumentHandle, selectorString, timeout, rlsigAveragePowerMean, hesigaAveragePowerMean, hesigbAveragePowerMean, hestfAveragePowerMean, heltfAveragePowerMean);
-#else
   return function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ax(instrumentHandle, selectorString, timeout, rlsigAveragePowerMean, hesigaAveragePowerMean, hesigbAveragePowerMean, hestfAveragePowerMean, heltfAveragePowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211n(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* htsigAveragePowerMean, float64* htstfAveragePowerMean, float64* htdltfAveragePowerMean, float64* hteltfAveragePowerMean)
@@ -1986,11 +1414,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211n(niRFmxInstrH
   if (!function_pointers_.OFDMModAccFetchPreambleAveragePowers80211n) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11n.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11n(instrumentHandle, selectorString, timeout, htsigAveragePowerMean, htstfAveragePowerMean, htdltfAveragePowerMean, hteltfAveragePowerMean);
-#else
   return function_pointers_.OFDMModAccFetchPreambleAveragePowers80211n(instrumentHandle, selectorString, timeout, htsigAveragePowerMean, htstfAveragePowerMean, htdltfAveragePowerMean, hteltfAveragePowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowersCommon(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lstfAveragePowerMean, float64* lltfAveragePowerMean, float64* lsigAveragePowerMean)
@@ -1998,11 +1422,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowersCommon(niRFmxInstrH
   if (!function_pointers_.OFDMModAccFetchPreambleAveragePowersCommon) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreambleAveragePowersCommon.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreambleAveragePowersCommon(instrumentHandle, selectorString, timeout, lstfAveragePowerMean, lltfAveragePowerMean, lsigAveragePowerMean);
-#else
   return function_pointers_.OFDMModAccFetchPreambleAveragePowersCommon(instrumentHandle, selectorString, timeout, lstfAveragePowerMean, lltfAveragePowerMean, lsigAveragePowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleFrequencyErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 preambleFrequencyError[], int32 arraySize, int32* actualArraySize)
@@ -2010,11 +1430,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleFrequencyErrorTrace(niRFmxInstrH
   if (!function_pointers_.OFDMModAccFetchPreambleFrequencyErrorTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreambleFrequencyErrorTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreambleFrequencyErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, preambleFrequencyError, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchPreambleFrequencyErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, preambleFrequencyError, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211ac(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* vhtsigaPeakPowerMaximum, float64* vhtstfPeakPowerMaximum, float64* vhtltfPeakPowerMaximum, float64* vhtsigbPeakPowerMaximum)
@@ -2022,11 +1438,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211ac(niRFmxInstrHan
   if (!function_pointers_.OFDMModAccFetchPreamblePeakPowers80211ac) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ac.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ac(instrumentHandle, selectorString, timeout, vhtsigaPeakPowerMaximum, vhtstfPeakPowerMaximum, vhtltfPeakPowerMaximum, vhtsigbPeakPowerMaximum);
-#else
   return function_pointers_.OFDMModAccFetchPreamblePeakPowers80211ac(instrumentHandle, selectorString, timeout, vhtsigaPeakPowerMaximum, vhtstfPeakPowerMaximum, vhtltfPeakPowerMaximum, vhtsigbPeakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211ax(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigPeakPowerMaximum, float64* hesigaPeakPowerMaximum, float64* hesigbPeakPowerMaximum, float64* hestfPeakPowerMaximum, float64* heltfPeakPowerMaximum)
@@ -2034,11 +1446,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211ax(niRFmxInstrHan
   if (!function_pointers_.OFDMModAccFetchPreamblePeakPowers80211ax) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ax.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ax(instrumentHandle, selectorString, timeout, rlsigPeakPowerMaximum, hesigaPeakPowerMaximum, hesigbPeakPowerMaximum, hestfPeakPowerMaximum, heltfPeakPowerMaximum);
-#else
   return function_pointers_.OFDMModAccFetchPreamblePeakPowers80211ax(instrumentHandle, selectorString, timeout, rlsigPeakPowerMaximum, hesigaPeakPowerMaximum, hesigbPeakPowerMaximum, hestfPeakPowerMaximum, heltfPeakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211n(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* htsigPeakPowerMaximum, float64* htstfPeakPowerMaximum, float64* htdltfPeakPowerMaximum, float64* hteltfPeakPowerMaximum)
@@ -2046,11 +1454,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211n(niRFmxInstrHand
   if (!function_pointers_.OFDMModAccFetchPreamblePeakPowers80211n) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11n.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11n(instrumentHandle, selectorString, timeout, htsigPeakPowerMaximum, htstfPeakPowerMaximum, htdltfPeakPowerMaximum, hteltfPeakPowerMaximum);
-#else
   return function_pointers_.OFDMModAccFetchPreamblePeakPowers80211n(instrumentHandle, selectorString, timeout, htsigPeakPowerMaximum, htstfPeakPowerMaximum, htdltfPeakPowerMaximum, hteltfPeakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowersCommon(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lstfPeakPowerMaximum, float64* lltfPeakPowerMaximum, float64* lsigPeakPowerMaximum)
@@ -2058,11 +1462,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowersCommon(niRFmxInstrHand
   if (!function_pointers_.OFDMModAccFetchPreamblePeakPowersCommon) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreamblePeakPowersCommon.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchPreamblePeakPowersCommon(instrumentHandle, selectorString, timeout, lstfPeakPowerMaximum, lltfPeakPowerMaximum, lsigPeakPowerMaximum);
-#else
   return function_pointers_.OFDMModAccFetchPreamblePeakPowersCommon(instrumentHandle, selectorString, timeout, lstfPeakPowerMaximum, lltfPeakPowerMaximum, lsigPeakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchRUOffsetAndSize(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* ruOffset, int32* ruSize)
@@ -2070,11 +1470,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchRUOffsetAndSize(niRFmxInstrHandle instru
   if (!function_pointers_.OFDMModAccFetchRUOffsetAndSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchRUOffsetAndSize.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchRUOffsetAndSize(instrumentHandle, selectorString, timeout, ruOffset, ruSize);
-#else
   return function_pointers_.OFDMModAccFetchRUOffsetAndSize(instrumentHandle, selectorString, timeout, ruOffset, ruSize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSIGBCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* sigbcrcStatus)
@@ -2082,11 +1478,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSIGBCRCStatus(niRFmxInstrHandle instrume
   if (!function_pointers_.OFDMModAccFetchSIGBCRCStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSIGBCRCStatus.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSIGBCRCStatus(instrumentHandle, selectorString, timeout, sigbcrcStatus);
-#else
   return function_pointers_.OFDMModAccFetchSIGBCRCStatus(instrumentHandle, selectorString, timeout, sigbcrcStatus);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSIGCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* sigcrcStatus)
@@ -2094,11 +1486,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSIGCRCStatus(niRFmxInstrHandle instrumen
   if (!function_pointers_.OFDMModAccFetchSIGCRCStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSIGCRCStatus.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSIGCRCStatus(instrumentHandle, selectorString, timeout, sigcrcStatus);
-#else
   return function_pointers_.OFDMModAccFetchSIGCRCStatus(instrumentHandle, selectorString, timeout, sigcrcStatus);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSpectralFlatness(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* spectralFlatnessMargin, int32* spectralFlatnessMarginSubcarrierIndex)
@@ -2106,11 +1494,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSpectralFlatness(niRFmxInstrHandle instr
   if (!function_pointers_.OFDMModAccFetchSpectralFlatness) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSpectralFlatness.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSpectralFlatness(instrumentHandle, selectorString, timeout, spectralFlatnessMargin, spectralFlatnessMarginSubcarrierIndex);
-#else
   return function_pointers_.OFDMModAccFetchSpectralFlatness(instrumentHandle, selectorString, timeout, spectralFlatnessMargin, spectralFlatnessMarginSubcarrierIndex);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSpectralFlatnessMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectralFlatnessMean[], float32 spectralFlatnessLowerMask[], float32 spectralFlatnessUpperMask[], int32 arraySize, int32* actualArraySize)
@@ -2118,11 +1502,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSpectralFlatnessMeanTrace(niRFmxInstrHan
   if (!function_pointers_.OFDMModAccFetchSpectralFlatnessMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSpectralFlatnessMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSpectralFlatnessMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, spectralFlatnessMean, spectralFlatnessLowerMask, spectralFlatnessUpperMask, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchSpectralFlatnessMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, spectralFlatnessMean, spectralFlatnessLowerMask, spectralFlatnessUpperMask, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 streamDataRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -2130,11 +1510,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(niRFm
   if (!function_pointers_.OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, streamDataRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, streamDataRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 streamPilotRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -2142,11 +1518,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(niRF
   if (!function_pointers_.OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, streamPilotRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, streamPilotRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamRMSEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* streamRMSEVMMean, float64* streamDataRMSEVMMean, float64* streamPilotRMSEVMMean)
@@ -2154,11 +1526,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamRMSEVM(niRFmxInstrHandle instrumen
   if (!function_pointers_.OFDMModAccFetchStreamRMSEVM) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchStreamRMSEVM.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchStreamRMSEVM(instrumentHandle, selectorString, timeout, streamRMSEVMMean, streamDataRMSEVMMean, streamPilotRMSEVMMean);
-#else
   return function_pointers_.OFDMModAccFetchStreamRMSEVM(instrumentHandle, selectorString, timeout, streamRMSEVMMean, streamDataRMSEVMMean, streamPilotRMSEVMMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 streamRMSEVMPerSubcarrierMean[], int32 arraySize, int32* actualArraySize)
@@ -2166,11 +1534,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(niRFm
   if (!function_pointers_.OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, streamRMSEVMPerSubcarrierMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, streamRMSEVMPerSubcarrierMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 streamRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -2178,11 +1542,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(niRFmxIns
   if (!function_pointers_.OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, streamRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, streamRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 subcarrierIndex, float64* x0, float64* dx, float32 subcarrierChainEVMPerSymbol[], int32 arraySize, int32* actualArraySize)
@@ -2190,11 +1550,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(niRFmxI
   if (!function_pointers_.OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, subcarrierIndex, x0, dx, subcarrierChainEVMPerSymbol, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, subcarrierIndex, x0, dx, subcarrierChainEVMPerSymbol, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 subcarrierIndex, float64* x0, float64* dx, float32 subcarrierStreamEVMPerSymbol[], int32 arraySize, int32* actualArraySize)
@@ -2202,11 +1558,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(niRFmx
   if (!function_pointers_.OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, subcarrierIndex, x0, dx, subcarrierStreamEVMPerSymbol, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, subcarrierIndex, x0, dx, subcarrierStreamEVMPerSymbol, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 symbolIndex, float64* x0, float64* dx, float32 symbolChainEVMPerSubcarrier[], int32 arraySize, int32* actualArraySize)
@@ -2214,11 +1566,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(niRFmxI
   if (!function_pointers_.OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(instrumentHandle, selectorString, timeout, symbolIndex, x0, dx, symbolChainEVMPerSubcarrier, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(instrumentHandle, selectorString, timeout, symbolIndex, x0, dx, symbolChainEVMPerSubcarrier, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSymbolClockErrorMean(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* symbolClockErrorMean)
@@ -2226,11 +1574,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSymbolClockErrorMean(niRFmxInstrHandle i
   if (!function_pointers_.OFDMModAccFetchSymbolClockErrorMean) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSymbolClockErrorMean.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSymbolClockErrorMean(instrumentHandle, selectorString, timeout, symbolClockErrorMean);
-#else
   return function_pointers_.OFDMModAccFetchSymbolClockErrorMean(instrumentHandle, selectorString, timeout, symbolClockErrorMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 symbolIndex, float64* x0, float64* dx, float32 symbolStreamEVMPerSubcarrier[], int32 arraySize, int32* actualArraySize)
@@ -2238,11 +1582,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(niRFmx
   if (!function_pointers_.OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(instrumentHandle, selectorString, timeout, symbolIndex, x0, dx, symbolStreamEVMPerSubcarrier, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(instrumentHandle, selectorString, timeout, symbolIndex, x0, dx, symbolStreamEVMPerSubcarrier, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUnusedToneError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* unusedToneErrorMargin, int32* unusedToneErrorMarginRUIndex)
@@ -2250,11 +1590,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUnusedToneError(niRFmxInstrHandle instru
   if (!function_pointers_.OFDMModAccFetchUnusedToneError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUnusedToneError.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUnusedToneError(instrumentHandle, selectorString, timeout, unusedToneErrorMargin, unusedToneErrorMarginRUIndex);
-#else
   return function_pointers_.OFDMModAccFetchUnusedToneError(instrumentHandle, selectorString, timeout, unusedToneErrorMargin, unusedToneErrorMarginRUIndex);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUnusedToneErrorMarginPerRU(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 unusedToneErrorMarginPerRU[], int32 arraySize, int32* actualArraySize)
@@ -2262,11 +1598,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUnusedToneErrorMarginPerRU(niRFmxInstrHa
   if (!function_pointers_.OFDMModAccFetchUnusedToneErrorMarginPerRU) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUnusedToneErrorMarginPerRU.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUnusedToneErrorMarginPerRU(instrumentHandle, selectorString, timeout, unusedToneErrorMarginPerRU, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchUnusedToneErrorMarginPerRU(instrumentHandle, selectorString, timeout, unusedToneErrorMarginPerRU, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUnusedToneErrorMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 unusedToneError[], float32 unusedToneErrorMask[], int32 arraySize, int32* actualArraySize)
@@ -2274,11 +1606,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUnusedToneErrorMeanTrace(niRFmxInstrHand
   if (!function_pointers_.OFDMModAccFetchUnusedToneErrorMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUnusedToneErrorMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUnusedToneErrorMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, unusedToneError, unusedToneErrorMask, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchUnusedToneErrorMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, unusedToneError, unusedToneErrorMask, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUserDataConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle userDataConstellation[], int32 arraySize, int32* actualArraySize)
@@ -2286,11 +1614,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUserDataConstellationTrace(niRFmxInstrHa
   if (!function_pointers_.OFDMModAccFetchUserDataConstellationTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUserDataConstellationTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUserDataConstellationTrace(instrumentHandle, selectorString, timeout, userDataConstellation, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchUserDataConstellationTrace(instrumentHandle, selectorString, timeout, userDataConstellation, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUserPilotConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle userPilotConstellation[], int32 arraySize, int32* actualArraySize)
@@ -2298,11 +1622,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUserPilotConstellationTrace(niRFmxInstrH
   if (!function_pointers_.OFDMModAccFetchUserPilotConstellationTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUserPilotConstellationTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUserPilotConstellationTrace(instrumentHandle, selectorString, timeout, userPilotConstellation, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchUserPilotConstellationTrace(instrumentHandle, selectorString, timeout, userPilotConstellation, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUserPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* userPowerMean)
@@ -2310,11 +1630,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUserPower(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.OFDMModAccFetchUserPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUserPower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUserPower(instrumentHandle, selectorString, timeout, userPowerMean);
-#else
   return function_pointers_.OFDMModAccFetchUserPower(instrumentHandle, selectorString, timeout, userPowerMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 userStreamDataRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -2322,11 +1638,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(n
   if (!function_pointers_.OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, userStreamDataRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, userStreamDataRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 userStreamPilotRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -2334,11 +1646,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(
   if (!function_pointers_.OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, userStreamPilotRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, userStreamPilotRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamRMSEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* userStreamRMSEVMMean, float64* userStreamDataRMSEVMMean, float64* userStreamPilotRMSEVMMean)
@@ -2346,11 +1654,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamRMSEVM(niRFmxInstrHandle instr
   if (!function_pointers_.OFDMModAccFetchUserStreamRMSEVM) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUserStreamRMSEVM.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUserStreamRMSEVM(instrumentHandle, selectorString, timeout, userStreamRMSEVMMean, userStreamDataRMSEVMMean, userStreamPilotRMSEVMMean);
-#else
   return function_pointers_.OFDMModAccFetchUserStreamRMSEVM(instrumentHandle, selectorString, timeout, userStreamRMSEVMMean, userStreamDataRMSEVMMean, userStreamPilotRMSEVMMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 userStreamRMSEVMPerSubcarrierMean[], int32 arraySize, int32* actualArraySize)
@@ -2358,11 +1662,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(n
   if (!function_pointers_.OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, userStreamRMSEVMPerSubcarrierMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, userStreamRMSEVMPerSubcarrierMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 userStreamRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize)
@@ -2370,11 +1670,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(niRFm
   if (!function_pointers_.OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, userStreamRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#else
   return function_pointers_.OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, userStreamRMSEVMPerSymbolMean, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid)
@@ -2382,11 +1678,7 @@ int32 NiRFmxWLANLibrary::OFDMModAccValidateCalibrationData(niRFmxInstrHandle ins
   if (!function_pointers_.OFDMModAccValidateCalibrationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccValidateCalibrationData.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_OFDMModAccValidateCalibrationData(instrumentHandle, selectorString, calibrationDataValid);
-#else
   return function_pointers_.OFDMModAccValidateCalibrationData(instrumentHandle, selectorString, calibrationDataValid);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::PowerRampCfgAcquisitionLength(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 acquisitionLength)
@@ -2394,11 +1686,7 @@ int32 NiRFmxWLANLibrary::PowerRampCfgAcquisitionLength(niRFmxInstrHandle instrum
   if (!function_pointers_.PowerRampCfgAcquisitionLength) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_PowerRampCfgAcquisitionLength.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_PowerRampCfgAcquisitionLength(instrumentHandle, selectorString, acquisitionLength);
-#else
   return function_pointers_.PowerRampCfgAcquisitionLength(instrumentHandle, selectorString, acquisitionLength);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::PowerRampCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
@@ -2406,11 +1694,7 @@ int32 NiRFmxWLANLibrary::PowerRampCfgAveraging(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.PowerRampCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_PowerRampCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_PowerRampCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.PowerRampCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::PowerRampFetchFallTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 rawWaveform[], float32 processedWaveform[], float32 threshold[], float32 powerReference[], int32 arraySize, int32* actualArraySize)
@@ -2418,11 +1702,7 @@ int32 NiRFmxWLANLibrary::PowerRampFetchFallTrace(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.PowerRampFetchFallTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_PowerRampFetchFallTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_PowerRampFetchFallTrace(instrumentHandle, selectorString, timeout, x0, dx, rawWaveform, processedWaveform, threshold, powerReference, arraySize, actualArraySize);
-#else
   return function_pointers_.PowerRampFetchFallTrace(instrumentHandle, selectorString, timeout, x0, dx, rawWaveform, processedWaveform, threshold, powerReference, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::PowerRampFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* riseTimeMean, float64* fallTimeMean)
@@ -2430,11 +1710,7 @@ int32 NiRFmxWLANLibrary::PowerRampFetchMeasurement(niRFmxInstrHandle instrumentH
   if (!function_pointers_.PowerRampFetchMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_PowerRampFetchMeasurement.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_PowerRampFetchMeasurement(instrumentHandle, selectorString, timeout, riseTimeMean, fallTimeMean);
-#else
   return function_pointers_.PowerRampFetchMeasurement(instrumentHandle, selectorString, timeout, riseTimeMean, fallTimeMean);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::PowerRampFetchRiseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 rawWaveform[], float32 processedWaveform[], float32 threshold[], float32 powerReference[], int32 arraySize, int32* actualArraySize)
@@ -2442,11 +1718,7 @@ int32 NiRFmxWLANLibrary::PowerRampFetchRiseTrace(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.PowerRampFetchRiseTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_PowerRampFetchRiseTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_PowerRampFetchRiseTrace(instrumentHandle, selectorString, timeout, x0, dx, rawWaveform, processedWaveform, threshold, powerReference, arraySize, actualArraySize);
-#else
   return function_pointers_.PowerRampFetchRiseTrace(instrumentHandle, selectorString, timeout, x0, dx, rawWaveform, processedWaveform, threshold, powerReference, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
@@ -2454,11 +1726,7 @@ int32 NiRFmxWLANLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.ResetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_ResetAttribute.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_ResetAttribute(instrumentHandle, selectorString, attributeID);
-#else
   return function_pointers_.ResetAttribute(instrumentHandle, selectorString, attributeID);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -2466,11 +1734,7 @@ int32 NiRFmxWLANLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.ResetToDefault) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_ResetToDefault.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_ResetToDefault(instrumentHandle, selectorString);
-#else
   return function_pointers_.ResetToDefault(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
@@ -2478,11 +1742,7 @@ int32 NiRFmxWLANLibrary::SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SEMCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
-#else
   return function_pointers_.SEMCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMCfgMaskType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 maskType)
@@ -2490,11 +1750,7 @@ int32 NiRFmxWLANLibrary::SEMCfgMaskType(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.SEMCfgMaskType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMCfgMaskType.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMCfgMaskType(instrumentHandle, selectorString, maskType);
-#else
   return function_pointers_.SEMCfgMaskType(instrumentHandle, selectorString, maskType);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfOffsets)
@@ -2502,11 +1758,7 @@ int32 NiRFmxWLANLibrary::SEMCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.SEMCfgNumberOfOffsets) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMCfgNumberOfOffsets.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
-#else
   return function_pointers_.SEMCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMCfgOffsetFrequencyArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetStartFrequency[], float64 offsetStopFrequency[], int32 offsetSideband[], int32 numberOfElements)
@@ -2514,11 +1766,7 @@ int32 NiRFmxWLANLibrary::SEMCfgOffsetFrequencyArray(niRFmxInstrHandle instrument
   if (!function_pointers_.SEMCfgOffsetFrequencyArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMCfgOffsetFrequencyArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMCfgOffsetFrequencyArray(instrumentHandle, selectorString, offsetStartFrequency, offsetStopFrequency, offsetSideband, numberOfElements);
-#else
   return function_pointers_.SEMCfgOffsetFrequencyArray(instrumentHandle, selectorString, offsetStartFrequency, offsetStopFrequency, offsetSideband, numberOfElements);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMCfgOffsetRelativeLimitArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 relativeLimitStart[], float64 relativeLimitStop[], int32 numberOfElements)
@@ -2526,11 +1774,7 @@ int32 NiRFmxWLANLibrary::SEMCfgOffsetRelativeLimitArray(niRFmxInstrHandle instru
   if (!function_pointers_.SEMCfgOffsetRelativeLimitArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMCfgOffsetRelativeLimitArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMCfgOffsetRelativeLimitArray(instrumentHandle, selectorString, relativeLimitStart, relativeLimitStop, numberOfElements);
-#else
   return function_pointers_.SEMCfgOffsetRelativeLimitArray(instrumentHandle, selectorString, relativeLimitStart, relativeLimitStop, numberOfElements);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMCfgSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spanAuto, float64 span)
@@ -2538,11 +1782,7 @@ int32 NiRFmxWLANLibrary::SEMCfgSpan(niRFmxInstrHandle instrumentHandle, char sel
   if (!function_pointers_.SEMCfgSpan) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMCfgSpan.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMCfgSpan(instrumentHandle, selectorString, spanAuto, span);
-#else
   return function_pointers_.SEMCfgSpan(instrumentHandle, selectorString, spanAuto, span);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
@@ -2550,11 +1790,7 @@ int32 NiRFmxWLANLibrary::SEMCfgSweepTime(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SEMCfgSweepTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMCfgSweepTime.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
-#else
   return function_pointers_.SEMCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* relativePower)
@@ -2562,11 +1798,7 @@ int32 NiRFmxWLANLibrary::SEMFetchCarrierMeasurement(niRFmxInstrHandle instrument
   if (!function_pointers_.SEMFetchCarrierMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchCarrierMeasurement.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchCarrierMeasurement(instrumentHandle, selectorString, timeout, absolutePower, relativePower);
-#else
   return function_pointers_.SEMFetchCarrierMeasurement(instrumentHandle, selectorString, timeout, absolutePower, relativePower);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchLowerOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
@@ -2574,11 +1806,7 @@ int32 NiRFmxWLANLibrary::SEMFetchLowerOffsetMargin(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SEMFetchLowerOffsetMargin) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchLowerOffsetMargin.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchLowerOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
-#else
   return function_pointers_.SEMFetchLowerOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchLowerOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
@@ -2586,11 +1814,7 @@ int32 NiRFmxWLANLibrary::SEMFetchLowerOffsetMarginArray(niRFmxInstrHandle instru
   if (!function_pointers_.SEMFetchLowerOffsetMarginArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchLowerOffsetMarginArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchLowerOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
-#else
   return function_pointers_.SEMFetchLowerOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchLowerOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalAbsolutePower, float64* totalRelativePower, float64* peakAbsolutePower, float64* peakFrequency, float64* peakRelativePower)
@@ -2598,11 +1822,7 @@ int32 NiRFmxWLANLibrary::SEMFetchLowerOffsetPower(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.SEMFetchLowerOffsetPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchLowerOffsetPower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchLowerOffsetPower(instrumentHandle, selectorString, timeout, totalAbsolutePower, totalRelativePower, peakAbsolutePower, peakFrequency, peakRelativePower);
-#else
   return function_pointers_.SEMFetchLowerOffsetPower(instrumentHandle, selectorString, timeout, totalAbsolutePower, totalRelativePower, peakAbsolutePower, peakFrequency, peakRelativePower);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchLowerOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 totalAbsolutePower[], float64 totalRelativePower[], float64 peakAbsolutePower[], float64 peakFrequency[], float64 peakRelativePower[], int32 arraySize, int32* actualArraySize)
@@ -2610,11 +1830,7 @@ int32 NiRFmxWLANLibrary::SEMFetchLowerOffsetPowerArray(niRFmxInstrHandle instrum
   if (!function_pointers_.SEMFetchLowerOffsetPowerArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchLowerOffsetPowerArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchLowerOffsetPowerArray(instrumentHandle, selectorString, timeout, totalAbsolutePower, totalRelativePower, peakAbsolutePower, peakFrequency, peakRelativePower, arraySize, actualArraySize);
-#else
   return function_pointers_.SEMFetchLowerOffsetPowerArray(instrumentHandle, selectorString, timeout, totalAbsolutePower, totalRelativePower, peakAbsolutePower, peakFrequency, peakRelativePower, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
@@ -2622,11 +1838,7 @@ int32 NiRFmxWLANLibrary::SEMFetchMeasurementStatus(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SEMFetchMeasurementStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchMeasurementStatus.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
-#else
   return function_pointers_.SEMFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], float32 compositeMask[], int32 arraySize, int32* actualArraySize)
@@ -2634,11 +1846,7 @@ int32 NiRFmxWLANLibrary::SEMFetchSpectrum(niRFmxInstrHandle instrumentHandle, ch
   if (!function_pointers_.SEMFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchSpectrum.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, compositeMask, arraySize, actualArraySize);
-#else
   return function_pointers_.SEMFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, compositeMask, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchUpperOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
@@ -2646,11 +1854,7 @@ int32 NiRFmxWLANLibrary::SEMFetchUpperOffsetMargin(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SEMFetchUpperOffsetMargin) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchUpperOffsetMargin.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchUpperOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
-#else
   return function_pointers_.SEMFetchUpperOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchUpperOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
@@ -2658,11 +1862,7 @@ int32 NiRFmxWLANLibrary::SEMFetchUpperOffsetMarginArray(niRFmxInstrHandle instru
   if (!function_pointers_.SEMFetchUpperOffsetMarginArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchUpperOffsetMarginArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchUpperOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
-#else
   return function_pointers_.SEMFetchUpperOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchUpperOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalAbsolutePower, float64* totalRelativePower, float64* peakAbsolutePower, float64* peakFrequency, float64* peakRelativePower)
@@ -2670,11 +1870,7 @@ int32 NiRFmxWLANLibrary::SEMFetchUpperOffsetPower(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.SEMFetchUpperOffsetPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchUpperOffsetPower.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchUpperOffsetPower(instrumentHandle, selectorString, timeout, totalAbsolutePower, totalRelativePower, peakAbsolutePower, peakFrequency, peakRelativePower);
-#else
   return function_pointers_.SEMFetchUpperOffsetPower(instrumentHandle, selectorString, timeout, totalAbsolutePower, totalRelativePower, peakAbsolutePower, peakFrequency, peakRelativePower);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SEMFetchUpperOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 totalAbsolutePower[], float64 totalRelativePower[], float64 peakAbsolutePower[], float64 peakFrequency[], float64 peakRelativePower[], int32 arraySize, int32* actualArraySize)
@@ -2682,11 +1878,7 @@ int32 NiRFmxWLANLibrary::SEMFetchUpperOffsetPowerArray(niRFmxInstrHandle instrum
   if (!function_pointers_.SEMFetchUpperOffsetPowerArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SEMFetchUpperOffsetPowerArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SEMFetchUpperOffsetPowerArray(instrumentHandle, selectorString, timeout, totalAbsolutePower, totalRelativePower, peakAbsolutePower, peakFrequency, peakRelativePower, arraySize, actualArraySize);
-#else
   return function_pointers_.SEMFetchUpperOffsetPowerArray(instrumentHandle, selectorString, timeout, totalAbsolutePower, totalRelativePower, peakAbsolutePower, peakFrequency, peakRelativePower, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
@@ -2694,11 +1886,7 @@ int32 NiRFmxWLANLibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, 
   if (!function_pointers_.SelectMeasurements) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SelectMeasurements.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
-#else
   return function_pointers_.SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
@@ -2706,11 +1894,7 @@ int32 NiRFmxWLANLibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.SendSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SendSoftwareEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SendSoftwareEdgeTrigger(instrumentHandle);
-#else
   return function_pointers_.SendSoftwareEdgeTrigger(instrumentHandle);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
@@ -2718,11 +1902,7 @@ int32 NiRFmxWLANLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SetAttributeF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeF32.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
@@ -2730,11 +1910,7 @@ int32 NiRFmxWLANLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeF32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
@@ -2742,11 +1918,7 @@ int32 NiRFmxWLANLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SetAttributeF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeF64.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
@@ -2754,11 +1926,7 @@ int32 NiRFmxWLANLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeF64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
@@ -2766,11 +1934,7 @@ int32 NiRFmxWLANLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SetAttributeI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeI16.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
@@ -2778,11 +1942,7 @@ int32 NiRFmxWLANLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SetAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeI32.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
@@ -2790,11 +1950,7 @@ int32 NiRFmxWLANLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeI32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeI32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
@@ -2802,11 +1958,7 @@ int32 NiRFmxWLANLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeI64.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
@@ -2814,11 +1966,7 @@ int32 NiRFmxWLANLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeI64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
@@ -2826,11 +1974,7 @@ int32 NiRFmxWLANLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.SetAttributeI8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeI8.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
@@ -2838,11 +1982,7 @@ int32 NiRFmxWLANLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.SetAttributeI8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeI8Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
@@ -2850,11 +1990,7 @@ int32 NiRFmxWLANLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle inst
   if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeNIComplexDoubleArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
@@ -2862,11 +1998,7 @@ int32 NiRFmxWLANLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle inst
   if (!function_pointers_.SetAttributeNIComplexSingleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeNIComplexSingleArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
@@ -2874,11 +2006,7 @@ int32 NiRFmxWLANLibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, 
   if (!function_pointers_.SetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeString.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
@@ -2886,11 +2014,7 @@ int32 NiRFmxWLANLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SetAttributeU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeU16.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
@@ -2898,11 +2022,7 @@ int32 NiRFmxWLANLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.SetAttributeU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeU32.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
@@ -2910,11 +2030,7 @@ int32 NiRFmxWLANLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeU32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeU32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
@@ -2922,11 +2038,7 @@ int32 NiRFmxWLANLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeU64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeU64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
@@ -2934,11 +2046,7 @@ int32 NiRFmxWLANLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.SetAttributeU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeU8.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
@@ -2946,11 +2054,7 @@ int32 NiRFmxWLANLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.SetAttributeU8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_SetAttributeU8Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
@@ -2958,11 +2062,7 @@ int32 NiRFmxWLANLibrary::TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, cha
   if (!function_pointers_.TXPCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_TXPCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_TXPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.TXPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::TXPCfgBurstDetectionEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstDetectionEnabled)
@@ -2970,11 +2070,7 @@ int32 NiRFmxWLANLibrary::TXPCfgBurstDetectionEnabled(niRFmxInstrHandle instrumen
   if (!function_pointers_.TXPCfgBurstDetectionEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_TXPCfgBurstDetectionEnabled.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_TXPCfgBurstDetectionEnabled(instrumentHandle, selectorString, burstDetectionEnabled);
-#else
   return function_pointers_.TXPCfgBurstDetectionEnabled(instrumentHandle, selectorString, burstDetectionEnabled);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::TXPCfgMaximumMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 maximumMeasurementInterval)
@@ -2982,11 +2078,7 @@ int32 NiRFmxWLANLibrary::TXPCfgMaximumMeasurementInterval(niRFmxInstrHandle inst
   if (!function_pointers_.TXPCfgMaximumMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_TXPCfgMaximumMeasurementInterval.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_TXPCfgMaximumMeasurementInterval(instrumentHandle, selectorString, maximumMeasurementInterval);
-#else
   return function_pointers_.TXPCfgMaximumMeasurementInterval(instrumentHandle, selectorString, maximumMeasurementInterval);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::TXPFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* peakPowerMaximum)
@@ -2994,11 +2086,7 @@ int32 NiRFmxWLANLibrary::TXPFetchMeasurement(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.TXPFetchMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_TXPFetchMeasurement.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_TXPFetchMeasurement(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum);
-#else
   return function_pointers_.TXPFetchMeasurement(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize)
@@ -3006,11 +2094,7 @@ int32 NiRFmxWLANLibrary::TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, 
   if (!function_pointers_.TXPFetchPowerTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_TXPFetchPowerTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_TXPFetchPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, power, arraySize, actualArraySize);
-#else
   return function_pointers_.TXPFetchPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, power, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
@@ -3018,11 +2102,7 @@ int32 NiRFmxWLANLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrument
   if (!function_pointers_.WaitForAcquisitionComplete) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_WaitForAcquisitionComplete.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_WaitForAcquisitionComplete(instrumentHandle, timeout);
-#else
   return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
-#endif
 }
 
 int32 NiRFmxWLANLibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
@@ -3030,11 +2110,7 @@ int32 NiRFmxWLANLibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrument
   if (!function_pointers_.WaitForMeasurementComplete) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_WaitForMeasurementComplete.");
   }
-#if defined(_MSC_VER)
-  return RFmxWLAN_WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
-#else
   return function_pointers_.WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
-#endif
 }
 
 }  // namespace nirfmxwlan_grpc
