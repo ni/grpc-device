@@ -42,6 +42,7 @@ def _generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     _generate_service_file(metadata, "mock_library.h.mako", "_mock_library.h", gen_dir)
     _generate_service_file(metadata, "client.h.mako", "_client.h", gen_dir)
     _generate_service_file(metadata, "client.cpp.mako", "_client.cpp", gen_dir)
+    _generate_service_file(metadata, "compilation_test.cpp.mako", "_compilation_test.cpp", gen_dir)
 
 
 if __name__ == "__main__":

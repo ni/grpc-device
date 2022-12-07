@@ -162,6 +162,7 @@ foreach(api ${nidrivers})
   set(output_files
     ${service_output_dir}/${api}/${api}_client.cpp
     ${service_output_dir}/${api}/${api}_client.h
+    ${service_output_dir}/${api}/${api}_compilation_test.cpp
     ${service_output_dir}/${api}/${api}_library_interface.h
     ${service_output_dir}/${api}/${api}_library.cpp
     ${service_output_dir}/${api}/${api}_library.h
@@ -544,6 +545,16 @@ add_custom_command(
   COMMAND  ${CMAKE_COMMAND} -E copy_directory
            ${CMAKE_SOURCE_DIR}/source/tests/assets/
            $<TARGET_FILE_DIR:UnitTestsRunner>/)
+
+foreach(api ${nidrivers_to_build})
+  set(compilation_test_sources
+    ${compilation_test_sources}
+    "${service_output_dir}/${api}/${api}_compilation_test.cpp")
+endforeach()
+add_library(CompilationTests STATIC ${compilation_test_sources})
+target_link_libraries(CompilationTests
+    ${_GRPC_GRPCPP}
+)
 
 set(system_test_runner_sources
   "imports/include/nierr_Status.cpp"
