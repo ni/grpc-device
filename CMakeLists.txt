@@ -125,6 +125,7 @@ set(codegen_scripts
   )
 
 # Populated in the api loop below.
+set(nidriver_service_library_hdrs "")
 set(nidriver_service_srcs "")
 set(nidriver_client_srcs "")
 
@@ -173,6 +174,11 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}_service_registrar.cpp
     ${service_output_dir}/${api}/${api}_service_registrar.h
   )
+  set(nidriver_service_library_hdrs
+    ${nidriver_service_library_hdrs}
+    "${service_output_dir}/${api}/${api}_library.h"
+    "${service_output_dir}/${api}/${api}_library_interface.h"
+    "${service_output_dir}/${api}/${api}_mock_library.h")
   set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (api IN_LIST nidrivers_to_build)
     set(nidriver_service_srcs
@@ -311,6 +317,10 @@ foreach(api ${nidrivers})
       "${proto_srcs_dir}/${api}.grpc.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.h"
   )
+  set(nidriver_service_library_hdrs
+    ${nidriver_service_library_hdrs}
+    "${proto_srcs_dir}/${api}.pb.h"
+    "${proto_srcs_dir}/${api}.grpc.pb.h")
   if(api IN_LIST nidrivers_to_build)
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
@@ -555,6 +565,8 @@ add_library(CompilationTests STATIC ${compilation_test_sources})
 target_link_libraries(CompilationTests
     ${_GRPC_GRPCPP}
 )
+add_custom_target(generated_nidriver_service_library_hdrs DEPENDS ${nidriver_service_library_hdrs})
+add_dependencies(CompilationTests generated_nidriver_service_library_hdrs)
 
 set(system_test_runner_sources
   "imports/include/nierr_Status.cpp"
