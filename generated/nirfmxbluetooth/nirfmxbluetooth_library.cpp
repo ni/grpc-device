@@ -170,11 +170,7 @@ int32 NiRFmxBluetoothLibrary::ACPCfgAveraging(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.ACPCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.ACPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
@@ -182,11 +178,7 @@ int32 NiRFmxBluetoothLibrary::ACPCfgBurstSynchronizationType(niRFmxInstrHandle i
   if (!function_pointers_.ACPCfgBurstSynchronizationType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPCfgBurstSynchronizationType.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
-#else
   return function_pointers_.ACPCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfOffsets)
@@ -194,11 +186,7 @@ int32 NiRFmxBluetoothLibrary::ACPCfgNumberOfOffsets(niRFmxInstrHandle instrument
   if (!function_pointers_.ACPCfgNumberOfOffsets) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPCfgNumberOfOffsets.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
-#else
   return function_pointers_.ACPCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPCfgOffsetChannelMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 offsetChannelMode)
@@ -206,11 +194,7 @@ int32 NiRFmxBluetoothLibrary::ACPCfgOffsetChannelMode(niRFmxInstrHandle instrume
   if (!function_pointers_.ACPCfgOffsetChannelMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPCfgOffsetChannelMode.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPCfgOffsetChannelMode(instrumentHandle, selectorString, offsetChannelMode);
-#else
   return function_pointers_.ACPCfgOffsetChannelMode(instrumentHandle, selectorString, offsetChannelMode);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPFetchAbsolutePowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 absolutePower[], int32 arraySize, int32* actualArraySize)
@@ -218,11 +202,7 @@ int32 NiRFmxBluetoothLibrary::ACPFetchAbsolutePowerTrace(niRFmxInstrHandle instr
   if (!function_pointers_.ACPFetchAbsolutePowerTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchAbsolutePowerTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPFetchAbsolutePowerTrace(instrumentHandle, selectorString, timeout, x0, dx, absolutePower, arraySize, actualArraySize);
-#else
   return function_pointers_.ACPFetchAbsolutePowerTrace(instrumentHandle, selectorString, timeout, x0, dx, absolutePower, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPFetchMaskTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 limitWithExceptionMask[], float32 limitWithoutExceptionMask[], int32 arraySize, int32* actualArraySize)
@@ -230,11 +210,7 @@ int32 NiRFmxBluetoothLibrary::ACPFetchMaskTrace(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.ACPFetchMaskTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchMaskTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPFetchMaskTrace(instrumentHandle, selectorString, timeout, x0, dx, limitWithExceptionMask, limitWithoutExceptionMask, arraySize, actualArraySize);
-#else
   return function_pointers_.ACPFetchMaskTrace(instrumentHandle, selectorString, timeout, x0, dx, limitWithExceptionMask, limitWithoutExceptionMask, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
@@ -242,11 +218,7 @@ int32 NiRFmxBluetoothLibrary::ACPFetchMeasurementStatus(niRFmxInstrHandle instru
   if (!function_pointers_.ACPFetchMeasurementStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchMeasurementStatus.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
-#else
   return function_pointers_.ACPFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPFetchOffsetMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerAbsolutePower, float64* upperAbsolutePower, float64* lowerRelativePower, float64* upperRelativePower, float64* lowerMargin, float64* upperMargin)
@@ -254,11 +226,7 @@ int32 NiRFmxBluetoothLibrary::ACPFetchOffsetMeasurement(niRFmxInstrHandle instru
   if (!function_pointers_.ACPFetchOffsetMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchOffsetMeasurement.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPFetchOffsetMeasurement(instrumentHandle, selectorString, timeout, lowerAbsolutePower, upperAbsolutePower, lowerRelativePower, upperRelativePower, lowerMargin, upperMargin);
-#else
   return function_pointers_.ACPFetchOffsetMeasurement(instrumentHandle, selectorString, timeout, lowerAbsolutePower, upperAbsolutePower, lowerRelativePower, upperRelativePower, lowerMargin, upperMargin);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPFetchOffsetMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 lowerAbsolutePower[], float64 upperAbsolutePower[], float64 lowerRelativePower[], float64 upperRelativePower[], float64 lowerMargin[], float64 upperMargin[], int32 arraySize, int32* actualArraySize)
@@ -266,11 +234,7 @@ int32 NiRFmxBluetoothLibrary::ACPFetchOffsetMeasurementArray(niRFmxInstrHandle i
   if (!function_pointers_.ACPFetchOffsetMeasurementArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchOffsetMeasurementArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPFetchOffsetMeasurementArray(instrumentHandle, selectorString, timeout, lowerAbsolutePower, upperAbsolutePower, lowerRelativePower, upperRelativePower, lowerMargin, upperMargin, arraySize, actualArraySize);
-#else
   return function_pointers_.ACPFetchOffsetMeasurementArray(instrumentHandle, selectorString, timeout, lowerAbsolutePower, upperAbsolutePower, lowerRelativePower, upperRelativePower, lowerMargin, upperMargin, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPFetchReferenceChannelPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* referenceChannelPower)
@@ -278,11 +242,7 @@ int32 NiRFmxBluetoothLibrary::ACPFetchReferenceChannelPower(niRFmxInstrHandle in
   if (!function_pointers_.ACPFetchReferenceChannelPower) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchReferenceChannelPower.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPFetchReferenceChannelPower(instrumentHandle, selectorString, timeout, referenceChannelPower);
-#else
   return function_pointers_.ACPFetchReferenceChannelPower(instrumentHandle, selectorString, timeout, referenceChannelPower);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
@@ -290,11 +250,7 @@ int32 NiRFmxBluetoothLibrary::ACPFetchSpectrum(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.ACPFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchSpectrum.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ACPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
-#else
   return function_pointers_.ACPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -302,11 +258,7 @@ int32 NiRFmxBluetoothLibrary::AbortMeasurements(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.AbortMeasurements) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AbortMeasurements.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_AbortMeasurements(instrumentHandle, selectorString);
-#else
   return function_pointers_.AbortMeasurements(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
@@ -314,11 +266,7 @@ int32 NiRFmxBluetoothLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.AnalyzeIQ1Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AnalyzeIQ1Waveform.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
-#else
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
@@ -326,11 +274,7 @@ int32 NiRFmxBluetoothLibrary::AutoDetectSignal(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.AutoDetectSignal) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AutoDetectSignal.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_AutoDetectSignal(instrumentHandle, selectorString, timeout);
-#else
   return function_pointers_.AutoDetectSignal(instrumentHandle, selectorString, timeout);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel)
@@ -338,11 +282,7 @@ int32 NiRFmxBluetoothLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char
   if (!function_pointers_.AutoLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AutoLevel.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_AutoLevel(instrumentHandle, selectorString, measurementInterval, referenceLevel);
-#else
   return function_pointers_.AutoLevel(instrumentHandle, selectorString, measurementInterval, referenceLevel);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
@@ -350,11 +290,7 @@ int32 NiRFmxBluetoothLibrary::BuildOffsetString(char selectorString[], int32 off
   if (!function_pointers_.BuildOffsetString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildOffsetString.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
-#else
   return function_pointers_.BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
@@ -362,11 +298,7 @@ int32 NiRFmxBluetoothLibrary::BuildSignalString(char signalName[], char resultNa
   if (!function_pointers_.BuildSignalString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildSignalString.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
-#else
   return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::BuildSlotString(char selectorString[], int32 slotNumber, int32 selectorStringOutLength, char selectorStringOut[])
@@ -374,11 +306,7 @@ int32 NiRFmxBluetoothLibrary::BuildSlotString(char selectorString[], int32 slotN
   if (!function_pointers_.BuildSlotString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildSlotString.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildSlotString(selectorString, slotNumber, selectorStringOutLength, selectorStringOut);
-#else
   return function_pointers_.BuildSlotString(selectorString, slotNumber, selectorStringOutLength, selectorStringOut);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgChannelNumber(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelNumber)
@@ -386,11 +314,7 @@ int32 NiRFmxBluetoothLibrary::CfgChannelNumber(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.CfgChannelNumber) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgChannelNumber.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgChannelNumber(instrumentHandle, selectorString, channelNumber);
-#else
   return function_pointers_.CfgChannelNumber(instrumentHandle, selectorString, channelNumber);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgDataRate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dataRate)
@@ -398,11 +322,7 @@ int32 NiRFmxBluetoothLibrary::CfgDataRate(niRFmxInstrHandle instrumentHandle, ch
   if (!function_pointers_.CfgDataRate) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgDataRate.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgDataRate(instrumentHandle, selectorString, dataRate);
-#else
   return function_pointers_.CfgDataRate(instrumentHandle, selectorString, dataRate);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger)
@@ -410,11 +330,7 @@ int32 NiRFmxBluetoothLibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrument
   if (!function_pointers_.CfgDigitalEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgDigitalEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
-#else
   return function_pointers_.CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation)
@@ -422,11 +338,7 @@ int32 NiRFmxBluetoothLibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumen
   if (!function_pointers_.CfgExternalAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgExternalAttenuation.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
-#else
   return function_pointers_.CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency)
@@ -434,11 +346,7 @@ int32 NiRFmxBluetoothLibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, c
   if (!function_pointers_.CfgFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgFrequency.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgFrequency(instrumentHandle, selectorString, centerFrequency);
-#else
   return function_pointers_.CfgFrequency(instrumentHandle, selectorString, centerFrequency);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgFrequencyChannelNumber(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard, int32 channelNumber)
@@ -446,11 +354,7 @@ int32 NiRFmxBluetoothLibrary::CfgFrequencyChannelNumber(niRFmxInstrHandle instru
   if (!function_pointers_.CfgFrequencyChannelNumber) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgFrequencyChannelNumber.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgFrequencyChannelNumber(instrumentHandle, selectorString, standard, channelNumber);
-#else
   return function_pointers_.CfgFrequencyChannelNumber(instrumentHandle, selectorString, standard, channelNumber);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
@@ -458,11 +362,7 @@ int32 NiRFmxBluetoothLibrary::CfgFrequencyReference(niRFmxInstrHandle instrument
   if (!function_pointers_.CfgFrequencyReference) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgFrequencyReference.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
-#else
   return function_pointers_.CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char iqPowerEdgeSource[], int32 iqPowerEdgeSlope, float64 iqPowerEdgeLevel, float64 triggerDelay, int32 triggerMinQuietTimeMode, float64 triggerMinQuietTimeDuration, int32 iqPowerEdgeLevelType, int32 enableTrigger)
@@ -470,11 +370,7 @@ int32 NiRFmxBluetoothLibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrument
   if (!function_pointers_.CfgIQPowerEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgIQPowerEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, triggerMinQuietTimeMode, triggerMinQuietTimeDuration, iqPowerEdgeLevelType, enableTrigger);
-#else
   return function_pointers_.CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, triggerMinQuietTimeMode, triggerMinQuietTimeDuration, iqPowerEdgeLevelType, enableTrigger);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgLEDirectionFinding(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 directionFindingMode, float64 cteLength, float64 cteSlotDuration)
@@ -482,11 +378,7 @@ int32 NiRFmxBluetoothLibrary::CfgLEDirectionFinding(niRFmxInstrHandle instrument
   if (!function_pointers_.CfgLEDirectionFinding) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgLEDirectionFinding.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgLEDirectionFinding(instrumentHandle, selectorString, directionFindingMode, cteLength, cteSlotDuration);
-#else
   return function_pointers_.CfgLEDirectionFinding(instrumentHandle, selectorString, directionFindingMode, cteLength, cteSlotDuration);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
@@ -494,11 +386,7 @@ int32 NiRFmxBluetoothLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrum
   if (!function_pointers_.CfgMechanicalAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgMechanicalAttenuation.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
-#else
   return function_pointers_.CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgPacketType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 packetType)
@@ -506,11 +394,7 @@ int32 NiRFmxBluetoothLibrary::CfgPacketType(niRFmxInstrHandle instrumentHandle, 
   if (!function_pointers_.CfgPacketType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgPacketType.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgPacketType(instrumentHandle, selectorString, packetType);
-#else
   return function_pointers_.CfgPacketType(instrumentHandle, selectorString, packetType);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgPayloadBitPattern(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 payloadBitPattern)
@@ -518,11 +402,7 @@ int32 NiRFmxBluetoothLibrary::CfgPayloadBitPattern(niRFmxInstrHandle instrumentH
   if (!function_pointers_.CfgPayloadBitPattern) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgPayloadBitPattern.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgPayloadBitPattern(instrumentHandle, selectorString, payloadBitPattern);
-#else
   return function_pointers_.CfgPayloadBitPattern(instrumentHandle, selectorString, payloadBitPattern);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgPayloadLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 payloadLengthMode, int32 payloadLength)
@@ -530,11 +410,7 @@ int32 NiRFmxBluetoothLibrary::CfgPayloadLength(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.CfgPayloadLength) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgPayloadLength.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgPayloadLength(instrumentHandle, selectorString, payloadLengthMode, payloadLength);
-#else
   return function_pointers_.CfgPayloadLength(instrumentHandle, selectorString, payloadLengthMode, payloadLength);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgRF(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency, float64 referenceLevel, float64 externalAttenuation)
@@ -542,11 +418,7 @@ int32 NiRFmxBluetoothLibrary::CfgRF(niRFmxInstrHandle instrumentHandle, char sel
   if (!function_pointers_.CfgRF) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgRF.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgRF(instrumentHandle, selectorString, centerFrequency, referenceLevel, externalAttenuation);
-#else
   return function_pointers_.CfgRF(instrumentHandle, selectorString, centerFrequency, referenceLevel, externalAttenuation);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
@@ -554,11 +426,7 @@ int32 NiRFmxBluetoothLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.CfgRFAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgRFAttenuation.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
-#else
   return function_pointers_.CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
@@ -566,11 +434,7 @@ int32 NiRFmxBluetoothLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.CfgReferenceLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgReferenceLevel.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
-#else
   return function_pointers_.CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
@@ -578,11 +442,7 @@ int32 NiRFmxBluetoothLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumen
   if (!function_pointers_.CfgSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgSoftwareEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
-#else
   return function_pointers_.CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone)
@@ -590,11 +450,7 @@ int32 NiRFmxBluetoothLibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumen
   if (!function_pointers_.CheckMeasurementStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CheckMeasurementStatus.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
-#else
   return function_pointers_.CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -602,11 +458,7 @@ int32 NiRFmxBluetoothLibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentH
   if (!function_pointers_.ClearAllNamedResults) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ClearAllNamedResults.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ClearAllNamedResults(instrumentHandle, selectorString);
-#else
   return function_pointers_.ClearAllNamedResults(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -614,11 +466,7 @@ int32 NiRFmxBluetoothLibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandl
   if (!function_pointers_.ClearNamedResult) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ClearNamedResult.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ClearNamedResult(instrumentHandle, selectorString);
-#else
   return function_pointers_.ClearNamedResult(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
@@ -626,11 +474,7 @@ int32 NiRFmxBluetoothLibrary::CloneSignalConfiguration(niRFmxInstrHandle instrum
   if (!function_pointers_.CloneSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CloneSignalConfiguration.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
-#else
   return function_pointers_.CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
@@ -638,11 +482,7 @@ int32 NiRFmxBluetoothLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 fo
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_Close.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_Close(instrumentHandle, forceDestroy);
-#else
   return function_pointers_.Close(instrumentHandle, forceDestroy);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -650,11 +490,7 @@ int32 NiRFmxBluetoothLibrary::Commit(niRFmxInstrHandle instrumentHandle, char se
   if (!function_pointers_.Commit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_Commit.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_Commit(instrumentHandle, selectorString);
-#else
   return function_pointers_.Commit(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
@@ -662,11 +498,7 @@ int32 NiRFmxBluetoothLibrary::CreateSignalConfiguration(niRFmxInstrHandle instru
   if (!function_pointers_.CreateSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CreateSignalConfiguration.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_CreateSignalConfiguration(instrumentHandle, signalName);
-#else
   return function_pointers_.CreateSignalConfiguration(instrumentHandle, signalName);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
@@ -674,11 +506,7 @@ int32 NiRFmxBluetoothLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instru
   if (!function_pointers_.DeleteSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_DeleteSignalConfiguration.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_DeleteSignalConfiguration(instrumentHandle, signalName);
-#else
   return function_pointers_.DeleteSignalConfiguration(instrumentHandle, signalName);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -686,11 +514,7 @@ int32 NiRFmxBluetoothLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.DisableTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_DisableTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_DisableTrigger(instrumentHandle, selectorString);
-#else
   return function_pointers_.DisableTrigger(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::FrequencyRangeCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
@@ -698,11 +522,7 @@ int32 NiRFmxBluetoothLibrary::FrequencyRangeCfgAveraging(niRFmxInstrHandle instr
   if (!function_pointers_.FrequencyRangeCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_FrequencyRangeCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_FrequencyRangeCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.FrequencyRangeCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::FrequencyRangeCfgSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span)
@@ -710,11 +530,7 @@ int32 NiRFmxBluetoothLibrary::FrequencyRangeCfgSpan(niRFmxInstrHandle instrument
   if (!function_pointers_.FrequencyRangeCfgSpan) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_FrequencyRangeCfgSpan.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_FrequencyRangeCfgSpan(instrumentHandle, selectorString, span);
-#else
   return function_pointers_.FrequencyRangeCfgSpan(instrumentHandle, selectorString, span);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::FrequencyRangeFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* highFrequency, float64* lowFrequency)
@@ -722,11 +538,7 @@ int32 NiRFmxBluetoothLibrary::FrequencyRangeFetchMeasurement(niRFmxInstrHandle i
   if (!function_pointers_.FrequencyRangeFetchMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_FrequencyRangeFetchMeasurement.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_FrequencyRangeFetchMeasurement(instrumentHandle, selectorString, timeout, highFrequency, lowFrequency);
-#else
   return function_pointers_.FrequencyRangeFetchMeasurement(instrumentHandle, selectorString, timeout, highFrequency, lowFrequency);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::FrequencyRangeFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
@@ -734,11 +546,7 @@ int32 NiRFmxBluetoothLibrary::FrequencyRangeFetchSpectrum(niRFmxInstrHandle inst
   if (!function_pointers_.FrequencyRangeFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_FrequencyRangeFetchSpectrum.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_FrequencyRangeFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
-#else
   return function_pointers_.FrequencyRangeFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
@@ -746,11 +554,7 @@ int32 NiRFmxBluetoothLibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumen
   if (!function_pointers_.GetAllNamedResultNames) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAllNamedResultNames.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
-#else
   return function_pointers_.GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
@@ -758,11 +562,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeF32.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -770,11 +570,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.GetAttributeF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeF32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
@@ -782,11 +578,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeF64.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -794,11 +586,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.GetAttributeF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeF64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
@@ -806,11 +594,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI16.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
@@ -818,11 +602,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI32.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -830,11 +610,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.GetAttributeI32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
@@ -842,11 +618,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI64.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -854,11 +626,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.GetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
@@ -866,11 +634,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.GetAttributeI8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI8.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -878,11 +642,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.GetAttributeI8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI8Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
@@ -890,11 +650,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle
   if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeNIComplexDoubleArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
@@ -902,11 +658,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle
   if (!function_pointers_.GetAttributeNIComplexSingleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeNIComplexSingleArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
@@ -914,11 +666,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeString(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.GetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeString.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
-#else
   return function_pointers_.GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
@@ -926,11 +674,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU16.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
@@ -938,11 +682,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.GetAttributeU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU32.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -950,11 +690,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.GetAttributeU32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -962,11 +698,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.GetAttributeU64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
@@ -974,11 +706,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.GetAttributeU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU8.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
@@ -986,11 +714,7 @@ int32 NiRFmxBluetoothLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.GetAttributeU8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU8Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#else
   return function_pointers_.GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -998,11 +722,7 @@ int32 NiRFmxBluetoothLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetError.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
-#else
   return function_pointers_.GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -1010,11 +730,7 @@ int32 NiRFmxBluetoothLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.GetErrorString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetErrorString.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
-#else
   return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession)
@@ -1022,11 +738,7 @@ int32 NiRFmxBluetoothLibrary::Initialize(char resourceName[], char optionString[
   if (!function_pointers_.Initialize) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_Initialize.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_Initialize(resourceName, optionString, handleOut, isNewSession);
-#else
   return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
@@ -1034,11 +746,7 @@ int32 NiRFmxBluetoothLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, 
   if (!function_pointers_.InitializeFromNIRFSASession) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_InitializeFromNIRFSASession.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_InitializeFromNIRFSASession(nirfsaSession, handleOut);
-#else
   return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, handleOut);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
@@ -1046,11 +754,7 @@ int32 NiRFmxBluetoothLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char 
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_Initiate.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_Initiate(instrumentHandle, selectorString, resultName);
-#else
   return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
@@ -1058,11 +762,7 @@ int32 NiRFmxBluetoothLibrary::ModAccCfgAveraging(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.ModAccCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.ModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
@@ -1070,11 +770,7 @@ int32 NiRFmxBluetoothLibrary::ModAccCfgBurstSynchronizationType(niRFmxInstrHandl
   if (!function_pointers_.ModAccCfgBurstSynchronizationType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccCfgBurstSynchronizationType.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
-#else
   return function_pointers_.ModAccCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
@@ -1082,11 +778,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle in
   if (!function_pointers_.ModAccFetchConstellationTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchConstellationTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakRMSDEVMMaximum, float64* peakDEVMMaximum, float64* ninetyninePercentDEVM)
@@ -1094,11 +786,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDEVM(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.ModAccFetchDEVM) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDEVM.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDEVM(instrumentHandle, selectorString, timeout, peakRMSDEVMMaximum, peakDEVMMaximum, ninetyninePercentDEVM);
-#else
   return function_pointers_.ModAccFetchDEVM(instrumentHandle, selectorString, timeout, peakRMSDEVMMaximum, peakDEVMMaximum, ninetyninePercentDEVM);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDEVMMagnitudeError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRMSMagnitudeErrorMean, float64* peakRMSMagnitudeErrorMaximum)
@@ -1106,11 +794,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDEVMMagnitudeError(niRFmxInstrHandle in
   if (!function_pointers_.ModAccFetchDEVMMagnitudeError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDEVMMagnitudeError.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDEVMMagnitudeError(instrumentHandle, selectorString, timeout, averageRMSMagnitudeErrorMean, peakRMSMagnitudeErrorMaximum);
-#else
   return function_pointers_.ModAccFetchDEVMMagnitudeError(instrumentHandle, selectorString, timeout, averageRMSMagnitudeErrorMean, peakRMSMagnitudeErrorMaximum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 devmPerSymbol[], int32 arraySize, int32* actualArraySize)
@@ -1118,11 +802,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDEVMPerSymbolTrace(niRFmxInstrHandle in
   if (!function_pointers_.ModAccFetchDEVMPerSymbolTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDEVMPerSymbolTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, devmPerSymbol, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchDEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, devmPerSymbol, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDEVMPhaseError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRMSPhaseErrorMean, float64* peakRMSPhaseErrorMaximum)
@@ -1130,11 +810,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDEVMPhaseError(niRFmxInstrHandle instru
   if (!function_pointers_.ModAccFetchDEVMPhaseError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDEVMPhaseError.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDEVMPhaseError(instrumentHandle, selectorString, timeout, averageRMSPhaseErrorMean, peakRMSPhaseErrorMaximum);
-#else
   return function_pointers_.ModAccFetchDEVMPhaseError(instrumentHandle, selectorString, timeout, averageRMSPhaseErrorMean, peakRMSPhaseErrorMaximum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDemodulatedBitTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int8 demodulatedBits[], int32 arraySize, int32* actualArraySize)
@@ -1142,11 +818,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDemodulatedBitTrace(niRFmxInstrHandle i
   if (!function_pointers_.ModAccFetchDemodulatedBitTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDemodulatedBitTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDemodulatedBitTrace(instrumentHandle, selectorString, timeout, demodulatedBits, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchDemodulatedBitTrace(instrumentHandle, selectorString, timeout, demodulatedBits, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDf1(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* df1avgMaximum, float64* df1avgMinimum)
@@ -1154,11 +826,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDf1(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.ModAccFetchDf1) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf1.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDf1(instrumentHandle, selectorString, timeout, df1avgMaximum, df1avgMinimum);
-#else
   return function_pointers_.ModAccFetchDf1(instrumentHandle, selectorString, timeout, df1avgMaximum, df1avgMinimum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDf1maxTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 df1max[], int32 arraySize, int32* actualArraySize)
@@ -1166,11 +834,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDf1maxTrace(niRFmxInstrHandle instrumen
   if (!function_pointers_.ModAccFetchDf1maxTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf1maxTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDf1maxTrace(instrumentHandle, selectorString, timeout, time, df1max, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchDf1maxTrace(instrumentHandle, selectorString, timeout, time, df1max, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDf2(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* df2avgMinimum, float64* percentageOfSymbolsAboveDf2maxThreshold)
@@ -1178,11 +842,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDf2(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.ModAccFetchDf2) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf2.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDf2(instrumentHandle, selectorString, timeout, df2avgMinimum, percentageOfSymbolsAboveDf2maxThreshold);
-#else
   return function_pointers_.ModAccFetchDf2(instrumentHandle, selectorString, timeout, df2avgMinimum, percentageOfSymbolsAboveDf2maxThreshold);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchDf2maxTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 df2max[], int32 arraySize, int32* actualArraySize)
@@ -1190,11 +850,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDf2maxTrace(niRFmxInstrHandle instrumen
   if (!function_pointers_.ModAccFetchDf2maxTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf2maxTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchDf2maxTrace(instrumentHandle, selectorString, timeout, time, df2max, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchDf2maxTrace(instrumentHandle, selectorString, timeout, time, df2max, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorBR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* initialFrequencyErrorMaximum, float64* peakFrequencyDriftMaximum, float64* peakFrequencyDriftRateMaximum)
@@ -1202,11 +858,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorBR(niRFmxInstrHandle inst
   if (!function_pointers_.ModAccFetchFrequencyErrorBR) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorBR.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchFrequencyErrorBR(instrumentHandle, selectorString, timeout, initialFrequencyErrorMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);
-#else
   return function_pointers_.ModAccFetchFrequencyErrorBR(instrumentHandle, selectorString, timeout, initialFrequencyErrorMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorEDR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* headerFrequencyErrorWiMaximum, float64* peakFrequencyErrorWiPlusW0Maximum, float64* peakFrequencyErrorW0Maximum)
@@ -1214,11 +866,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorEDR(niRFmxInstrHandle ins
   if (!function_pointers_.ModAccFetchFrequencyErrorEDR) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorEDR.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchFrequencyErrorEDR(instrumentHandle, selectorString, timeout, headerFrequencyErrorWiMaximum, peakFrequencyErrorWiPlusW0Maximum, peakFrequencyErrorW0Maximum);
-#else
   return function_pointers_.ModAccFetchFrequencyErrorEDR(instrumentHandle, selectorString, timeout, headerFrequencyErrorWiMaximum, peakFrequencyErrorWiPlusW0Maximum, peakFrequencyErrorW0Maximum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorLE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakFrequencyErrorMaximum, float64* initialFrequencyDriftMaximum, float64* peakFrequencyDriftMaximum, float64* peakFrequencyDriftRateMaximum)
@@ -1226,11 +874,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorLE(niRFmxInstrHandle inst
   if (!function_pointers_.ModAccFetchFrequencyErrorLE) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorLE.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchFrequencyErrorLE(instrumentHandle, selectorString, timeout, peakFrequencyErrorMaximum, initialFrequencyDriftMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);
-#else
   return function_pointers_.ModAccFetchFrequencyErrorLE(instrumentHandle, selectorString, timeout, peakFrequencyErrorMaximum, initialFrequencyDriftMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorTraceBR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 frequencyError[], int32 arraySize, int32* actualArraySize)
@@ -1238,11 +882,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorTraceBR(niRFmxInstrHandle
   if (!function_pointers_.ModAccFetchFrequencyErrorTraceBR) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorTraceBR.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchFrequencyErrorTraceBR(instrumentHandle, selectorString, timeout, time, frequencyError, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchFrequencyErrorTraceBR(instrumentHandle, selectorString, timeout, time, frequencyError, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorTraceLE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 frequencyError[], int32 arraySize, int32* actualArraySize)
@@ -1250,11 +890,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorTraceLE(niRFmxInstrHandle
   if (!function_pointers_.ModAccFetchFrequencyErrorTraceLE) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorTraceLE.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchFrequencyErrorTraceLE(instrumentHandle, selectorString, timeout, time, frequencyError, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchFrequencyErrorTraceLE(instrumentHandle, selectorString, timeout, time, frequencyError, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorWiPlusW0TraceEDR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 frequencyErrorWiPlusW0[], int32 arraySize, int32* actualArraySize)
@@ -1262,11 +898,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorWiPlusW0TraceEDR(niRFmxIn
   if (!function_pointers_.ModAccFetchFrequencyErrorWiPlusW0TraceEDR) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR(instrumentHandle, selectorString, timeout, time, frequencyErrorWiPlusW0, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchFrequencyErrorWiPlusW0TraceEDR(instrumentHandle, selectorString, timeout, time, frequencyErrorWiPlusW0, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequency[], int32 arraySize, int32* actualArraySize)
@@ -1274,11 +906,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyTrace(niRFmxInstrHandle instru
   if (!function_pointers_.ModAccFetchFrequencyTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchFrequencyTrace(instrumentHandle, selectorString, timeout, x0, dx, frequency, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchFrequencyTrace(instrumentHandle, selectorString, timeout, x0, dx, frequency, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchRMSDEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 rmsdevm[], int32 arraySize, int32* actualArraySize)
@@ -1286,11 +914,7 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchRMSDEVMTrace(niRFmxInstrHandle instrume
   if (!function_pointers_.ModAccFetchRMSDEVMTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchRMSDEVMTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ModAccFetchRMSDEVMTrace(instrumentHandle, selectorString, timeout, rmsdevm, arraySize, actualArraySize);
-#else
   return function_pointers_.ModAccFetchRMSDEVMTrace(instrumentHandle, selectorString, timeout, rmsdevm, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
@@ -1298,11 +922,7 @@ int32 NiRFmxBluetoothLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.ResetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ResetAttribute.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ResetAttribute(instrumentHandle, selectorString, attributeID);
-#else
   return function_pointers_.ResetAttribute(instrumentHandle, selectorString, attributeID);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
@@ -1310,11 +930,7 @@ int32 NiRFmxBluetoothLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.ResetToDefault) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ResetToDefault.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_ResetToDefault(instrumentHandle, selectorString);
-#else
   return function_pointers_.ResetToDefault(instrumentHandle, selectorString);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
@@ -1322,11 +938,7 @@ int32 NiRFmxBluetoothLibrary::SelectMeasurements(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.SelectMeasurements) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SelectMeasurements.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
-#else
   return function_pointers_.SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
@@ -1334,11 +946,7 @@ int32 NiRFmxBluetoothLibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrume
   if (!function_pointers_.SendSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SendSoftwareEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SendSoftwareEdgeTrigger(instrumentHandle);
-#else
   return function_pointers_.SendSoftwareEdgeTrigger(instrumentHandle);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
@@ -1346,11 +954,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeF32.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
@@ -1358,11 +962,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SetAttributeF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeF32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
@@ -1370,11 +970,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeF64.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
@@ -1382,11 +978,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SetAttributeF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeF64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
@@ -1394,11 +986,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI16.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
@@ -1406,11 +994,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI32.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
@@ -1418,11 +1002,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SetAttributeI32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
@@ -1430,11 +1010,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI64.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
@@ -1442,11 +1018,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
@@ -1454,11 +1026,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.SetAttributeI8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI8.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
@@ -1466,11 +1034,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.SetAttributeI8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI8Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
@@ -1478,11 +1042,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle
   if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeNIComplexDoubleArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
@@ -1490,11 +1050,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle
   if (!function_pointers_.SetAttributeNIComplexSingleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeNIComplexSingleArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
@@ -1502,11 +1058,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeString(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.SetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeString.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
@@ -1514,11 +1066,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU16.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
@@ -1526,11 +1074,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.SetAttributeU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU32.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
@@ -1538,11 +1082,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SetAttributeU32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU32Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
@@ -1550,11 +1090,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentH
   if (!function_pointers_.SetAttributeU64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU64Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
@@ -1562,11 +1098,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.SetAttributeU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU8.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
-#else
   return function_pointers_.SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
@@ -1574,11 +1106,7 @@ int32 NiRFmxBluetoothLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHa
   if (!function_pointers_.SetAttributeU8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU8Array.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#else
   return function_pointers_.SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
@@ -1586,11 +1114,7 @@ int32 NiRFmxBluetoothLibrary::TXPCfgAveraging(niRFmxInstrHandle instrumentHandle
   if (!function_pointers_.TXPCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_TXPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.TXPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TXPCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
@@ -1598,11 +1122,7 @@ int32 NiRFmxBluetoothLibrary::TXPCfgBurstSynchronizationType(niRFmxInstrHandle i
   if (!function_pointers_.TXPCfgBurstSynchronizationType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPCfgBurstSynchronizationType.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_TXPCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
-#else
   return function_pointers_.TXPCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TXPFetchEDRPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* edrgfskAveragePowerMean, float64* edrdpskAveragePowerMean, float64* edr_DPSK_GFSKAveragePowerRatioMean)
@@ -1610,11 +1130,7 @@ int32 NiRFmxBluetoothLibrary::TXPFetchEDRPowers(niRFmxInstrHandle instrumentHand
   if (!function_pointers_.TXPFetchEDRPowers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchEDRPowers.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_TXPFetchEDRPowers(instrumentHandle, selectorString, timeout, edrgfskAveragePowerMean, edrdpskAveragePowerMean, edr_DPSK_GFSKAveragePowerRatioMean);
-#else
   return function_pointers_.TXPFetchEDRPowers(instrumentHandle, selectorString, timeout, edrgfskAveragePowerMean, edrdpskAveragePowerMean, edr_DPSK_GFSKAveragePowerRatioMean);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TXPFetchLECTEReferencePeriodPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* referencePeriodAveragePowerMean, float64* referencePeriodPeakAbsolutePowerDeviationMaximum)
@@ -1622,11 +1138,7 @@ int32 NiRFmxBluetoothLibrary::TXPFetchLECTEReferencePeriodPowers(niRFmxInstrHand
   if (!function_pointers_.TXPFetchLECTEReferencePeriodPowers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchLECTEReferencePeriodPowers.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_TXPFetchLECTEReferencePeriodPowers(instrumentHandle, selectorString, timeout, referencePeriodAveragePowerMean, referencePeriodPeakAbsolutePowerDeviationMaximum);
-#else
   return function_pointers_.TXPFetchLECTEReferencePeriodPowers(instrumentHandle, selectorString, timeout, referencePeriodAveragePowerMean, referencePeriodPeakAbsolutePowerDeviationMaximum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TXPFetchLECTETransmitSlotPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* transmitSlotAveragePowerMean, float64* transmitSlotPeakAbsolutePowerDeviationMaximum)
@@ -1634,11 +1146,7 @@ int32 NiRFmxBluetoothLibrary::TXPFetchLECTETransmitSlotPowers(niRFmxInstrHandle 
   if (!function_pointers_.TXPFetchLECTETransmitSlotPowers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchLECTETransmitSlotPowers.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_TXPFetchLECTETransmitSlotPowers(instrumentHandle, selectorString, timeout, transmitSlotAveragePowerMean, transmitSlotPeakAbsolutePowerDeviationMaximum);
-#else
   return function_pointers_.TXPFetchLECTETransmitSlotPowers(instrumentHandle, selectorString, timeout, transmitSlotAveragePowerMean, transmitSlotPeakAbsolutePowerDeviationMaximum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TXPFetchLECTETransmitSlotPowersArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 transmitSlotAveragePowerMean[], float64 transmitSlotPeakAbsolutePowerDeviationMaximum[], int32 arraySize, int32* actualArraySize)
@@ -1646,11 +1154,7 @@ int32 NiRFmxBluetoothLibrary::TXPFetchLECTETransmitSlotPowersArray(niRFmxInstrHa
   if (!function_pointers_.TXPFetchLECTETransmitSlotPowersArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchLECTETransmitSlotPowersArray.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_TXPFetchLECTETransmitSlotPowersArray(instrumentHandle, selectorString, timeout, transmitSlotAveragePowerMean, transmitSlotPeakAbsolutePowerDeviationMaximum, arraySize, actualArraySize);
-#else
   return function_pointers_.TXPFetchLECTETransmitSlotPowersArray(instrumentHandle, selectorString, timeout, transmitSlotAveragePowerMean, transmitSlotPeakAbsolutePowerDeviationMaximum, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize)
@@ -1658,11 +1162,7 @@ int32 NiRFmxBluetoothLibrary::TXPFetchPowerTrace(niRFmxInstrHandle instrumentHan
   if (!function_pointers_.TXPFetchPowerTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchPowerTrace.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_TXPFetchPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, power, arraySize, actualArraySize);
-#else
   return function_pointers_.TXPFetchPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, power, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TXPFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* averagePowerMaximum, float64* averagePowerMinimum, float64* peakToAveragePowerRatioMaximum)
@@ -1670,11 +1170,7 @@ int32 NiRFmxBluetoothLibrary::TXPFetchPowers(niRFmxInstrHandle instrumentHandle,
   if (!function_pointers_.TXPFetchPowers) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchPowers.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_TXPFetchPowers(instrumentHandle, selectorString, timeout, averagePowerMean, averagePowerMaximum, averagePowerMinimum, peakToAveragePowerRatioMaximum);
-#else
   return function_pointers_.TXPFetchPowers(instrumentHandle, selectorString, timeout, averagePowerMean, averagePowerMaximum, averagePowerMinimum, peakToAveragePowerRatioMaximum);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TwentydBBandwidthCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
@@ -1682,11 +1178,7 @@ int32 NiRFmxBluetoothLibrary::TwentydBBandwidthCfgAveraging(niRFmxInstrHandle in
   if (!function_pointers_.TwentydBBandwidthCfgAveraging) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_20dBBandwidthCfgAveraging.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_20dBBandwidthCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#else
   return function_pointers_.TwentydBBandwidthCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TwentydBBandwidthFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakPower, float64* bandwidth, float64* highFrequency, float64* lowFrequency)
@@ -1694,11 +1186,7 @@ int32 NiRFmxBluetoothLibrary::TwentydBBandwidthFetchMeasurement(niRFmxInstrHandl
   if (!function_pointers_.TwentydBBandwidthFetchMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_20dBBandwidthFetchMeasurement.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_20dBBandwidthFetchMeasurement(instrumentHandle, selectorString, timeout, peakPower, bandwidth, highFrequency, lowFrequency);
-#else
   return function_pointers_.TwentydBBandwidthFetchMeasurement(instrumentHandle, selectorString, timeout, peakPower, bandwidth, highFrequency, lowFrequency);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::TwentydBBandwidthFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
@@ -1706,11 +1194,7 @@ int32 NiRFmxBluetoothLibrary::TwentydBBandwidthFetchSpectrum(niRFmxInstrHandle i
   if (!function_pointers_.TwentydBBandwidthFetchSpectrum) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_20dBBandwidthFetchSpectrum.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_20dBBandwidthFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
-#else
   return function_pointers_.TwentydBBandwidthFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
@@ -1718,11 +1202,7 @@ int32 NiRFmxBluetoothLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instr
   if (!function_pointers_.WaitForAcquisitionComplete) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_WaitForAcquisitionComplete.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_WaitForAcquisitionComplete(instrumentHandle, timeout);
-#else
   return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
-#endif
 }
 
 int32 NiRFmxBluetoothLibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
@@ -1730,11 +1210,7 @@ int32 NiRFmxBluetoothLibrary::WaitForMeasurementComplete(niRFmxInstrHandle instr
   if (!function_pointers_.WaitForMeasurementComplete) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_WaitForMeasurementComplete.");
   }
-#if defined(_MSC_VER)
-  return RFmxBT_WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
-#else
   return function_pointers_.WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
-#endif
 }
 
 }  // namespace nirfmxbluetooth_grpc
