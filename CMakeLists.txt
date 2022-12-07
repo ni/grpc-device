@@ -307,6 +307,17 @@ GenerateGrpcSources(
     "${debugsessionproperties_restricted_grpc_hdrs}"
 )
 
+set(nidriver_service_library_hdrs
+  ${nidriver_service_library_hdrs}
+  "${session_proto_hdrs}"
+  "${session_grpc_hdrs}"
+  "${session_utilities_proto_hdrs}"
+  "${session_utilities_grpc_hdrs}"
+  "${nidevice_proto_hdrs}"
+  "${debugsessionproperties_restricted_proto_hdrs}"
+  "${debugsessionproperties_restricted_grpc_hdrs}"
+)
+
 foreach(api ${nidrivers})
   GenerateGrpcSources(
     PROTO
