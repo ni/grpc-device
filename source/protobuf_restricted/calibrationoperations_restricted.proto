@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.devicerestricted";
+option java_outer_classname = "NiDeviceRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.DeviceRestricted";
+
+package nidevice_restricted_grpc;
+
+import "deviceid_restricted.proto";
+import "google/protobuf/timestamp.proto";
+
+service CalibrationOperationsRestricted {
+  rpc GetCalibrationInformation(GetCalibrationInformationRequest) returns (GetCalibrationInformationResponse);
+}
+
+message GetCalibrationInformationRequest {
+  DeviceId device_id = 1;
+}
+
+message GetCalibrationInformationResponse {
+  bool calibration_internal_support = 1;
+  google.protobuf.Timestamp calibration_internal_last_reading = 2;
+  double calibration_internal_last_temperature_c = 3;
+  uint32 calibration_internal_details_count = 4;
+  string calibration_internal_name = 5;
+  bool calibration_external_support = 6;
+  google.protobuf.Timestamp calibration_external_last_reading = 7;
+  google.protobuf.Timestamp calibration_external_next_reading = 8;
+  double calibration_external_last_temperature_c = 9;
+}
