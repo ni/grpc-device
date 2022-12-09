@@ -425,11 +425,7 @@ int32 NiDAQmxLibrary::AddCDAQSyncConnection(const char portList[])
   if (!function_pointers_.AddCDAQSyncConnection) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAddCDAQSyncConnection.");
   }
-#if defined(_MSC_VER)
-  return DAQmxAddCDAQSyncConnection(portList);
-#else
   return function_pointers_.AddCDAQSyncConnection(portList);
-#endif
 }
 
 int32 NiDAQmxLibrary::AddGlobalChansToTask(TaskHandle task, const char channelNames[])
@@ -437,11 +433,7 @@ int32 NiDAQmxLibrary::AddGlobalChansToTask(TaskHandle task, const char channelNa
   if (!function_pointers_.AddGlobalChansToTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAddGlobalChansToTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxAddGlobalChansToTask(task, channelNames);
-#else
   return function_pointers_.AddGlobalChansToTask(task, channelNames);
-#endif
 }
 
 int32 NiDAQmxLibrary::AddNetworkDevice(const char ipAddress[], const char deviceName[], bool32 attemptReservation, float64 timeout, char deviceNameOut[], uInt32 deviceNameOutBufferSize)
@@ -449,11 +441,7 @@ int32 NiDAQmxLibrary::AddNetworkDevice(const char ipAddress[], const char device
   if (!function_pointers_.AddNetworkDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAddNetworkDevice.");
   }
-#if defined(_MSC_VER)
-  return DAQmxAddNetworkDevice(ipAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize);
-#else
   return function_pointers_.AddNetworkDevice(ipAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize);
-#endif
 }
 
 int32 NiDAQmxLibrary::AreConfiguredCDAQSyncPortsDisconnected(const char chassisDevicesPorts[], float64 timeout, bool32* disconnectedPortsExist)
@@ -461,11 +449,7 @@ int32 NiDAQmxLibrary::AreConfiguredCDAQSyncPortsDisconnected(const char chassisD
   if (!function_pointers_.AreConfiguredCDAQSyncPortsDisconnected) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAreConfiguredCDAQSyncPortsDisconnected.");
   }
-#if defined(_MSC_VER)
-  return DAQmxAreConfiguredCDAQSyncPortsDisconnected(chassisDevicesPorts, timeout, disconnectedPortsExist);
-#else
   return function_pointers_.AreConfiguredCDAQSyncPortsDisconnected(chassisDevicesPorts, timeout, disconnectedPortsExist);
-#endif
 }
 
 int32 NiDAQmxLibrary::AutoConfigureCDAQSyncConnections(const char chassisDevicesPorts[], float64 timeout)
@@ -473,11 +457,7 @@ int32 NiDAQmxLibrary::AutoConfigureCDAQSyncConnections(const char chassisDevices
   if (!function_pointers_.AutoConfigureCDAQSyncConnections) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxAutoConfigureCDAQSyncConnections.");
   }
-#if defined(_MSC_VER)
-  return DAQmxAutoConfigureCDAQSyncConnections(chassisDevicesPorts, timeout);
-#else
   return function_pointers_.AutoConfigureCDAQSyncConnections(chassisDevicesPorts, timeout);
-#endif
 }
 
 int32 NiDAQmxLibrary::CalculateReversePolyCoeff(const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, float64 minValX, float64 maxValX, int32 numPointsToCompute, int32 reversePolyOrder, float64 reverseCoeffs[])
@@ -485,11 +465,7 @@ int32 NiDAQmxLibrary::CalculateReversePolyCoeff(const float64 forwardCoeffs[], u
   if (!function_pointers_.CalculateReversePolyCoeff) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCalculateReversePolyCoeff.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCalculateReversePolyCoeff(forwardCoeffs, numForwardCoeffsIn, minValX, maxValX, numPointsToCompute, reversePolyOrder, reverseCoeffs);
-#else
   return function_pointers_.CalculateReversePolyCoeff(forwardCoeffs, numForwardCoeffsIn, minValX, maxValX, numPointsToCompute, reversePolyOrder, reverseCoeffs);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgAnlgEdgeRefTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples)
@@ -497,11 +473,7 @@ int32 NiDAQmxLibrary::CfgAnlgEdgeRefTrig(TaskHandle task, const char triggerSour
   if (!function_pointers_.CfgAnlgEdgeRefTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgAnlgEdgeRefTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgAnlgEdgeRefTrig(task, triggerSource, triggerSlope, triggerLevel, pretriggerSamples);
-#else
   return function_pointers_.CfgAnlgEdgeRefTrig(task, triggerSource, triggerSlope, triggerLevel, pretriggerSamples);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgAnlgEdgeStartTrig(TaskHandle task, const char triggerSource[], int32 triggerSlope, float64 triggerLevel)
@@ -509,11 +481,7 @@ int32 NiDAQmxLibrary::CfgAnlgEdgeStartTrig(TaskHandle task, const char triggerSo
   if (!function_pointers_.CfgAnlgEdgeStartTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgAnlgEdgeStartTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgAnlgEdgeStartTrig(task, triggerSource, triggerSlope, triggerLevel);
-#else
   return function_pointers_.CfgAnlgEdgeStartTrig(task, triggerSource, triggerSlope, triggerLevel);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgAnlgMultiEdgeRefTrig(TaskHandle task, const char triggerSources[], const int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 pretriggerSamples, uInt32 arraySize)
@@ -521,11 +489,7 @@ int32 NiDAQmxLibrary::CfgAnlgMultiEdgeRefTrig(TaskHandle task, const char trigge
   if (!function_pointers_.CfgAnlgMultiEdgeRefTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgAnlgMultiEdgeRefTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgAnlgMultiEdgeRefTrig(task, triggerSources, triggerSlopeArray, triggerLevelArray, pretriggerSamples, arraySize);
-#else
   return function_pointers_.CfgAnlgMultiEdgeRefTrig(task, triggerSources, triggerSlopeArray, triggerLevelArray, pretriggerSamples, arraySize);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgAnlgMultiEdgeStartTrig(TaskHandle task, const char triggerSources[], const int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 arraySize)
@@ -533,11 +497,7 @@ int32 NiDAQmxLibrary::CfgAnlgMultiEdgeStartTrig(TaskHandle task, const char trig
   if (!function_pointers_.CfgAnlgMultiEdgeStartTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgAnlgMultiEdgeStartTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgAnlgMultiEdgeStartTrig(task, triggerSources, triggerSlopeArray, triggerLevelArray, arraySize);
-#else
   return function_pointers_.CfgAnlgMultiEdgeStartTrig(task, triggerSources, triggerSlopeArray, triggerLevelArray, arraySize);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgAnlgWindowRefTrig(TaskHandle task, const char triggerSource[], int32 triggerWhen, float64 windowTop, float64 windowBottom, uInt32 pretriggerSamples)
@@ -545,11 +505,7 @@ int32 NiDAQmxLibrary::CfgAnlgWindowRefTrig(TaskHandle task, const char triggerSo
   if (!function_pointers_.CfgAnlgWindowRefTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgAnlgWindowRefTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgAnlgWindowRefTrig(task, triggerSource, triggerWhen, windowTop, windowBottom, pretriggerSamples);
-#else
   return function_pointers_.CfgAnlgWindowRefTrig(task, triggerSource, triggerWhen, windowTop, windowBottom, pretriggerSamples);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgAnlgWindowStartTrig(TaskHandle task, const char triggerSource[], int32 triggerWhen, float64 windowTop, float64 windowBottom)
@@ -557,11 +513,7 @@ int32 NiDAQmxLibrary::CfgAnlgWindowStartTrig(TaskHandle task, const char trigger
   if (!function_pointers_.CfgAnlgWindowStartTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgAnlgWindowStartTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgAnlgWindowStartTrig(task, triggerSource, triggerWhen, windowTop, windowBottom);
-#else
   return function_pointers_.CfgAnlgWindowStartTrig(task, triggerSource, triggerWhen, windowTop, windowBottom);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgBurstHandshakingTimingExportClock(TaskHandle task, int32 sampleMode, uInt64 sampsPerChan, float64 sampleClkRate, const char sampleClkOutpTerm[], int32 sampleClkPulsePolarity, int32 pauseWhen, int32 readyEventActiveLevel)
@@ -569,11 +521,7 @@ int32 NiDAQmxLibrary::CfgBurstHandshakingTimingExportClock(TaskHandle task, int3
   if (!function_pointers_.CfgBurstHandshakingTimingExportClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgBurstHandshakingTimingExportClock.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgBurstHandshakingTimingExportClock(task, sampleMode, sampsPerChan, sampleClkRate, sampleClkOutpTerm, sampleClkPulsePolarity, pauseWhen, readyEventActiveLevel);
-#else
   return function_pointers_.CfgBurstHandshakingTimingExportClock(task, sampleMode, sampsPerChan, sampleClkRate, sampleClkOutpTerm, sampleClkPulsePolarity, pauseWhen, readyEventActiveLevel);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgBurstHandshakingTimingImportClock(TaskHandle task, int32 sampleMode, uInt64 sampsPerChan, float64 sampleClkRate, const char sampleClkSrc[], int32 sampleClkActiveEdge, int32 pauseWhen, int32 readyEventActiveLevel)
@@ -581,11 +529,7 @@ int32 NiDAQmxLibrary::CfgBurstHandshakingTimingImportClock(TaskHandle task, int3
   if (!function_pointers_.CfgBurstHandshakingTimingImportClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgBurstHandshakingTimingImportClock.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgBurstHandshakingTimingImportClock(task, sampleMode, sampsPerChan, sampleClkRate, sampleClkSrc, sampleClkActiveEdge, pauseWhen, readyEventActiveLevel);
-#else
   return function_pointers_.CfgBurstHandshakingTimingImportClock(task, sampleMode, sampsPerChan, sampleClkRate, sampleClkSrc, sampleClkActiveEdge, pauseWhen, readyEventActiveLevel);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgChangeDetectionTiming(TaskHandle task, const char risingEdgeChan[], const char fallingEdgeChan[], int32 sampleMode, uInt64 sampsPerChan)
@@ -593,11 +537,7 @@ int32 NiDAQmxLibrary::CfgChangeDetectionTiming(TaskHandle task, const char risin
   if (!function_pointers_.CfgChangeDetectionTiming) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgChangeDetectionTiming.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgChangeDetectionTiming(task, risingEdgeChan, fallingEdgeChan, sampleMode, sampsPerChan);
-#else
   return function_pointers_.CfgChangeDetectionTiming(task, risingEdgeChan, fallingEdgeChan, sampleMode, sampsPerChan);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgDigEdgeRefTrig(TaskHandle task, const char triggerSource[], int32 triggerEdge, uInt32 pretriggerSamples)
@@ -605,11 +545,7 @@ int32 NiDAQmxLibrary::CfgDigEdgeRefTrig(TaskHandle task, const char triggerSourc
   if (!function_pointers_.CfgDigEdgeRefTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgDigEdgeRefTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgDigEdgeRefTrig(task, triggerSource, triggerEdge, pretriggerSamples);
-#else
   return function_pointers_.CfgDigEdgeRefTrig(task, triggerSource, triggerEdge, pretriggerSamples);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgDigEdgeStartTrig(TaskHandle task, const char triggerSource[], int32 triggerEdge)
@@ -617,11 +553,7 @@ int32 NiDAQmxLibrary::CfgDigEdgeStartTrig(TaskHandle task, const char triggerSou
   if (!function_pointers_.CfgDigEdgeStartTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgDigEdgeStartTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgDigEdgeStartTrig(task, triggerSource, triggerEdge);
-#else
   return function_pointers_.CfgDigEdgeStartTrig(task, triggerSource, triggerEdge);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgDigPatternRefTrig(TaskHandle task, const char triggerSource[], const char triggerPattern[], int32 triggerWhen, uInt32 pretriggerSamples)
@@ -629,11 +561,7 @@ int32 NiDAQmxLibrary::CfgDigPatternRefTrig(TaskHandle task, const char triggerSo
   if (!function_pointers_.CfgDigPatternRefTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgDigPatternRefTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgDigPatternRefTrig(task, triggerSource, triggerPattern, triggerWhen, pretriggerSamples);
-#else
   return function_pointers_.CfgDigPatternRefTrig(task, triggerSource, triggerPattern, triggerWhen, pretriggerSamples);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgDigPatternStartTrig(TaskHandle task, const char triggerSource[], const char triggerPattern[], int32 triggerWhen)
@@ -641,11 +569,7 @@ int32 NiDAQmxLibrary::CfgDigPatternStartTrig(TaskHandle task, const char trigger
   if (!function_pointers_.CfgDigPatternStartTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgDigPatternStartTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgDigPatternStartTrig(task, triggerSource, triggerPattern, triggerWhen);
-#else
   return function_pointers_.CfgDigPatternStartTrig(task, triggerSource, triggerPattern, triggerWhen);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgHandshakingTiming(TaskHandle task, int32 sampleMode, uInt64 sampsPerChan)
@@ -653,11 +577,7 @@ int32 NiDAQmxLibrary::CfgHandshakingTiming(TaskHandle task, int32 sampleMode, uI
   if (!function_pointers_.CfgHandshakingTiming) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgHandshakingTiming.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgHandshakingTiming(task, sampleMode, sampsPerChan);
-#else
   return function_pointers_.CfgHandshakingTiming(task, sampleMode, sampsPerChan);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgImplicitTiming(TaskHandle task, int32 sampleMode, uInt64 sampsPerChan)
@@ -665,11 +585,7 @@ int32 NiDAQmxLibrary::CfgImplicitTiming(TaskHandle task, int32 sampleMode, uInt6
   if (!function_pointers_.CfgImplicitTiming) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgImplicitTiming.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgImplicitTiming(task, sampleMode, sampsPerChan);
-#else
   return function_pointers_.CfgImplicitTiming(task, sampleMode, sampsPerChan);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgInputBuffer(TaskHandle task, uInt32 numSampsPerChan)
@@ -677,11 +593,7 @@ int32 NiDAQmxLibrary::CfgInputBuffer(TaskHandle task, uInt32 numSampsPerChan)
   if (!function_pointers_.CfgInputBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgInputBuffer.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgInputBuffer(task, numSampsPerChan);
-#else
   return function_pointers_.CfgInputBuffer(task, numSampsPerChan);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgOutputBuffer(TaskHandle task, uInt32 numSampsPerChan)
@@ -689,11 +601,7 @@ int32 NiDAQmxLibrary::CfgOutputBuffer(TaskHandle task, uInt32 numSampsPerChan)
   if (!function_pointers_.CfgOutputBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgOutputBuffer.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgOutputBuffer(task, numSampsPerChan);
-#else
   return function_pointers_.CfgOutputBuffer(task, numSampsPerChan);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgPipelinedSampClkTiming(TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan)
@@ -701,11 +609,7 @@ int32 NiDAQmxLibrary::CfgPipelinedSampClkTiming(TaskHandle task, const char sour
   if (!function_pointers_.CfgPipelinedSampClkTiming) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgPipelinedSampClkTiming.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgPipelinedSampClkTiming(task, source, rate, activeEdge, sampleMode, sampsPerChan);
-#else
   return function_pointers_.CfgPipelinedSampClkTiming(task, source, rate, activeEdge, sampleMode, sampsPerChan);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgSampClkTiming(TaskHandle task, const char source[], float64 rate, int32 activeEdge, int32 sampleMode, uInt64 sampsPerChan)
@@ -713,11 +617,7 @@ int32 NiDAQmxLibrary::CfgSampClkTiming(TaskHandle task, const char source[], flo
   if (!function_pointers_.CfgSampClkTiming) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgSampClkTiming.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgSampClkTiming(task, source, rate, activeEdge, sampleMode, sampsPerChan);
-#else
   return function_pointers_.CfgSampClkTiming(task, source, rate, activeEdge, sampleMode, sampsPerChan);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgTimeStartTrig(TaskHandle task, CVIAbsoluteTime when, int32 timescale)
@@ -725,11 +625,7 @@ int32 NiDAQmxLibrary::CfgTimeStartTrig(TaskHandle task, CVIAbsoluteTime when, in
   if (!function_pointers_.CfgTimeStartTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgTimeStartTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgTimeStartTrig(task, when, timescale);
-#else
   return function_pointers_.CfgTimeStartTrig(task, when, timescale);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgWatchdogAOExpirStates(TaskHandle task, const char channelNames[], const float64 expirStateArray[], const int32 outputTypeArray[], uInt32 arraySize)
@@ -737,11 +633,7 @@ int32 NiDAQmxLibrary::CfgWatchdogAOExpirStates(TaskHandle task, const char chann
   if (!function_pointers_.CfgWatchdogAOExpirStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgWatchdogAOExpirStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgWatchdogAOExpirStates(task, channelNames, expirStateArray, outputTypeArray, arraySize);
-#else
   return function_pointers_.CfgWatchdogAOExpirStates(task, channelNames, expirStateArray, outputTypeArray, arraySize);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgWatchdogCOExpirStates(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize)
@@ -749,11 +641,7 @@ int32 NiDAQmxLibrary::CfgWatchdogCOExpirStates(TaskHandle task, const char chann
   if (!function_pointers_.CfgWatchdogCOExpirStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgWatchdogCOExpirStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgWatchdogCOExpirStates(task, channelNames, expirStateArray, arraySize);
-#else
   return function_pointers_.CfgWatchdogCOExpirStates(task, channelNames, expirStateArray, arraySize);
-#endif
 }
 
 int32 NiDAQmxLibrary::CfgWatchdogDOExpirStates(TaskHandle task, const char channelNames[], const int32 expirStateArray[], uInt32 arraySize)
@@ -761,11 +649,7 @@ int32 NiDAQmxLibrary::CfgWatchdogDOExpirStates(TaskHandle task, const char chann
   if (!function_pointers_.CfgWatchdogDOExpirStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCfgWatchdogDOExpirStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCfgWatchdogDOExpirStates(task, channelNames, expirStateArray, arraySize);
-#else
   return function_pointers_.CfgWatchdogDOExpirStates(task, channelNames, expirStateArray, arraySize);
-#endif
 }
 
 int32 NiDAQmxLibrary::ClearTEDS(const char physicalChannel[])
@@ -773,11 +657,7 @@ int32 NiDAQmxLibrary::ClearTEDS(const char physicalChannel[])
   if (!function_pointers_.ClearTEDS) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxClearTEDS.");
   }
-#if defined(_MSC_VER)
-  return DAQmxClearTEDS(physicalChannel);
-#else
   return function_pointers_.ClearTEDS(physicalChannel);
-#endif
 }
 
 int32 NiDAQmxLibrary::ClearTask(TaskHandle task)
@@ -785,11 +665,7 @@ int32 NiDAQmxLibrary::ClearTask(TaskHandle task)
   if (!function_pointers_.ClearTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxClearTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxClearTask(task);
-#else
   return function_pointers_.ClearTask(task);
-#endif
 }
 
 int32 NiDAQmxLibrary::ConfigureLogging(TaskHandle task, const char filePath[], int32 loggingMode, const char groupName[], int32 operation)
@@ -797,11 +673,7 @@ int32 NiDAQmxLibrary::ConfigureLogging(TaskHandle task, const char filePath[], i
   if (!function_pointers_.ConfigureLogging) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxConfigureLogging.");
   }
-#if defined(_MSC_VER)
-  return DAQmxConfigureLogging(task, filePath, loggingMode, groupName, operation);
-#else
   return function_pointers_.ConfigureLogging(task, filePath, loggingMode, groupName, operation);
-#endif
 }
 
 int32 NiDAQmxLibrary::ConfigureTEDS(const char physicalChannel[], const char filePath[])
@@ -809,11 +681,7 @@ int32 NiDAQmxLibrary::ConfigureTEDS(const char physicalChannel[], const char fil
   if (!function_pointers_.ConfigureTEDS) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxConfigureTEDS.");
   }
-#if defined(_MSC_VER)
-  return DAQmxConfigureTEDS(physicalChannel, filePath);
-#else
   return function_pointers_.ConfigureTEDS(physicalChannel, filePath);
-#endif
 }
 
 int32 NiDAQmxLibrary::ConnectTerms(const char sourceTerminal[], const char destinationTerminal[], int32 signalModifiers)
@@ -821,11 +689,7 @@ int32 NiDAQmxLibrary::ConnectTerms(const char sourceTerminal[], const char desti
   if (!function_pointers_.ConnectTerms) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxConnectTerms.");
   }
-#if defined(_MSC_VER)
-  return DAQmxConnectTerms(sourceTerminal, destinationTerminal, signalModifiers);
-#else
   return function_pointers_.ConnectTerms(sourceTerminal, destinationTerminal, signalModifiers);
-#endif
 }
 
 int32 NiDAQmxLibrary::ControlWatchdogTask(TaskHandle task, int32 action)
@@ -833,11 +697,7 @@ int32 NiDAQmxLibrary::ControlWatchdogTask(TaskHandle task, int32 action)
   if (!function_pointers_.ControlWatchdogTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxControlWatchdogTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxControlWatchdogTask(task, action);
-#else
   return function_pointers_.ControlWatchdogTask(task, action);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIAccel4WireDCVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[])
@@ -845,11 +705,7 @@ int32 NiDAQmxLibrary::CreateAIAccel4WireDCVoltageChan(TaskHandle task, const cha
   if (!function_pointers_.CreateAIAccel4WireDCVoltageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIAccel4WireDCVoltageChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIAccel4WireDCVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, useExcitForScaling, customScaleName);
-#else
   return function_pointers_.CreateAIAccel4WireDCVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, useExcitForScaling, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIAccelChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -857,11 +713,7 @@ int32 NiDAQmxLibrary::CreateAIAccelChan(TaskHandle task, const char physicalChan
   if (!function_pointers_.CreateAIAccelChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIAccelChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIAccelChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateAIAccelChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIAccelChargeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, const char customScaleName[])
@@ -869,11 +721,7 @@ int32 NiDAQmxLibrary::CreateAIAccelChargeChan(TaskHandle task, const char physic
   if (!function_pointers_.CreateAIAccelChargeChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIAccelChargeChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIAccelChargeChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, customScaleName);
-#else
   return function_pointers_.CreateAIAccelChargeChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const char customScaleName[])
@@ -881,11 +729,7 @@ int32 NiDAQmxLibrary::CreateAIBridgeChan(TaskHandle task, const char physicalCha
   if (!function_pointers_.CreateAIBridgeChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIBridgeChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, customScaleName);
-#else
   return function_pointers_.CreateAIBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIChargeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
@@ -893,11 +737,7 @@ int32 NiDAQmxLibrary::CreateAIChargeChan(TaskHandle task, const char physicalCha
   if (!function_pointers_.CreateAIChargeChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIChargeChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIChargeChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
-#else
   return function_pointers_.CreateAIChargeChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAICurrentChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[])
@@ -905,11 +745,7 @@ int32 NiDAQmxLibrary::CreateAICurrentChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateAICurrentChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAICurrentChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAICurrentChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, shuntResistorLoc, extShuntResistorVal, customScaleName);
-#else
   return function_pointers_.CreateAICurrentChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, shuntResistorLoc, extShuntResistorVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAICurrentRMSChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[])
@@ -917,11 +753,7 @@ int32 NiDAQmxLibrary::CreateAICurrentRMSChan(TaskHandle task, const char physica
   if (!function_pointers_.CreateAICurrentRMSChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAICurrentRMSChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAICurrentRMSChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, shuntResistorLoc, extShuntResistorVal, customScaleName);
-#else
   return function_pointers_.CreateAICurrentRMSChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, shuntResistorLoc, extShuntResistorVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIForceBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
@@ -929,11 +761,7 @@ int32 NiDAQmxLibrary::CreateAIForceBridgePolynomialChan(TaskHandle task, const c
   if (!function_pointers_.CreateAIForceBridgePolynomialChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIForceBridgePolynomialChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIForceBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAIForceBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIForceBridgeTableChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 electricalVals[], uInt32 numElectricalVals, int32 electricalUnits, const float64 physicalVals[], uInt32 numPhysicalVals, int32 physicalUnits, const char customScaleName[])
@@ -941,11 +769,7 @@ int32 NiDAQmxLibrary::CreateAIForceBridgeTableChan(TaskHandle task, const char p
   if (!function_pointers_.CreateAIForceBridgeTableChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIForceBridgeTableChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIForceBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAIForceBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIForceBridgeTwoPointLinChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, float64 firstElectricalVal, float64 secondElectricalVal, int32 electricalUnits, float64 firstPhysicalVal, float64 secondPhysicalVal, int32 physicalUnits, const char customScaleName[])
@@ -953,11 +777,7 @@ int32 NiDAQmxLibrary::CreateAIForceBridgeTwoPointLinChan(TaskHandle task, const 
   if (!function_pointers_.CreateAIForceBridgeTwoPointLinChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIForceBridgeTwoPointLinChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIForceBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAIForceBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIForceIEPEChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -965,11 +785,7 @@ int32 NiDAQmxLibrary::CreateAIForceIEPEChan(TaskHandle task, const char physical
   if (!function_pointers_.CreateAIForceIEPEChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIForceIEPEChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIForceIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateAIForceIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIFreqVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 thresholdLevel, float64 hysteresis, const char customScaleName[])
@@ -977,11 +793,7 @@ int32 NiDAQmxLibrary::CreateAIFreqVoltageChan(TaskHandle task, const char physic
   if (!function_pointers_.CreateAIFreqVoltageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIFreqVoltageChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIFreqVoltageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, thresholdLevel, hysteresis, customScaleName);
-#else
   return function_pointers_.CreateAIFreqVoltageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, thresholdLevel, hysteresis, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIMicrophoneChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, int32 units, float64 micSensitivity, float64 maxSndPressLevel, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -989,11 +801,7 @@ int32 NiDAQmxLibrary::CreateAIMicrophoneChan(TaskHandle task, const char physica
   if (!function_pointers_.CreateAIMicrophoneChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIMicrophoneChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIMicrophoneChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, units, micSensitivity, maxSndPressLevel, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateAIMicrophoneChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, units, micSensitivity, maxSndPressLevel, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIPosEddyCurrProxProbeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, const char customScaleName[])
@@ -1001,11 +809,7 @@ int32 NiDAQmxLibrary::CreateAIPosEddyCurrProxProbeChan(TaskHandle task, const ch
   if (!function_pointers_.CreateAIPosEddyCurrProxProbeChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPosEddyCurrProxProbeChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIPosEddyCurrProxProbeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, customScaleName);
-#else
   return function_pointers_.CreateAIPosEddyCurrProxProbeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIPosLVDTChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, float64 voltageExcitFreq, int32 acExcitWireMode, const char customScaleName[])
@@ -1013,11 +817,7 @@ int32 NiDAQmxLibrary::CreateAIPosLVDTChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateAIPosLVDTChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPosLVDTChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIPosLVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
-#else
   return function_pointers_.CreateAIPosLVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIPosRVDTChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, float64 voltageExcitFreq, int32 acExcitWireMode, const char customScaleName[])
@@ -1025,11 +825,7 @@ int32 NiDAQmxLibrary::CreateAIPosRVDTChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateAIPosRVDTChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPosRVDTChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIPosRVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
-#else
   return function_pointers_.CreateAIPosRVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIPressureBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
@@ -1037,11 +833,7 @@ int32 NiDAQmxLibrary::CreateAIPressureBridgePolynomialChan(TaskHandle task, cons
   if (!function_pointers_.CreateAIPressureBridgePolynomialChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPressureBridgePolynomialChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIPressureBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAIPressureBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIPressureBridgeTableChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 electricalVals[], uInt32 numElectricalVals, int32 electricalUnits, const float64 physicalVals[], uInt32 numPhysicalVals, int32 physicalUnits, const char customScaleName[])
@@ -1049,11 +841,7 @@ int32 NiDAQmxLibrary::CreateAIPressureBridgeTableChan(TaskHandle task, const cha
   if (!function_pointers_.CreateAIPressureBridgeTableChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPressureBridgeTableChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIPressureBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAIPressureBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIPressureBridgeTwoPointLinChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, float64 firstElectricalVal, float64 secondElectricalVal, int32 electricalUnits, float64 firstPhysicalVal, float64 secondPhysicalVal, int32 physicalUnits, const char customScaleName[])
@@ -1061,11 +849,7 @@ int32 NiDAQmxLibrary::CreateAIPressureBridgeTwoPointLinChan(TaskHandle task, con
   if (!function_pointers_.CreateAIPressureBridgeTwoPointLinChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPressureBridgeTwoPointLinChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIPressureBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAIPressureBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIRTDChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 rtdType, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, float64 r0)
@@ -1073,11 +857,7 @@ int32 NiDAQmxLibrary::CreateAIRTDChan(TaskHandle task, const char physicalChanne
   if (!function_pointers_.CreateAIRTDChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIRTDChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIRTDChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, rtdType, resistanceConfig, currentExcitSource, currentExcitVal, r0);
-#else
   return function_pointers_.CreateAIRTDChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, rtdType, resistanceConfig, currentExcitSource, currentExcitVal, r0);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIResistanceChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -1085,11 +865,7 @@ int32 NiDAQmxLibrary::CreateAIResistanceChan(TaskHandle task, const char physica
   if (!function_pointers_.CreateAIResistanceChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIResistanceChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIResistanceChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateAIResistanceChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIRosetteStrainGageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 rosetteType, float64 gageOrientation, const int32 rosetteMeasTypes[], uInt32 numRosetteMeasTypes, int32 strainConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 gageFactor, float64 nominalGageResistance, float64 poissonRatio, float64 leadWireResistance)
@@ -1097,11 +873,7 @@ int32 NiDAQmxLibrary::CreateAIRosetteStrainGageChan(TaskHandle task, const char 
   if (!function_pointers_.CreateAIRosetteStrainGageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIRosetteStrainGageChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIRosetteStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, rosetteType, gageOrientation, rosetteMeasTypes, numRosetteMeasTypes, strainConfig, voltageExcitSource, voltageExcitVal, gageFactor, nominalGageResistance, poissonRatio, leadWireResistance);
-#else
   return function_pointers_.CreateAIRosetteStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, rosetteType, gageOrientation, rosetteMeasTypes, numRosetteMeasTypes, strainConfig, voltageExcitSource, voltageExcitVal, gageFactor, nominalGageResistance, poissonRatio, leadWireResistance);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIStrainGageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 strainConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 gageFactor, float64 initialBridgeVoltage, float64 nominalGageResistance, float64 poissonRatio, float64 leadWireResistance, const char customScaleName[])
@@ -1109,11 +881,7 @@ int32 NiDAQmxLibrary::CreateAIStrainGageChan(TaskHandle task, const char physica
   if (!function_pointers_.CreateAIStrainGageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIStrainGageChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, strainConfig, voltageExcitSource, voltageExcitVal, gageFactor, initialBridgeVoltage, nominalGageResistance, poissonRatio, leadWireResistance, customScaleName);
-#else
   return function_pointers_.CreateAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, strainConfig, voltageExcitSource, voltageExcitVal, gageFactor, initialBridgeVoltage, nominalGageResistance, poissonRatio, leadWireResistance, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAITempBuiltInSensorChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 units)
@@ -1121,11 +889,7 @@ int32 NiDAQmxLibrary::CreateAITempBuiltInSensorChan(TaskHandle task, const char 
   if (!function_pointers_.CreateAITempBuiltInSensorChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAITempBuiltInSensorChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAITempBuiltInSensorChan(task, physicalChannel, nameToAssignToChannel, units);
-#else
   return function_pointers_.CreateAITempBuiltInSensorChan(task, physicalChannel, nameToAssignToChannel, units);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIThrmcplChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 thermocoupleType, int32 cjcSource, float64 cjcVal, const char cjcChannel[])
@@ -1133,11 +897,7 @@ int32 NiDAQmxLibrary::CreateAIThrmcplChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateAIThrmcplChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIThrmcplChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIThrmcplChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, thermocoupleType, cjcSource, cjcVal, cjcChannel);
-#else
   return function_pointers_.CreateAIThrmcplChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, thermocoupleType, cjcSource, cjcVal, cjcChannel);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIThrmstrChanIex(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, float64 a, float64 b, float64 c)
@@ -1145,11 +905,7 @@ int32 NiDAQmxLibrary::CreateAIThrmstrChanIex(TaskHandle task, const char physica
   if (!function_pointers_.CreateAIThrmstrChanIex) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIThrmstrChanIex.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIThrmstrChanIex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, a, b, c);
-#else
   return function_pointers_.CreateAIThrmstrChanIex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, a, b, c);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIThrmstrChanVex(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 a, float64 b, float64 c, float64 r1)
@@ -1157,11 +913,7 @@ int32 NiDAQmxLibrary::CreateAIThrmstrChanVex(TaskHandle task, const char physica
   if (!function_pointers_.CreateAIThrmstrChanVex) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIThrmstrChanVex.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIThrmstrChanVex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, voltageExcitSource, voltageExcitVal, a, b, c, r1);
-#else
   return function_pointers_.CreateAIThrmstrChanVex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, voltageExcitSource, voltageExcitVal, a, b, c, r1);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAITorqueBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
@@ -1169,11 +921,7 @@ int32 NiDAQmxLibrary::CreateAITorqueBridgePolynomialChan(TaskHandle task, const 
   if (!function_pointers_.CreateAITorqueBridgePolynomialChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAITorqueBridgePolynomialChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAITorqueBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAITorqueBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAITorqueBridgeTableChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 electricalVals[], uInt32 numElectricalVals, int32 electricalUnits, const float64 physicalVals[], uInt32 numPhysicalVals, int32 physicalUnits, const char customScaleName[])
@@ -1181,11 +929,7 @@ int32 NiDAQmxLibrary::CreateAITorqueBridgeTableChan(TaskHandle task, const char 
   if (!function_pointers_.CreateAITorqueBridgeTableChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAITorqueBridgeTableChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAITorqueBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAITorqueBridgeTableChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, electricalVals, numElectricalVals, electricalUnits, physicalVals, numPhysicalVals, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAITorqueBridgeTwoPointLinChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, float64 firstElectricalVal, float64 secondElectricalVal, int32 electricalUnits, float64 firstPhysicalVal, float64 secondPhysicalVal, int32 physicalUnits, const char customScaleName[])
@@ -1193,11 +937,7 @@ int32 NiDAQmxLibrary::CreateAITorqueBridgeTwoPointLinChan(TaskHandle task, const
   if (!function_pointers_.CreateAITorqueBridgeTwoPointLinChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAITorqueBridgeTwoPointLinChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAITorqueBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
-#else
   return function_pointers_.CreateAITorqueBridgeTwoPointLinChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, firstElectricalVal, secondElectricalVal, electricalUnits, firstPhysicalVal, secondPhysicalVal, physicalUnits, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIVelocityIEPEChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -1205,11 +945,7 @@ int32 NiDAQmxLibrary::CreateAIVelocityIEPEChan(TaskHandle task, const char physi
   if (!function_pointers_.CreateAIVelocityIEPEChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIVelocityIEPEChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIVelocityIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateAIVelocityIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, sensitivity, sensitivityUnits, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
@@ -1217,11 +953,7 @@ int32 NiDAQmxLibrary::CreateAIVoltageChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateAIVoltageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIVoltageChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
-#else
   return function_pointers_.CreateAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIVoltageChanWithExcit(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, bool32 useExcitForScaling, const char customScaleName[])
@@ -1229,11 +961,7 @@ int32 NiDAQmxLibrary::CreateAIVoltageChanWithExcit(TaskHandle task, const char p
   if (!function_pointers_.CreateAIVoltageChanWithExcit) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIVoltageChanWithExcit.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIVoltageChanWithExcit(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, useExcitForScaling, customScaleName);
-#else
   return function_pointers_.CreateAIVoltageChanWithExcit(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, useExcitForScaling, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAIVoltageRMSChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
@@ -1241,11 +969,7 @@ int32 NiDAQmxLibrary::CreateAIVoltageRMSChan(TaskHandle task, const char physica
   if (!function_pointers_.CreateAIVoltageRMSChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIVoltageRMSChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAIVoltageRMSChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
-#else
   return function_pointers_.CreateAIVoltageRMSChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAOCurrentChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
@@ -1253,11 +977,7 @@ int32 NiDAQmxLibrary::CreateAOCurrentChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateAOCurrentChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAOCurrentChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAOCurrentChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, customScaleName);
-#else
   return function_pointers_.CreateAOCurrentChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAOFuncGenChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 type, float64 freq, float64 amplitude, float64 offset)
@@ -1265,11 +985,7 @@ int32 NiDAQmxLibrary::CreateAOFuncGenChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateAOFuncGenChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAOFuncGenChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAOFuncGenChan(task, physicalChannel, nameToAssignToChannel, type, freq, amplitude, offset);
-#else
   return function_pointers_.CreateAOFuncGenChan(task, physicalChannel, nameToAssignToChannel, type, freq, amplitude, offset);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateAOVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
@@ -1277,11 +993,7 @@ int32 NiDAQmxLibrary::CreateAOVoltageChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateAOVoltageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAOVoltageChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateAOVoltageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, customScaleName);
-#else
   return function_pointers_.CreateAOVoltageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIAngEncoderChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], int32 decodingType, bool32 zidxEnable, float64 zidxVal, int32 zidxPhase, int32 units, uInt32 pulsesPerRev, float64 initialAngle, const char customScaleName[])
@@ -1289,11 +1001,7 @@ int32 NiDAQmxLibrary::CreateCIAngEncoderChan(TaskHandle task, const char counter
   if (!function_pointers_.CreateCIAngEncoderChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIAngEncoderChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIAngEncoderChan(task, counter, nameToAssignToChannel, decodingType, zidxEnable, zidxVal, zidxPhase, units, pulsesPerRev, initialAngle, customScaleName);
-#else
   return function_pointers_.CreateCIAngEncoderChan(task, counter, nameToAssignToChannel, decodingType, zidxEnable, zidxVal, zidxPhase, units, pulsesPerRev, initialAngle, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIAngVelocityChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 decodingType, int32 units, uInt32 pulsesPerRev, const char customScaleName[])
@@ -1301,11 +1009,7 @@ int32 NiDAQmxLibrary::CreateCIAngVelocityChan(TaskHandle task, const char counte
   if (!function_pointers_.CreateCIAngVelocityChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIAngVelocityChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIAngVelocityChan(task, counter, nameToAssignToChannel, minVal, maxVal, decodingType, units, pulsesPerRev, customScaleName);
-#else
   return function_pointers_.CreateCIAngVelocityChan(task, counter, nameToAssignToChannel, minVal, maxVal, decodingType, units, pulsesPerRev, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCICountEdgesChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], int32 edge, uInt32 initialCount, int32 countDirection)
@@ -1313,11 +1017,7 @@ int32 NiDAQmxLibrary::CreateCICountEdgesChan(TaskHandle task, const char counter
   if (!function_pointers_.CreateCICountEdgesChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCICountEdgesChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCICountEdgesChan(task, counter, nameToAssignToChannel, edge, initialCount, countDirection);
-#else
   return function_pointers_.CreateCICountEdgesChan(task, counter, nameToAssignToChannel, edge, initialCount, countDirection);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIDutyCycleChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minFreq, float64 maxFreq, int32 edge, const char customScaleName[])
@@ -1325,11 +1025,7 @@ int32 NiDAQmxLibrary::CreateCIDutyCycleChan(TaskHandle task, const char counter[
   if (!function_pointers_.CreateCIDutyCycleChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIDutyCycleChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIDutyCycleChan(task, counter, nameToAssignToChannel, minFreq, maxFreq, edge, customScaleName);
-#else
   return function_pointers_.CreateCIDutyCycleChan(task, counter, nameToAssignToChannel, minFreq, maxFreq, edge, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIFreqChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 edge, int32 measMethod, float64 measTime, uInt32 divisor, const char customScaleName[])
@@ -1337,11 +1033,7 @@ int32 NiDAQmxLibrary::CreateCIFreqChan(TaskHandle task, const char counter[], co
   if (!function_pointers_.CreateCIFreqChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIFreqChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIFreqChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, edge, measMethod, measTime, divisor, customScaleName);
-#else
   return function_pointers_.CreateCIFreqChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, edge, measMethod, measTime, divisor, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIGPSTimestampChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], int32 units, int32 syncMethod, const char customScaleName[])
@@ -1349,11 +1041,7 @@ int32 NiDAQmxLibrary::CreateCIGPSTimestampChan(TaskHandle task, const char count
   if (!function_pointers_.CreateCIGPSTimestampChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIGPSTimestampChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIGPSTimestampChan(task, counter, nameToAssignToChannel, units, syncMethod, customScaleName);
-#else
   return function_pointers_.CreateCIGPSTimestampChan(task, counter, nameToAssignToChannel, units, syncMethod, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCILinEncoderChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], int32 decodingType, bool32 zidxEnable, float64 zidxVal, int32 zidxPhase, int32 units, float64 distPerPulse, float64 initialPos, const char customScaleName[])
@@ -1361,11 +1049,7 @@ int32 NiDAQmxLibrary::CreateCILinEncoderChan(TaskHandle task, const char counter
   if (!function_pointers_.CreateCILinEncoderChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCILinEncoderChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCILinEncoderChan(task, counter, nameToAssignToChannel, decodingType, zidxEnable, zidxVal, zidxPhase, units, distPerPulse, initialPos, customScaleName);
-#else
   return function_pointers_.CreateCILinEncoderChan(task, counter, nameToAssignToChannel, decodingType, zidxEnable, zidxVal, zidxPhase, units, distPerPulse, initialPos, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCILinVelocityChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 decodingType, int32 units, float64 distPerPulse, const char customScaleName[])
@@ -1373,11 +1057,7 @@ int32 NiDAQmxLibrary::CreateCILinVelocityChan(TaskHandle task, const char counte
   if (!function_pointers_.CreateCILinVelocityChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCILinVelocityChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCILinVelocityChan(task, counter, nameToAssignToChannel, minVal, maxVal, decodingType, units, distPerPulse, customScaleName);
-#else
   return function_pointers_.CreateCILinVelocityChan(task, counter, nameToAssignToChannel, minVal, maxVal, decodingType, units, distPerPulse, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIPeriodChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 edge, int32 measMethod, float64 measTime, uInt32 divisor, const char customScaleName[])
@@ -1385,11 +1065,7 @@ int32 NiDAQmxLibrary::CreateCIPeriodChan(TaskHandle task, const char counter[], 
   if (!function_pointers_.CreateCIPeriodChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIPeriodChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIPeriodChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, edge, measMethod, measTime, divisor, customScaleName);
-#else
   return function_pointers_.CreateCIPeriodChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, edge, measMethod, measTime, divisor, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIPulseChanFreq(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units)
@@ -1397,11 +1073,7 @@ int32 NiDAQmxLibrary::CreateCIPulseChanFreq(TaskHandle task, const char counter[
   if (!function_pointers_.CreateCIPulseChanFreq) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIPulseChanFreq.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIPulseChanFreq(task, counter, nameToAssignToChannel, minVal, maxVal, units);
-#else
   return function_pointers_.CreateCIPulseChanFreq(task, counter, nameToAssignToChannel, minVal, maxVal, units);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIPulseChanTicks(TaskHandle task, const char counter[], const char nameToAssignToChannel[], const char sourceTerminal[], float64 minVal, float64 maxVal)
@@ -1409,11 +1081,7 @@ int32 NiDAQmxLibrary::CreateCIPulseChanTicks(TaskHandle task, const char counter
   if (!function_pointers_.CreateCIPulseChanTicks) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIPulseChanTicks.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIPulseChanTicks(task, counter, nameToAssignToChannel, sourceTerminal, minVal, maxVal);
-#else
   return function_pointers_.CreateCIPulseChanTicks(task, counter, nameToAssignToChannel, sourceTerminal, minVal, maxVal);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIPulseChanTime(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units)
@@ -1421,11 +1089,7 @@ int32 NiDAQmxLibrary::CreateCIPulseChanTime(TaskHandle task, const char counter[
   if (!function_pointers_.CreateCIPulseChanTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIPulseChanTime.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIPulseChanTime(task, counter, nameToAssignToChannel, minVal, maxVal, units);
-#else
   return function_pointers_.CreateCIPulseChanTime(task, counter, nameToAssignToChannel, minVal, maxVal, units);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCIPulseWidthChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 startingEdge, const char customScaleName[])
@@ -1433,11 +1097,7 @@ int32 NiDAQmxLibrary::CreateCIPulseWidthChan(TaskHandle task, const char counter
   if (!function_pointers_.CreateCIPulseWidthChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCIPulseWidthChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCIPulseWidthChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, startingEdge, customScaleName);
-#else
   return function_pointers_.CreateCIPulseWidthChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, startingEdge, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCISemiPeriodChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
@@ -1445,11 +1105,7 @@ int32 NiDAQmxLibrary::CreateCISemiPeriodChan(TaskHandle task, const char counter
   if (!function_pointers_.CreateCISemiPeriodChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCISemiPeriodChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCISemiPeriodChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, customScaleName);
-#else
   return function_pointers_.CreateCISemiPeriodChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCITwoEdgeSepChan(TaskHandle task, const char counter[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 firstEdge, int32 secondEdge, const char customScaleName[])
@@ -1457,11 +1113,7 @@ int32 NiDAQmxLibrary::CreateCITwoEdgeSepChan(TaskHandle task, const char counter
   if (!function_pointers_.CreateCITwoEdgeSepChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCITwoEdgeSepChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCITwoEdgeSepChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, firstEdge, secondEdge, customScaleName);
-#else
   return function_pointers_.CreateCITwoEdgeSepChan(task, counter, nameToAssignToChannel, minVal, maxVal, units, firstEdge, secondEdge, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCOPulseChanFreq(TaskHandle task, const char counter[], const char nameToAssignToChannel[], int32 units, int32 idleState, float64 initialDelay, float64 freq, float64 dutyCycle)
@@ -1469,11 +1121,7 @@ int32 NiDAQmxLibrary::CreateCOPulseChanFreq(TaskHandle task, const char counter[
   if (!function_pointers_.CreateCOPulseChanFreq) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCOPulseChanFreq.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCOPulseChanFreq(task, counter, nameToAssignToChannel, units, idleState, initialDelay, freq, dutyCycle);
-#else
   return function_pointers_.CreateCOPulseChanFreq(task, counter, nameToAssignToChannel, units, idleState, initialDelay, freq, dutyCycle);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCOPulseChanTicks(TaskHandle task, const char counter[], const char nameToAssignToChannel[], const char sourceTerminal[], int32 idleState, int32 initialDelay, int32 lowTicks, int32 highTicks)
@@ -1481,11 +1129,7 @@ int32 NiDAQmxLibrary::CreateCOPulseChanTicks(TaskHandle task, const char counter
   if (!function_pointers_.CreateCOPulseChanTicks) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCOPulseChanTicks.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCOPulseChanTicks(task, counter, nameToAssignToChannel, sourceTerminal, idleState, initialDelay, lowTicks, highTicks);
-#else
   return function_pointers_.CreateCOPulseChanTicks(task, counter, nameToAssignToChannel, sourceTerminal, idleState, initialDelay, lowTicks, highTicks);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateCOPulseChanTime(TaskHandle task, const char counter[], const char nameToAssignToChannel[], int32 units, int32 idleState, float64 initialDelay, float64 lowTime, float64 highTime)
@@ -1493,11 +1137,7 @@ int32 NiDAQmxLibrary::CreateCOPulseChanTime(TaskHandle task, const char counter[
   if (!function_pointers_.CreateCOPulseChanTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateCOPulseChanTime.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateCOPulseChanTime(task, counter, nameToAssignToChannel, units, idleState, initialDelay, lowTime, highTime);
-#else
   return function_pointers_.CreateCOPulseChanTime(task, counter, nameToAssignToChannel, units, idleState, initialDelay, lowTime, highTime);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateDIChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping)
@@ -1505,11 +1145,7 @@ int32 NiDAQmxLibrary::CreateDIChan(TaskHandle task, const char lines[], const ch
   if (!function_pointers_.CreateDIChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateDIChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateDIChan(task, lines, nameToAssignToLines, lineGrouping);
-#else
   return function_pointers_.CreateDIChan(task, lines, nameToAssignToLines, lineGrouping);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateDOChan(TaskHandle task, const char lines[], const char nameToAssignToLines[], int32 lineGrouping)
@@ -1517,11 +1153,7 @@ int32 NiDAQmxLibrary::CreateDOChan(TaskHandle task, const char lines[], const ch
   if (!function_pointers_.CreateDOChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateDOChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateDOChan(task, lines, nameToAssignToLines, lineGrouping);
-#else
   return function_pointers_.CreateDOChan(task, lines, nameToAssignToLines, lineGrouping);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateLinScale(const char name[], float64 slope, float64 yIntercept, int32 preScaledUnits, const char scaledUnits[])
@@ -1529,11 +1161,7 @@ int32 NiDAQmxLibrary::CreateLinScale(const char name[], float64 slope, float64 y
   if (!function_pointers_.CreateLinScale) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateLinScale.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateLinScale(name, slope, yIntercept, preScaledUnits, scaledUnits);
-#else
   return function_pointers_.CreateLinScale(name, slope, yIntercept, preScaledUnits, scaledUnits);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateMapScale(const char name[], float64 prescaledMin, float64 prescaledMax, float64 scaledMin, float64 scaledMax, int32 preScaledUnits, const char scaledUnits[])
@@ -1541,11 +1169,7 @@ int32 NiDAQmxLibrary::CreateMapScale(const char name[], float64 prescaledMin, fl
   if (!function_pointers_.CreateMapScale) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateMapScale.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateMapScale(name, prescaledMin, prescaledMax, scaledMin, scaledMax, preScaledUnits, scaledUnits);
-#else
   return function_pointers_.CreateMapScale(name, prescaledMin, prescaledMax, scaledMin, scaledMax, preScaledUnits, scaledUnits);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreatePolynomialScale(const char name[], const float64 forwardCoeffs[], uInt32 numForwardCoeffsIn, const float64 reverseCoeffs[], uInt32 numReverseCoeffsIn, int32 preScaledUnits, const char scaledUnits[])
@@ -1553,11 +1177,7 @@ int32 NiDAQmxLibrary::CreatePolynomialScale(const char name[], const float64 for
   if (!function_pointers_.CreatePolynomialScale) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreatePolynomialScale.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreatePolynomialScale(name, forwardCoeffs, numForwardCoeffsIn, reverseCoeffs, numReverseCoeffsIn, preScaledUnits, scaledUnits);
-#else
   return function_pointers_.CreatePolynomialScale(name, forwardCoeffs, numForwardCoeffsIn, reverseCoeffs, numReverseCoeffsIn, preScaledUnits, scaledUnits);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIAccelChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -1565,11 +1185,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIAccelChan(TaskHandle task, const char physical
   if (!function_pointers_.CreateTEDSAIAccelChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIAccelChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIAccelChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIAccelChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
@@ -1577,11 +1193,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIBridgeChan(TaskHandle task, const char physica
   if (!function_pointers_.CreateTEDSAIBridgeChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIBridgeChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAICurrentChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[])
@@ -1589,11 +1201,7 @@ int32 NiDAQmxLibrary::CreateTEDSAICurrentChan(TaskHandle task, const char physic
   if (!function_pointers_.CreateTEDSAICurrentChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAICurrentChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAICurrentChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, shuntResistorLoc, extShuntResistorVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAICurrentChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, shuntResistorLoc, extShuntResistorVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIForceBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
@@ -1601,11 +1209,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIForceBridgeChan(TaskHandle task, const char ph
   if (!function_pointers_.CreateTEDSAIForceBridgeChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIForceBridgeChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIForceBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIForceBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIForceIEPEChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -1613,11 +1217,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIForceIEPEChan(TaskHandle task, const char phys
   if (!function_pointers_.CreateTEDSAIForceIEPEChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIForceIEPEChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIForceIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIForceIEPEChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIMicrophoneChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, int32 units, float64 maxSndPressLevel, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -1625,11 +1225,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIMicrophoneChan(TaskHandle task, const char phy
   if (!function_pointers_.CreateTEDSAIMicrophoneChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIMicrophoneChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIMicrophoneChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, units, maxSndPressLevel, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIMicrophoneChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, units, maxSndPressLevel, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIPosLVDTChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, float64 voltageExcitFreq, int32 acExcitWireMode, const char customScaleName[])
@@ -1637,11 +1233,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIPosLVDTChan(TaskHandle task, const char physic
   if (!function_pointers_.CreateTEDSAIPosLVDTChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIPosLVDTChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIPosLVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIPosLVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIPosRVDTChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, float64 voltageExcitFreq, int32 acExcitWireMode, const char customScaleName[])
@@ -1649,11 +1241,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIPosRVDTChan(TaskHandle task, const char physic
   if (!function_pointers_.CreateTEDSAIPosRVDTChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIPosRVDTChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIPosRVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIPosRVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIPressureBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
@@ -1661,11 +1249,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIPressureBridgeChan(TaskHandle task, const char
   if (!function_pointers_.CreateTEDSAIPressureBridgeChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIPressureBridgeChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIPressureBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIPressureBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIRTDChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal)
@@ -1673,11 +1257,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIRTDChan(TaskHandle task, const char physicalCh
   if (!function_pointers_.CreateTEDSAIRTDChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIRTDChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIRTDChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal);
-#else
   return function_pointers_.CreateTEDSAIRTDChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIResistanceChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[])
@@ -1685,11 +1265,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIResistanceChan(TaskHandle task, const char phy
   if (!function_pointers_.CreateTEDSAIResistanceChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIResistanceChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIResistanceChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIResistanceChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIStrainGageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, float64 initialBridgeVoltage, float64 leadWireResistance, const char customScaleName[])
@@ -1697,11 +1273,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIStrainGageChan(TaskHandle task, const char phy
   if (!function_pointers_.CreateTEDSAIStrainGageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIStrainGageChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, initialBridgeVoltage, leadWireResistance, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIStrainGageChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, initialBridgeVoltage, leadWireResistance, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIThrmcplChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 cjcSource, float64 cjcVal, const char cjcChannel[])
@@ -1709,11 +1281,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIThrmcplChan(TaskHandle task, const char physic
   if (!function_pointers_.CreateTEDSAIThrmcplChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIThrmcplChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIThrmcplChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, cjcSource, cjcVal, cjcChannel);
-#else
   return function_pointers_.CreateTEDSAIThrmcplChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, cjcSource, cjcVal, cjcChannel);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIThrmstrChanIex(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 currentExcitSource, float64 currentExcitVal)
@@ -1721,11 +1289,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIThrmstrChanIex(TaskHandle task, const char phy
   if (!function_pointers_.CreateTEDSAIThrmstrChanIex) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIThrmstrChanIex.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIThrmstrChanIex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal);
-#else
   return function_pointers_.CreateTEDSAIThrmstrChanIex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, currentExcitSource, currentExcitVal);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIThrmstrChanVex(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 resistanceConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 r1)
@@ -1733,11 +1297,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIThrmstrChanVex(TaskHandle task, const char phy
   if (!function_pointers_.CreateTEDSAIThrmstrChanVex) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIThrmstrChanVex.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIThrmstrChanVex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, voltageExcitSource, voltageExcitVal, r1);
-#else
   return function_pointers_.CreateTEDSAIThrmstrChanVex(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, resistanceConfig, voltageExcitSource, voltageExcitVal, r1);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAITorqueBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
@@ -1745,11 +1305,7 @@ int32 NiDAQmxLibrary::CreateTEDSAITorqueBridgeChan(TaskHandle task, const char p
   if (!function_pointers_.CreateTEDSAITorqueBridgeChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAITorqueBridgeChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAITorqueBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAITorqueBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIVoltageChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
@@ -1757,11 +1313,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIVoltageChan(TaskHandle task, const char physic
   if (!function_pointers_.CreateTEDSAIVoltageChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIVoltageChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIVoltageChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTEDSAIVoltageChanWithExcit(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 voltageExcitSource, float64 voltageExcitVal, const char customScaleName[])
@@ -1769,11 +1321,7 @@ int32 NiDAQmxLibrary::CreateTEDSAIVoltageChanWithExcit(TaskHandle task, const ch
   if (!function_pointers_.CreateTEDSAIVoltageChanWithExcit) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTEDSAIVoltageChanWithExcit.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTEDSAIVoltageChanWithExcit(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#else
   return function_pointers_.CreateTEDSAIVoltageChanWithExcit(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, voltageExcitSource, voltageExcitVal, customScaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTableScale(const char name[], const float64 prescaledVals[], uInt32 numPrescaledValsIn, const float64 scaledVals[], uInt32 numScaledValsIn, int32 preScaledUnits, const char scaledUnits[])
@@ -1781,11 +1329,7 @@ int32 NiDAQmxLibrary::CreateTableScale(const char name[], const float64 prescale
   if (!function_pointers_.CreateTableScale) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTableScale.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTableScale(name, prescaledVals, numPrescaledValsIn, scaledVals, numScaledValsIn, preScaledUnits, scaledUnits);
-#else
   return function_pointers_.CreateTableScale(name, prescaledVals, numPrescaledValsIn, scaledVals, numScaledValsIn, preScaledUnits, scaledUnits);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateTask(const char sessionName[], TaskHandle* task)
@@ -1793,11 +1337,7 @@ int32 NiDAQmxLibrary::CreateTask(const char sessionName[], TaskHandle* task)
   if (!function_pointers_.CreateTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateTask(sessionName, task);
-#else
   return function_pointers_.CreateTask(sessionName, task);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateWatchdogTimerTask(const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout, const char lines[], int32 expState, const char lines0[], int32 expState0, const char lines1[], int32 expState1, const char lines2[], int32 expState2, const char lines3[], int32 expState3, const char lines4[], int32 expState4, const char lines5[], int32 expState5, const char lines6[], int32 expState6, const char lines7[], int32 expState7, const char lines8[], int32 expState8, const char lines9[], int32 expState9, const char lines10[], int32 expState10, const char lines11[], int32 expState11, const char lines12[], int32 expState12, const char lines13[], int32 expState13, const char lines14[], int32 expState14, const char lines15[], int32 expState15, const char lines16[], int32 expState16, const char lines17[], int32 expState17, const char lines18[], int32 expState18, const char lines19[], int32 expState19, const char lines20[], int32 expState20, const char lines21[], int32 expState21, const char lines22[], int32 expState22, const char lines23[], int32 expState23, const char lines24[], int32 expState24, const char lines25[], int32 expState25, const char lines26[], int32 expState26, const char lines27[], int32 expState27, const char lines28[], int32 expState28, const char lines29[], int32 expState29, const char lines30[], int32 expState30, const char lines31[], int32 expState31, const char lines32[], int32 expState32, const char lines33[], int32 expState33, const char lines34[], int32 expState34, const char lines35[], int32 expState35, const char lines36[], int32 expState36, const char lines37[], int32 expState37, const char lines38[], int32 expState38, const char lines39[], int32 expState39, const char lines40[], int32 expState40, const char lines41[], int32 expState41, const char lines42[], int32 expState42, const char lines43[], int32 expState43, const char lines44[], int32 expState44, const char lines45[], int32 expState45, const char lines46[], int32 expState46, const char lines47[], int32 expState47, const char lines48[], int32 expState48, const char lines49[], int32 expState49, const char lines50[], int32 expState50, const char lines51[], int32 expState51, const char lines52[], int32 expState52, const char lines53[], int32 expState53, const char lines54[], int32 expState54, const char lines55[], int32 expState55, const char lines56[], int32 expState56, const char lines57[], int32 expState57, const char lines58[], int32 expState58, const char lines59[], int32 expState59, const char lines60[], int32 expState60, const char lines61[], int32 expState61, const char lines62[], int32 expState62, const char lines63[], int32 expState63, const char lines64[], int32 expState64, const char lines65[], int32 expState65, const char lines66[], int32 expState66, const char lines67[], int32 expState67, const char lines68[], int32 expState68, const char lines69[], int32 expState69, const char lines70[], int32 expState70, const char lines71[], int32 expState71, const char lines72[], int32 expState72, const char lines73[], int32 expState73, const char lines74[], int32 expState74, const char lines75[], int32 expState75, const char lines76[], int32 expState76, const char lines77[], int32 expState77, const char lines78[], int32 expState78, const char lines79[], int32 expState79, const char lines80[], int32 expState80, const char lines81[], int32 expState81, const char lines82[], int32 expState82, const char lines83[], int32 expState83, const char lines84[], int32 expState84, const char lines85[], int32 expState85, const char lines86[], int32 expState86, const char lines87[], int32 expState87, const char lines88[], int32 expState88, const char lines89[], int32 expState89, const char lines90[], int32 expState90, const char lines91[], int32 expState91, const char lines92[], int32 expState92, const char lines93[], int32 expState93, const char lines94[], int32 expState94, const char lines95[], int32 expState95)
@@ -1805,11 +1345,7 @@ int32 NiDAQmxLibrary::CreateWatchdogTimerTask(const char deviceName[], const cha
   if (!function_pointers_.CreateWatchdogTimerTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateWatchdogTimerTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateWatchdogTimerTask(deviceName, sessionName, task, timeout, lines, expState, lines0, expState0, lines1, expState1, lines2, expState2, lines3, expState3, lines4, expState4, lines5, expState5, lines6, expState6, lines7, expState7, lines8, expState8, lines9, expState9, lines10, expState10, lines11, expState11, lines12, expState12, lines13, expState13, lines14, expState14, lines15, expState15, lines16, expState16, lines17, expState17, lines18, expState18, lines19, expState19, lines20, expState20, lines21, expState21, lines22, expState22, lines23, expState23, lines24, expState24, lines25, expState25, lines26, expState26, lines27, expState27, lines28, expState28, lines29, expState29, lines30, expState30, lines31, expState31, lines32, expState32, lines33, expState33, lines34, expState34, lines35, expState35, lines36, expState36, lines37, expState37, lines38, expState38, lines39, expState39, lines40, expState40, lines41, expState41, lines42, expState42, lines43, expState43, lines44, expState44, lines45, expState45, lines46, expState46, lines47, expState47, lines48, expState48, lines49, expState49, lines50, expState50, lines51, expState51, lines52, expState52, lines53, expState53, lines54, expState54, lines55, expState55, lines56, expState56, lines57, expState57, lines58, expState58, lines59, expState59, lines60, expState60, lines61, expState61, lines62, expState62, lines63, expState63, lines64, expState64, lines65, expState65, lines66, expState66, lines67, expState67, lines68, expState68, lines69, expState69, lines70, expState70, lines71, expState71, lines72, expState72, lines73, expState73, lines74, expState74, lines75, expState75, lines76, expState76, lines77, expState77, lines78, expState78, lines79, expState79, lines80, expState80, lines81, expState81, lines82, expState82, lines83, expState83, lines84, expState84, lines85, expState85, lines86, expState86, lines87, expState87, lines88, expState88, lines89, expState89, lines90, expState90, lines91, expState91, lines92, expState92, lines93, expState93, lines94, expState94, lines95, expState95);
-#else
   return function_pointers_.CreateWatchdogTimerTask(deviceName, sessionName, task, timeout, lines, expState, lines0, expState0, lines1, expState1, lines2, expState2, lines3, expState3, lines4, expState4, lines5, expState5, lines6, expState6, lines7, expState7, lines8, expState8, lines9, expState9, lines10, expState10, lines11, expState11, lines12, expState12, lines13, expState13, lines14, expState14, lines15, expState15, lines16, expState16, lines17, expState17, lines18, expState18, lines19, expState19, lines20, expState20, lines21, expState21, lines22, expState22, lines23, expState23, lines24, expState24, lines25, expState25, lines26, expState26, lines27, expState27, lines28, expState28, lines29, expState29, lines30, expState30, lines31, expState31, lines32, expState32, lines33, expState33, lines34, expState34, lines35, expState35, lines36, expState36, lines37, expState37, lines38, expState38, lines39, expState39, lines40, expState40, lines41, expState41, lines42, expState42, lines43, expState43, lines44, expState44, lines45, expState45, lines46, expState46, lines47, expState47, lines48, expState48, lines49, expState49, lines50, expState50, lines51, expState51, lines52, expState52, lines53, expState53, lines54, expState54, lines55, expState55, lines56, expState56, lines57, expState57, lines58, expState58, lines59, expState59, lines60, expState60, lines61, expState61, lines62, expState62, lines63, expState63, lines64, expState64, lines65, expState65, lines66, expState66, lines67, expState67, lines68, expState68, lines69, expState69, lines70, expState70, lines71, expState71, lines72, expState72, lines73, expState73, lines74, expState74, lines75, expState75, lines76, expState76, lines77, expState77, lines78, expState78, lines79, expState79, lines80, expState80, lines81, expState81, lines82, expState82, lines83, expState83, lines84, expState84, lines85, expState85, lines86, expState86, lines87, expState87, lines88, expState88, lines89, expState89, lines90, expState90, lines91, expState91, lines92, expState92, lines93, expState93, lines94, expState94, lines95, expState95);
-#endif
 }
 
 int32 NiDAQmxLibrary::CreateWatchdogTimerTaskEx(const char deviceName[], const char sessionName[], TaskHandle* task, float64 timeout)
@@ -1817,11 +1353,7 @@ int32 NiDAQmxLibrary::CreateWatchdogTimerTaskEx(const char deviceName[], const c
   if (!function_pointers_.CreateWatchdogTimerTaskEx) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateWatchdogTimerTaskEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxCreateWatchdogTimerTaskEx(deviceName, sessionName, task, timeout);
-#else
   return function_pointers_.CreateWatchdogTimerTaskEx(deviceName, sessionName, task, timeout);
-#endif
 }
 
 int32 NiDAQmxLibrary::DeleteNetworkDevice(const char deviceName[])
@@ -1829,11 +1361,7 @@ int32 NiDAQmxLibrary::DeleteNetworkDevice(const char deviceName[])
   if (!function_pointers_.DeleteNetworkDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeleteNetworkDevice.");
   }
-#if defined(_MSC_VER)
-  return DAQmxDeleteNetworkDevice(deviceName);
-#else
   return function_pointers_.DeleteNetworkDevice(deviceName);
-#endif
 }
 
 int32 NiDAQmxLibrary::DeleteSavedGlobalChan(const char channelName[])
@@ -1841,11 +1369,7 @@ int32 NiDAQmxLibrary::DeleteSavedGlobalChan(const char channelName[])
   if (!function_pointers_.DeleteSavedGlobalChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeleteSavedGlobalChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxDeleteSavedGlobalChan(channelName);
-#else
   return function_pointers_.DeleteSavedGlobalChan(channelName);
-#endif
 }
 
 int32 NiDAQmxLibrary::DeleteSavedScale(const char scaleName[])
@@ -1853,11 +1377,7 @@ int32 NiDAQmxLibrary::DeleteSavedScale(const char scaleName[])
   if (!function_pointers_.DeleteSavedScale) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeleteSavedScale.");
   }
-#if defined(_MSC_VER)
-  return DAQmxDeleteSavedScale(scaleName);
-#else
   return function_pointers_.DeleteSavedScale(scaleName);
-#endif
 }
 
 int32 NiDAQmxLibrary::DeleteSavedTask(const char taskName[])
@@ -1865,11 +1385,7 @@ int32 NiDAQmxLibrary::DeleteSavedTask(const char taskName[])
   if (!function_pointers_.DeleteSavedTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeleteSavedTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxDeleteSavedTask(taskName);
-#else
   return function_pointers_.DeleteSavedTask(taskName);
-#endif
 }
 
 int32 NiDAQmxLibrary::DeviceSupportsCal(const char deviceName[], bool32* calSupported)
@@ -1877,11 +1393,7 @@ int32 NiDAQmxLibrary::DeviceSupportsCal(const char deviceName[], bool32* calSupp
   if (!function_pointers_.DeviceSupportsCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDeviceSupportsCal.");
   }
-#if defined(_MSC_VER)
-  return DAQmxDeviceSupportsCal(deviceName, calSupported);
-#else
   return function_pointers_.DeviceSupportsCal(deviceName, calSupported);
-#endif
 }
 
 int32 NiDAQmxLibrary::DisableRefTrig(TaskHandle task)
@@ -1889,11 +1401,7 @@ int32 NiDAQmxLibrary::DisableRefTrig(TaskHandle task)
   if (!function_pointers_.DisableRefTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDisableRefTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxDisableRefTrig(task);
-#else
   return function_pointers_.DisableRefTrig(task);
-#endif
 }
 
 int32 NiDAQmxLibrary::DisableStartTrig(TaskHandle task)
@@ -1901,11 +1409,7 @@ int32 NiDAQmxLibrary::DisableStartTrig(TaskHandle task)
   if (!function_pointers_.DisableStartTrig) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDisableStartTrig.");
   }
-#if defined(_MSC_VER)
-  return DAQmxDisableStartTrig(task);
-#else
   return function_pointers_.DisableStartTrig(task);
-#endif
 }
 
 int32 NiDAQmxLibrary::DisconnectTerms(const char sourceTerminal[], const char destinationTerminal[])
@@ -1913,11 +1417,7 @@ int32 NiDAQmxLibrary::DisconnectTerms(const char sourceTerminal[], const char de
   if (!function_pointers_.DisconnectTerms) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxDisconnectTerms.");
   }
-#if defined(_MSC_VER)
-  return DAQmxDisconnectTerms(sourceTerminal, destinationTerminal);
-#else
   return function_pointers_.DisconnectTerms(sourceTerminal, destinationTerminal);
-#endif
 }
 
 int32 NiDAQmxLibrary::ExportSignal(TaskHandle task, int32 signalID, const char outputTerminal[])
@@ -1925,11 +1425,7 @@ int32 NiDAQmxLibrary::ExportSignal(TaskHandle task, int32 signalID, const char o
   if (!function_pointers_.ExportSignal) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxExportSignal.");
   }
-#if defined(_MSC_VER)
-  return DAQmxExportSignal(task, signalID, outputTerminal);
-#else
   return function_pointers_.ExportSignal(task, signalID, outputTerminal);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute)
@@ -1937,11 +1433,7 @@ int32 NiDAQmxLibrary::GetAIChanCalCalDate(TaskHandle task, const char channelNam
   if (!function_pointers_.GetAIChanCalCalDate) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetAIChanCalCalDate.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetAIChanCalCalDate(task, channelName, year, month, day, hour, minute);
-#else
   return function_pointers_.GetAIChanCalCalDate(task, channelName, year, month, day, hour, minute);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute)
@@ -1949,11 +1441,7 @@ int32 NiDAQmxLibrary::GetAIChanCalExpDate(TaskHandle task, const char channelNam
   if (!function_pointers_.GetAIChanCalExpDate) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetAIChanCalExpDate.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetAIChanCalExpDate(task, channelName, year, month, day, hour, minute);
-#else
   return function_pointers_.GetAIChanCalExpDate(task, channelName, year, month, day, hour, minute);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetAnalogPowerUpStates(const char deviceName[], const char channelName[], float64* state, int32 channelType, const char channelName0[], float64* state0, int32 channelType0, const char channelName1[], float64* state1, int32 channelType1, const char channelName2[], float64* state2, int32 channelType2, const char channelName3[], float64* state3, int32 channelType3, const char channelName4[], float64* state4, int32 channelType4, const char channelName5[], float64* state5, int32 channelType5, const char channelName6[], float64* state6, int32 channelType6, const char channelName7[], float64* state7, int32 channelType7, const char channelName8[], float64* state8, int32 channelType8, const char channelName9[], float64* state9, int32 channelType9, const char channelName10[], float64* state10, int32 channelType10, const char channelName11[], float64* state11, int32 channelType11, const char channelName12[], float64* state12, int32 channelType12, const char channelName13[], float64* state13, int32 channelType13, const char channelName14[], float64* state14, int32 channelType14, const char channelName15[], float64* state15, int32 channelType15, const char channelName16[], float64* state16, int32 channelType16, const char channelName17[], float64* state17, int32 channelType17, const char channelName18[], float64* state18, int32 channelType18, const char channelName19[], float64* state19, int32 channelType19, const char channelName20[], float64* state20, int32 channelType20, const char channelName21[], float64* state21, int32 channelType21, const char channelName22[], float64* state22, int32 channelType22, const char channelName23[], float64* state23, int32 channelType23, const char channelName24[], float64* state24, int32 channelType24, const char channelName25[], float64* state25, int32 channelType25, const char channelName26[], float64* state26, int32 channelType26, const char channelName27[], float64* state27, int32 channelType27, const char channelName28[], float64* state28, int32 channelType28, const char channelName29[], float64* state29, int32 channelType29, const char channelName30[], float64* state30, int32 channelType30, const char channelName31[], float64* state31, int32 channelType31, const char channelName32[], float64* state32, int32 channelType32, const char channelName33[], float64* state33, int32 channelType33, const char channelName34[], float64* state34, int32 channelType34, const char channelName35[], float64* state35, int32 channelType35, const char channelName36[], float64* state36, int32 channelType36, const char channelName37[], float64* state37, int32 channelType37, const char channelName38[], float64* state38, int32 channelType38, const char channelName39[], float64* state39, int32 channelType39, const char channelName40[], float64* state40, int32 channelType40, const char channelName41[], float64* state41, int32 channelType41, const char channelName42[], float64* state42, int32 channelType42, const char channelName43[], float64* state43, int32 channelType43, const char channelName44[], float64* state44, int32 channelType44, const char channelName45[], float64* state45, int32 channelType45, const char channelName46[], float64* state46, int32 channelType46, const char channelName47[], float64* state47, int32 channelType47, const char channelName48[], float64* state48, int32 channelType48, const char channelName49[], float64* state49, int32 channelType49, const char channelName50[], float64* state50, int32 channelType50, const char channelName51[], float64* state51, int32 channelType51, const char channelName52[], float64* state52, int32 channelType52, const char channelName53[], float64* state53, int32 channelType53, const char channelName54[], float64* state54, int32 channelType54, const char channelName55[], float64* state55, int32 channelType55, const char channelName56[], float64* state56, int32 channelType56, const char channelName57[], float64* state57, int32 channelType57, const char channelName58[], float64* state58, int32 channelType58, const char channelName59[], float64* state59, int32 channelType59, const char channelName60[], float64* state60, int32 channelType60, const char channelName61[], float64* state61, int32 channelType61, const char channelName62[], float64* state62, int32 channelType62, const char channelName63[], float64* state63, int32 channelType63, const char channelName64[], float64* state64, int32 channelType64, const char channelName65[], float64* state65, int32 channelType65, const char channelName66[], float64* state66, int32 channelType66, const char channelName67[], float64* state67, int32 channelType67, const char channelName68[], float64* state68, int32 channelType68, const char channelName69[], float64* state69, int32 channelType69, const char channelName70[], float64* state70, int32 channelType70, const char channelName71[], float64* state71, int32 channelType71, const char channelName72[], float64* state72, int32 channelType72, const char channelName73[], float64* state73, int32 channelType73, const char channelName74[], float64* state74, int32 channelType74, const char channelName75[], float64* state75, int32 channelType75, const char channelName76[], float64* state76, int32 channelType76, const char channelName77[], float64* state77, int32 channelType77, const char channelName78[], float64* state78, int32 channelType78, const char channelName79[], float64* state79, int32 channelType79, const char channelName80[], float64* state80, int32 channelType80, const char channelName81[], float64* state81, int32 channelType81, const char channelName82[], float64* state82, int32 channelType82, const char channelName83[], float64* state83, int32 channelType83, const char channelName84[], float64* state84, int32 channelType84, const char channelName85[], float64* state85, int32 channelType85, const char channelName86[], float64* state86, int32 channelType86, const char channelName87[], float64* state87, int32 channelType87, const char channelName88[], float64* state88, int32 channelType88, const char channelName89[], float64* state89, int32 channelType89, const char channelName90[], float64* state90, int32 channelType90, const char channelName91[], float64* state91, int32 channelType91, const char channelName92[], float64* state92, int32 channelType92, const char channelName93[], float64* state93, int32 channelType93, const char channelName94[], float64* state94, int32 channelType94, const char channelName95[], float64* state95, int32 channelType95)
@@ -1961,11 +1449,7 @@ int32 NiDAQmxLibrary::GetAnalogPowerUpStates(const char deviceName[], const char
   if (!function_pointers_.GetAnalogPowerUpStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetAnalogPowerUpStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetAnalogPowerUpStates(deviceName, channelName, state, channelType, channelName0, state0, channelType0, channelName1, state1, channelType1, channelName2, state2, channelType2, channelName3, state3, channelType3, channelName4, state4, channelType4, channelName5, state5, channelType5, channelName6, state6, channelType6, channelName7, state7, channelType7, channelName8, state8, channelType8, channelName9, state9, channelType9, channelName10, state10, channelType10, channelName11, state11, channelType11, channelName12, state12, channelType12, channelName13, state13, channelType13, channelName14, state14, channelType14, channelName15, state15, channelType15, channelName16, state16, channelType16, channelName17, state17, channelType17, channelName18, state18, channelType18, channelName19, state19, channelType19, channelName20, state20, channelType20, channelName21, state21, channelType21, channelName22, state22, channelType22, channelName23, state23, channelType23, channelName24, state24, channelType24, channelName25, state25, channelType25, channelName26, state26, channelType26, channelName27, state27, channelType27, channelName28, state28, channelType28, channelName29, state29, channelType29, channelName30, state30, channelType30, channelName31, state31, channelType31, channelName32, state32, channelType32, channelName33, state33, channelType33, channelName34, state34, channelType34, channelName35, state35, channelType35, channelName36, state36, channelType36, channelName37, state37, channelType37, channelName38, state38, channelType38, channelName39, state39, channelType39, channelName40, state40, channelType40, channelName41, state41, channelType41, channelName42, state42, channelType42, channelName43, state43, channelType43, channelName44, state44, channelType44, channelName45, state45, channelType45, channelName46, state46, channelType46, channelName47, state47, channelType47, channelName48, state48, channelType48, channelName49, state49, channelType49, channelName50, state50, channelType50, channelName51, state51, channelType51, channelName52, state52, channelType52, channelName53, state53, channelType53, channelName54, state54, channelType54, channelName55, state55, channelType55, channelName56, state56, channelType56, channelName57, state57, channelType57, channelName58, state58, channelType58, channelName59, state59, channelType59, channelName60, state60, channelType60, channelName61, state61, channelType61, channelName62, state62, channelType62, channelName63, state63, channelType63, channelName64, state64, channelType64, channelName65, state65, channelType65, channelName66, state66, channelType66, channelName67, state67, channelType67, channelName68, state68, channelType68, channelName69, state69, channelType69, channelName70, state70, channelType70, channelName71, state71, channelType71, channelName72, state72, channelType72, channelName73, state73, channelType73, channelName74, state74, channelType74, channelName75, state75, channelType75, channelName76, state76, channelType76, channelName77, state77, channelType77, channelName78, state78, channelType78, channelName79, state79, channelType79, channelName80, state80, channelType80, channelName81, state81, channelType81, channelName82, state82, channelType82, channelName83, state83, channelType83, channelName84, state84, channelType84, channelName85, state85, channelType85, channelName86, state86, channelType86, channelName87, state87, channelType87, channelName88, state88, channelType88, channelName89, state89, channelType89, channelName90, state90, channelType90, channelName91, state91, channelType91, channelName92, state92, channelType92, channelName93, state93, channelType93, channelName94, state94, channelType94, channelName95, state95, channelType95);
-#else
   return function_pointers_.GetAnalogPowerUpStates(deviceName, channelName, state, channelType, channelName0, state0, channelType0, channelName1, state1, channelType1, channelName2, state2, channelType2, channelName3, state3, channelType3, channelName4, state4, channelType4, channelName5, state5, channelType5, channelName6, state6, channelType6, channelName7, state7, channelType7, channelName8, state8, channelType8, channelName9, state9, channelType9, channelName10, state10, channelType10, channelName11, state11, channelType11, channelName12, state12, channelType12, channelName13, state13, channelType13, channelName14, state14, channelType14, channelName15, state15, channelType15, channelName16, state16, channelType16, channelName17, state17, channelType17, channelName18, state18, channelType18, channelName19, state19, channelType19, channelName20, state20, channelType20, channelName21, state21, channelType21, channelName22, state22, channelType22, channelName23, state23, channelType23, channelName24, state24, channelType24, channelName25, state25, channelType25, channelName26, state26, channelType26, channelName27, state27, channelType27, channelName28, state28, channelType28, channelName29, state29, channelType29, channelName30, state30, channelType30, channelName31, state31, channelType31, channelName32, state32, channelType32, channelName33, state33, channelType33, channelName34, state34, channelType34, channelName35, state35, channelType35, channelName36, state36, channelType36, channelName37, state37, channelType37, channelName38, state38, channelType38, channelName39, state39, channelType39, channelName40, state40, channelType40, channelName41, state41, channelType41, channelName42, state42, channelType42, channelName43, state43, channelType43, channelName44, state44, channelType44, channelName45, state45, channelType45, channelName46, state46, channelType46, channelName47, state47, channelType47, channelName48, state48, channelType48, channelName49, state49, channelType49, channelName50, state50, channelType50, channelName51, state51, channelType51, channelName52, state52, channelType52, channelName53, state53, channelType53, channelName54, state54, channelType54, channelName55, state55, channelType55, channelName56, state56, channelType56, channelName57, state57, channelType57, channelName58, state58, channelType58, channelName59, state59, channelType59, channelName60, state60, channelType60, channelName61, state61, channelType61, channelName62, state62, channelType62, channelName63, state63, channelType63, channelName64, state64, channelType64, channelName65, state65, channelType65, channelName66, state66, channelType66, channelName67, state67, channelType67, channelName68, state68, channelType68, channelName69, state69, channelType69, channelName70, state70, channelType70, channelName71, state71, channelType71, channelName72, state72, channelType72, channelName73, state73, channelType73, channelName74, state74, channelType74, channelName75, state75, channelType75, channelName76, state76, channelType76, channelName77, state77, channelType77, channelName78, state78, channelType78, channelName79, state79, channelType79, channelName80, state80, channelType80, channelName81, state81, channelType81, channelName82, state82, channelType82, channelName83, state83, channelType83, channelName84, state84, channelType84, channelName85, state85, channelType85, channelName86, state86, channelType86, channelName87, state87, channelType87, channelName88, state88, channelType88, channelName89, state89, channelType89, channelName90, state90, channelType90, channelName91, state91, channelType91, channelName92, state92, channelType92, channelName93, state93, channelType93, channelName94, state94, channelType94, channelName95, state95, channelType95);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySize)
@@ -1973,11 +1457,7 @@ int32 NiDAQmxLibrary::GetAnalogPowerUpStatesWithOutputType(const char channelNam
   if (!function_pointers_.GetAnalogPowerUpStatesWithOutputType) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetAnalogPowerUpStatesWithOutputType.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
-#else
   return function_pointers_.GetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetArmStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
@@ -1985,11 +1465,7 @@ int32 NiDAQmxLibrary::GetArmStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTi
   if (!function_pointers_.GetArmStartTrigTimestampVal) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetArmStartTrigTimestampVal.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetArmStartTrigTimestampVal(task, data);
-#else
   return function_pointers_.GetArmStartTrigTimestampVal(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data)
@@ -1997,11 +1473,7 @@ int32 NiDAQmxLibrary::GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* 
   if (!function_pointers_.GetArmStartTrigTrigWhen) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetArmStartTrigTrigWhen.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetArmStartTrigTrigWhen(task, data);
-#else
   return function_pointers_.GetArmStartTrigTrigWhen(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetAutoConfiguredCDAQSyncConnections(char portList[], uInt32 portListSize)
@@ -2009,11 +1481,7 @@ int32 NiDAQmxLibrary::GetAutoConfiguredCDAQSyncConnections(char portList[], uInt
   if (!function_pointers_.GetAutoConfiguredCDAQSyncConnections) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetAutoConfiguredCDAQSyncConnections.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetAutoConfiguredCDAQSyncConnections(portList, portListSize);
-#else
   return function_pointers_.GetAutoConfiguredCDAQSyncConnections(portList, portListSize);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
@@ -2021,11 +1489,7 @@ int32 NiDAQmxLibrary::GetBufferAttributeUInt32(TaskHandle task, int32 attribute,
   if (!function_pointers_.GetBufferAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetBufferAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetBufferAttribute(task, attribute, value);
-#else
   return function_pointers_.GetBufferAttributeUInt32(task, attribute, value);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
@@ -2033,11 +1497,7 @@ int32 NiDAQmxLibrary::GetCalInfoAttributeBool(const char deviceName[], int32 att
   if (!function_pointers_.GetCalInfoAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetCalInfoAttributeBool(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size)
@@ -2045,11 +1505,7 @@ int32 NiDAQmxLibrary::GetCalInfoAttributeDouble(const char deviceName[], int32 a
   if (!function_pointers_.GetCalInfoAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetCalInfoAttributeDouble(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetCalInfoAttributeString(const char deviceName[], int32 attribute, char value[], uInt32 size)
@@ -2057,11 +1513,7 @@ int32 NiDAQmxLibrary::GetCalInfoAttributeString(const char deviceName[], int32 a
   if (!function_pointers_.GetCalInfoAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetCalInfoAttributeString(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size)
@@ -2069,11 +1521,7 @@ int32 NiDAQmxLibrary::GetCalInfoAttributeUInt32(const char deviceName[], int32 a
   if (!function_pointers_.GetCalInfoAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetCalInfoAttributeUInt32(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size)
@@ -2081,11 +1529,7 @@ int32 NiDAQmxLibrary::GetChanAttributeBool(TaskHandle task, const char channel[]
   if (!function_pointers_.GetChanAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.GetChanAttributeBool(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64* value, uInt32 size)
@@ -2093,11 +1537,7 @@ int32 NiDAQmxLibrary::GetChanAttributeDouble(TaskHandle task, const char channel
   if (!function_pointers_.GetChanAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.GetChanAttributeDouble(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, float64 value[], uInt32 size)
@@ -2105,11 +1545,7 @@ int32 NiDAQmxLibrary::GetChanAttributeDoubleArray(TaskHandle task, const char ch
   if (!function_pointers_.GetChanAttributeDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.GetChanAttributeDoubleArray(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value, uInt32 size)
@@ -2117,11 +1553,7 @@ int32 NiDAQmxLibrary::GetChanAttributeInt32(TaskHandle task, const char channel[
   if (!function_pointers_.GetChanAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.GetChanAttributeInt32(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, char value[], uInt32 size)
@@ -2129,11 +1561,7 @@ int32 NiDAQmxLibrary::GetChanAttributeString(TaskHandle task, const char channel
   if (!function_pointers_.GetChanAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.GetChanAttributeString(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value, uInt32 size)
@@ -2141,11 +1569,7 @@ int32 NiDAQmxLibrary::GetChanAttributeUInt32(TaskHandle task, const char channel
   if (!function_pointers_.GetChanAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.GetChanAttributeUInt32(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
@@ -2153,11 +1577,7 @@ int32 NiDAQmxLibrary::GetDeviceAttributeBool(const char deviceName[], int32 attr
   if (!function_pointers_.GetDeviceAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetDeviceAttributeBool(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size)
@@ -2165,11 +1585,7 @@ int32 NiDAQmxLibrary::GetDeviceAttributeDouble(const char deviceName[], int32 at
   if (!function_pointers_.GetDeviceAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetDeviceAttributeDouble(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, float64 value[], uInt32 size)
@@ -2177,11 +1593,7 @@ int32 NiDAQmxLibrary::GetDeviceAttributeDoubleArray(const char deviceName[], int
   if (!function_pointers_.GetDeviceAttributeDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetDeviceAttributeDoubleArray(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeInt32(const char deviceName[], int32 attribute, int32* value, uInt32 size)
@@ -2189,11 +1601,7 @@ int32 NiDAQmxLibrary::GetDeviceAttributeInt32(const char deviceName[], int32 att
   if (!function_pointers_.GetDeviceAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetDeviceAttributeInt32(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeInt32Array(const char deviceName[], int32 attribute, int32 value[], uInt32 size)
@@ -2201,11 +1609,7 @@ int32 NiDAQmxLibrary::GetDeviceAttributeInt32Array(const char deviceName[], int3
   if (!function_pointers_.GetDeviceAttributeInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetDeviceAttributeInt32Array(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeString(const char deviceName[], int32 attribute, char value[], uInt32 size)
@@ -2213,11 +1617,7 @@ int32 NiDAQmxLibrary::GetDeviceAttributeString(const char deviceName[], int32 at
   if (!function_pointers_.GetDeviceAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetDeviceAttributeString(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size)
@@ -2225,11 +1625,7 @@ int32 NiDAQmxLibrary::GetDeviceAttributeUInt32(const char deviceName[], int32 at
   if (!function_pointers_.GetDeviceAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetDeviceAttributeUInt32(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeUInt32Array(const char deviceName[], int32 attribute, uInt32 value[], uInt32 size)
@@ -2237,11 +1633,7 @@ int32 NiDAQmxLibrary::GetDeviceAttributeUInt32Array(const char deviceName[], int
   if (!function_pointers_.GetDeviceAttributeUInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.GetDeviceAttributeUInt32Array(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily)
@@ -2249,11 +1641,7 @@ int32 NiDAQmxLibrary::GetDigitalLogicFamilyPowerUpState(const char deviceName[],
   if (!function_pointers_.GetDigitalLogicFamilyPowerUpState) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDigitalLogicFamilyPowerUpState.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDigitalLogicFamilyPowerUpState(deviceName, logicFamily);
-#else
   return function_pointers_.GetDigitalLogicFamilyPowerUpState(deviceName, logicFamily);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDigitalPowerUpStates(const char deviceName[], const char channelName[], int32* state, const char channelName0[], int32* state0, const char channelName1[], int32* state1, const char channelName2[], int32* state2, const char channelName3[], int32* state3, const char channelName4[], int32* state4, const char channelName5[], int32* state5, const char channelName6[], int32* state6, const char channelName7[], int32* state7, const char channelName8[], int32* state8, const char channelName9[], int32* state9, const char channelName10[], int32* state10, const char channelName11[], int32* state11, const char channelName12[], int32* state12, const char channelName13[], int32* state13, const char channelName14[], int32* state14, const char channelName15[], int32* state15, const char channelName16[], int32* state16, const char channelName17[], int32* state17, const char channelName18[], int32* state18, const char channelName19[], int32* state19, const char channelName20[], int32* state20, const char channelName21[], int32* state21, const char channelName22[], int32* state22, const char channelName23[], int32* state23, const char channelName24[], int32* state24, const char channelName25[], int32* state25, const char channelName26[], int32* state26, const char channelName27[], int32* state27, const char channelName28[], int32* state28, const char channelName29[], int32* state29, const char channelName30[], int32* state30, const char channelName31[], int32* state31, const char channelName32[], int32* state32, const char channelName33[], int32* state33, const char channelName34[], int32* state34, const char channelName35[], int32* state35, const char channelName36[], int32* state36, const char channelName37[], int32* state37, const char channelName38[], int32* state38, const char channelName39[], int32* state39, const char channelName40[], int32* state40, const char channelName41[], int32* state41, const char channelName42[], int32* state42, const char channelName43[], int32* state43, const char channelName44[], int32* state44, const char channelName45[], int32* state45, const char channelName46[], int32* state46, const char channelName47[], int32* state47, const char channelName48[], int32* state48, const char channelName49[], int32* state49, const char channelName50[], int32* state50, const char channelName51[], int32* state51, const char channelName52[], int32* state52, const char channelName53[], int32* state53, const char channelName54[], int32* state54, const char channelName55[], int32* state55, const char channelName56[], int32* state56, const char channelName57[], int32* state57, const char channelName58[], int32* state58, const char channelName59[], int32* state59, const char channelName60[], int32* state60, const char channelName61[], int32* state61, const char channelName62[], int32* state62, const char channelName63[], int32* state63, const char channelName64[], int32* state64, const char channelName65[], int32* state65, const char channelName66[], int32* state66, const char channelName67[], int32* state67, const char channelName68[], int32* state68, const char channelName69[], int32* state69, const char channelName70[], int32* state70, const char channelName71[], int32* state71, const char channelName72[], int32* state72, const char channelName73[], int32* state73, const char channelName74[], int32* state74, const char channelName75[], int32* state75, const char channelName76[], int32* state76, const char channelName77[], int32* state77, const char channelName78[], int32* state78, const char channelName79[], int32* state79, const char channelName80[], int32* state80, const char channelName81[], int32* state81, const char channelName82[], int32* state82, const char channelName83[], int32* state83, const char channelName84[], int32* state84, const char channelName85[], int32* state85, const char channelName86[], int32* state86, const char channelName87[], int32* state87, const char channelName88[], int32* state88, const char channelName89[], int32* state89, const char channelName90[], int32* state90, const char channelName91[], int32* state91, const char channelName92[], int32* state92, const char channelName93[], int32* state93, const char channelName94[], int32* state94, const char channelName95[], int32* state95)
@@ -2261,11 +1649,7 @@ int32 NiDAQmxLibrary::GetDigitalPowerUpStates(const char deviceName[], const cha
   if (!function_pointers_.GetDigitalPowerUpStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDigitalPowerUpStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDigitalPowerUpStates(deviceName, channelName, state, channelName0, state0, channelName1, state1, channelName2, state2, channelName3, state3, channelName4, state4, channelName5, state5, channelName6, state6, channelName7, state7, channelName8, state8, channelName9, state9, channelName10, state10, channelName11, state11, channelName12, state12, channelName13, state13, channelName14, state14, channelName15, state15, channelName16, state16, channelName17, state17, channelName18, state18, channelName19, state19, channelName20, state20, channelName21, state21, channelName22, state22, channelName23, state23, channelName24, state24, channelName25, state25, channelName26, state26, channelName27, state27, channelName28, state28, channelName29, state29, channelName30, state30, channelName31, state31, channelName32, state32, channelName33, state33, channelName34, state34, channelName35, state35, channelName36, state36, channelName37, state37, channelName38, state38, channelName39, state39, channelName40, state40, channelName41, state41, channelName42, state42, channelName43, state43, channelName44, state44, channelName45, state45, channelName46, state46, channelName47, state47, channelName48, state48, channelName49, state49, channelName50, state50, channelName51, state51, channelName52, state52, channelName53, state53, channelName54, state54, channelName55, state55, channelName56, state56, channelName57, state57, channelName58, state58, channelName59, state59, channelName60, state60, channelName61, state61, channelName62, state62, channelName63, state63, channelName64, state64, channelName65, state65, channelName66, state66, channelName67, state67, channelName68, state68, channelName69, state69, channelName70, state70, channelName71, state71, channelName72, state72, channelName73, state73, channelName74, state74, channelName75, state75, channelName76, state76, channelName77, state77, channelName78, state78, channelName79, state79, channelName80, state80, channelName81, state81, channelName82, state82, channelName83, state83, channelName84, state84, channelName85, state85, channelName86, state86, channelName87, state87, channelName88, state88, channelName89, state89, channelName90, state90, channelName91, state91, channelName92, state92, channelName93, state93, channelName94, state94, channelName95, state95);
-#else
   return function_pointers_.GetDigitalPowerUpStates(deviceName, channelName, state, channelName0, state0, channelName1, state1, channelName2, state2, channelName3, state3, channelName4, state4, channelName5, state5, channelName6, state6, channelName7, state7, channelName8, state8, channelName9, state9, channelName10, state10, channelName11, state11, channelName12, state12, channelName13, state13, channelName14, state14, channelName15, state15, channelName16, state16, channelName17, state17, channelName18, state18, channelName19, state19, channelName20, state20, channelName21, state21, channelName22, state22, channelName23, state23, channelName24, state24, channelName25, state25, channelName26, state26, channelName27, state27, channelName28, state28, channelName29, state29, channelName30, state30, channelName31, state31, channelName32, state32, channelName33, state33, channelName34, state34, channelName35, state35, channelName36, state36, channelName37, state37, channelName38, state38, channelName39, state39, channelName40, state40, channelName41, state41, channelName42, state42, channelName43, state43, channelName44, state44, channelName45, state45, channelName46, state46, channelName47, state47, channelName48, state48, channelName49, state49, channelName50, state50, channelName51, state51, channelName52, state52, channelName53, state53, channelName54, state54, channelName55, state55, channelName56, state56, channelName57, state57, channelName58, state58, channelName59, state59, channelName60, state60, channelName61, state61, channelName62, state62, channelName63, state63, channelName64, state64, channelName65, state65, channelName66, state66, channelName67, state67, channelName68, state68, channelName69, state69, channelName70, state70, channelName71, state71, channelName72, state72, channelName73, state73, channelName74, state74, channelName75, state75, channelName76, state76, channelName77, state77, channelName78, state78, channelName79, state79, channelName80, state80, channelName81, state81, channelName82, state82, channelName83, state83, channelName84, state84, channelName85, state85, channelName86, state86, channelName87, state87, channelName88, state88, channelName89, state89, channelName90, state90, channelName91, state91, channelName92, state92, channelName93, state93, channelName94, state94, channelName95, state95);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDigitalPullUpPullDownStates(const char deviceName[], const char channelName[], int32* state, const char channelName0[], int32* state0, const char channelName1[], int32* state1, const char channelName2[], int32* state2, const char channelName3[], int32* state3, const char channelName4[], int32* state4, const char channelName5[], int32* state5, const char channelName6[], int32* state6, const char channelName7[], int32* state7, const char channelName8[], int32* state8, const char channelName9[], int32* state9, const char channelName10[], int32* state10, const char channelName11[], int32* state11, const char channelName12[], int32* state12, const char channelName13[], int32* state13, const char channelName14[], int32* state14, const char channelName15[], int32* state15, const char channelName16[], int32* state16, const char channelName17[], int32* state17, const char channelName18[], int32* state18, const char channelName19[], int32* state19, const char channelName20[], int32* state20, const char channelName21[], int32* state21, const char channelName22[], int32* state22, const char channelName23[], int32* state23, const char channelName24[], int32* state24, const char channelName25[], int32* state25, const char channelName26[], int32* state26, const char channelName27[], int32* state27, const char channelName28[], int32* state28, const char channelName29[], int32* state29, const char channelName30[], int32* state30, const char channelName31[], int32* state31, const char channelName32[], int32* state32, const char channelName33[], int32* state33, const char channelName34[], int32* state34, const char channelName35[], int32* state35, const char channelName36[], int32* state36, const char channelName37[], int32* state37, const char channelName38[], int32* state38, const char channelName39[], int32* state39, const char channelName40[], int32* state40, const char channelName41[], int32* state41, const char channelName42[], int32* state42, const char channelName43[], int32* state43, const char channelName44[], int32* state44, const char channelName45[], int32* state45, const char channelName46[], int32* state46, const char channelName47[], int32* state47, const char channelName48[], int32* state48, const char channelName49[], int32* state49, const char channelName50[], int32* state50, const char channelName51[], int32* state51, const char channelName52[], int32* state52, const char channelName53[], int32* state53, const char channelName54[], int32* state54, const char channelName55[], int32* state55, const char channelName56[], int32* state56, const char channelName57[], int32* state57, const char channelName58[], int32* state58, const char channelName59[], int32* state59, const char channelName60[], int32* state60, const char channelName61[], int32* state61, const char channelName62[], int32* state62, const char channelName63[], int32* state63, const char channelName64[], int32* state64, const char channelName65[], int32* state65, const char channelName66[], int32* state66, const char channelName67[], int32* state67, const char channelName68[], int32* state68, const char channelName69[], int32* state69, const char channelName70[], int32* state70, const char channelName71[], int32* state71, const char channelName72[], int32* state72, const char channelName73[], int32* state73, const char channelName74[], int32* state74, const char channelName75[], int32* state75, const char channelName76[], int32* state76, const char channelName77[], int32* state77, const char channelName78[], int32* state78, const char channelName79[], int32* state79, const char channelName80[], int32* state80, const char channelName81[], int32* state81, const char channelName82[], int32* state82, const char channelName83[], int32* state83, const char channelName84[], int32* state84, const char channelName85[], int32* state85, const char channelName86[], int32* state86, const char channelName87[], int32* state87, const char channelName88[], int32* state88, const char channelName89[], int32* state89, const char channelName90[], int32* state90, const char channelName91[], int32* state91, const char channelName92[], int32* state92, const char channelName93[], int32* state93, const char channelName94[], int32* state94, const char channelName95[], int32* state95)
@@ -2273,11 +1657,7 @@ int32 NiDAQmxLibrary::GetDigitalPullUpPullDownStates(const char deviceName[], co
   if (!function_pointers_.GetDigitalPullUpPullDownStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDigitalPullUpPullDownStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDigitalPullUpPullDownStates(deviceName, channelName, state, channelName0, state0, channelName1, state1, channelName2, state2, channelName3, state3, channelName4, state4, channelName5, state5, channelName6, state6, channelName7, state7, channelName8, state8, channelName9, state9, channelName10, state10, channelName11, state11, channelName12, state12, channelName13, state13, channelName14, state14, channelName15, state15, channelName16, state16, channelName17, state17, channelName18, state18, channelName19, state19, channelName20, state20, channelName21, state21, channelName22, state22, channelName23, state23, channelName24, state24, channelName25, state25, channelName26, state26, channelName27, state27, channelName28, state28, channelName29, state29, channelName30, state30, channelName31, state31, channelName32, state32, channelName33, state33, channelName34, state34, channelName35, state35, channelName36, state36, channelName37, state37, channelName38, state38, channelName39, state39, channelName40, state40, channelName41, state41, channelName42, state42, channelName43, state43, channelName44, state44, channelName45, state45, channelName46, state46, channelName47, state47, channelName48, state48, channelName49, state49, channelName50, state50, channelName51, state51, channelName52, state52, channelName53, state53, channelName54, state54, channelName55, state55, channelName56, state56, channelName57, state57, channelName58, state58, channelName59, state59, channelName60, state60, channelName61, state61, channelName62, state62, channelName63, state63, channelName64, state64, channelName65, state65, channelName66, state66, channelName67, state67, channelName68, state68, channelName69, state69, channelName70, state70, channelName71, state71, channelName72, state72, channelName73, state73, channelName74, state74, channelName75, state75, channelName76, state76, channelName77, state77, channelName78, state78, channelName79, state79, channelName80, state80, channelName81, state81, channelName82, state82, channelName83, state83, channelName84, state84, channelName85, state85, channelName86, state86, channelName87, state87, channelName88, state88, channelName89, state89, channelName90, state90, channelName91, state91, channelName92, state92, channelName93, state93, channelName94, state94, channelName95, state95);
-#else
   return function_pointers_.GetDigitalPullUpPullDownStates(deviceName, channelName, state, channelName0, state0, channelName1, state1, channelName2, state2, channelName3, state3, channelName4, state4, channelName5, state5, channelName6, state6, channelName7, state7, channelName8, state8, channelName9, state9, channelName10, state10, channelName11, state11, channelName12, state12, channelName13, state13, channelName14, state14, channelName15, state15, channelName16, state16, channelName17, state17, channelName18, state18, channelName19, state19, channelName20, state20, channelName21, state21, channelName22, state22, channelName23, state23, channelName24, state24, channelName25, state25, channelName26, state26, channelName27, state27, channelName28, state28, channelName29, state29, channelName30, state30, channelName31, state31, channelName32, state32, channelName33, state33, channelName34, state34, channelName35, state35, channelName36, state36, channelName37, state37, channelName38, state38, channelName39, state39, channelName40, state40, channelName41, state41, channelName42, state42, channelName43, state43, channelName44, state44, channelName45, state45, channelName46, state46, channelName47, state47, channelName48, state48, channelName49, state49, channelName50, state50, channelName51, state51, channelName52, state52, channelName53, state53, channelName54, state54, channelName55, state55, channelName56, state56, channelName57, state57, channelName58, state58, channelName59, state59, channelName60, state60, channelName61, state61, channelName62, state62, channelName63, state63, channelName64, state64, channelName65, state65, channelName66, state66, channelName67, state67, channelName68, state68, channelName69, state69, channelName70, state70, channelName71, state71, channelName72, state72, channelName73, state73, channelName74, state74, channelName75, state75, channelName76, state76, channelName77, state77, channelName78, state78, channelName79, state79, channelName80, state80, channelName81, state81, channelName82, state82, channelName83, state83, channelName84, state84, channelName85, state85, channelName86, state86, channelName87, state87, channelName88, state88, channelName89, state89, channelName90, state90, channelName91, state91, channelName92, state92, channelName93, state93, channelName94, state94, channelName95, state95);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetDisconnectedCDAQSyncPorts(char portList[], uInt32 portListSize)
@@ -2285,11 +1665,7 @@ int32 NiDAQmxLibrary::GetDisconnectedCDAQSyncPorts(char portList[], uInt32 portL
   if (!function_pointers_.GetDisconnectedCDAQSyncPorts) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDisconnectedCDAQSyncPorts.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetDisconnectedCDAQSyncPorts(portList, portListSize);
-#else
   return function_pointers_.GetDisconnectedCDAQSyncPorts(portList, portListSize);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetErrorString(int32 errorCode, char errorString[], uInt32 bufferSize)
@@ -2297,11 +1673,7 @@ int32 NiDAQmxLibrary::GetErrorString(int32 errorCode, char errorString[], uInt32
   if (!function_pointers_.GetErrorString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetErrorString.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetErrorString(errorCode, errorString, bufferSize);
-#else
   return function_pointers_.GetErrorString(errorCode, errorString, bufferSize);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
@@ -2309,11 +1681,7 @@ int32 NiDAQmxLibrary::GetExportedSignalAttributeBool(TaskHandle task, int32 attr
   if (!function_pointers_.GetExportedSignalAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetExportedSignalAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
@@ -2321,11 +1689,7 @@ int32 NiDAQmxLibrary::GetExportedSignalAttributeDouble(TaskHandle task, int32 at
   if (!function_pointers_.GetExportedSignalAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetExportedSignalAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
@@ -2333,11 +1697,7 @@ int32 NiDAQmxLibrary::GetExportedSignalAttributeInt32(TaskHandle task, int32 att
   if (!function_pointers_.GetExportedSignalAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetExportedSignalAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -2345,11 +1705,7 @@ int32 NiDAQmxLibrary::GetExportedSignalAttributeString(TaskHandle task, int32 at
   if (!function_pointers_.GetExportedSignalAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetExportedSignalAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
@@ -2357,11 +1713,7 @@ int32 NiDAQmxLibrary::GetExportedSignalAttributeUInt32(TaskHandle task, int32 at
   if (!function_pointers_.GetExportedSignalAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetExportedSignalAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetExtendedErrorInfo(char errorString[], uInt32 bufferSize)
@@ -2377,11 +1729,7 @@ int32 NiDAQmxLibrary::GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data
   if (!function_pointers_.GetFirstSampClkWhen) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetFirstSampClkWhen.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetFirstSampClkWhen(task, data);
-#else
   return function_pointers_.GetFirstSampClkWhen(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetFirstSampTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
@@ -2389,11 +1737,7 @@ int32 NiDAQmxLibrary::GetFirstSampTimestampVal(TaskHandle task, CVIAbsoluteTime*
   if (!function_pointers_.GetFirstSampTimestampVal) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetFirstSampTimestampVal.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetFirstSampTimestampVal(task, data);
-#else
   return function_pointers_.GetFirstSampTimestampVal(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetNthTaskChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize)
@@ -2401,11 +1745,7 @@ int32 NiDAQmxLibrary::GetNthTaskChannel(TaskHandle task, uInt32 index, char buff
   if (!function_pointers_.GetNthTaskChannel) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetNthTaskChannel.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetNthTaskChannel(task, index, buffer, bufferSize);
-#else
   return function_pointers_.GetNthTaskChannel(task, index, buffer, bufferSize);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize)
@@ -2413,11 +1753,7 @@ int32 NiDAQmxLibrary::GetNthTaskDevice(TaskHandle task, uInt32 index, char buffe
   if (!function_pointers_.GetNthTaskDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetNthTaskDevice.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetNthTaskDevice(task, index, buffer, bufferSize);
-#else
   return function_pointers_.GetNthTaskDevice(task, index, buffer, bufferSize);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetNthTaskReadChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize)
@@ -2425,11 +1761,7 @@ int32 NiDAQmxLibrary::GetNthTaskReadChannel(TaskHandle task, uInt32 index, char 
   if (!function_pointers_.GetNthTaskReadChannel) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetNthTaskReadChannel.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetNthTaskReadChannel(task, index, buffer, bufferSize);
-#else
   return function_pointers_.GetNthTaskReadChannel(task, index, buffer, bufferSize);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPersistedChanAttributeBool(const char channel[], int32 attribute, bool32* value, uInt32 size)
@@ -2437,11 +1769,7 @@ int32 NiDAQmxLibrary::GetPersistedChanAttributeBool(const char channel[], int32 
   if (!function_pointers_.GetPersistedChanAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPersistedChanAttribute(channel, attribute, value, size);
-#else
   return function_pointers_.GetPersistedChanAttributeBool(channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPersistedChanAttributeString(const char channel[], int32 attribute, char value[], uInt32 size)
@@ -2449,11 +1777,7 @@ int32 NiDAQmxLibrary::GetPersistedChanAttributeString(const char channel[], int3
   if (!function_pointers_.GetPersistedChanAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPersistedChanAttribute(channel, attribute, value, size);
-#else
   return function_pointers_.GetPersistedChanAttributeString(channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPersistedScaleAttributeBool(const char scaleName[], int32 attribute, bool32* value, uInt32 size)
@@ -2461,11 +1785,7 @@ int32 NiDAQmxLibrary::GetPersistedScaleAttributeBool(const char scaleName[], int
   if (!function_pointers_.GetPersistedScaleAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPersistedScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.GetPersistedScaleAttributeBool(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPersistedScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size)
@@ -2473,11 +1793,7 @@ int32 NiDAQmxLibrary::GetPersistedScaleAttributeString(const char scaleName[], i
   if (!function_pointers_.GetPersistedScaleAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPersistedScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.GetPersistedScaleAttributeString(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPersistedTaskAttributeBool(const char taskName[], int32 attribute, bool32* value, uInt32 size)
@@ -2485,11 +1801,7 @@ int32 NiDAQmxLibrary::GetPersistedTaskAttributeBool(const char taskName[], int32
   if (!function_pointers_.GetPersistedTaskAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedTaskAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPersistedTaskAttribute(taskName, attribute, value, size);
-#else
   return function_pointers_.GetPersistedTaskAttributeBool(taskName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPersistedTaskAttributeString(const char taskName[], int32 attribute, char value[], uInt32 size)
@@ -2497,11 +1809,7 @@ int32 NiDAQmxLibrary::GetPersistedTaskAttributeString(const char taskName[], int
   if (!function_pointers_.GetPersistedTaskAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedTaskAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPersistedTaskAttribute(taskName, attribute, value, size);
-#else
   return function_pointers_.GetPersistedTaskAttributeString(taskName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeBool(const char physicalChannel[], int32 attribute, bool32* value, uInt32 size)
@@ -2509,11 +1817,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeBool(const char physicalChannel[],
   if (!function_pointers_.GetPhysicalChanAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeBool(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeBytes(const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size)
@@ -2521,11 +1825,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeBytes(const char physicalChannel[]
   if (!function_pointers_.GetPhysicalChanAttributeBytes) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeBytes(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeDouble(const char physicalChannel[], int32 attribute, float64* value, uInt32 size)
@@ -2533,11 +1833,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeDouble(const char physicalChannel[
   if (!function_pointers_.GetPhysicalChanAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeDouble(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeDoubleArray(const char physicalChannel[], int32 attribute, float64 value[], uInt32 size)
@@ -2545,11 +1841,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeDoubleArray(const char physicalCha
   if (!function_pointers_.GetPhysicalChanAttributeDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeDoubleArray(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32(const char physicalChannel[], int32 attribute, int32* value, uInt32 size)
@@ -2557,11 +1849,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32(const char physicalChannel[]
   if (!function_pointers_.GetPhysicalChanAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeInt32(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32Array(const char physicalChannel[], int32 attribute, int32 value[], uInt32 size)
@@ -2569,11 +1857,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32Array(const char physicalChan
   if (!function_pointers_.GetPhysicalChanAttributeInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeInt32Array(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeString(const char physicalChannel[], int32 attribute, char value[], uInt32 size)
@@ -2581,11 +1865,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeString(const char physicalChannel[
   if (!function_pointers_.GetPhysicalChanAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeString(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32(const char physicalChannel[], int32 attribute, uInt32* value, uInt32 size)
@@ -2593,11 +1873,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32(const char physicalChannel[
   if (!function_pointers_.GetPhysicalChanAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeUInt32(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32Array(const char physicalChannel[], int32 attribute, uInt32 value[], uInt32 size)
@@ -2605,11 +1881,7 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32Array(const char physicalCha
   if (!function_pointers_.GetPhysicalChanAttributeUInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
-#else
   return function_pointers_.GetPhysicalChanAttributeUInt32Array(physicalChannel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetReadAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
@@ -2617,11 +1889,7 @@ int32 NiDAQmxLibrary::GetReadAttributeBool(TaskHandle task, int32 attribute, boo
   if (!function_pointers_.GetReadAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetReadAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetReadAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
@@ -2629,11 +1897,7 @@ int32 NiDAQmxLibrary::GetReadAttributeDouble(TaskHandle task, int32 attribute, f
   if (!function_pointers_.GetReadAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetReadAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetReadAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
@@ -2641,11 +1905,7 @@ int32 NiDAQmxLibrary::GetReadAttributeInt32(TaskHandle task, int32 attribute, in
   if (!function_pointers_.GetReadAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetReadAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetReadAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -2653,11 +1913,7 @@ int32 NiDAQmxLibrary::GetReadAttributeString(TaskHandle task, int32 attribute, c
   if (!function_pointers_.GetReadAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetReadAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
@@ -2665,11 +1921,7 @@ int32 NiDAQmxLibrary::GetReadAttributeUInt32(TaskHandle task, int32 attribute, u
   if (!function_pointers_.GetReadAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetReadAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
@@ -2677,11 +1929,7 @@ int32 NiDAQmxLibrary::GetReadAttributeUInt64(TaskHandle task, int32 attribute, u
   if (!function_pointers_.GetReadAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetReadAttributeUInt64(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
@@ -2689,11 +1937,7 @@ int32 NiDAQmxLibrary::GetRealTimeAttributeBool(TaskHandle task, int32 attribute,
   if (!function_pointers_.GetRealTimeAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetRealTimeAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
@@ -2701,11 +1945,7 @@ int32 NiDAQmxLibrary::GetRealTimeAttributeInt32(TaskHandle task, int32 attribute
   if (!function_pointers_.GetRealTimeAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetRealTimeAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
@@ -2713,11 +1953,7 @@ int32 NiDAQmxLibrary::GetRealTimeAttributeUInt32(TaskHandle task, int32 attribut
   if (!function_pointers_.GetRealTimeAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetRealTimeAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
@@ -2725,11 +1961,7 @@ int32 NiDAQmxLibrary::GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* d
   if (!function_pointers_.GetRefTrigTimestampVal) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRefTrigTimestampVal.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetRefTrigTimestampVal(task, data);
-#else
   return function_pointers_.GetRefTrigTimestampVal(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value, uInt32 size)
@@ -2737,11 +1969,7 @@ int32 NiDAQmxLibrary::GetScaleAttributeDouble(const char scaleName[], int32 attr
   if (!function_pointers_.GetScaleAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.GetScaleAttributeDouble(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, float64 value[], uInt32 size)
@@ -2749,11 +1977,7 @@ int32 NiDAQmxLibrary::GetScaleAttributeDoubleArray(const char scaleName[], int32
   if (!function_pointers_.GetScaleAttributeDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.GetScaleAttributeDoubleArray(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value, uInt32 size)
@@ -2761,11 +1985,7 @@ int32 NiDAQmxLibrary::GetScaleAttributeInt32(const char scaleName[], int32 attri
   if (!function_pointers_.GetScaleAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.GetScaleAttributeInt32(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size)
@@ -2773,11 +1993,7 @@ int32 NiDAQmxLibrary::GetScaleAttributeString(const char scaleName[], int32 attr
   if (!function_pointers_.GetScaleAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.GetScaleAttributeString(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetSelfCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute)
@@ -2785,11 +2001,7 @@ int32 NiDAQmxLibrary::GetSelfCalLastDateAndTime(const char deviceName[], uInt32*
   if (!function_pointers_.GetSelfCalLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSelfCalLastDateAndTime.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetSelfCalLastDateAndTime(deviceName, year, month, day, hour, minute);
-#else
   return function_pointers_.GetSelfCalLastDateAndTime(deviceName, year, month, day, hour, minute);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
@@ -2797,11 +2009,7 @@ int32 NiDAQmxLibrary::GetStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime*
   if (!function_pointers_.GetStartTrigTimestampVal) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetStartTrigTimestampVal.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetStartTrigTimestampVal(task, data);
-#else
   return function_pointers_.GetStartTrigTimestampVal(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data)
@@ -2809,11 +2017,7 @@ int32 NiDAQmxLibrary::GetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* dat
   if (!function_pointers_.GetStartTrigTrigWhen) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetStartTrigTrigWhen.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetStartTrigTrigWhen(task, data);
-#else
   return function_pointers_.GetStartTrigTrigWhen(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* data)
@@ -2821,11 +2025,7 @@ int32 NiDAQmxLibrary::GetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime* dat
   if (!function_pointers_.GetSyncPulseTimeWhen) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSyncPulseTimeWhen.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetSyncPulseTimeWhen(task, data);
-#else
   return function_pointers_.GetSyncPulseTimeWhen(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetSystemInfoAttributeString(int32 attribute, char value[], uInt32 size)
@@ -2833,11 +2033,7 @@ int32 NiDAQmxLibrary::GetSystemInfoAttributeString(int32 attribute, char value[]
   if (!function_pointers_.GetSystemInfoAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSystemInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetSystemInfoAttribute(attribute, value, size);
-#else
   return function_pointers_.GetSystemInfoAttributeString(attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetSystemInfoAttributeUInt32(int32 attribute, uInt32* value, uInt32 size)
@@ -2845,11 +2041,7 @@ int32 NiDAQmxLibrary::GetSystemInfoAttributeUInt32(int32 attribute, uInt32* valu
   if (!function_pointers_.GetSystemInfoAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSystemInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetSystemInfoAttribute(attribute, value, size);
-#else
   return function_pointers_.GetSystemInfoAttributeUInt32(attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
@@ -2857,11 +2049,7 @@ int32 NiDAQmxLibrary::GetTaskAttributeBool(TaskHandle task, int32 attribute, boo
   if (!function_pointers_.GetTaskAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTaskAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTaskAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTaskAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTaskAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -2869,11 +2057,7 @@ int32 NiDAQmxLibrary::GetTaskAttributeString(TaskHandle task, int32 attribute, c
   if (!function_pointers_.GetTaskAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTaskAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTaskAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTaskAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
@@ -2881,11 +2065,7 @@ int32 NiDAQmxLibrary::GetTaskAttributeUInt32(TaskHandle task, int32 attribute, u
   if (!function_pointers_.GetTaskAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTaskAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTaskAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTaskAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
@@ -2893,11 +2073,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeBool(TaskHandle task, int32 attribute, b
   if (!function_pointers_.GetTimingAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
@@ -2905,11 +2081,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeDouble(TaskHandle task, int32 attribute,
   if (!function_pointers_.GetTimingAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32* value, uInt32 size)
@@ -2917,11 +2089,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeExBool(TaskHandle task, const char devic
   if (!function_pointers_.GetTimingAttributeExBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeExBool(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64* value, uInt32 size)
@@ -2929,11 +2097,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeExDouble(TaskHandle task, const char dev
   if (!function_pointers_.GetTimingAttributeExDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeExDouble(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32* value, uInt32 size)
@@ -2941,11 +2105,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeExInt32(TaskHandle task, const char devi
   if (!function_pointers_.GetTimingAttributeExInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeExInt32(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, char value[], uInt32 size)
@@ -2953,11 +2113,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeExString(TaskHandle task, const char dev
   if (!function_pointers_.GetTimingAttributeExString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeExString(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime* value, uInt32 size)
@@ -2965,11 +2121,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeExTimestamp(TaskHandle task, const char 
   if (!function_pointers_.GetTimingAttributeExTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeExTimestamp(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32* value, uInt32 size)
@@ -2977,11 +2129,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeExUInt32(TaskHandle task, const char dev
   if (!function_pointers_.GetTimingAttributeExUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeExUInt32(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64* value, uInt32 size)
@@ -2989,11 +2137,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeExUInt64(TaskHandle task, const char dev
   if (!function_pointers_.GetTimingAttributeExUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeExUInt64(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
@@ -3001,11 +2145,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeInt32(TaskHandle task, int32 attribute, 
   if (!function_pointers_.GetTimingAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -3013,11 +2153,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeString(TaskHandle task, int32 attribute,
   if (!function_pointers_.GetTimingAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size)
@@ -3025,11 +2161,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeTimestamp(TaskHandle task, int32 attribu
   if (!function_pointers_.GetTimingAttributeTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeTimestamp(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
@@ -3037,11 +2169,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeUInt32(TaskHandle task, int32 attribute,
   if (!function_pointers_.GetTimingAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
@@ -3049,11 +2177,7 @@ int32 NiDAQmxLibrary::GetTimingAttributeUInt64(TaskHandle task, int32 attribute,
   if (!function_pointers_.GetTimingAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTimingAttributeUInt64(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
@@ -3061,11 +2185,7 @@ int32 NiDAQmxLibrary::GetTrigAttributeBool(TaskHandle task, int32 attribute, boo
   if (!function_pointers_.GetTrigAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTrigAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
@@ -3073,11 +2193,7 @@ int32 NiDAQmxLibrary::GetTrigAttributeDouble(TaskHandle task, int32 attribute, f
   if (!function_pointers_.GetTrigAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTrigAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, float64 value[], uInt32 size)
@@ -3085,11 +2201,7 @@ int32 NiDAQmxLibrary::GetTrigAttributeDoubleArray(TaskHandle task, int32 attribu
   if (!function_pointers_.GetTrigAttributeDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTrigAttributeDoubleArray(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
@@ -3097,11 +2209,7 @@ int32 NiDAQmxLibrary::GetTrigAttributeInt32(TaskHandle task, int32 attribute, in
   if (!function_pointers_.GetTrigAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTrigAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeInt32Array(TaskHandle task, int32 attribute, int32 value[], uInt32 size)
@@ -3109,11 +2217,7 @@ int32 NiDAQmxLibrary::GetTrigAttributeInt32Array(TaskHandle task, int32 attribut
   if (!function_pointers_.GetTrigAttributeInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTrigAttributeInt32Array(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -3121,11 +2225,7 @@ int32 NiDAQmxLibrary::GetTrigAttributeString(TaskHandle task, int32 attribute, c
   if (!function_pointers_.GetTrigAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTrigAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size)
@@ -3133,11 +2233,7 @@ int32 NiDAQmxLibrary::GetTrigAttributeTimestamp(TaskHandle task, int32 attribute
   if (!function_pointers_.GetTrigAttributeTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTrigAttributeTimestamp(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
@@ -3145,11 +2241,7 @@ int32 NiDAQmxLibrary::GetTrigAttributeUInt32(TaskHandle task, int32 attribute, u
   if (!function_pointers_.GetTrigAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetTrigAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32* value, uInt32 size)
@@ -3157,11 +2249,7 @@ int32 NiDAQmxLibrary::GetWatchdogAttributeBool(TaskHandle task, const char lines
   if (!function_pointers_.GetWatchdogAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
-#else
   return function_pointers_.GetWatchdogAttributeBool(task, lines, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64* value, uInt32 size)
@@ -3169,11 +2257,7 @@ int32 NiDAQmxLibrary::GetWatchdogAttributeDouble(TaskHandle task, const char lin
   if (!function_pointers_.GetWatchdogAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
-#else
   return function_pointers_.GetWatchdogAttributeDouble(task, lines, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32* value, uInt32 size)
@@ -3181,11 +2265,7 @@ int32 NiDAQmxLibrary::GetWatchdogAttributeInt32(TaskHandle task, const char line
   if (!function_pointers_.GetWatchdogAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
-#else
   return function_pointers_.GetWatchdogAttributeInt32(task, lines, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, char value[], uInt32 size)
@@ -3193,11 +2273,7 @@ int32 NiDAQmxLibrary::GetWatchdogAttributeString(TaskHandle task, const char lin
   if (!function_pointers_.GetWatchdogAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
-#else
   return function_pointers_.GetWatchdogAttributeString(task, lines, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWriteAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
@@ -3205,11 +2281,7 @@ int32 NiDAQmxLibrary::GetWriteAttributeBool(TaskHandle task, int32 attribute, bo
   if (!function_pointers_.GetWriteAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetWriteAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWriteAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
@@ -3217,11 +2289,7 @@ int32 NiDAQmxLibrary::GetWriteAttributeDouble(TaskHandle task, int32 attribute, 
   if (!function_pointers_.GetWriteAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetWriteAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
@@ -3229,11 +2297,7 @@ int32 NiDAQmxLibrary::GetWriteAttributeInt32(TaskHandle task, int32 attribute, i
   if (!function_pointers_.GetWriteAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetWriteAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWriteAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -3241,11 +2305,7 @@ int32 NiDAQmxLibrary::GetWriteAttributeString(TaskHandle task, int32 attribute, 
   if (!function_pointers_.GetWriteAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetWriteAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
@@ -3253,11 +2313,7 @@ int32 NiDAQmxLibrary::GetWriteAttributeUInt32(TaskHandle task, int32 attribute, 
   if (!function_pointers_.GetWriteAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetWriteAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
@@ -3265,11 +2321,7 @@ int32 NiDAQmxLibrary::GetWriteAttributeUInt64(TaskHandle task, int32 attribute, 
   if (!function_pointers_.GetWriteAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.GetWriteAttributeUInt64(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::IsTaskDone(TaskHandle task, bool32* isTaskDone)
@@ -3277,11 +2329,7 @@ int32 NiDAQmxLibrary::IsTaskDone(TaskHandle task, bool32* isTaskDone)
   if (!function_pointers_.IsTaskDone) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxIsTaskDone.");
   }
-#if defined(_MSC_VER)
-  return DAQmxIsTaskDone(task, isTaskDone);
-#else
   return function_pointers_.IsTaskDone(task, isTaskDone);
-#endif
 }
 
 int32 NiDAQmxLibrary::LoadTask(const char sessionName[], TaskHandle* task)
@@ -3289,11 +2337,7 @@ int32 NiDAQmxLibrary::LoadTask(const char sessionName[], TaskHandle* task)
   if (!function_pointers_.LoadTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxLoadTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxLoadTask(sessionName, task);
-#else
   return function_pointers_.LoadTask(sessionName, task);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3301,11 +2345,7 @@ int32 NiDAQmxLibrary::ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, floa
   if (!function_pointers_.ReadAnalogF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadAnalogF64.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadAnalogF64(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadAnalogF64(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadAnalogScalarF64(TaskHandle task, float64 timeout, float64* value, bool32* reserved)
@@ -3313,11 +2353,7 @@ int32 NiDAQmxLibrary::ReadAnalogScalarF64(TaskHandle task, float64 timeout, floa
   if (!function_pointers_.ReadAnalogScalarF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadAnalogScalarF64.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadAnalogScalarF64(task, timeout, value, reserved);
-#else
   return function_pointers_.ReadAnalogScalarF64(task, timeout, value, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3325,11 +2361,7 @@ int32 NiDAQmxLibrary::ReadBinaryI16(TaskHandle task, int32 numSampsPerChan, floa
   if (!function_pointers_.ReadBinaryI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadBinaryI16.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadBinaryI16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadBinaryI16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadBinaryI32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3337,11 +2369,7 @@ int32 NiDAQmxLibrary::ReadBinaryI32(TaskHandle task, int32 numSampsPerChan, floa
   if (!function_pointers_.ReadBinaryI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadBinaryI32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadBinaryI32(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadBinaryI32(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadBinaryU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3349,11 +2377,7 @@ int32 NiDAQmxLibrary::ReadBinaryU16(TaskHandle task, int32 numSampsPerChan, floa
   if (!function_pointers_.ReadBinaryU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadBinaryU16.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadBinaryU16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadBinaryU16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadBinaryU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3361,11 +2385,7 @@ int32 NiDAQmxLibrary::ReadBinaryU32(TaskHandle task, int32 numSampsPerChan, floa
   if (!function_pointers_.ReadBinaryU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadBinaryU32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadBinaryU32(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadBinaryU32(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCounterF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3373,11 +2393,7 @@ int32 NiDAQmxLibrary::ReadCounterF64(TaskHandle task, int32 numSampsPerChan, flo
   if (!function_pointers_.ReadCounterF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCounterF64.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCounterF64(task, numSampsPerChan, timeout, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadCounterF64(task, numSampsPerChan, timeout, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCounterF64Ex(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3385,11 +2401,7 @@ int32 NiDAQmxLibrary::ReadCounterF64Ex(TaskHandle task, int32 numSampsPerChan, f
   if (!function_pointers_.ReadCounterF64Ex) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCounterF64Ex.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCounterF64Ex(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadCounterF64Ex(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCounterScalarF64(TaskHandle task, float64 timeout, float64* value, bool32* reserved)
@@ -3397,11 +2409,7 @@ int32 NiDAQmxLibrary::ReadCounterScalarF64(TaskHandle task, float64 timeout, flo
   if (!function_pointers_.ReadCounterScalarF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCounterScalarF64.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCounterScalarF64(task, timeout, value, reserved);
-#else
   return function_pointers_.ReadCounterScalarF64(task, timeout, value, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCounterScalarU32(TaskHandle task, float64 timeout, uInt32* value, bool32* reserved)
@@ -3409,11 +2417,7 @@ int32 NiDAQmxLibrary::ReadCounterScalarU32(TaskHandle task, float64 timeout, uIn
   if (!function_pointers_.ReadCounterScalarU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCounterScalarU32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCounterScalarU32(task, timeout, value, reserved);
-#else
   return function_pointers_.ReadCounterScalarU32(task, timeout, value, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCounterU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3421,11 +2425,7 @@ int32 NiDAQmxLibrary::ReadCounterU32(TaskHandle task, int32 numSampsPerChan, flo
   if (!function_pointers_.ReadCounterU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCounterU32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCounterU32(task, numSampsPerChan, timeout, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadCounterU32(task, numSampsPerChan, timeout, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCounterU32Ex(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3433,11 +2433,7 @@ int32 NiDAQmxLibrary::ReadCounterU32Ex(TaskHandle task, int32 numSampsPerChan, f
   if (!function_pointers_.ReadCounterU32Ex) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCounterU32Ex.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCounterU32Ex(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadCounterU32Ex(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCtrFreq(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 interleaved, float64 readArrayFrequency[], float64 readArrayDutyCycle[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3445,11 +2441,7 @@ int32 NiDAQmxLibrary::ReadCtrFreq(TaskHandle task, int32 numSampsPerChan, float6
   if (!function_pointers_.ReadCtrFreq) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCtrFreq.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCtrFreq(task, numSampsPerChan, timeout, interleaved, readArrayFrequency, readArrayDutyCycle, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadCtrFreq(task, numSampsPerChan, timeout, interleaved, readArrayFrequency, readArrayDutyCycle, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCtrFreqScalar(TaskHandle task, float64 timeout, float64* frequency, float64* dutyCycle, bool32* reserved)
@@ -3457,11 +2449,7 @@ int32 NiDAQmxLibrary::ReadCtrFreqScalar(TaskHandle task, float64 timeout, float6
   if (!function_pointers_.ReadCtrFreqScalar) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCtrFreqScalar.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCtrFreqScalar(task, timeout, frequency, dutyCycle, reserved);
-#else
   return function_pointers_.ReadCtrFreqScalar(task, timeout, frequency, dutyCycle, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCtrTicks(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 interleaved, uInt32 readArrayHighTicks[], uInt32 readArrayLowTicks[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3469,11 +2457,7 @@ int32 NiDAQmxLibrary::ReadCtrTicks(TaskHandle task, int32 numSampsPerChan, float
   if (!function_pointers_.ReadCtrTicks) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCtrTicks.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCtrTicks(task, numSampsPerChan, timeout, interleaved, readArrayHighTicks, readArrayLowTicks, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadCtrTicks(task, numSampsPerChan, timeout, interleaved, readArrayHighTicks, readArrayLowTicks, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCtrTicksScalar(TaskHandle task, float64 timeout, uInt32* highTicks, uInt32* lowTicks, bool32* reserved)
@@ -3481,11 +2465,7 @@ int32 NiDAQmxLibrary::ReadCtrTicksScalar(TaskHandle task, float64 timeout, uInt3
   if (!function_pointers_.ReadCtrTicksScalar) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCtrTicksScalar.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCtrTicksScalar(task, timeout, highTicks, lowTicks, reserved);
-#else
   return function_pointers_.ReadCtrTicksScalar(task, timeout, highTicks, lowTicks, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCtrTime(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 interleaved, float64 readArrayHighTime[], float64 readArrayLowTime[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3493,11 +2473,7 @@ int32 NiDAQmxLibrary::ReadCtrTime(TaskHandle task, int32 numSampsPerChan, float6
   if (!function_pointers_.ReadCtrTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCtrTime.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCtrTime(task, numSampsPerChan, timeout, interleaved, readArrayHighTime, readArrayLowTime, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadCtrTime(task, numSampsPerChan, timeout, interleaved, readArrayHighTime, readArrayLowTime, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadCtrTimeScalar(TaskHandle task, float64 timeout, float64* highTime, float64* lowTime, bool32* reserved)
@@ -3505,11 +2481,7 @@ int32 NiDAQmxLibrary::ReadCtrTimeScalar(TaskHandle task, float64 timeout, float6
   if (!function_pointers_.ReadCtrTimeScalar) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadCtrTimeScalar.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadCtrTimeScalar(task, timeout, highTime, lowTime, reserved);
-#else
   return function_pointers_.ReadCtrTimeScalar(task, timeout, highTime, lowTime, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadDigitalLines(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsPerChanRead, int32* numBytesPerSamp, bool32* reserved)
@@ -3517,11 +2489,7 @@ int32 NiDAQmxLibrary::ReadDigitalLines(TaskHandle task, int32 numSampsPerChan, f
   if (!function_pointers_.ReadDigitalLines) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadDigitalLines.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadDigitalLines(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInBytes, sampsPerChanRead, numBytesPerSamp, reserved);
-#else
   return function_pointers_.ReadDigitalLines(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInBytes, sampsPerChanRead, numBytesPerSamp, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadDigitalScalarU32(TaskHandle task, float64 timeout, uInt32* value, bool32* reserved)
@@ -3529,11 +2497,7 @@ int32 NiDAQmxLibrary::ReadDigitalScalarU32(TaskHandle task, float64 timeout, uIn
   if (!function_pointers_.ReadDigitalScalarU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadDigitalScalarU32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadDigitalScalarU32(task, timeout, value, reserved);
-#else
   return function_pointers_.ReadDigitalScalarU32(task, timeout, value, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3541,11 +2505,7 @@ int32 NiDAQmxLibrary::ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, flo
   if (!function_pointers_.ReadDigitalU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadDigitalU16.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadDigitalU16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadDigitalU16(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3553,11 +2513,7 @@ int32 NiDAQmxLibrary::ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, flo
   if (!function_pointers_.ReadDigitalU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadDigitalU32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadDigitalU32(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadDigitalU32(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
@@ -3565,11 +2521,7 @@ int32 NiDAQmxLibrary::ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, floa
   if (!function_pointers_.ReadDigitalU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadDigitalU8.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#else
   return function_pointers_.ReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved)
@@ -3577,11 +2529,7 @@ int32 NiDAQmxLibrary::ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 ti
   if (!function_pointers_.ReadRaw) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadRaw.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReadRaw(task, numSampsPerChan, timeout, readArray, arraySizeInBytes, sampsRead, numBytesPerSamp, reserved);
-#else
   return function_pointers_.ReadRaw(task, numSampsPerChan, timeout, readArray, arraySizeInBytes, sampsRead, numBytesPerSamp, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData)
@@ -3589,11 +2537,7 @@ int32 NiDAQmxLibrary::RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDo
   if (!function_pointers_.RegisterDoneEvent) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterDoneEvent.");
   }
-#if defined(_MSC_VER)
-  return DAQmxRegisterDoneEvent(task, options, callbackFunction, callbackData);
-#else
   return function_pointers_.RegisterDoneEvent(task, options, callbackFunction, callbackData);
-#endif
 }
 
 int32 NiDAQmxLibrary::RegisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData)
@@ -3601,11 +2545,7 @@ int32 NiDAQmxLibrary::RegisterEveryNSamplesEvent(TaskHandle task, int32 everyNSa
   if (!function_pointers_.RegisterEveryNSamplesEvent) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterEveryNSamplesEvent.");
   }
-#if defined(_MSC_VER)
-  return DAQmxRegisterEveryNSamplesEvent(task, everyNSamplesEventType, nSamples, options, callbackFunction, callbackData);
-#else
   return function_pointers_.RegisterEveryNSamplesEvent(task, everyNSamplesEventType, nSamples, options, callbackFunction, callbackData);
-#endif
 }
 
 int32 NiDAQmxLibrary::RegisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData)
@@ -3613,11 +2553,7 @@ int32 NiDAQmxLibrary::RegisterSignalEvent(TaskHandle task, int32 signalID, uInt3
   if (!function_pointers_.RegisterSignalEvent) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterSignalEvent.");
   }
-#if defined(_MSC_VER)
-  return DAQmxRegisterSignalEvent(task, signalID, options, callbackFunction, callbackData);
-#else
   return function_pointers_.RegisterSignalEvent(task, signalID, options, callbackFunction, callbackData);
-#endif
 }
 
 int32 NiDAQmxLibrary::RemoveCDAQSyncConnection(const char portList[])
@@ -3625,11 +2561,7 @@ int32 NiDAQmxLibrary::RemoveCDAQSyncConnection(const char portList[])
   if (!function_pointers_.RemoveCDAQSyncConnection) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRemoveCDAQSyncConnection.");
   }
-#if defined(_MSC_VER)
-  return DAQmxRemoveCDAQSyncConnection(portList);
-#else
   return function_pointers_.RemoveCDAQSyncConnection(portList);
-#endif
 }
 
 int32 NiDAQmxLibrary::ReserveNetworkDevice(const char deviceName[], bool32 overrideReservation)
@@ -3637,11 +2569,7 @@ int32 NiDAQmxLibrary::ReserveNetworkDevice(const char deviceName[], bool32 overr
   if (!function_pointers_.ReserveNetworkDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReserveNetworkDevice.");
   }
-#if defined(_MSC_VER)
-  return DAQmxReserveNetworkDevice(deviceName, overrideReservation);
-#else
   return function_pointers_.ReserveNetworkDevice(deviceName, overrideReservation);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetBufferAttribute(TaskHandle task, int32 attribute)
@@ -3649,11 +2577,7 @@ int32 NiDAQmxLibrary::ResetBufferAttribute(TaskHandle task, int32 attribute)
   if (!function_pointers_.ResetBufferAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetBufferAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetBufferAttribute(task, attribute);
-#else
   return function_pointers_.ResetBufferAttribute(task, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetChanAttribute(TaskHandle task, const char channel[], int32 attribute)
@@ -3661,11 +2585,7 @@ int32 NiDAQmxLibrary::ResetChanAttribute(TaskHandle task, const char channel[], 
   if (!function_pointers_.ResetChanAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetChanAttribute(task, channel, attribute);
-#else
   return function_pointers_.ResetChanAttribute(task, channel, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetDevice(const char deviceName[])
@@ -3673,11 +2593,7 @@ int32 NiDAQmxLibrary::ResetDevice(const char deviceName[])
   if (!function_pointers_.ResetDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetDevice.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetDevice(deviceName);
-#else
   return function_pointers_.ResetDevice(deviceName);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetExportedSignalAttribute(TaskHandle task, int32 attribute)
@@ -3685,11 +2601,7 @@ int32 NiDAQmxLibrary::ResetExportedSignalAttribute(TaskHandle task, int32 attrib
   if (!function_pointers_.ResetExportedSignalAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetExportedSignalAttribute(task, attribute);
-#else
   return function_pointers_.ResetExportedSignalAttribute(task, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetReadAttribute(TaskHandle task, int32 attribute)
@@ -3697,11 +2609,7 @@ int32 NiDAQmxLibrary::ResetReadAttribute(TaskHandle task, int32 attribute)
   if (!function_pointers_.ResetReadAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetReadAttribute(task, attribute);
-#else
   return function_pointers_.ResetReadAttribute(task, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetRealTimeAttribute(TaskHandle task, int32 attribute)
@@ -3709,11 +2617,7 @@ int32 NiDAQmxLibrary::ResetRealTimeAttribute(TaskHandle task, int32 attribute)
   if (!function_pointers_.ResetRealTimeAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetRealTimeAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetRealTimeAttribute(task, attribute);
-#else
   return function_pointers_.ResetRealTimeAttribute(task, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetTimingAttribute(TaskHandle task, int32 attribute)
@@ -3721,11 +2625,7 @@ int32 NiDAQmxLibrary::ResetTimingAttribute(TaskHandle task, int32 attribute)
   if (!function_pointers_.ResetTimingAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetTimingAttribute(task, attribute);
-#else
   return function_pointers_.ResetTimingAttribute(task, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetTimingAttributeEx(TaskHandle task, const char deviceNames[], int32 attribute)
@@ -3733,11 +2633,7 @@ int32 NiDAQmxLibrary::ResetTimingAttributeEx(TaskHandle task, const char deviceN
   if (!function_pointers_.ResetTimingAttributeEx) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetTimingAttributeEx(task, deviceNames, attribute);
-#else
   return function_pointers_.ResetTimingAttributeEx(task, deviceNames, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetTrigAttribute(TaskHandle task, int32 attribute)
@@ -3745,11 +2641,7 @@ int32 NiDAQmxLibrary::ResetTrigAttribute(TaskHandle task, int32 attribute)
   if (!function_pointers_.ResetTrigAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetTrigAttribute(task, attribute);
-#else
   return function_pointers_.ResetTrigAttribute(task, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetWatchdogAttribute(TaskHandle task, const char lines[], int32 attribute)
@@ -3757,11 +2649,7 @@ int32 NiDAQmxLibrary::ResetWatchdogAttribute(TaskHandle task, const char lines[]
   if (!function_pointers_.ResetWatchdogAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetWatchdogAttribute(task, lines, attribute);
-#else
   return function_pointers_.ResetWatchdogAttribute(task, lines, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::ResetWriteAttribute(TaskHandle task, int32 attribute)
@@ -3769,11 +2657,7 @@ int32 NiDAQmxLibrary::ResetWriteAttribute(TaskHandle task, int32 attribute)
   if (!function_pointers_.ResetWriteAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxResetWriteAttribute(task, attribute);
-#else
   return function_pointers_.ResetWriteAttribute(task, attribute);
-#endif
 }
 
 int32 NiDAQmxLibrary::SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options)
@@ -3781,11 +2665,7 @@ int32 NiDAQmxLibrary::SaveGlobalChan(TaskHandle task, const char channelName[], 
   if (!function_pointers_.SaveGlobalChan) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSaveGlobalChan.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSaveGlobalChan(task, channelName, saveAs, author, options);
-#else
   return function_pointers_.SaveGlobalChan(task, channelName, saveAs, author, options);
-#endif
 }
 
 int32 NiDAQmxLibrary::SaveScale(const char scaleName[], const char saveAs[], const char author[], uInt32 options)
@@ -3793,11 +2673,7 @@ int32 NiDAQmxLibrary::SaveScale(const char scaleName[], const char saveAs[], con
   if (!function_pointers_.SaveScale) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSaveScale.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSaveScale(scaleName, saveAs, author, options);
-#else
   return function_pointers_.SaveScale(scaleName, saveAs, author, options);
-#endif
 }
 
 int32 NiDAQmxLibrary::SaveTask(TaskHandle task, const char saveAs[], const char author[], uInt32 options)
@@ -3805,11 +2681,7 @@ int32 NiDAQmxLibrary::SaveTask(TaskHandle task, const char saveAs[], const char 
   if (!function_pointers_.SaveTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSaveTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSaveTask(task, saveAs, author, options);
-#else
   return function_pointers_.SaveTask(task, saveAs, author, options);
-#endif
 }
 
 int32 NiDAQmxLibrary::SelfCal(const char deviceName[])
@@ -3817,11 +2689,7 @@ int32 NiDAQmxLibrary::SelfCal(const char deviceName[])
   if (!function_pointers_.SelfCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSelfCal.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSelfCal(deviceName);
-#else
   return function_pointers_.SelfCal(deviceName);
-#endif
 }
 
 int32 NiDAQmxLibrary::SelfTestDevice(const char deviceName[])
@@ -3829,11 +2697,7 @@ int32 NiDAQmxLibrary::SelfTestDevice(const char deviceName[])
   if (!function_pointers_.SelfTestDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSelfTestDevice.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSelfTestDevice(deviceName);
-#else
   return function_pointers_.SelfTestDevice(deviceName);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute)
@@ -3841,11 +2705,7 @@ int32 NiDAQmxLibrary::SetAIChanCalCalDate(TaskHandle task, const char channelNam
   if (!function_pointers_.SetAIChanCalCalDate) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetAIChanCalCalDate.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetAIChanCalCalDate(task, channelName, year, month, day, hour, minute);
-#else
   return function_pointers_.SetAIChanCalCalDate(task, channelName, year, month, day, hour, minute);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute)
@@ -3853,11 +2713,7 @@ int32 NiDAQmxLibrary::SetAIChanCalExpDate(TaskHandle task, const char channelNam
   if (!function_pointers_.SetAIChanCalExpDate) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetAIChanCalExpDate.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetAIChanCalExpDate(task, channelName, year, month, day, hour, minute);
-#else
   return function_pointers_.SetAIChanCalExpDate(task, channelName, year, month, day, hour, minute);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetAnalogPowerUpStates(const char deviceName[], const char channelNames[], float64 state, int32 channelType, const char channelNames0[], float64 state0, int32 channelType0, const char channelNames1[], float64 state1, int32 channelType1, const char channelNames2[], float64 state2, int32 channelType2, const char channelNames3[], float64 state3, int32 channelType3, const char channelNames4[], float64 state4, int32 channelType4, const char channelNames5[], float64 state5, int32 channelType5, const char channelNames6[], float64 state6, int32 channelType6, const char channelNames7[], float64 state7, int32 channelType7, const char channelNames8[], float64 state8, int32 channelType8, const char channelNames9[], float64 state9, int32 channelType9, const char channelNames10[], float64 state10, int32 channelType10, const char channelNames11[], float64 state11, int32 channelType11, const char channelNames12[], float64 state12, int32 channelType12, const char channelNames13[], float64 state13, int32 channelType13, const char channelNames14[], float64 state14, int32 channelType14, const char channelNames15[], float64 state15, int32 channelType15, const char channelNames16[], float64 state16, int32 channelType16, const char channelNames17[], float64 state17, int32 channelType17, const char channelNames18[], float64 state18, int32 channelType18, const char channelNames19[], float64 state19, int32 channelType19, const char channelNames20[], float64 state20, int32 channelType20, const char channelNames21[], float64 state21, int32 channelType21, const char channelNames22[], float64 state22, int32 channelType22, const char channelNames23[], float64 state23, int32 channelType23, const char channelNames24[], float64 state24, int32 channelType24, const char channelNames25[], float64 state25, int32 channelType25, const char channelNames26[], float64 state26, int32 channelType26, const char channelNames27[], float64 state27, int32 channelType27, const char channelNames28[], float64 state28, int32 channelType28, const char channelNames29[], float64 state29, int32 channelType29, const char channelNames30[], float64 state30, int32 channelType30, const char channelNames31[], float64 state31, int32 channelType31, const char channelNames32[], float64 state32, int32 channelType32, const char channelNames33[], float64 state33, int32 channelType33, const char channelNames34[], float64 state34, int32 channelType34, const char channelNames35[], float64 state35, int32 channelType35, const char channelNames36[], float64 state36, int32 channelType36, const char channelNames37[], float64 state37, int32 channelType37, const char channelNames38[], float64 state38, int32 channelType38, const char channelNames39[], float64 state39, int32 channelType39, const char channelNames40[], float64 state40, int32 channelType40, const char channelNames41[], float64 state41, int32 channelType41, const char channelNames42[], float64 state42, int32 channelType42, const char channelNames43[], float64 state43, int32 channelType43, const char channelNames44[], float64 state44, int32 channelType44, const char channelNames45[], float64 state45, int32 channelType45, const char channelNames46[], float64 state46, int32 channelType46, const char channelNames47[], float64 state47, int32 channelType47, const char channelNames48[], float64 state48, int32 channelType48, const char channelNames49[], float64 state49, int32 channelType49, const char channelNames50[], float64 state50, int32 channelType50, const char channelNames51[], float64 state51, int32 channelType51, const char channelNames52[], float64 state52, int32 channelType52, const char channelNames53[], float64 state53, int32 channelType53, const char channelNames54[], float64 state54, int32 channelType54, const char channelNames55[], float64 state55, int32 channelType55, const char channelNames56[], float64 state56, int32 channelType56, const char channelNames57[], float64 state57, int32 channelType57, const char channelNames58[], float64 state58, int32 channelType58, const char channelNames59[], float64 state59, int32 channelType59, const char channelNames60[], float64 state60, int32 channelType60, const char channelNames61[], float64 state61, int32 channelType61, const char channelNames62[], float64 state62, int32 channelType62, const char channelNames63[], float64 state63, int32 channelType63, const char channelNames64[], float64 state64, int32 channelType64, const char channelNames65[], float64 state65, int32 channelType65, const char channelNames66[], float64 state66, int32 channelType66, const char channelNames67[], float64 state67, int32 channelType67, const char channelNames68[], float64 state68, int32 channelType68, const char channelNames69[], float64 state69, int32 channelType69, const char channelNames70[], float64 state70, int32 channelType70, const char channelNames71[], float64 state71, int32 channelType71, const char channelNames72[], float64 state72, int32 channelType72, const char channelNames73[], float64 state73, int32 channelType73, const char channelNames74[], float64 state74, int32 channelType74, const char channelNames75[], float64 state75, int32 channelType75, const char channelNames76[], float64 state76, int32 channelType76, const char channelNames77[], float64 state77, int32 channelType77, const char channelNames78[], float64 state78, int32 channelType78, const char channelNames79[], float64 state79, int32 channelType79, const char channelNames80[], float64 state80, int32 channelType80, const char channelNames81[], float64 state81, int32 channelType81, const char channelNames82[], float64 state82, int32 channelType82, const char channelNames83[], float64 state83, int32 channelType83, const char channelNames84[], float64 state84, int32 channelType84, const char channelNames85[], float64 state85, int32 channelType85, const char channelNames86[], float64 state86, int32 channelType86, const char channelNames87[], float64 state87, int32 channelType87, const char channelNames88[], float64 state88, int32 channelType88, const char channelNames89[], float64 state89, int32 channelType89, const char channelNames90[], float64 state90, int32 channelType90, const char channelNames91[], float64 state91, int32 channelType91, const char channelNames92[], float64 state92, int32 channelType92, const char channelNames93[], float64 state93, int32 channelType93, const char channelNames94[], float64 state94, int32 channelType94, const char channelNames95[], float64 state95, int32 channelType95)
@@ -3865,11 +2721,7 @@ int32 NiDAQmxLibrary::SetAnalogPowerUpStates(const char deviceName[], const char
   if (!function_pointers_.SetAnalogPowerUpStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetAnalogPowerUpStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetAnalogPowerUpStates(deviceName, channelNames, state, channelType, channelNames0, state0, channelType0, channelNames1, state1, channelType1, channelNames2, state2, channelType2, channelNames3, state3, channelType3, channelNames4, state4, channelType4, channelNames5, state5, channelType5, channelNames6, state6, channelType6, channelNames7, state7, channelType7, channelNames8, state8, channelType8, channelNames9, state9, channelType9, channelNames10, state10, channelType10, channelNames11, state11, channelType11, channelNames12, state12, channelType12, channelNames13, state13, channelType13, channelNames14, state14, channelType14, channelNames15, state15, channelType15, channelNames16, state16, channelType16, channelNames17, state17, channelType17, channelNames18, state18, channelType18, channelNames19, state19, channelType19, channelNames20, state20, channelType20, channelNames21, state21, channelType21, channelNames22, state22, channelType22, channelNames23, state23, channelType23, channelNames24, state24, channelType24, channelNames25, state25, channelType25, channelNames26, state26, channelType26, channelNames27, state27, channelType27, channelNames28, state28, channelType28, channelNames29, state29, channelType29, channelNames30, state30, channelType30, channelNames31, state31, channelType31, channelNames32, state32, channelType32, channelNames33, state33, channelType33, channelNames34, state34, channelType34, channelNames35, state35, channelType35, channelNames36, state36, channelType36, channelNames37, state37, channelType37, channelNames38, state38, channelType38, channelNames39, state39, channelType39, channelNames40, state40, channelType40, channelNames41, state41, channelType41, channelNames42, state42, channelType42, channelNames43, state43, channelType43, channelNames44, state44, channelType44, channelNames45, state45, channelType45, channelNames46, state46, channelType46, channelNames47, state47, channelType47, channelNames48, state48, channelType48, channelNames49, state49, channelType49, channelNames50, state50, channelType50, channelNames51, state51, channelType51, channelNames52, state52, channelType52, channelNames53, state53, channelType53, channelNames54, state54, channelType54, channelNames55, state55, channelType55, channelNames56, state56, channelType56, channelNames57, state57, channelType57, channelNames58, state58, channelType58, channelNames59, state59, channelType59, channelNames60, state60, channelType60, channelNames61, state61, channelType61, channelNames62, state62, channelType62, channelNames63, state63, channelType63, channelNames64, state64, channelType64, channelNames65, state65, channelType65, channelNames66, state66, channelType66, channelNames67, state67, channelType67, channelNames68, state68, channelType68, channelNames69, state69, channelType69, channelNames70, state70, channelType70, channelNames71, state71, channelType71, channelNames72, state72, channelType72, channelNames73, state73, channelType73, channelNames74, state74, channelType74, channelNames75, state75, channelType75, channelNames76, state76, channelType76, channelNames77, state77, channelType77, channelNames78, state78, channelType78, channelNames79, state79, channelType79, channelNames80, state80, channelType80, channelNames81, state81, channelType81, channelNames82, state82, channelType82, channelNames83, state83, channelType83, channelNames84, state84, channelType84, channelNames85, state85, channelType85, channelNames86, state86, channelType86, channelNames87, state87, channelType87, channelNames88, state88, channelType88, channelNames89, state89, channelType89, channelNames90, state90, channelType90, channelNames91, state91, channelType91, channelNames92, state92, channelType92, channelNames93, state93, channelType93, channelNames94, state94, channelType94, channelNames95, state95, channelType95);
-#else
   return function_pointers_.SetAnalogPowerUpStates(deviceName, channelNames, state, channelType, channelNames0, state0, channelType0, channelNames1, state1, channelType1, channelNames2, state2, channelType2, channelNames3, state3, channelType3, channelNames4, state4, channelType4, channelNames5, state5, channelType5, channelNames6, state6, channelType6, channelNames7, state7, channelType7, channelNames8, state8, channelType8, channelNames9, state9, channelType9, channelNames10, state10, channelType10, channelNames11, state11, channelType11, channelNames12, state12, channelType12, channelNames13, state13, channelType13, channelNames14, state14, channelType14, channelNames15, state15, channelType15, channelNames16, state16, channelType16, channelNames17, state17, channelType17, channelNames18, state18, channelType18, channelNames19, state19, channelType19, channelNames20, state20, channelType20, channelNames21, state21, channelType21, channelNames22, state22, channelType22, channelNames23, state23, channelType23, channelNames24, state24, channelType24, channelNames25, state25, channelType25, channelNames26, state26, channelType26, channelNames27, state27, channelType27, channelNames28, state28, channelType28, channelNames29, state29, channelType29, channelNames30, state30, channelType30, channelNames31, state31, channelType31, channelNames32, state32, channelType32, channelNames33, state33, channelType33, channelNames34, state34, channelType34, channelNames35, state35, channelType35, channelNames36, state36, channelType36, channelNames37, state37, channelType37, channelNames38, state38, channelType38, channelNames39, state39, channelType39, channelNames40, state40, channelType40, channelNames41, state41, channelType41, channelNames42, state42, channelType42, channelNames43, state43, channelType43, channelNames44, state44, channelType44, channelNames45, state45, channelType45, channelNames46, state46, channelType46, channelNames47, state47, channelType47, channelNames48, state48, channelType48, channelNames49, state49, channelType49, channelNames50, state50, channelType50, channelNames51, state51, channelType51, channelNames52, state52, channelType52, channelNames53, state53, channelType53, channelNames54, state54, channelType54, channelNames55, state55, channelType55, channelNames56, state56, channelType56, channelNames57, state57, channelType57, channelNames58, state58, channelType58, channelNames59, state59, channelType59, channelNames60, state60, channelType60, channelNames61, state61, channelType61, channelNames62, state62, channelType62, channelNames63, state63, channelType63, channelNames64, state64, channelType64, channelNames65, state65, channelType65, channelNames66, state66, channelType66, channelNames67, state67, channelType67, channelNames68, state68, channelType68, channelNames69, state69, channelType69, channelNames70, state70, channelType70, channelNames71, state71, channelType71, channelNames72, state72, channelType72, channelNames73, state73, channelType73, channelNames74, state74, channelType74, channelNames75, state75, channelType75, channelNames76, state76, channelType76, channelNames77, state77, channelType77, channelNames78, state78, channelType78, channelNames79, state79, channelType79, channelNames80, state80, channelType80, channelNames81, state81, channelType81, channelNames82, state82, channelType82, channelNames83, state83, channelType83, channelNames84, state84, channelType84, channelNames85, state85, channelType85, channelNames86, state86, channelType86, channelNames87, state87, channelType87, channelNames88, state88, channelType88, channelNames89, state89, channelType89, channelNames90, state90, channelType90, channelNames91, state91, channelType91, channelNames92, state92, channelType92, channelNames93, state93, channelType93, channelNames94, state94, channelType94, channelNames95, state95, channelType95);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetAnalogPowerUpStatesWithOutputType(const char channelNames[], const float64 stateArray[], const int32 channelTypeArray[], uInt32 arraySize)
@@ -3877,11 +2729,7 @@ int32 NiDAQmxLibrary::SetAnalogPowerUpStatesWithOutputType(const char channelNam
   if (!function_pointers_.SetAnalogPowerUpStatesWithOutputType) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetAnalogPowerUpStatesWithOutputType.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
-#else
   return function_pointers_.SetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data)
@@ -3889,11 +2737,7 @@ int32 NiDAQmxLibrary::SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime d
   if (!function_pointers_.SetArmStartTrigTrigWhen) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetArmStartTrigTrigWhen.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetArmStartTrigTrigWhen(task, data);
-#else
   return function_pointers_.SetArmStartTrigTrigWhen(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
@@ -3901,11 +2745,7 @@ int32 NiDAQmxLibrary::SetBufferAttributeUInt32(TaskHandle task, int32 attribute,
   if (!function_pointers_.SetBufferAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetBufferAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetBufferAttribute(task, attribute, value);
-#else
   return function_pointers_.SetBufferAttributeUInt32(task, attribute, value);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32 value, uInt32 size)
@@ -3913,11 +2753,7 @@ int32 NiDAQmxLibrary::SetCalInfoAttributeBool(const char deviceName[], int32 att
   if (!function_pointers_.SetCalInfoAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.SetCalInfoAttributeBool(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64 value, uInt32 size)
@@ -3925,11 +2761,7 @@ int32 NiDAQmxLibrary::SetCalInfoAttributeDouble(const char deviceName[], int32 a
   if (!function_pointers_.SetCalInfoAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.SetCalInfoAttributeDouble(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetCalInfoAttributeString(const char deviceName[], int32 attribute, const char value[], uInt32 size)
@@ -3937,11 +2769,7 @@ int32 NiDAQmxLibrary::SetCalInfoAttributeString(const char deviceName[], int32 a
   if (!function_pointers_.SetCalInfoAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.SetCalInfoAttributeString(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32 value, uInt32 size)
@@ -3949,11 +2777,7 @@ int32 NiDAQmxLibrary::SetCalInfoAttributeUInt32(const char deviceName[], int32 a
   if (!function_pointers_.SetCalInfoAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
-#else
   return function_pointers_.SetCalInfoAttributeUInt32(deviceName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32 value, uInt32 size)
@@ -3961,11 +2785,7 @@ int32 NiDAQmxLibrary::SetChanAttributeBool(TaskHandle task, const char channel[]
   if (!function_pointers_.SetChanAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.SetChanAttributeBool(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64 value, uInt32 size)
@@ -3973,11 +2793,7 @@ int32 NiDAQmxLibrary::SetChanAttributeDouble(TaskHandle task, const char channel
   if (!function_pointers_.SetChanAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.SetChanAttributeDouble(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, const float64 value[], uInt32 size)
@@ -3985,11 +2801,7 @@ int32 NiDAQmxLibrary::SetChanAttributeDoubleArray(TaskHandle task, const char ch
   if (!function_pointers_.SetChanAttributeDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.SetChanAttributeDoubleArray(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32 value, uInt32 size)
@@ -3997,11 +2809,7 @@ int32 NiDAQmxLibrary::SetChanAttributeInt32(TaskHandle task, const char channel[
   if (!function_pointers_.SetChanAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.SetChanAttributeInt32(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, const char value[], uInt32 size)
@@ -4009,11 +2817,7 @@ int32 NiDAQmxLibrary::SetChanAttributeString(TaskHandle task, const char channel
   if (!function_pointers_.SetChanAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.SetChanAttributeString(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32 value, uInt32 size)
@@ -4021,11 +2825,7 @@ int32 NiDAQmxLibrary::SetChanAttributeUInt32(TaskHandle task, const char channel
   if (!function_pointers_.SetChanAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
-#else
   return function_pointers_.SetChanAttributeUInt32(task, channel, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily)
@@ -4033,11 +2833,7 @@ int32 NiDAQmxLibrary::SetDigitalLogicFamilyPowerUpState(const char deviceName[],
   if (!function_pointers_.SetDigitalLogicFamilyPowerUpState) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetDigitalLogicFamilyPowerUpState.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetDigitalLogicFamilyPowerUpState(deviceName, logicFamily);
-#else
   return function_pointers_.SetDigitalLogicFamilyPowerUpState(deviceName, logicFamily);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetDigitalPowerUpStates(const char deviceName[], const char channelNames[], int32 state, const char channelNames0[], int32 state0, const char channelNames1[], int32 state1, const char channelNames2[], int32 state2, const char channelNames3[], int32 state3, const char channelNames4[], int32 state4, const char channelNames5[], int32 state5, const char channelNames6[], int32 state6, const char channelNames7[], int32 state7, const char channelNames8[], int32 state8, const char channelNames9[], int32 state9, const char channelNames10[], int32 state10, const char channelNames11[], int32 state11, const char channelNames12[], int32 state12, const char channelNames13[], int32 state13, const char channelNames14[], int32 state14, const char channelNames15[], int32 state15, const char channelNames16[], int32 state16, const char channelNames17[], int32 state17, const char channelNames18[], int32 state18, const char channelNames19[], int32 state19, const char channelNames20[], int32 state20, const char channelNames21[], int32 state21, const char channelNames22[], int32 state22, const char channelNames23[], int32 state23, const char channelNames24[], int32 state24, const char channelNames25[], int32 state25, const char channelNames26[], int32 state26, const char channelNames27[], int32 state27, const char channelNames28[], int32 state28, const char channelNames29[], int32 state29, const char channelNames30[], int32 state30, const char channelNames31[], int32 state31, const char channelNames32[], int32 state32, const char channelNames33[], int32 state33, const char channelNames34[], int32 state34, const char channelNames35[], int32 state35, const char channelNames36[], int32 state36, const char channelNames37[], int32 state37, const char channelNames38[], int32 state38, const char channelNames39[], int32 state39, const char channelNames40[], int32 state40, const char channelNames41[], int32 state41, const char channelNames42[], int32 state42, const char channelNames43[], int32 state43, const char channelNames44[], int32 state44, const char channelNames45[], int32 state45, const char channelNames46[], int32 state46, const char channelNames47[], int32 state47, const char channelNames48[], int32 state48, const char channelNames49[], int32 state49, const char channelNames50[], int32 state50, const char channelNames51[], int32 state51, const char channelNames52[], int32 state52, const char channelNames53[], int32 state53, const char channelNames54[], int32 state54, const char channelNames55[], int32 state55, const char channelNames56[], int32 state56, const char channelNames57[], int32 state57, const char channelNames58[], int32 state58, const char channelNames59[], int32 state59, const char channelNames60[], int32 state60, const char channelNames61[], int32 state61, const char channelNames62[], int32 state62, const char channelNames63[], int32 state63, const char channelNames64[], int32 state64, const char channelNames65[], int32 state65, const char channelNames66[], int32 state66, const char channelNames67[], int32 state67, const char channelNames68[], int32 state68, const char channelNames69[], int32 state69, const char channelNames70[], int32 state70, const char channelNames71[], int32 state71, const char channelNames72[], int32 state72, const char channelNames73[], int32 state73, const char channelNames74[], int32 state74, const char channelNames75[], int32 state75, const char channelNames76[], int32 state76, const char channelNames77[], int32 state77, const char channelNames78[], int32 state78, const char channelNames79[], int32 state79, const char channelNames80[], int32 state80, const char channelNames81[], int32 state81, const char channelNames82[], int32 state82, const char channelNames83[], int32 state83, const char channelNames84[], int32 state84, const char channelNames85[], int32 state85, const char channelNames86[], int32 state86, const char channelNames87[], int32 state87, const char channelNames88[], int32 state88, const char channelNames89[], int32 state89, const char channelNames90[], int32 state90, const char channelNames91[], int32 state91, const char channelNames92[], int32 state92, const char channelNames93[], int32 state93, const char channelNames94[], int32 state94, const char channelNames95[], int32 state95)
@@ -4045,11 +2841,7 @@ int32 NiDAQmxLibrary::SetDigitalPowerUpStates(const char deviceName[], const cha
   if (!function_pointers_.SetDigitalPowerUpStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetDigitalPowerUpStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetDigitalPowerUpStates(deviceName, channelNames, state, channelNames0, state0, channelNames1, state1, channelNames2, state2, channelNames3, state3, channelNames4, state4, channelNames5, state5, channelNames6, state6, channelNames7, state7, channelNames8, state8, channelNames9, state9, channelNames10, state10, channelNames11, state11, channelNames12, state12, channelNames13, state13, channelNames14, state14, channelNames15, state15, channelNames16, state16, channelNames17, state17, channelNames18, state18, channelNames19, state19, channelNames20, state20, channelNames21, state21, channelNames22, state22, channelNames23, state23, channelNames24, state24, channelNames25, state25, channelNames26, state26, channelNames27, state27, channelNames28, state28, channelNames29, state29, channelNames30, state30, channelNames31, state31, channelNames32, state32, channelNames33, state33, channelNames34, state34, channelNames35, state35, channelNames36, state36, channelNames37, state37, channelNames38, state38, channelNames39, state39, channelNames40, state40, channelNames41, state41, channelNames42, state42, channelNames43, state43, channelNames44, state44, channelNames45, state45, channelNames46, state46, channelNames47, state47, channelNames48, state48, channelNames49, state49, channelNames50, state50, channelNames51, state51, channelNames52, state52, channelNames53, state53, channelNames54, state54, channelNames55, state55, channelNames56, state56, channelNames57, state57, channelNames58, state58, channelNames59, state59, channelNames60, state60, channelNames61, state61, channelNames62, state62, channelNames63, state63, channelNames64, state64, channelNames65, state65, channelNames66, state66, channelNames67, state67, channelNames68, state68, channelNames69, state69, channelNames70, state70, channelNames71, state71, channelNames72, state72, channelNames73, state73, channelNames74, state74, channelNames75, state75, channelNames76, state76, channelNames77, state77, channelNames78, state78, channelNames79, state79, channelNames80, state80, channelNames81, state81, channelNames82, state82, channelNames83, state83, channelNames84, state84, channelNames85, state85, channelNames86, state86, channelNames87, state87, channelNames88, state88, channelNames89, state89, channelNames90, state90, channelNames91, state91, channelNames92, state92, channelNames93, state93, channelNames94, state94, channelNames95, state95);
-#else
   return function_pointers_.SetDigitalPowerUpStates(deviceName, channelNames, state, channelNames0, state0, channelNames1, state1, channelNames2, state2, channelNames3, state3, channelNames4, state4, channelNames5, state5, channelNames6, state6, channelNames7, state7, channelNames8, state8, channelNames9, state9, channelNames10, state10, channelNames11, state11, channelNames12, state12, channelNames13, state13, channelNames14, state14, channelNames15, state15, channelNames16, state16, channelNames17, state17, channelNames18, state18, channelNames19, state19, channelNames20, state20, channelNames21, state21, channelNames22, state22, channelNames23, state23, channelNames24, state24, channelNames25, state25, channelNames26, state26, channelNames27, state27, channelNames28, state28, channelNames29, state29, channelNames30, state30, channelNames31, state31, channelNames32, state32, channelNames33, state33, channelNames34, state34, channelNames35, state35, channelNames36, state36, channelNames37, state37, channelNames38, state38, channelNames39, state39, channelNames40, state40, channelNames41, state41, channelNames42, state42, channelNames43, state43, channelNames44, state44, channelNames45, state45, channelNames46, state46, channelNames47, state47, channelNames48, state48, channelNames49, state49, channelNames50, state50, channelNames51, state51, channelNames52, state52, channelNames53, state53, channelNames54, state54, channelNames55, state55, channelNames56, state56, channelNames57, state57, channelNames58, state58, channelNames59, state59, channelNames60, state60, channelNames61, state61, channelNames62, state62, channelNames63, state63, channelNames64, state64, channelNames65, state65, channelNames66, state66, channelNames67, state67, channelNames68, state68, channelNames69, state69, channelNames70, state70, channelNames71, state71, channelNames72, state72, channelNames73, state73, channelNames74, state74, channelNames75, state75, channelNames76, state76, channelNames77, state77, channelNames78, state78, channelNames79, state79, channelNames80, state80, channelNames81, state81, channelNames82, state82, channelNames83, state83, channelNames84, state84, channelNames85, state85, channelNames86, state86, channelNames87, state87, channelNames88, state88, channelNames89, state89, channelNames90, state90, channelNames91, state91, channelNames92, state92, channelNames93, state93, channelNames94, state94, channelNames95, state95);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetDigitalPullUpPullDownStates(const char deviceName[], const char channelNames[], int32 state, const char channelNames0[], int32 state0, const char channelNames1[], int32 state1, const char channelNames2[], int32 state2, const char channelNames3[], int32 state3, const char channelNames4[], int32 state4, const char channelNames5[], int32 state5, const char channelNames6[], int32 state6, const char channelNames7[], int32 state7, const char channelNames8[], int32 state8, const char channelNames9[], int32 state9, const char channelNames10[], int32 state10, const char channelNames11[], int32 state11, const char channelNames12[], int32 state12, const char channelNames13[], int32 state13, const char channelNames14[], int32 state14, const char channelNames15[], int32 state15, const char channelNames16[], int32 state16, const char channelNames17[], int32 state17, const char channelNames18[], int32 state18, const char channelNames19[], int32 state19, const char channelNames20[], int32 state20, const char channelNames21[], int32 state21, const char channelNames22[], int32 state22, const char channelNames23[], int32 state23, const char channelNames24[], int32 state24, const char channelNames25[], int32 state25, const char channelNames26[], int32 state26, const char channelNames27[], int32 state27, const char channelNames28[], int32 state28, const char channelNames29[], int32 state29, const char channelNames30[], int32 state30, const char channelNames31[], int32 state31, const char channelNames32[], int32 state32, const char channelNames33[], int32 state33, const char channelNames34[], int32 state34, const char channelNames35[], int32 state35, const char channelNames36[], int32 state36, const char channelNames37[], int32 state37, const char channelNames38[], int32 state38, const char channelNames39[], int32 state39, const char channelNames40[], int32 state40, const char channelNames41[], int32 state41, const char channelNames42[], int32 state42, const char channelNames43[], int32 state43, const char channelNames44[], int32 state44, const char channelNames45[], int32 state45, const char channelNames46[], int32 state46, const char channelNames47[], int32 state47, const char channelNames48[], int32 state48, const char channelNames49[], int32 state49, const char channelNames50[], int32 state50, const char channelNames51[], int32 state51, const char channelNames52[], int32 state52, const char channelNames53[], int32 state53, const char channelNames54[], int32 state54, const char channelNames55[], int32 state55, const char channelNames56[], int32 state56, const char channelNames57[], int32 state57, const char channelNames58[], int32 state58, const char channelNames59[], int32 state59, const char channelNames60[], int32 state60, const char channelNames61[], int32 state61, const char channelNames62[], int32 state62, const char channelNames63[], int32 state63, const char channelNames64[], int32 state64, const char channelNames65[], int32 state65, const char channelNames66[], int32 state66, const char channelNames67[], int32 state67, const char channelNames68[], int32 state68, const char channelNames69[], int32 state69, const char channelNames70[], int32 state70, const char channelNames71[], int32 state71, const char channelNames72[], int32 state72, const char channelNames73[], int32 state73, const char channelNames74[], int32 state74, const char channelNames75[], int32 state75, const char channelNames76[], int32 state76, const char channelNames77[], int32 state77, const char channelNames78[], int32 state78, const char channelNames79[], int32 state79, const char channelNames80[], int32 state80, const char channelNames81[], int32 state81, const char channelNames82[], int32 state82, const char channelNames83[], int32 state83, const char channelNames84[], int32 state84, const char channelNames85[], int32 state85, const char channelNames86[], int32 state86, const char channelNames87[], int32 state87, const char channelNames88[], int32 state88, const char channelNames89[], int32 state89, const char channelNames90[], int32 state90, const char channelNames91[], int32 state91, const char channelNames92[], int32 state92, const char channelNames93[], int32 state93, const char channelNames94[], int32 state94, const char channelNames95[], int32 state95)
@@ -4057,11 +2849,7 @@ int32 NiDAQmxLibrary::SetDigitalPullUpPullDownStates(const char deviceName[], co
   if (!function_pointers_.SetDigitalPullUpPullDownStates) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetDigitalPullUpPullDownStates.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetDigitalPullUpPullDownStates(deviceName, channelNames, state, channelNames0, state0, channelNames1, state1, channelNames2, state2, channelNames3, state3, channelNames4, state4, channelNames5, state5, channelNames6, state6, channelNames7, state7, channelNames8, state8, channelNames9, state9, channelNames10, state10, channelNames11, state11, channelNames12, state12, channelNames13, state13, channelNames14, state14, channelNames15, state15, channelNames16, state16, channelNames17, state17, channelNames18, state18, channelNames19, state19, channelNames20, state20, channelNames21, state21, channelNames22, state22, channelNames23, state23, channelNames24, state24, channelNames25, state25, channelNames26, state26, channelNames27, state27, channelNames28, state28, channelNames29, state29, channelNames30, state30, channelNames31, state31, channelNames32, state32, channelNames33, state33, channelNames34, state34, channelNames35, state35, channelNames36, state36, channelNames37, state37, channelNames38, state38, channelNames39, state39, channelNames40, state40, channelNames41, state41, channelNames42, state42, channelNames43, state43, channelNames44, state44, channelNames45, state45, channelNames46, state46, channelNames47, state47, channelNames48, state48, channelNames49, state49, channelNames50, state50, channelNames51, state51, channelNames52, state52, channelNames53, state53, channelNames54, state54, channelNames55, state55, channelNames56, state56, channelNames57, state57, channelNames58, state58, channelNames59, state59, channelNames60, state60, channelNames61, state61, channelNames62, state62, channelNames63, state63, channelNames64, state64, channelNames65, state65, channelNames66, state66, channelNames67, state67, channelNames68, state68, channelNames69, state69, channelNames70, state70, channelNames71, state71, channelNames72, state72, channelNames73, state73, channelNames74, state74, channelNames75, state75, channelNames76, state76, channelNames77, state77, channelNames78, state78, channelNames79, state79, channelNames80, state80, channelNames81, state81, channelNames82, state82, channelNames83, state83, channelNames84, state84, channelNames85, state85, channelNames86, state86, channelNames87, state87, channelNames88, state88, channelNames89, state89, channelNames90, state90, channelNames91, state91, channelNames92, state92, channelNames93, state93, channelNames94, state94, channelNames95, state95);
-#else
   return function_pointers_.SetDigitalPullUpPullDownStates(deviceName, channelNames, state, channelNames0, state0, channelNames1, state1, channelNames2, state2, channelNames3, state3, channelNames4, state4, channelNames5, state5, channelNames6, state6, channelNames7, state7, channelNames8, state8, channelNames9, state9, channelNames10, state10, channelNames11, state11, channelNames12, state12, channelNames13, state13, channelNames14, state14, channelNames15, state15, channelNames16, state16, channelNames17, state17, channelNames18, state18, channelNames19, state19, channelNames20, state20, channelNames21, state21, channelNames22, state22, channelNames23, state23, channelNames24, state24, channelNames25, state25, channelNames26, state26, channelNames27, state27, channelNames28, state28, channelNames29, state29, channelNames30, state30, channelNames31, state31, channelNames32, state32, channelNames33, state33, channelNames34, state34, channelNames35, state35, channelNames36, state36, channelNames37, state37, channelNames38, state38, channelNames39, state39, channelNames40, state40, channelNames41, state41, channelNames42, state42, channelNames43, state43, channelNames44, state44, channelNames45, state45, channelNames46, state46, channelNames47, state47, channelNames48, state48, channelNames49, state49, channelNames50, state50, channelNames51, state51, channelNames52, state52, channelNames53, state53, channelNames54, state54, channelNames55, state55, channelNames56, state56, channelNames57, state57, channelNames58, state58, channelNames59, state59, channelNames60, state60, channelNames61, state61, channelNames62, state62, channelNames63, state63, channelNames64, state64, channelNames65, state65, channelNames66, state66, channelNames67, state67, channelNames68, state68, channelNames69, state69, channelNames70, state70, channelNames71, state71, channelNames72, state72, channelNames73, state73, channelNames74, state74, channelNames75, state75, channelNames76, state76, channelNames77, state77, channelNames78, state78, channelNames79, state79, channelNames80, state80, channelNames81, state81, channelNames82, state82, channelNames83, state83, channelNames84, state84, channelNames85, state85, channelNames86, state86, channelNames87, state87, channelNames88, state88, channelNames89, state89, channelNames90, state90, channelNames91, state91, channelNames92, state92, channelNames93, state93, channelNames94, state94, channelNames95, state95);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
@@ -4069,11 +2857,7 @@ int32 NiDAQmxLibrary::SetExportedSignalAttributeBool(TaskHandle task, int32 attr
   if (!function_pointers_.SetExportedSignalAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetExportedSignalAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
@@ -4081,11 +2865,7 @@ int32 NiDAQmxLibrary::SetExportedSignalAttributeDouble(TaskHandle task, int32 at
   if (!function_pointers_.SetExportedSignalAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetExportedSignalAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
@@ -4093,11 +2873,7 @@ int32 NiDAQmxLibrary::SetExportedSignalAttributeInt32(TaskHandle task, int32 att
   if (!function_pointers_.SetExportedSignalAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetExportedSignalAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetExportedSignalAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
@@ -4105,11 +2881,7 @@ int32 NiDAQmxLibrary::SetExportedSignalAttributeString(TaskHandle task, int32 at
   if (!function_pointers_.SetExportedSignalAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetExportedSignalAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
@@ -4117,11 +2889,7 @@ int32 NiDAQmxLibrary::SetExportedSignalAttributeUInt32(TaskHandle task, int32 at
   if (!function_pointers_.SetExportedSignalAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetExportedSignalAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data)
@@ -4129,11 +2897,7 @@ int32 NiDAQmxLibrary::SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data)
   if (!function_pointers_.SetFirstSampClkWhen) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetFirstSampClkWhen.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetFirstSampClkWhen(task, data);
-#else
   return function_pointers_.SetFirstSampClkWhen(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetReadAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
@@ -4141,11 +2905,7 @@ int32 NiDAQmxLibrary::SetReadAttributeBool(TaskHandle task, int32 attribute, boo
   if (!function_pointers_.SetReadAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetReadAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetReadAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
@@ -4153,11 +2913,7 @@ int32 NiDAQmxLibrary::SetReadAttributeDouble(TaskHandle task, int32 attribute, f
   if (!function_pointers_.SetReadAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetReadAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetReadAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
@@ -4165,11 +2921,7 @@ int32 NiDAQmxLibrary::SetReadAttributeInt32(TaskHandle task, int32 attribute, in
   if (!function_pointers_.SetReadAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetReadAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetReadAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
@@ -4177,11 +2929,7 @@ int32 NiDAQmxLibrary::SetReadAttributeString(TaskHandle task, int32 attribute, c
   if (!function_pointers_.SetReadAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetReadAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
@@ -4189,11 +2937,7 @@ int32 NiDAQmxLibrary::SetReadAttributeUInt32(TaskHandle task, int32 attribute, u
   if (!function_pointers_.SetReadAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetReadAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
@@ -4201,11 +2945,7 @@ int32 NiDAQmxLibrary::SetReadAttributeUInt64(TaskHandle task, int32 attribute, u
   if (!function_pointers_.SetReadAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetReadAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetReadAttributeUInt64(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
@@ -4213,11 +2953,7 @@ int32 NiDAQmxLibrary::SetRealTimeAttributeBool(TaskHandle task, int32 attribute,
   if (!function_pointers_.SetRealTimeAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetRealTimeAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
@@ -4225,11 +2961,7 @@ int32 NiDAQmxLibrary::SetRealTimeAttributeInt32(TaskHandle task, int32 attribute
   if (!function_pointers_.SetRealTimeAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetRealTimeAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
@@ -4237,11 +2969,7 @@ int32 NiDAQmxLibrary::SetRealTimeAttributeUInt32(TaskHandle task, int32 attribut
   if (!function_pointers_.SetRealTimeAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetRealTimeAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size)
@@ -4249,11 +2977,7 @@ int32 NiDAQmxLibrary::SetScaleAttributeDouble(const char scaleName[], int32 attr
   if (!function_pointers_.SetScaleAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.SetScaleAttributeDouble(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size)
@@ -4261,11 +2985,7 @@ int32 NiDAQmxLibrary::SetScaleAttributeDoubleArray(const char scaleName[], int32
   if (!function_pointers_.SetScaleAttributeDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.SetScaleAttributeDoubleArray(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value, uInt32 size)
@@ -4273,11 +2993,7 @@ int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attri
   if (!function_pointers_.SetScaleAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.SetScaleAttributeInt32(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[], uInt32 size)
@@ -4285,11 +3001,7 @@ int32 NiDAQmxLibrary::SetScaleAttributeString(const char scaleName[], int32 attr
   if (!function_pointers_.SetScaleAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
-#else
   return function_pointers_.SetScaleAttributeString(scaleName, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data)
@@ -4297,11 +3009,7 @@ int32 NiDAQmxLibrary::SetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data
   if (!function_pointers_.SetStartTrigTrigWhen) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetStartTrigTrigWhen.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetStartTrigTrigWhen(task, data);
-#else
   return function_pointers_.SetStartTrigTrigWhen(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data)
@@ -4309,11 +3017,7 @@ int32 NiDAQmxLibrary::SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data
   if (!function_pointers_.SetSyncPulseTimeWhen) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetSyncPulseTimeWhen.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetSyncPulseTimeWhen(task, data);
-#else
   return function_pointers_.SetSyncPulseTimeWhen(task, data);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
@@ -4321,11 +3025,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeBool(TaskHandle task, int32 attribute, b
   if (!function_pointers_.SetTimingAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
@@ -4333,11 +3033,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeDouble(TaskHandle task, int32 attribute,
   if (!function_pointers_.SetTimingAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32 value, uInt32 size)
@@ -4345,11 +3041,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeExBool(TaskHandle task, const char devic
   if (!function_pointers_.SetTimingAttributeExBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeExBool(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64 value, uInt32 size)
@@ -4357,11 +3049,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeExDouble(TaskHandle task, const char dev
   if (!function_pointers_.SetTimingAttributeExDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeExDouble(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32 value, uInt32 size)
@@ -4369,11 +3057,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeExInt32(TaskHandle task, const char devi
   if (!function_pointers_.SetTimingAttributeExInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeExInt32(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, const char value[], uInt32 size)
@@ -4381,11 +3065,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeExString(TaskHandle task, const char dev
   if (!function_pointers_.SetTimingAttributeExString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeExString(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime value, uInt32 size)
@@ -4393,11 +3073,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeExTimestamp(TaskHandle task, const char 
   if (!function_pointers_.SetTimingAttributeExTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeExTimestamp(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32 value, uInt32 size)
@@ -4405,11 +3081,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeExUInt32(TaskHandle task, const char dev
   if (!function_pointers_.SetTimingAttributeExUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeExUInt32(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64 value, uInt32 size)
@@ -4417,11 +3089,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeExUInt64(TaskHandle task, const char dev
   if (!function_pointers_.SetTimingAttributeExUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeExUInt64(task, deviceNames, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
@@ -4429,11 +3097,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeInt32(TaskHandle task, int32 attribute, 
   if (!function_pointers_.SetTimingAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
@@ -4441,11 +3105,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeString(TaskHandle task, int32 attribute,
   if (!function_pointers_.SetTimingAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size)
@@ -4453,11 +3113,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeTimestamp(TaskHandle task, int32 attribu
   if (!function_pointers_.SetTimingAttributeTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeTimestamp(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
@@ -4465,11 +3121,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeUInt32(TaskHandle task, int32 attribute,
   if (!function_pointers_.SetTimingAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
@@ -4477,11 +3129,7 @@ int32 NiDAQmxLibrary::SetTimingAttributeUInt64(TaskHandle task, int32 attribute,
   if (!function_pointers_.SetTimingAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTimingAttributeUInt64(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
@@ -4489,11 +3137,7 @@ int32 NiDAQmxLibrary::SetTrigAttributeBool(TaskHandle task, int32 attribute, boo
   if (!function_pointers_.SetTrigAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTrigAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
@@ -4501,11 +3145,7 @@ int32 NiDAQmxLibrary::SetTrigAttributeDouble(TaskHandle task, int32 attribute, f
   if (!function_pointers_.SetTrigAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTrigAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, const float64 value[], uInt32 size)
@@ -4513,11 +3153,7 @@ int32 NiDAQmxLibrary::SetTrigAttributeDoubleArray(TaskHandle task, int32 attribu
   if (!function_pointers_.SetTrigAttributeDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTrigAttributeDoubleArray(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
@@ -4525,11 +3161,7 @@ int32 NiDAQmxLibrary::SetTrigAttributeInt32(TaskHandle task, int32 attribute, in
   if (!function_pointers_.SetTrigAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTrigAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeInt32Array(TaskHandle task, int32 attribute, const int32 value[], uInt32 size)
@@ -4537,11 +3169,7 @@ int32 NiDAQmxLibrary::SetTrigAttributeInt32Array(TaskHandle task, int32 attribut
   if (!function_pointers_.SetTrigAttributeInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTrigAttributeInt32Array(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
@@ -4549,11 +3177,7 @@ int32 NiDAQmxLibrary::SetTrigAttributeString(TaskHandle task, int32 attribute, c
   if (!function_pointers_.SetTrigAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTrigAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size)
@@ -4561,11 +3185,7 @@ int32 NiDAQmxLibrary::SetTrigAttributeTimestamp(TaskHandle task, int32 attribute
   if (!function_pointers_.SetTrigAttributeTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTrigAttributeTimestamp(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
@@ -4573,11 +3193,7 @@ int32 NiDAQmxLibrary::SetTrigAttributeUInt32(TaskHandle task, int32 attribute, u
   if (!function_pointers_.SetTrigAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetTrigAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32 value, uInt32 size)
@@ -4585,11 +3201,7 @@ int32 NiDAQmxLibrary::SetWatchdogAttributeBool(TaskHandle task, const char lines
   if (!function_pointers_.SetWatchdogAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
-#else
   return function_pointers_.SetWatchdogAttributeBool(task, lines, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64 value, uInt32 size)
@@ -4597,11 +3209,7 @@ int32 NiDAQmxLibrary::SetWatchdogAttributeDouble(TaskHandle task, const char lin
   if (!function_pointers_.SetWatchdogAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
-#else
   return function_pointers_.SetWatchdogAttributeDouble(task, lines, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32 value, uInt32 size)
@@ -4609,11 +3217,7 @@ int32 NiDAQmxLibrary::SetWatchdogAttributeInt32(TaskHandle task, const char line
   if (!function_pointers_.SetWatchdogAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
-#else
   return function_pointers_.SetWatchdogAttributeInt32(task, lines, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, const char value[], uInt32 size)
@@ -4621,11 +3225,7 @@ int32 NiDAQmxLibrary::SetWatchdogAttributeString(TaskHandle task, const char lin
   if (!function_pointers_.SetWatchdogAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
-#else
   return function_pointers_.SetWatchdogAttributeString(task, lines, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWriteAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
@@ -4633,11 +3233,7 @@ int32 NiDAQmxLibrary::SetWriteAttributeBool(TaskHandle task, int32 attribute, bo
   if (!function_pointers_.SetWriteAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetWriteAttributeBool(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWriteAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
@@ -4645,11 +3241,7 @@ int32 NiDAQmxLibrary::SetWriteAttributeDouble(TaskHandle task, int32 attribute, 
   if (!function_pointers_.SetWriteAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetWriteAttributeDouble(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
@@ -4657,11 +3249,7 @@ int32 NiDAQmxLibrary::SetWriteAttributeInt32(TaskHandle task, int32 attribute, i
   if (!function_pointers_.SetWriteAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetWriteAttributeInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWriteAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
@@ -4669,11 +3257,7 @@ int32 NiDAQmxLibrary::SetWriteAttributeString(TaskHandle task, int32 attribute, 
   if (!function_pointers_.SetWriteAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetWriteAttributeString(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
@@ -4681,11 +3265,7 @@ int32 NiDAQmxLibrary::SetWriteAttributeUInt32(TaskHandle task, int32 attribute, 
   if (!function_pointers_.SetWriteAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetWriteAttributeUInt32(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::SetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
@@ -4693,11 +3273,7 @@ int32 NiDAQmxLibrary::SetWriteAttributeUInt64(TaskHandle task, int32 attribute, 
   if (!function_pointers_.SetWriteAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-#if defined(_MSC_VER)
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
-#else
   return function_pointers_.SetWriteAttributeUInt64(task, attribute, value, size);
-#endif
 }
 
 int32 NiDAQmxLibrary::StartNewFile(TaskHandle task, const char filePath[])
@@ -4705,11 +3281,7 @@ int32 NiDAQmxLibrary::StartNewFile(TaskHandle task, const char filePath[])
   if (!function_pointers_.StartNewFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxStartNewFile.");
   }
-#if defined(_MSC_VER)
-  return DAQmxStartNewFile(task, filePath);
-#else
   return function_pointers_.StartNewFile(task, filePath);
-#endif
 }
 
 int32 NiDAQmxLibrary::StartTask(TaskHandle task)
@@ -4717,11 +3289,7 @@ int32 NiDAQmxLibrary::StartTask(TaskHandle task)
   if (!function_pointers_.StartTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxStartTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxStartTask(task);
-#else
   return function_pointers_.StartTask(task);
-#endif
 }
 
 int32 NiDAQmxLibrary::StopTask(TaskHandle task)
@@ -4729,11 +3297,7 @@ int32 NiDAQmxLibrary::StopTask(TaskHandle task)
   if (!function_pointers_.StopTask) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxStopTask.");
   }
-#if defined(_MSC_VER)
-  return DAQmxStopTask(task);
-#else
   return function_pointers_.StopTask(task);
-#endif
 }
 
 int32 NiDAQmxLibrary::TaskControl(TaskHandle task, int32 action)
@@ -4741,11 +3305,7 @@ int32 NiDAQmxLibrary::TaskControl(TaskHandle task, int32 action)
   if (!function_pointers_.TaskControl) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxTaskControl.");
   }
-#if defined(_MSC_VER)
-  return DAQmxTaskControl(task, action);
-#else
   return function_pointers_.TaskControl(task, action);
-#endif
 }
 
 int32 NiDAQmxLibrary::TristateOutputTerm(const char outputTerminal[])
@@ -4753,11 +3313,7 @@ int32 NiDAQmxLibrary::TristateOutputTerm(const char outputTerminal[])
   if (!function_pointers_.TristateOutputTerm) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxTristateOutputTerm.");
   }
-#if defined(_MSC_VER)
-  return DAQmxTristateOutputTerm(outputTerminal);
-#else
   return function_pointers_.TristateOutputTerm(outputTerminal);
-#endif
 }
 
 int32 NiDAQmxLibrary::UnreserveNetworkDevice(const char deviceName[])
@@ -4765,11 +3321,7 @@ int32 NiDAQmxLibrary::UnreserveNetworkDevice(const char deviceName[])
   if (!function_pointers_.UnreserveNetworkDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxUnreserveNetworkDevice.");
   }
-#if defined(_MSC_VER)
-  return DAQmxUnreserveNetworkDevice(deviceName);
-#else
   return function_pointers_.UnreserveNetworkDevice(deviceName);
-#endif
 }
 
 int32 NiDAQmxLibrary::WaitForNextSampleClock(TaskHandle task, float64 timeout, bool32* isLate)
@@ -4777,11 +3329,7 @@ int32 NiDAQmxLibrary::WaitForNextSampleClock(TaskHandle task, float64 timeout, b
   if (!function_pointers_.WaitForNextSampleClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWaitForNextSampleClock.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWaitForNextSampleClock(task, timeout, isLate);
-#else
   return function_pointers_.WaitForNextSampleClock(task, timeout, isLate);
-#endif
 }
 
 int32 NiDAQmxLibrary::WaitForValidTimestamp(TaskHandle task, int32 timestampEvent, float64 timeout, CVIAbsoluteTime* timestamp)
@@ -4789,11 +3337,7 @@ int32 NiDAQmxLibrary::WaitForValidTimestamp(TaskHandle task, int32 timestampEven
   if (!function_pointers_.WaitForValidTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWaitForValidTimestamp.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWaitForValidTimestamp(task, timestampEvent, timeout, timestamp);
-#else
   return function_pointers_.WaitForValidTimestamp(task, timestampEvent, timeout, timestamp);
-#endif
 }
 
 int32 NiDAQmxLibrary::WaitUntilTaskDone(TaskHandle task, float64 timeToWait)
@@ -4801,11 +3345,7 @@ int32 NiDAQmxLibrary::WaitUntilTaskDone(TaskHandle task, float64 timeToWait)
   if (!function_pointers_.WaitUntilTaskDone) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWaitUntilTaskDone.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWaitUntilTaskDone(task, timeToWait);
-#else
   return function_pointers_.WaitUntilTaskDone(task, timeToWait);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -4813,11 +3353,7 @@ int32 NiDAQmxLibrary::WriteAnalogF64(TaskHandle task, int32 numSampsPerChan, boo
   if (!function_pointers_.WriteAnalogF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteAnalogF64.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteAnalogF64(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteAnalogF64(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteAnalogScalarF64(TaskHandle task, bool32 autoStart, float64 timeout, float64 value, bool32* reserved)
@@ -4825,11 +3361,7 @@ int32 NiDAQmxLibrary::WriteAnalogScalarF64(TaskHandle task, bool32 autoStart, fl
   if (!function_pointers_.WriteAnalogScalarF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteAnalogScalarF64.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteAnalogScalarF64(task, autoStart, timeout, value, reserved);
-#else
   return function_pointers_.WriteAnalogScalarF64(task, autoStart, timeout, value, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteBinaryI16(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const int16 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -4837,11 +3369,7 @@ int32 NiDAQmxLibrary::WriteBinaryI16(TaskHandle task, int32 numSampsPerChan, boo
   if (!function_pointers_.WriteBinaryI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteBinaryI16.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteBinaryI16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteBinaryI16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteBinaryI32(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const int32 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -4849,11 +3377,7 @@ int32 NiDAQmxLibrary::WriteBinaryI32(TaskHandle task, int32 numSampsPerChan, boo
   if (!function_pointers_.WriteBinaryI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteBinaryI32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteBinaryI32(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteBinaryI32(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteBinaryU16(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -4861,11 +3385,7 @@ int32 NiDAQmxLibrary::WriteBinaryU16(TaskHandle task, int32 numSampsPerChan, boo
   if (!function_pointers_.WriteBinaryU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteBinaryU16.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteBinaryU16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteBinaryU16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteBinaryU32(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -4873,11 +3393,7 @@ int32 NiDAQmxLibrary::WriteBinaryU32(TaskHandle task, int32 numSampsPerChan, boo
   if (!function_pointers_.WriteBinaryU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteBinaryU32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteBinaryU32(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteBinaryU32(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteCtrFreq(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 frequency[], const float64 dutyCycle[], int32* numSampsPerChanWritten, bool32* reserved)
@@ -4885,11 +3401,7 @@ int32 NiDAQmxLibrary::WriteCtrFreq(TaskHandle task, int32 numSampsPerChan, bool3
   if (!function_pointers_.WriteCtrFreq) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteCtrFreq.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteCtrFreq(task, numSampsPerChan, autoStart, timeout, dataLayout, frequency, dutyCycle, numSampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteCtrFreq(task, numSampsPerChan, autoStart, timeout, dataLayout, frequency, dutyCycle, numSampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteCtrFreqScalar(TaskHandle task, bool32 autoStart, float64 timeout, float64 frequency, float64 dutyCycle, bool32* reserved)
@@ -4897,11 +3409,7 @@ int32 NiDAQmxLibrary::WriteCtrFreqScalar(TaskHandle task, bool32 autoStart, floa
   if (!function_pointers_.WriteCtrFreqScalar) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteCtrFreqScalar.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteCtrFreqScalar(task, autoStart, timeout, frequency, dutyCycle, reserved);
-#else
   return function_pointers_.WriteCtrFreqScalar(task, autoStart, timeout, frequency, dutyCycle, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteCtrTicks(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 highTicks[], const uInt32 lowTicks[], int32* numSampsPerChanWritten, bool32* reserved)
@@ -4909,11 +3417,7 @@ int32 NiDAQmxLibrary::WriteCtrTicks(TaskHandle task, int32 numSampsPerChan, bool
   if (!function_pointers_.WriteCtrTicks) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteCtrTicks.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteCtrTicks(task, numSampsPerChan, autoStart, timeout, dataLayout, highTicks, lowTicks, numSampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteCtrTicks(task, numSampsPerChan, autoStart, timeout, dataLayout, highTicks, lowTicks, numSampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteCtrTicksScalar(TaskHandle task, bool32 autoStart, float64 timeout, uInt32 highTicks, uInt32 lowTicks, bool32* reserved)
@@ -4921,11 +3425,7 @@ int32 NiDAQmxLibrary::WriteCtrTicksScalar(TaskHandle task, bool32 autoStart, flo
   if (!function_pointers_.WriteCtrTicksScalar) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteCtrTicksScalar.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteCtrTicksScalar(task, autoStart, timeout, highTicks, lowTicks, reserved);
-#else
   return function_pointers_.WriteCtrTicksScalar(task, autoStart, timeout, highTicks, lowTicks, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteCtrTime(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const float64 highTime[], const float64 lowTime[], int32* numSampsPerChanWritten, bool32* reserved)
@@ -4933,11 +3433,7 @@ int32 NiDAQmxLibrary::WriteCtrTime(TaskHandle task, int32 numSampsPerChan, bool3
   if (!function_pointers_.WriteCtrTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteCtrTime.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteCtrTime(task, numSampsPerChan, autoStart, timeout, dataLayout, highTime, lowTime, numSampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteCtrTime(task, numSampsPerChan, autoStart, timeout, dataLayout, highTime, lowTime, numSampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteCtrTimeScalar(TaskHandle task, bool32 autoStart, float64 timeout, float64 highTime, float64 lowTime, bool32* reserved)
@@ -4945,11 +3441,7 @@ int32 NiDAQmxLibrary::WriteCtrTimeScalar(TaskHandle task, bool32 autoStart, floa
   if (!function_pointers_.WriteCtrTimeScalar) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteCtrTimeScalar.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteCtrTimeScalar(task, autoStart, timeout, highTime, lowTime, reserved);
-#else
   return function_pointers_.WriteCtrTimeScalar(task, autoStart, timeout, highTime, lowTime, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteDigitalLines(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -4957,11 +3449,7 @@ int32 NiDAQmxLibrary::WriteDigitalLines(TaskHandle task, int32 numSampsPerChan, 
   if (!function_pointers_.WriteDigitalLines) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteDigitalLines.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteDigitalLines(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteDigitalLines(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteDigitalScalarU32(TaskHandle task, bool32 autoStart, float64 timeout, uInt32 value, bool32* reserved)
@@ -4969,11 +3457,7 @@ int32 NiDAQmxLibrary::WriteDigitalScalarU32(TaskHandle task, bool32 autoStart, f
   if (!function_pointers_.WriteDigitalScalarU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteDigitalScalarU32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteDigitalScalarU32(task, autoStart, timeout, value, reserved);
-#else
   return function_pointers_.WriteDigitalScalarU32(task, autoStart, timeout, value, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -4981,11 +3465,7 @@ int32 NiDAQmxLibrary::WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, bo
   if (!function_pointers_.WriteDigitalU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteDigitalU16.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteDigitalU16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteDigitalU16(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteDigitalU32(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -4993,11 +3473,7 @@ int32 NiDAQmxLibrary::WriteDigitalU32(TaskHandle task, int32 numSampsPerChan, bo
   if (!function_pointers_.WriteDigitalU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteDigitalU32.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteDigitalU32(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteDigitalU32(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -5005,11 +3481,7 @@ int32 NiDAQmxLibrary::WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, boo
   if (!function_pointers_.WriteDigitalU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteDigitalU8.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteDigitalU8(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteDigitalU8(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
@@ -5017,11 +3489,7 @@ int32 NiDAQmxLibrary::WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart
   if (!function_pointers_.WriteRaw) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteRaw.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteRaw(task, numSamps, autoStart, timeout, writeArray, sampsPerChanWritten, reserved);
-#else
   return function_pointers_.WriteRaw(task, numSamps, autoStart, timeout, writeArray, sampsPerChanWritten, reserved);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteToTEDSFromArray(const char physicalChannel[], const uInt8 bitStream[], uInt32 arraySize, int32 basicTEDSOptions)
@@ -5029,11 +3497,7 @@ int32 NiDAQmxLibrary::WriteToTEDSFromArray(const char physicalChannel[], const u
   if (!function_pointers_.WriteToTEDSFromArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteToTEDSFromArray.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteToTEDSFromArray(physicalChannel, bitStream, arraySize, basicTEDSOptions);
-#else
   return function_pointers_.WriteToTEDSFromArray(physicalChannel, bitStream, arraySize, basicTEDSOptions);
-#endif
 }
 
 int32 NiDAQmxLibrary::WriteToTEDSFromFile(const char physicalChannel[], const char filePath[], int32 basicTEDSOptions)
@@ -5041,11 +3505,7 @@ int32 NiDAQmxLibrary::WriteToTEDSFromFile(const char physicalChannel[], const ch
   if (!function_pointers_.WriteToTEDSFromFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteToTEDSFromFile.");
   }
-#if defined(_MSC_VER)
-  return DAQmxWriteToTEDSFromFile(physicalChannel, filePath, basicTEDSOptions);
-#else
   return function_pointers_.WriteToTEDSFromFile(physicalChannel, filePath, basicTEDSOptions);
-#endif
 }
 
 }  // namespace nidaqmx_grpc

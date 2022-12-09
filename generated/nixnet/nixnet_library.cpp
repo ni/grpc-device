@@ -95,11 +95,7 @@ nxStatus_t NiXnetLibrary::Blink(nxSessionRef_t interfaceRef, u32 modifier)
   if (!function_pointers_.Blink) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxBlink.");
   }
-#if defined(_MSC_VER)
-  return nxBlink(interfaceRef, modifier);
-#else
   return function_pointers_.Blink(interfaceRef, modifier);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::Clear(nxSessionRef_t session)
@@ -107,11 +103,7 @@ nxStatus_t NiXnetLibrary::Clear(nxSessionRef_t session)
   if (!function_pointers_.Clear) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxClear.");
   }
-#if defined(_MSC_VER)
-  return nxClear(session);
-#else
   return function_pointers_.Clear(session);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ConnectTerminals(nxSessionRef_t session, const char source[], const char destination[])
@@ -119,11 +111,7 @@ nxStatus_t NiXnetLibrary::ConnectTerminals(nxSessionRef_t session, const char so
   if (!function_pointers_.ConnectTerminals) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConnectTerminals.");
   }
-#if defined(_MSC_VER)
-  return nxConnectTerminals(session, source, destination);
-#else
   return function_pointers_.ConnectTerminals(session, source, destination);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ConvertByteArrayToFramesSinglePoint(nxSessionRef_t session, u8 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned)
@@ -131,11 +119,7 @@ nxStatus_t NiXnetLibrary::ConvertByteArrayToFramesSinglePoint(nxSessionRef_t ses
   if (!function_pointers_.ConvertByteArrayToFramesSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertByteArrayToFramesSinglePoint.");
   }
-#if defined(_MSC_VER)
-  return nxConvertByteArrayToFramesSinglePoint(session, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
-#else
   return function_pointers_.ConvertByteArrayToFramesSinglePoint(session, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ConvertFramesToByteArraySinglePoint(nxSessionRef_t session, u8* frameBuffer, u32 numberOfBytesForFrames, u8 valueBuffer[], u32 sizeOfValueBuffer)
@@ -143,11 +127,7 @@ nxStatus_t NiXnetLibrary::ConvertFramesToByteArraySinglePoint(nxSessionRef_t ses
   if (!function_pointers_.ConvertFramesToByteArraySinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertFramesToByteArraySinglePoint.");
   }
-#if defined(_MSC_VER)
-  return nxConvertFramesToByteArraySinglePoint(session, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer);
-#else
   return function_pointers_.ConvertFramesToByteArraySinglePoint(session, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t session, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer)
@@ -155,11 +135,7 @@ nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessi
   if (!function_pointers_.ConvertFramesToSignalsSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertFramesToSignalsSinglePoint.");
   }
-#if defined(_MSC_VER)
-  return nxConvertFramesToSignalsSinglePoint(session, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer);
-#else
   return function_pointers_.ConvertFramesToSignalsSinglePoint(session, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ConvertSignalsToFramesSinglePoint(nxSessionRef_t session, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned)
@@ -167,11 +143,7 @@ nxStatus_t NiXnetLibrary::ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessi
   if (!function_pointers_.ConvertSignalsToFramesSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertSignalsToFramesSinglePoint.");
   }
-#if defined(_MSC_VER)
-  return nxConvertSignalsToFramesSinglePoint(session, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
-#else
   return function_pointers_.ConvertSignalsToFramesSinglePoint(session, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns)
@@ -179,11 +151,7 @@ nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_tim
   if (!function_pointers_.ConvertTimestamp100nsTo1ns) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertTimestamp100nsTo1ns.");
   }
-#if defined(_MSC_VER)
-  return nxConvertTimestamp100nsTo1ns(from_timestamp_100ns, to_timestamp_1ns);
-#else
   return function_pointers_.ConvertTimestamp100nsTo1ns(from_timestamp_100ns, to_timestamp_1ns);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from_timestamp_1ns, nxTimestamp100ns_t* to_timestamp_100ns)
@@ -191,11 +159,7 @@ nxStatus_t NiXnetLibrary::ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from_times
   if (!function_pointers_.ConvertTimestamp1nsTo100ns) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertTimestamp1nsTo100ns.");
   }
-#if defined(_MSC_VER)
-  return nxConvertTimestamp1nsTo100ns(from_timestamp_1ns, to_timestamp_100ns);
-#else
   return function_pointers_.ConvertTimestamp1nsTo100ns(from_timestamp_1ns, to_timestamp_100ns);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* session)
@@ -203,11 +167,7 @@ nxStatus_t NiXnetLibrary::CreateSession(const char databaseName[], const char cl
   if (!function_pointers_.CreateSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxCreateSession.");
   }
-#if defined(_MSC_VER)
-  return nxCreateSession(databaseName, clusterName, list, interfaceParameter, mode, session);
-#else
   return function_pointers_.CreateSession(databaseName, clusterName, list, interfaceParameter, mode, session);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::CreateSessionByRef(u32 numberOfDatabaseRef, nxDatabaseRef_t arrayOfDatabaseRef[], const char interfaceParameter[], u32 mode, nxSessionRef_t* session)
@@ -215,11 +175,7 @@ nxStatus_t NiXnetLibrary::CreateSessionByRef(u32 numberOfDatabaseRef, nxDatabase
   if (!function_pointers_.CreateSessionByRef) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxCreateSessionByRef.");
   }
-#if defined(_MSC_VER)
-  return nxCreateSessionByRef(numberOfDatabaseRef, arrayOfDatabaseRef, interfaceParameter, mode, session);
-#else
   return function_pointers_.CreateSessionByRef(numberOfDatabaseRef, arrayOfDatabaseRef, interfaceParameter, mode, session);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbAddAlias(const char databaseAlias[], const char databaseFilepath[], u32 defaultBaudRate)
@@ -227,11 +183,7 @@ nxStatus_t NiXnetLibrary::DbAddAlias(const char databaseAlias[], const char data
   if (!function_pointers_.DbAddAlias) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbAddAlias.");
   }
-#if defined(_MSC_VER)
-  return nxdbAddAlias(databaseAlias, databaseFilepath, defaultBaudRate);
-#else
   return function_pointers_.DbAddAlias(databaseAlias, databaseFilepath, defaultBaudRate);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbAddAlias64(const char databaseAlias[], const char databaseFilepath[], u64 defaultBaudRate)
@@ -239,11 +191,7 @@ nxStatus_t NiXnetLibrary::DbAddAlias64(const char databaseAlias[], const char da
   if (!function_pointers_.DbAddAlias64) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbAddAlias64.");
   }
-#if defined(_MSC_VER)
-  return nxdbAddAlias64(databaseAlias, databaseFilepath, defaultBaudRate);
-#else
   return function_pointers_.DbAddAlias64(databaseAlias, databaseFilepath, defaultBaudRate);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbCloseDatabase(nxDatabaseRef_t database, u32 closeAllRefs)
@@ -251,11 +199,7 @@ nxStatus_t NiXnetLibrary::DbCloseDatabase(nxDatabaseRef_t database, u32 closeAll
   if (!function_pointers_.DbCloseDatabase) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbCloseDatabase.");
   }
-#if defined(_MSC_VER)
-  return nxdbCloseDatabase(database, closeAllRefs);
-#else
   return function_pointers_.DbCloseDatabase(database, closeAllRefs);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbCreateObject(nxDatabaseRef_t parentObject, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObject)
@@ -263,11 +207,7 @@ nxStatus_t NiXnetLibrary::DbCreateObject(nxDatabaseRef_t parentObject, u32 objec
   if (!function_pointers_.DbCreateObject) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbCreateObject.");
   }
-#if defined(_MSC_VER)
-  return nxdbCreateObject(parentObject, objectClass, objectName, dbObject);
-#else
   return function_pointers_.DbCreateObject(parentObject, objectClass, objectName, dbObject);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbDeleteObject(nxDatabaseRef_t dbObject)
@@ -275,11 +215,7 @@ nxStatus_t NiXnetLibrary::DbDeleteObject(nxDatabaseRef_t dbObject)
   if (!function_pointers_.DbDeleteObject) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbDeleteObject.");
   }
-#if defined(_MSC_VER)
-  return nxdbDeleteObject(dbObject);
-#else
   return function_pointers_.DbDeleteObject(dbObject);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbDeploy(const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete)
@@ -287,11 +223,7 @@ nxStatus_t NiXnetLibrary::DbDeploy(const char ipAddress[], const char databaseAl
   if (!function_pointers_.DbDeploy) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbDeploy.");
   }
-#if defined(_MSC_VER)
-  return nxdbDeploy(ipAddress, databaseAlias, waitForComplete, percentComplete);
-#else
   return function_pointers_.DbDeploy(ipAddress, databaseAlias, waitForComplete, percentComplete);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbFindObject(nxDatabaseRef_t parentObject, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObject)
@@ -299,11 +231,7 @@ nxStatus_t NiXnetLibrary::DbFindObject(nxDatabaseRef_t parentObject, u32 objectC
   if (!function_pointers_.DbFindObject) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbFindObject.");
   }
-#if defined(_MSC_VER)
-  return nxdbFindObject(parentObject, objectClass, objectName, dbObject);
-#else
   return function_pointers_.DbFindObject(parentObject, objectClass, objectName, dbObject);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbGetDBCAttribute(nxDatabaseRef_t dbObject, u32 mode, const char attributeName[], u32 attributeTextSize, char attributeText[], u32* isDefault)
@@ -311,11 +239,7 @@ nxStatus_t NiXnetLibrary::DbGetDBCAttribute(nxDatabaseRef_t dbObject, u32 mode, 
   if (!function_pointers_.DbGetDBCAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDBCAttribute.");
   }
-#if defined(_MSC_VER)
-  return nxdbGetDBCAttribute(dbObject, mode, attributeName, attributeTextSize, attributeText, isDefault);
-#else
   return function_pointers_.DbGetDBCAttribute(dbObject, mode, attributeName, attributeTextSize, attributeText, isDefault);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbGetDBCAttributeSize(nxDatabaseRef_t dbObject, u32 mode, const char attributeName[], u32* attributeTextSize)
@@ -323,11 +247,7 @@ nxStatus_t NiXnetLibrary::DbGetDBCAttributeSize(nxDatabaseRef_t dbObject, u32 mo
   if (!function_pointers_.DbGetDBCAttributeSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDBCAttributeSize.");
   }
-#if defined(_MSC_VER)
-  return nxdbGetDBCAttributeSize(dbObject, mode, attributeName, attributeTextSize);
-#else
   return function_pointers_.DbGetDBCAttributeSize(dbObject, mode, attributeName, attributeTextSize);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbGetDatabaseList(const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases)
@@ -335,11 +255,7 @@ nxStatus_t NiXnetLibrary::DbGetDatabaseList(const char ipAddress[], u32 sizeofAl
   if (!function_pointers_.DbGetDatabaseList) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDatabaseList.");
   }
-#if defined(_MSC_VER)
-  return nxdbGetDatabaseList(ipAddress, sizeofAliasBuffer, aliasBuffer, sizeofFilepathBuffer, filepathBuffer, numberOfDatabases);
-#else
   return function_pointers_.DbGetDatabaseList(ipAddress, sizeofAliasBuffer, aliasBuffer, sizeofFilepathBuffer, filepathBuffer, numberOfDatabases);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbGetDatabaseListSizes(const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer)
@@ -347,11 +263,7 @@ nxStatus_t NiXnetLibrary::DbGetDatabaseListSizes(const char ipAddress[], u32* si
   if (!function_pointers_.DbGetDatabaseListSizes) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDatabaseListSizes.");
   }
-#if defined(_MSC_VER)
-  return nxdbGetDatabaseListSizes(ipAddress, sizeofAliasBuffer, sizeofFilepathBuffer);
-#else
   return function_pointers_.DbGetDatabaseListSizes(ipAddress, sizeofAliasBuffer, sizeofFilepathBuffer);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbGetProperty(nxDatabaseRef_t dbObject, u32 propertyID, u32 propertySize, void* propertyValue)
@@ -359,11 +271,7 @@ nxStatus_t NiXnetLibrary::DbGetProperty(nxDatabaseRef_t dbObject, u32 propertyID
   if (!function_pointers_.DbGetProperty) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetProperty.");
   }
-#if defined(_MSC_VER)
-  return nxdbGetProperty(dbObject, propertyID, propertySize, propertyValue);
-#else
   return function_pointers_.DbGetProperty(dbObject, propertyID, propertySize, propertyValue);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbGetPropertySize(nxDatabaseRef_t dbObject, u32 propertyID, u32* propertySize)
@@ -371,11 +279,7 @@ nxStatus_t NiXnetLibrary::DbGetPropertySize(nxDatabaseRef_t dbObject, u32 proper
   if (!function_pointers_.DbGetPropertySize) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetPropertySize.");
   }
-#if defined(_MSC_VER)
-  return nxdbGetPropertySize(dbObject, propertyID, propertySize);
-#else
   return function_pointers_.DbGetPropertySize(dbObject, propertyID, propertySize);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbMerge(nxDatabaseRef_t targetCluster, nxDatabaseRef_t sourceObj, u32 copyMode, char prefix[], u32 waitForComplete, u32* percentComplete)
@@ -383,11 +287,7 @@ nxStatus_t NiXnetLibrary::DbMerge(nxDatabaseRef_t targetCluster, nxDatabaseRef_t
   if (!function_pointers_.DbMerge) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbMerge.");
   }
-#if defined(_MSC_VER)
-  return nxdbMerge(targetCluster, sourceObj, copyMode, prefix, waitForComplete, percentComplete);
-#else
   return function_pointers_.DbMerge(targetCluster, sourceObj, copyMode, prefix, waitForComplete, percentComplete);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbOpenDatabase(const char databaseName[], nxDatabaseRef_t* database)
@@ -395,11 +295,7 @@ nxStatus_t NiXnetLibrary::DbOpenDatabase(const char databaseName[], nxDatabaseRe
   if (!function_pointers_.DbOpenDatabase) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbOpenDatabase.");
   }
-#if defined(_MSC_VER)
-  return nxdbOpenDatabase(databaseName, database);
-#else
   return function_pointers_.DbOpenDatabase(databaseName, database);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbRemoveAlias(const char databaseAlias[])
@@ -407,11 +303,7 @@ nxStatus_t NiXnetLibrary::DbRemoveAlias(const char databaseAlias[])
   if (!function_pointers_.DbRemoveAlias) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbRemoveAlias.");
   }
-#if defined(_MSC_VER)
-  return nxdbRemoveAlias(databaseAlias);
-#else
   return function_pointers_.DbRemoveAlias(databaseAlias);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbSaveDatabase(nxDatabaseRef_t database, const char dbFilepath[])
@@ -419,11 +311,7 @@ nxStatus_t NiXnetLibrary::DbSaveDatabase(nxDatabaseRef_t database, const char db
   if (!function_pointers_.DbSaveDatabase) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbSaveDatabase.");
   }
-#if defined(_MSC_VER)
-  return nxdbSaveDatabase(database, dbFilepath);
-#else
   return function_pointers_.DbSaveDatabase(database, dbFilepath);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbSetProperty(nxDatabaseRef_t dbObject, u32 propertyID, u32 propertySize, void* propertyValue)
@@ -431,11 +319,7 @@ nxStatus_t NiXnetLibrary::DbSetProperty(nxDatabaseRef_t dbObject, u32 propertyID
   if (!function_pointers_.DbSetProperty) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbSetProperty.");
   }
-#if defined(_MSC_VER)
-  return nxdbSetProperty(dbObject, propertyID, propertySize, propertyValue);
-#else
   return function_pointers_.DbSetProperty(dbObject, propertyID, propertySize, propertyValue);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DbUndeploy(const char ipAddress[], const char databaseAlias[])
@@ -443,11 +327,7 @@ nxStatus_t NiXnetLibrary::DbUndeploy(const char ipAddress[], const char database
   if (!function_pointers_.DbUndeploy) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxdbUndeploy.");
   }
-#if defined(_MSC_VER)
-  return nxdbUndeploy(ipAddress, databaseAlias);
-#else
   return function_pointers_.DbUndeploy(ipAddress, databaseAlias);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::DisconnectTerminals(nxSessionRef_t session, const char source[], const char destination[])
@@ -455,11 +335,7 @@ nxStatus_t NiXnetLibrary::DisconnectTerminals(nxSessionRef_t session, const char
   if (!function_pointers_.DisconnectTerminals) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxDisconnectTerminals.");
   }
-#if defined(_MSC_VER)
-  return nxDisconnectTerminals(session, source, destination);
-#else
   return function_pointers_.DisconnectTerminals(session, source, destination);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::Flush(nxSessionRef_t session)
@@ -467,11 +343,7 @@ nxStatus_t NiXnetLibrary::Flush(nxSessionRef_t session)
   if (!function_pointers_.Flush) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxFlush.");
   }
-#if defined(_MSC_VER)
-  return nxFlush(session);
-#else
   return function_pointers_.Flush(session);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::FutureTimeTrigger(nxSessionRef_t session, nxTimestamp1ns_t when, u32 timescale)
@@ -479,11 +351,7 @@ nxStatus_t NiXnetLibrary::FutureTimeTrigger(nxSessionRef_t session, nxTimestamp1
   if (!function_pointers_.FutureTimeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxFutureTimeTrigger.");
   }
-#if defined(_MSC_VER)
-  return nxFutureTimeTrigger(session, when, timescale);
-#else
   return function_pointers_.FutureTimeTrigger(session, when, timescale);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::GetProperty(nxSessionRef_t session, u32 propertyID, u32 propertySize, void* propertyValue)
@@ -491,11 +359,7 @@ nxStatus_t NiXnetLibrary::GetProperty(nxSessionRef_t session, u32 propertyID, u3
   if (!function_pointers_.GetProperty) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxGetProperty.");
   }
-#if defined(_MSC_VER)
-  return nxGetProperty(session, propertyID, propertySize, propertyValue);
-#else
   return function_pointers_.GetProperty(session, propertyID, propertySize, propertyValue);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::GetPropertySize(nxSessionRef_t session, u32 propertyID, u32* propertySize)
@@ -503,11 +367,7 @@ nxStatus_t NiXnetLibrary::GetPropertySize(nxSessionRef_t session, u32 propertyID
   if (!function_pointers_.GetPropertySize) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxGetPropertySize.");
   }
-#if defined(_MSC_VER)
-  return nxGetPropertySize(session, propertyID, propertySize);
-#else
   return function_pointers_.GetPropertySize(session, propertyID, propertySize);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::GetSubProperty(nxSessionRef_t session, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue)
@@ -515,11 +375,7 @@ nxStatus_t NiXnetLibrary::GetSubProperty(nxSessionRef_t session, u32 activeIndex
   if (!function_pointers_.GetSubProperty) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxGetSubProperty.");
   }
-#if defined(_MSC_VER)
-  return nxGetSubProperty(session, activeIndex, propertyID, propertySize, propertyValue);
-#else
   return function_pointers_.GetSubProperty(session, activeIndex, propertyID, propertySize, propertyValue);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::GetSubPropertySize(nxSessionRef_t session, u32 activeIndex, u32 propertyID, u32* propertySize)
@@ -527,11 +383,7 @@ nxStatus_t NiXnetLibrary::GetSubPropertySize(nxSessionRef_t session, u32 activeI
   if (!function_pointers_.GetSubPropertySize) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxGetSubPropertySize.");
   }
-#if defined(_MSC_VER)
-  return nxGetSubPropertySize(session, activeIndex, propertyID, propertySize);
-#else
   return function_pointers_.GetSubPropertySize(session, activeIndex, propertyID, propertySize);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ReadFrame(nxSessionRef_t session, u8 buffer[], u32 sizeOfBuffer, f64 timeout, u32* numberOfBytesReturned)
@@ -539,11 +391,7 @@ nxStatus_t NiXnetLibrary::ReadFrame(nxSessionRef_t session, u8 buffer[], u32 siz
   if (!function_pointers_.ReadFrame) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxReadFrame.");
   }
-#if defined(_MSC_VER)
-  return nxReadFrame(session, buffer, sizeOfBuffer, timeout, numberOfBytesReturned);
-#else
   return function_pointers_.ReadFrame(session, buffer, sizeOfBuffer, timeout, numberOfBytesReturned);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ReadSignalSinglePoint(nxSessionRef_t session, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer)
@@ -551,11 +399,7 @@ nxStatus_t NiXnetLibrary::ReadSignalSinglePoint(nxSessionRef_t session, f64 valu
   if (!function_pointers_.ReadSignalSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxReadSignalSinglePoint.");
   }
-#if defined(_MSC_VER)
-  return nxReadSignalSinglePoint(session, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer);
-#else
   return function_pointers_.ReadSignalSinglePoint(session, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ReadSignalWaveform(nxSessionRef_t session, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned)
@@ -563,11 +407,7 @@ nxStatus_t NiXnetLibrary::ReadSignalWaveform(nxSessionRef_t session, f64 timeout
   if (!function_pointers_.ReadSignalWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxReadSignalWaveform.");
   }
-#if defined(_MSC_VER)
-  return nxReadSignalWaveform(session, timeout, startTime, deltaTime, valueBuffer, sizeOfValueBuffer, numberOfValuesReturned);
-#else
   return function_pointers_.ReadSignalWaveform(session, timeout, startTime, deltaTime, valueBuffer, sizeOfValueBuffer, numberOfValuesReturned);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ReadSignalXY(nxSessionRef_t session, nxTimestamp100ns_t* timeLimit, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer)
@@ -575,11 +415,7 @@ nxStatus_t NiXnetLibrary::ReadSignalXY(nxSessionRef_t session, nxTimestamp100ns_
   if (!function_pointers_.ReadSignalXY) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxReadSignalXY.");
   }
-#if defined(_MSC_VER)
-  return nxReadSignalXY(session, timeLimit, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
-#else
   return function_pointers_.ReadSignalXY(session, timeLimit, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ReadState(nxSessionRef_t session, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault)
@@ -587,11 +423,7 @@ nxStatus_t NiXnetLibrary::ReadState(nxSessionRef_t session, u32 stateID, u32 sta
   if (!function_pointers_.ReadState) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxReadState.");
   }
-#if defined(_MSC_VER)
-  return nxReadState(session, stateID, stateSize, stateValue, fault);
-#else
   return function_pointers_.ReadState(session, stateID, stateSize, stateValue, fault);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::ReadStateTimeTrigger(nxSessionRef_t session, f64 timeout, u32 stateSize, _nxTimeLocalNetwork_t* stateValue)
@@ -599,11 +431,7 @@ nxStatus_t NiXnetLibrary::ReadStateTimeTrigger(nxSessionRef_t session, f64 timeo
   if (!function_pointers_.ReadStateTimeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxReadStateTimeTrigger.");
   }
-#if defined(_MSC_VER)
-  return nxReadStateTimeTrigger(session, timeout, stateSize, stateValue);
-#else
   return function_pointers_.ReadStateTimeTrigger(session, timeout, stateSize, stateValue);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::SetProperty(nxSessionRef_t session, u32 propertyID, u32 propertySize, void* propertyValue)
@@ -611,11 +439,7 @@ nxStatus_t NiXnetLibrary::SetProperty(nxSessionRef_t session, u32 propertyID, u3
   if (!function_pointers_.SetProperty) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxSetProperty.");
   }
-#if defined(_MSC_VER)
-  return nxSetProperty(session, propertyID, propertySize, propertyValue);
-#else
   return function_pointers_.SetProperty(session, propertyID, propertySize, propertyValue);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::SetSubProperty(nxSessionRef_t session, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue)
@@ -623,11 +447,7 @@ nxStatus_t NiXnetLibrary::SetSubProperty(nxSessionRef_t session, u32 activeIndex
   if (!function_pointers_.SetSubProperty) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxSetSubProperty.");
   }
-#if defined(_MSC_VER)
-  return nxSetSubProperty(session, activeIndex, propertyID, propertySize, propertyValue);
-#else
   return function_pointers_.SetSubProperty(session, activeIndex, propertyID, propertySize, propertyValue);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::Start(nxSessionRef_t session, u32 scope)
@@ -635,11 +455,7 @@ nxStatus_t NiXnetLibrary::Start(nxSessionRef_t session, u32 scope)
   if (!function_pointers_.Start) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxStart.");
   }
-#if defined(_MSC_VER)
-  return nxStart(session, scope);
-#else
   return function_pointers_.Start(session, scope);
-#endif
 }
 
 void NiXnetLibrary::StatusToString(nxStatus_t statusID, u32 sizeofString, char statusDescription[2048])
@@ -647,11 +463,7 @@ void NiXnetLibrary::StatusToString(nxStatus_t statusID, u32 sizeofString, char s
   if (!function_pointers_.StatusToString) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxStatusToString.");
   }
-#if defined(_MSC_VER)
-  return nxStatusToString(statusID, sizeofString, statusDescription);
-#else
   return function_pointers_.StatusToString(statusID, sizeofString, statusDescription);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::Stop(nxSessionRef_t session, u32 scope)
@@ -659,11 +471,7 @@ nxStatus_t NiXnetLibrary::Stop(nxSessionRef_t session, u32 scope)
   if (!function_pointers_.Stop) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxStop.");
   }
-#if defined(_MSC_VER)
-  return nxStop(session, scope);
-#else
   return function_pointers_.Stop(session, scope);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::SystemClose(nxSessionRef_t system)
@@ -671,11 +479,7 @@ nxStatus_t NiXnetLibrary::SystemClose(nxSessionRef_t system)
   if (!function_pointers_.SystemClose) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxSystemClose.");
   }
-#if defined(_MSC_VER)
-  return nxSystemClose(system);
-#else
   return function_pointers_.SystemClose(system);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::SystemOpen(nxSessionRef_t* system)
@@ -683,11 +487,7 @@ nxStatus_t NiXnetLibrary::SystemOpen(nxSessionRef_t* system)
   if (!function_pointers_.SystemOpen) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxSystemOpen.");
   }
-#if defined(_MSC_VER)
-  return nxSystemOpen(system);
-#else
   return function_pointers_.SystemOpen(system);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::Wait(nxSessionRef_t session, u32 condition, u32 paramIn, f64 timeout, u32* paramOut)
@@ -695,11 +495,7 @@ nxStatus_t NiXnetLibrary::Wait(nxSessionRef_t session, u32 condition, u32 paramI
   if (!function_pointers_.Wait) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxWait.");
   }
-#if defined(_MSC_VER)
-  return nxWait(session, condition, paramIn, timeout, paramOut);
-#else
   return function_pointers_.Wait(session, condition, paramIn, timeout, paramOut);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::WriteFrame(nxSessionRef_t session, u8* buffer, u32 numberOfBytesForFrames, f64 timeout)
@@ -707,11 +503,7 @@ nxStatus_t NiXnetLibrary::WriteFrame(nxSessionRef_t session, u8* buffer, u32 num
   if (!function_pointers_.WriteFrame) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxWriteFrame.");
   }
-#if defined(_MSC_VER)
-  return nxWriteFrame(session, buffer, numberOfBytesForFrames, timeout);
-#else
   return function_pointers_.WriteFrame(session, buffer, numberOfBytesForFrames, timeout);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::WriteSignalSinglePoint(nxSessionRef_t session, f64 valueBuffer[], u32 sizeOfValueBuffer)
@@ -719,11 +511,7 @@ nxStatus_t NiXnetLibrary::WriteSignalSinglePoint(nxSessionRef_t session, f64 val
   if (!function_pointers_.WriteSignalSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxWriteSignalSinglePoint.");
   }
-#if defined(_MSC_VER)
-  return nxWriteSignalSinglePoint(session, valueBuffer, sizeOfValueBuffer);
-#else
   return function_pointers_.WriteSignalSinglePoint(session, valueBuffer, sizeOfValueBuffer);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::WriteSignalWaveform(nxSessionRef_t session, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer)
@@ -731,11 +519,7 @@ nxStatus_t NiXnetLibrary::WriteSignalWaveform(nxSessionRef_t session, f64 timeou
   if (!function_pointers_.WriteSignalWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxWriteSignalWaveform.");
   }
-#if defined(_MSC_VER)
-  return nxWriteSignalWaveform(session, timeout, valueBuffer, sizeOfValueBuffer);
-#else
   return function_pointers_.WriteSignalWaveform(session, timeout, valueBuffer, sizeOfValueBuffer);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::WriteSignalXY(nxSessionRef_t session, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer)
@@ -743,11 +527,7 @@ nxStatus_t NiXnetLibrary::WriteSignalXY(nxSessionRef_t session, f64 timeout, f64
   if (!function_pointers_.WriteSignalXY) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxWriteSignalXY.");
   }
-#if defined(_MSC_VER)
-  return nxWriteSignalXY(session, timeout, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
-#else
   return function_pointers_.WriteSignalXY(session, timeout, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
-#endif
 }
 
 nxStatus_t NiXnetLibrary::WriteState(nxSessionRef_t session, u32 stateID, u32 stateSize, void* stateValue)
@@ -755,11 +535,7 @@ nxStatus_t NiXnetLibrary::WriteState(nxSessionRef_t session, u32 stateID, u32 st
   if (!function_pointers_.WriteState) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxWriteState.");
   }
-#if defined(_MSC_VER)
-  return nxWriteState(session, stateID, stateSize, stateValue);
-#else
   return function_pointers_.WriteState(session, stateID, stateSize, stateValue);
-#endif
 }
 
 }  // namespace nixnet_grpc

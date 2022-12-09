@@ -40,11 +40,7 @@ ViStatus NiFakeExtensionLibrary::AddCoolFunctionality(ViSession vi, ViInt32 para
   if (!function_pointers_.AddCoolFunctionality) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeExtension_AddCoolFunctionality.");
   }
-#if defined(_MSC_VER)
-  return niFakeExtension_AddCoolFunctionality(vi, param);
-#else
   return function_pointers_.AddCoolFunctionality(vi, param);
-#endif
 }
 
 }  // namespace nifake_extension_grpc
