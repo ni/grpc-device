@@ -214,6 +214,7 @@ set(nidriver_service_srcs
 # Proto file
 #----------------------------------------------------------------------
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
+get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/deviceid_restricted.proto" ABSOLUTE)
 get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
 get_filename_component(session_utilities_proto "source/protobuf/session_utilities.proto" ABSOLUTE)
 get_filename_component(nidevice_proto "source/protobuf/nidevice.proto" ABSOLUTE)
@@ -265,7 +266,10 @@ set(calibrationoperations_restricted_proto_srcs "${proto_srcs_dir}/calibrationop
 set(calibrationoperations_restricted_proto_hdrs "${proto_srcs_dir}/calibrationoperations_restricted.pb.h")
 set(calibrationoperations_restricted_grpc_srcs "${proto_srcs_dir}/calibrationoperations_restricted.grpc.pb.cc")
 set(calibrationoperations_restricted_grpc_hdrs "${proto_srcs_dir}/calibrationoperations_restricted.grpc.pb.h")
-
+set(deviceid_restricted_proto_srcs "${proto_srcs_dir}/deviceid_restricted.pb.cc")
+set(deviceid_restricted_proto_hdrs "${proto_srcs_dir}/deviceid_restricted.pb.h")
+set(deviceid_restricted_grpc_srcs "${proto_srcs_dir}/deviceid_restricted.grpc.pb.cc")
+set(deviceid_restricted_grpc_hdrs "${proto_srcs_dir}/deviceid_restricted.grpc.pb.h")
 
 GenerateGrpcSources(
   PROTO
@@ -313,6 +317,16 @@ GenerateGrpcSources(
     "${calibrationoperations_restricted_proto_hdrs}"
     "${calibrationoperations_restricted_grpc_srcs}"
     "${calibrationoperations_restricted_grpc_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
+    ${deviceid_restricted_proto}
+  OUTPUT
+    "${deviceid_restricted_proto_srcs}"
+    "${deviceid_restricted_proto_hdrs}"
+    "${deviceid_restricted_grpc_srcs}"
+    "${deviceid_restricted_grpc_hdrs}"
 )
 
 
@@ -365,6 +379,8 @@ add_executable(ni_grpc_device_server
    ${debugsessionproperties_restricted_grpc_srcs}
    ${calibrationoperations_restricted_proto_srcs}
    ${calibrationoperations_restricted_grpc_srcs}
+   ${deviceid_restricted_proto_srcs}
+   ${deviceid_restricted_grpc_srcs}
    ${nidriver_service_srcs})
 
 if(WIN32)
@@ -461,6 +477,8 @@ add_executable(IntegrationTestsRunner
     ${debugsessionproperties_restricted_grpc_srcs}
     ${calibrationoperations_restricted_proto_srcs}
     ${calibrationoperations_restricted_grpc_srcs}
+    ${deviceid_restricted_proto_srcs}
+    ${deviceid_restricted_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
@@ -529,6 +547,8 @@ add_executable(UnitTestsRunner
     ${debugsessionproperties_restricted_grpc_srcs}
     ${calibrationoperations_restricted_proto_srcs}
     ${calibrationoperations_restricted_grpc_srcs}
+    ${deviceid_restricted_proto_srcs}
+    ${deviceid_restricted_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_extension.pb.cc"
@@ -632,6 +652,8 @@ set(system_test_runner_sources
   ${debugsessionproperties_restricted_grpc_srcs}
   ${calibrationoperations_restricted_proto_srcs}
   ${calibrationoperations_restricted_grpc_srcs}
+  ${deviceid_restricted_proto_srcs}
+  ${deviceid_restricted_grpc_srcs}
   ${nidriver_service_srcs}
   ${nidriver_client_srcs}
 )
