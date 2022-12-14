@@ -24,6 +24,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus Close(ViSession vi) = 0;
   virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
   virtual ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved) = 0;
+  virtual ViStatus ConfigureAbc(ViSession vi) = 0;
   virtual ViStatus Control4022(ViString resourceName, ViInt32 configuration) = 0;
   virtual ViStatus CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]) = 0;
   virtual ViStatus CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut) = 0;
@@ -78,7 +79,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size) = 0;
   virtual ViStatus MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size) = 0;
   virtual ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber) = 0;
-  virtual ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString) = 0;
+  virtual ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViConstString aString) = 0;
   virtual ViStatus PoorlyNamedSimpleFunction(ViSession vi) = 0;
   virtual ViStatus Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading) = 0;
   virtual ViStatus ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* bufferSize) = 0;

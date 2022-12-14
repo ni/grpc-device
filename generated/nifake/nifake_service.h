@@ -50,6 +50,7 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response) override;
   ::grpc::Status CommandWithReservedParam(::grpc::ServerContext* context, const CommandWithReservedParamRequest* request, CommandWithReservedParamResponse* response) override;
+  ::grpc::Status ConfigureAbc(::grpc::ServerContext* context, const ConfigureAbcRequest* request, ConfigureAbcResponse* response) override;
   ::grpc::Status Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response) override;
   ::grpc::Status CreateConfigurationList(::grpc::ServerContext* context, const CreateConfigurationListRequest* request, CreateConfigurationListResponse* response) override;
   ::grpc::Status CustomNestedStructRoundtrip(::grpc::ServerContext* context, const CustomNestedStructRoundtripRequest* request, CustomNestedStructRoundtripResponse* response) override;

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d49
+# This file is generated from NI-FAKE API metadata version 23.0.0d96
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -231,6 +231,20 @@ functions = {
                 'name': 'reserved',
                 'pointer': True,
                 'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureAbc': {
+        'cname': 'niFake_ConfigureABC',
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus'
@@ -2083,27 +2097,10 @@ functions = {
                 'type': 'ViReal64'
             },
             {
-                'cppName': 'stringSize',
-                'determine_size_from': [
-                    'aString'
-                ],
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'include_in_proto': False,
-                'is_size_param': True,
-                'linked_params_are_optional': False,
-                'name': 'stringSize',
-                'type': 'ViInt32'
-            },
-            {
                 'cppName': 'aString',
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'aString',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'stringSize'
-                },
                 'type': 'ViConstString'
             }
         ],
@@ -2579,7 +2576,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'int64',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViInt64'
             }
         ],
@@ -2648,7 +2645,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViConstString'
             }
         ],

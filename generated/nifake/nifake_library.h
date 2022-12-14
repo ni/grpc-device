@@ -27,6 +27,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus Close(ViSession vi);
   ViStatus CloseExtCal(ViSession vi, ViInt32 action);
   ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved);
+  ViStatus ConfigureAbc(ViSession vi);
   ViStatus Control4022(ViString resourceName, ViInt32 configuration);
   ViStatus CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]);
   ViStatus CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut);
@@ -81,7 +82,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size);
   ViStatus MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size);
   ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber);
-  ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString);
+  ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViConstString aString);
   ViStatus PoorlyNamedSimpleFunction(ViSession vi);
   ViStatus Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading);
   ViStatus ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* bufferSize);
@@ -118,6 +119,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using ClosePtr = decltype(&niFake_close);
   using CloseExtCalPtr = decltype(&niFake_CloseExtCal);
   using CommandWithReservedParamPtr = decltype(&niFake_CommandWithReservedParam);
+  using ConfigureAbcPtr = decltype(&niFake_ConfigureABC);
   using Control4022Ptr = decltype(&niFake_4022Control);
   using CreateConfigurationListPtr = decltype(&niFake_CreateConfigurationList);
   using CustomNestedStructRoundtripPtr = decltype(&niFake_CustomNestedStructRoundtrip);
@@ -209,6 +211,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     ClosePtr Close;
     CloseExtCalPtr CloseExtCal;
     CommandWithReservedParamPtr CommandWithReservedParam;
+    ConfigureAbcPtr ConfigureAbc;
     Control4022Ptr Control4022;
     CreateConfigurationListPtr CreateConfigurationList;
     CustomNestedStructRoundtripPtr CustomNestedStructRoundtrip;

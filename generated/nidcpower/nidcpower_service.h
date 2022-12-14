@@ -67,7 +67,6 @@ public:
   ::grpc::Status ConfigureDigitalEdgeSourceTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeSourceTriggerWithChannelsRequest* request, ConfigureDigitalEdgeSourceTriggerWithChannelsResponse* response) override;
   ::grpc::Status ConfigureDigitalEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerRequest* request, ConfigureDigitalEdgeStartTriggerResponse* response) override;
   ::grpc::Status ConfigureDigitalEdgeStartTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerWithChannelsRequest* request, ConfigureDigitalEdgeStartTriggerWithChannelsResponse* response) override;
-  ::grpc::Status ConfigureLCRCompensation(::grpc::ServerContext* context, const ConfigureLCRCompensationRequest* request, ConfigureLCRCompensationResponse* response) override;
   ::grpc::Status ConfigureLCRCustomCableCompensation(::grpc::ServerContext* context, const ConfigureLCRCustomCableCompensationRequest* request, ConfigureLCRCustomCableCompensationResponse* response) override;
   ::grpc::Status ConfigureOutputEnabled(::grpc::ServerContext* context, const ConfigureOutputEnabledRequest* request, ConfigureOutputEnabledResponse* response) override;
   ::grpc::Status ConfigureOutputFunction(::grpc::ServerContext* context, const ConfigureOutputFunctionRequest* request, ConfigureOutputFunctionResponse* response) override;
@@ -142,7 +141,6 @@ public:
   ::grpc::Status GetExtCalLastDateAndTime(::grpc::ServerContext* context, const GetExtCalLastDateAndTimeRequest* request, GetExtCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetExtCalLastTemp(::grpc::ServerContext* context, const GetExtCalLastTempRequest* request, GetExtCalLastTempResponse* response) override;
   ::grpc::Status GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response) override;
-  ::grpc::Status GetLCRCompensationData(::grpc::ServerContext* context, const GetLCRCompensationDataRequest* request, GetLCRCompensationDataResponse* response) override;
   ::grpc::Status GetLCRCompensationLastDateAndTime(::grpc::ServerContext* context, const GetLCRCompensationLastDateAndTimeRequest* request, GetLCRCompensationLastDateAndTimeResponse* response) override;
   ::grpc::Status GetLCRCustomCableCompensationData(::grpc::ServerContext* context, const GetLCRCustomCableCompensationDataRequest* request, GetLCRCustomCableCompensationDataResponse* response) override;
   ::grpc::Status GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response) override;

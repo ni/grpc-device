@@ -48,7 +48,6 @@ ConfigureDigitalEdgeSourceTriggerResponse configure_digital_edge_source_trigger(
 ConfigureDigitalEdgeSourceTriggerWithChannelsResponse configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
 ConfigureDigitalEdgeStartTriggerResponse configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
 ConfigureDigitalEdgeStartTriggerWithChannelsResponse configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureLCRCompensationResponse configure_lcr_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& compensation_data);
 ConfigureLCRCustomCableCompensationResponse configure_lcr_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& custom_cable_compensation_data);
 ConfigureOutputEnabledResponse configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled);
 ConfigureOutputFunctionResponse configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputFunction, pb::int32>& function);
@@ -123,7 +122,6 @@ GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi
 GetExtCalLastDateAndTimeResponse get_ext_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExtCalLastTempResponse get_ext_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExtCalRecommendedIntervalResponse get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetLCRCompensationDataResponse get_lcr_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 GetLCRCompensationLastDateAndTimeResponse get_lcr_compensation_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<LCRCompensationType, pb::int32>& compensation_type);
 GetLCRCustomCableCompensationDataResponse get_lcr_custom_cable_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 GetNextCoercionRecordResponse get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi);

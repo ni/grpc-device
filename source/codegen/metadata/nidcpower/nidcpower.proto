@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-DCPower API metadata version 23.0.0d288
+// This file is generated from NI-DCPower API metadata version 23.0.0d318
 //---------------------------------------------------------------------
 // Proto file for the NI-DCPower Metadata
 //---------------------------------------------------------------------
@@ -43,7 +43,6 @@ service NiDCPower {
   rpc ConfigureDigitalEdgeSourceTriggerWithChannels(ConfigureDigitalEdgeSourceTriggerWithChannelsRequest) returns (ConfigureDigitalEdgeSourceTriggerWithChannelsResponse);
   rpc ConfigureDigitalEdgeStartTrigger(ConfigureDigitalEdgeStartTriggerRequest) returns (ConfigureDigitalEdgeStartTriggerResponse);
   rpc ConfigureDigitalEdgeStartTriggerWithChannels(ConfigureDigitalEdgeStartTriggerWithChannelsRequest) returns (ConfigureDigitalEdgeStartTriggerWithChannelsResponse);
-  rpc ConfigureLCRCompensation(ConfigureLCRCompensationRequest) returns (ConfigureLCRCompensationResponse);
   rpc ConfigureLCRCustomCableCompensation(ConfigureLCRCustomCableCompensationRequest) returns (ConfigureLCRCustomCableCompensationResponse);
   rpc ConfigureOutputEnabled(ConfigureOutputEnabledRequest) returns (ConfigureOutputEnabledResponse);
   rpc ConfigureOutputFunction(ConfigureOutputFunctionRequest) returns (ConfigureOutputFunctionResponse);
@@ -118,7 +117,6 @@ service NiDCPower {
   rpc GetExtCalLastDateAndTime(GetExtCalLastDateAndTimeRequest) returns (GetExtCalLastDateAndTimeResponse);
   rpc GetExtCalLastTemp(GetExtCalLastTempRequest) returns (GetExtCalLastTempResponse);
   rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
-  rpc GetLCRCompensationData(GetLCRCompensationDataRequest) returns (GetLCRCompensationDataResponse);
   rpc GetLCRCompensationLastDateAndTime(GetLCRCompensationLastDateAndTimeRequest) returns (GetLCRCompensationLastDateAndTimeResponse);
   rpc GetLCRCustomCableCompensationData(GetLCRCustomCableCompensationDataRequest) returns (GetLCRCustomCableCompensationDataResponse);
   rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
@@ -943,16 +941,6 @@ message ConfigureDigitalEdgeStartTriggerWithChannelsResponse {
   int32 status = 1;
 }
 
-message ConfigureLCRCompensationRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  bytes compensation_data = 3;
-}
-
-message ConfigureLCRCompensationResponse {
-  int32 status = 1;
-}
-
 message ConfigureLCRCustomCableCompensationRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1698,16 +1686,6 @@ message GetExtCalRecommendedIntervalRequest {
 message GetExtCalRecommendedIntervalResponse {
   int32 status = 1;
   sint32 months = 2;
-}
-
-message GetLCRCompensationDataRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-}
-
-message GetLCRCompensationDataResponse {
-  int32 status = 1;
-  bytes compensation_data = 2;
 }
 
 message GetLCRCompensationLastDateAndTimeRequest {

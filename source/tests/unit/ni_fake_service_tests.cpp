@@ -1316,9 +1316,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
           an_int_enum,
           a_float,
           expected_float_enum_value,
-          expected_string_size,
-          _))
-      .With(Args<8, 7>(ElementsAreArray(a_string, expected_string_size)))
+          StrEq(a_string)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -1363,9 +1361,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_C
           an_int_enum,
           a_float,
           expected_float_enum_value,
-          expected_string_size,
-          _))
-      .With(Args<8, 7>(ElementsAreArray(a_string, expected_string_size)))
+          StrEq(a_string)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -1410,9 +1406,7 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValuesNo
           expected_int_enum_value,
           a_float,
           expected_float_enum_value,
-          expected_string_size,
-          _))
-      .With(Args<8, 7>(ElementsAreArray(a_string, expected_string_size)))
+          StrEq(a_string)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;

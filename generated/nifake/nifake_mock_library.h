@@ -26,6 +26,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, Close, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CloseExtCal, (ViSession vi, ViInt32 action), (override));
   MOCK_METHOD(ViStatus, CommandWithReservedParam, (ViSession vi, ViBoolean* reserved), (override));
+  MOCK_METHOD(ViStatus, ConfigureAbc, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, Control4022, (ViString resourceName, ViInt32 configuration), (override));
   MOCK_METHOD(ViStatus, CreateConfigurationList, (ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]), (override));
   MOCK_METHOD(ViStatus, CustomNestedStructRoundtrip, (CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut), (override));
@@ -80,7 +81,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, MultipleArraysSameSize, (ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size), (override));
   MOCK_METHOD(ViStatus, MultipleArraysSameSizeWithOptional, (ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size), (override));
   MOCK_METHOD(ViStatus, OneInputFunction, (ViSession vi, ViInt32 aNumber), (override));
-  MOCK_METHOD(ViStatus, ParametersAreMultipleTypes, (ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString), (override));
+  MOCK_METHOD(ViStatus, ParametersAreMultipleTypes, (ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViConstString aString), (override));
   MOCK_METHOD(ViStatus, PoorlyNamedSimpleFunction, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, Read, (ViSession vi, ViReal64 maximumTime, ViReal64* reading), (override));
   MOCK_METHOD(ViStatus, ReadDataWithInOutIviTwist, (ViInt32 data[], ViInt32* bufferSize), (override));

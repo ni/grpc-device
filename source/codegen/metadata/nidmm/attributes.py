@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 23.0.0d46
+# This file is generated from NI-DMM API metadata version 23.0.0d85
 attributes = {
     1050002: {
         'codegen_method': 'public',

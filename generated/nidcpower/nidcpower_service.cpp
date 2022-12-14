@@ -919,32 +919,6 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDCPowerService::ConfigureLCRCompensation(::grpc::ServerContext* context, const ConfigureLCRCompensationRequest* request, ConfigureLCRCompensationResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
-      auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 compensation_data_size = static_cast<ViInt32>(request->compensation_data().size());
-      ViInt8* compensation_data = (ViInt8*)request->compensation_data().c_str();
-      auto status = library_->ConfigureLCRCompensation(vi, channel_name, compensation_data_size, compensation_data);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::ConfigureLCRCustomCableCompensation(::grpc::ServerContext* context, const ConfigureLCRCustomCableCompensationRequest* request, ConfigureLCRCustomCableCompensationResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2988,45 +2962,6 @@ namespace nidcpower_grpc {
       response->set_status(status);
       response->set_months(months);
       return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDCPowerService::GetLCRCompensationData(::grpc::ServerContext* context, const GetLCRCompensationDataRequest* request, GetLCRCompensationDataResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
-      auto channel_name = channel_name_mbcs.c_str();
-
-      while (true) {
-        auto status = library_->GetLCRCompensationData(vi, channel_name, 0, nullptr);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        ViInt32 compensation_data_size = status;
-
-        std::string compensation_data(compensation_data_size, '\0');
-        status = library_->GetLCRCompensationData(vi, channel_name, compensation_data_size, (ViInt8*)compensation_data.data());
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(compensation_data_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->set_status(status);
-        response->set_compensation_data(compensation_data);
-        return ::grpc::Status::OK;
-      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
