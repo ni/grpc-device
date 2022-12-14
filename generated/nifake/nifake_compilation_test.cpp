@@ -52,6 +52,11 @@ ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved)
   return niFake_CommandWithReservedParam(vi, reserved);
 }
 
+ViStatus ConfigureAbc(ViSession vi)
+{
+  return niFake_ConfigureABC(vi);
+}
+
 ViStatus Control4022(ViString resourceName, ViInt32 configuration)
 {
   return niFake_4022Control(resourceName, configuration);
@@ -317,9 +322,9 @@ ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber)
   return niFake_OneInputFunction(vi, aNumber);
 }
 
-ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString)
+ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViConstString aString)
 {
-  return niFake_ParametersAreMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, stringSize, aString);
+  return niFake_ParametersAreMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, aString);
 }
 
 ViStatus PoorlyNamedSimpleFunction(ViSession vi)

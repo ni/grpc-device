@@ -30,6 +30,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niFake_close"));
   function_pointers_.CloseExtCal = reinterpret_cast<CloseExtCalPtr>(shared_library_.get_function_pointer("niFake_CloseExtCal"));
   function_pointers_.CommandWithReservedParam = reinterpret_cast<CommandWithReservedParamPtr>(shared_library_.get_function_pointer("niFake_CommandWithReservedParam"));
+  function_pointers_.ConfigureAbc = reinterpret_cast<ConfigureAbcPtr>(shared_library_.get_function_pointer("niFake_ConfigureABC"));
   function_pointers_.Control4022 = reinterpret_cast<Control4022Ptr>(shared_library_.get_function_pointer("niFake_4022Control"));
   function_pointers_.CreateConfigurationList = reinterpret_cast<CreateConfigurationListPtr>(shared_library_.get_function_pointer("niFake_CreateConfigurationList"));
   function_pointers_.CustomNestedStructRoundtrip = reinterpret_cast<CustomNestedStructRoundtripPtr>(shared_library_.get_function_pointer("niFake_CustomNestedStructRoundtrip"));
@@ -193,6 +194,14 @@ ViStatus NiFakeLibrary::CommandWithReservedParam(ViSession vi, ViBoolean* reserv
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_CommandWithReservedParam.");
   }
   return function_pointers_.CommandWithReservedParam(vi, reserved);
+}
+
+ViStatus NiFakeLibrary::ConfigureAbc(ViSession vi)
+{
+  if (!function_pointers_.ConfigureAbc) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_ConfigureABC.");
+  }
+  return function_pointers_.ConfigureAbc(vi);
 }
 
 ViStatus NiFakeLibrary::Control4022(ViString resourceName, ViInt32 configuration)
@@ -627,12 +636,12 @@ ViStatus NiFakeLibrary::OneInputFunction(ViSession vi, ViInt32 aNumber)
   return function_pointers_.OneInputFunction(vi, aNumber);
 }
 
-ViStatus NiFakeLibrary::ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString)
+ViStatus NiFakeLibrary::ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViConstString aString)
 {
   if (!function_pointers_.ParametersAreMultipleTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_ParametersAreMultipleTypes.");
   }
-  return function_pointers_.ParametersAreMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, stringSize, aString);
+  return function_pointers_.ParametersAreMultipleTypes(vi, aBoolean, anInt32, anInt64, anIntEnum, aFloat, aFloatEnum, aString);
 }
 
 ViStatus NiFakeLibrary::PoorlyNamedSimpleFunction(ViSession vi)

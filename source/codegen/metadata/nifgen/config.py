@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0d39
+# This file is generated from NI-FGEN API metadata version 23.0.0d57
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'
         ]
     },
-    'api_version': '23.0.0',
+    'api_version': '23.0.0d57',
     'c_function_prefix': 'niFgen_',
     'c_header': 'niFgen.h',
     'close_function': 'Close',

@@ -177,6 +177,23 @@ command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& v
   return response;
 }
 
+ConfigureAbcResponse
+configure_abc(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureAbcRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = ConfigureAbcResponse{};
+
+  raise_if_error(
+      stub->ConfigureAbc(&context, request, &response),
+      context);
+
+  return response;
+}
+
 Control4022Response
 control4022(const StubPtr& stub, const pb::string& resource_name, const pb::int32& configuration)
 {

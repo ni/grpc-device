@@ -273,6 +273,28 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ConfigureAbc(::grpc::ServerContext* context, const ConfigureAbcRequest* request, ConfigureAbcResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto status = library_->ConfigureAbc(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response)
   {
     if (context->IsCancelled()) {
@@ -1951,10 +1973,9 @@ namespace nifake_grpc {
         }
       }
 
-      ViInt32 string_size = static_cast<ViInt32>(convert_from_grpc<std::string>(request->a_string()).size());
       auto a_string_mbcs = convert_from_grpc<std::string>(request->a_string());
       auto a_string = a_string_mbcs.c_str();
-      auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
+      auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, a_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }

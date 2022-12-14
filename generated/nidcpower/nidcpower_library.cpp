@@ -47,7 +47,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureDigitalEdgeSourceTriggerWithChannels = reinterpret_cast<ConfigureDigitalEdgeSourceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeSourceTriggerWithChannels"));
   function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeStartTrigger"));
   function_pointers_.ConfigureDigitalEdgeStartTriggerWithChannels = reinterpret_cast<ConfigureDigitalEdgeStartTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeStartTriggerWithChannels"));
-  function_pointers_.ConfigureLCRCompensation = reinterpret_cast<ConfigureLCRCompensationPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureLCRCompensation"));
   function_pointers_.ConfigureLCRCustomCableCompensation = reinterpret_cast<ConfigureLCRCustomCableCompensationPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureLCRCustomCableCompensation"));
   function_pointers_.ConfigureOutputEnabled = reinterpret_cast<ConfigureOutputEnabledPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputEnabled"));
   function_pointers_.ConfigureOutputFunction = reinterpret_cast<ConfigureOutputFunctionPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputFunction"));
@@ -122,7 +121,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niDCPower_GetExtCalLastDateAndTime"));
   function_pointers_.GetExtCalLastTemp = reinterpret_cast<GetExtCalLastTempPtr>(shared_library_.get_function_pointer("niDCPower_GetExtCalLastTemp"));
   function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_.get_function_pointer("niDCPower_GetExtCalRecommendedInterval"));
-  function_pointers_.GetLCRCompensationData = reinterpret_cast<GetLCRCompensationDataPtr>(shared_library_.get_function_pointer("niDCPower_GetLCRCompensationData"));
   function_pointers_.GetLCRCompensationLastDateAndTime = reinterpret_cast<GetLCRCompensationLastDateAndTimePtr>(shared_library_.get_function_pointer("niDCPower_GetLCRCompensationLastDateAndTime"));
   function_pointers_.GetLCRCustomCableCompensationData = reinterpret_cast<GetLCRCustomCableCompensationDataPtr>(shared_library_.get_function_pointer("niDCPower_GetLCRCustomCableCompensationData"));
   function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_.get_function_pointer("niDCPower_GetNextCoercionRecord"));
@@ -391,14 +389,6 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeStartTriggerWithChannels(ViSessio
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureDigitalEdgeStartTriggerWithChannels.");
   }
   return function_pointers_.ConfigureDigitalEdgeStartTriggerWithChannels(vi, channelName, inputTerminal, edge);
-}
-
-ViStatus NiDCPowerLibrary::ConfigureLCRCompensation(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[])
-{
-  if (!function_pointers_.ConfigureLCRCompensation) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureLCRCompensation.");
-  }
-  return function_pointers_.ConfigureLCRCompensation(vi, channelName, compensationDataSize, compensationData);
 }
 
 ViStatus NiDCPowerLibrary::ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[])
@@ -991,14 +981,6 @@ ViStatus NiDCPowerLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* m
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetExtCalRecommendedInterval.");
   }
   return function_pointers_.GetExtCalRecommendedInterval(vi, months);
-}
-
-ViStatus NiDCPowerLibrary::GetLCRCompensationData(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[])
-{
-  if (!function_pointers_.GetLCRCompensationData) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetLCRCompensationData.");
-  }
-  return function_pointers_.GetLCRCompensationData(vi, channelName, compensationDataSize, compensationData);
 }
 
 ViStatus NiDCPowerLibrary::GetLCRCompensationLastDateAndTime(ViSession vi, ViConstString channelName, ViInt32 compensationType, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
