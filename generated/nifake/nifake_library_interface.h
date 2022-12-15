@@ -25,6 +25,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
   virtual ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved) = 0;
   virtual ViStatus ConfigureAbc(ViSession vi) = 0;
+  virtual ViStatus ConfigureEnums(ViSession vi, ViInt32 sampleCount, ViReal64 sampleInterval) = 0;
   virtual ViStatus Control4022(ViString resourceName, ViInt32 configuration) = 0;
   virtual ViStatus CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]) = 0;
   virtual ViStatus CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut) = 0;
@@ -33,6 +34,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
+  virtual ViStatus ExportAttributeConfigurationBufferEx(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples) = 0;
   virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
   virtual ViStatus GetANumber(ViSession vi, ViInt16* aNumber) = 0;
@@ -64,6 +66,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]) = 0;
   virtual ViStatus GetViUInt8(ViSession vi, ViUInt8* aUint8Number) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
+  virtual ViStatus ImportAttributeConfigurationBufferEx(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2) = 0;

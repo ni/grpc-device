@@ -152,11 +152,6 @@ ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt3
   return niDCPower_ConfigureOutputFunction(vi, channelName, function);
 }
 
-ViStatus ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range)
-{
-  return niDCPower_ConfigureOutputRange(vi, channelName, rangeType, range);
-}
-
 ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance)
 {
   return niDCPower_ConfigureOutputResistance(vi, channelName, resistance);

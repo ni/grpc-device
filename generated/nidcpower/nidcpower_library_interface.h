@@ -44,7 +44,6 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]) = 0;
   virtual ViStatus ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled) = 0;
   virtual ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function) = 0;
-  virtual ViStatus ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range) = 0;
   virtual ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance) = 0;
   virtual ViStatus ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit) = 0;
   virtual ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerlineFrequency) = 0;

@@ -70,7 +70,6 @@ public:
   ::grpc::Status ConfigureLCRCustomCableCompensation(::grpc::ServerContext* context, const ConfigureLCRCustomCableCompensationRequest* request, ConfigureLCRCustomCableCompensationResponse* response) override;
   ::grpc::Status ConfigureOutputEnabled(::grpc::ServerContext* context, const ConfigureOutputEnabledRequest* request, ConfigureOutputEnabledResponse* response) override;
   ::grpc::Status ConfigureOutputFunction(::grpc::ServerContext* context, const ConfigureOutputFunctionRequest* request, ConfigureOutputFunctionResponse* response) override;
-  ::grpc::Status ConfigureOutputRange(::grpc::ServerContext* context, const ConfigureOutputRangeRequest* request, ConfigureOutputRangeResponse* response) override;
   ::grpc::Status ConfigureOutputResistance(::grpc::ServerContext* context, const ConfigureOutputResistanceRequest* request, ConfigureOutputResistanceResponse* response) override;
   ::grpc::Status ConfigureOvp(::grpc::ServerContext* context, const ConfigureOvpRequest* request, ConfigureOvpResponse* response) override;
   ::grpc::Status ConfigurePowerLineFrequency(::grpc::ServerContext* context, const ConfigurePowerLineFrequencyRequest* request, ConfigurePowerLineFrequencyResponse* response) override;

@@ -27,6 +27,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, CloseExtCal, (ViSession vi, ViInt32 action), (override));
   MOCK_METHOD(ViStatus, CommandWithReservedParam, (ViSession vi, ViBoolean* reserved), (override));
   MOCK_METHOD(ViStatus, ConfigureAbc, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, ConfigureEnums, (ViSession vi, ViInt32 sampleCount, ViReal64 sampleInterval), (override));
   MOCK_METHOD(ViStatus, Control4022, (ViString resourceName, ViInt32 configuration), (override));
   MOCK_METHOD(ViStatus, CreateConfigurationList, (ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]), (override));
   MOCK_METHOD(ViStatus, CustomNestedStructRoundtrip, (CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut), (override));
@@ -35,6 +36,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, EnumInputFunctionWithDefaults, (ViSession vi, ViInt16 aTurtle), (override));
   MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
+  MOCK_METHOD(ViStatus, ExportAttributeConfigurationBufferEx, (ViSession vi, ViInt32 size, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, FetchWaveform, (ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples), (override));
   MOCK_METHOD(ViStatus, GetABoolean, (ViSession vi, ViBoolean* aBoolean), (override));
   MOCK_METHOD(ViStatus, GetANumber, (ViSession vi, ViInt16* aNumber), (override));
@@ -66,6 +68,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, GetViUInt32Array, (ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]), (override));
   MOCK_METHOD(ViStatus, GetViUInt8, (ViSession vi, ViUInt8* aUint8Number), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
+  MOCK_METHOD(ViStatus, ImportAttributeConfigurationBufferEx, (ViSession vi, ViInt32 size, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, InitExtCal, (ViRsrc resourceName, ViString calibrationPassword, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithVarArgs, (ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2), (override));

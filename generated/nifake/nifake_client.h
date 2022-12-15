@@ -32,6 +32,7 @@ CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CloseExtCalResponse close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action);
 CommandWithReservedParamResponse command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ConfigureAbcResponse configure_abc(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ConfigureEnumsResponse configure_enums(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SampleCount, pb::int32>& sample_count, const simple_variant<SampleInterval, double>& sample_interval);
 Control4022Response control4022(const StubPtr& stub, const pb::string& resource_name, const pb::int32& configuration);
 CreateConfigurationListResponse create_configuration_list(const StubPtr& stub, const std::vector<NiFakeAttribute>& list_attribute_ids);
 CustomNestedStructRoundtripResponse custom_nested_struct_roundtrip(const StubPtr& stub, const CustomStructNestedTypedef& nested_custom_type_in);
@@ -40,6 +41,7 @@ EnumArrayOutputFunctionResponse enum_array_output_function(const StubPtr& stub, 
 EnumInputFunctionWithDefaultsResponse enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Turtle, pb::int32>& a_turtle);
 ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ExportAttributeConfigurationBufferExResponse export_attribute_configuration_buffer_ex(const StubPtr& stub, const nidevice_grpc::Session& vi);
 FetchWaveformResponse fetch_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_samples);
 GetABooleanResponse get_a_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetANumberResponse get_a_number(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -71,6 +73,7 @@ GetViInt32ArrayResponse get_vi_int32_array(const StubPtr& stub, const nidevice_g
 GetViUInt32ArrayResponse get_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len);
 GetViUInt8Response get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration);
+ImportAttributeConfigurationBufferExResponse import_attribute_configuration_buffer_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration);
 InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& calibration_password);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitWithVarArgsResponse init_with_var_args(const StubPtr& stub, const pb::string& resource_name, const std::vector<StringAndTurtle>& name_and_turtle);
@@ -98,7 +101,7 @@ ReturnMultipleTypesResponse return_multiple_types(const StubPtr& stub, const nid
 SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const bool& attribute_value);
 SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeInt32AttributeValues, pb::int32>& attribute_value);
 SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const pb::int64& attribute_value);
-SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeReal64AttributeValuesMapped, double>& attribute_value);
+SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeReal64AttributeValues, double>& attribute_value);
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const pb::string& attribute_value);
 SetCustomTypeResponse set_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const FakeCustomStruct& cs);
 SetCustomTypeArrayResponse set_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<FakeCustomStruct>& cs);

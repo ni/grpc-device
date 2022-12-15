@@ -50,7 +50,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureLCRCustomCableCompensation = reinterpret_cast<ConfigureLCRCustomCableCompensationPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureLCRCustomCableCompensation"));
   function_pointers_.ConfigureOutputEnabled = reinterpret_cast<ConfigureOutputEnabledPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputEnabled"));
   function_pointers_.ConfigureOutputFunction = reinterpret_cast<ConfigureOutputFunctionPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputFunction"));
-  function_pointers_.ConfigureOutputRange = reinterpret_cast<ConfigureOutputRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputRange"));
   function_pointers_.ConfigureOutputResistance = reinterpret_cast<ConfigureOutputResistancePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputResistance"));
   function_pointers_.ConfigureOvp = reinterpret_cast<ConfigureOvpPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOVP"));
   function_pointers_.ConfigurePowerLineFrequency = reinterpret_cast<ConfigurePowerLineFrequencyPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePowerLineFrequency"));
@@ -413,14 +412,6 @@ ViStatus NiDCPowerLibrary::ConfigureOutputFunction(ViSession vi, ViConstString c
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureOutputFunction.");
   }
   return function_pointers_.ConfigureOutputFunction(vi, channelName, function);
-}
-
-ViStatus NiDCPowerLibrary::ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range)
-{
-  if (!function_pointers_.ConfigureOutputRange) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureOutputRange.");
-  }
-  return function_pointers_.ConfigureOutputRange(vi, channelName, rangeType, range);
 }
 
 ViStatus NiDCPowerLibrary::ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance)

@@ -47,7 +47,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]);
   ViStatus ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled);
   ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function);
-  ViStatus ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range);
   ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance);
   ViStatus ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit);
   ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerlineFrequency);
@@ -198,7 +197,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using ConfigureLCRCustomCableCompensationPtr = decltype(&niDCPower_ConfigureLCRCustomCableCompensation);
   using ConfigureOutputEnabledPtr = decltype(&niDCPower_ConfigureOutputEnabled);
   using ConfigureOutputFunctionPtr = decltype(&niDCPower_ConfigureOutputFunction);
-  using ConfigureOutputRangePtr = decltype(&niDCPower_ConfigureOutputRange);
   using ConfigureOutputResistancePtr = decltype(&niDCPower_ConfigureOutputResistance);
   using ConfigureOvpPtr = decltype(&niDCPower_ConfigureOVP);
   using ConfigurePowerLineFrequencyPtr = decltype(&niDCPower_ConfigurePowerLineFrequency);
@@ -349,7 +347,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     ConfigureLCRCustomCableCompensationPtr ConfigureLCRCustomCableCompensation;
     ConfigureOutputEnabledPtr ConfigureOutputEnabled;
     ConfigureOutputFunctionPtr ConfigureOutputFunction;
-    ConfigureOutputRangePtr ConfigureOutputRange;
     ConfigureOutputResistancePtr ConfigureOutputResistance;
     ConfigureOvpPtr ConfigureOvp;
     ConfigurePowerLineFrequencyPtr ConfigurePowerLineFrequency;

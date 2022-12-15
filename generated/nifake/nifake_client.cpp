@@ -194,6 +194,39 @@ configure_abc(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+ConfigureEnumsResponse
+configure_enums(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SampleCount, pb::int32>& sample_count, const simple_variant<SampleInterval, double>& sample_interval)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureEnumsRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  const auto sample_count_ptr = sample_count.get_if<SampleCount>();
+  const auto sample_count_raw_ptr = sample_count.get_if<pb::int32>();
+  if (sample_count_ptr) {
+    request.set_sample_count(*sample_count_ptr);
+  }
+  else if (sample_count_raw_ptr) {
+    request.set_sample_count_raw(*sample_count_raw_ptr);
+  }
+  const auto sample_interval_ptr = sample_interval.get_if<SampleInterval>();
+  const auto sample_interval_raw_ptr = sample_interval.get_if<double>();
+  if (sample_interval_ptr) {
+    request.set_sample_interval(*sample_interval_ptr);
+  }
+  else if (sample_interval_raw_ptr) {
+    request.set_sample_interval_raw(*sample_interval_raw_ptr);
+  }
+
+  auto response = ConfigureEnumsResponse{};
+
+  raise_if_error(
+      stub->ConfigureEnums(&context, request, &response),
+      context);
+
+  return response;
+}
+
 Control4022Response
 control4022(const StubPtr& stub, const pb::string& resource_name, const pb::int32& configuration)
 {
@@ -337,6 +370,23 @@ export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->ExportAttributeConfigurationBuffer(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ExportAttributeConfigurationBufferExResponse
+export_attribute_configuration_buffer_ex(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ExportAttributeConfigurationBufferExRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = ExportAttributeConfigurationBufferExResponse{};
+
+  raise_if_error(
+      stub->ExportAttributeConfigurationBufferEx(&context, request, &response),
       context);
 
   return response;
@@ -886,6 +936,24 @@ import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
   return response;
 }
 
+ImportAttributeConfigurationBufferExResponse
+import_attribute_configuration_buffer_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ImportAttributeConfigurationBufferExRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_configuration(configuration);
+
+  auto response = ImportAttributeConfigurationBufferExResponse{};
+
+  raise_if_error(
+      stub->ImportAttributeConfigurationBufferEx(&context, request, &response),
+      context);
+
+  return response;
+}
+
 InitExtCalResponse
 init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& calibration_password)
 {
@@ -1409,7 +1477,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeReal64AttributeValuesMapped, double>& attribute_value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1417,10 +1485,10 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  const auto attribute_value_ptr = attribute_value.get_if<NiFakeReal64AttributeValuesMapped>();
+  const auto attribute_value_ptr = attribute_value.get_if<NiFakeReal64AttributeValues>();
   const auto attribute_value_raw_ptr = attribute_value.get_if<double>();
   if (attribute_value_ptr) {
-    request.set_attribute_value_mapped(*attribute_value_ptr);
+    request.set_attribute_value(*attribute_value_ptr);
   }
   else if (attribute_value_raw_ptr) {
     request.set_attribute_value_raw(*attribute_value_raw_ptr);

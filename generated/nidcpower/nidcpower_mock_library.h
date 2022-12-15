@@ -46,7 +46,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureLCRCustomCableCompensation, (ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputEnabled, (ViSession vi, ViConstString channelName, ViBoolean enabled), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputFunction, (ViSession vi, ViConstString channelName, ViInt32 function), (override));
-  MOCK_METHOD(ViStatus, ConfigureOutputRange, (ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputResistance, (ViSession vi, ViConstString channelName, ViReal64 resistance), (override));
   MOCK_METHOD(ViStatus, ConfigureOvp, (ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit), (override));
   MOCK_METHOD(ViStatus, ConfigurePowerLineFrequency, (ViSession vi, ViReal64 powerlineFrequency), (override));
