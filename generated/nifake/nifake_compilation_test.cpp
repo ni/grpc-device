@@ -57,6 +57,11 @@ ViStatus ConfigureAbc(ViSession vi)
   return niFake_ConfigureABC(vi);
 }
 
+ViStatus ConfigureEnums(ViSession vi, ViInt32 sampleCount, ViReal64 sampleInterval)
+{
+  return niFake_ConfigureEnums(vi, sampleCount, sampleInterval);
+}
+
 ViStatus Control4022(ViString resourceName, ViInt32 configuration)
 {
   return niFake_4022Control(resourceName, configuration);
@@ -95,6 +100,11 @@ ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]
 ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
   return niFake_ExportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
+}
+
+ViStatus ExportAttributeConfigurationBufferEx(ViSession vi, ViInt32 size, ViInt8 configuration[])
+{
+  return niFake_ExportAttributeConfigurationBufferEx(vi, size, configuration);
 }
 
 ViStatus FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples)
@@ -250,6 +260,11 @@ ViStatus GetViUInt8(ViSession vi, ViUInt8* aUint8Number)
 ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
   return niFake_ImportAttributeConfigurationBuffer(vi, sizeInBytes, configuration);
+}
+
+ViStatus ImportAttributeConfigurationBufferEx(ViSession vi, ViInt32 size, ViInt8 configuration[])
+{
+  return niFake_ImportAttributeConfigurationBufferEx(vi, size, configuration);
 }
 
 ViStatus InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi)

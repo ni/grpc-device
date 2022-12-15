@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d96
+# This file is generated from NI-FAKE API metadata version 23.0.0d142
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -249,6 +249,35 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ConfigureEnums': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'sampleCount',
+                'direction': 'in',
+                'enum': 'SampleCount',
+                'grpc_type': 'sint32',
+                'name': 'sampleCount',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'sampleInterval',
+                'direction': 'in',
+                'enum': 'SampleInterval',
+                'grpc_type': 'double',
+                'name': 'sampleInterval',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'Control4022': {
         'cname': 'niFake_4022Control',
         'codegen_method': 'public',
@@ -471,6 +500,39 @@ functions = {
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'sizeInBytes'
+                },
+                'type': 'ViInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ExportAttributeConfigurationBufferEx': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'size',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'name': 'size',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'configuration',
+                'direction': 'out',
+                'grpc_type': 'bytes',
+                'name': 'configuration',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'size'
                 },
                 'type': 'ViInt8[]'
             }
@@ -1500,6 +1562,43 @@ functions = {
                 'size': {
                     'mechanism': 'len',
                     'value': 'sizeInBytes'
+                },
+                'type': 'ViInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ImportAttributeConfigurationBufferEx': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'size',
+                'determine_size_from': [
+                    'configuration'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'size',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'configuration',
+                'direction': 'in',
+                'grpc_type': 'bytes',
+                'name': 'configuration',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
                 },
                 'type': 'ViInt8[]'
             }
@@ -2609,6 +2708,7 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
+                'enum': 'NiFakeReal64AttributeValues',
                 'grpc_type': 'double',
                 'mapped-enum': 'NiFakeReal64AttributeValuesMapped',
                 'name': 'attributeValue',

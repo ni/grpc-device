@@ -675,26 +675,6 @@ configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi,
   return response;
 }
 
-ConfigureOutputRangeResponse
-configure_output_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& range_type, const double& range)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConfigureOutputRangeRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  request.set_range_type(range_type);
-  request.set_range(range);
-
-  auto response = ConfigureOutputRangeResponse{};
-
-  raise_if_error(
-      stub->ConfigureOutputRange(&context, request, &response),
-      context);
-
-  return response;
-}
-
 ConfigureOutputResistanceResponse
 configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& resistance)
 {

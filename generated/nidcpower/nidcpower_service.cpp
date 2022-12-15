@@ -1010,32 +1010,6 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDCPowerService::ConfigureOutputRange(::grpc::ServerContext* context, const ConfigureOutputRangeRequest* request, ConfigureOutputRangeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
-      auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 range_type = request->range_type();
-      ViReal64 range = request->range();
-      auto status = library_->ConfigureOutputRange(vi, channel_name, range_type, range);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::ConfigureOutputResistance(::grpc::ServerContext* context, const ConfigureOutputResistanceRequest* request, ConfigureOutputResistanceResponse* response)
   {
     if (context->IsCancelled()) {

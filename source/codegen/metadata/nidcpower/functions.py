@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d318
+# This file is generated from NI-DCPower API metadata version 23.0.0d446
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -779,40 +779,6 @@ functions = {
                 'grpc_type': 'sint32',
                 'name': 'function',
                 'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ConfigureOutputRange': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'channelName',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'cppName': 'rangeType',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'name': 'rangeType',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'range',
-                'direction': 'in',
-                'grpc_type': 'double',
-                'name': 'range',
-                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'

@@ -51,7 +51,6 @@ ConfigureDigitalEdgeStartTriggerWithChannelsResponse configure_digital_edge_star
 ConfigureLCRCustomCableCompensationResponse configure_lcr_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& custom_cable_compensation_data);
 ConfigureOutputEnabledResponse configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled);
 ConfigureOutputFunctionResponse configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputFunction, pb::int32>& function);
-ConfigureOutputRangeResponse configure_output_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& range_type, const double& range);
 ConfigureOutputResistanceResponse configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& resistance);
 ConfigureOvpResponse configure_ovp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled, const double& limit);
 ConfigurePowerLineFrequencyResponse configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& powerline_frequency);
