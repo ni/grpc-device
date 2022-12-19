@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0d57
+# This file is generated from NI-FGEN API metadata version 23.0.0d131
 enums = {
     'AddressType': {
         'codegen_method': 'public',
@@ -836,66 +836,6 @@ enums = {
                 'value': 102
             },
             {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL0',
-                'value': 111
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL1',
-                'value': 112
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL2',
-                'value': 113
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL3',
-                'value': 114
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL4',
-                'value': 115
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL5',
-                'value': 116
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL6',
-                'value': 117
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_0',
-                'value': 141
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_1',
-                'value': 142
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_2',
-                'value': 143
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_3',
-                'value': 144
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_4',
-                'value': 145
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_5',
-                'value': 146
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_6',
-                'value': 147
-            },
-            {
-                'name': 'SYNCHRONIZATION_SOURCE_VAL_NONE',
-                'value': 1000
-            },
-            {
                 'name': 'TERMINAL_CONFIGURATION_VAL_SINGLE_ENDED',
                 'value': 300
             },
@@ -926,38 +866,6 @@ enums = {
             {
                 'name': 'TRIGGER_SOURCE_VAL_EXTERNAL',
                 'value': 1
-            },
-            {
-                'name': 'TRIGGER_SOURCE_VAL_SOFTWARE_TRIG',
-                'value': 2
-            },
-            {
-                'name': 'TRIGGER_SOURCE_VAL_TTL0',
-                'value': 111
-            },
-            {
-                'name': 'TRIGGER_SOURCE_VAL_TTL1',
-                'value': 112
-            },
-            {
-                'name': 'TRIGGER_SOURCE_VAL_TTL2',
-                'value': 113
-            },
-            {
-                'name': 'TRIGGER_SOURCE_VAL_TTL3',
-                'value': 114
-            },
-            {
-                'name': 'TRIGGER_SOURCE_VAL_TTL4',
-                'value': 115
-            },
-            {
-                'name': 'TRIGGER_SOURCE_VAL_TTL5',
-                'value': 116
-            },
-            {
-                'name': 'TRIGGER_SOURCE_VAL_TTL6',
-                'value': 117
             },
             {
                 'name': 'TRIGGER_SOURCE_VAL_PXI_STAR',
@@ -992,108 +900,40 @@ enums = {
                 'value': 147
             },
             {
-                'name': 'TRIGGER_SOURCE_VAL_RTSI_7',
-                'value': 1010
+                'name': 'TRIGGER_SOURCE_VAL_SOFTWARE_TRIG',
+                'value': 2
             },
             {
-                'name': 'TRIGGER_SOURCE_VAL_PFI_0',
-                'value': 1011
+                'name': 'TRIGGER_SOURCE_VAL_TTL0',
+                'value': 111
             },
             {
-                'name': 'TRIGGER_SOURCE_VAL_PFI_1',
-                'value': 1012
+                'name': 'TRIGGER_SOURCE_VAL_TTL1',
+                'value': 112
             },
             {
-                'name': 'TRIGGER_SOURCE_VAL_PFI_2',
-                'value': 1013
+                'name': 'TRIGGER_SOURCE_VAL_TTL2',
+                'value': 113
             },
             {
-                'name': 'TRIGGER_SOURCE_VAL_PFI_3',
-                'value': 1014
+                'name': 'TRIGGER_SOURCE_VAL_TTL3',
+                'value': 114
             },
             {
-                'name': 'TRIGGER_SOURCE_VAL_OTHER_TERMINAL',
-                'value': 1018
+                'name': 'TRIGGER_SOURCE_VAL_TTL4',
+                'value': 115
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL5',
+                'value': 116
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL6',
+                'value': 117
             },
             {
                 'name': 'UPDATE_CLOCK_SOURCE_VAL_INTERNAL',
                 'value': 0
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_EXTERNAL',
-                'value': 1
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL1',
-                'value': 112
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL2',
-                'value': 113
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL3',
-                'value': 114
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL4',
-                'value': 115
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL5',
-                'value': 116
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL6',
-                'value': 117
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_PXI_STAR',
-                'value': 131
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_0',
-                'value': 141
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_1',
-                'value': 142
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_2',
-                'value': 143
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_3',
-                'value': 144
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_4',
-                'value': 145
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_5',
-                'value': 146
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_6',
-                'value': 147
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_7',
-                'value': 1010
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_OTHER_TERMINAL',
-                'value': 1018
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_CLK_IN',
-                'value': 1202
-            },
-            {
-                'name': 'UPDATE_CLOCK_SOURCE_VAL_DDC_CLK_IN',
-                'value': 1203
             },
             {
                 'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_B',
@@ -1191,85 +1031,127 @@ enums = {
             }
         ]
     },
-    'NiFgenStringAttributeValuesMapped': {
-        'enum-value-prefix': 'NIFGEN_STRING',
-        'generate-mappings': True,
+    'ObsoleteReferenceClockSource': {
+        'codegen_method': 'public',
         'values': [
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_VAL_CLOCK_IN_COLLISION_AVOIDANCE',
-                'value': 'ClkIn'
+                'name': 'NIFGEN_VAL_CLK_IN',
+                'value': 1202
             },
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_VAL_NONE_COLLISION_AVOIDANCE',
-                'value': 'None'
+                'name': 'NIFGEN_VAL_PXI_CLK10',
+                'value': 1201
+            }
+        ]
+    },
+    'ObsoleteSampleClockSource': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_DDC_CLK_IN',
+                'value': 1203
             },
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_VAL_ONBOARD_REFERENCE_CLOCK_COLLISION_AVOIDANCE',
-                'value': 'OnboardRefClk'
+                'name': 'NIFGEN_VAL_PXI_STAR',
+                'value': 131
             },
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_VAL_PXI_CLOCK_COLLISION_AVOIDANCE',
-                'value': 'PXI_Clk'
+                'name': 'NIFGEN_VAL_RTSI_0',
+                'value': 141
             },
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_VAL_RTSI_7_COLLISION_AVOIDANCE',
-                'value': 'RTSI7'
+                'name': 'NIFGEN_VAL_RTSI_1',
+                'value': 142
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_CLOCK_IN',
-                'value': 'ClkIn'
+                'name': 'NIFGEN_VAL_RTSI_2',
+                'value': 143
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_DDC_CLOCK_IN',
-                'value': 'DDC_ClkIn'
+                'name': 'NIFGEN_VAL_RTSI_3',
+                'value': 144
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_ONBOARD_CLOCK',
-                'value': 'OnboardClock'
+                'name': 'NIFGEN_VAL_RTSI_4',
+                'value': 145
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_STAR_LINE',
-                'value': 'PXI_Star'
+                'name': 'NIFGEN_VAL_RTSI_5',
+                'value': 146
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_0_RTSI_0',
-                'value': 'PXI_Trig0'
+                'name': 'NIFGEN_VAL_RTSI_6',
+                'value': 147
+            }
+        ]
+    },
+    'ObsoleteSampleClockTimebaseSource': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_CLK_IN',
+                'value': 1202
+            }
+        ]
+    },
+    'ObsoleteSynchronizationSource': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_RTSI_0',
+                'value': 141
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_1_RTSI_1',
-                'value': 'PXI_Trig1'
+                'name': 'NIFGEN_VAL_TTL0',
+                'value': 111
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_2_RTSI_2',
-                'value': 'PXI_Trig2'
+                'name': 'NIFGEN_VAL_RTSI_1',
+                'value': 142
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_3_RTSI_3',
-                'value': 'PXI_Trig3'
+                'name': 'NIFGEN_VAL_TTL1',
+                'value': 112
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_4_RTSI_4',
-                'value': 'PXI_Trig4'
+                'name': 'NIFGEN_VAL_RTSI_2',
+                'value': 143
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_5_RTSI_5',
-                'value': 'PXI_Trig5'
+                'name': 'NIFGEN_VAL_TTL2',
+                'value': 113
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_6_RTSI_6',
-                'value': 'PXI_Trig6'
+                'name': 'NIFGEN_VAL_TTL3',
+                'value': 114
             },
             {
-                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_7_RTSI_7',
-                'value': 'PXI_Trig7'
+                'name': 'NIFGEN_VAL_RTSI_3',
+                'value': 144
             },
             {
-                'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE_VAL_CLOCK_IN',
-                'value': 'ClkIn'
+                'name': 'NIFGEN_VAL_TTL4',
+                'value': 115
             },
             {
-                'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE_VAL_ONBOARD_CLOCK',
-                'value': 'OnboardClock'
+                'name': 'NIFGEN_VAL_RTSI_4',
+                'value': 145
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL5',
+                'value': 116
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_5',
+                'value': 146
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_6',
+                'value': 147
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL6',
+                'value': 117
             }
         ]
     },
@@ -1412,32 +1294,6 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_ACTIVE_LOW',
                 'value': 102
-            }
-        ]
-    },
-    'ReferenceClockSource': {
-        'codegen_method': 'public',
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_CLOCK_IN_COLLISION_AVOIDANCE',
-                'value': 'ClkIn'
-            },
-            {
-                'name': 'NIFGEN_VAL_NONE_COLLISION_AVOIDANCE',
-                'value': 'None'
-            },
-            {
-                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK_COLLISION_AVOIDANCE',
-                'value': 'OnboardRefClk'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_CLOCK_COLLISION_AVOIDANCE',
-                'value': 'PXI_Clk'
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_7_COLLISION_AVOIDANCE',
-                'value': 'RTSI7'
             }
         ]
     },
@@ -1585,74 +1441,6 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_PXI_STAR',
                 'value': 131
-            }
-        ]
-    },
-    'SampleClockSource': {
-        'codegen_method': 'public',
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_CLOCK_IN',
-                'value': 'ClkIn'
-            },
-            {
-                'name': 'NIFGEN_VAL_DDC_CLOCK_IN',
-                'value': 'DDC_ClkIn'
-            },
-            {
-                'name': 'NIFGEN_VAL_ONBOARD_CLOCK',
-                'value': 'OnboardClock'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_STAR_LINE',
-                'value': 'PXI_Star'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_0_RTSI_0',
-                'value': 'PXI_Trig0'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_1_RTSI_1',
-                'value': 'PXI_Trig1'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_2_RTSI_2',
-                'value': 'PXI_Trig2'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_3_RTSI_3',
-                'value': 'PXI_Trig3'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_4_RTSI_4',
-                'value': 'PXI_Trig4'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_5_RTSI_5',
-                'value': 'PXI_Trig5'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_6_RTSI_6',
-                'value': 'PXI_Trig6'
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_7_RTSI_7',
-                'value': 'PXI_Trig7'
-            }
-        ]
-    },
-    'SampleClockTimebaseSource': {
-        'codegen_method': 'public',
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_CLOCK_IN',
-                'value': 'ClkIn'
-            },
-            {
-                'name': 'NIFGEN_VAL_ONBOARD_CLOCK',
-                'value': 'OnboardClock'
             }
         ]
     },
@@ -1877,71 +1665,6 @@ enums = {
             }
         ]
     },
-    'SynchronizationSource': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_TTL0',
-                'value': 111
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL1',
-                'value': 112
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL2',
-                'value': 113
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL3',
-                'value': 114
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL4',
-                'value': 115
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL5',
-                'value': 116
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL6',
-                'value': 117
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_0',
-                'value': 141
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_1',
-                'value': 142
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_2',
-                'value': 143
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_3',
-                'value': 144
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_4',
-                'value': 145
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_5',
-                'value': 146
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_6',
-                'value': 147
-            },
-            {
-                'name': 'NIFGEN_VAL_NONE',
-                'value': 1000
-            }
-        ]
-    },
     'TerminalConfiguration': {
         'codegen_method': 'public',
         'values': [
@@ -2001,6 +1724,38 @@ enums = {
                 'value': 1
             },
             {
+                'name': 'NIFGEN_VAL_PXI_STAR',
+                'value': 131
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_0',
+                'value': 141
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_1',
+                'value': 142
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_2',
+                'value': 143
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_3',
+                'value': 144
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_4',
+                'value': 145
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_5',
+                'value': 146
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_6',
+                'value': 147
+            },
+            {
                 'name': 'NIFGEN_VAL_SOFTWARE_TRIG',
                 'value': 2
             },
@@ -2031,62 +1786,6 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_TTL6',
                 'value': 117
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_STAR',
-                'value': 131
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_0',
-                'value': 141
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_1',
-                'value': 142
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_2',
-                'value': 143
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_3',
-                'value': 144
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_4',
-                'value': 145
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_5',
-                'value': 146
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_6',
-                'value': 147
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_7',
-                'value': 1010
-            },
-            {
-                'name': 'NIFGEN_VAL_PFI_0',
-                'value': 1011
-            },
-            {
-                'name': 'NIFGEN_VAL_PFI_1',
-                'value': 1012
-            },
-            {
-                'name': 'NIFGEN_VAL_PFI_2',
-                'value': 1013
-            },
-            {
-                'name': 'NIFGEN_VAL_PFI_3',
-                'value': 1014
-            },
-            {
-                'name': 'NIFGEN_VAL_OTHER_TERMINAL',
-                'value': 1018
             }
         ]
     },
@@ -2109,82 +1808,6 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_INTERNAL',
                 'value': 0
-            },
-            {
-                'name': 'NIFGEN_VAL_EXTERNAL',
-                'value': 1
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL1',
-                'value': 112
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL2',
-                'value': 113
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL3',
-                'value': 114
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL4',
-                'value': 115
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL5',
-                'value': 116
-            },
-            {
-                'name': 'NIFGEN_VAL_TTL6',
-                'value': 117
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_STAR',
-                'value': 131
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_0',
-                'value': 141
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_1',
-                'value': 142
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_2',
-                'value': 143
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_3',
-                'value': 144
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_4',
-                'value': 145
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_5',
-                'value': 146
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_6',
-                'value': 147
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_7',
-                'value': 1010
-            },
-            {
-                'name': 'NIFGEN_VAL_OTHER_TERMINAL',
-                'value': 1018
-            },
-            {
-                'name': 'NIFGEN_VAL_CLK_IN',
-                'value': 1202
-            },
-            {
-                'name': 'NIFGEN_VAL_DDC_CLK_IN',
-                'value': 1203
             }
         ]
     },

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0d57
+# This file is generated from NI-FGEN API metadata version 23.0.0d131
 functions = {
     'AbortGeneration': {
         'codegen_method': 'public',
@@ -304,8 +304,7 @@ functions = {
                 'grpc_mapped_field_number': '5',
                 'grpc_raw_field_number': '4',
                 'grpc_type': 'string',
-                'mapped-enum': 'NiFgenStringAttributeValuesMapped',
-                'name': 'attributeValue',
+                'name': 'attribute_value_raw',
                 'type': 'ViConstString'
             }
         ],
@@ -2043,13 +2042,13 @@ functions = {
             {
                 'cppName': 'configuration',
                 'direction': 'out',
-                'grpc_type': 'bytes',
+                'grpc_type': 'repeated fixed64',
                 'name': 'configuration',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'sizeInBytes'
                 },
-                'type': 'ViInt8[]'
+                'type': 'ViAddr[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2771,13 +2770,13 @@ functions = {
             {
                 'cppName': 'configuration',
                 'direction': 'in',
-                'grpc_type': 'bytes',
+                'grpc_type': 'repeated fixed64',
                 'name': 'configuration',
                 'size': {
                     'mechanism': 'len',
                     'value': 'sizeInBytes'
                 },
-                'type': 'ViInt8[]'
+                'type': 'ViAddr[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3457,7 +3456,7 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'triggerId',
-                'type': 'ViString'
+                'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'
@@ -3664,8 +3663,7 @@ functions = {
                 'grpc_mapped_field_number': '5',
                 'grpc_raw_field_number': '4',
                 'grpc_type': 'string',
-                'mapped-enum': 'NiFgenStringAttributeValuesMapped',
-                'name': 'attributeValue',
+                'name': 'attribute_value_raw',
                 'type': 'ViConstString'
             }
         ],
