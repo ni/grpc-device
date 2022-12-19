@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0d131
+# This file is generated from NI-FGEN API metadata version 23.0.0d9999
 functions = {
     'AbortGeneration': {
         'codegen_method': 'public',
@@ -304,7 +304,8 @@ functions = {
                 'grpc_mapped_field_number': '5',
                 'grpc_raw_field_number': '4',
                 'grpc_type': 'string',
-                'name': 'attribute_value_raw',
+                'mapped-enum': 'NiFgenStringAttributeValuesMapped',
+                'name': 'attributeValue',
                 'type': 'ViConstString'
             }
         ],
@@ -2042,13 +2043,13 @@ functions = {
             {
                 'cppName': 'configuration',
                 'direction': 'out',
-                'grpc_type': 'repeated fixed64',
+                'grpc_type': 'bytes',
                 'name': 'configuration',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'sizeInBytes'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2770,13 +2771,13 @@ functions = {
             {
                 'cppName': 'configuration',
                 'direction': 'in',
-                'grpc_type': 'repeated fixed64',
+                'grpc_type': 'bytes',
                 'name': 'configuration',
                 'size': {
                     'mechanism': 'len',
                     'value': 'sizeInBytes'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3663,7 +3664,8 @@ functions = {
                 'grpc_mapped_field_number': '5',
                 'grpc_raw_field_number': '4',
                 'grpc_type': 'string',
-                'name': 'attribute_value_raw',
+                'mapped-enum': 'NiFgenStringAttributeValuesMapped',
+                'name': 'attributeValue',
                 'type': 'ViConstString'
             }
         ],

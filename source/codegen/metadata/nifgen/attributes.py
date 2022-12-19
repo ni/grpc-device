@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0d131
+# This file is generated from NI-FGEN API metadata version 23.0.0d9999
 attributes = {
     1050002: {
         'codegen_method': 'public',
@@ -237,6 +237,7 @@ attributes = {
     },
     1150111: {
         'codegen_method': 'public',
+        'enum': 'SynchronizationSource',
         'grpc_type': 'sint32',
         'name': 'SYNCHRONIZATION',
         'resettable': False,
@@ -244,6 +245,7 @@ attributes = {
     },
     1150112: {
         'codegen_method': 'public',
+        'enum': 'SampleClockSource',
         'grpc_type': 'string',
         'name': 'SAMPLE_CLOCK_SOURCE',
         'resettable': True,
@@ -251,6 +253,7 @@ attributes = {
     },
     1150113: {
         'codegen_method': 'public',
+        'enum': 'ReferenceClockSource',
         'grpc_type': 'string',
         'name': 'REFERENCE_CLOCK_SOURCE',
         'resettable': True,
@@ -1151,6 +1154,7 @@ attributes = {
     },
     1150367: {
         'codegen_method': 'public',
+        'enum': 'SampleClockTimebaseSource',
         'grpc_type': 'string',
         'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE',
         'resettable': True,
