@@ -220,9 +220,9 @@ set(nidriver_service_srcs
 #----------------------------------------------------------------------
 # Proto file
 #----------------------------------------------------------------------
-get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
+get_filename_component(session_proto "imports/protobuf/session.proto" ABSOLUTE)
 get_filename_component(session_utilities_proto "source/protobuf/session_utilities.proto" ABSOLUTE)
-get_filename_component(nidevice_proto "source/protobuf/nidevice.proto" ABSOLUTE)
+get_filename_component(nidevice_proto "imports/protobuf/nidevice.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
@@ -247,7 +247,7 @@ function(GenerateGrpcSources)
       --cpp_out "${proto_out_path}"
       -I "${proto_path}"
       -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
-      -I ${CMAKE_SOURCE_DIR}/source/protobuf
+      -I ${CMAKE_SOURCE_DIR}/imports/protobuf
       --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
       "${proto_file}"
     DEPENDS "${proto_file}" "${session_proto}")

@@ -68,7 +68,11 @@ class _ArtifactLocations:
         return self.repo_root / "generated"
 
     @property
-    def shared_protos(self) -> Path:
+    def shared_imported_protos(self) -> Path:
+        return self.repo_root / "imports" / "protobuf"
+
+    @property
+    def shared_source_protos(self) -> Path:
         return self.repo_root / "source" / "protobuf"
 
     @property
@@ -103,7 +107,10 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
     proto_path = output_path / "proto"
     proto_path.mkdir(parents=True)
 
-    for file in artifact_locations.shared_protos.iterdir():
+    for file in artifact_locations.shared_source_protos.iterdir():
+        copy2(file, proto_path)
+
+    for file in artifact_locations.shared_imported_protos.iterdir():
         copy2(file, proto_path)
 
     for file in _get_release_proto_files(artifact_locations, readiness):
