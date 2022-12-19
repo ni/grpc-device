@@ -87,7 +87,6 @@ class _ArtifactLocations:
 def _get_release_proto_files(
     artifact_locations: _ArtifactLocations, readiness: _ArtifactReadiness
 ) -> List[Path]:
-
     release_driver_dirs = readiness.get_release_ready_subdirs(artifact_locations.generated_files)
     return [proto for d in release_driver_dirs for proto in d.glob("*.proto")]
 
