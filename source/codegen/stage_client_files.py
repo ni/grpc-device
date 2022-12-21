@@ -106,10 +106,10 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
     proto_path = output_path / "proto"
     proto_path.mkdir(parents=True)
 
-    for file in artifact_locations.shared_source_protos.iterdir():
+    for file in artifact_locations.shared_source_protos.glob("*.proto"):
         copy2(file, proto_path)
 
-    for file in artifact_locations.shared_imported_protos.iterdir():
+    for file in artifact_locations.shared_imported_protos.glob("*.proto"):
         copy2(file, proto_path)
 
     for file in _get_release_proto_files(artifact_locations, readiness):
