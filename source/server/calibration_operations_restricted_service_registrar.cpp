@@ -1,4 +1,4 @@
-#include "calibration_operations_restricted_service_registar.h"
+#include "calibration_operations_restricted_service_registrar.h"
 
 #include "calibration_operations_restricted_service.h"
 #include "syscfg_library.h"
@@ -38,7 +38,7 @@ std::shared_ptr<void> register_calibration_operations_restricted_service(
   if (toggles.is_enabled) {
     auto library_and_service_ptr = std::make_shared<CalibrationOperationsRestrictedLibraryAndService>(serverResetObserverRegistrar);
     auto& service = library_and_service_ptr->service;
-    server_builder.RegisterService(service);
+    server_builder.RegisterService(&service);
     return library_and_service_ptr;
   }
 

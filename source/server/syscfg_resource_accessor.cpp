@@ -1,11 +1,19 @@
-#include "calibration_operations_restricted_service.h"
+#include "syscfg_resource_accessor.h"
+
 #include "converters.h"
 
 namespace nidevice_restricted_grpc {
 
-::grpc::Status DebugSessionPropertiesRestrictedService::access_syscfg_resource_by_device_id_filter(
+SysCfgResourceAccessor::SysCfgResourceAccessor(nidevice_grpc::SysCfgLibraryInterface* library)
+    : SysCfgSessionHandler(library) {}
+
+SysCfgResourceAccessor::~SysCfgResourceAccessor()
+{
+}
+::grpc::Status SysCfgResourceAccessor::access_syscfg_resource_by_device_id_filter(
     ::grpc::ServerContext* context,
-    const nidevice_restricted_grpc::DeviceId& device_id,
+    const DeviceId& device_id,
+    const char* access_failed_message,
     std::function<NISysCfgStatus(nidevice_grpc::SysCfgLibraryInterface*, NISysCfgResourceHandle, bool*)> syscfg_resource_action_func)
 {
   NISysCfgStatus status = NISysCfg_OK;
@@ -50,14 +58,14 @@ namespace nidevice_restricted_grpc {
   }
 
   if (NISysCfg_Failed(status)) {
-    std::string description(kDebugSessionPropertyAccessFailedMessage);
+    std::string description(access_failed_message);
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
   }
 
   if (no_hardware_found) {
-    return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, kDebugSessionPropertyAccessFailedMessage);
+    return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, access_failed_message);
   }
 
   return ::grpc::Status::OK;
 }
-}
+}  // namespace nidevice_restricted_grpc

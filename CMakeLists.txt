@@ -354,7 +354,7 @@ add_executable(ni_grpc_device_server
    "source/server/core_services_registrar.cpp"
    "source/server/debug_session_properties_restricted_service_registrar.cpp"
    "source/server/debug_session_properties_restricted_service.cpp"
-   "source/server/calibration_operations_restricted_service_registar.cpp"
+   "source/server/calibration_operations_restricted_service_registrar.cpp"
    "source/server/calibration_operations_restricted_service.cpp"
    "source/server/device_enumerator.cpp"
    "source/server/feature_toggles.cpp"
@@ -510,6 +510,8 @@ add_compile_definitions(TestApi TEST_API_BUILDING)
 add_executable(UnitTestsRunner
     "imports/include/nierr_Status.cpp"
     "source/tests/utilities/run_all_tests.cpp"
+    "source/tests/unit/calibration_operations_tests.cpp"
+    "source/server/calibration_operations_restricted_service.cpp"
     "source/tests/unit/callback_router_tests.cpp"
     "source/tests/unit/converters_tests.cpp"
     "source/tests/unit/session_resource_repository_tests.cpp"
@@ -601,6 +603,8 @@ add_custom_command(
 set(system_test_runner_sources
   "imports/include/nierr_Status.cpp"
   "source/tests/utilities/run_all_tests.cpp"
+  "source/server/calibration_operations_restricted_service_registrar.cpp"
+  "source/server/calibration_operations_restricted_service.cpp"
   "source/server/core_services_registrar.cpp"
   "source/tests/system/device_server.cpp"
   "source/tests/system/enumerate_devices.cpp"
