@@ -22,6 +22,8 @@ NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary() : shared_library_(kLi
     return;
   }
   function_pointers_.GetChannelList = reinterpret_cast<GetChannelListPtr>(shared_library_.get_function_pointer("RFmxWLAN_GetChannelList"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxWLAN_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxWLAN_GetErrorString"));
   function_pointers_.OFDMModAccFetchCommonPilotErrorTraceIndB = reinterpret_cast<OFDMModAccFetchCommonPilotErrorTraceIndBPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchCommonPilotErrorTraceIndB"));
   function_pointers_.OFDMModAccNoiseCalibrate = reinterpret_cast<OFDMModAccNoiseCalibratePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccNoiseCalibrate"));
 }
@@ -43,6 +45,22 @@ int32 NiRFmxWLANRestrictedLibrary::GetChannelList(niRFmxInstrHandle instrumentHa
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetChannelList.");
   }
   return function_pointers_.GetChannelList(instrumentHandle, selectorString, WLANBand, centerFrequencies, channelBandwidths, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWLANRestrictedLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetError) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetError.");
+  }
+  return function_pointers_.GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+}
+
+int32 NiRFmxWLANRestrictedLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetErrorString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_GetErrorString.");
+  }
+  return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
 }
 
 int32 NiRFmxWLANRestrictedLibrary::OFDMModAccFetchCommonPilotErrorTraceIndB(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 commonPilotErrorMagnitude[], float32 commonPilotErrorPhase[], int32 arraySize, int32* actualArraySize)
