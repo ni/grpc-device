@@ -20,17 +20,17 @@ class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLA
   ::grpc::Status check_function_exists(std::string functionName);
   int32 GetChannelList(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 WLANBand, float64 centerFrequencies[], float64 channelBandwidths[], int32 arraySize, int32* actualArraySize);
   int32 OFDMModAccFetchCommonPilotErrorTraceIndB(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 commonPilotErrorMagnitude[], float32 commonPilotErrorPhase[], int32 arraySize, int32* actualArraySize);
-  int32 OFDMModAccCNoiseCalibrate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection);
+  int32 OFDMModAccNoiseCalibrate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection);
 
  private:
   using GetChannelListPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 WLANBand, float64 centerFrequencies[], float64 channelBandwidths[], int32 arraySize, int32* actualArraySize);
   using OFDMModAccFetchCommonPilotErrorTraceIndBPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 commonPilotErrorMagnitude[], float32 commonPilotErrorPhase[], int32 arraySize, int32* actualArraySize);
-  using OFDMModAccCNoiseCalibratePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection);
+  using OFDMModAccNoiseCalibratePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection);
 
   typedef struct FunctionPointers {
     GetChannelListPtr GetChannelList;
     OFDMModAccFetchCommonPilotErrorTraceIndBPtr OFDMModAccFetchCommonPilotErrorTraceIndB;
-    OFDMModAccCNoiseCalibratePtr OFDMModAccCNoiseCalibrate;
+    OFDMModAccNoiseCalibratePtr OFDMModAccNoiseCalibrate;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

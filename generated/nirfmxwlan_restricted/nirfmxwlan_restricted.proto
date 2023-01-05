@@ -18,7 +18,7 @@ import "session.proto";
 service NiRFmxWLANRestricted {
   rpc GetChannelList(GetChannelListRequest) returns (GetChannelListResponse);
   rpc OFDMModAccFetchCommonPilotErrorTraceIndB(OFDMModAccFetchCommonPilotErrorTraceIndBRequest) returns (OFDMModAccFetchCommonPilotErrorTraceIndBResponse);
-  rpc OFDMModAccCNoiseCalibrate(OFDMModAccCNoiseCalibrateRequest) returns (OFDMModAccCNoiseCalibrateResponse);
+  rpc OFDMModAccNoiseCalibrate(OFDMModAccNoiseCalibrateRequest) returns (OFDMModAccNoiseCalibrateResponse);
 }
 
 message GetChannelListRequest {
@@ -49,13 +49,13 @@ message OFDMModAccFetchCommonPilotErrorTraceIndBResponse {
   int32 actual_array_size = 6;
 }
 
-message OFDMModAccCNoiseCalibrateRequest {
+message OFDMModAccNoiseCalibrateRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 shared_lo_connection = 3;
 }
 
-message OFDMModAccCNoiseCalibrateResponse {
+message OFDMModAccNoiseCalibrateResponse {
   int32 status = 1;
 }
 

@@ -138,7 +138,7 @@ namespace nirfmxwlan_restricted_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxWLANRestrictedService::OFDMModAccCNoiseCalibrate(::grpc::ServerContext* context, const OFDMModAccCNoiseCalibrateRequest* request, OFDMModAccCNoiseCalibrateResponse* response)
+  ::grpc::Status NiRFmxWLANRestrictedService::OFDMModAccNoiseCalibrate(::grpc::ServerContext* context, const OFDMModAccNoiseCalibrateRequest* request, OFDMModAccNoiseCalibrateResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -149,7 +149,7 @@ namespace nirfmxwlan_restricted_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 shared_lo_connection = request->shared_lo_connection();
-      auto status = library_->OFDMModAccCNoiseCalibrate(instrument, selector_string, shared_lo_connection);
+      auto status = library_->OFDMModAccNoiseCalibrate(instrument, selector_string, shared_lo_connection);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

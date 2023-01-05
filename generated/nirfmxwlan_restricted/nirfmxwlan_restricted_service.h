@@ -43,7 +43,7 @@ public:
   
   ::grpc::Status GetChannelList(::grpc::ServerContext* context, const GetChannelListRequest* request, GetChannelListResponse* response) override;
   ::grpc::Status OFDMModAccFetchCommonPilotErrorTraceIndB(::grpc::ServerContext* context, const OFDMModAccFetchCommonPilotErrorTraceIndBRequest* request, OFDMModAccFetchCommonPilotErrorTraceIndBResponse* response) override;
-  ::grpc::Status OFDMModAccCNoiseCalibrate(::grpc::ServerContext* context, const OFDMModAccCNoiseCalibrateRequest* request, OFDMModAccCNoiseCalibrateResponse* response) override;
+  ::grpc::Status OFDMModAccNoiseCalibrate(::grpc::ServerContext* context, const OFDMModAccNoiseCalibrateRequest* request, OFDMModAccNoiseCalibrateResponse* response) override;
 private:
   NiRFmxWLANRestrictedLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;

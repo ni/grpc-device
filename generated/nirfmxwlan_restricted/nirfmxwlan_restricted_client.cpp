@@ -55,20 +55,20 @@ ofdm_mod_acc_fetch_common_pilot_error_trace_ind_b(const StubPtr& stub, const nid
   return response;
 }
 
-OFDMModAccCNoiseCalibrateResponse
-ofdm_mod_acc_c_noise_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& shared_lo_connection)
+OFDMModAccNoiseCalibrateResponse
+ofdm_mod_acc_noise_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& shared_lo_connection)
 {
   ::grpc::ClientContext context;
 
-  auto request = OFDMModAccCNoiseCalibrateRequest{};
+  auto request = OFDMModAccNoiseCalibrateRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_shared_lo_connection(shared_lo_connection);
 
-  auto response = OFDMModAccCNoiseCalibrateResponse{};
+  auto response = OFDMModAccNoiseCalibrateResponse{};
 
   raise_if_error(
-      stub->OFDMModAccCNoiseCalibrate(&context, request, &response),
+      stub->OFDMModAccNoiseCalibrate(&context, request, &response),
       context);
 
   return response;

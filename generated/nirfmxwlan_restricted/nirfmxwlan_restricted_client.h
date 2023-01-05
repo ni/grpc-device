@@ -24,7 +24,7 @@ using namespace nidevice_grpc::experimental::client;
 
 GetChannelListResponse get_channel_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& wlan_band);
 OFDMModAccFetchCommonPilotErrorTraceIndBResponse ofdm_mod_acc_fetch_common_pilot_error_trace_ind_b(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
-OFDMModAccCNoiseCalibrateResponse ofdm_mod_acc_c_noise_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& shared_lo_connection);
+OFDMModAccNoiseCalibrateResponse ofdm_mod_acc_noise_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& shared_lo_connection);
 
 } // namespace nirfmxwlan_restricted_grpc::experimental::client
 

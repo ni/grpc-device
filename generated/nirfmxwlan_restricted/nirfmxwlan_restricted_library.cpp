@@ -23,7 +23,7 @@ NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary() : shared_library_(kLi
   }
   function_pointers_.GetChannelList = reinterpret_cast<GetChannelListPtr>(shared_library_.get_function_pointer("RFmxWLAN_GetChannelList"));
   function_pointers_.OFDMModAccFetchCommonPilotErrorTraceIndB = reinterpret_cast<OFDMModAccFetchCommonPilotErrorTraceIndBPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchCommonPilotErrorTraceIndB"));
-  function_pointers_.OFDMModAccCNoiseCalibrate = reinterpret_cast<OFDMModAccCNoiseCalibratePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccCNoiseCalibrate"));
+  function_pointers_.OFDMModAccNoiseCalibrate = reinterpret_cast<OFDMModAccNoiseCalibratePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccNoiseCalibrate"));
 }
 
 NiRFmxWLANRestrictedLibrary::~NiRFmxWLANRestrictedLibrary()
@@ -53,12 +53,12 @@ int32 NiRFmxWLANRestrictedLibrary::OFDMModAccFetchCommonPilotErrorTraceIndB(niRF
   return function_pointers_.OFDMModAccFetchCommonPilotErrorTraceIndB(instrumentHandle, selectorString, timeout, x0, dx, commonPilotErrorMagnitude, commonPilotErrorPhase, arraySize, actualArraySize);
 }
 
-int32 NiRFmxWLANRestrictedLibrary::OFDMModAccCNoiseCalibrate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection)
+int32 NiRFmxWLANRestrictedLibrary::OFDMModAccNoiseCalibrate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection)
 {
-  if (!function_pointers_.OFDMModAccCNoiseCalibrate) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCNoiseCalibrate.");
+  if (!function_pointers_.OFDMModAccNoiseCalibrate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccNoiseCalibrate.");
   }
-  return function_pointers_.OFDMModAccCNoiseCalibrate(instrumentHandle, selectorString, sharedLOConnection);
+  return function_pointers_.OFDMModAccNoiseCalibrate(instrumentHandle, selectorString, sharedLOConnection);
 }
 
 }  // namespace nirfmxwlan_restricted_grpc

@@ -111,7 +111,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'OFDMModAccCNoiseCalibrate': {
+    'OFDMModAccNoiseCalibrate': {
         'parameters': [
             {
                 'direction': 'in',
