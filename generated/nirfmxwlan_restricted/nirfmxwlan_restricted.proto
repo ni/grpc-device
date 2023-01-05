@@ -1,0 +1,61 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFMXWLAN-RESTRICTED API metadata version 21.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFMXWLAN-RESTRICTED Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxwlanrestricted";
+option java_outer_classname = "NiRFmxWLANRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxWLANRestricted";
+
+package nirfmxwlan_restricted_grpc;
+
+import "session.proto";
+
+service NiRFmxWLANRestricted {
+  rpc GetChannelList(GetChannelListRequest) returns (GetChannelListResponse);
+  rpc OFDMModAccFetchCommonPilotErrorTraceIndB(OFDMModAccFetchCommonPilotErrorTraceIndBRequest) returns (OFDMModAccFetchCommonPilotErrorTraceIndBResponse);
+  rpc OFDMModAccCNoiseCalibrate(OFDMModAccCNoiseCalibrateRequest) returns (OFDMModAccCNoiseCalibrateResponse);
+}
+
+message GetChannelListRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 wlan_band = 3;
+}
+
+message GetChannelListResponse {
+  int32 status = 1;
+  repeated double center_frequencies = 2;
+  repeated double channel_bandwidths = 3;
+  int32 actual_array_size = 4;
+}
+
+message OFDMModAccFetchCommonPilotErrorTraceIndBRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchCommonPilotErrorTraceIndBResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float common_pilot_error_magnitude = 4;
+  repeated float common_pilot_error_phase = 5;
+  int32 actual_array_size = 6;
+}
+
+message OFDMModAccCNoiseCalibrateRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 shared_lo_connection = 3;
+}
+
+message OFDMModAccCNoiseCalibrateResponse {
+  int32 status = 1;
+}
+
