@@ -1,33 +1,4 @@
 functions = {
-    'BuildResultString': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'resultNumber',
-                'type': 'int32'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorStringOutLength',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'selectorStringOut',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'selectorStringOutLength'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
     'GetChannelList': {
         'parameters': [
             {
