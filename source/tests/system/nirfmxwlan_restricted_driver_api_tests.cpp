@@ -78,7 +78,7 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
   return session;
 }
 
-void configure_OFDMModAccFromExample(const nirfmxinstr_grpc::experimental::client::StubPtr& instr_stub, const nidevice_grpc::Session& session, const nirfmxwlan_grpc::experimental::client::StubPtr& wlan_stub)
+void configure_OFDMModAccFromExample(const instr_client::StubPtr& instr_stub, const nidevice_grpc::Session& session, const client::StubPtr& wlan_stub)
 {
   EXPECT_RESPONSE_SUCCESS(instr_client::cfg_frequency_reference(instr_stub, session, "", nirfmxinstr_grpc::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_RESPONSE_SUCCESS(client::cfg_frequency(wlan_stub, session, "", 2.412e9));
