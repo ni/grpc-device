@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-FAKE API metadata version 23.0.0
+// This file is generated from NI-FAKE API metadata version 23.0.0d142
 //---------------------------------------------------------------------
 // Proto file for the NI-FAKE Metadata
 //---------------------------------------------------------------------
@@ -25,6 +25,8 @@ service NiFake {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
   rpc CommandWithReservedParam(CommandWithReservedParamRequest) returns (CommandWithReservedParamResponse);
+  rpc ConfigureAbc(ConfigureAbcRequest) returns (ConfigureAbcResponse);
+  rpc ConfigureEnums(ConfigureEnumsRequest) returns (ConfigureEnumsResponse);
   rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc CreateConfigurationList(CreateConfigurationListRequest) returns (CreateConfigurationListResponse);
   rpc CustomNestedStructRoundtrip(CustomNestedStructRoundtripRequest) returns (CustomNestedStructRoundtripResponse);
@@ -33,6 +35,7 @@ service NiFake {
   rpc EnumInputFunctionWithDefaults(EnumInputFunctionWithDefaultsRequest) returns (EnumInputFunctionWithDefaultsResponse);
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
+  rpc ExportAttributeConfigurationBufferEx(ExportAttributeConfigurationBufferExRequest) returns (ExportAttributeConfigurationBufferExResponse);
   rpc FetchWaveform(FetchWaveformRequest) returns (FetchWaveformResponse);
   rpc GetABoolean(GetABooleanRequest) returns (GetABooleanResponse);
   rpc GetANumber(GetANumberRequest) returns (GetANumberResponse);
@@ -64,6 +67,7 @@ service NiFake {
   rpc GetViUInt32Array(GetViUInt32ArrayRequest) returns (GetViUInt32ArrayResponse);
   rpc GetViUInt8(GetViUInt8Request) returns (GetViUInt8Response);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
+  rpc ImportAttributeConfigurationBufferEx(ImportAttributeConfigurationBufferExRequest) returns (ImportAttributeConfigurationBufferExResponse);
   rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitWithVarArgs(InitWithVarArgsRequest) returns (InitWithVarArgsResponse);
@@ -118,6 +122,8 @@ enum NiFakeAttribute {
   NIFAKE_ATTRIBUTE_READ_WRITE_INTEGER_WITH_CONVERTER = 1000008;
   NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY = 1000009;
   NIFAKE_ATTRIBUTE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010;
+  NIFAKE_ATTRIBUTE_SAMPLE_COUNT = 1000012;
+  NIFAKE_ATTRIBUTE_SAMPLE_INTERVAL = 1000013;
 }
 
 enum Bitfield {
@@ -183,11 +189,18 @@ enum MobileOSNames {
 }
 
 enum NiFakeInt32AttributeValues {
+  option allow_alias = true;
   NIFAKE_INT32_UNSPECIFIED = 0;
   NIFAKE_INT32_GRPC_COLOR_OVERRIDE_RED = 1;
   NIFAKE_INT32_GRPC_COLOR_OVERRIDE_BLUE = 2;
   NIFAKE_INT32_GRPC_COLOR_OVERRIDE_YELLOW = 5;
   NIFAKE_INT32_GRPC_COLOR_OVERRIDE_BLACK = 42;
+  NIFAKE_INT32_SAMPLE_COUNT_SAMPLE_COUNT_INFINITE = 0;
+}
+
+enum NiFakeReal64AttributeValues {
+  NIFAKE_REAL64_UNSPECIFIED = 0;
+  NIFAKE_REAL64_SAMPLE_INTERVAL_AUTO_DELAY = -1;
 }
 
 enum NiFakeReal64AttributeValuesMapped {
@@ -197,6 +210,15 @@ enum NiFakeReal64AttributeValuesMapped {
   NIFAKE_REAL64_FLOAT_ENUM_FIVE_POINT_FIVE = 3;
   NIFAKE_REAL64_FLOAT_ENUM_SIX_POINT_FIVE = 4;
   NIFAKE_REAL64_FLOAT_ENUM_SEVEN_POINT_FIVE = 5;
+}
+
+enum SampleCount {
+  SAMPLE_COUNT_SAMPLE_COUNT_INFINITE = 0;
+}
+
+enum SampleInterval {
+  SAMPLE_INTERVAL_UNSPECIFIED = 0;
+  SAMPLE_INTERVAL_AUTO_DELAY = -1;
 }
 
 enum Turtle {
@@ -310,6 +332,30 @@ message CommandWithReservedParamResponse {
   int32 status = 1;
 }
 
+message ConfigureAbcRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ConfigureAbcResponse {
+  int32 status = 1;
+}
+
+message ConfigureEnumsRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof sample_count_enum {
+    SampleCount sample_count = 2;
+    sint32 sample_count_raw = 3;
+  }
+  oneof sample_interval_enum {
+    SampleInterval sample_interval = 4;
+    double sample_interval_raw = 5;
+  }
+}
+
+message ConfigureEnumsResponse {
+  int32 status = 1;
+}
+
 message Control4022Request {
   string resource_name = 1;
   sint32 configuration = 2;
@@ -383,6 +429,15 @@ message ExportAttributeConfigurationBufferRequest {
 }
 
 message ExportAttributeConfigurationBufferResponse {
+  int32 status = 1;
+  bytes configuration = 2;
+}
+
+message ExportAttributeConfigurationBufferExRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ExportAttributeConfigurationBufferExResponse {
   int32 status = 1;
   bytes configuration = 2;
 }
@@ -698,6 +753,15 @@ message ImportAttributeConfigurationBufferResponse {
   int32 status = 1;
 }
 
+message ImportAttributeConfigurationBufferExRequest {
+  nidevice_grpc.Session vi = 1;
+  bytes configuration = 2;
+}
+
+message ImportAttributeConfigurationBufferExResponse {
+  int32 status = 1;
+}
+
 message InitExtCalRequest {
   string session_name = 1;
   string resource_name = 2;
@@ -1005,8 +1069,9 @@ message SetAttributeViReal64Request {
   string channel_name = 2;
   NiFakeAttribute attribute_id = 3;
   oneof attribute_value_enum {
-    NiFakeReal64AttributeValuesMapped attribute_value_mapped = 4;
-    double attribute_value_raw = 5;
+    NiFakeReal64AttributeValues attribute_value = 4;
+    NiFakeReal64AttributeValuesMapped attribute_value_mapped = 5;
+    double attribute_value_raw = 6;
   }
 }
 

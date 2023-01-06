@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d48
+# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d94
 attributes = {
     1050002: {
         'codegen_method': 'public',

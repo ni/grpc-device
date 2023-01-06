@@ -611,25 +611,6 @@ configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const ni
   return response;
 }
 
-ConfigureLCRCompensationResponse
-configure_lcr_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& compensation_data)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConfigureLCRCompensationRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  request.set_compensation_data(compensation_data);
-
-  auto response = ConfigureLCRCompensationResponse{};
-
-  raise_if_error(
-      stub->ConfigureLCRCompensation(&context, request, &response),
-      context);
-
-  return response;
-}
-
 ConfigureLCRCustomCableCompensationResponse
 configure_lcr_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& custom_cable_compensation_data)
 {
@@ -689,26 +670,6 @@ configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi,
 
   raise_if_error(
       stub->ConfigureOutputFunction(&context, request, &response),
-      context);
-
-  return response;
-}
-
-ConfigureOutputRangeResponse
-configure_output_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& range_type, const double& range)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConfigureOutputRangeRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  request.set_range_type(range_type);
-  request.set_range(range);
-
-  auto response = ConfigureOutputRangeResponse{};
-
-  raise_if_error(
-      stub->ConfigureOutputRange(&context, request, &response),
       context);
 
   return response;
@@ -2039,24 +2000,6 @@ get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Sessi
 
   raise_if_error(
       stub->GetExtCalRecommendedInterval(&context, request, &response),
-      context);
-
-  return response;
-}
-
-GetLCRCompensationDataResponse
-get_lcr_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetLCRCompensationDataRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-
-  auto response = GetLCRCompensationDataResponse{};
-
-  raise_if_error(
-      stub->GetLCRCompensationData(&context, request, &response),
       context);
 
   return response;

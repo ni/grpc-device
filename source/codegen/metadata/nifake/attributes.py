@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d49
+# This file is generated from NI-FAKE API metadata version 23.0.0d142
 attributes = {
     1000000: {
         'codegen_method': 'public',
@@ -79,5 +79,21 @@ attributes = {
         'name': 'READ_WRITE_STRING_REPEATED_CAPABILITY',
         'resettable': False,
         'type': 'ViString'
+    },
+    1000012: {
+        'codegen_method': 'public',
+        'enum': 'SampleCount',
+        'grpc_type': 'sint32',
+        'name': 'SAMPLE_COUNT',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1000013: {
+        'codegen_method': 'public',
+        'enum': 'SampleInterval',
+        'grpc_type': 'double',
+        'name': 'SAMPLE_INTERVAL',
+        'resettable': False,
+        'type': 'ViReal64'
     }
 }

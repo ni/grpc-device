@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d49
+# This file is generated from NI-FAKE API metadata version 23.0.0d142
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -235,6 +235,49 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ConfigureAbc': {
+        'cname': 'niFake_ConfigureABC',
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureEnums': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'sampleCount',
+                'direction': 'in',
+                'enum': 'SampleCount',
+                'grpc_type': 'sint32',
+                'name': 'sampleCount',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'sampleInterval',
+                'direction': 'in',
+                'enum': 'SampleInterval',
+                'grpc_type': 'double',
+                'name': 'sampleInterval',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'Control4022': {
         'cname': 'niFake_4022Control',
         'codegen_method': 'public',
@@ -457,6 +500,39 @@ functions = {
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'sizeInBytes'
+                },
+                'type': 'ViInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ExportAttributeConfigurationBufferEx': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'size',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'name': 'size',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'configuration',
+                'direction': 'out',
+                'grpc_type': 'bytes',
+                'name': 'configuration',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'size'
                 },
                 'type': 'ViInt8[]'
             }
@@ -1492,6 +1568,43 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ImportAttributeConfigurationBufferEx': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'size',
+                'determine_size_from': [
+                    'configuration'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'size',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'configuration',
+                'direction': 'in',
+                'grpc_type': 'bytes',
+                'name': 'configuration',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'ViInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'InitExtCal': {
         'codegen_method': 'public',
         'custom_close': 'CloseExtCal(id, 0)',
@@ -2083,27 +2196,10 @@ functions = {
                 'type': 'ViReal64'
             },
             {
-                'cppName': 'stringSize',
-                'determine_size_from': [
-                    'aString'
-                ],
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'include_in_proto': False,
-                'is_size_param': True,
-                'linked_params_are_optional': False,
-                'name': 'stringSize',
-                'type': 'ViInt32'
-            },
-            {
                 'cppName': 'aString',
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'aString',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'stringSize'
-                },
                 'type': 'ViConstString'
             }
         ],
@@ -2579,7 +2675,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'int64',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViInt64'
             }
         ],
@@ -2612,6 +2708,7 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
+                'enum': 'NiFakeReal64AttributeValues',
                 'grpc_type': 'double',
                 'mapped-enum': 'NiFakeReal64AttributeValuesMapped',
                 'name': 'attributeValue',
@@ -2648,7 +2745,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViConstString'
             }
         ],

@@ -44,11 +44,9 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus ConfigureDigitalEdgeSourceTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
   ViStatus ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge);
   ViStatus ConfigureDigitalEdgeStartTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
-  ViStatus ConfigureLCRCompensation(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[]);
   ViStatus ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]);
   ViStatus ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled);
   ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function);
-  ViStatus ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range);
   ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance);
   ViStatus ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit);
   ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerlineFrequency);
@@ -119,7 +117,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
   ViStatus GetExtCalLastTemp(ViSession vi, ViReal64* temperature);
   ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months);
-  ViStatus GetLCRCompensationData(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[]);
   ViStatus GetLCRCompensationLastDateAndTime(ViSession vi, ViConstString channelName, ViInt32 compensationType, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
   ViStatus GetLCRCustomCableCompensationData(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]);
   ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]);
@@ -197,11 +194,9 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using ConfigureDigitalEdgeSourceTriggerWithChannelsPtr = decltype(&niDCPower_ConfigureDigitalEdgeSourceTriggerWithChannels);
   using ConfigureDigitalEdgeStartTriggerPtr = decltype(&niDCPower_ConfigureDigitalEdgeStartTrigger);
   using ConfigureDigitalEdgeStartTriggerWithChannelsPtr = decltype(&niDCPower_ConfigureDigitalEdgeStartTriggerWithChannels);
-  using ConfigureLCRCompensationPtr = decltype(&niDCPower_ConfigureLCRCompensation);
   using ConfigureLCRCustomCableCompensationPtr = decltype(&niDCPower_ConfigureLCRCustomCableCompensation);
   using ConfigureOutputEnabledPtr = decltype(&niDCPower_ConfigureOutputEnabled);
   using ConfigureOutputFunctionPtr = decltype(&niDCPower_ConfigureOutputFunction);
-  using ConfigureOutputRangePtr = decltype(&niDCPower_ConfigureOutputRange);
   using ConfigureOutputResistancePtr = decltype(&niDCPower_ConfigureOutputResistance);
   using ConfigureOvpPtr = decltype(&niDCPower_ConfigureOVP);
   using ConfigurePowerLineFrequencyPtr = decltype(&niDCPower_ConfigurePowerLineFrequency);
@@ -272,7 +267,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using GetExtCalLastDateAndTimePtr = decltype(&niDCPower_GetExtCalLastDateAndTime);
   using GetExtCalLastTempPtr = decltype(&niDCPower_GetExtCalLastTemp);
   using GetExtCalRecommendedIntervalPtr = decltype(&niDCPower_GetExtCalRecommendedInterval);
-  using GetLCRCompensationDataPtr = decltype(&niDCPower_GetLCRCompensationData);
   using GetLCRCompensationLastDateAndTimePtr = decltype(&niDCPower_GetLCRCompensationLastDateAndTime);
   using GetLCRCustomCableCompensationDataPtr = decltype(&niDCPower_GetLCRCustomCableCompensationData);
   using GetNextCoercionRecordPtr = decltype(&niDCPower_GetNextCoercionRecord);
@@ -350,11 +344,9 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     ConfigureDigitalEdgeSourceTriggerWithChannelsPtr ConfigureDigitalEdgeSourceTriggerWithChannels;
     ConfigureDigitalEdgeStartTriggerPtr ConfigureDigitalEdgeStartTrigger;
     ConfigureDigitalEdgeStartTriggerWithChannelsPtr ConfigureDigitalEdgeStartTriggerWithChannels;
-    ConfigureLCRCompensationPtr ConfigureLCRCompensation;
     ConfigureLCRCustomCableCompensationPtr ConfigureLCRCustomCableCompensation;
     ConfigureOutputEnabledPtr ConfigureOutputEnabled;
     ConfigureOutputFunctionPtr ConfigureOutputFunction;
-    ConfigureOutputRangePtr ConfigureOutputRange;
     ConfigureOutputResistancePtr ConfigureOutputResistance;
     ConfigureOvpPtr ConfigureOvp;
     ConfigurePowerLineFrequencyPtr ConfigurePowerLineFrequency;
@@ -425,7 +417,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     GetExtCalLastDateAndTimePtr GetExtCalLastDateAndTime;
     GetExtCalLastTempPtr GetExtCalLastTemp;
     GetExtCalRecommendedIntervalPtr GetExtCalRecommendedInterval;
-    GetLCRCompensationDataPtr GetLCRCompensationData;
     GetLCRCompensationLastDateAndTimePtr GetLCRCompensationLastDateAndTime;
     GetLCRCustomCableCompensationDataPtr GetLCRCustomCableCompensationData;
     GetNextCoercionRecordPtr GetNextCoercionRecord;

@@ -27,6 +27,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus Close(ViSession vi);
   ViStatus CloseExtCal(ViSession vi, ViInt32 action);
   ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved);
+  ViStatus ConfigureAbc(ViSession vi);
+  ViStatus ConfigureEnums(ViSession vi, ViInt32 sampleCount, ViReal64 sampleInterval);
   ViStatus Control4022(ViString resourceName, ViInt32 configuration);
   ViStatus CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]);
   ViStatus CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut);
@@ -35,6 +37,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle);
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
+  ViStatus ExportAttributeConfigurationBufferEx(ViSession vi, ViInt32 size, ViInt8 configuration[]);
   ViStatus FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples);
   ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean);
   ViStatus GetANumber(ViSession vi, ViInt16* aNumber);
@@ -66,6 +69,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]);
   ViStatus GetViUInt8(ViSession vi, ViUInt8* aUint8Number);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
+  ViStatus ImportAttributeConfigurationBufferEx(ViSession vi, ViInt32 size, ViInt8 configuration[]);
   ViStatus InitExtCal(ViRsrc resourceName, ViString calibrationPassword, ViSession* vi);
   ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
   ViStatus InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2);
@@ -81,7 +85,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size);
   ViStatus MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size);
   ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber);
-  ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString);
+  ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViConstString aString);
   ViStatus PoorlyNamedSimpleFunction(ViSession vi);
   ViStatus Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading);
   ViStatus ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* bufferSize);
@@ -118,6 +122,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using ClosePtr = decltype(&niFake_close);
   using CloseExtCalPtr = decltype(&niFake_CloseExtCal);
   using CommandWithReservedParamPtr = decltype(&niFake_CommandWithReservedParam);
+  using ConfigureAbcPtr = decltype(&niFake_ConfigureABC);
+  using ConfigureEnumsPtr = decltype(&niFake_ConfigureEnums);
   using Control4022Ptr = decltype(&niFake_4022Control);
   using CreateConfigurationListPtr = decltype(&niFake_CreateConfigurationList);
   using CustomNestedStructRoundtripPtr = decltype(&niFake_CustomNestedStructRoundtrip);
@@ -126,6 +132,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using EnumInputFunctionWithDefaultsPtr = decltype(&niFake_EnumInputFunctionWithDefaults);
   using ErrorMessagePtr = decltype(&niFake_error_message);
   using ExportAttributeConfigurationBufferPtr = decltype(&niFake_ExportAttributeConfigurationBuffer);
+  using ExportAttributeConfigurationBufferExPtr = decltype(&niFake_ExportAttributeConfigurationBufferEx);
   using FetchWaveformPtr = decltype(&niFake_FetchWaveform);
   using GetABooleanPtr = decltype(&niFake_GetABoolean);
   using GetANumberPtr = decltype(&niFake_GetANumber);
@@ -157,6 +164,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetViUInt32ArrayPtr = decltype(&niFake_GetViUInt32Array);
   using GetViUInt8Ptr = decltype(&niFake_GetViUInt8);
   using ImportAttributeConfigurationBufferPtr = decltype(&niFake_ImportAttributeConfigurationBuffer);
+  using ImportAttributeConfigurationBufferExPtr = decltype(&niFake_ImportAttributeConfigurationBufferEx);
   using InitExtCalPtr = decltype(&niFake_InitExtCal);
   using InitWithOptionsPtr = decltype(&niFake_InitWithOptions);
   using InitWithVarArgsPtr = decltype(&niFake_InitWithVarArgs);
@@ -209,6 +217,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     ClosePtr Close;
     CloseExtCalPtr CloseExtCal;
     CommandWithReservedParamPtr CommandWithReservedParam;
+    ConfigureAbcPtr ConfigureAbc;
+    ConfigureEnumsPtr ConfigureEnums;
     Control4022Ptr Control4022;
     CreateConfigurationListPtr CreateConfigurationList;
     CustomNestedStructRoundtripPtr CustomNestedStructRoundtrip;
@@ -217,6 +227,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     EnumInputFunctionWithDefaultsPtr EnumInputFunctionWithDefaults;
     ErrorMessagePtr ErrorMessage;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
+    ExportAttributeConfigurationBufferExPtr ExportAttributeConfigurationBufferEx;
     FetchWaveformPtr FetchWaveform;
     GetABooleanPtr GetABoolean;
     GetANumberPtr GetANumber;
@@ -248,6 +259,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetViUInt32ArrayPtr GetViUInt32Array;
     GetViUInt8Ptr GetViUInt8;
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
+    ImportAttributeConfigurationBufferExPtr ImportAttributeConfigurationBufferEx;
     InitExtCalPtr InitExtCal;
     InitWithOptionsPtr InitWithOptions;
     InitWithVarArgsPtr InitWithVarArgs;

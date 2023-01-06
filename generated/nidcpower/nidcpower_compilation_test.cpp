@@ -137,11 +137,6 @@ ViStatus ConfigureDigitalEdgeStartTriggerWithChannels(ViSession vi, ViConstStrin
   return niDCPower_ConfigureDigitalEdgeStartTriggerWithChannels(vi, channelName, inputTerminal, edge);
 }
 
-ViStatus ConfigureLCRCompensation(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[])
-{
-  return niDCPower_ConfigureLCRCompensation(vi, channelName, compensationDataSize, compensationData);
-}
-
 ViStatus ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[])
 {
   return niDCPower_ConfigureLCRCustomCableCompensation(vi, channelName, customCableCompensationDataSize, customCableCompensationData);
@@ -155,11 +150,6 @@ ViStatus ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoole
 ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function)
 {
   return niDCPower_ConfigureOutputFunction(vi, channelName, function);
-}
-
-ViStatus ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range)
-{
-  return niDCPower_ConfigureOutputRange(vi, channelName, rangeType, range);
 }
 
 ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance)
@@ -510,11 +500,6 @@ ViStatus GetExtCalLastTemp(ViSession vi, ViReal64* temperature)
 ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months)
 {
   return niDCPower_GetExtCalRecommendedInterval(vi, months);
-}
-
-ViStatus GetLCRCompensationData(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[])
-{
-  return niDCPower_GetLCRCompensationData(vi, channelName, compensationDataSize, compensationData);
 }
 
 ViStatus GetLCRCompensationLastDateAndTime(ViSession vi, ViConstString channelName, ViInt32 compensationType, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)

@@ -273,6 +273,82 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ConfigureAbc(::grpc::ServerContext* context, const ConfigureAbcRequest* request, ConfigureAbcResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto status = library_->ConfigureAbc(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ConfigureEnums(::grpc::ServerContext* context, const ConfigureEnumsRequest* request, ConfigureEnumsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt32 sample_count;
+      switch (request->sample_count_enum_case()) {
+        case nifake_grpc::ConfigureEnumsRequest::SampleCountEnumCase::kSampleCount: {
+          sample_count = static_cast<ViInt32>(request->sample_count());
+          break;
+        }
+        case nifake_grpc::ConfigureEnumsRequest::SampleCountEnumCase::kSampleCountRaw: {
+          sample_count = static_cast<ViInt32>(request->sample_count_raw());
+          break;
+        }
+        case nifake_grpc::ConfigureEnumsRequest::SampleCountEnumCase::SAMPLE_COUNT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_count was not specified or out of range");
+          break;
+        }
+      }
+
+      ViReal64 sample_interval;
+      switch (request->sample_interval_enum_case()) {
+        case nifake_grpc::ConfigureEnumsRequest::SampleIntervalEnumCase::kSampleInterval: {
+          sample_interval = static_cast<ViReal64>(request->sample_interval());
+          break;
+        }
+        case nifake_grpc::ConfigureEnumsRequest::SampleIntervalEnumCase::kSampleIntervalRaw: {
+          sample_interval = static_cast<ViReal64>(request->sample_interval_raw());
+          break;
+        }
+        case nifake_grpc::ConfigureEnumsRequest::SampleIntervalEnumCase::SAMPLE_INTERVAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sample_interval was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureEnums(vi, sample_count, sample_interval);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response)
   {
     if (context->IsCancelled()) {
@@ -465,6 +541,43 @@ namespace nifake_grpc {
         std::string configuration(size_in_bytes, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size_in_bytes)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->set_status(status);
+        response->set_configuration(configuration);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ExportAttributeConfigurationBufferEx(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferExRequest* request, ExportAttributeConfigurationBufferExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+
+      while (true) {
+        auto status = library_->ExportAttributeConfigurationBufferEx(vi, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        ViInt32 size = status;
+
+        std::string configuration(size, '\0');
+        status = library_->ExportAttributeConfigurationBufferEx(vi, size, (ViInt8*)configuration.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1445,6 +1558,30 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ImportAttributeConfigurationBufferEx(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferExRequest* request, ImportAttributeConfigurationBufferExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt32 size = static_cast<ViInt32>(request->configuration().size());
+      ViInt8* configuration = (ViInt8*)request->configuration().c_str();
+      auto status = library_->ImportAttributeConfigurationBufferEx(vi, size, configuration);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1951,10 +2088,9 @@ namespace nifake_grpc {
         }
       }
 
-      ViInt32 string_size = static_cast<ViInt32>(convert_from_grpc<std::string>(request->a_string()).size());
       auto a_string_mbcs = convert_from_grpc<std::string>(request->a_string());
       auto a_string = a_string_mbcs.c_str();
-      auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
+      auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, a_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -2366,6 +2502,10 @@ namespace nifake_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value;
       switch (request->attribute_value_enum_case()) {
+        case nifake_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValue: {
+          attribute_value = static_cast<ViReal64>(request->attribute_value());
+          break;
+        }
         case nifake_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueMapped: {
           auto attribute_value_imap_it = nifakereal64attributevaluesmapped_input_map_.find(request->attribute_value_mapped());
           if (attribute_value_imap_it == nifakereal64attributevaluesmapped_input_map_.end()) {
