@@ -112,7 +112,7 @@ TEST_F(NiRFmxWLANRestrictedDriverApiTests, GetChannelListBehavior_ReturnsNonEmpt
   EXPECT_SUCCESS(session, response);
   EXPECT_THAT(response.center_frequencies(), Not(IsEmpty()));
   EXPECT_THAT(response.channel_bandwidths(), Not(IsEmpty()));
-  EXPECT_GT(0, response.actual_array_size());
+  EXPECT_GT(response.actual_array_size(), 0);
 }
 
 TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_FetchCommonPilotErrorTradeIndB_ReturnsNonEmptyResult)
