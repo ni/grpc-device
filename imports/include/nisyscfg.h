@@ -1,7 +1,7 @@
 /*============================================================================*/
 /*                       NI System Configuration API                          */
 /*----------------------------------------------------------------------------*/
-/*    Copyright (c) National Instruments 2010-2022.  All Rights Reserved.     */
+/*    Copyright (c) National Instruments 2010-2020.  All Rights Reserved.     */
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /* Title:   nisyscfg.h                                                        */
@@ -129,12 +129,11 @@ typedef enum
 {
    NISysCfgItemTypeStandard                  = 0,           // Standard visible component
    NISysCfgItemTypeHidden                    = 1,           // Hidden component
-   NISysCfgItemTypeSystem                    = 2,           // Required system component (hidden package or base system image installed by the host)
+   NISysCfgItemTypeSystem                    = 2,           // Required system component
    NISysCfgItemTypeUnknown                   = 3,           // Unknown component type
    NISysCfgItemTypeStartup                   = 4,           // Startup component
    NISysCfgItemTypeImage                     = 5,           // User-defined system image
-   NISysCfgItemTypeEssential                 = 6,           // Required visible component
-   NISysCfgItemTypeSystemPackage             = 7            // Base system image installed using a package from feeds on ni.com
+   NISysCfgItemTypeEssential                 = 6            // Required visible component
 } NISysCfgComponentType;
 
 typedef enum
@@ -182,8 +181,7 @@ typedef enum
    NISysCfgBusTypeFireWire                   = 12,
    NISysCfgBusTypeAccessory                  = 13,
    NISysCfgBusTypeCan                        = 14,
-   NISysCfgBusTypeSwitchBlockDevice          = 15,
-   NISysCfgBusTypeSlsc                       = 16
+   NISysCfgBusTypeSwitchBlockDevice          = 15
 } NISysCfgBusType;
 
 typedef enum
@@ -399,6 +397,8 @@ typedef enum
    NISysCfgResourcePropertyIsPresent                           = 16924672,    // NISysCfgIsPresentType
    NISysCfgResourcePropertySlotNumber                          = 16822272,    // int
    NISysCfgResourcePropertySupportsInternalCalibration         = 16842752,    // NISysCfgBool
+   NISysCfgResourcePropertyInternalCalibrationLastTime         = 16846848,    // NISysCfgTimestampUTC
+   NISysCfgResourcePropertyInternalCalibrationLastTemp         = 16850944,    // double
    NISysCfgResourcePropertySupportsExternalCalibration         = 16859136,    // NISysCfgBool
    NISysCfgResourcePropertyExternalCalibrationLastTemp         = 16867328,    // double
    NISysCfgResourcePropertyCalibrationComments                 = 16961536,    // char *
@@ -433,14 +433,12 @@ typedef enum
    NISysCfgResourcePropertyConnectsToNumSlots                  = 17072128,    // int
    NISysCfgResourcePropertySlotOffsetLeft                      = 17276928,    // unsigned int
    NISysCfgResourcePropertyInternalCalibrationValuesInRange    = 17489920,    // NISysCfgBool
-   NISysCfgResourcePropertyNumberOfInternalCalibrationDetails  = 17510400,    // int
 
    // Read/Write firmware properties
    NISysCfgResourcePropertyFirmwareUpdateMode                  = 17354752,    // NISysCfgFirmwareUpdateMode
 
    // Read/Write calibration properties
    NISysCfgResourcePropertyExternalCalibrationLastTime         = 16863232,    // NISysCfgTimestampUTC
-   NISysCfgResourcePropertyExternalCalibrationLastAdjustTime   = 17502208,    // NISysCfgTimestampUTC
    NISysCfgResourcePropertyRecommendedNextCalibrationTime      = 16871424,    // NISysCfgTimestampUTC
    NISysCfgResourcePropertyExternalCalibrationLastLimited      = 17428480,    // NISysCfgBool
 
@@ -514,16 +512,12 @@ typedef enum
    NISysCfgResourcePropertyNumberOfUserSwitches                = 17293312     // int
 } NISysCfgResourceProperty;
 
-#define NISysCfgResourcePropertyNumberOfCpus                   NISysCfgResourcePropertyNumberOfCpuLogicalProcessors
-#define NISysCfgResourcePropertyPxiPciSlotLinkWidth            (NISysCfgResourceProperty)16982016
-#define NISysCfgResourcePropertyInternalCalibrationLastTime    (NISysCfgResourceProperty)NISysCfgIndexedPropertyInternalCalibrationLastTime
-#define NISysCfgResourcePropertyInternalCalibrationLastTemp    (NISysCfgResourceProperty)NISysCfgIndexedPropertyInternalCalibrationLastTemp
+#define NISysCfgResourcePropertyPxiPciSlotLinkWidth   (NISysCfgResourceProperty)16982016
+#define NISysCfgResourcePropertyNumberOfCpus          NISysCfgResourcePropertyNumberOfCpuLogicalProcessors
 
 #if defined(WIN32) && (_MSC_VER >= 1300)
-#pragma deprecated("NISysCfgResourcePropertyNumberOfCpus")
 #pragma deprecated("NISysCfgResourcePropertyPxiPciSlotLinkWidth")
-#pragma deprecated("NISysCfgResourcePropertyInternalCalibrationLastTime")
-#pragma deprecated("NISysCfgResourcePropertyInternalCalibrationLastTemp")
+#pragma deprecated("NISysCfgResourcePropertyNumberOfCpus")
 #endif
 
 typedef enum
@@ -562,9 +556,6 @@ typedef enum
    NISysCfgIndexedPropertyUserLedName                          = 17285120,    // char *
    NISysCfgIndexedPropertyUserSwitchName                       = 17297408,    // char *
    NISysCfgIndexedPropertyUserSwitchState                      = 17301504,    // NISysCfgSwitchState
-   NISysCfgIndexedPropertyInternalCalibrationName              = 17514496,    // char *
-   NISysCfgIndexedPropertyInternalCalibrationLastTime          = 16846848,    // NISysCfgTimestampUTC
-   NISysCfgIndexedPropertyInternalCalibrationLastTemp          = 16850944,    // double
 
    // Read/Write properties
    NISysCfgIndexedPropertyUserLedState                         = 17289216,    // NISysCfgLedState
@@ -662,15 +653,15 @@ typedef enum
 } NISysCfgPropertyType;
 
 // These macros are provided for backward compatibility.
-#define NISysCfgBusTypeFlexAdapter                             NISysCfgBusTypeAccessory
-#define NISysCfgFilterModeAll                                  NISysCfgFilterModeMatchValuesAll
-#define NISysCfgFilterModeAny                                  NISysCfgFilterModeMatchValuesAny
-#define NISysCfgFilterModeNone                                 NISysCfgFilterModeMatchValuesNone
-#define NISysCfgPacketDetectionInterrupt                       NISysCfgPacketDetectionLineInterrupt
-#define NISysCfgResourcePropertyWlanAvailableCount             NISysCfgResourcePropertyNumberOfDiscoveredAccessPoints
-#define NISysCfgResetPrimaryDisableOthers                      NISysCfgResetPrimaryResetOthers
-#define NISysCfgPreservePrimaryDisableOthers                   NISysCfgPreservePrimaryResetOthers
-#define NISysCfgApplyPrimaryDisableOthers                      NISysCfgApplyPrimaryResetOthers
+#define NISysCfgBusTypeFlexAdapter                    NISysCfgBusTypeAccessory
+#define NISysCfgFilterModeAll                         NISysCfgFilterModeMatchValuesAll
+#define NISysCfgFilterModeAny                         NISysCfgFilterModeMatchValuesAny
+#define NISysCfgFilterModeNone                        NISysCfgFilterModeMatchValuesNone
+#define NISysCfgPacketDetectionInterrupt              NISysCfgPacketDetectionLineInterrupt
+#define NISysCfgResourcePropertyWlanAvailableCount    NISysCfgResourcePropertyNumberOfDiscoveredAccessPoints
+#define NISysCfgResetPrimaryDisableOthers             NISysCfgResetPrimaryResetOthers
+#define NISysCfgPreservePrimaryDisableOthers          NISysCfgPreservePrimaryResetOthers
+#define NISysCfgApplyPrimaryDisableOthers             NISysCfgApplyPrimaryResetOthers
 
 ////////////////////////////////////////////////////////////////////////////////
 // System Configuration core functions
@@ -763,12 +754,6 @@ NISYSCFGCFUNC NISysCfgGetResourceProperty(
    void *                                 value
    );
 
-NISYSCFGCFUNC NISysCfgGetResourcePropertyType(
-   NISysCfgResourceHandle                resourceHandle,
-   NISysCfgResourceProperty              propertyID,
-   NISysCfgPropertyType *                propertyType
-   );
-
 NISYSCFGCDECL NISysCfgSetResourceProperty(
    NISysCfgResourceHandle                 resourceHandle,
    NISysCfgResourceProperty               propertyID,
@@ -813,12 +798,6 @@ NISYSCFGCFUNC NISysCfgGetSystemProperty(
    NISysCfgSessionHandle                  sessionHandle,
    NISysCfgSystemProperty                 propertyID,
    void *                                 value
-   );
-
- NISYSCFGCFUNC NISysCfgGetSystemPropertyType(
-   NISysCfgSessionHandle                  sessionHandle,
-   NISysCfgSystemProperty                 propertyID,
-   NISysCfgPropertyType *                 propertyType
    );
 
 NISYSCFGCDECL NISysCfgSetSystemProperty(
@@ -955,11 +934,6 @@ NISYSCFGCFUNC NISysCfgGetAvailableSoftwareSets(
    NISysCfgSessionHandle                  sessionHandle,
    NISysCfgEnumSoftwareSetHandle *        setEnumHandle
    );
-
-NISYSCFGCFUNC NISysCfgGetAvailableBaseSystemImages(
-   NISysCfgSessionHandle                  sessionHandle,
-   NISysCfgEnumSoftwareComponentHandle*   systemImageEnumHandle
-);
 
 NISYSCFGCFUNC NISysCfgGetFilteredSoftwareComponents(
    const char *                           repositoryPath,
