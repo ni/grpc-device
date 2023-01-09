@@ -77,7 +77,8 @@ config = {
                 },
                 {
                     'coerced': True,
-                    'grpc_type': 'sint32',
+                    'enum': 'Turtle',
+                    'grpc_type': 'Turtle',
                     'name': 'turtle',
                     'type': 'ViInt16'
                 }

@@ -249,7 +249,7 @@ message CustomStructTypedef {
 
 message StringAndTurtle {
   string string_arg = 1;
-  sint32 turtle = 2;
+  Turtle turtle = 2;
 }
 
 message AbortRequest {
