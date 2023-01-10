@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.0.0d152
+# This file is generated from NI-SCOPE API metadata version 23.0.0f168
 attributes = {
     1050002: {
         'codegen_method': 'public',

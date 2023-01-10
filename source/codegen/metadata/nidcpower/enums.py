@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d446
+# This file is generated from NI-DCPower API metadata version 23.0.0f517
 enums = {
     'ApertureTimeAutoMode': {
         'codegen_method': 'public',
