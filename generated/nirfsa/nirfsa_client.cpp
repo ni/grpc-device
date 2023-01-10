@@ -145,7 +145,7 @@ configure_acquisition_type(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ConfigureDeembeddingTableInterpolationLinearResponse
-configure_deembedding_table_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const simple_variant<LinearInterpolationFormat, pb::int32>& format)
+configure_deembedding_table_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const simple_variant<LinearInterpolationFormat, pb::int32>& format)
 {
   ::grpc::ClientContext context;
 
@@ -172,7 +172,7 @@ configure_deembedding_table_interpolation_linear(const StubPtr& stub, const nide
 }
 
 ConfigureDeembeddingTableInterpolationNearestResponse
-configure_deembedding_table_interpolation_nearest(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name)
+configure_deembedding_table_interpolation_nearest(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name)
 {
   ::grpc::ClientContext context;
 
@@ -191,7 +191,7 @@ configure_deembedding_table_interpolation_nearest(const StubPtr& stub, const nid
 }
 
 ConfigureDeembeddingTableInterpolationSplineResponse
-configure_deembedding_table_interpolation_spline(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name)
+configure_deembedding_table_interpolation_spline(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name)
 {
   ::grpc::ClientContext context;
 
@@ -310,7 +310,7 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ConfigureIQCarrierFrequencyResponse
-configure_iq_carrier_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& carrier_frequency)
+configure_iq_carrier_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& carrier_frequency)
 {
   ::grpc::ClientContext context;
 
@@ -356,7 +356,7 @@ configure_iq_power_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ConfigureIQRateResponse
-configure_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& iq_rate)
+configure_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& iq_rate)
 {
   ::grpc::ClientContext context;
 
@@ -375,7 +375,7 @@ configure_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
 }
 
 ConfigureNumberOfRecordsResponse
-configure_number_of_records(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const bool& number_of_records_is_finite, const pb::int64& number_of_records)
+configure_number_of_records(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const bool& number_of_records_is_finite, const pb::int64& number_of_records)
 {
   ::grpc::ClientContext context;
 
@@ -395,7 +395,7 @@ configure_number_of_records(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 ConfigureNumberOfSamplesResponse
-configure_number_of_samples(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const bool& number_of_samples_is_finite, const pb::int64& samples_per_record)
+configure_number_of_samples(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const bool& number_of_samples_is_finite, const pb::int64& samples_per_record)
 {
   ::grpc::ClientContext context;
 
@@ -466,7 +466,7 @@ configure_ref_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 ConfigureReferenceLevelResponse
-configure_reference_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& reference_level)
+configure_reference_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& reference_level)
 {
   ::grpc::ClientContext context;
 
@@ -485,7 +485,7 @@ configure_reference_level(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 ConfigureResolutionBandwidthResponse
-configure_resolution_bandwidth(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& resolution_bandwidth)
+configure_resolution_bandwidth(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& resolution_bandwidth)
 {
   ::grpc::ClientContext context;
 
@@ -556,7 +556,7 @@ configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureSpectrumFrequencyCenterSpanResponse
-configure_spectrum_frequency_center_span(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& center_frequency, const double& span)
+configure_spectrum_frequency_center_span(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& center_frequency, const double& span)
 {
   ::grpc::ClientContext context;
 
@@ -576,7 +576,7 @@ configure_spectrum_frequency_center_span(const StubPtr& stub, const nidevice_grp
 }
 
 ConfigureSpectrumFrequencyStartStopResponse
-configure_spectrum_frequency_start_stop(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& start_frequency, const double& stop_frequency)
+configure_spectrum_frequency_start_stop(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& start_frequency, const double& stop_frequency)
 {
   ::grpc::ClientContext context;
 
@@ -596,7 +596,7 @@ configure_spectrum_frequency_start_stop(const StubPtr& stub, const nidevice_grpc
 }
 
 CreateConfigurationListResponse
-create_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& list_name, const std::vector<NiRFSAAttribute>& list_attribute_ids, const bool& set_as_active_list)
+create_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& list_name, const std::vector<NiRFSAAttribute>& list_attribute_ids, const bool& set_as_active_list)
 {
   ::grpc::ClientContext context;
 
@@ -634,7 +634,7 @@ create_configuration_list_step(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CreateDeembeddingSparameterTableArrayResponse
-create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const std::vector<double>& frequencies, const std::vector<nidevice_grpc::NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation)
+create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const std::vector<double>& frequencies, const std::vector<nidevice_grpc::NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation)
 {
   ::grpc::ClientContext context;
 
@@ -664,7 +664,7 @@ create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_gr
 }
 
 CreateDeembeddingSparameterTableS2PFileResponse
-create_deembedding_sparameter_table_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const pb::string& s2p_file_path, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation)
+create_deembedding_sparameter_table_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const std::string& s2p_file_path, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation)
 {
   ::grpc::ClientContext context;
 
@@ -709,7 +709,7 @@ delete_all_deembedding_tables(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 DeleteConfigurationListResponse
-delete_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& list_name)
+delete_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& list_name)
 {
   ::grpc::ClientContext context;
 
@@ -727,7 +727,7 @@ delete_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 DeleteDeembeddingTableResponse
-delete_deembedding_table(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name)
+delete_deembedding_table(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name)
 {
   ::grpc::ClientContext context;
 
@@ -867,7 +867,7 @@ error_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ExportTerminal, std::string>& output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const std::string& signal_identifier, const simple_variant<ExportTerminal, std::string>& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -901,7 +901,7 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
 }
 
 FetchIQMultiRecordComplexF32Response
-fetch_iq_multi_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
+fetch_iq_multi_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -923,7 +923,7 @@ fetch_iq_multi_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 FetchIQMultiRecordComplexF64Response
-fetch_iq_multi_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
+fetch_iq_multi_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -945,7 +945,7 @@ fetch_iq_multi_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 FetchIQMultiRecordComplexI16Response
-fetch_iq_multi_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
+fetch_iq_multi_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -967,7 +967,7 @@ fetch_iq_multi_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 FetchIQSingleRecordComplexF32Response
-fetch_iq_single_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
+fetch_iq_single_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -988,7 +988,7 @@ fetch_iq_single_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 FetchIQSingleRecordComplexF64Response
-fetch_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
+fetch_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -1009,7 +1009,7 @@ fetch_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 FetchIQSingleRecordComplexI16Response
-fetch_iq_single_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
+fetch_iq_single_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -1030,7 +1030,7 @@ fetch_iq_single_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1049,7 +1049,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1068,7 +1068,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViInt64Response
-get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id)
+get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1087,7 +1087,7 @@ get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1106,7 +1106,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1125,7 +1125,7 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1195,7 +1195,7 @@ get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 GetDeviceResponseResponse
-get_device_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<DeviceResponse, pb::int32>& response_type)
+get_device_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const simple_variant<DeviceResponse, pb::int32>& response_type)
 {
   ::grpc::ClientContext context;
 
@@ -1289,7 +1289,7 @@ get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 GetFetchBacklogResponse
-get_fetch_backlog(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number)
+get_fetch_backlog(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::int64& record_number)
 {
   ::grpc::ClientContext context;
 
@@ -1308,7 +1308,7 @@ get_fetch_backlog(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
 }
 
 GetFrequencyResponseResponse
-get_frequency_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+get_frequency_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -1326,7 +1326,7 @@ get_frequency_response(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetNormalizationCoefficientsResponse
-get_normalization_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+get_normalization_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -1344,7 +1344,7 @@ get_normalization_coefficients(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetNumberOfSpectralLinesResponse
-get_number_of_spectral_lines(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+get_number_of_spectral_lines(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -1362,7 +1362,7 @@ get_number_of_spectral_lines(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetRelayNameResponse
-get_relay_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int32& index)
+get_relay_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::int32& index)
 {
   ::grpc::ClientContext context;
 
@@ -1381,7 +1381,7 @@ get_relay_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 GetRelayOperationsCountResponse
-get_relay_operations_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+get_relay_operations_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -1399,7 +1399,7 @@ get_relay_operations_count(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 GetScalingCoefficientsResponse
-get_scaling_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+get_scaling_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -1470,7 +1470,7 @@ get_spectral_info_for_smt(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 GetStreamEndpointHandleResponse
-get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint)
+get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& stream_endpoint)
 {
   ::grpc::ClientContext context;
 
@@ -1488,7 +1488,7 @@ get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 GetTerminalNameResponse
-get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const pb::int32& buffer_size)
+get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const std::string& signal_identifier, const pb::int32& buffer_size)
 {
   ::grpc::ClientContext context;
 
@@ -1515,7 +1515,7 @@ get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const s
 }
 
 GetUserDataResponse
-get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier)
+get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& identifier)
 {
   ::grpc::ClientContext context;
 
@@ -1533,7 +1533,7 @@ get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::s
 }
 
 InitResponse
-init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1553,7 +1553,7 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
 }
 
 InitWithOptionsResponse
-init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init_with_options(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1642,7 +1642,7 @@ perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ReadIQSingleRecordComplexF64Response
-read_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int64& data_array_size)
+read_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int64& data_array_size)
 {
   ::grpc::ClientContext context;
 
@@ -1662,7 +1662,7 @@ read_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 ReadPowerSpectrumF32Response
-read_power_spectrum_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& data_array_size)
+read_power_spectrum_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int32& data_array_size)
 {
   ::grpc::ClientContext context;
 
@@ -1682,7 +1682,7 @@ read_power_spectrum_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ReadPowerSpectrumF64Response
-read_power_spectrum_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& data_array_size)
+read_power_spectrum_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int32& data_array_size)
 {
   ::grpc::ClientContext context;
 
@@ -1719,7 +1719,7 @@ reset(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ResetAttributeResponse
-reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id)
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1902,7 +1902,7 @@ self_test(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SendSoftwareEdgeTriggerResponse
-send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& trigger, const pb::string& trigger_identifier)
+send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& trigger, const std::string& trigger_identifier)
 {
   ::grpc::ClientContext context;
 
@@ -1928,7 +1928,7 @@ send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id, const bool& value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -1948,7 +1948,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id, const simple_variant<NiRFSAInt32AttributeValues, pb::int32>& value)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id, const simple_variant<NiRFSAInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -1975,7 +1975,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViInt64Response
-set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id, const pb::int64& value)
+set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id, const pb::int64& value)
 {
   ::grpc::ClientContext context;
 
@@ -1995,7 +1995,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id, const double& value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -2015,7 +2015,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViSessionResponse
-set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id, const nidevice_grpc::Session& value)
+set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id, const nidevice_grpc::Session& value)
 {
   ::grpc::ClientContext context;
 
@@ -2035,7 +2035,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttribute& attribute_id, const simple_variant<NiRFSAStringAttributeValuesMapped, std::string>& value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSAAttribute& attribute_id, const simple_variant<NiRFSAStringAttributeValuesMapped, std::string>& value)
 {
   ::grpc::ClientContext context;
 
@@ -2062,7 +2062,7 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetCalUserDefinedInfoResponse
-set_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& info)
+set_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& info)
 {
   ::grpc::ClientContext context;
 
@@ -2080,7 +2080,7 @@ set_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 SetUserDataResponse
-set_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier, const pb::int32& buffer_size)
+set_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& identifier, const pb::int32& buffer_size)
 {
   ::grpc::ClientContext context;
 

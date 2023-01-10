@@ -18,7 +18,7 @@
 namespace nisync_grpc::experimental::client {
 
 InitResponse
-init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -141,7 +141,7 @@ revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ConnectTrigTerminalsResponse
-connect_trig_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal, const pb::string& dest_terminal, const pb::string& sync_clock, const pb::int32& invert, const pb::int32& update_edge)
+connect_trig_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal, const std::string& dest_terminal, const std::string& sync_clock, const pb::int32& invert, const pb::int32& update_edge)
 {
   ::grpc::ClientContext context;
 
@@ -163,7 +163,7 @@ connect_trig_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 DisconnectTrigTerminalsResponse
-disconnect_trig_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal, const pb::string& dest_terminal)
+disconnect_trig_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal, const std::string& dest_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -182,7 +182,7 @@ disconnect_trig_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 ConnectSWTrigToTerminalResponse
-connect_sw_trig_to_terminal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal, const pb::string& dest_terminal, const pb::string& sync_clock, const pb::int32& invert, const pb::int32& update_edge, const double& delay)
+connect_sw_trig_to_terminal(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal, const std::string& dest_terminal, const std::string& sync_clock, const pb::int32& invert, const pb::int32& update_edge, const double& delay)
 {
   ::grpc::ClientContext context;
 
@@ -205,7 +205,7 @@ connect_sw_trig_to_terminal(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 DisconnectSWTrigFromTerminalResponse
-disconnect_sw_trig_from_terminal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal, const pb::string& dest_terminal)
+disconnect_sw_trig_from_terminal(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal, const std::string& dest_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -224,7 +224,7 @@ disconnect_sw_trig_from_terminal(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 SendSoftwareTriggerResponse
-send_software_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal)
+send_software_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -242,7 +242,7 @@ send_software_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 ConnectClkTerminalsResponse
-connect_clk_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal, const pb::string& dest_terminal)
+connect_clk_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal, const std::string& dest_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -261,7 +261,7 @@ connect_clk_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 DisconnectClkTerminalsResponse
-disconnect_clk_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal, const pb::string& dest_terminal)
+disconnect_clk_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal, const std::string& dest_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -280,7 +280,7 @@ disconnect_clk_terminals(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 MeasureFrequencyResponse
-measure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal, const double& duration)
+measure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal, const double& duration)
 {
   ::grpc::ClientContext context;
 
@@ -299,7 +299,7 @@ measure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
 }
 
 MeasureFrequencyExResponse
-measure_frequency_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& src_terminal, const double& duration, const pb::uint32& decimation_count)
+measure_frequency_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& src_terminal, const double& duration, const pb::uint32& decimation_count)
 {
   ::grpc::ClientContext context;
 
@@ -442,7 +442,7 @@ reset_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 CreateFutureTimeEventResponse
-create_future_time_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal, const pb::int32& output_level, const pb::uint32& time_seconds, const pb::uint32& time_nanoseconds, const pb::uint32& time_fractional_nanoseconds)
+create_future_time_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal, const pb::int32& output_level, const pb::uint32& time_seconds, const pb::uint32& time_nanoseconds, const pb::uint32& time_fractional_nanoseconds)
 {
   ::grpc::ClientContext context;
 
@@ -464,7 +464,7 @@ create_future_time_event(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 ClearFutureTimeEventsResponse
-clear_future_time_events(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal)
+clear_future_time_events(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal)
 {
   ::grpc::ClientContext context;
 
@@ -482,7 +482,7 @@ clear_future_time_events(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 EnableTimeStampTriggerResponse
-enable_time_stamp_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal, const pb::int32& active_edge)
+enable_time_stamp_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal, const pb::int32& active_edge)
 {
   ::grpc::ClientContext context;
 
@@ -501,7 +501,7 @@ enable_time_stamp_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 EnableTimeStampTriggerWithDecimationResponse
-enable_time_stamp_trigger_with_decimation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal, const pb::int32& active_edge, const pb::uint32& decimation_count)
+enable_time_stamp_trigger_with_decimation(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal, const pb::int32& active_edge, const pb::uint32& decimation_count)
 {
   ::grpc::ClientContext context;
 
@@ -521,7 +521,7 @@ enable_time_stamp_trigger_with_decimation(const StubPtr& stub, const nidevice_gr
 }
 
 ReadTriggerTimeStampResponse
-read_trigger_time_stamp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal, const double& timeout)
+read_trigger_time_stamp(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -540,7 +540,7 @@ read_trigger_time_stamp(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ReadMultipleTriggerTimeStampResponse
-read_multiple_trigger_time_stamp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal, const pb::uint32& timestamps_to_read, const double& timeout)
+read_multiple_trigger_time_stamp(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal, const pb::uint32& timestamps_to_read, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -560,7 +560,7 @@ read_multiple_trigger_time_stamp(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 DisableTimeStampTriggerResponse
-disable_time_stamp_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal)
+disable_time_stamp_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal)
 {
   ::grpc::ClientContext context;
 
@@ -578,7 +578,7 @@ disable_time_stamp_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CreateClockResponse
-create_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal, const pb::uint32& high_ticks, const pb::uint32& low_ticks, const pb::uint32& start_time_seconds, const pb::uint32& start_time_nanoseconds, const pb::uint32& start_time_fractional_nanoseconds, const pb::uint32& stop_time_seconds, const pb::uint32& stop_time_nanoseconds, const pb::uint32& stop_time_fractional_nanoseconds)
+create_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal, const pb::uint32& high_ticks, const pb::uint32& low_ticks, const pb::uint32& start_time_seconds, const pb::uint32& start_time_nanoseconds, const pb::uint32& start_time_fractional_nanoseconds, const pb::uint32& stop_time_seconds, const pb::uint32& stop_time_nanoseconds, const pb::uint32& stop_time_fractional_nanoseconds)
 {
   ::grpc::ClientContext context;
 
@@ -604,7 +604,7 @@ create_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
 }
 
 ClearClockResponse
-clear_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal)
+clear_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal)
 {
   ::grpc::ClientContext context;
 
@@ -656,7 +656,7 @@ set_time_reference_gps(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SetTimeReferenceIRIGResponse
-set_time_reference_irig(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& irig_type, const pb::string& terminal_name)
+set_time_reference_irig(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& irig_type, const std::string& terminal_name)
 {
   ::grpc::ClientContext context;
 
@@ -675,7 +675,7 @@ set_time_reference_irig(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetTimeReferencePPSResponse
-set_time_reference_pps(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal_name, const bool& use_manual_time, const pb::uint32& initial_time_seconds, const pb::uint32& initial_time_nanoseconds, const pb::uint32& initial_time_fractional_nanoseconds)
+set_time_reference_pps(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal_name, const bool& use_manual_time, const pb::uint32& initial_time_seconds, const pb::uint32& initial_time_nanoseconds, const pb::uint32& initial_time_fractional_nanoseconds)
 {
   ::grpc::ClientContext context;
 
@@ -748,7 +748,7 @@ enable_gps_timestamping(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 EnableIRIGTimestampingResponse
-enable_irig_timestamping(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& irig_type, const pb::string& terminal_name)
+enable_irig_timestamping(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& irig_type, const std::string& terminal_name)
 {
   ::grpc::ClientContext context;
 
@@ -784,7 +784,7 @@ read_last_gps_timestamp(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ReadLastIRIGTimestampResponse
-read_last_irig_timestamp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal)
+read_last_irig_timestamp(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal)
 {
   ::grpc::ClientContext context;
 
@@ -819,7 +819,7 @@ disable_gps_timestamping(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 DisableIRIGTimestampingResponse
-disable_irig_timestamping(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& terminal_name)
+disable_irig_timestamping(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& terminal_name)
 {
   ::grpc::ClientContext context;
 
@@ -888,7 +888,7 @@ get_time_reference_names(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& active_item, const NiSyncAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -907,7 +907,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& active_item, const NiSyncAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -926,7 +926,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& active_item, const NiSyncAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -945,7 +945,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& active_item, const NiSyncAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -964,7 +964,7 @@ get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const pb::int32& value)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& active_item, const NiSyncAttribute& attribute, const pb::int32& value)
 {
   ::grpc::ClientContext context;
 
@@ -984,7 +984,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const double& value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& active_item, const NiSyncAttribute& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -1004,7 +1004,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const bool& value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& active_item, const NiSyncAttribute& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -1024,7 +1024,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const pb::string& value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& active_item, const NiSyncAttribute& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -1095,7 +1095,7 @@ get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 ChangeExtCalPasswordResponse
-change_ext_cal_password(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& old_password, const pb::string& new_password)
+change_ext_cal_password(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& old_password, const std::string& new_password)
 {
   ::grpc::ClientContext context;
 
@@ -1199,7 +1199,7 @@ cal_get_dds_initial_phase(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 InitExtCalResponse
-init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init_ext_cal(const StubPtr& stub, const std::string& resource_name, const std::string& password, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 

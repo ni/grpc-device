@@ -228,7 +228,7 @@ configure_enums(const StubPtr& stub, const nidevice_grpc::Session& vi, const sim
 }
 
 Control4022Response
-control4022(const StubPtr& stub, const pb::string& resource_name, const pb::int32& configuration)
+control4022(const StubPtr& stub, const std::string& resource_name, const pb::int32& configuration)
 {
   ::grpc::ClientContext context;
 
@@ -479,7 +479,7 @@ get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 GetAnIviDanceWithATwistArrayResponse
-get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& a_string)
+get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& a_string)
 {
   ::grpc::ClientContext context;
 
@@ -632,7 +632,7 @@ get_array_vi_uint8_with_enum(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -651,7 +651,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -670,7 +670,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViInt64Response
-get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id)
+get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -689,7 +689,7 @@ get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -708,7 +708,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -727,7 +727,7 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -919,7 +919,7 @@ get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ImportAttributeConfigurationBufferResponse
-import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
+import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& configuration)
 {
   ::grpc::ClientContext context;
 
@@ -937,7 +937,7 @@ import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
 }
 
 ImportAttributeConfigurationBufferExResponse
-import_attribute_configuration_buffer_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
+import_attribute_configuration_buffer_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& configuration)
 {
   ::grpc::ClientContext context;
 
@@ -955,7 +955,7 @@ import_attribute_configuration_buffer_ex(const StubPtr& stub, const nidevice_grp
 }
 
 InitExtCalResponse
-init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& calibration_password)
+init_ext_cal(const StubPtr& stub, const std::string& resource_name, const std::string& calibration_password)
 {
   ::grpc::ClientContext context;
 
@@ -973,7 +973,7 @@ init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::str
 }
 
 InitWithOptionsResponse
-init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init_with_options(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -994,7 +994,7 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
 }
 
 InitWithVarArgsResponse
-init_with_var_args(const StubPtr& stub, const pb::string& resource_name, const std::vector<StringAndTurtle>& name_and_turtle)
+init_with_var_args(const StubPtr& stub, const std::string& resource_name, const std::vector<StringAndTurtle>& name_and_turtle)
 {
   ::grpc::ClientContext context;
 
@@ -1216,7 +1216,7 @@ one_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 ParametersAreMultipleTypesResponse
-parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& a_boolean, const pb::int32& an_int32, const pb::int64& an_int64, const simple_variant<Turtle, pb::int32>& an_int_enum, const double& a_float, const simple_variant<FloatEnum, double>& a_float_enum, const pb::string& a_string)
+parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& a_boolean, const pb::int32& an_int32, const pb::int64& an_int64, const simple_variant<Turtle, pb::int32>& an_int_enum, const double& a_float, const simple_variant<FloatEnum, double>& a_float_enum, const std::string& a_string)
 {
   ::grpc::ClientContext context;
 
@@ -1321,7 +1321,7 @@ read_data_with_multiple_ivi_twist_param_sets(const StubPtr& stub)
 }
 
 ReadFromChannelResponse
-read_from_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& maximum_time)
+read_from_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& maximum_time)
 {
   ::grpc::ClientContext context;
 
@@ -1410,7 +1410,7 @@ return_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const bool& attribute_value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id, const bool& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1430,7 +1430,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeInt32AttributeValues, pb::int32>& attribute_value)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1457,7 +1457,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViInt64Response
-set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const pb::int64& attribute_value)
+set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id, const pb::int64& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1477,7 +1477,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeReal64AttributeValues, double>& attribute_value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1504,7 +1504,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const pb::string& attribute_value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFakeAttribute& attribute_id, const std::string& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1585,7 +1585,7 @@ string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidev
 }
 
 TwoInputFunctionResponse
-two_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& a_number, const pb::string& a_string)
+two_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& a_number, const std::string& a_string)
 {
   ::grpc::ClientContext context;
 
@@ -1659,7 +1659,7 @@ vi_int16_array_input_function(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ViUInt8ArrayInputFunctionResponse
-vi_uint8_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const pb::string& an_array)
+vi_uint8_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const std::string& an_array)
 {
   ::grpc::ClientContext context;
 
