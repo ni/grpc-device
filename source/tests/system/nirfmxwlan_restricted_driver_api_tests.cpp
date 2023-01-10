@@ -24,7 +24,7 @@ namespace tests {
 namespace system {
 namespace {
 
-constexpr auto PXI_5663E = "5663E";
+constexpr auto PXI_5841 = "5841";
 
 class NiRFmxWLANRestrictedDriverApiTests : public ::testing::Test {
  protected:
@@ -104,7 +104,7 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
 
 TEST_F(NiRFmxWLANRestrictedDriverApiTests, GetChannelListBehavior_ReturnsNonEmptyResult)
 {
-  const auto session = init_session(stub(), PXI_5663E);
+  const auto session = init_session(stub(), PXI_5841);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
@@ -119,7 +119,7 @@ TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_FetchCommonPilo
 {
   char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  const auto session = init_session(stub(), PXI_5663E);
+  const auto session = init_session(stub(), PXI_5841);
   configure_OFDMModAccFromExample(instr_stub, session, stub());
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
@@ -131,12 +131,17 @@ TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_NoiseCalibrate_
 {
   char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  const auto session = init_session(stub(), PXI_5663E);
+  const auto session = init_session(stub(), PXI_5841);
   configure_OFDMModAccFromExample(instr_stub, session, stub());
-  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
-
+  std::vector<float64> center_frequency{2.412e9};
+  std::vector<float64> channel_bandwidth{2.0e7};
+  EXPECT_SUCCESS(session, client::set_attribute_f64_array(stub(), session, "", (nirfmxwlan_grpc::NiRFmxWLANAttribute)10502272, center_frequency));
+  EXPECT_SUCCESS(session, client::set_attribute_f64_array(stub(), session, "", (nirfmxwlan_grpc::NiRFmxWLANAttribute)10502273, channel_bandwidth));
+  
   const auto response = restricted_client::ofdm_mod_acc_noise_calibrate(restricted_stub(), session, "", 0);
   EXPECT_SUCCESS(session, response);
+
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 }
 
 }  // namespace
