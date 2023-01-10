@@ -35,7 +35,7 @@ abort(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 AbortWithChannelsResponse
-abort_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+abort_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -53,7 +53,7 @@ abort_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 CalSelfCalibrateResponse
-cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -105,7 +105,7 @@ clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ClearLatchedOutputCutoffStateResponse
-clear_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason)
+clear_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason)
 {
   ::grpc::ClientContext context;
 
@@ -165,7 +165,7 @@ commit(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 CommitWithChannelsResponse
-commit_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+commit_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -183,7 +183,7 @@ commit_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
 }
 
 ConfigureApertureTimeResponse
-configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& aperture_time, const simple_variant<ApertureTimeUnits, pb::int32>& units)
+configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& aperture_time, const simple_variant<ApertureTimeUnits, pb::int32>& units)
 {
   ::grpc::ClientContext context;
 
@@ -210,7 +210,7 @@ configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ConfigureAutoZeroResponse
-configure_auto_zero(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<AutoZero, pb::int32>& auto_zero)
+configure_auto_zero(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<AutoZero, pb::int32>& auto_zero)
 {
   ::grpc::ClientContext context;
 
@@ -236,7 +236,7 @@ configure_auto_zero(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 ConfigureCurrentLevelResponse
-configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level)
+configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& level)
 {
   ::grpc::ClientContext context;
 
@@ -255,7 +255,7 @@ configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ConfigureCurrentLevelRangeResponse
-configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range)
+configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -274,7 +274,7 @@ configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigureCurrentLimitResponse
-configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<CurrentLimitBehavior, pb::int32>& behavior, const double& limit)
+configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<CurrentLimitBehavior, pb::int32>& behavior, const double& limit)
 {
   ::grpc::ClientContext context;
 
@@ -301,7 +301,7 @@ configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ConfigureCurrentLimitRangeResponse
-configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range)
+configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -320,7 +320,7 @@ configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigureDigitalEdgeMeasureTriggerResponse
-configure_digital_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -346,7 +346,7 @@ configure_digital_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc:
 }
 
 ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse
-configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -373,7 +373,7 @@ configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const 
 }
 
 ConfigureDigitalEdgePulseTriggerResponse
-configure_digital_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -399,7 +399,7 @@ configure_digital_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ConfigureDigitalEdgePulseTriggerWithChannelsResponse
-configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -426,7 +426,7 @@ configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const ni
 }
 
 ConfigureDigitalEdgeSequenceAdvanceTriggerResponse
-configure_digital_edge_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -452,7 +452,7 @@ configure_digital_edge_sequence_advance_trigger(const StubPtr& stub, const nidev
 }
 
 ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse
-configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -479,7 +479,7 @@ configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stu
 }
 
 ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse
-configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -506,7 +506,7 @@ configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const
 }
 
 ConfigureDigitalEdgeSourceTriggerResponse
-configure_digital_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -532,7 +532,7 @@ configure_digital_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureDigitalEdgeSourceTriggerWithChannelsResponse
-configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -559,7 +559,7 @@ configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const n
 }
 
 ConfigureDigitalEdgeStartTriggerResponse
-configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -585,7 +585,7 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ConfigureDigitalEdgeStartTriggerWithChannelsResponse
-configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -612,7 +612,7 @@ configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const ni
 }
 
 ConfigureLCRCustomCableCompensationResponse
-configure_lcr_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& custom_cable_compensation_data)
+configure_lcr_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& custom_cable_compensation_data)
 {
   ::grpc::ClientContext context;
 
@@ -631,7 +631,7 @@ configure_lcr_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc
 }
 
 ConfigureOutputEnabledResponse
-configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled)
+configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const bool& enabled)
 {
   ::grpc::ClientContext context;
 
@@ -650,7 +650,7 @@ configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 ConfigureOutputFunctionResponse
-configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputFunction, pb::int32>& function)
+configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<OutputFunction, pb::int32>& function)
 {
   ::grpc::ClientContext context;
 
@@ -676,7 +676,7 @@ configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 ConfigureOutputResistanceResponse
-configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& resistance)
+configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& resistance)
 {
   ::grpc::ClientContext context;
 
@@ -695,7 +695,7 @@ configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 ConfigureOvpResponse
-configure_ovp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled, const double& limit)
+configure_ovp(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const bool& enabled, const double& limit)
 {
   ::grpc::ClientContext context;
 
@@ -740,7 +740,7 @@ configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ConfigurePulseBiasCurrentLevelResponse
-configure_pulse_bias_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level)
+configure_pulse_bias_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& level)
 {
   ::grpc::ClientContext context;
 
@@ -759,7 +759,7 @@ configure_pulse_bias_current_level(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ConfigurePulseBiasCurrentLimitResponse
-configure_pulse_bias_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit)
+configure_pulse_bias_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& limit)
 {
   ::grpc::ClientContext context;
 
@@ -778,7 +778,7 @@ configure_pulse_bias_current_limit(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ConfigurePulseBiasVoltageLevelResponse
-configure_pulse_bias_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level)
+configure_pulse_bias_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& level)
 {
   ::grpc::ClientContext context;
 
@@ -797,7 +797,7 @@ configure_pulse_bias_voltage_level(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ConfigurePulseBiasVoltageLimitResponse
-configure_pulse_bias_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit)
+configure_pulse_bias_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& limit)
 {
   ::grpc::ClientContext context;
 
@@ -816,7 +816,7 @@ configure_pulse_bias_voltage_limit(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ConfigurePulseCurrentLevelResponse
-configure_pulse_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level)
+configure_pulse_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& level)
 {
   ::grpc::ClientContext context;
 
@@ -835,7 +835,7 @@ configure_pulse_current_level(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigurePulseCurrentLevelRangeResponse
-configure_pulse_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range)
+configure_pulse_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -854,7 +854,7 @@ configure_pulse_current_level_range(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ConfigurePulseCurrentLimitResponse
-configure_pulse_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit)
+configure_pulse_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& limit)
 {
   ::grpc::ClientContext context;
 
@@ -873,7 +873,7 @@ configure_pulse_current_limit(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigurePulseCurrentLimitRangeResponse
-configure_pulse_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range)
+configure_pulse_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -892,7 +892,7 @@ configure_pulse_current_limit_range(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ConfigurePulseVoltageLevelResponse
-configure_pulse_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level)
+configure_pulse_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& level)
 {
   ::grpc::ClientContext context;
 
@@ -911,7 +911,7 @@ configure_pulse_voltage_level(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigurePulseVoltageLevelRangeResponse
-configure_pulse_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range)
+configure_pulse_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -930,7 +930,7 @@ configure_pulse_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ConfigurePulseVoltageLimitResponse
-configure_pulse_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit)
+configure_pulse_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& limit)
 {
   ::grpc::ClientContext context;
 
@@ -949,7 +949,7 @@ configure_pulse_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigurePulseVoltageLimitRangeResponse
-configure_pulse_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range)
+configure_pulse_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -968,7 +968,7 @@ configure_pulse_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ConfigureSenseResponse
-configure_sense(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Sense, pb::int32>& sense)
+configure_sense(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<Sense, pb::int32>& sense)
 {
   ::grpc::ClientContext context;
 
@@ -1011,7 +1011,7 @@ configure_software_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc
 }
 
 ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse
-configure_software_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+configure_software_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1046,7 +1046,7 @@ configure_software_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureSoftwareEdgePulseTriggerWithChannelsResponse
-configure_software_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+configure_software_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1081,7 +1081,7 @@ configure_software_edge_sequence_advance_trigger(const StubPtr& stub, const nide
 }
 
 ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse
-configure_software_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+configure_software_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1099,7 +1099,7 @@ configure_software_edge_sequence_advance_trigger_with_channels(const StubPtr& st
 }
 
 ConfigureSoftwareEdgeShutdownTriggerWithChannelsResponse
-configure_software_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+configure_software_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1134,7 +1134,7 @@ configure_software_edge_source_trigger(const StubPtr& stub, const nidevice_grpc:
 }
 
 ConfigureSoftwareEdgeSourceTriggerWithChannelsResponse
-configure_software_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+configure_software_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1169,7 +1169,7 @@ configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureSoftwareEdgeStartTriggerWithChannelsResponse
-configure_software_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+configure_software_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1212,7 +1212,7 @@ configure_source_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 ConfigureSourceModeWithChannelsResponse
-configure_source_mode_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<SourceMode, pb::int32>& source_mode)
+configure_source_mode_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<SourceMode, pb::int32>& source_mode)
 {
   ::grpc::ClientContext context;
 
@@ -1238,7 +1238,7 @@ configure_source_mode_with_channels(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ConfigureVoltageLevelResponse
-configure_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level)
+configure_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& level)
 {
   ::grpc::ClientContext context;
 
@@ -1257,7 +1257,7 @@ configure_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ConfigureVoltageLevelRangeResponse
-configure_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range)
+configure_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -1276,7 +1276,7 @@ configure_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigureVoltageLimitResponse
-configure_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit)
+configure_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& limit)
 {
   ::grpc::ClientContext context;
 
@@ -1295,7 +1295,7 @@ configure_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ConfigureVoltageLimitRangeResponse
-configure_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range)
+configure_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -1314,7 +1314,7 @@ configure_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateAdvancedSequenceResponse
-create_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence)
+create_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence)
 {
   ::grpc::ClientContext context;
 
@@ -1334,7 +1334,7 @@ create_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CreateAdvancedSequenceCommitStepWithChannelsResponse
-create_advanced_sequence_commit_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& set_as_active_step)
+create_advanced_sequence_commit_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const bool& set_as_active_step)
 {
   ::grpc::ClientContext context;
 
@@ -1371,7 +1371,7 @@ create_advanced_sequence_step(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateAdvancedSequenceStepWithChannelsResponse
-create_advanced_sequence_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& set_as_active_step)
+create_advanced_sequence_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const bool& set_as_active_step)
 {
   ::grpc::ClientContext context;
 
@@ -1390,7 +1390,7 @@ create_advanced_sequence_step_with_channels(const StubPtr& stub, const nidevice_
 }
 
 CreateAdvancedSequenceWithChannelsResponse
-create_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence)
+create_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence)
 {
   ::grpc::ClientContext context;
 
@@ -1411,7 +1411,7 @@ create_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc:
 }
 
 DeleteAdvancedSequenceResponse
-delete_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sequence_name)
+delete_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& sequence_name)
 {
   ::grpc::ClientContext context;
 
@@ -1429,7 +1429,7 @@ delete_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 DeleteAdvancedSequenceWithChannelsResponse
-delete_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& sequence_name)
+delete_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& sequence_name)
 {
   ::grpc::ClientContext context;
 
@@ -1482,7 +1482,7 @@ disable_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 DisablePulseTriggerWithChannelsResponse
-disable_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+disable_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1517,7 +1517,7 @@ disable_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 DisableSequenceAdvanceTriggerWithChannelsResponse
-disable_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+disable_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1535,7 +1535,7 @@ disable_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevi
 }
 
 DisableShutdownTriggerWithChannelsResponse
-disable_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+disable_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1570,7 +1570,7 @@ disable_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 DisableSourceTriggerWithChannelsResponse
-disable_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+disable_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1605,7 +1605,7 @@ disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 DisableStartTriggerWithChannelsResponse
-disable_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+disable_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1675,7 +1675,7 @@ export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
 }
 
 ExportAttributeConfigurationFileResponse
-export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1693,7 +1693,7 @@ export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const std::string& signal_identifier, const std::string& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -1720,7 +1720,7 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
 }
 
 ExportSignalWithChannelsResponse
-export_signal_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal)
+export_signal_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<ExportSignal, pb::int32>& signal, const std::string& signal_identifier, const std::string& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -1748,7 +1748,7 @@ export_signal_with_channels(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 FetchMultipleResponse
-fetch_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& timeout, const pb::int32& count)
+fetch_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& timeout, const pb::int32& count)
 {
   ::grpc::ClientContext context;
 
@@ -1768,7 +1768,7 @@ fetch_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 FetchMultipleLCRResponse
-fetch_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& timeout, const pb::int32& count)
+fetch_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& timeout, const pb::int32& count)
 {
   ::grpc::ClientContext context;
 
@@ -1788,7 +1788,7 @@ fetch_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1807,7 +1807,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1826,7 +1826,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViInt64Response
-get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id)
+get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1845,7 +1845,7 @@ get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1864,7 +1864,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1883,7 +1883,7 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1920,7 +1920,7 @@ get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 }
 
 GetChannelNameFromStringResponse
-get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& index)
+get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& index)
 {
   ::grpc::ClientContext context;
 
@@ -2006,7 +2006,7 @@ get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 GetLCRCompensationLastDateAndTimeResponse
-get_lcr_compensation_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<LCRCompensationType, pb::int32>& compensation_type)
+get_lcr_compensation_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<LCRCompensationType, pb::int32>& compensation_type)
 {
   ::grpc::ClientContext context;
 
@@ -2032,7 +2032,7 @@ get_lcr_compensation_last_date_and_time(const StubPtr& stub, const nidevice_grpc
 }
 
 GetLCRCustomCableCompensationDataResponse
-get_lcr_custom_cable_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+get_lcr_custom_cable_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -2118,7 +2118,7 @@ get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ImportAttributeConfigurationBufferResponse
-import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
+import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& configuration)
 {
   ::grpc::ClientContext context;
 
@@ -2136,7 +2136,7 @@ import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
 }
 
 ImportAttributeConfigurationFileResponse
-import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -2154,7 +2154,7 @@ import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 InitializeWithChannelsResponse
-initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+initialize_with_channels(const StubPtr& stub, const std::string& resource_name, const std::string& channels, const bool& reset, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -2175,7 +2175,7 @@ initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, c
 }
 
 InitializeWithIndependentChannelsResponse
-initialize_with_independent_channels(const StubPtr& stub, const pb::string& resource_name, const bool& reset, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+initialize_with_independent_channels(const StubPtr& stub, const std::string& resource_name, const bool& reset, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -2212,7 +2212,7 @@ initiate(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 InitiateWithChannelsResponse
-initiate_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+initiate_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -2247,7 +2247,7 @@ invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 MeasureResponse
-measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<MeasurementTypes, pb::int32>& measurement_type)
+measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<MeasurementTypes, pb::int32>& measurement_type)
 {
   ::grpc::ClientContext context;
 
@@ -2273,7 +2273,7 @@ measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string&
 }
 
 MeasureMultipleResponse
-measure_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+measure_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -2291,7 +2291,7 @@ measure_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 }
 
 MeasureMultipleLCRResponse
-measure_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+measure_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -2309,7 +2309,7 @@ measure_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
 }
 
 PerformLCRLoadCompensationResponse
-perform_lcr_load_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<NILCRLoadCompensationSpot>& compensation_spots)
+perform_lcr_load_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<NILCRLoadCompensationSpot>& compensation_spots)
 {
   ::grpc::ClientContext context;
 
@@ -2328,7 +2328,7 @@ perform_lcr_load_compensation(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 PerformLCROpenCompensationResponse
-perform_lcr_open_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& additional_frequencies)
+perform_lcr_open_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<double>& additional_frequencies)
 {
   ::grpc::ClientContext context;
 
@@ -2347,7 +2347,7 @@ perform_lcr_open_compensation(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 PerformLCROpenCustomCableCompensationResponse
-perform_lcr_open_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+perform_lcr_open_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -2365,7 +2365,7 @@ perform_lcr_open_custom_cable_compensation(const StubPtr& stub, const nidevice_g
 }
 
 PerformLCRShortCompensationResponse
-perform_lcr_short_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& additional_frequencies)
+perform_lcr_short_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<double>& additional_frequencies)
 {
   ::grpc::ClientContext context;
 
@@ -2384,7 +2384,7 @@ perform_lcr_short_compensation(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 PerformLCRShortCustomCableCompensationResponse
-perform_lcr_short_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+perform_lcr_short_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -2402,7 +2402,7 @@ perform_lcr_short_custom_cable_compensation(const StubPtr& stub, const nidevice_
 }
 
 QueryInComplianceResponse
-query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -2420,7 +2420,7 @@ query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 QueryLatchedOutputCutoffStateResponse
-query_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason)
+query_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason)
 {
   ::grpc::ClientContext context;
 
@@ -2446,7 +2446,7 @@ query_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 QueryMaxCurrentLimitResponse
-query_max_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level)
+query_max_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& voltage_level)
 {
   ::grpc::ClientContext context;
 
@@ -2465,7 +2465,7 @@ query_max_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 QueryMaxVoltageLevelResponse
-query_max_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& current_limit)
+query_max_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& current_limit)
 {
   ::grpc::ClientContext context;
 
@@ -2484,7 +2484,7 @@ query_max_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 QueryMinCurrentLimitResponse
-query_min_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level)
+query_min_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& voltage_level)
 {
   ::grpc::ClientContext context;
 
@@ -2503,7 +2503,7 @@ query_min_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 QueryOutputStateResponse
-query_output_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputStates, pb::int32>& output_state)
+query_output_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<OutputStates, pb::int32>& output_state)
 {
   ::grpc::ClientContext context;
 
@@ -2597,7 +2597,7 @@ reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ResetWithChannelsResponse
-reset_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+reset_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -2691,7 +2691,7 @@ send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 SendSoftwareEdgeTriggerWithChannelsResponse
-send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<SendSoftwareEdgeTriggerType, pb::int32>& trigger)
+send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<SendSoftwareEdgeTriggerType, pb::int32>& trigger)
 {
   ::grpc::ClientContext context;
 
@@ -2717,7 +2717,7 @@ send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grp
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const bool& attribute_value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id, const bool& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2737,7 +2737,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const simple_variant<NiDCPowerInt32AttributeValues, pb::int32>& attribute_value)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id, const simple_variant<NiDCPowerInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2764,7 +2764,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViInt64Response
-set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::int64& attribute_value)
+set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::int64& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2784,7 +2784,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const simple_variant<NiDCPowerReal64AttributeValues, double>& attribute_value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id, const simple_variant<NiDCPowerReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2811,7 +2811,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViSessionResponse
-set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
+set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2831,7 +2831,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::string& attribute_value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDCPowerAttribute& attribute_id, const std::string& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2851,7 +2851,7 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetSequenceResponse
-set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& values, const std::vector<double>& source_delays)
+set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<double>& values, const std::vector<double>& source_delays)
 {
   ::grpc::ClientContext context;
 
@@ -2897,7 +2897,7 @@ wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simp
 }
 
 WaitForEventWithChannelsResponse
-wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Event, pb::int32>& event_id, const double& timeout)
+wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<Event, pb::int32>& event_id, const double& timeout)
 {
   ::grpc::ClientContext context;
 

@@ -22,7 +22,7 @@ using StubPtr = std::unique_ptr<NimxlcTerminalAdaptorRestricted::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-CreateSessionResponse create_session(const StubPtr& stub, const pb::string& hostname, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+CreateSessionResponse create_session(const StubPtr& stub, const std::string& hostname, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 DestroySessionResponse destroy_session(const StubPtr& stub, const nidevice_grpc::Session& session);
 RefreshTerminalCacheResponse refresh_terminal_cache(const StubPtr& stub, const nidevice_grpc::Session& session);
 HasTerminalInformationChangedResponse has_terminal_information_changed(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& system_change_number);

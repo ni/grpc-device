@@ -18,7 +18,7 @@
 namespace nirfmxnr_grpc::experimental::client {
 
 ACPCfgAveragingResponse
-acp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<AcpAveragingType, pb::int32>& averaging_type)
+acp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AcpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<AcpAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
@@ -53,7 +53,7 @@ acp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 ACPCfgMeasurementMethodResponse
-acp_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpMeasurementMethod, pb::int32>& measurement_method)
+acp_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AcpMeasurementMethod, pb::int32>& measurement_method)
 {
   ::grpc::ClientContext context;
 
@@ -79,7 +79,7 @@ acp_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 ACPCfgNoiseCompensationEnabledResponse
-acp_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpNoiseCompensationEnabled, pb::int32>& noise_compensation_enabled)
+acp_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AcpNoiseCompensationEnabled, pb::int32>& noise_compensation_enabled)
 {
   ::grpc::ClientContext context;
 
@@ -105,7 +105,7 @@ acp_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ACPCfgNumberOfENDCOffsetsResponse
-acp_cfg_number_of_endc_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& number_of_endc_offsets)
+acp_cfg_number_of_endc_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_endc_offsets)
 {
   ::grpc::ClientContext context;
 
@@ -124,7 +124,7 @@ acp_cfg_number_of_endc_offsets(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ACPCfgNumberOfEUTRAOffsetsResponse
-acp_cfg_number_of_eutra_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& number_of_eutra_offsets)
+acp_cfg_number_of_eutra_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_eutra_offsets)
 {
   ::grpc::ClientContext context;
 
@@ -143,7 +143,7 @@ acp_cfg_number_of_eutra_offsets(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 ACPCfgNumberOfNROffsetsResponse
-acp_cfg_number_of_nr_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& number_of_nr_offsets)
+acp_cfg_number_of_nr_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_nr_offsets)
 {
   ::grpc::ClientContext context;
 
@@ -162,7 +162,7 @@ acp_cfg_number_of_nr_offsets(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 ACPCfgNumberOfUTRAOffsetsResponse
-acp_cfg_number_of_utra_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& number_of_utra_offsets)
+acp_cfg_number_of_utra_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_utra_offsets)
 {
   ::grpc::ClientContext context;
 
@@ -181,7 +181,7 @@ acp_cfg_number_of_utra_offsets(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ACPCfgPowerUnitsResponse
-acp_cfg_power_units(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpPowerUnits, pb::int32>& power_units)
+acp_cfg_power_units(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AcpPowerUnits, pb::int32>& power_units)
 {
   ::grpc::ClientContext context;
 
@@ -207,7 +207,7 @@ acp_cfg_power_units(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 ACPCfgRBWFilterResponse
-acp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<AcpRbwFilterType, pb::int32>& rbw_filter_type)
+acp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AcpRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<AcpRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
@@ -242,7 +242,7 @@ acp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 ACPCfgSweepTimeResponse
-acp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
+acp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AcpSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
@@ -269,7 +269,7 @@ acp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 ACPFetchAbsolutePowersTraceResponse
-acp_fetch_absolute_powers_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout, const pb::int32& trace_index)
+acp_fetch_absolute_powers_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& trace_index)
 {
   ::grpc::ClientContext context;
 
@@ -289,7 +289,7 @@ acp_fetch_absolute_powers_trace(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 ACPFetchComponentCarrierMeasurementResponse
-acp_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+acp_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -308,7 +308,7 @@ acp_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc
 }
 
 ACPFetchComponentCarrierMeasurementArrayResponse
-acp_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+acp_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -327,7 +327,7 @@ acp_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevic
 }
 
 ACPFetchOffsetMeasurementResponse
-acp_fetch_offset_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+acp_fetch_offset_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -346,7 +346,7 @@ acp_fetch_offset_measurement(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 ACPFetchOffsetMeasurementArrayResponse
-acp_fetch_offset_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+acp_fetch_offset_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -365,7 +365,7 @@ acp_fetch_offset_measurement_array(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ACPFetchRelativePowersTraceResponse
-acp_fetch_relative_powers_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout, const pb::int32& trace_index)
+acp_fetch_relative_powers_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& trace_index)
 {
   ::grpc::ClientContext context;
 
@@ -385,7 +385,7 @@ acp_fetch_relative_powers_trace(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 ACPFetchSpectrumResponse
-acp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+acp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -404,7 +404,7 @@ acp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 ACPFetchSubblockMeasurementResponse
-acp_fetch_subblock_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+acp_fetch_subblock_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -423,7 +423,7 @@ acp_fetch_subblock_measurement(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ACPFetchTotalAggregatedPowerResponse
-acp_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+acp_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -442,7 +442,7 @@ acp_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 ACPValidateNoiseCalibrationDataResponse
-acp_validate_noise_calibration_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+acp_validate_noise_calibration_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -460,7 +460,7 @@ acp_validate_noise_calibration_data(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 AbortMeasurementsResponse
-abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -478,7 +478,7 @@ abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 AnalyzeIQ1WaveformResponse
-analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset)
+analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset)
 {
   ::grpc::ClientContext context;
 
@@ -501,7 +501,7 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 AnalyzeSpectrum1WaveformResponse
-analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset)
+analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset)
 {
   ::grpc::ClientContext context;
 
@@ -524,7 +524,7 @@ analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 AutoLevelResponse
-auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& measurement_interval)
+auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_interval)
 {
   ::grpc::ClientContext context;
 
@@ -543,7 +543,7 @@ auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const 
 }
 
 BuildBandwidthPartStringResponse
-build_bandwidth_part_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& bandwidth_part_number)
+build_bandwidth_part_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& bandwidth_part_number)
 {
   ::grpc::ClientContext context;
 
@@ -561,7 +561,7 @@ build_bandwidth_part_string(const StubPtr& stub, const pb::string& selector_stri
 }
 
 BuildCORESETClusterStringResponse
-build_coreset_cluster_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& coreset_cluster_number)
+build_coreset_cluster_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& coreset_cluster_number)
 {
   ::grpc::ClientContext context;
 
@@ -579,7 +579,7 @@ build_coreset_cluster_string(const StubPtr& stub, const pb::string& selector_str
 }
 
 BuildCORESETStringResponse
-build_coreset_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& coreset_number)
+build_coreset_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& coreset_number)
 {
   ::grpc::ClientContext context;
 
@@ -597,7 +597,7 @@ build_coreset_string(const StubPtr& stub, const pb::string& selector_string, con
 }
 
 BuildCarrierStringResponse
-build_carrier_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& carrier_number)
+build_carrier_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& carrier_number)
 {
   ::grpc::ClientContext context;
 
@@ -615,7 +615,7 @@ build_carrier_string(const StubPtr& stub, const pb::string& selector_string, con
 }
 
 BuildListStepStringResponse
-build_list_step_string(const StubPtr& stub, const pb::string& list_name, const pb::string& result_name, const pb::int32& step_number)
+build_list_step_string(const StubPtr& stub, const std::string& list_name, const std::string& result_name, const pb::int32& step_number)
 {
   ::grpc::ClientContext context;
 
@@ -634,7 +634,7 @@ build_list_step_string(const StubPtr& stub, const pb::string& list_name, const p
 }
 
 BuildListStringResponse
-build_list_string(const StubPtr& stub, const pb::string& list_name, const pb::string& result_name)
+build_list_string(const StubPtr& stub, const std::string& list_name, const std::string& result_name)
 {
   ::grpc::ClientContext context;
 
@@ -652,7 +652,7 @@ build_list_string(const StubPtr& stub, const pb::string& list_name, const pb::st
 }
 
 BuildOffsetStringResponse
-build_offset_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& offset_number)
+build_offset_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& offset_number)
 {
   ::grpc::ClientContext context;
 
@@ -670,7 +670,7 @@ build_offset_string(const StubPtr& stub, const pb::string& selector_string, cons
 }
 
 BuildPDCCHStringResponse
-build_pdcch_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& pdcch_number)
+build_pdcch_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& pdcch_number)
 {
   ::grpc::ClientContext context;
 
@@ -688,7 +688,7 @@ build_pdcch_string(const StubPtr& stub, const pb::string& selector_string, const
 }
 
 BuildPDSCHClusterStringResponse
-build_pdsch_cluster_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& pdsch_cluster_number)
+build_pdsch_cluster_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& pdsch_cluster_number)
 {
   ::grpc::ClientContext context;
 
@@ -706,7 +706,7 @@ build_pdsch_cluster_string(const StubPtr& stub, const pb::string& selector_strin
 }
 
 BuildPDSCHStringResponse
-build_pdsch_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& pdsch_number)
+build_pdsch_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& pdsch_number)
 {
   ::grpc::ClientContext context;
 
@@ -724,7 +724,7 @@ build_pdsch_string(const StubPtr& stub, const pb::string& selector_string, const
 }
 
 BuildPUSCHClusterStringResponse
-build_pusch_cluster_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& pusch_cluster_number)
+build_pusch_cluster_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& pusch_cluster_number)
 {
   ::grpc::ClientContext context;
 
@@ -742,7 +742,7 @@ build_pusch_cluster_string(const StubPtr& stub, const pb::string& selector_strin
 }
 
 BuildPUSCHStringResponse
-build_pusch_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& pusch_number)
+build_pusch_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& pusch_number)
 {
   ::grpc::ClientContext context;
 
@@ -760,7 +760,7 @@ build_pusch_string(const StubPtr& stub, const pb::string& selector_string, const
 }
 
 BuildSignalStringResponse
-build_signal_string(const StubPtr& stub, const pb::string& signal_name, const pb::string& result_name)
+build_signal_string(const StubPtr& stub, const std::string& signal_name, const std::string& result_name)
 {
   ::grpc::ClientContext context;
 
@@ -778,7 +778,7 @@ build_signal_string(const StubPtr& stub, const pb::string& signal_name, const pb
 }
 
 BuildSubblockStringResponse
-build_subblock_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& subblock_number)
+build_subblock_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& subblock_number)
 {
   ::grpc::ClientContext context;
 
@@ -796,7 +796,7 @@ build_subblock_string(const StubPtr& stub, const pb::string& selector_string, co
 }
 
 BuildUserStringResponse
-build_user_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& user_number)
+build_user_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& user_number)
 {
   ::grpc::ClientContext context;
 
@@ -814,7 +814,7 @@ build_user_string(const StubPtr& stub, const pb::string& selector_string, const 
 }
 
 CHPCfgAveragingResponse
-chp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ChpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ChpAveragingType, pb::int32>& averaging_type)
+chp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ChpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ChpAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
@@ -849,7 +849,7 @@ chp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 CHPCfgRBWFilterResponse
-chp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ChpRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<ChpRbwFilterType, pb::int32>& rbw_filter_type)
+chp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ChpRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<ChpRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
@@ -884,7 +884,7 @@ chp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 CHPCfgSweepTimeResponse
-chp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ChpSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
+chp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ChpSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
@@ -911,7 +911,7 @@ chp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 CHPFetchComponentCarrierMeasurementResponse
-chp_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+chp_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -930,7 +930,7 @@ chp_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc
 }
 
 CHPFetchComponentCarrierMeasurementArrayResponse
-chp_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+chp_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -949,7 +949,7 @@ chp_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevic
 }
 
 CHPFetchSpectrumResponse
-chp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+chp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -968,7 +968,7 @@ chp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 CHPFetchSubblockPowerResponse
-chp_fetch_subblock_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+chp_fetch_subblock_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -987,7 +987,7 @@ chp_fetch_subblock_power(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 CHPFetchTotalAggregatedPowerResponse
-chp_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+chp_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -1006,7 +1006,7 @@ chp_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 CHPValidateNoiseCalibrationDataResponse
-chp_validate_noise_calibration_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+chp_validate_noise_calibration_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1024,7 +1024,7 @@ chp_validate_noise_calibration_data(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 CfgDigitalEdgeTriggerResponse
-cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<DigitalEdgeTriggerSource, std::string>& digital_edge_source, const simple_variant<DigitalEdgeTriggerEdge, pb::int32>& digital_edge, const double& trigger_delay, const pb::int32& enable_trigger)
+cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DigitalEdgeTriggerSource, std::string>& digital_edge_source, const simple_variant<DigitalEdgeTriggerEdge, pb::int32>& digital_edge, const double& trigger_delay, const pb::int32& enable_trigger)
 {
   ::grpc::ClientContext context;
 
@@ -1060,7 +1060,7 @@ cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 CfgExternalAttenuationResponse
-cfg_external_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& external_attenuation)
+cfg_external_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& external_attenuation)
 {
   ::grpc::ClientContext context;
 
@@ -1079,7 +1079,7 @@ cfg_external_attenuation(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 CfgFrequencyResponse
-cfg_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& center_frequency)
+cfg_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& center_frequency)
 {
   ::grpc::ClientContext context;
 
@@ -1098,7 +1098,7 @@ cfg_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, con
 }
 
 CfgFrequencyReferenceResponse
-cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<FrequencyReferenceSource, std::string>& frequency_reference_source, const double& frequency_reference_frequency)
+cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<FrequencyReferenceSource, std::string>& frequency_reference_source, const double& frequency_reference_frequency)
 {
   ::grpc::ClientContext context;
 
@@ -1125,7 +1125,7 @@ cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 CfgIQPowerEdgeTriggerResponse
-cfg_iq_power_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& iq_power_edge_source, const simple_variant<IQPowerEdgeTriggerSlope, pb::int32>& iq_power_edge_slope, const double& iq_power_edge_level, const double& trigger_delay, const simple_variant<TriggerMinimumQuietTimeMode, pb::int32>& trigger_min_quiet_time_mode, const double& trigger_min_quiet_time_duration, const simple_variant<IQPowerEdgeTriggerLevelType, pb::int32>& iq_power_edge_level_type, const pb::int32& enable_trigger)
+cfg_iq_power_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& iq_power_edge_source, const simple_variant<IQPowerEdgeTriggerSlope, pb::int32>& iq_power_edge_slope, const double& iq_power_edge_level, const double& trigger_delay, const simple_variant<TriggerMinimumQuietTimeMode, pb::int32>& trigger_min_quiet_time_mode, const double& trigger_min_quiet_time_duration, const simple_variant<IQPowerEdgeTriggerLevelType, pb::int32>& iq_power_edge_level_type, const pb::int32& enable_trigger)
 {
   ::grpc::ClientContext context;
 
@@ -1172,7 +1172,7 @@ cfg_iq_power_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 CfgMechanicalAttenuationResponse
-cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<MechanicalAttenuationAuto, pb::int32>& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
+cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<MechanicalAttenuationAuto, pb::int32>& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
 {
   ::grpc::ClientContext context;
 
@@ -1199,7 +1199,7 @@ cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 CfgRFResponse
-cfg_rf(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& center_frequency, const double& reference_level, const double& external_attenuation)
+cfg_rf(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& center_frequency, const double& reference_level, const double& external_attenuation)
 {
   ::grpc::ClientContext context;
 
@@ -1220,7 +1220,7 @@ cfg_rf(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::
 }
 
 CfgRFAttenuationResponse
-cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value)
+cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value)
 {
   ::grpc::ClientContext context;
 
@@ -1247,7 +1247,7 @@ cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 CfgReferenceLevelResponse
-cfg_reference_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& reference_level)
+cfg_reference_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& reference_level)
 {
   ::grpc::ClientContext context;
 
@@ -1266,7 +1266,7 @@ cfg_reference_level(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 CfgSoftwareEdgeTriggerResponse
-cfg_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& trigger_delay, const pb::int32& enable_trigger)
+cfg_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& trigger_delay, const pb::int32& enable_trigger)
 {
   ::grpc::ClientContext context;
 
@@ -1286,7 +1286,7 @@ cfg_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 CfggNodeBCategoryResponse
-cfgg_node_b_category(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<GNodeBCategory, pb::int32>& gnodeb_category)
+cfgg_node_b_category(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<GNodeBCategory, pb::int32>& gnodeb_category)
 {
   ::grpc::ClientContext context;
 
@@ -1312,7 +1312,7 @@ cfgg_node_b_category(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 CheckMeasurementStatusResponse
-check_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+check_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1330,7 +1330,7 @@ check_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 ClearAllNamedResultsResponse
-clear_all_named_results(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+clear_all_named_results(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1348,7 +1348,7 @@ clear_all_named_results(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 ClearNamedResultResponse
-clear_named_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+clear_named_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1366,7 +1366,7 @@ clear_named_result(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 ClearNoiseCalibrationDatabaseResponse
-clear_noise_calibration_database(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+clear_noise_calibration_database(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1384,7 +1384,7 @@ clear_noise_calibration_database(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 CloneSignalConfigurationResponse
-clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& old_signal_name, const pb::string& new_signal_name)
+clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& old_signal_name, const std::string& new_signal_name)
 {
   ::grpc::ClientContext context;
 
@@ -1421,7 +1421,7 @@ close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool&
 }
 
 CommitResponse
-commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1439,7 +1439,7 @@ commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::
 }
 
 CreateListResponse
-create_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& list_name)
+create_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& list_name)
 {
   ::grpc::ClientContext context;
 
@@ -1457,7 +1457,7 @@ create_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const
 }
 
 CreateListStepResponse
-create_list_step(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+create_list_step(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1475,7 +1475,7 @@ create_list_step(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 CreateSignalConfigurationResponse
-create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name)
+create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name)
 {
   ::grpc::ClientContext context;
 
@@ -1493,7 +1493,7 @@ create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 DeleteListResponse
-delete_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& list_name)
+delete_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& list_name)
 {
   ::grpc::ClientContext context;
 
@@ -1511,7 +1511,7 @@ delete_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const
 }
 
 DeleteSignalConfigurationResponse
-delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name)
+delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name)
 {
   ::grpc::ClientContext context;
 
@@ -1529,7 +1529,7 @@ delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 DisableTriggerResponse
-disable_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+disable_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1547,7 +1547,7 @@ disable_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, c
 }
 
 GetAllNamedResultNamesResponse
-get_all_named_result_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_all_named_result_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1565,7 +1565,7 @@ get_all_named_result_names(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 GetAttributeF32Response
-get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1584,7 +1584,7 @@ get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeF32ArrayResponse
-get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1603,7 +1603,7 @@ get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeF64Response
-get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1622,7 +1622,7 @@ get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeF64ArrayResponse
-get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1641,7 +1641,7 @@ get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI16Response
-get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1660,7 +1660,7 @@ get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeI32Response
-get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1679,7 +1679,7 @@ get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeI32ArrayResponse
-get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1698,7 +1698,7 @@ get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI64Response
-get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1717,7 +1717,7 @@ get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeI64ArrayResponse
-get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1736,7 +1736,7 @@ get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI8Response
-get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1755,7 +1755,7 @@ get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 GetAttributeI8ArrayResponse
-get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1774,7 +1774,7 @@ get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 GetAttributeNIComplexDoubleArrayResponse
-get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1793,7 +1793,7 @@ get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetAttributeNIComplexSingleArrayResponse
-get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1812,7 +1812,7 @@ get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetAttributeStringResponse
-get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1831,7 +1831,7 @@ get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 GetAttributeU16Response
-get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1850,7 +1850,7 @@ get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeU32Response
-get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1869,7 +1869,7 @@ get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeU32ArrayResponse
-get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1888,7 +1888,7 @@ get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeU64ArrayResponse
-get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1907,7 +1907,7 @@ get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeU8Response
-get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1926,7 +1926,7 @@ get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 GetAttributeU8ArrayResponse
-get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1980,7 +1980,7 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 InitializeResponse
-initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -2017,7 +2017,7 @@ initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 InitiateResponse
-initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name)
+initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name)
 {
   ::grpc::ClientContext context;
 
@@ -2036,7 +2036,7 @@ initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb
 }
 
 ModAccAutoLevelResponse
-mod_acc_auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2055,7 +2055,7 @@ mod_acc_auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 ModAccCfgMeasurementModeResponse
-mod_acc_cfg_measurement_mode(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ModAccMeasurementMode, pb::int32>& measurement_mode)
+mod_acc_cfg_measurement_mode(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccMeasurementMode, pb::int32>& measurement_mode)
 {
   ::grpc::ClientContext context;
 
@@ -2081,7 +2081,7 @@ mod_acc_cfg_measurement_mode(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 ModAccCfgNoiseCompensationEnabledResponse
-mod_acc_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ModAccNoiseCompensationEnabled, pb::int32>& noise_compensation_enabled)
+mod_acc_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccNoiseCompensationEnabled, pb::int32>& noise_compensation_enabled)
 {
   ::grpc::ClientContext context;
 
@@ -2107,7 +2107,7 @@ mod_acc_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc:
 }
 
 ModAccCfgReferenceWaveformResponse
-mod_acc_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform)
+mod_acc_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform)
 {
   ::grpc::ClientContext context;
 
@@ -2145,7 +2145,7 @@ mod_acc_clear_noise_calibration_database(const StubPtr& stub, const nidevice_grp
 }
 
 ModAccFetchCompositeEVMResponse
-mod_acc_fetch_composite_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_composite_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2164,7 +2164,7 @@ mod_acc_fetch_composite_evm(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 ModAccFetchFrequencyErrorMeanResponse
-mod_acc_fetch_frequency_error_mean(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_frequency_error_mean(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2183,7 +2183,7 @@ mod_acc_fetch_frequency_error_mean(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ModAccFetchFrequencyErrorPerSlotMaximumTraceResponse
-mod_acc_fetch_frequency_error_per_slot_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_frequency_error_per_slot_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2202,7 +2202,7 @@ mod_acc_fetch_frequency_error_per_slot_maximum_trace(const StubPtr& stub, const 
 }
 
 ModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse
-mod_acc_fetch_iq_gain_imbalance_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_iq_gain_imbalance_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2221,7 +2221,7 @@ mod_acc_fetch_iq_gain_imbalance_per_subcarrier_mean_trace(const StubPtr& stub, c
 }
 
 ModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse
-mod_acc_fetch_iq_quadrature_error_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_iq_quadrature_error_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2240,7 +2240,7 @@ mod_acc_fetch_iq_quadrature_error_per_subcarrier_mean_trace(const StubPtr& stub,
 }
 
 ModAccFetchInBandEmissionTraceResponse
-mod_acc_fetch_in_band_emission_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_in_band_emission_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2259,7 +2259,7 @@ mod_acc_fetch_in_band_emission_trace(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ModAccFetchPBCHDMRSConstellationTraceResponse
-mod_acc_fetch_pbchdmrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pbchdmrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2278,7 +2278,7 @@ mod_acc_fetch_pbchdmrs_constellation_trace(const StubPtr& stub, const nidevice_g
 }
 
 ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTraceResponse
-mod_acc_fetch_pbchdmrsrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pbchdmrsrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2297,7 +2297,7 @@ mod_acc_fetch_pbchdmrsrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, cons
 }
 
 ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTraceResponse
-mod_acc_fetch_pbchdmrsrmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pbchdmrsrmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2316,7 +2316,7 @@ mod_acc_fetch_pbchdmrsrmsevm_per_symbol_mean_trace(const StubPtr& stub, const ni
 }
 
 ModAccFetchPBCHDataConstellationTraceResponse
-mod_acc_fetch_pbch_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pbch_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2335,7 +2335,7 @@ mod_acc_fetch_pbch_data_constellation_trace(const StubPtr& stub, const nidevice_
 }
 
 ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTraceResponse
-mod_acc_fetch_pbch_data_rmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pbch_data_rmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2354,7 +2354,7 @@ mod_acc_fetch_pbch_data_rmsevm_per_subcarrier_mean_trace(const StubPtr& stub, co
 }
 
 ModAccFetchPBCHDataRMSEVMPerSymbolMeanTraceResponse
-mod_acc_fetch_pbch_data_rmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pbch_data_rmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2373,7 +2373,7 @@ mod_acc_fetch_pbch_data_rmsevm_per_symbol_mean_trace(const StubPtr& stub, const 
 }
 
 ModAccFetchPDSCH1024QAMConstellationTraceResponse
-mod_acc_fetch_pdsch1024q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdsch1024q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2392,7 +2392,7 @@ mod_acc_fetch_pdsch1024q_am_constellation_trace(const StubPtr& stub, const nidev
 }
 
 ModAccFetchPDSCH16QAMConstellationTraceResponse
-mod_acc_fetch_pdsch16q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdsch16q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2411,7 +2411,7 @@ mod_acc_fetch_pdsch16q_am_constellation_trace(const StubPtr& stub, const nidevic
 }
 
 ModAccFetchPDSCH256QAMConstellationTraceResponse
-mod_acc_fetch_pdsch256q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdsch256q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2430,7 +2430,7 @@ mod_acc_fetch_pdsch256q_am_constellation_trace(const StubPtr& stub, const nidevi
 }
 
 ModAccFetchPDSCH64QAMConstellationTraceResponse
-mod_acc_fetch_pdsch64q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdsch64q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2449,7 +2449,7 @@ mod_acc_fetch_pdsch64q_am_constellation_trace(const StubPtr& stub, const nidevic
 }
 
 ModAccFetchPDSCH8PSKConstellationTraceResponse
-mod_acc_fetch_pdsch8p_sk_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdsch8p_sk_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2468,7 +2468,7 @@ mod_acc_fetch_pdsch8p_sk_constellation_trace(const StubPtr& stub, const nidevice
 }
 
 ModAccFetchPDSCHDMRSConstellationTraceResponse
-mod_acc_fetch_pdschdmrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdschdmrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2487,7 +2487,7 @@ mod_acc_fetch_pdschdmrs_constellation_trace(const StubPtr& stub, const nidevice_
 }
 
 ModAccFetchPDSCHDataConstellationTraceResponse
-mod_acc_fetch_pdsch_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdsch_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2506,7 +2506,7 @@ mod_acc_fetch_pdsch_data_constellation_trace(const StubPtr& stub, const nidevice
 }
 
 ModAccFetchPDSCHDemodulatedBitsResponse
-mod_acc_fetch_pdsch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdsch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2525,7 +2525,7 @@ mod_acc_fetch_pdsch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ModAccFetchPDSCHPTRSConstellationTraceResponse
-mod_acc_fetch_pdschptrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdschptrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2544,7 +2544,7 @@ mod_acc_fetch_pdschptrs_constellation_trace(const StubPtr& stub, const nidevice_
 }
 
 ModAccFetchPDSCHQPSKConstellationTraceResponse
-mod_acc_fetch_pdschqpsk_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pdschqpsk_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2563,7 +2563,7 @@ mod_acc_fetch_pdschqpsk_constellation_trace(const StubPtr& stub, const nidevice_
 }
 
 ModAccFetchPSSConstellationTraceResponse
-mod_acc_fetch_pss_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pss_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2582,7 +2582,7 @@ mod_acc_fetch_pss_constellation_trace(const StubPtr& stub, const nidevice_grpc::
 }
 
 ModAccFetchPSSRMSEVMPerSubcarrierMeanTraceResponse
-mod_acc_fetch_pssrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pssrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2601,7 +2601,7 @@ mod_acc_fetch_pssrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nid
 }
 
 ModAccFetchPSSRMSEVMPerSymbolMeanTraceResponse
-mod_acc_fetch_pssrmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pssrmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2620,7 +2620,7 @@ mod_acc_fetch_pssrmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevic
 }
 
 ModAccFetchPUSCHDMRSConstellationTraceResponse
-mod_acc_fetch_puschdmrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_puschdmrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2639,7 +2639,7 @@ mod_acc_fetch_puschdmrs_constellation_trace(const StubPtr& stub, const nidevice_
 }
 
 ModAccFetchPUSCHDataConstellationTraceResponse
-mod_acc_fetch_pusch_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pusch_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2658,7 +2658,7 @@ mod_acc_fetch_pusch_data_constellation_trace(const StubPtr& stub, const nidevice
 }
 
 ModAccFetchPUSCHDemodulatedBitsResponse
-mod_acc_fetch_pusch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_pusch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2677,7 +2677,7 @@ mod_acc_fetch_pusch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ModAccFetchPUSCHPTRSConstellationTraceResponse
-mod_acc_fetch_puschptrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_puschptrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2696,7 +2696,7 @@ mod_acc_fetch_puschptrs_constellation_trace(const StubPtr& stub, const nidevice_
 }
 
 ModAccFetchPeakEVMPerSlotMaximumTraceResponse
-mod_acc_fetch_peak_evm_per_slot_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_peak_evm_per_slot_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2715,7 +2715,7 @@ mod_acc_fetch_peak_evm_per_slot_maximum_trace(const StubPtr& stub, const nidevic
 }
 
 ModAccFetchPeakEVMPerSubcarrierMaximumTraceResponse
-mod_acc_fetch_peak_evm_per_subcarrier_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_peak_evm_per_subcarrier_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2734,7 +2734,7 @@ mod_acc_fetch_peak_evm_per_subcarrier_maximum_trace(const StubPtr& stub, const n
 }
 
 ModAccFetchPeakEVMPerSymbolMaximumTraceResponse
-mod_acc_fetch_peak_evm_per_symbol_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_peak_evm_per_symbol_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2753,7 +2753,7 @@ mod_acc_fetch_peak_evm_per_symbol_maximum_trace(const StubPtr& stub, const nidev
 }
 
 ModAccFetchRMSEVMHighPerSymbolMeanTraceResponse
-mod_acc_fetch_rmsevm_high_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_rmsevm_high_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2772,7 +2772,7 @@ mod_acc_fetch_rmsevm_high_per_symbol_mean_trace(const StubPtr& stub, const nidev
 }
 
 ModAccFetchRMSEVMLowPerSymbolMeanTraceResponse
-mod_acc_fetch_rmsevm_low_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_rmsevm_low_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2791,7 +2791,7 @@ mod_acc_fetch_rmsevm_low_per_symbol_mean_trace(const StubPtr& stub, const nidevi
 }
 
 ModAccFetchRMSEVMPerSlotMeanTraceResponse
-mod_acc_fetch_rmsevm_per_slot_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_rmsevm_per_slot_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2810,7 +2810,7 @@ mod_acc_fetch_rmsevm_per_slot_mean_trace(const StubPtr& stub, const nidevice_grp
 }
 
 ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse
-mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2829,7 +2829,7 @@ mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevi
 }
 
 ModAccFetchRMSEVMPerSymbolMeanTraceResponse
-mod_acc_fetch_rmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_rmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2848,7 +2848,7 @@ mod_acc_fetch_rmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_g
 }
 
 ModAccFetchSSSConstellationTraceResponse
-mod_acc_fetch_sss_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_sss_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2867,7 +2867,7 @@ mod_acc_fetch_sss_constellation_trace(const StubPtr& stub, const nidevice_grpc::
 }
 
 ModAccFetchSSSRMSEVMPerSubcarrierMeanTraceResponse
-mod_acc_fetch_sssrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_sssrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2886,7 +2886,7 @@ mod_acc_fetch_sssrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nid
 }
 
 ModAccFetchSSSRMSEVMPerSymbolMeanTraceResponse
-mod_acc_fetch_sssrmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_sssrmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2905,7 +2905,7 @@ mod_acc_fetch_sssrmsevm_per_symbol_mean_trace(const StubPtr& stub, const nidevic
 }
 
 ModAccFetchSpectralFlatnessTraceResponse
-mod_acc_fetch_spectral_flatness_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_spectral_flatness_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2924,7 +2924,7 @@ mod_acc_fetch_spectral_flatness_trace(const StubPtr& stub, const nidevice_grpc::
 }
 
 ModAccFetchSubblockInBandEmissionTraceResponse
-mod_acc_fetch_subblock_in_band_emission_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+mod_acc_fetch_subblock_in_band_emission_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2943,7 +2943,7 @@ mod_acc_fetch_subblock_in_band_emission_trace(const StubPtr& stub, const nidevic
 }
 
 ModAccValidateCalibrationDataResponse
-mod_acc_validate_calibration_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+mod_acc_validate_calibration_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -2961,7 +2961,7 @@ mod_acc_validate_calibration_data(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 OBWCfgAveragingResponse
-obw_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ObwAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ObwAveragingType, pb::int32>& averaging_type)
+obw_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ObwAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ObwAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
@@ -2996,7 +2996,7 @@ obw_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 OBWCfgRBWFilterResponse
-obw_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ObwRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<ObwRbwFilterType, pb::int32>& rbw_filter_type)
+obw_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ObwRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<ObwRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
@@ -3031,7 +3031,7 @@ obw_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 OBWCfgSweepTimeResponse
-obw_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ObwSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
+obw_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ObwSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
@@ -3058,7 +3058,7 @@ obw_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 OBWFetchMeasurementResponse
-obw_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+obw_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3077,7 +3077,7 @@ obw_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrum
 }
 
 OBWFetchSpectrumResponse
-obw_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+obw_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3096,7 +3096,7 @@ obw_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 PVTCfgAveragingResponse
-pvt_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<PvtAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<PvtAveragingType, pb::int32>& averaging_type)
+pvt_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PvtAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<PvtAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
@@ -3131,7 +3131,7 @@ pvt_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 PVTCfgMeasurementMethodResponse
-pvt_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<PvtMeasurementMethod, pb::int32>& measurement_method)
+pvt_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PvtMeasurementMethod, pb::int32>& measurement_method)
 {
   ::grpc::ClientContext context;
 
@@ -3157,7 +3157,7 @@ pvt_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 PVTCfgOFFPowerExclusionPeriodsResponse
-pvt_cfg_off_power_exclusion_periods(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& off_power_exclusion_before, const double& off_power_exclusion_after)
+pvt_cfg_off_power_exclusion_periods(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& off_power_exclusion_before, const double& off_power_exclusion_after)
 {
   ::grpc::ClientContext context;
 
@@ -3177,7 +3177,7 @@ pvt_cfg_off_power_exclusion_periods(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 PVTFetchMeasurementResponse
-pvt_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+pvt_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3196,7 +3196,7 @@ pvt_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrum
 }
 
 PVTFetchMeasurementArrayResponse
-pvt_fetch_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+pvt_fetch_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3215,7 +3215,7 @@ pvt_fetch_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 PVTFetchSignalPowerTraceResponse
-pvt_fetch_signal_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+pvt_fetch_signal_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3234,7 +3234,7 @@ pvt_fetch_signal_power_trace(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 PVTFetchWindowedSignalPowerTraceResponse
-pvt_fetch_windowed_signal_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+pvt_fetch_windowed_signal_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3253,7 +3253,7 @@ pvt_fetch_windowed_signal_power_trace(const StubPtr& stub, const nidevice_grpc::
 }
 
 ResetAttributeResponse
-reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id)
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -3272,7 +3272,7 @@ reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, c
 }
 
 ResetToDefaultResponse
-reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -3290,7 +3290,7 @@ reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 SEMCfgAveragingResponse
-sem_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<SemAveragingType, pb::int32>& averaging_type)
+sem_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SemAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<SemAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
@@ -3325,7 +3325,7 @@ sem_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SEMCfgComponentCarrierRatedOutputPowerResponse
-sem_cfg_component_carrier_rated_output_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& component_carrier_rated_output_power)
+sem_cfg_component_carrier_rated_output_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& component_carrier_rated_output_power)
 {
   ::grpc::ClientContext context;
 
@@ -3344,7 +3344,7 @@ sem_cfg_component_carrier_rated_output_power(const StubPtr& stub, const nidevice
 }
 
 SEMCfgComponentCarrierRatedOutputPowerArrayResponse
-sem_cfg_component_carrier_rated_output_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& component_carrier_rated_output_power)
+sem_cfg_component_carrier_rated_output_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& component_carrier_rated_output_power)
 {
   ::grpc::ClientContext context;
 
@@ -3363,7 +3363,7 @@ sem_cfg_component_carrier_rated_output_power_array(const StubPtr& stub, const ni
 }
 
 SEMCfgNumberOfOffsetsResponse
-sem_cfg_number_of_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& number_of_offsets)
+sem_cfg_number_of_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_offsets)
 {
   ::grpc::ClientContext context;
 
@@ -3382,7 +3382,7 @@ sem_cfg_number_of_offsets(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 SEMCfgOffsetAbsoluteLimitResponse
-sem_cfg_offset_absolute_limit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& absolute_limit_start, const double& absolute_limit_stop)
+sem_cfg_offset_absolute_limit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& absolute_limit_start, const double& absolute_limit_stop)
 {
   ::grpc::ClientContext context;
 
@@ -3402,7 +3402,7 @@ sem_cfg_offset_absolute_limit(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SEMCfgOffsetAbsoluteLimitArrayResponse
-sem_cfg_offset_absolute_limit_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& absolute_limit_start, const std::vector<double>& absolute_limit_stop)
+sem_cfg_offset_absolute_limit_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& absolute_limit_start, const std::vector<double>& absolute_limit_stop)
 {
   ::grpc::ClientContext context;
 
@@ -3422,7 +3422,7 @@ sem_cfg_offset_absolute_limit_array(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 SEMCfgOffsetBandwidthIntegralResponse
-sem_cfg_offset_bandwidth_integral(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& bandwidth_integral)
+sem_cfg_offset_bandwidth_integral(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& bandwidth_integral)
 {
   ::grpc::ClientContext context;
 
@@ -3441,7 +3441,7 @@ sem_cfg_offset_bandwidth_integral(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 SEMCfgOffsetBandwidthIntegralArrayResponse
-sem_cfg_offset_bandwidth_integral_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& bandwidth_integral)
+sem_cfg_offset_bandwidth_integral_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<pb::int32>& bandwidth_integral)
 {
   ::grpc::ClientContext context;
 
@@ -3460,7 +3460,7 @@ sem_cfg_offset_bandwidth_integral_array(const StubPtr& stub, const nidevice_grpc
 }
 
 SEMCfgOffsetFrequencyResponse
-sem_cfg_offset_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& offset_start_frequency, const double& offset_stop_frequency, const simple_variant<SemOffsetSideband, pb::int32>& offset_sideband)
+sem_cfg_offset_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& offset_start_frequency, const double& offset_stop_frequency, const simple_variant<SemOffsetSideband, pb::int32>& offset_sideband)
 {
   ::grpc::ClientContext context;
 
@@ -3488,7 +3488,7 @@ sem_cfg_offset_frequency(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SEMCfgOffsetFrequencyArrayResponse
-sem_cfg_offset_frequency_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& offset_start_frequency, const std::vector<double>& offset_stop_frequency, const std::vector<pb::int32>& offset_sideband)
+sem_cfg_offset_frequency_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& offset_start_frequency, const std::vector<double>& offset_stop_frequency, const std::vector<pb::int32>& offset_sideband)
 {
   ::grpc::ClientContext context;
 
@@ -3509,7 +3509,7 @@ sem_cfg_offset_frequency_array(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SEMCfgOffsetLimitFailMaskResponse
-sem_cfg_offset_limit_fail_mask(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemOffsetLimitFailMask, pb::int32>& limit_fail_mask)
+sem_cfg_offset_limit_fail_mask(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SemOffsetLimitFailMask, pb::int32>& limit_fail_mask)
 {
   ::grpc::ClientContext context;
 
@@ -3535,7 +3535,7 @@ sem_cfg_offset_limit_fail_mask(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SEMCfgOffsetLimitFailMaskArrayResponse
-sem_cfg_offset_limit_fail_mask_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& limit_fail_mask)
+sem_cfg_offset_limit_fail_mask_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<pb::int32>& limit_fail_mask)
 {
   ::grpc::ClientContext context;
 
@@ -3554,7 +3554,7 @@ sem_cfg_offset_limit_fail_mask_array(const StubPtr& stub, const nidevice_grpc::S
 }
 
 SEMCfgOffsetRBWFilterResponse
-sem_cfg_offset_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& offset_rbw, const simple_variant<SemOffsetRbwFilterType, pb::int32>& offset_rbw_filter_type)
+sem_cfg_offset_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& offset_rbw, const simple_variant<SemOffsetRbwFilterType, pb::int32>& offset_rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
@@ -3581,7 +3581,7 @@ sem_cfg_offset_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 SEMCfgOffsetRBWFilterArrayResponse
-sem_cfg_offset_rbw_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& offset_rbw, const std::vector<pb::int32>& offset_rbw_filter_type)
+sem_cfg_offset_rbw_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& offset_rbw, const std::vector<pb::int32>& offset_rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
@@ -3601,7 +3601,7 @@ sem_cfg_offset_rbw_filter_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 SEMCfgOffsetRelativeLimitResponse
-sem_cfg_offset_relative_limit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& relative_limit_start, const double& relative_limit_stop)
+sem_cfg_offset_relative_limit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& relative_limit_start, const double& relative_limit_stop)
 {
   ::grpc::ClientContext context;
 
@@ -3621,7 +3621,7 @@ sem_cfg_offset_relative_limit(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SEMCfgOffsetRelativeLimitArrayResponse
-sem_cfg_offset_relative_limit_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& relative_limit_start, const std::vector<double>& relative_limit_stop)
+sem_cfg_offset_relative_limit_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& relative_limit_start, const std::vector<double>& relative_limit_stop)
 {
   ::grpc::ClientContext context;
 
@@ -3641,7 +3641,7 @@ sem_cfg_offset_relative_limit_array(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 SEMCfgSweepTimeResponse
-sem_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
+sem_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SemSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
@@ -3668,7 +3668,7 @@ sem_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 SEMCfgUplinkMaskTypeResponse
-sem_cfg_uplink_mask_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemUplinkMaskType, pb::int32>& uplink_mask_type)
+sem_cfg_uplink_mask_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SemUplinkMaskType, pb::int32>& uplink_mask_type)
 {
   ::grpc::ClientContext context;
 
@@ -3694,7 +3694,7 @@ sem_cfg_uplink_mask_type(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SEMFetchComponentCarrierMeasurementResponse
-sem_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3713,7 +3713,7 @@ sem_fetch_component_carrier_measurement(const StubPtr& stub, const nidevice_grpc
 }
 
 SEMFetchComponentCarrierMeasurementArrayResponse
-sem_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3732,7 +3732,7 @@ sem_fetch_component_carrier_measurement_array(const StubPtr& stub, const nidevic
 }
 
 SEMFetchLowerOffsetMarginResponse
-sem_fetch_lower_offset_margin(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_lower_offset_margin(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3751,7 +3751,7 @@ sem_fetch_lower_offset_margin(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SEMFetchLowerOffsetMarginArrayResponse
-sem_fetch_lower_offset_margin_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_lower_offset_margin_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3770,7 +3770,7 @@ sem_fetch_lower_offset_margin_array(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 SEMFetchLowerOffsetPowerResponse
-sem_fetch_lower_offset_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_lower_offset_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3789,7 +3789,7 @@ sem_fetch_lower_offset_power(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SEMFetchLowerOffsetPowerArrayResponse
-sem_fetch_lower_offset_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_lower_offset_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3808,7 +3808,7 @@ sem_fetch_lower_offset_power_array(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 SEMFetchMeasurementStatusResponse
-sem_fetch_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3827,7 +3827,7 @@ sem_fetch_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SEMFetchSpectrumResponse
-sem_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3846,7 +3846,7 @@ sem_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 SEMFetchSubblockMeasurementResponse
-sem_fetch_subblock_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_subblock_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3865,7 +3865,7 @@ sem_fetch_subblock_measurement(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SEMFetchTotalAggregatedPowerResponse
-sem_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3884,7 +3884,7 @@ sem_fetch_total_aggregated_power(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 SEMFetchUpperOffsetMarginResponse
-sem_fetch_upper_offset_margin(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_upper_offset_margin(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3903,7 +3903,7 @@ sem_fetch_upper_offset_margin(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SEMFetchUpperOffsetMarginArrayResponse
-sem_fetch_upper_offset_margin_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_upper_offset_margin_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3922,7 +3922,7 @@ sem_fetch_upper_offset_margin_array(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 SEMFetchUpperOffsetPowerResponse
-sem_fetch_upper_offset_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_upper_offset_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3941,7 +3941,7 @@ sem_fetch_upper_offset_power(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SEMFetchUpperOffsetPowerArrayResponse
-sem_fetch_upper_offset_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+sem_fetch_upper_offset_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -3960,7 +3960,7 @@ sem_fetch_upper_offset_power_array(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 SelectMeasurementsResponse
-select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const bool& enable_all_traces)
+select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const bool& enable_all_traces)
 {
   ::grpc::ClientContext context;
 
@@ -4004,7 +4004,7 @@ send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 SetAttributeF32Response
-set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const float& attr_val)
+set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const float& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4024,7 +4024,7 @@ set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeF32ArrayResponse
-set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<float>& attr_val)
+set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<float>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4044,7 +4044,7 @@ set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeF64Response
-set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const double& attr_val)
+set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const double& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4064,7 +4064,7 @@ set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeF64ArrayResponse
-set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<double>& attr_val)
+set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<double>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4084,7 +4084,7 @@ set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI16Response
-set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::int32& attr_val)
+set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::int32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4104,7 +4104,7 @@ set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeI32Response
-set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const simple_variant<NiRFmxNRInt32AttributeValues, pb::int32>& attr_val)
+set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const simple_variant<NiRFmxNRInt32AttributeValues, pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4131,7 +4131,7 @@ set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeI32ArrayResponse
-set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4151,7 +4151,7 @@ set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI64Response
-set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::int64& attr_val)
+set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::int64& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4171,7 +4171,7 @@ set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeI64ArrayResponse
-set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::int64>& attr_val)
+set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::int64>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4191,7 +4191,7 @@ set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI8Response
-set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::int32& attr_val)
+set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::int32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4211,7 +4211,7 @@ set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 SetAttributeI8ArrayResponse
-set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4231,7 +4231,7 @@ set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 SetAttributeNIComplexDoubleArrayResponse
-set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
+set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4251,7 +4251,7 @@ set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeNIComplexSingleArrayResponse
-set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumberF32>& attr_val)
+set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumberF32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4271,7 +4271,7 @@ set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeStringResponse
-set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const simple_variant<NiRFmxNRStringAttributeValuesMapped, std::string>& attr_val)
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const simple_variant<NiRFmxNRStringAttributeValuesMapped, std::string>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4298,7 +4298,7 @@ set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 SetAttributeU16Response
-set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4318,7 +4318,7 @@ set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeU32Response
-set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4338,7 +4338,7 @@ set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeU32ArrayResponse
-set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::uint32>& attr_val)
+set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::uint32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4358,7 +4358,7 @@ set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeU64ArrayResponse
-set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::uint64>& attr_val)
+set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::vector<pb::uint64>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4378,7 +4378,7 @@ set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeU8Response
-set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4398,7 +4398,7 @@ set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 SetAttributeU8ArrayResponse
-set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::string& attr_val)
+set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxNRAttribute& attribute_id, const std::string& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4418,7 +4418,7 @@ set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 TXPFetchMeasurementResponse
-txp_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+txp_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -4437,7 +4437,7 @@ txp_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrum
 }
 
 TXPFetchPowerTraceResponse
-txp_fetch_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+txp_fetch_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -4474,7 +4474,7 @@ wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 WaitForMeasurementCompleteResponse
-wait_for_measurement_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+wait_for_measurement_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
   ::grpc::ClientContext context;
 
