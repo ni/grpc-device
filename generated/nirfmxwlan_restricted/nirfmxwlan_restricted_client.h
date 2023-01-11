@@ -22,9 +22,9 @@ using StubPtr = std::unique_ptr<NiRFmxWLANRestricted::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-GetChannelListResponse get_channel_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& wlan_band);
-OFDMModAccFetchCommonPilotErrorTraceIndBResponse ofdm_mod_acc_fetch_common_pilot_error_trace_ind_b(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
-OFDMModAccNoiseCalibrateResponse ofdm_mod_acc_noise_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& shared_lo_connection);
+GetChannelListResponse get_channel_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& wlan_band);
+OFDMModAccFetchCommonPilotErrorTraceIndBResponse ofdm_mod_acc_fetch_common_pilot_error_trace_ind_b(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+OFDMModAccNoiseCalibrateResponse ofdm_mod_acc_noise_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& shared_lo_connection);
 
 } // namespace nirfmxwlan_restricted_grpc::experimental::client
 
