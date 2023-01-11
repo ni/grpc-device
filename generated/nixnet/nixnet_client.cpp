@@ -93,7 +93,7 @@ connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session, co
 }
 
 ConvertByteArrayToFramesSinglePointResponse
-convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& value_buffer, const pb::uint32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& protocol)
+convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& value_buffer, const pb::uint32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& protocol)
 {
   ::grpc::ClientContext context;
 
@@ -221,7 +221,7 @@ convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from_timesta
 }
 
 CreateSessionResponse
-create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+create_session(const StubPtr& stub, const std::string& database_name, const std::string& cluster_name, const std::string& list, const std::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -250,7 +250,7 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
 }
 
 CreateSessionByRefResponse
-create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const std::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -277,7 +277,7 @@ create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Sess
 }
 
 DbAddAliasResponse
-db_add_alias(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint32& default_baud_rate)
+db_add_alias(const StubPtr& stub, const std::string& database_alias, const std::string& database_filepath, const pb::uint32& default_baud_rate)
 {
   ::grpc::ClientContext context;
 
@@ -296,7 +296,7 @@ db_add_alias(const StubPtr& stub, const pb::string& database_alias, const pb::st
 }
 
 DbAddAlias64Response
-db_add_alias64(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint64& default_baud_rate)
+db_add_alias64(const StubPtr& stub, const std::string& database_alias, const std::string& database_filepath, const pb::uint64& default_baud_rate)
 {
   ::grpc::ClientContext context;
 
@@ -333,7 +333,7 @@ db_close_database(const StubPtr& stub, const nidevice_grpc::Session& database, c
 }
 
 DbCreateObjectResponse
-db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name)
+db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const std::string& object_name)
 {
   ::grpc::ClientContext context;
 
@@ -369,7 +369,7 @@ db_delete_object(const StubPtr& stub, const nidevice_grpc::Session& db_object)
 }
 
 DbDeployResponse
-db_deploy(const StubPtr& stub, const pb::string& ip_address, const pb::string& database_alias, const pb::uint32& wait_for_complete)
+db_deploy(const StubPtr& stub, const std::string& ip_address, const std::string& database_alias, const pb::uint32& wait_for_complete)
 {
   ::grpc::ClientContext context;
 
@@ -388,7 +388,7 @@ db_deploy(const StubPtr& stub, const pb::string& ip_address, const pb::string& d
 }
 
 DbFindObjectResponse
-db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name)
+db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const std::string& object_name)
 {
   ::grpc::ClientContext context;
 
@@ -407,7 +407,7 @@ db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object,
 }
 
 DbGetDBCAttributeResponse
-db_get_dbc_attribute(const StubPtr& stub, const nidevice_grpc::Session& db_object, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const pb::string& attribute_name)
+db_get_dbc_attribute(const StubPtr& stub, const nidevice_grpc::Session& db_object, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const std::string& attribute_name)
 {
   ::grpc::ClientContext context;
 
@@ -433,7 +433,7 @@ db_get_dbc_attribute(const StubPtr& stub, const nidevice_grpc::Session& db_objec
 }
 
 DbGetDBCAttributeSizeResponse
-db_get_dbc_attribute_size(const StubPtr& stub, const nidevice_grpc::Session& db_object, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const pb::string& attribute_name)
+db_get_dbc_attribute_size(const StubPtr& stub, const nidevice_grpc::Session& db_object, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const std::string& attribute_name)
 {
   ::grpc::ClientContext context;
 
@@ -459,7 +459,7 @@ db_get_dbc_attribute_size(const StubPtr& stub, const nidevice_grpc::Session& db_
 }
 
 DbGetDatabaseListSizesResponse
-db_get_database_list_sizes(const StubPtr& stub, const pb::string& ip_address)
+db_get_database_list_sizes(const StubPtr& stub, const std::string& ip_address)
 {
   ::grpc::ClientContext context;
 
@@ -501,7 +501,7 @@ db_get_property_size(const StubPtr& stub, const nidevice_grpc::Session& db_objec
 }
 
 DbMergeResponse
-db_merge(const StubPtr& stub, const nidevice_grpc::Session& target_cluster, const nidevice_grpc::Session& source_obj, const simple_variant<CopyMode, pb::uint32>& copy_mode, const pb::string& prefix, const pb::uint32& wait_for_complete)
+db_merge(const StubPtr& stub, const nidevice_grpc::Session& target_cluster, const nidevice_grpc::Session& source_obj, const simple_variant<CopyMode, pb::uint32>& copy_mode, const std::string& prefix, const pb::uint32& wait_for_complete)
 {
   ::grpc::ClientContext context;
 
@@ -529,7 +529,7 @@ db_merge(const StubPtr& stub, const nidevice_grpc::Session& target_cluster, cons
 }
 
 DbOpenDatabaseResponse
-db_open_database(const StubPtr& stub, const pb::string& database_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+db_open_database(const StubPtr& stub, const std::string& database_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -547,7 +547,7 @@ db_open_database(const StubPtr& stub, const pb::string& database_name, const nid
 }
 
 DbRemoveAliasResponse
-db_remove_alias(const StubPtr& stub, const pb::string& database_alias)
+db_remove_alias(const StubPtr& stub, const std::string& database_alias)
 {
   ::grpc::ClientContext context;
 
@@ -564,7 +564,7 @@ db_remove_alias(const StubPtr& stub, const pb::string& database_alias)
 }
 
 DbSaveDatabaseResponse
-db_save_database(const StubPtr& stub, const nidevice_grpc::Session& database, const pb::string& db_filepath)
+db_save_database(const StubPtr& stub, const nidevice_grpc::Session& database, const std::string& db_filepath)
 {
   ::grpc::ClientContext context;
 
@@ -582,7 +582,7 @@ db_save_database(const StubPtr& stub, const nidevice_grpc::Session& database, co
 }
 
 DbUndeployResponse
-db_undeploy(const StubPtr& stub, const pb::string& ip_address, const pb::string& database_alias)
+db_undeploy(const StubPtr& stub, const std::string& ip_address, const std::string& database_alias)
 {
   ::grpc::ClientContext context;
 

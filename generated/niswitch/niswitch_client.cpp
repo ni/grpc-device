@@ -35,7 +35,7 @@ abort_scan(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 CanConnectResponse
-can_connect(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel1, const pb::string& channel2)
+can_connect(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel1, const std::string& channel2)
 {
   ::grpc::ClientContext context;
 
@@ -54,7 +54,7 @@ can_connect(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::str
 }
 
 CheckAttributeViBooleanResponse
-check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const bool& attribute_value)
+check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const bool& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -74,7 +74,7 @@ check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViInt32Response
-check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const simple_variant<NiSwitchInt32AttributeValues, pb::int32>& attribute_value)
+check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const simple_variant<NiSwitchInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -101,7 +101,7 @@ check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViReal64Response
-check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const double& attribute_value)
+check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const double& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -121,7 +121,7 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 CheckAttributeViSessionResponse
-check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
+check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -141,7 +141,7 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const pb::string& attribute_value)
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const std::string& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -229,7 +229,7 @@ commit(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ConfigureScanListResponse
-configure_scan_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& scanlist, const simple_variant<ScanMode, pb::int32>& scan_mode)
+configure_scan_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& scanlist, const simple_variant<ScanMode, pb::int32>& scan_mode)
 {
   ::grpc::ClientContext context;
 
@@ -289,7 +289,7 @@ configure_scan_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 ConnectResponse
-connect(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel1, const pb::string& channel2)
+connect(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel1, const std::string& channel2)
 {
   ::grpc::ClientContext context;
 
@@ -308,7 +308,7 @@ connect(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string&
 }
 
 ConnectMultipleResponse
-connect_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& connection_list)
+connect_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& connection_list)
 {
   ::grpc::ClientContext context;
 
@@ -343,7 +343,7 @@ disable(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 DisconnectResponse
-disconnect(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel1, const pb::string& channel2)
+disconnect(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel1, const std::string& channel2)
 {
   ::grpc::ClientContext context;
 
@@ -379,7 +379,7 @@ disconnect_all(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 DisconnectMultipleResponse
-disconnect_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& disconnection_list)
+disconnect_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& disconnection_list)
 {
   ::grpc::ClientContext context;
 
@@ -432,7 +432,7 @@ error_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -451,7 +451,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -470,7 +470,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -489,7 +489,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -508,7 +508,7 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -596,7 +596,7 @@ get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetPathResponse
-get_path(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel1, const pb::string& channel2)
+get_path(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel1, const std::string& channel2)
 {
   ::grpc::ClientContext context;
 
@@ -615,7 +615,7 @@ get_path(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string
 }
 
 GetRelayCountResponse
-get_relay_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& relay_name)
+get_relay_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& relay_name)
 {
   ::grpc::ClientContext context;
 
@@ -651,7 +651,7 @@ get_relay_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 GetRelayPositionResponse
-get_relay_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& relay_name)
+get_relay_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& relay_name)
 {
   ::grpc::ClientContext context;
 
@@ -669,7 +669,7 @@ get_relay_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 InitResponse
-init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -689,7 +689,7 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
 }
 
 InitWithOptionsResponse
-init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init_with_options(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -710,7 +710,7 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
 }
 
 InitWithTopologyResponse
-init_with_topology(const StubPtr& stub, const pb::string& resource_name, const pb::string& topology, const bool& simulate, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init_with_topology(const StubPtr& stub, const std::string& resource_name, const std::string& topology, const bool& simulate, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -799,7 +799,7 @@ is_scanning(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 RelayControlResponse
-relay_control(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& relay_name, const simple_variant<RelayAction, pb::int32>& relay_action)
+relay_control(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& relay_name, const simple_variant<RelayAction, pb::int32>& relay_action)
 {
   ::grpc::ClientContext context;
 
@@ -961,7 +961,7 @@ route_trigger_input(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 ScanResponse
-scan(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& scanlist, const simple_variant<HandshakingInitiation, pb::int32>& initiation)
+scan(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& scanlist, const simple_variant<HandshakingInitiation, pb::int32>& initiation)
 {
   ::grpc::ClientContext context;
 
@@ -1021,7 +1021,7 @@ send_software_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const bool& attribute_value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const bool& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1041,7 +1041,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const simple_variant<NiSwitchInt32AttributeValues, pb::int32>& attribute_value)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const simple_variant<NiSwitchInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1068,7 +1068,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const double& attribute_value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const double& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1088,7 +1088,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViSessionResponse
-set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
+set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1108,7 +1108,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const pb::string& attribute_value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiSwitchAttribute& attribute_id, const std::string& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1146,7 +1146,7 @@ set_continuous_scan(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 SetPathResponse
-set_path(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& path_list)
+set_path(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& path_list)
 {
   ::grpc::ClientContext context;
 

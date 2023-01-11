@@ -18,7 +18,7 @@
 namespace nirfmxspecan_restricted_grpc::experimental::client {
 
 CacheResultResponse
-cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& selector_string_out_size)
+cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& selector_string_out_size)
 {
   ::grpc::ClientContext context;
 
@@ -37,7 +37,7 @@ cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, cons
 }
 
 IQFetchDataOverrideBehaviorResponse
-iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout, const pb::int32& record_to_fetch, const pb::int64& samples_to_read, const simple_variant<IQDeleteOnFetch, pb::int32>& delete_on_fetch)
+iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& record_to_fetch, const pb::int64& samples_to_read, const simple_variant<IQDeleteOnFetch, pb::int32>& delete_on_fetch)
 {
   ::grpc::ClientContext context;
 

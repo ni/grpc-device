@@ -18,7 +18,7 @@
 namespace nirfmxinstr_grpc::experimental::client {
 
 BuildCalibrationPlaneStringResponse
-build_calibration_plane_string(const StubPtr& stub, const pb::string& calibration_plane_name)
+build_calibration_plane_string(const StubPtr& stub, const std::string& calibration_plane_name)
 {
   ::grpc::ClientContext context;
 
@@ -35,7 +35,7 @@ build_calibration_plane_string(const StubPtr& stub, const pb::string& calibratio
 }
 
 BuildInstrumentStringResponse
-build_instrument_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& instrument_number)
+build_instrument_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& instrument_number)
 {
   ::grpc::ClientContext context;
 
@@ -53,7 +53,7 @@ build_instrument_string(const StubPtr& stub, const pb::string& selector_string, 
 }
 
 BuildLOStringResponse
-build_lo_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& lo_index)
+build_lo_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& lo_index)
 {
   ::grpc::ClientContext context;
 
@@ -71,7 +71,7 @@ build_lo_string(const StubPtr& stub, const pb::string& selector_string, const pb
 }
 
 BuildModuleStringResponse
-build_module_string(const StubPtr& stub, const pb::string& selector_string, const pb::string& module_name)
+build_module_string(const StubPtr& stub, const std::string& selector_string, const std::string& module_name)
 {
   ::grpc::ClientContext context;
 
@@ -89,7 +89,7 @@ build_module_string(const StubPtr& stub, const pb::string& selector_string, cons
 }
 
 BuildPortStringResponse
-build_port_string(const StubPtr& stub, const pb::string& selector_string, const pb::string& port_name, const pb::string& device_name, const pb::int32& channel_number)
+build_port_string(const StubPtr& stub, const std::string& selector_string, const std::string& port_name, const std::string& device_name, const pb::int32& channel_number)
 {
   ::grpc::ClientContext context;
 
@@ -109,7 +109,7 @@ build_port_string(const StubPtr& stub, const pb::string& selector_string, const 
 }
 
 CfgExternalAttenuationInterpolationLinearResponse
-cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const simple_variant<LinearInterpolationFormat, pb::int32>& format)
+cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const simple_variant<LinearInterpolationFormat, pb::int32>& format)
 {
   ::grpc::ClientContext context;
 
@@ -136,7 +136,7 @@ cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevic
 }
 
 CfgExternalAttenuationInterpolationNearestResponse
-cfg_external_attenuation_interpolation_nearest(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name)
+cfg_external_attenuation_interpolation_nearest(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name)
 {
   ::grpc::ClientContext context;
 
@@ -155,7 +155,7 @@ cfg_external_attenuation_interpolation_nearest(const StubPtr& stub, const nidevi
 }
 
 CfgExternalAttenuationInterpolationSplineResponse
-cfg_external_attenuation_interpolation_spline(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name)
+cfg_external_attenuation_interpolation_spline(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name)
 {
   ::grpc::ClientContext context;
 
@@ -174,7 +174,7 @@ cfg_external_attenuation_interpolation_spline(const StubPtr& stub, const nidevic
 }
 
 CfgExternalAttenuationTableResponse
-cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const std::vector<double>& frequency, const std::vector<double>& external_attenuation)
+cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency, const std::vector<double>& external_attenuation)
 {
   ::grpc::ClientContext context;
 
@@ -195,7 +195,7 @@ cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CfgFrequencyReferenceResponse
-cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<FrequencyReferenceSource, std::string>& frequency_reference_source, const double& frequency_reference_frequency)
+cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<FrequencyReferenceSource, std::string>& frequency_reference_source, const double& frequency_reference_frequency)
 {
   ::grpc::ClientContext context;
 
@@ -222,7 +222,7 @@ cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 CfgMechanicalAttenuationResponse
-cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<MechanicalAttenuationAuto, pb::int32>& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
+cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<MechanicalAttenuationAuto, pb::int32>& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
 {
   ::grpc::ClientContext context;
 
@@ -249,7 +249,7 @@ cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 CfgRFAttenuationResponse
-cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value)
+cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value)
 {
   ::grpc::ClientContext context;
 
@@ -276,7 +276,7 @@ cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 CfgSParameterExternalAttenuationTableResponse
-cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const std::vector<double>& frequency, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
+cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
@@ -306,7 +306,7 @@ cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_g
 }
 
 CfgSParameterExternalAttenuationTypeResponse
-cfg_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SParameterType, pb::int32>& s_parameter_type)
+cfg_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SParameterType, pb::int32>& s_parameter_type)
 {
   ::grpc::ClientContext context;
 
@@ -349,7 +349,7 @@ check_acquisition_status(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 CheckIfListExistsResponse
-check_if_list_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& list_name)
+check_if_list_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& list_name)
 {
   ::grpc::ClientContext context;
 
@@ -367,7 +367,7 @@ check_if_list_exists(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 CheckIfSignalConfigurationExistsResponse
-check_if_signal_configuration_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name)
+check_if_signal_configuration_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name)
 {
   ::grpc::ClientContext context;
 
@@ -403,7 +403,7 @@ close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool&
 }
 
 DeleteAllExternalAttenuationTablesResponse
-delete_all_external_attenuation_tables(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+delete_all_external_attenuation_tables(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -421,7 +421,7 @@ delete_all_external_attenuation_tables(const StubPtr& stub, const nidevice_grpc:
 }
 
 DeleteExternalAttenuationTableResponse
-delete_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name)
+delete_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name)
 {
   ::grpc::ClientContext context;
 
@@ -440,7 +440,7 @@ delete_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 DisableCalibrationPlaneResponse
-disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -458,7 +458,7 @@ disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 EnableCalibrationPlaneResponse
-enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -509,7 +509,7 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, con
 }
 
 GetAttributeF32Response
-get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -528,7 +528,7 @@ get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeF32ArrayResponse
-get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -547,7 +547,7 @@ get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeF64Response
-get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -566,7 +566,7 @@ get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeF64ArrayResponse
-get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -585,7 +585,7 @@ get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI16Response
-get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -604,7 +604,7 @@ get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeI32Response
-get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -623,7 +623,7 @@ get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeI32ArrayResponse
-get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -642,7 +642,7 @@ get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI64Response
-get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -661,7 +661,7 @@ get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeI64ArrayResponse
-get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -680,7 +680,7 @@ get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI8Response
-get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -699,7 +699,7 @@ get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 GetAttributeI8ArrayResponse
-get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -718,7 +718,7 @@ get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 GetAttributeNIComplexDoubleArrayResponse
-get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -737,7 +737,7 @@ get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetAttributeNIComplexSingleArrayResponse
-get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -756,7 +756,7 @@ get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetAttributeStringResponse
-get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -775,7 +775,7 @@ get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 GetAttributeU16Response
-get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -794,7 +794,7 @@ get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeU32Response
-get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -813,7 +813,7 @@ get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 GetAttributeU32ArrayResponse
-get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -832,7 +832,7 @@ get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeU64ArrayResponse
-get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -851,7 +851,7 @@ get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeU8Response
-get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -870,7 +870,7 @@ get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 GetAttributeU8ArrayResponse
-get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -889,7 +889,7 @@ get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 GetAvailablePortsResponse
-get_available_ports(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_available_ports(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -942,7 +942,7 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 GetExternalAttenuationTableActualValueResponse
-get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -960,7 +960,7 @@ get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_
 }
 
 GetListNamesResponse
-get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter)
+get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter)
 {
   ::grpc::ClientContext context;
 
@@ -1020,7 +1020,7 @@ get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 GetSParameterExternalAttenuationTypeResponse
-get_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1038,7 +1038,7 @@ get_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_gr
 }
 
 GetSelfCalibrateLastDateAndTimeResponse
-get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step)
+get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step)
 {
   ::grpc::ClientContext context;
 
@@ -1064,7 +1064,7 @@ get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetSelfCalibrateLastTemperatureResponse
-get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step)
+get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step)
 {
   ::grpc::ClientContext context;
 
@@ -1090,7 +1090,7 @@ get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 GetSignalConfigurationNamesResponse
-get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter)
+get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter)
 {
   ::grpc::ClientContext context;
 
@@ -1116,7 +1116,7 @@ get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 InitializeResponse
-initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1171,7 +1171,7 @@ initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<nide
 }
 
 IsSelfCalibrateValidResponse
-is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -1189,7 +1189,7 @@ is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 LoadAllConfigurationsResponse
-load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path, const pb::int32& load_rf_instr_configuration)
+load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path, const pb::int32& load_rf_instr_configuration)
 {
   ::grpc::ClientContext context;
 
@@ -1208,7 +1208,7 @@ load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 LoadSParameterExternalAttenuationTableFromS2PFileResponse
-load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
+load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
@@ -1236,7 +1236,7 @@ load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, c
 }
 
 ResetAttributeResponse
-reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1306,7 +1306,7 @@ reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 }
 
 SaveAllConfigurationsResponse
-save_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path)
+save_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1324,7 +1324,7 @@ save_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SelectActiveExternalAttenuationTableResponse
-select_active_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name)
+select_active_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name)
 {
   ::grpc::ClientContext context;
 
@@ -1343,7 +1343,7 @@ select_active_external_attenuation_table(const StubPtr& stub, const nidevice_grp
 }
 
 SelfCalibrateResponse
-self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int32>& steps_to_omit)
+self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SelfCalStep, pb::int32>& steps_to_omit)
 {
   ::grpc::ClientContext context;
 
@@ -1369,7 +1369,7 @@ self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, co
 }
 
 SelfCalibrateRangeResponse
-self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int32>& steps_to_omit, const double& minimum_frequency, const double& maximum_frequency, const double& minimum_reference_level, const double& maximum_reference_level)
+self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SelfCalStep, pb::int32>& steps_to_omit, const double& minimum_frequency, const double& maximum_frequency, const double& minimum_reference_level, const double& maximum_reference_level)
 {
   ::grpc::ClientContext context;
 
@@ -1433,7 +1433,7 @@ send_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 SetAttributeF32Response
-set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const float& attr_val)
+set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const float& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1453,7 +1453,7 @@ set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeF32ArrayResponse
-set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<float>& attr_val)
+set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<float>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1473,7 +1473,7 @@ set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeF64Response
-set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const double& attr_val)
+set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const double& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1493,7 +1493,7 @@ set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeF64ArrayResponse
-set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<double>& attr_val)
+set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<double>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1513,7 +1513,7 @@ set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI16Response
-set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int32& attr_val)
+set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1533,7 +1533,7 @@ set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeI32Response
-set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const simple_variant<NiRFmxInstrInt32AttributeValues, pb::int32>& attr_val)
+set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const simple_variant<NiRFmxInstrInt32AttributeValues, pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1560,7 +1560,7 @@ set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeI32ArrayResponse
-set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1580,7 +1580,7 @@ set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI64Response
-set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int64& attr_val)
+set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int64& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1600,7 +1600,7 @@ set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeI64ArrayResponse
-set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int64>& attr_val)
+set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int64>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1620,7 +1620,7 @@ set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI8Response
-set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int32& attr_val)
+set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1640,7 +1640,7 @@ set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 SetAttributeI8ArrayResponse
-set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1660,7 +1660,7 @@ set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 SetAttributeNIComplexDoubleArrayResponse
-set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
+set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1680,7 +1680,7 @@ set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeNIComplexSingleArrayResponse
-set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumberF32>& attr_val)
+set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumberF32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1700,7 +1700,7 @@ set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeStringResponse
-set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const simple_variant<NiRFmxInstrStringAttributeValuesMapped, std::string>& attr_val)
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const simple_variant<NiRFmxInstrStringAttributeValuesMapped, std::string>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1727,7 +1727,7 @@ set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 SetAttributeU16Response
-set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1747,7 +1747,7 @@ set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeU32Response
-set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1767,7 +1767,7 @@ set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SetAttributeU32ArrayResponse
-set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint32>& attr_val)
+set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint32>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1787,7 +1787,7 @@ set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeU64ArrayResponse
-set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint64>& attr_val)
+set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint64>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1807,7 +1807,7 @@ set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeU8Response
-set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1827,7 +1827,7 @@ set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 SetAttributeU8ArrayResponse
-set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::string& attr_val)
+set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::string& attr_val)
 {
   ::grpc::ClientContext context;
 
