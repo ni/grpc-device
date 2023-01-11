@@ -107,7 +107,7 @@ fd_is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vect
 }
 
 GetAddrInfoResponse
-get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints)
+get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const std::string& node, const std::string& service, const AddrInfoHint& hints)
 {
   ::grpc::ClientContext context;
 
@@ -215,7 +215,7 @@ get_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const si
 }
 
 InetAddrResponse
-inet_addr(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp)
+inet_addr(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const std::string& cp)
 {
   ::grpc::ClientContext context;
 
@@ -233,7 +233,7 @@ inet_addr(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb
 }
 
 InetAToNResponse
-inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp)
+inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const std::string& cp)
 {
   ::grpc::ClientContext context;
 
@@ -287,7 +287,7 @@ inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 }
 
 InetPToNResponse
-inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const pb::string& address)
+inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const std::string& address)
 {
   ::grpc::ClientContext context;
 
@@ -330,7 +330,7 @@ ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 }
 
 IpStackCreateResponse
-ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+ip_stack_create(const StubPtr& stub, const std::string& stack_name, const std::string& config, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -390,7 +390,7 @@ ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 }
 
 IpStackOpenResponse
-ip_stack_open(const StubPtr& stub, const pb::string& stack_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+ip_stack_open(const StubPtr& stub, const std::string& stack_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -408,7 +408,7 @@ ip_stack_open(const StubPtr& stub, const pb::string& stack_name, const nidevice_
 }
 
 IpStackWaitForInterfaceResponse
-ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& local_interface, const pb::int32& timeout_ms)
+ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const std::string& local_interface, const pb::int32& timeout_ms)
 {
   ::grpc::ClientContext context;
 
@@ -503,7 +503,7 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, 
 }
 
 SendResponse
-send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& data, const pb::int32& flags_raw)
+send(const StubPtr& stub, const nidevice_grpc::Session& socket, const std::string& data, const pb::int32& flags_raw)
 {
   ::grpc::ClientContext context;
 
@@ -522,7 +522,7 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
 }
 
 SendToResponse
-send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& data, const pb::int32& flags_raw, const SockAddr& to)
+send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const std::string& data, const pb::int32& flags_raw, const SockAddr& to)
 {
   ::grpc::ClientContext context;
 

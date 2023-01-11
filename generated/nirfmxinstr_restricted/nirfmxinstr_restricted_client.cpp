@@ -40,7 +40,7 @@ convert_for_power_units_utility(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 DeleteSnapshotResponse
-delete_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const pb::string& selector_string)
+delete_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -59,7 +59,7 @@ delete_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, c
 }
 
 GetActiveResultNameResponse
-get_active_result_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type)
+get_active_result_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name, const pb::uint32& signal_type)
 {
   ::grpc::ClientContext context;
 
@@ -78,7 +78,7 @@ get_active_result_name(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 GetActiveTableNameResponse
-get_active_table_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_active_table_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -96,7 +96,7 @@ get_active_table_name(const StubPtr& stub, const nidevice_grpc::Session& instrum
 }
 
 GetAttributeAuthorResponse
-get_attribute_author(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& attribute_id)
+get_attribute_author(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -115,7 +115,7 @@ get_attribute_author(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 GetAttributeDesiredF32Response
-get_attribute_desired_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+get_attribute_desired_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -134,7 +134,7 @@ get_attribute_desired_f32(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 GetAttributeDesiredF32ArrayResponse
-get_attribute_desired_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+get_attribute_desired_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -153,7 +153,7 @@ get_attribute_desired_f32_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 GetAttributeDesiredF64Response
-get_attribute_desired_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+get_attribute_desired_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -172,7 +172,7 @@ get_attribute_desired_f64(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 GetAttributeDesiredF64ArrayResponse
-get_attribute_desired_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+get_attribute_desired_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -191,7 +191,7 @@ get_attribute_desired_f64_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 GetAttributeDesiredI32Response
-get_attribute_desired_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+get_attribute_desired_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -210,7 +210,7 @@ get_attribute_desired_i32(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 GetAttributeDesiredI64Response
-get_attribute_desired_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+get_attribute_desired_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -229,7 +229,7 @@ get_attribute_desired_i64(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 GetAttributeDesiredStringResponse
-get_attribute_desired_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+get_attribute_desired_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -248,7 +248,7 @@ get_attribute_desired_string(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetCalibrationPlaneEnabledResponse
-get_calibration_plane_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_calibration_plane_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -266,7 +266,7 @@ get_calibration_plane_enabled(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 GetCalibrationPlaneNamesResponse
-get_calibration_plane_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_calibration_plane_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -284,7 +284,7 @@ get_calibration_plane_names(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 GetExternalAttenuationTableNamesResponse
-get_external_attenuation_table_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_external_attenuation_table_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -302,7 +302,7 @@ get_external_attenuation_table_names(const StubPtr& stub, const nidevice_grpc::S
 }
 
 GetForceAllTracesEnabledResponse
-get_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name)
+get_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -354,7 +354,7 @@ get_latest_configuration_snapshot(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 GetOpenSessionsInformationResponse
-get_open_sessions_information(const StubPtr& stub, const pb::string& resource_name)
+get_open_sessions_information(const StubPtr& stub, const std::string& resource_name)
 {
   ::grpc::ClientContext context;
 
@@ -405,7 +405,7 @@ get_r_fmx_version(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 }
 
 GetSessionUniqueIdentifierResponse
-get_session_unique_identifier(const StubPtr& stub, const pb::string& resource_names, const pb::string& option_string)
+get_session_unique_identifier(const StubPtr& stub, const std::string& resource_names, const std::string& option_string)
 {
   ::grpc::ClientContext context;
 
@@ -423,7 +423,7 @@ get_session_unique_identifier(const StubPtr& stub, const pb::string& resource_na
 }
 
 GetSignalConfigurationState64Response
-get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type)
+get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name, const pb::uint32& signal_type)
 {
   ::grpc::ClientContext context;
 
@@ -442,7 +442,7 @@ get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 GetSnapshotStateResponse
-get_snapshot_state(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const pb::string& selector_string)
+get_snapshot_state(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -461,7 +461,7 @@ get_snapshot_state(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 GetTracesInfoForMonitorSnapshotResponse
-get_traces_info_for_monitor_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+get_traces_info_for_monitor_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
@@ -479,7 +479,7 @@ get_traces_info_for_monitor_snapshot(const StubPtr& stub, const nidevice_grpc::S
 }
 
 LoadAllForRevertResponse
-load_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path)
+load_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -497,7 +497,7 @@ load_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 LoadConfigurationsFromJSONResponse
-load_configurations_from_json(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& json_string)
+load_configurations_from_json(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& json_string)
 {
   ::grpc::ClientContext context;
 
@@ -515,7 +515,7 @@ load_configurations_from_json(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 RegisterSpecialClientSnapshotInterestResponse
-register_special_client_snapshot_interest(const StubPtr& stub, const pb::string& resource_name)
+register_special_client_snapshot_interest(const StubPtr& stub, const std::string& resource_name)
 {
   ::grpc::ClientContext context;
 
@@ -550,7 +550,7 @@ request_privilege(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SaveAllForRevertResponse
-save_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path)
+save_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -568,7 +568,7 @@ save_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 SaveConfigurationsToJSONResponse
-save_configurations_to_json(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_names)
+save_configurations_to_json(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_names)
 {
   ::grpc::ClientContext context;
 
@@ -586,7 +586,7 @@ save_configurations_to_json(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 SetForceAllTracesEnabledResponse
-set_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attr_val)
+set_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -623,7 +623,7 @@ set_io_trace_status(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 UnregisterSpecialClientSnapshotInterestResponse
-unregister_special_client_snapshot_interest(const StubPtr& stub, const pb::string& resource_name)
+unregister_special_client_snapshot_interest(const StubPtr& stub, const std::string& resource_name)
 {
   ::grpc::ClientContext context;
 

@@ -18,7 +18,7 @@
 namespace nimxlcterminaladaptor_restricted_grpc::experimental::client {
 
 CreateSessionResponse
-create_session(const StubPtr& stub, const pb::string& hostname, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+create_session(const StubPtr& stub, const std::string& hostname, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 

@@ -176,7 +176,7 @@ get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 InitResponse
-init(const StubPtr& stub, const pb::string& session_name)
+init(const StubPtr& stub, const std::string& session_name)
 {
   ::grpc::ClientContext context;
 
@@ -243,7 +243,7 @@ init_secondary_session(const StubPtr& stub)
 }
 
 InitWithHandleNameAsSessionNameResponse
-init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& handle_name)
+init_with_handle_name_as_session_name(const StubPtr& stub, const std::string& handle_name)
 {
   ::grpc::ClientContext context;
 
@@ -260,7 +260,7 @@ init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& han
 }
 
 InitWithReturnedSessionResponse
-init_with_returned_session(const StubPtr& stub, const pb::string& handle_name)
+init_with_returned_session(const StubPtr& stub, const std::string& handle_name)
 {
   ::grpc::ClientContext context;
 
@@ -333,7 +333,7 @@ output_arrays_with_narrow_integer_types(const StubPtr& stub, const pb::int32& nu
 }
 
 InputArrayOfBytesResponse
-input_array_of_bytes(const StubPtr& stub, const pb::string& u8_array)
+input_array_of_bytes(const StubPtr& stub, const std::string& u8_array)
 {
   ::grpc::ClientContext context;
 
@@ -436,7 +436,7 @@ output_timestamp(const StubPtr& stub)
 }
 
 InputVarArgsResponse
-input_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<StringAndEnum>& string_and_enums)
+input_var_args(const StubPtr& stub, const std::string& input_name, const std::vector<StringAndEnum>& string_and_enums)
 {
   ::grpc::ClientContext context;
 
@@ -454,7 +454,7 @@ input_var_args(const StubPtr& stub, const pb::string& input_name, const std::vec
 }
 
 OutputVarArgsResponse
-output_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<pb::string>& channel_names)
+output_var_args(const StubPtr& stub, const std::string& input_name, const std::vector<std::string>& channel_names)
 {
   ::grpc::ClientContext context;
 

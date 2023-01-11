@@ -18,7 +18,7 @@
 namespace nidaqmx_grpc::experimental::client {
 
 AddCDAQSyncConnectionResponse
-add_cdaq_sync_connection(const StubPtr& stub, const pb::string& port_list)
+add_cdaq_sync_connection(const StubPtr& stub, const std::string& port_list)
 {
   ::grpc::ClientContext context;
 
@@ -35,7 +35,7 @@ add_cdaq_sync_connection(const StubPtr& stub, const pb::string& port_list)
 }
 
 AddGlobalChansToTaskResponse
-add_global_chans_to_task(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names)
+add_global_chans_to_task(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_names)
 {
   ::grpc::ClientContext context;
 
@@ -53,7 +53,7 @@ add_global_chans_to_task(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 AddNetworkDeviceResponse
-add_network_device(const StubPtr& stub, const pb::string& ip_address, const pb::string& device_name, const bool& attempt_reservation, const double& timeout)
+add_network_device(const StubPtr& stub, const std::string& ip_address, const std::string& device_name, const bool& attempt_reservation, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -73,7 +73,7 @@ add_network_device(const StubPtr& stub, const pb::string& ip_address, const pb::
 }
 
 AreConfiguredCDAQSyncPortsDisconnectedResponse
-are_configured_cdaq_sync_ports_disconnected(const StubPtr& stub, const pb::string& chassis_devices_ports, const double& timeout)
+are_configured_cdaq_sync_ports_disconnected(const StubPtr& stub, const std::string& chassis_devices_ports, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -91,7 +91,7 @@ are_configured_cdaq_sync_ports_disconnected(const StubPtr& stub, const pb::strin
 }
 
 AutoConfigureCDAQSyncConnectionsResponse
-auto_configure_cdaq_sync_connections(const StubPtr& stub, const pb::string& chassis_devices_ports, const double& timeout)
+auto_configure_cdaq_sync_connections(const StubPtr& stub, const std::string& chassis_devices_ports, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -130,7 +130,7 @@ calculate_reverse_poly_coeff(const StubPtr& stub, const std::vector<double>& for
 }
 
 CfgAnlgEdgeRefTrigResponse
-cfg_anlg_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_source, const simple_variant<Slope1, pb::int32>& trigger_slope, const double& trigger_level, const pb::uint32& pretrigger_samples)
+cfg_anlg_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_source, const simple_variant<Slope1, pb::int32>& trigger_slope, const double& trigger_level, const pb::uint32& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -158,7 +158,7 @@ cfg_anlg_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 CfgAnlgEdgeStartTrigResponse
-cfg_anlg_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_source, const simple_variant<Slope1, pb::int32>& trigger_slope, const double& trigger_level)
+cfg_anlg_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_source, const simple_variant<Slope1, pb::int32>& trigger_slope, const double& trigger_level)
 {
   ::grpc::ClientContext context;
 
@@ -185,7 +185,7 @@ cfg_anlg_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 CfgAnlgMultiEdgeRefTrigResponse
-cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_sources, const std::vector<pb::int32>& trigger_slope_array, const std::vector<double>& trigger_level_array, const pb::uint32& pretrigger_samples)
+cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_sources, const std::vector<pb::int32>& trigger_slope_array, const std::vector<double>& trigger_level_array, const pb::uint32& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -206,7 +206,7 @@ cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 CfgAnlgMultiEdgeStartTrigResponse
-cfg_anlg_multi_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_sources, const std::vector<pb::int32>& trigger_slope_array, const std::vector<double>& trigger_level_array)
+cfg_anlg_multi_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_sources, const std::vector<pb::int32>& trigger_slope_array, const std::vector<double>& trigger_level_array)
 {
   ::grpc::ClientContext context;
 
@@ -226,7 +226,7 @@ cfg_anlg_multi_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CfgAnlgWindowRefTrigResponse
-cfg_anlg_window_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_source, const simple_variant<WindowTriggerCondition1, pb::int32>& trigger_when, const double& window_top, const double& window_bottom, const pb::uint32& pretrigger_samples)
+cfg_anlg_window_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_source, const simple_variant<WindowTriggerCondition1, pb::int32>& trigger_when, const double& window_top, const double& window_bottom, const pb::uint32& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -255,7 +255,7 @@ cfg_anlg_window_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 CfgAnlgWindowStartTrigResponse
-cfg_anlg_window_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_source, const simple_variant<WindowTriggerCondition1, pb::int32>& trigger_when, const double& window_top, const double& window_bottom)
+cfg_anlg_window_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_source, const simple_variant<WindowTriggerCondition1, pb::int32>& trigger_when, const double& window_top, const double& window_bottom)
 {
   ::grpc::ClientContext context;
 
@@ -283,7 +283,7 @@ cfg_anlg_window_start_trig(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CfgBurstHandshakingTimingExportClockResponse
-cfg_burst_handshaking_timing_export_clock(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan, const double& sample_clk_rate, const pb::string& sample_clk_outp_term, const simple_variant<Polarity2, pb::int32>& sample_clk_pulse_polarity, const simple_variant<Level1, pb::int32>& pause_when, const simple_variant<Polarity2, pb::int32>& ready_event_active_level)
+cfg_burst_handshaking_timing_export_clock(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan, const double& sample_clk_rate, const std::string& sample_clk_outp_term, const simple_variant<Polarity2, pb::int32>& sample_clk_pulse_polarity, const simple_variant<Level1, pb::int32>& pause_when, const simple_variant<Polarity2, pb::int32>& ready_event_active_level)
 {
   ::grpc::ClientContext context;
 
@@ -335,7 +335,7 @@ cfg_burst_handshaking_timing_export_clock(const StubPtr& stub, const nidevice_gr
 }
 
 CfgBurstHandshakingTimingImportClockResponse
-cfg_burst_handshaking_timing_import_clock(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan, const double& sample_clk_rate, const pb::string& sample_clk_src, const simple_variant<Edge1, pb::int32>& sample_clk_active_edge, const simple_variant<Level1, pb::int32>& pause_when, const simple_variant<Polarity2, pb::int32>& ready_event_active_level)
+cfg_burst_handshaking_timing_import_clock(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan, const double& sample_clk_rate, const std::string& sample_clk_src, const simple_variant<Edge1, pb::int32>& sample_clk_active_edge, const simple_variant<Level1, pb::int32>& pause_when, const simple_variant<Polarity2, pb::int32>& ready_event_active_level)
 {
   ::grpc::ClientContext context;
 
@@ -387,7 +387,7 @@ cfg_burst_handshaking_timing_import_clock(const StubPtr& stub, const nidevice_gr
 }
 
 CfgChangeDetectionTimingResponse
-cfg_change_detection_timing(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& rising_edge_chan, const pb::string& falling_edge_chan, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan)
+cfg_change_detection_timing(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& rising_edge_chan, const std::string& falling_edge_chan, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan)
 {
   ::grpc::ClientContext context;
 
@@ -415,7 +415,7 @@ cfg_change_detection_timing(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CfgDigEdgeRefTrigResponse
-cfg_dig_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_source, const simple_variant<Edge1, pb::int32>& trigger_edge, const pb::uint32& pretrigger_samples)
+cfg_dig_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_source, const simple_variant<Edge1, pb::int32>& trigger_edge, const pb::uint32& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -442,7 +442,7 @@ cfg_dig_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 CfgDigEdgeStartTrigResponse
-cfg_dig_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_source, const simple_variant<Edge1, pb::int32>& trigger_edge)
+cfg_dig_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_source, const simple_variant<Edge1, pb::int32>& trigger_edge)
 {
   ::grpc::ClientContext context;
 
@@ -468,7 +468,7 @@ cfg_dig_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 CfgDigPatternRefTrigResponse
-cfg_dig_pattern_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_source, const pb::string& trigger_pattern, const simple_variant<DigitalPatternCondition1, pb::int32>& trigger_when, const pb::uint32& pretrigger_samples)
+cfg_dig_pattern_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_source, const std::string& trigger_pattern, const simple_variant<DigitalPatternCondition1, pb::int32>& trigger_when, const pb::uint32& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -496,7 +496,7 @@ cfg_dig_pattern_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 CfgDigPatternStartTrigResponse
-cfg_dig_pattern_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_source, const pb::string& trigger_pattern, const simple_variant<DigitalPatternCondition1, pb::int32>& trigger_when)
+cfg_dig_pattern_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& trigger_source, const std::string& trigger_pattern, const simple_variant<DigitalPatternCondition1, pb::int32>& trigger_when)
 {
   ::grpc::ClientContext context;
 
@@ -611,7 +611,7 @@ cfg_output_buffer(const StubPtr& stub, const nidevice_grpc::Session& task, const
 }
 
 CfgPipelinedSampClkTimingResponse
-cfg_pipelined_samp_clk_timing(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& source, const double& rate, const simple_variant<Edge1, pb::int32>& active_edge, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan)
+cfg_pipelined_samp_clk_timing(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& source, const double& rate, const simple_variant<Edge1, pb::int32>& active_edge, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan)
 {
   ::grpc::ClientContext context;
 
@@ -647,7 +647,7 @@ cfg_pipelined_samp_clk_timing(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CfgSampClkTimingResponse
-cfg_samp_clk_timing(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& source, const double& rate, const simple_variant<Edge1, pb::int32>& active_edge, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan)
+cfg_samp_clk_timing(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& source, const double& rate, const simple_variant<Edge1, pb::int32>& active_edge, const simple_variant<AcquisitionType, pb::int32>& sample_mode, const pb::uint64& samps_per_chan)
 {
   ::grpc::ClientContext context;
 
@@ -709,7 +709,7 @@ cfg_time_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, con
 }
 
 CfgWatchdogAOExpirStatesResponse
-cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<double>& expir_state_array, const std::vector<pb::int32>& output_type_array)
+cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_names, const std::vector<double>& expir_state_array, const std::vector<pb::int32>& output_type_array)
 {
   ::grpc::ClientContext context;
 
@@ -729,7 +729,7 @@ cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 CfgWatchdogCOExpirStatesResponse
-cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array)
+cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_names, const std::vector<pb::int32>& expir_state_array)
 {
   ::grpc::ClientContext context;
 
@@ -748,7 +748,7 @@ cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 CfgWatchdogDOExpirStatesResponse
-cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array)
+cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_names, const std::vector<pb::int32>& expir_state_array)
 {
   ::grpc::ClientContext context;
 
@@ -767,7 +767,7 @@ cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 ClearTEDSResponse
-clear_teds(const StubPtr& stub, const pb::string& physical_channel)
+clear_teds(const StubPtr& stub, const std::string& physical_channel)
 {
   ::grpc::ClientContext context;
 
@@ -801,7 +801,7 @@ clear_task(const StubPtr& stub, const nidevice_grpc::Session& task)
 }
 
 ConfigureLoggingResponse
-configure_logging(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& file_path, const simple_variant<LoggingMode, pb::int32>& logging_mode, const pb::string& group_name, const simple_variant<LoggingOperation, pb::int32>& operation)
+configure_logging(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& file_path, const simple_variant<LoggingMode, pb::int32>& logging_mode, const std::string& group_name, const simple_variant<LoggingOperation, pb::int32>& operation)
 {
   ::grpc::ClientContext context;
 
@@ -836,7 +836,7 @@ configure_logging(const StubPtr& stub, const nidevice_grpc::Session& task, const
 }
 
 ConfigureTEDSResponse
-configure_teds(const StubPtr& stub, const pb::string& physical_channel, const pb::string& file_path)
+configure_teds(const StubPtr& stub, const std::string& physical_channel, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -854,7 +854,7 @@ configure_teds(const StubPtr& stub, const pb::string& physical_channel, const pb
 }
 
 ConnectTermsResponse
-connect_terms(const StubPtr& stub, const pb::string& source_terminal, const pb::string& destination_terminal, const simple_variant<InvertPolarity, pb::int32>& signal_modifiers)
+connect_terms(const StubPtr& stub, const std::string& source_terminal, const std::string& destination_terminal, const simple_variant<InvertPolarity, pb::int32>& signal_modifiers)
 {
   ::grpc::ClientContext context;
 
@@ -905,7 +905,7 @@ control_watchdog_task(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 CreateAIAccel4WireDCVoltageChanResponse
-create_ai_accel4_wire_dc_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<AccelUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<AccelSensitivityUnits1, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const bool& use_excit_for_scaling, const pb::string& custom_scale_name)
+create_ai_accel4_wire_dc_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<AccelUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<AccelSensitivityUnits1, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const bool& use_excit_for_scaling, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -962,7 +962,7 @@ create_ai_accel4_wire_dc_voltage_chan(const StubPtr& stub, const nidevice_grpc::
 }
 
 CreateAIAccelChanResponse
-create_ai_accel_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<AccelUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<AccelSensitivityUnits1, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_ai_accel_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<AccelUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<AccelSensitivityUnits1, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1018,7 +1018,7 @@ create_ai_accel_chan(const StubPtr& stub, const nidevice_grpc::Session& task, co
 }
 
 CreateAIAccelChargeChanResponse
-create_ai_accel_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<AccelUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<AccelChargeSensitivityUnits, pb::int32>& sensitivity_units, const pb::string& custom_scale_name)
+create_ai_accel_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<AccelUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<AccelChargeSensitivityUnits, pb::int32>& sensitivity_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1065,7 +1065,7 @@ create_ai_accel_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CreateAIBridgeChanResponse
-create_ai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<BridgeUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const pb::string& custom_scale_name)
+create_ai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<BridgeUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1113,7 +1113,7 @@ create_ai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 CreateAIChargeChanResponse
-create_ai_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<ChargeUnits, pb::int32>& units, const pb::string& custom_scale_name)
+create_ai_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<ChargeUnits, pb::int32>& units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1151,7 +1151,7 @@ create_ai_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 CreateAICurrentChanResponse
-create_ai_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<CurrentUnits2, pb::int32>& units, const simple_variant<CurrentShuntResistorLocationWithDefault, pb::int32>& shunt_resistor_loc, const double& ext_shunt_resistor_val, const pb::string& custom_scale_name)
+create_ai_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<CurrentUnits2, pb::int32>& units, const simple_variant<CurrentShuntResistorLocationWithDefault, pb::int32>& shunt_resistor_loc, const double& ext_shunt_resistor_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1198,7 +1198,7 @@ create_ai_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 CreateAICurrentRMSChanResponse
-create_ai_current_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<CurrentUnits2, pb::int32>& units, const simple_variant<CurrentShuntResistorLocationWithDefault, pb::int32>& shunt_resistor_loc, const double& ext_shunt_resistor_val, const pb::string& custom_scale_name)
+create_ai_current_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<CurrentUnits2, pb::int32>& units, const simple_variant<CurrentShuntResistorLocationWithDefault, pb::int32>& shunt_resistor_loc, const double& ext_shunt_resistor_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1245,7 +1245,7 @@ create_ai_current_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAIForceBridgePolynomialChanResponse
-create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1311,7 +1311,7 @@ create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc:
 }
 
 CreateAIForceBridgeTableChanResponse
-create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1377,7 +1377,7 @@ create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 CreateAIForceBridgeTwoPointLinChanResponse
-create_ai_force_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const double& first_electrical_val, const double& second_electrical_val, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const double& first_physical_val, const double& second_physical_val, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_force_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const double& first_electrical_val, const double& second_electrical_val, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const double& first_physical_val, const double& second_physical_val, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1445,7 +1445,7 @@ create_ai_force_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_gr
 }
 
 CreateAIForceIEPEChanResponse
-create_ai_force_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<ForceIEPEUnits, pb::int32>& units, const double& sensitivity, const simple_variant<ForceIEPESensorSensitivityUnits, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_ai_force_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<ForceIEPEUnits, pb::int32>& units, const double& sensitivity, const simple_variant<ForceIEPESensorSensitivityUnits, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1501,7 +1501,7 @@ create_ai_force_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateAIFreqVoltageChanResponse
-create_ai_freq_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<FrequencyUnits, pb::int32>& units, const double& threshold_level, const double& hysteresis, const pb::string& custom_scale_name)
+create_ai_freq_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<FrequencyUnits, pb::int32>& units, const double& threshold_level, const double& hysteresis, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1533,7 +1533,7 @@ create_ai_freq_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CreateAIMicrophoneChanResponse
-create_ai_microphone_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const simple_variant<SoundPressureUnits1, pb::int32>& units, const double& mic_sensitivity, const double& max_snd_press_level, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_ai_microphone_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const simple_variant<SoundPressureUnits1, pb::int32>& units, const double& mic_sensitivity, const double& max_snd_press_level, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1580,7 +1580,7 @@ create_ai_microphone_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateAIPosEddyCurrProxProbeChanResponse
-create_ai_pos_eddy_curr_prox_probe_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<LengthUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<EddyCurrentProxProbeSensitivityUnits, pb::int32>& sensitivity_units, const pb::string& custom_scale_name)
+create_ai_pos_eddy_curr_prox_probe_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<LengthUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<EddyCurrentProxProbeSensitivityUnits, pb::int32>& sensitivity_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1619,7 +1619,7 @@ create_ai_pos_eddy_curr_prox_probe_chan(const StubPtr& stub, const nidevice_grpc
 }
 
 CreateAIPosLVDTChanResponse
-create_ai_pos_lvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<LengthUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<LVDTSensitivityUnits1, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& voltage_excit_freq, const simple_variant<ACExcitWireMode, pb::int32>& ac_excit_wire_mode, const pb::string& custom_scale_name)
+create_ai_pos_lvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<LengthUnits2, pb::int32>& units, const double& sensitivity, const simple_variant<LVDTSensitivityUnits1, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& voltage_excit_freq, const simple_variant<ACExcitWireMode, pb::int32>& ac_excit_wire_mode, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1676,7 +1676,7 @@ create_ai_pos_lvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 CreateAIPosRVDTChanResponse
-create_ai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<AngleUnits1, pb::int32>& units, const double& sensitivity, const simple_variant<RVDTSensitivityUnits1, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& voltage_excit_freq, const simple_variant<ACExcitWireMode, pb::int32>& ac_excit_wire_mode, const pb::string& custom_scale_name)
+create_ai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<AngleUnits1, pb::int32>& units, const double& sensitivity, const simple_variant<RVDTSensitivityUnits1, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& voltage_excit_freq, const simple_variant<ACExcitWireMode, pb::int32>& ac_excit_wire_mode, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1733,7 +1733,7 @@ create_ai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 CreateAIPressureBridgePolynomialChanResponse
-create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1799,7 +1799,7 @@ create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_gr
 }
 
 CreateAIPressureBridgeTableChanResponse
-create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1865,7 +1865,7 @@ create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::S
 }
 
 CreateAIPressureBridgeTwoPointLinChanResponse
-create_ai_pressure_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const double& first_electrical_val, const double& second_electrical_val, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const double& first_physical_val, const double& second_physical_val, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_pressure_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const double& first_electrical_val, const double& second_electrical_val, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const double& first_physical_val, const double& second_physical_val, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1933,7 +1933,7 @@ create_ai_pressure_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice
 }
 
 CreateAIRTDChanResponse
-create_airtd_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<RTDType1, pb::int32>& rtd_type, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const double& r0)
+create_airtd_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<RTDType1, pb::int32>& rtd_type, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const double& r0)
 {
   ::grpc::ClientContext context;
 
@@ -1988,7 +1988,7 @@ create_airtd_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const
 }
 
 CreateAIResistanceChanResponse
-create_ai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ResistanceUnits2, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_ai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ResistanceUnits2, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2035,7 +2035,7 @@ create_ai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateAIRosetteStrainGageChanResponse
-create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainGageRosetteType, pb::int32>& rosette_type, const double& gage_orientation, const std::vector<pb::int32>& rosette_meas_types, const simple_variant<StrainGageBridgeType1, pb::int32>& strain_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& gage_factor, const double& nominal_gage_resistance, const double& poisson_ratio, const double& lead_wire_resistance)
+create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainGageRosetteType, pb::int32>& rosette_type, const double& gage_orientation, const std::vector<pb::int32>& rosette_meas_types, const simple_variant<StrainGageBridgeType1, pb::int32>& strain_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& gage_factor, const double& nominal_gage_resistance, const double& poisson_ratio, const double& lead_wire_resistance)
 {
   ::grpc::ClientContext context;
 
@@ -2087,7 +2087,7 @@ create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 CreateAIStrainGageChanResponse
-create_ai_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainUnits1, pb::int32>& units, const simple_variant<StrainGageBridgeType1, pb::int32>& strain_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& gage_factor, const double& initial_bridge_voltage, const double& nominal_gage_resistance, const double& poisson_ratio, const double& lead_wire_resistance, const pb::string& custom_scale_name)
+create_ai_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainUnits1, pb::int32>& units, const simple_variant<StrainGageBridgeType1, pb::int32>& strain_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& gage_factor, const double& initial_bridge_voltage, const double& nominal_gage_resistance, const double& poisson_ratio, const double& lead_wire_resistance, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2139,7 +2139,7 @@ create_ai_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAITempBuiltInSensorChanResponse
-create_ai_temp_built_in_sensor_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<TemperatureUnits, pb::int32>& units)
+create_ai_temp_built_in_sensor_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<TemperatureUnits, pb::int32>& units)
 {
   ::grpc::ClientContext context;
 
@@ -2166,7 +2166,7 @@ create_ai_temp_built_in_sensor_chan(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 CreateAIThrmcplChanResponse
-create_ai_thrmcpl_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ThermocoupleType1, pb::int32>& thermocouple_type, const simple_variant<CJCSource1, pb::int32>& cjc_source, const double& cjc_val, const pb::string& cjc_channel)
+create_ai_thrmcpl_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ThermocoupleType1, pb::int32>& thermocouple_type, const simple_variant<CJCSource1, pb::int32>& cjc_source, const double& cjc_val, const std::string& cjc_channel)
 {
   ::grpc::ClientContext context;
 
@@ -2213,7 +2213,7 @@ create_ai_thrmcpl_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 CreateAIThrmstrChanIexResponse
-create_ai_thrmstr_chan_iex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const double& a, const double& b, const double& c)
+create_ai_thrmstr_chan_iex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const double& a, const double& b, const double& c)
 {
   ::grpc::ClientContext context;
 
@@ -2262,7 +2262,7 @@ create_ai_thrmstr_chan_iex(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAIThrmstrChanVexResponse
-create_ai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& a, const double& b, const double& c, const double& r1)
+create_ai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& a, const double& b, const double& c, const double& r1)
 {
   ::grpc::ClientContext context;
 
@@ -2312,7 +2312,7 @@ create_ai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAITorqueBridgePolynomialChanResponse
-create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2378,7 +2378,7 @@ create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc
 }
 
 CreateAITorqueBridgeTableChanResponse
-create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2444,7 +2444,7 @@ create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 CreateAITorqueBridgeTwoPointLinChanResponse
-create_ai_torque_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const double& first_electrical_val, const double& second_electrical_val, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const double& first_physical_val, const double& second_physical_val, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_torque_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const double& first_electrical_val, const double& second_electrical_val, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const double& first_physical_val, const double& second_physical_val, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2512,7 +2512,7 @@ create_ai_torque_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_g
 }
 
 CreateAIVelocityIEPEChanResponse
-create_ai_velocity_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<VelocityUnits, pb::int32>& units, const double& sensitivity, const simple_variant<VelocityIEPESensorSensitivityUnits, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_ai_velocity_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<VelocityUnits, pb::int32>& units, const double& sensitivity, const simple_variant<VelocityIEPESensorSensitivityUnits, pb::int32>& sensitivity_units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2568,7 +2568,7 @@ create_ai_velocity_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 CreateAIVoltageChanResponse
-create_ai_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<VoltageUnits2, pb::int32>& units, const pb::string& custom_scale_name)
+create_ai_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<VoltageUnits2, pb::int32>& units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2606,7 +2606,7 @@ create_ai_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 CreateAIVoltageChanWithExcitResponse
-create_ai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<VoltageUnits2, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const bool& use_excit_for_scaling, const pb::string& custom_scale_name)
+create_ai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<VoltageUnits2, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const bool& use_excit_for_scaling, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2662,7 +2662,7 @@ create_ai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 CreateAIVoltageRMSChanResponse
-create_ai_voltage_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<VoltageUnits2, pb::int32>& units, const pb::string& custom_scale_name)
+create_ai_voltage_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<VoltageUnits2, pb::int32>& units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2700,7 +2700,7 @@ create_ai_voltage_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAOCurrentChanResponse
-create_ao_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<CurrentUnits2, pb::int32>& units, const pb::string& custom_scale_name)
+create_ao_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<CurrentUnits2, pb::int32>& units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2730,7 +2730,7 @@ create_ao_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 CreateAOFuncGenChanResponse
-create_ao_func_gen_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<FuncGenType, pb::int32>& type, const double& freq, const double& amplitude, const double& offset)
+create_ao_func_gen_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<FuncGenType, pb::int32>& type, const double& freq, const double& amplitude, const double& offset)
 {
   ::grpc::ClientContext context;
 
@@ -2760,7 +2760,7 @@ create_ao_func_gen_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 CreateAOVoltageChanResponse
-create_ao_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<VoltageUnits2, pb::int32>& units, const pb::string& custom_scale_name)
+create_ao_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<VoltageUnits2, pb::int32>& units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2790,7 +2790,7 @@ create_ao_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 CreateCIAngEncoderChanResponse
-create_ci_ang_encoder_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const simple_variant<EncoderType2, pb::int32>& decoding_type, const bool& zidx_enable, const double& zidx_val, const simple_variant<EncoderZIndexPhase1, pb::int32>& zidx_phase, const simple_variant<AngleUnits2, pb::int32>& units, const pb::uint32& pulses_per_rev, const double& initial_angle, const pb::string& custom_scale_name)
+create_ci_ang_encoder_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const simple_variant<EncoderType2, pb::int32>& decoding_type, const bool& zidx_enable, const double& zidx_val, const simple_variant<EncoderZIndexPhase1, pb::int32>& zidx_phase, const simple_variant<AngleUnits2, pb::int32>& units, const pb::uint32& pulses_per_rev, const double& initial_angle, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2838,7 +2838,7 @@ create_ci_ang_encoder_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateCIAngVelocityChanResponse
-create_ci_ang_velocity_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<EncoderType2, pb::int32>& decoding_type, const simple_variant<AngularVelocityUnits, pb::int32>& units, const pb::uint32& pulses_per_rev, const pb::string& custom_scale_name)
+create_ci_ang_velocity_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<EncoderType2, pb::int32>& decoding_type, const simple_variant<AngularVelocityUnits, pb::int32>& units, const pb::uint32& pulses_per_rev, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2877,7 +2877,7 @@ create_ci_ang_velocity_chan(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CreateCICountEdgesChanResponse
-create_ci_count_edges_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const simple_variant<Edge1, pb::int32>& edge, const pb::uint32& initial_count, const simple_variant<CountDirection1, pb::int32>& count_direction)
+create_ci_count_edges_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const simple_variant<Edge1, pb::int32>& edge, const pb::uint32& initial_count, const simple_variant<CountDirection1, pb::int32>& count_direction)
 {
   ::grpc::ClientContext context;
 
@@ -2913,7 +2913,7 @@ create_ci_count_edges_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateCIDutyCycleChanResponse
-create_ci_duty_cycle_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_freq, const double& max_freq, const simple_variant<Edge1, pb::int32>& edge, const pb::string& custom_scale_name)
+create_ci_duty_cycle_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_freq, const double& max_freq, const simple_variant<Edge1, pb::int32>& edge, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2943,7 +2943,7 @@ create_ci_duty_cycle_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateCIFreqChanResponse
-create_ci_freq_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<FrequencyUnits3, pb::int32>& units, const simple_variant<Edge1, pb::int32>& edge, const simple_variant<CounterFrequencyMethod, pb::int32>& meas_method, const double& meas_time, const pb::uint32& divisor, const pb::string& custom_scale_name)
+create_ci_freq_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<FrequencyUnits3, pb::int32>& units, const simple_variant<Edge1, pb::int32>& edge, const simple_variant<CounterFrequencyMethod, pb::int32>& meas_method, const double& meas_time, const pb::uint32& divisor, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2991,7 +2991,7 @@ create_ci_freq_chan(const StubPtr& stub, const nidevice_grpc::Session& task, con
 }
 
 CreateCIGPSTimestampChanResponse
-create_cigps_timestamp_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const simple_variant<TimeUnits, pb::int32>& units, const simple_variant<GpsSignalType1, pb::int32>& sync_method, const pb::string& custom_scale_name)
+create_cigps_timestamp_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const simple_variant<TimeUnits, pb::int32>& units, const simple_variant<GpsSignalType1, pb::int32>& sync_method, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3027,7 +3027,7 @@ create_cigps_timestamp_chan(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CreateCILinEncoderChanResponse
-create_ci_lin_encoder_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const simple_variant<EncoderType2, pb::int32>& decoding_type, const bool& zidx_enable, const double& zidx_val, const simple_variant<EncoderZIndexPhase1, pb::int32>& zidx_phase, const simple_variant<LengthUnits3, pb::int32>& units, const double& dist_per_pulse, const double& initial_pos, const pb::string& custom_scale_name)
+create_ci_lin_encoder_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const simple_variant<EncoderType2, pb::int32>& decoding_type, const bool& zidx_enable, const double& zidx_val, const simple_variant<EncoderZIndexPhase1, pb::int32>& zidx_phase, const simple_variant<LengthUnits3, pb::int32>& units, const double& dist_per_pulse, const double& initial_pos, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3075,7 +3075,7 @@ create_ci_lin_encoder_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateCILinVelocityChanResponse
-create_ci_lin_velocity_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<EncoderType2, pb::int32>& decoding_type, const simple_variant<VelocityUnits, pb::int32>& units, const double& dist_per_pulse, const pb::string& custom_scale_name)
+create_ci_lin_velocity_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<EncoderType2, pb::int32>& decoding_type, const simple_variant<VelocityUnits, pb::int32>& units, const double& dist_per_pulse, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3114,7 +3114,7 @@ create_ci_lin_velocity_chan(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CreateCIPeriodChanResponse
-create_ci_period_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TimeUnits3, pb::int32>& units, const simple_variant<Edge1, pb::int32>& edge, const simple_variant<CounterFrequencyMethod, pb::int32>& meas_method, const double& meas_time, const pb::uint32& divisor, const pb::string& custom_scale_name)
+create_ci_period_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TimeUnits3, pb::int32>& units, const simple_variant<Edge1, pb::int32>& edge, const simple_variant<CounterFrequencyMethod, pb::int32>& meas_method, const double& meas_time, const pb::uint32& divisor, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3162,7 +3162,7 @@ create_ci_period_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 CreateCIPulseChanFreqResponse
-create_ci_pulse_chan_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<FrequencyUnits2, pb::int32>& units)
+create_ci_pulse_chan_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<FrequencyUnits2, pb::int32>& units)
 {
   ::grpc::ClientContext context;
 
@@ -3191,7 +3191,7 @@ create_ci_pulse_chan_freq(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateCIPulseChanTicksResponse
-create_ci_pulse_chan_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const pb::string& source_terminal, const double& min_val, const double& max_val)
+create_ci_pulse_chan_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const std::string& source_terminal, const double& min_val, const double& max_val)
 {
   ::grpc::ClientContext context;
 
@@ -3213,7 +3213,7 @@ create_ci_pulse_chan_ticks(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateCIPulseChanTimeResponse
-create_ci_pulse_chan_time(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<DigitalWidthUnits3, pb::int32>& units)
+create_ci_pulse_chan_time(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<DigitalWidthUnits3, pb::int32>& units)
 {
   ::grpc::ClientContext context;
 
@@ -3242,7 +3242,7 @@ create_ci_pulse_chan_time(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateCIPulseWidthChanResponse
-create_ci_pulse_width_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TimeUnits3, pb::int32>& units, const simple_variant<Edge1, pb::int32>& starting_edge, const pb::string& custom_scale_name)
+create_ci_pulse_width_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TimeUnits3, pb::int32>& units, const simple_variant<Edge1, pb::int32>& starting_edge, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3280,7 +3280,7 @@ create_ci_pulse_width_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateCISemiPeriodChanResponse
-create_ci_semi_period_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TimeUnits3, pb::int32>& units, const pb::string& custom_scale_name)
+create_ci_semi_period_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TimeUnits3, pb::int32>& units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3310,7 +3310,7 @@ create_ci_semi_period_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateCITwoEdgeSepChanResponse
-create_ci_two_edge_sep_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TimeUnits3, pb::int32>& units, const simple_variant<Edge1, pb::int32>& first_edge, const simple_variant<Edge1, pb::int32>& second_edge, const pb::string& custom_scale_name)
+create_ci_two_edge_sep_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TimeUnits3, pb::int32>& units, const simple_variant<Edge1, pb::int32>& first_edge, const simple_variant<Edge1, pb::int32>& second_edge, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3356,7 +3356,7 @@ create_ci_two_edge_sep_chan(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CreateCOPulseChanFreqResponse
-create_co_pulse_chan_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const simple_variant<FrequencyUnits2, pb::int32>& units, const simple_variant<Level1, pb::int32>& idle_state, const double& initial_delay, const double& freq, const double& duty_cycle)
+create_co_pulse_chan_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const simple_variant<FrequencyUnits2, pb::int32>& units, const simple_variant<Level1, pb::int32>& idle_state, const double& initial_delay, const double& freq, const double& duty_cycle)
 {
   ::grpc::ClientContext context;
 
@@ -3394,7 +3394,7 @@ create_co_pulse_chan_freq(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateCOPulseChanTicksResponse
-create_co_pulse_chan_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const pb::string& source_terminal, const simple_variant<Level1, pb::int32>& idle_state, const pb::int32& initial_delay, const pb::int32& low_ticks, const pb::int32& high_ticks)
+create_co_pulse_chan_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const std::string& source_terminal, const simple_variant<Level1, pb::int32>& idle_state, const pb::int32& initial_delay, const pb::int32& low_ticks, const pb::int32& high_ticks)
 {
   ::grpc::ClientContext context;
 
@@ -3425,7 +3425,7 @@ create_co_pulse_chan_ticks(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateCOPulseChanTimeResponse
-create_co_pulse_chan_time(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& counter, const pb::string& name_to_assign_to_channel, const simple_variant<DigitalWidthUnits3, pb::int32>& units, const simple_variant<Level1, pb::int32>& idle_state, const double& initial_delay, const double& low_time, const double& high_time)
+create_co_pulse_chan_time(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& counter, const std::string& name_to_assign_to_channel, const simple_variant<DigitalWidthUnits3, pb::int32>& units, const simple_variant<Level1, pb::int32>& idle_state, const double& initial_delay, const double& low_time, const double& high_time)
 {
   ::grpc::ClientContext context;
 
@@ -3463,7 +3463,7 @@ create_co_pulse_chan_time(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateDIChanResponse
-create_di_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const pb::string& name_to_assign_to_lines, const simple_variant<LineGrouping, pb::int32>& line_grouping)
+create_di_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const std::string& name_to_assign_to_lines, const simple_variant<LineGrouping, pb::int32>& line_grouping)
 {
   ::grpc::ClientContext context;
 
@@ -3490,7 +3490,7 @@ create_di_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
 }
 
 CreateDOChanResponse
-create_do_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const pb::string& name_to_assign_to_lines, const simple_variant<LineGrouping, pb::int32>& line_grouping)
+create_do_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const std::string& name_to_assign_to_lines, const simple_variant<LineGrouping, pb::int32>& line_grouping)
 {
   ::grpc::ClientContext context;
 
@@ -3517,7 +3517,7 @@ create_do_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
 }
 
 CreateLinScaleResponse
-create_lin_scale(const StubPtr& stub, const pb::string& name, const double& slope, const double& y_intercept, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
+create_lin_scale(const StubPtr& stub, const std::string& name, const double& slope, const double& y_intercept, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const std::string& scaled_units)
 {
   ::grpc::ClientContext context;
 
@@ -3545,7 +3545,7 @@ create_lin_scale(const StubPtr& stub, const pb::string& name, const double& slop
 }
 
 CreateMapScaleResponse
-create_map_scale(const StubPtr& stub, const pb::string& name, const double& prescaled_min, const double& prescaled_max, const double& scaled_min, const double& scaled_max, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
+create_map_scale(const StubPtr& stub, const std::string& name, const double& prescaled_min, const double& prescaled_max, const double& scaled_min, const double& scaled_max, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const std::string& scaled_units)
 {
   ::grpc::ClientContext context;
 
@@ -3575,7 +3575,7 @@ create_map_scale(const StubPtr& stub, const pb::string& name, const double& pres
 }
 
 CreatePolynomialScaleResponse
-create_polynomial_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
+create_polynomial_scale(const StubPtr& stub, const std::string& name, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const std::string& scaled_units)
 {
   ::grpc::ClientContext context;
 
@@ -3603,7 +3603,7 @@ create_polynomial_scale(const StubPtr& stub, const pb::string& name, const std::
 }
 
 CreateTEDSAIAccelChanResponse
-create_tedsai_accel_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<AccelUnits2, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_tedsai_accel_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<AccelUnits2, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3650,7 +3650,7 @@ create_tedsai_accel_chan(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 CreateTEDSAIBridgeChanResponse
-create_tedsai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const pb::string& custom_scale_name)
+create_tedsai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3689,7 +3689,7 @@ create_tedsai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateTEDSAICurrentChanResponse
-create_tedsai_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const simple_variant<CurrentShuntResistorLocationWithDefault, pb::int32>& shunt_resistor_loc, const double& ext_shunt_resistor_val, const pb::string& custom_scale_name)
+create_tedsai_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const simple_variant<CurrentShuntResistorLocationWithDefault, pb::int32>& shunt_resistor_loc, const double& ext_shunt_resistor_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3736,7 +3736,7 @@ create_tedsai_current_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateTEDSAIForceBridgeChanResponse
-create_tedsai_force_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const pb::string& custom_scale_name)
+create_tedsai_force_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3775,7 +3775,7 @@ create_tedsai_force_bridge_chan(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 CreateTEDSAIForceIEPEChanResponse
-create_tedsai_force_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<ForceIEPEUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_tedsai_force_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<ForceIEPEUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3822,7 +3822,7 @@ create_tedsai_force_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateTEDSAIMicrophoneChanResponse
-create_tedsai_microphone_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const simple_variant<SoundPressureUnits1, pb::int32>& units, const double& max_snd_press_level, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_tedsai_microphone_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const simple_variant<SoundPressureUnits1, pb::int32>& units, const double& max_snd_press_level, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3868,7 +3868,7 @@ create_tedsai_microphone_chan(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateTEDSAIPosLVDTChanResponse
-create_tedsai_pos_lvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<LengthUnits2, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& voltage_excit_freq, const simple_variant<ACExcitWireMode, pb::int32>& ac_excit_wire_mode, const pb::string& custom_scale_name)
+create_tedsai_pos_lvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<LengthUnits2, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& voltage_excit_freq, const simple_variant<ACExcitWireMode, pb::int32>& ac_excit_wire_mode, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3916,7 +3916,7 @@ create_tedsai_pos_lvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CreateTEDSAIPosRVDTChanResponse
-create_tedsai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<AngleUnits1, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& voltage_excit_freq, const simple_variant<ACExcitWireMode, pb::int32>& ac_excit_wire_mode, const pb::string& custom_scale_name)
+create_tedsai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<AngleUnits1, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& voltage_excit_freq, const simple_variant<ACExcitWireMode, pb::int32>& ac_excit_wire_mode, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -3964,7 +3964,7 @@ create_tedsai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 CreateTEDSAIPressureBridgeChanResponse
-create_tedsai_pressure_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const pb::string& custom_scale_name)
+create_tedsai_pressure_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -4003,7 +4003,7 @@ create_tedsai_pressure_bridge_chan(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 CreateTEDSAIRTDChanResponse
-create_tedsairtd_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val)
+create_tedsairtd_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val)
 {
   ::grpc::ClientContext context;
 
@@ -4049,7 +4049,7 @@ create_tedsairtd_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 CreateTEDSAIResistanceChanResponse
-create_tedsai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const pb::string& custom_scale_name)
+create_tedsai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -4096,7 +4096,7 @@ create_tedsai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateTEDSAIStrainGageChanResponse
-create_tedsai_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainUnits1, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& initial_bridge_voltage, const double& lead_wire_resistance, const pb::string& custom_scale_name)
+create_tedsai_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainUnits1, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& initial_bridge_voltage, const double& lead_wire_resistance, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -4137,7 +4137,7 @@ create_tedsai_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CreateTEDSAIThrmcplChanResponse
-create_tedsai_thrmcpl_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<CJCSource1, pb::int32>& cjc_source, const double& cjc_val, const pb::string& cjc_channel)
+create_tedsai_thrmcpl_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<CJCSource1, pb::int32>& cjc_source, const double& cjc_val, const std::string& cjc_channel)
 {
   ::grpc::ClientContext context;
 
@@ -4176,7 +4176,7 @@ create_tedsai_thrmcpl_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateTEDSAIThrmstrChanIexResponse
-create_tedsai_thrmstr_chan_iex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val)
+create_tedsai_thrmstr_chan_iex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& current_excit_source, const double& current_excit_val)
 {
   ::grpc::ClientContext context;
 
@@ -4222,7 +4222,7 @@ create_tedsai_thrmstr_chan_iex(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CreateTEDSAIThrmstrChanVexResponse
-create_tedsai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& r1)
+create_tedsai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TemperatureUnits, pb::int32>& units, const simple_variant<ResistanceConfiguration, pb::int32>& resistance_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& r1)
 {
   ::grpc::ClientContext context;
 
@@ -4269,7 +4269,7 @@ create_tedsai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CreateTEDSAITorqueBridgeChanResponse
-create_tedsai_torque_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const pb::string& custom_scale_name)
+create_tedsai_torque_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -4308,7 +4308,7 @@ create_tedsai_torque_bridge_chan(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 CreateTEDSAIVoltageChanResponse
-create_tedsai_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const pb::string& custom_scale_name)
+create_tedsai_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -4346,7 +4346,7 @@ create_tedsai_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateTEDSAIVoltageChanWithExcitResponse
-create_tedsai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const pb::string& custom_scale_name)
+create_tedsai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<TEDSUnits, pb::int32>& units, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const std::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -4393,7 +4393,7 @@ create_tedsai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::
 }
 
 CreateTableScaleResponse
-create_table_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& prescaled_vals, const std::vector<double>& scaled_vals, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
+create_table_scale(const StubPtr& stub, const std::string& name, const std::vector<double>& prescaled_vals, const std::vector<double>& scaled_vals, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const std::string& scaled_units)
 {
   ::grpc::ClientContext context;
 
@@ -4421,7 +4421,7 @@ create_table_scale(const StubPtr& stub, const pb::string& name, const std::vecto
 }
 
 CreateTaskResponse
-create_task(const StubPtr& stub, const pb::string& session_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+create_task(const StubPtr& stub, const std::string& session_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -4439,7 +4439,7 @@ create_task(const StubPtr& stub, const pb::string& session_name, const nidevice_
 }
 
 CreateWatchdogTimerTaskResponse
-create_watchdog_timer_task(const StubPtr& stub, const pb::string& device_name, const pb::string& session_name, const double& timeout, const std::vector<WatchdogExpChannelsAndState>& exp_states, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+create_watchdog_timer_task(const StubPtr& stub, const std::string& device_name, const std::string& session_name, const double& timeout, const std::vector<WatchdogExpChannelsAndState>& exp_states, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -4460,7 +4460,7 @@ create_watchdog_timer_task(const StubPtr& stub, const pb::string& device_name, c
 }
 
 CreateWatchdogTimerTaskExResponse
-create_watchdog_timer_task_ex(const StubPtr& stub, const pb::string& device_name, const pb::string& session_name, const double& timeout, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+create_watchdog_timer_task_ex(const StubPtr& stub, const std::string& device_name, const std::string& session_name, const double& timeout, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -4480,7 +4480,7 @@ create_watchdog_timer_task_ex(const StubPtr& stub, const pb::string& device_name
 }
 
 DeleteNetworkDeviceResponse
-delete_network_device(const StubPtr& stub, const pb::string& device_name)
+delete_network_device(const StubPtr& stub, const std::string& device_name)
 {
   ::grpc::ClientContext context;
 
@@ -4497,7 +4497,7 @@ delete_network_device(const StubPtr& stub, const pb::string& device_name)
 }
 
 DeleteSavedGlobalChanResponse
-delete_saved_global_chan(const StubPtr& stub, const pb::string& channel_name)
+delete_saved_global_chan(const StubPtr& stub, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -4514,7 +4514,7 @@ delete_saved_global_chan(const StubPtr& stub, const pb::string& channel_name)
 }
 
 DeleteSavedScaleResponse
-delete_saved_scale(const StubPtr& stub, const pb::string& scale_name)
+delete_saved_scale(const StubPtr& stub, const std::string& scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -4531,7 +4531,7 @@ delete_saved_scale(const StubPtr& stub, const pb::string& scale_name)
 }
 
 DeleteSavedTaskResponse
-delete_saved_task(const StubPtr& stub, const pb::string& task_name)
+delete_saved_task(const StubPtr& stub, const std::string& task_name)
 {
   ::grpc::ClientContext context;
 
@@ -4548,7 +4548,7 @@ delete_saved_task(const StubPtr& stub, const pb::string& task_name)
 }
 
 DeviceSupportsCalResponse
-device_supports_cal(const StubPtr& stub, const pb::string& device_name)
+device_supports_cal(const StubPtr& stub, const std::string& device_name)
 {
   ::grpc::ClientContext context;
 
@@ -4599,7 +4599,7 @@ disable_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task)
 }
 
 DisconnectTermsResponse
-disconnect_terms(const StubPtr& stub, const pb::string& source_terminal, const pb::string& destination_terminal)
+disconnect_terms(const StubPtr& stub, const std::string& source_terminal, const std::string& destination_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -4617,7 +4617,7 @@ disconnect_terms(const StubPtr& stub, const pb::string& source_terminal, const p
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<Signal, pb::int32>& signal_id, const pb::string& output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<Signal, pb::int32>& signal_id, const std::string& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -4643,7 +4643,7 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& task, const sim
 }
 
 GetAIChanCalCalDateResponse
-get_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name)
+get_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -4661,7 +4661,7 @@ get_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 GetAIChanCalExpDateResponse
-get_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name)
+get_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -4679,7 +4679,7 @@ get_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 GetAnalogPowerUpStatesResponse
-get_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, const std::vector<AnalogPowerUpChannelAndType>& channels)
+get_analog_power_up_states(const StubPtr& stub, const std::string& device_name, const std::vector<AnalogPowerUpChannelAndType>& channels)
 {
   ::grpc::ClientContext context;
 
@@ -4697,7 +4697,7 @@ get_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, c
 }
 
 GetAnalogPowerUpStatesWithOutputTypeResponse
-get_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const pb::uint32& array_size)
+get_analog_power_up_states_with_output_type(const StubPtr& stub, const std::string& channel_names, const pb::uint32& array_size)
 {
   ::grpc::ClientContext context;
 
@@ -4790,7 +4790,7 @@ get_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 GetCalInfoAttributeBoolResponse
-get_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoBoolAttribute, pb::int32>& attribute)
+get_cal_info_attribute_bool(const StubPtr& stub, const std::string& device_name, const simple_variant<CalibrationInfoBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -4815,7 +4815,7 @@ get_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetCalInfoAttributeDoubleResponse
-get_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoDoubleAttribute, pb::int32>& attribute)
+get_cal_info_attribute_double(const StubPtr& stub, const std::string& device_name, const simple_variant<CalibrationInfoDoubleAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -4840,7 +4840,7 @@ get_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name
 }
 
 GetCalInfoAttributeStringResponse
-get_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoStringAttribute, pb::int32>& attribute)
+get_cal_info_attribute_string(const StubPtr& stub, const std::string& device_name, const simple_variant<CalibrationInfoStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -4865,7 +4865,7 @@ get_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name
 }
 
 GetCalInfoAttributeUInt32Response
-get_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoUInt32Attribute, pb::int32>& attribute)
+get_cal_info_attribute_uint32(const StubPtr& stub, const std::string& device_name, const simple_variant<CalibrationInfoUInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -4890,7 +4890,7 @@ get_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name
 }
 
 GetChanAttributeBoolResponse
-get_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelBoolAttribute, pb::int32>& attribute)
+get_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -4916,7 +4916,7 @@ get_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 GetChanAttributeDoubleResponse
-get_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelDoubleAttribute, pb::int32>& attribute)
+get_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelDoubleAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -4942,7 +4942,7 @@ get_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetChanAttributeDoubleArrayResponse
-get_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelDoubleArrayAttribute, pb::int32>& attribute)
+get_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelDoubleArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -4968,7 +4968,7 @@ get_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 GetChanAttributeInt32Response
-get_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelInt32Attribute, pb::int32>& attribute)
+get_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -4994,7 +4994,7 @@ get_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 GetChanAttributeStringResponse
-get_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelStringAttribute, pb::int32>& attribute)
+get_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5020,7 +5020,7 @@ get_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetChanAttributeUInt32Response
-get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelUInt32Attribute, pb::int32>& attribute)
+get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelUInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5046,7 +5046,7 @@ get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetDeviceAttributeBoolResponse
-get_device_attribute_bool(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceBoolAttribute, pb::int32>& attribute)
+get_device_attribute_bool(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5071,7 +5071,7 @@ get_device_attribute_bool(const StubPtr& stub, const pb::string& device_name, co
 }
 
 GetDeviceAttributeDoubleResponse
-get_device_attribute_double(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceDoubleAttribute, pb::int32>& attribute)
+get_device_attribute_double(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceDoubleAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5096,7 +5096,7 @@ get_device_attribute_double(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetDeviceAttributeDoubleArrayResponse
-get_device_attribute_double_array(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceDoubleArrayAttribute, pb::int32>& attribute)
+get_device_attribute_double_array(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceDoubleArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5121,7 +5121,7 @@ get_device_attribute_double_array(const StubPtr& stub, const pb::string& device_
 }
 
 GetDeviceAttributeInt32Response
-get_device_attribute_int32(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceInt32Attribute, pb::int32>& attribute)
+get_device_attribute_int32(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5146,7 +5146,7 @@ get_device_attribute_int32(const StubPtr& stub, const pb::string& device_name, c
 }
 
 GetDeviceAttributeInt32ArrayResponse
-get_device_attribute_int32_array(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceInt32ArrayAttribute, pb::int32>& attribute)
+get_device_attribute_int32_array(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceInt32ArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5171,7 +5171,7 @@ get_device_attribute_int32_array(const StubPtr& stub, const pb::string& device_n
 }
 
 GetDeviceAttributeStringResponse
-get_device_attribute_string(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceStringAttribute, pb::int32>& attribute)
+get_device_attribute_string(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5196,7 +5196,7 @@ get_device_attribute_string(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetDeviceAttributeUInt32Response
-get_device_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceUInt32Attribute, pb::int32>& attribute)
+get_device_attribute_uint32(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceUInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5221,7 +5221,7 @@ get_device_attribute_uint32(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetDeviceAttributeUInt32ArrayResponse
-get_device_attribute_uint32_array(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceUInt32ArrayAttribute, pb::int32>& attribute)
+get_device_attribute_uint32_array(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceUInt32ArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5246,7 +5246,7 @@ get_device_attribute_uint32_array(const StubPtr& stub, const pb::string& device_
 }
 
 GetDigitalLogicFamilyPowerUpStateResponse
-get_digital_logic_family_power_up_state(const StubPtr& stub, const pb::string& device_name)
+get_digital_logic_family_power_up_state(const StubPtr& stub, const std::string& device_name)
 {
   ::grpc::ClientContext context;
 
@@ -5263,7 +5263,7 @@ get_digital_logic_family_power_up_state(const StubPtr& stub, const pb::string& d
 }
 
 GetDigitalPowerUpStatesResponse
-get_digital_power_up_states(const StubPtr& stub, const pb::string& device_name, const std::vector<pb::string>& channel_name)
+get_digital_power_up_states(const StubPtr& stub, const std::string& device_name, const std::vector<std::string>& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -5281,7 +5281,7 @@ get_digital_power_up_states(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetDigitalPullUpPullDownStatesResponse
-get_digital_pull_up_pull_down_states(const StubPtr& stub, const pb::string& device_name, const std::vector<pb::string>& channel_name)
+get_digital_pull_up_pull_down_states(const StubPtr& stub, const std::string& device_name, const std::vector<std::string>& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -5545,7 +5545,7 @@ get_nth_task_read_channel(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetPersistedChanAttributeBoolResponse
-get_persisted_chan_attribute_bool(const StubPtr& stub, const pb::string& channel, const simple_variant<PersistedChannelBoolAttribute, pb::int32>& attribute)
+get_persisted_chan_attribute_bool(const StubPtr& stub, const std::string& channel, const simple_variant<PersistedChannelBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5570,7 +5570,7 @@ get_persisted_chan_attribute_bool(const StubPtr& stub, const pb::string& channel
 }
 
 GetPersistedChanAttributeStringResponse
-get_persisted_chan_attribute_string(const StubPtr& stub, const pb::string& channel, const simple_variant<PersistedChannelStringAttribute, pb::int32>& attribute)
+get_persisted_chan_attribute_string(const StubPtr& stub, const std::string& channel, const simple_variant<PersistedChannelStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5595,7 +5595,7 @@ get_persisted_chan_attribute_string(const StubPtr& stub, const pb::string& chann
 }
 
 GetPersistedScaleAttributeBoolResponse
-get_persisted_scale_attribute_bool(const StubPtr& stub, const pb::string& scale_name, const simple_variant<PersistedScaleBoolAttribute, pb::int32>& attribute)
+get_persisted_scale_attribute_bool(const StubPtr& stub, const std::string& scale_name, const simple_variant<PersistedScaleBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5620,7 +5620,7 @@ get_persisted_scale_attribute_bool(const StubPtr& stub, const pb::string& scale_
 }
 
 GetPersistedScaleAttributeStringResponse
-get_persisted_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const simple_variant<PersistedScaleStringAttribute, pb::int32>& attribute)
+get_persisted_scale_attribute_string(const StubPtr& stub, const std::string& scale_name, const simple_variant<PersistedScaleStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5645,7 +5645,7 @@ get_persisted_scale_attribute_string(const StubPtr& stub, const pb::string& scal
 }
 
 GetPersistedTaskAttributeBoolResponse
-get_persisted_task_attribute_bool(const StubPtr& stub, const pb::string& task_name, const simple_variant<PersistedTaskBoolAttribute, pb::int32>& attribute)
+get_persisted_task_attribute_bool(const StubPtr& stub, const std::string& task_name, const simple_variant<PersistedTaskBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5670,7 +5670,7 @@ get_persisted_task_attribute_bool(const StubPtr& stub, const pb::string& task_na
 }
 
 GetPersistedTaskAttributeStringResponse
-get_persisted_task_attribute_string(const StubPtr& stub, const pb::string& task_name, const simple_variant<PersistedTaskStringAttribute, pb::int32>& attribute)
+get_persisted_task_attribute_string(const StubPtr& stub, const std::string& task_name, const simple_variant<PersistedTaskStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5695,7 +5695,7 @@ get_persisted_task_attribute_string(const StubPtr& stub, const pb::string& task_
 }
 
 GetPhysicalChanAttributeBoolResponse
-get_physical_chan_attribute_bool(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelBoolAttribute, pb::int32>& attribute)
+get_physical_chan_attribute_bool(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5720,7 +5720,7 @@ get_physical_chan_attribute_bool(const StubPtr& stub, const pb::string& physical
 }
 
 GetPhysicalChanAttributeBytesResponse
-get_physical_chan_attribute_bytes(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelBytesAttribute, pb::int32>& attribute)
+get_physical_chan_attribute_bytes(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelBytesAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5745,7 +5745,7 @@ get_physical_chan_attribute_bytes(const StubPtr& stub, const pb::string& physica
 }
 
 GetPhysicalChanAttributeDoubleResponse
-get_physical_chan_attribute_double(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelDoubleAttribute, pb::int32>& attribute)
+get_physical_chan_attribute_double(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelDoubleAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5770,7 +5770,7 @@ get_physical_chan_attribute_double(const StubPtr& stub, const pb::string& physic
 }
 
 GetPhysicalChanAttributeDoubleArrayResponse
-get_physical_chan_attribute_double_array(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelDoubleArrayAttribute, pb::int32>& attribute)
+get_physical_chan_attribute_double_array(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelDoubleArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5795,7 +5795,7 @@ get_physical_chan_attribute_double_array(const StubPtr& stub, const pb::string& 
 }
 
 GetPhysicalChanAttributeInt32Response
-get_physical_chan_attribute_int32(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelInt32Attribute, pb::int32>& attribute)
+get_physical_chan_attribute_int32(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5820,7 +5820,7 @@ get_physical_chan_attribute_int32(const StubPtr& stub, const pb::string& physica
 }
 
 GetPhysicalChanAttributeInt32ArrayResponse
-get_physical_chan_attribute_int32_array(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelInt32ArrayAttribute, pb::int32>& attribute)
+get_physical_chan_attribute_int32_array(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelInt32ArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5845,7 +5845,7 @@ get_physical_chan_attribute_int32_array(const StubPtr& stub, const pb::string& p
 }
 
 GetPhysicalChanAttributeStringResponse
-get_physical_chan_attribute_string(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelStringAttribute, pb::int32>& attribute)
+get_physical_chan_attribute_string(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5870,7 +5870,7 @@ get_physical_chan_attribute_string(const StubPtr& stub, const pb::string& physic
 }
 
 GetPhysicalChanAttributeUInt32Response
-get_physical_chan_attribute_uint32(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelUInt32Attribute, pb::int32>& attribute)
+get_physical_chan_attribute_uint32(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelUInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -5895,7 +5895,7 @@ get_physical_chan_attribute_uint32(const StubPtr& stub, const pb::string& physic
 }
 
 GetPhysicalChanAttributeUInt32ArrayResponse
-get_physical_chan_attribute_uint32_array(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelUInt32ArrayAttribute, pb::int32>& attribute)
+get_physical_chan_attribute_uint32_array(const StubPtr& stub, const std::string& physical_channel, const simple_variant<PhysicalChannelUInt32ArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6162,7 +6162,7 @@ get_ref_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 GetScaleAttributeDoubleResponse
-get_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleDoubleAttribute, pb::int32>& attribute)
+get_scale_attribute_double(const StubPtr& stub, const std::string& scale_name, const simple_variant<ScaleDoubleAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6187,7 +6187,7 @@ get_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, co
 }
 
 GetScaleAttributeDoubleArrayResponse
-get_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleDoubleArrayAttribute, pb::int32>& attribute)
+get_scale_attribute_double_array(const StubPtr& stub, const std::string& scale_name, const simple_variant<ScaleDoubleArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6212,7 +6212,7 @@ get_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_na
 }
 
 GetScaleAttributeInt32Response
-get_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleInt32Attribute, pb::int32>& attribute)
+get_scale_attribute_int32(const StubPtr& stub, const std::string& scale_name, const simple_variant<ScaleInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6237,7 +6237,7 @@ get_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, con
 }
 
 GetScaleAttributeStringResponse
-get_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleStringAttribute, pb::int32>& attribute)
+get_scale_attribute_string(const StubPtr& stub, const std::string& scale_name, const simple_variant<ScaleStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6262,7 +6262,7 @@ get_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, co
 }
 
 GetSelfCalLastDateAndTimeResponse
-get_self_cal_last_date_and_time(const StubPtr& stub, const pb::string& device_name)
+get_self_cal_last_date_and_time(const StubPtr& stub, const std::string& device_name)
 {
   ::grpc::ClientContext context;
 
@@ -6503,7 +6503,7 @@ get_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 GetTimingAttributeExBoolResponse
-get_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingBoolAttribute, pb::int32>& attribute)
+get_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6529,7 +6529,7 @@ get_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetTimingAttributeExDoubleResponse
-get_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingDoubleAttribute, pb::int32>& attribute)
+get_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingDoubleAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6555,7 +6555,7 @@ get_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetTimingAttributeExInt32Response
-get_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingInt32Attribute, pb::int32>& attribute)
+get_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6581,7 +6581,7 @@ get_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 GetTimingAttributeExStringResponse
-get_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingStringAttribute, pb::int32>& attribute)
+get_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6607,7 +6607,7 @@ get_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetTimingAttributeExTimestampResponse
-get_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingTimestampAttribute, pb::int32>& attribute)
+get_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingTimestampAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6633,7 +6633,7 @@ get_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 GetTimingAttributeExUInt32Response
-get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt32Attribute, pb::int32>& attribute)
+get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingUInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -6659,7 +6659,7 @@ get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetTimingAttributeExUInt64Response
-get_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt64Attribute, pb::int32>& attribute)
+get_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingUInt64Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -7010,7 +7010,7 @@ get_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetWatchdogAttributeBoolResponse
-get_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogBoolAttribute, pb::int32>& attribute)
+get_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogBoolAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -7036,7 +7036,7 @@ get_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 GetWatchdogAttributeDoubleResponse
-get_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogDoubleAttribute, pb::int32>& attribute)
+get_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogDoubleAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -7062,7 +7062,7 @@ get_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 GetWatchdogAttributeInt32Response
-get_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogInt32Attribute, pb::int32>& attribute)
+get_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -7088,7 +7088,7 @@ get_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetWatchdogAttributeStringResponse
-get_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogStringAttribute, pb::int32>& attribute)
+get_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogStringAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -7281,7 +7281,7 @@ is_task_done(const StubPtr& stub, const nidevice_grpc::Session& task)
 }
 
 LoadTaskResponse
-load_task(const StubPtr& stub, const pb::string& session_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+load_task(const StubPtr& stub, const std::string& session_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -7921,7 +7921,7 @@ register_signal_event(const StubPtr& stub, ::grpc::ClientContext& context, const
 }
 
 RemoveCDAQSyncConnectionResponse
-remove_cdaq_sync_connection(const StubPtr& stub, const pb::string& port_list)
+remove_cdaq_sync_connection(const StubPtr& stub, const std::string& port_list)
 {
   ::grpc::ClientContext context;
 
@@ -7938,7 +7938,7 @@ remove_cdaq_sync_connection(const StubPtr& stub, const pb::string& port_list)
 }
 
 ReserveNetworkDeviceResponse
-reserve_network_device(const StubPtr& stub, const pb::string& device_name, const bool& override_reservation)
+reserve_network_device(const StubPtr& stub, const std::string& device_name, const bool& override_reservation)
 {
   ::grpc::ClientContext context;
 
@@ -7981,7 +7981,7 @@ reset_buffer_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 ResetChanAttributeResponse
-reset_chan_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelResetAttribute, pb::int32>& attribute)
+reset_chan_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelResetAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -8007,7 +8007,7 @@ reset_chan_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
 }
 
 ResetDeviceResponse
-reset_device(const StubPtr& stub, const pb::string& device_name)
+reset_device(const StubPtr& stub, const std::string& device_name)
 {
   ::grpc::ClientContext context;
 
@@ -8124,7 +8124,7 @@ reset_timing_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 ResetTimingAttributeExResponse
-reset_timing_attribute_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingResetAttribute, pb::int32>& attribute)
+reset_timing_attribute_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingResetAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -8175,7 +8175,7 @@ reset_trig_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
 }
 
 ResetWatchdogAttributeResponse
-reset_watchdog_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogResetAttribute, pb::int32>& attribute)
+reset_watchdog_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogResetAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -8226,7 +8226,7 @@ reset_write_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 SaveGlobalChanResponse
-save_global_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name, const pb::string& save_as, const pb::string& author, const simple_variant<SaveOptions, pb::uint32>& options)
+save_global_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_name, const std::string& save_as, const std::string& author, const simple_variant<SaveOptions, pb::uint32>& options)
 {
   ::grpc::ClientContext context;
 
@@ -8254,7 +8254,7 @@ save_global_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const 
 }
 
 SaveScaleResponse
-save_scale(const StubPtr& stub, const pb::string& scale_name, const pb::string& save_as, const pb::string& author, const simple_variant<SaveOptions, pb::uint32>& options)
+save_scale(const StubPtr& stub, const std::string& scale_name, const std::string& save_as, const std::string& author, const simple_variant<SaveOptions, pb::uint32>& options)
 {
   ::grpc::ClientContext context;
 
@@ -8281,7 +8281,7 @@ save_scale(const StubPtr& stub, const pb::string& scale_name, const pb::string& 
 }
 
 SaveTaskResponse
-save_task(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& save_as, const pb::string& author, const simple_variant<SaveOptions, pb::uint32>& options)
+save_task(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& save_as, const std::string& author, const simple_variant<SaveOptions, pb::uint32>& options)
 {
   ::grpc::ClientContext context;
 
@@ -8308,7 +8308,7 @@ save_task(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::str
 }
 
 SelfCalResponse
-self_cal(const StubPtr& stub, const pb::string& device_name)
+self_cal(const StubPtr& stub, const std::string& device_name)
 {
   ::grpc::ClientContext context;
 
@@ -8325,7 +8325,7 @@ self_cal(const StubPtr& stub, const pb::string& device_name)
 }
 
 SelfTestDeviceResponse
-self_test_device(const StubPtr& stub, const pb::string& device_name)
+self_test_device(const StubPtr& stub, const std::string& device_name)
 {
   ::grpc::ClientContext context;
 
@@ -8342,7 +8342,7 @@ self_test_device(const StubPtr& stub, const pb::string& device_name)
 }
 
 SetAIChanCalCalDateResponse
-set_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name, const pb::uint32& year, const pb::uint32& month, const pb::uint32& day, const pb::uint32& hour, const pb::uint32& minute)
+set_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_name, const pb::uint32& year, const pb::uint32& month, const pb::uint32& day, const pb::uint32& hour, const pb::uint32& minute)
 {
   ::grpc::ClientContext context;
 
@@ -8365,7 +8365,7 @@ set_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetAIChanCalExpDateResponse
-set_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name, const pb::uint32& year, const pb::uint32& month, const pb::uint32& day, const pb::uint32& hour, const pb::uint32& minute)
+set_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_name, const pb::uint32& year, const pb::uint32& month, const pb::uint32& day, const pb::uint32& hour, const pb::uint32& minute)
 {
   ::grpc::ClientContext context;
 
@@ -8388,7 +8388,7 @@ set_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetAnalogPowerUpStatesResponse
-set_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, const std::vector<AnalogPowerUpChannelsAndState>& power_up_states)
+set_analog_power_up_states(const StubPtr& stub, const std::string& device_name, const std::vector<AnalogPowerUpChannelsAndState>& power_up_states)
 {
   ::grpc::ClientContext context;
 
@@ -8406,7 +8406,7 @@ set_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, c
 }
 
 SetAnalogPowerUpStatesWithOutputTypeResponse
-set_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const std::vector<double>& state_array, const std::vector<pb::int32>& channel_type_array)
+set_analog_power_up_states_with_output_type(const StubPtr& stub, const std::string& channel_names, const std::vector<double>& state_array, const std::vector<pb::int32>& channel_type_array)
 {
   ::grpc::ClientContext context;
 
@@ -8469,7 +8469,7 @@ set_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 SetCalInfoAttributeBoolResponse
-set_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoBoolAttribute, pb::int32>& attribute, const bool& value)
+set_cal_info_attribute_bool(const StubPtr& stub, const std::string& device_name, const simple_variant<CalibrationInfoBoolAttribute, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -8495,7 +8495,7 @@ set_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, 
 }
 
 SetCalInfoAttributeDoubleResponse
-set_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoDoubleAttribute, pb::int32>& attribute, const double& value)
+set_cal_info_attribute_double(const StubPtr& stub, const std::string& device_name, const simple_variant<CalibrationInfoDoubleAttribute, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -8521,7 +8521,7 @@ set_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name
 }
 
 SetCalInfoAttributeStringResponse
-set_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_cal_info_attribute_string(const StubPtr& stub, const std::string& device_name, const simple_variant<CalibrationInfoStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -8547,7 +8547,7 @@ set_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name
 }
 
 SetCalInfoAttributeUInt32Response
-set_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoUInt32Attribute, pb::int32>& attribute, const pb::uint32& value)
+set_cal_info_attribute_uint32(const StubPtr& stub, const std::string& device_name, const simple_variant<CalibrationInfoUInt32Attribute, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
@@ -8573,7 +8573,7 @@ set_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name
 }
 
 SetChanAttributeBoolResponse
-set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelBoolAttribute, pb::int32>& attribute, const bool& value)
+set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelBoolAttribute, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -8600,7 +8600,7 @@ set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 SetChanAttributeDoubleResponse
-set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelDoubleAttribute, pb::int32>& attribute, const double& value)
+set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelDoubleAttribute, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -8627,7 +8627,7 @@ set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetChanAttributeDoubleArrayResponse
-set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelDoubleArrayAttribute, pb::int32>& attribute, const std::vector<double>& value)
+set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelDoubleArrayAttribute, pb::int32>& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -8654,7 +8654,7 @@ set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 SetChanAttributeInt32Response
-set_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelInt32Attribute, pb::int32>& attribute, const simple_variant<ChannelInt32AttributeValues, pb::int32>& value)
+set_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelInt32Attribute, pb::int32>& attribute, const simple_variant<ChannelInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -8688,7 +8688,7 @@ set_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetChanAttributeStringResponse
-set_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -8715,7 +8715,7 @@ set_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetChanAttributeUInt32Response
-set_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelUInt32Attribute, pb::int32>& attribute, const pb::uint32& value)
+set_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelUInt32Attribute, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
@@ -8742,7 +8742,7 @@ set_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetDigitalLogicFamilyPowerUpStateResponse
-set_digital_logic_family_power_up_state(const StubPtr& stub, const pb::string& device_name, const simple_variant<LogicFamily, pb::int32>& logic_family)
+set_digital_logic_family_power_up_state(const StubPtr& stub, const std::string& device_name, const simple_variant<LogicFamily, pb::int32>& logic_family)
 {
   ::grpc::ClientContext context;
 
@@ -8767,7 +8767,7 @@ set_digital_logic_family_power_up_state(const StubPtr& stub, const pb::string& d
 }
 
 SetDigitalPowerUpStatesResponse
-set_digital_power_up_states(const StubPtr& stub, const pb::string& device_name, const std::vector<DigitalPowerUpChannelsAndState>& power_up_states)
+set_digital_power_up_states(const StubPtr& stub, const std::string& device_name, const std::vector<DigitalPowerUpChannelsAndState>& power_up_states)
 {
   ::grpc::ClientContext context;
 
@@ -8785,7 +8785,7 @@ set_digital_power_up_states(const StubPtr& stub, const pb::string& device_name, 
 }
 
 SetDigitalPullUpPullDownStatesResponse
-set_digital_pull_up_pull_down_states(const StubPtr& stub, const pb::string& device_name, const std::vector<DigitalPullUpPullDownChannelsAndState>& pull_up_pull_down_states)
+set_digital_pull_up_pull_down_states(const StubPtr& stub, const std::string& device_name, const std::vector<DigitalPullUpPullDownChannelsAndState>& pull_up_pull_down_states)
 {
   ::grpc::ClientContext context;
 
@@ -8888,7 +8888,7 @@ set_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 SetExportedSignalAttributeStringResponse
-set_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -9043,7 +9043,7 @@ set_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetReadAttributeStringResponse
-set_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -9206,7 +9206,7 @@ set_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetScaleAttributeDoubleResponse
-set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleDoubleAttribute, pb::int32>& attribute, const double& value)
+set_scale_attribute_double(const StubPtr& stub, const std::string& scale_name, const simple_variant<ScaleDoubleAttribute, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -9232,7 +9232,7 @@ set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, co
 }
 
 SetScaleAttributeDoubleArrayResponse
-set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleDoubleArrayAttribute, pb::int32>& attribute, const std::vector<double>& value)
+set_scale_attribute_double_array(const StubPtr& stub, const std::string& scale_name, const simple_variant<ScaleDoubleArrayAttribute, pb::int32>& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -9258,7 +9258,7 @@ set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_na
 }
 
 SetScaleAttributeInt32Response
-set_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleInt32Attribute, pb::int32>& attribute, const simple_variant<ScaleInt32AttributeValues, pb::int32>& value)
+set_scale_attribute_int32(const StubPtr& stub, const std::string& scale_name, const simple_variant<ScaleInt32Attribute, pb::int32>& attribute, const simple_variant<ScaleInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -9291,7 +9291,7 @@ set_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, con
 }
 
 SetScaleAttributeStringResponse
-set_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_scale_attribute_string(const StubPtr& stub, const std::string& scale_name, const simple_variant<ScaleStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -9405,7 +9405,7 @@ set_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 SetTimingAttributeExBoolResponse
-set_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingBoolAttribute, pb::int32>& attribute, const bool& value)
+set_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingBoolAttribute, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -9432,7 +9432,7 @@ set_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SetTimingAttributeExDoubleResponse
-set_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingDoubleAttribute, pb::int32>& attribute, const double& value)
+set_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingDoubleAttribute, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -9459,7 +9459,7 @@ set_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTimingAttributeExInt32Response
-set_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingInt32Attribute, pb::int32>& attribute, const simple_variant<TimingInt32AttributeValues, pb::int32>& value)
+set_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingInt32Attribute, pb::int32>& attribute, const simple_variant<TimingInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -9493,7 +9493,7 @@ set_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SetTimingAttributeExStringResponse
-set_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -9520,7 +9520,7 @@ set_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTimingAttributeExTimestampResponse
-set_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingTimestampAttribute, pb::int32>& attribute, const google::protobuf::Timestamp& value)
+set_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingTimestampAttribute, pb::int32>& attribute, const google::protobuf::Timestamp& value)
 {
   ::grpc::ClientContext context;
 
@@ -9547,7 +9547,7 @@ set_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 SetTimingAttributeExUInt32Response
-set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt32Attribute, pb::int32>& attribute, const pb::uint32& value)
+set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingUInt32Attribute, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
@@ -9574,7 +9574,7 @@ set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTimingAttributeExUInt64Response
-set_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt64Attribute, pb::int32>& attribute, const pb::uint64& value)
+set_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& device_names, const simple_variant<TimingUInt64Attribute, pb::int32>& attribute, const pb::uint64& value)
 {
   ::grpc::ClientContext context;
 
@@ -9634,7 +9634,7 @@ set_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 SetTimingAttributeStringResponse
-set_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -9875,7 +9875,7 @@ set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTrigAttributeStringResponse
-set_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -9953,7 +9953,7 @@ set_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetWatchdogAttributeBoolResponse
-set_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogBoolAttribute, pb::int32>& attribute, const bool& value)
+set_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogBoolAttribute, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -9980,7 +9980,7 @@ set_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 SetWatchdogAttributeDoubleResponse
-set_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogDoubleAttribute, pb::int32>& attribute, const double& value)
+set_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogDoubleAttribute, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -10007,7 +10007,7 @@ set_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SetWatchdogAttributeInt32Response
-set_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogInt32Attribute, pb::int32>& attribute, const simple_variant<WatchdogInt32AttributeValues, pb::int32>& value)
+set_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogInt32Attribute, pb::int32>& attribute, const simple_variant<WatchdogInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -10041,7 +10041,7 @@ set_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SetWatchdogAttributeStringResponse
-set_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -10153,7 +10153,7 @@ set_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetWriteAttributeStringResponse
-set_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteStringAttribute, pb::int32>& attribute, const pb::string& value)
+set_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteStringAttribute, pb::int32>& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -10231,7 +10231,7 @@ set_write_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 StartNewFileResponse
-start_new_file(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& file_path)
+start_new_file(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -10308,7 +10308,7 @@ task_control(const StubPtr& stub, const nidevice_grpc::Session& task, const simp
 }
 
 TristateOutputTermResponse
-tristate_output_term(const StubPtr& stub, const pb::string& output_terminal)
+tristate_output_term(const StubPtr& stub, const std::string& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -10325,7 +10325,7 @@ tristate_output_term(const StubPtr& stub, const pb::string& output_terminal)
 }
 
 UnreserveNetworkDeviceResponse
-unreserve_network_device(const StubPtr& stub, const pb::string& device_name)
+unreserve_network_device(const StubPtr& stub, const std::string& device_name)
 {
   ::grpc::ClientContext context;
 
@@ -10722,7 +10722,7 @@ write_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 WriteDigitalLinesResponse
-write_digital_lines(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout, const pb::string& write_array)
+write_digital_lines(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout, const std::string& write_array)
 {
   ::grpc::ClientContext context;
 
@@ -10829,7 +10829,7 @@ write_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const
 }
 
 WriteDigitalU8Response
-write_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout, const pb::string& write_array)
+write_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout, const std::string& write_array)
 {
   ::grpc::ClientContext context;
 
@@ -10858,7 +10858,7 @@ write_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const 
 }
 
 WriteRawResponse
-write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps, const bool& auto_start, const double& timeout, const pb::string& write_array)
+write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps, const bool& auto_start, const double& timeout, const std::string& write_array)
 {
   ::grpc::ClientContext context;
 
@@ -10879,7 +10879,7 @@ write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int
 }
 
 WriteToTEDSFromArrayResponse
-write_to_teds_from_array(const StubPtr& stub, const pb::string& physical_channel, const pb::string& bit_stream, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options)
+write_to_teds_from_array(const StubPtr& stub, const std::string& physical_channel, const std::string& bit_stream, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options)
 {
   ::grpc::ClientContext context;
 
@@ -10905,7 +10905,7 @@ write_to_teds_from_array(const StubPtr& stub, const pb::string& physical_channel
 }
 
 WriteToTEDSFromFileResponse
-write_to_teds_from_file(const StubPtr& stub, const pb::string& physical_channel, const pb::string& file_path, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options)
+write_to_teds_from_file(const StubPtr& stub, const std::string& physical_channel, const std::string& file_path, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options)
 {
   ::grpc::ClientContext context;
 
