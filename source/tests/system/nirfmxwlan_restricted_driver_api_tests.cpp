@@ -135,8 +135,11 @@ TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_NoiseCalibrate_
   configure_OFDMModAccFromExample(instr_stub, session, stub());
   std::vector<float64> center_frequency{2.412e9};
   std::vector<float64> channel_bandwidth{2.0e7};
-  EXPECT_SUCCESS(session, client::set_attribute_f64_array(stub(), session, "", (nirfmxwlan_grpc::NiRFmxWLANAttribute)10502272, center_frequency));
-  EXPECT_SUCCESS(session, client::set_attribute_f64_array(stub(), session, "", (nirfmxwlan_grpc::NiRFmxWLANAttribute)10502273, channel_bandwidth));
+  // Note that ofdm_mod_acc_noise_calibrate is non-public and requires setup with non-public attributes.
+  const auto NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CENTER_FREQUENCIES = 10502272;
+  const auto NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_BANDWIDTHS = 10502273;
+  EXPECT_SUCCESS(session, client::set_attribute_f64_array(stub(), session, "", (nirfmxwlan_grpc::NiRFmxWLANAttribute)NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CENTER_FREQUENCIES, center_frequency));
+  EXPECT_SUCCESS(session, client::set_attribute_f64_array(stub(), session, "", (nirfmxwlan_grpc::NiRFmxWLANAttribute)NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_BANDWIDTHS, channel_bandwidth));
   
   const auto response = restricted_client::ofdm_mod_acc_noise_calibrate(restricted_stub(), session, "", 0);
   EXPECT_SUCCESS(session, response);
