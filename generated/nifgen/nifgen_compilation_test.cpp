@@ -562,7 +562,7 @@ ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[
   return niFgen_self_test(vi, selfTestResult, selfTestMessage);
 }
 
-ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViString triggerId)
+ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerId)
 {
   return niFgen_SendSoftwareEdgeTrigger(vi, trigger, triggerId);
 }

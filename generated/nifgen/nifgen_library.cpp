@@ -1063,7 +1063,7 @@ ViStatus NiFgenLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar s
   return function_pointers_.SelfTest(vi, selfTestResult, selfTestMessage);
 }
 
-ViStatus NiFgenLibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViString triggerId)
+ViStatus NiFgenLibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerId)
 {
   if (!function_pointers_.SendSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SendSoftwareEdgeTrigger.");

@@ -3315,7 +3315,7 @@ namespace nifgen_grpc {
       }
 
       auto trigger_id_mbcs = convert_from_grpc<std::string>(request->trigger_id());
-      ViString trigger_id = (ViString)trigger_id_mbcs.c_str();
+      auto trigger_id = trigger_id_mbcs.c_str();
       auto status = library_->SendSoftwareEdgeTrigger(vi, trigger, trigger_id);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
