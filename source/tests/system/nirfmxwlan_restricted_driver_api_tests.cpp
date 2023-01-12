@@ -125,6 +125,10 @@ TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_FetchCommonPilo
 
   const auto response = restricted_client::ofdm_mod_acc_fetch_common_pilot_error_trace_ind_b(restricted_stub(), session, "", 10.0);
   EXPECT_SUCCESS(session, response);
+  EXPECT_NE(0.0, response.x0());
+  EXPECT_NE(0.0, response.dx());
+  EXPECT_THAT(response.common_pilot_error_magnitude(), Not(IsEmpty()));
+  EXPECT_THAT(response.common_pilot_error_phase(), Not(IsEmpty()));
 }
 
 TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_NoiseCalibrate_Succeeds)
@@ -141,8 +145,7 @@ TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_NoiseCalibrate_
   EXPECT_SUCCESS(session, client::set_attribute_f64_array(stub(), session, "", (nirfmxwlan_grpc::NiRFmxWLANAttribute)NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CENTER_FREQUENCIES, center_frequency));
   EXPECT_SUCCESS(session, client::set_attribute_f64_array(stub(), session, "", (nirfmxwlan_grpc::NiRFmxWLANAttribute)NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_BANDWIDTHS, channel_bandwidth));
   
-  const auto response = restricted_client::ofdm_mod_acc_noise_calibrate(restricted_stub(), session, "", 0);
-  EXPECT_SUCCESS(session, response);
+  EXPECT_SUCCESS(session, restricted_client::ofdm_mod_acc_noise_calibrate(restricted_stub(), session, "", 0));
 
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 }
