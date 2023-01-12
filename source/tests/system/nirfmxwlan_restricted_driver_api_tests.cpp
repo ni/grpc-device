@@ -115,7 +115,7 @@ TEST_F(NiRFmxWLANRestrictedDriverApiTests, GetChannelListBehavior_ReturnsNonEmpt
   EXPECT_GT(response.actual_array_size(), 0);
 }
 
-TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_FetchCommonPilotErrorTradeIndB_ReturnsNonEmptyResult)
+TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_FetchCommonPilotErrorTradeIndB_ResponseLooksReasonable)
 {
   char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
@@ -125,7 +125,7 @@ TEST_F(NiRFmxWLANRestrictedDriverApiTests, OFDMModAccFromExample_FetchCommonPilo
 
   const auto response = restricted_client::ofdm_mod_acc_fetch_common_pilot_error_trace_ind_b(restricted_stub(), session, "", 10.0);
   EXPECT_SUCCESS(session, response);
-  EXPECT_NE(0.0, response.x0());
+  EXPECT_EQ(0.0, response.x0());
   EXPECT_NE(0.0, response.dx());
   EXPECT_THAT(response.common_pilot_error_magnitude(), Not(IsEmpty()));
   EXPECT_THAT(response.common_pilot_error_phase(), Not(IsEmpty()));
