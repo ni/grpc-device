@@ -144,11 +144,7 @@ ViStatus NiRFSALibrary::Abort(ViSession vi)
   if (!function_pointers_.Abort) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_Abort.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_Abort(vi);
-#else
   return function_pointers_.Abort(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::CheckAcquisitionStatus(ViSession vi, ViBoolean* isDone)
@@ -156,11 +152,7 @@ ViStatus NiRFSALibrary::CheckAcquisitionStatus(ViSession vi, ViBoolean* isDone)
   if (!function_pointers_.CheckAcquisitionStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CheckAcquisitionStatus.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_CheckAcquisitionStatus(vi, isDone);
-#else
   return function_pointers_.CheckAcquisitionStatus(vi, isDone);
-#endif
 }
 
 ViStatus NiRFSALibrary::ClearError(ViSession vi)
@@ -168,11 +160,7 @@ ViStatus NiRFSALibrary::ClearError(ViSession vi)
   if (!function_pointers_.ClearError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ClearError.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ClearError(vi);
-#else
   return function_pointers_.ClearError(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::ClearSelfCalibrateRange(ViSession vi)
@@ -180,11 +168,7 @@ ViStatus NiRFSALibrary::ClearSelfCalibrateRange(ViSession vi)
   if (!function_pointers_.ClearSelfCalibrateRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ClearSelfCalibrateRange.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ClearSelfCalibrateRange(vi);
-#else
   return function_pointers_.ClearSelfCalibrateRange(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::Close(ViSession vi)
@@ -192,11 +176,7 @@ ViStatus NiRFSALibrary::Close(ViSession vi)
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_close.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_close(vi);
-#else
   return function_pointers_.Close(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::Commit(ViSession vi)
@@ -204,11 +184,7 @@ ViStatus NiRFSALibrary::Commit(ViSession vi)
   if (!function_pointers_.Commit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_Commit.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_Commit(vi);
-#else
   return function_pointers_.Commit(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureAcquisitionType(ViSession vi, ViInt32 acquisitionType)
@@ -216,11 +192,7 @@ ViStatus NiRFSALibrary::ConfigureAcquisitionType(ViSession vi, ViInt32 acquisiti
   if (!function_pointers_.ConfigureAcquisitionType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureAcquisitionType.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureAcquisitionType(vi, acquisitionType);
-#else
   return function_pointers_.ConfigureAcquisitionType(vi, acquisitionType);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureDeembeddingTableInterpolationLinear(ViSession vi, ViConstString port, ViConstString tableName, ViInt32 format)
@@ -228,11 +200,7 @@ ViStatus NiRFSALibrary::ConfigureDeembeddingTableInterpolationLinear(ViSession v
   if (!function_pointers_.ConfigureDeembeddingTableInterpolationLinear) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureDeembeddingTableInterpolationLinear.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureDeembeddingTableInterpolationLinear(vi, port, tableName, format);
-#else
   return function_pointers_.ConfigureDeembeddingTableInterpolationLinear(vi, port, tableName, format);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureDeembeddingTableInterpolationNearest(ViSession vi, ViConstString port, ViConstString tableName)
@@ -240,11 +208,7 @@ ViStatus NiRFSALibrary::ConfigureDeembeddingTableInterpolationNearest(ViSession 
   if (!function_pointers_.ConfigureDeembeddingTableInterpolationNearest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureDeembeddingTableInterpolationNearest.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureDeembeddingTableInterpolationNearest(vi, port, tableName);
-#else
   return function_pointers_.ConfigureDeembeddingTableInterpolationNearest(vi, port, tableName);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureDeembeddingTableInterpolationSpline(ViSession vi, ViConstString port, ViConstString tableName)
@@ -252,11 +216,7 @@ ViStatus NiRFSALibrary::ConfigureDeembeddingTableInterpolationSpline(ViSession v
   if (!function_pointers_.ConfigureDeembeddingTableInterpolationSpline) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureDeembeddingTableInterpolationSpline.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureDeembeddingTableInterpolationSpline(vi, port, tableName);
-#else
   return function_pointers_.ConfigureDeembeddingTableInterpolationSpline(vi, port, tableName);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureDigitalEdgeAdvanceTrigger(ViSession vi, ViConstString source, ViInt32 edge)
@@ -264,11 +224,7 @@ ViStatus NiRFSALibrary::ConfigureDigitalEdgeAdvanceTrigger(ViSession vi, ViConst
   if (!function_pointers_.ConfigureDigitalEdgeAdvanceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureDigitalEdgeAdvanceTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureDigitalEdgeAdvanceTrigger(vi, source, edge);
-#else
   return function_pointers_.ConfigureDigitalEdgeAdvanceTrigger(vi, source, edge);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureDigitalEdgeRefTrigger(ViSession vi, ViConstString source, ViInt32 edge, ViInt64 pretriggerSamples)
@@ -276,11 +232,7 @@ ViStatus NiRFSALibrary::ConfigureDigitalEdgeRefTrigger(ViSession vi, ViConstStri
   if (!function_pointers_.ConfigureDigitalEdgeRefTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureDigitalEdgeRefTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureDigitalEdgeRefTrigger(vi, source, edge, pretriggerSamples);
-#else
   return function_pointers_.ConfigureDigitalEdgeRefTrigger(vi, source, edge, pretriggerSamples);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstString source, ViInt32 edge)
@@ -288,11 +240,7 @@ ViStatus NiRFSALibrary::ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstSt
   if (!function_pointers_.ConfigureDigitalEdgeStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureDigitalEdgeStartTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureDigitalEdgeStartTrigger(vi, source, edge);
-#else
   return function_pointers_.ConfigureDigitalEdgeStartTrigger(vi, source, edge);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureIQCarrierFrequency(ViSession vi, ViConstString channelList, ViReal64 carrierFrequency)
@@ -300,11 +248,7 @@ ViStatus NiRFSALibrary::ConfigureIQCarrierFrequency(ViSession vi, ViConstString 
   if (!function_pointers_.ConfigureIQCarrierFrequency) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureIQCarrierFrequency.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureIQCarrierFrequency(vi, channelList, carrierFrequency);
-#else
   return function_pointers_.ConfigureIQCarrierFrequency(vi, channelList, carrierFrequency);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureIQPowerEdgeRefTrigger(ViSession vi, ViConstString source, ViReal64 level, ViInt32 slope, ViInt64 pretriggerSamples)
@@ -312,11 +256,7 @@ ViStatus NiRFSALibrary::ConfigureIQPowerEdgeRefTrigger(ViSession vi, ViConstStri
   if (!function_pointers_.ConfigureIQPowerEdgeRefTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureIQPowerEdgeRefTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureIQPowerEdgeRefTrigger(vi, source, level, slope, pretriggerSamples);
-#else
   return function_pointers_.ConfigureIQPowerEdgeRefTrigger(vi, source, level, slope, pretriggerSamples);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureIQRate(ViSession vi, ViConstString channelList, ViReal64 iqRate)
@@ -324,11 +264,7 @@ ViStatus NiRFSALibrary::ConfigureIQRate(ViSession vi, ViConstString channelList,
   if (!function_pointers_.ConfigureIQRate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureIQRate.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureIQRate(vi, channelList, iqRate);
-#else
   return function_pointers_.ConfigureIQRate(vi, channelList, iqRate);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureNumberOfRecords(ViSession vi, ViConstString channelList, ViBoolean numberOfRecordsIsFinite, ViInt64 numberOfRecords)
@@ -336,11 +272,7 @@ ViStatus NiRFSALibrary::ConfigureNumberOfRecords(ViSession vi, ViConstString cha
   if (!function_pointers_.ConfigureNumberOfRecords) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureNumberOfRecords.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureNumberOfRecords(vi, channelList, numberOfRecordsIsFinite, numberOfRecords);
-#else
   return function_pointers_.ConfigureNumberOfRecords(vi, channelList, numberOfRecordsIsFinite, numberOfRecords);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureNumberOfSamples(ViSession vi, ViConstString channelList, ViBoolean numberOfSamplesIsFinite, ViInt64 samplesPerRecord)
@@ -348,11 +280,7 @@ ViStatus NiRFSALibrary::ConfigureNumberOfSamples(ViSession vi, ViConstString cha
   if (!function_pointers_.ConfigureNumberOfSamples) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureNumberOfSamples.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureNumberOfSamples(vi, channelList, numberOfSamplesIsFinite, samplesPerRecord);
-#else
   return function_pointers_.ConfigureNumberOfSamples(vi, channelList, numberOfSamplesIsFinite, samplesPerRecord);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigurePXIChassisClk10(ViSession vi, ViConstString pxiClk10Source)
@@ -360,11 +288,7 @@ ViStatus NiRFSALibrary::ConfigurePXIChassisClk10(ViSession vi, ViConstString pxi
   if (!function_pointers_.ConfigurePXIChassisClk10) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigurePXIChassisClk10.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigurePXIChassisClk10(vi, pxiClk10Source);
-#else
   return function_pointers_.ConfigurePXIChassisClk10(vi, pxiClk10Source);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureRefClock(ViSession vi, ViConstString clockSource, ViReal64 refClockRate)
@@ -372,11 +296,7 @@ ViStatus NiRFSALibrary::ConfigureRefClock(ViSession vi, ViConstString clockSourc
   if (!function_pointers_.ConfigureRefClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureRefClock.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureRefClock(vi, clockSource, refClockRate);
-#else
   return function_pointers_.ConfigureRefClock(vi, clockSource, refClockRate);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureReferenceLevel(ViSession vi, ViConstString channelList, ViReal64 referenceLevel)
@@ -384,11 +304,7 @@ ViStatus NiRFSALibrary::ConfigureReferenceLevel(ViSession vi, ViConstString chan
   if (!function_pointers_.ConfigureReferenceLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureReferenceLevel.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureReferenceLevel(vi, channelList, referenceLevel);
-#else
   return function_pointers_.ConfigureReferenceLevel(vi, channelList, referenceLevel);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureResolutionBandwidth(ViSession vi, ViConstString channelList, ViReal64 resolutionBandwidth)
@@ -396,11 +312,7 @@ ViStatus NiRFSALibrary::ConfigureResolutionBandwidth(ViSession vi, ViConstString
   if (!function_pointers_.ConfigureResolutionBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureResolutionBandwidth.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureResolutionBandwidth(vi, channelList, resolutionBandwidth);
-#else
   return function_pointers_.ConfigureResolutionBandwidth(vi, channelList, resolutionBandwidth);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureSoftwareEdgeAdvanceTrigger(ViSession vi)
@@ -408,11 +320,7 @@ ViStatus NiRFSALibrary::ConfigureSoftwareEdgeAdvanceTrigger(ViSession vi)
   if (!function_pointers_.ConfigureSoftwareEdgeAdvanceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureSoftwareEdgeAdvanceTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureSoftwareEdgeAdvanceTrigger(vi);
-#else
   return function_pointers_.ConfigureSoftwareEdgeAdvanceTrigger(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureSoftwareEdgeRefTrigger(ViSession vi, ViInt64 pretriggerSamples)
@@ -420,11 +328,7 @@ ViStatus NiRFSALibrary::ConfigureSoftwareEdgeRefTrigger(ViSession vi, ViInt64 pr
   if (!function_pointers_.ConfigureSoftwareEdgeRefTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureSoftwareEdgeRefTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureSoftwareEdgeRefTrigger(vi, pretriggerSamples);
-#else
   return function_pointers_.ConfigureSoftwareEdgeRefTrigger(vi, pretriggerSamples);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureSoftwareEdgeStartTrigger(ViSession vi)
@@ -432,11 +336,7 @@ ViStatus NiRFSALibrary::ConfigureSoftwareEdgeStartTrigger(ViSession vi)
   if (!function_pointers_.ConfigureSoftwareEdgeStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureSoftwareEdgeStartTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureSoftwareEdgeStartTrigger(vi);
-#else
   return function_pointers_.ConfigureSoftwareEdgeStartTrigger(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureSpectrumFrequencyCenterSpan(ViSession vi, ViConstString channelList, ViReal64 centerFrequency, ViReal64 span)
@@ -444,11 +344,7 @@ ViStatus NiRFSALibrary::ConfigureSpectrumFrequencyCenterSpan(ViSession vi, ViCon
   if (!function_pointers_.ConfigureSpectrumFrequencyCenterSpan) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureSpectrumFrequencyCenterSpan.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureSpectrumFrequencyCenterSpan(vi, channelList, centerFrequency, span);
-#else
   return function_pointers_.ConfigureSpectrumFrequencyCenterSpan(vi, channelList, centerFrequency, span);
-#endif
 }
 
 ViStatus NiRFSALibrary::ConfigureSpectrumFrequencyStartStop(ViSession vi, ViConstString channelList, ViReal64 startFrequency, ViReal64 stopFrequency)
@@ -456,11 +352,7 @@ ViStatus NiRFSALibrary::ConfigureSpectrumFrequencyStartStop(ViSession vi, ViCons
   if (!function_pointers_.ConfigureSpectrumFrequencyStartStop) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ConfigureSpectrumFrequencyStartStop.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ConfigureSpectrumFrequencyStartStop(vi, channelList, startFrequency, stopFrequency);
-#else
   return function_pointers_.ConfigureSpectrumFrequencyStartStop(vi, channelList, startFrequency, stopFrequency);
-#endif
 }
 
 ViStatus NiRFSALibrary::CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIds[], ViBoolean setAsActiveList)
@@ -468,11 +360,7 @@ ViStatus NiRFSALibrary::CreateConfigurationList(ViSession vi, ViConstString list
   if (!function_pointers_.CreateConfigurationList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CreateConfigurationList.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_CreateConfigurationList(vi, listName, numberOfListAttributes, listAttributeIds, setAsActiveList);
-#else
   return function_pointers_.CreateConfigurationList(vi, listName, numberOfListAttributes, listAttributeIds, setAsActiveList);
-#endif
 }
 
 ViStatus NiRFSALibrary::CreateConfigurationListStep(ViSession vi, ViBoolean setAsActiveStep)
@@ -480,11 +368,7 @@ ViStatus NiRFSALibrary::CreateConfigurationListStep(ViSession vi, ViBoolean setA
   if (!function_pointers_.CreateConfigurationListStep) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CreateConfigurationListStep.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_CreateConfigurationListStep(vi, setAsActiveStep);
-#else
   return function_pointers_.CreateConfigurationListStep(vi, setAsActiveStep);
-#endif
 }
 
 ViStatus NiRFSALibrary::CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation)
@@ -492,11 +376,7 @@ ViStatus NiRFSALibrary::CreateDeembeddingSparameterTableArray(ViSession vi, ViCo
   if (!function_pointers_.CreateDeembeddingSparameterTableArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CreateDeembeddingSparameterTableArray.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_CreateDeembeddingSparameterTableArray(vi, port, tableName, frequencies, frequenciesSize, sparameterTable, sparameterTableSize, numberOfPorts, sparameterOrientation);
-#else
   return function_pointers_.CreateDeembeddingSparameterTableArray(vi, port, tableName, frequencies, frequenciesSize, sparameterTable, sparameterTableSize, numberOfPorts, sparameterOrientation);
-#endif
 }
 
 ViStatus NiRFSALibrary::CreateDeembeddingSparameterTableS2PFile(ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation)
@@ -504,11 +384,7 @@ ViStatus NiRFSALibrary::CreateDeembeddingSparameterTableS2PFile(ViSession vi, Vi
   if (!function_pointers_.CreateDeembeddingSparameterTableS2PFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CreateDeembeddingSparameterTableS2PFile.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_CreateDeembeddingSparameterTableS2PFile(vi, port, tableName, s2pFilePath, sparameterOrientation);
-#else
   return function_pointers_.CreateDeembeddingSparameterTableS2PFile(vi, port, tableName, s2pFilePath, sparameterOrientation);
-#endif
 }
 
 ViStatus NiRFSALibrary::DeleteAllDeembeddingTables(ViSession vi)
@@ -516,11 +392,7 @@ ViStatus NiRFSALibrary::DeleteAllDeembeddingTables(ViSession vi)
   if (!function_pointers_.DeleteAllDeembeddingTables) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_DeleteAllDeembeddingTables.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_DeleteAllDeembeddingTables(vi);
-#else
   return function_pointers_.DeleteAllDeembeddingTables(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::DeleteConfigurationList(ViSession vi, ViConstString listName)
@@ -528,11 +400,7 @@ ViStatus NiRFSALibrary::DeleteConfigurationList(ViSession vi, ViConstString list
   if (!function_pointers_.DeleteConfigurationList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_DeleteConfigurationList.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_DeleteConfigurationList(vi, listName);
-#else
   return function_pointers_.DeleteConfigurationList(vi, listName);
-#endif
 }
 
 ViStatus NiRFSALibrary::DeleteDeembeddingTable(ViSession vi, ViConstString port, ViConstString tableName)
@@ -540,11 +408,7 @@ ViStatus NiRFSALibrary::DeleteDeembeddingTable(ViSession vi, ViConstString port,
   if (!function_pointers_.DeleteDeembeddingTable) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_DeleteDeembeddingTable.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_DeleteDeembeddingTable(vi, port, tableName);
-#else
   return function_pointers_.DeleteDeembeddingTable(vi, port, tableName);
-#endif
 }
 
 ViStatus NiRFSALibrary::Disable(ViSession vi)
@@ -552,11 +416,7 @@ ViStatus NiRFSALibrary::Disable(ViSession vi)
   if (!function_pointers_.Disable) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_Disable.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_Disable(vi);
-#else
   return function_pointers_.Disable(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::DisableAdvanceTrigger(ViSession vi)
@@ -564,11 +424,7 @@ ViStatus NiRFSALibrary::DisableAdvanceTrigger(ViSession vi)
   if (!function_pointers_.DisableAdvanceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_DisableAdvanceTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_DisableAdvanceTrigger(vi);
-#else
   return function_pointers_.DisableAdvanceTrigger(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::DisableRefTrigger(ViSession vi)
@@ -576,11 +432,7 @@ ViStatus NiRFSALibrary::DisableRefTrigger(ViSession vi)
   if (!function_pointers_.DisableRefTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_DisableRefTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_DisableRefTrigger(vi);
-#else
   return function_pointers_.DisableRefTrigger(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::DisableStartTrigger(ViSession vi)
@@ -588,11 +440,7 @@ ViStatus NiRFSALibrary::DisableStartTrigger(ViSession vi)
   if (!function_pointers_.DisableStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_DisableStartTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_DisableStartTrigger(vi);
-#else
   return function_pointers_.DisableStartTrigger(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::EnableSessionAccess(ViSession vi, ViBoolean enable)
@@ -600,11 +448,7 @@ ViStatus NiRFSALibrary::EnableSessionAccess(ViSession vi, ViBoolean enable)
   if (!function_pointers_.EnableSessionAccess) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_EnableSessionAccess.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_EnableSessionAccess(vi, enable);
-#else
   return function_pointers_.EnableSessionAccess(vi, enable);
-#endif
 }
 
 ViStatus NiRFSALibrary::ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024])
@@ -612,11 +456,7 @@ ViStatus NiRFSALibrary::ErrorMessage(ViSession vi, ViStatus statusCode, ViChar e
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_error_message.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_error_message(vi, statusCode, errorMessage);
-#else
   return function_pointers_.ErrorMessage(vi, statusCode, errorMessage);
-#endif
 }
 
 ViStatus NiRFSALibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024])
@@ -624,11 +464,7 @@ ViStatus NiRFSALibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar erro
   if (!function_pointers_.ErrorQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_error_query.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_error_query(vi, errorCode, errorMessage);
-#else
   return function_pointers_.ErrorQuery(vi, errorCode, errorMessage);
-#endif
 }
 
 ViStatus NiRFSALibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal)
@@ -636,11 +472,7 @@ ViStatus NiRFSALibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString
   if (!function_pointers_.ExportSignal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ExportSignal.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ExportSignal(vi, signal, signalIdentifier, outputTerminal);
-#else
   return function_pointers_.ExportSignal(vi, signal, signalIdentifier, outputTerminal);
-#endif
 }
 
 ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
@@ -648,11 +480,7 @@ ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF32(ViSession vi, ViConstString
   if (!function_pointers_.FetchIQMultiRecordComplexF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQMultiRecordComplexF32.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_FetchIQMultiRecordComplexF32(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
-#else
   return function_pointers_.FetchIQMultiRecordComplexF32(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
@@ -660,11 +488,7 @@ ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF64(ViSession vi, ViConstString
   if (!function_pointers_.FetchIQMultiRecordComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQMultiRecordComplexF64.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_FetchIQMultiRecordComplexF64(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
-#else
   return function_pointers_.FetchIQMultiRecordComplexF64(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
@@ -672,11 +496,7 @@ ViStatus NiRFSALibrary::FetchIQMultiRecordComplexI16(ViSession vi, ViConstString
   if (!function_pointers_.FetchIQMultiRecordComplexI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQMultiRecordComplexI16.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_FetchIQMultiRecordComplexI16(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
-#else
   return function_pointers_.FetchIQMultiRecordComplexI16(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
@@ -684,11 +504,7 @@ ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF32(ViSession vi, ViConstStrin
   if (!function_pointers_.FetchIQSingleRecordComplexF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQSingleRecordComplexF32.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_FetchIQSingleRecordComplexF32(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
-#else
   return function_pointers_.FetchIQSingleRecordComplexF32(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
@@ -696,11 +512,7 @@ ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF64(ViSession vi, ViConstStrin
   if (!function_pointers_.FetchIQSingleRecordComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQSingleRecordComplexF64.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_FetchIQSingleRecordComplexF64(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
-#else
   return function_pointers_.FetchIQSingleRecordComplexF64(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
@@ -708,11 +520,7 @@ ViStatus NiRFSALibrary::FetchIQSingleRecordComplexI16(ViSession vi, ViConstStrin
   if (!function_pointers_.FetchIQSingleRecordComplexI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQSingleRecordComplexI16.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_FetchIQSingleRecordComplexI16(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
-#else
   return function_pointers_.FetchIQSingleRecordComplexI16(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value)
@@ -720,11 +528,7 @@ ViStatus NiRFSALibrary::GetAttributeViBoolean(ViSession vi, ViConstString channe
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetAttributeViBoolean.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetAttributeViBoolean(vi, channelName, attributeId, value);
-#else
   return function_pointers_.GetAttributeViBoolean(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value)
@@ -732,11 +536,7 @@ ViStatus NiRFSALibrary::GetAttributeViInt32(ViSession vi, ViConstString channelN
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetAttributeViInt32.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetAttributeViInt32(vi, channelName, attributeId, value);
-#else
   return function_pointers_.GetAttributeViInt32(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value)
@@ -744,11 +544,7 @@ ViStatus NiRFSALibrary::GetAttributeViInt64(ViSession vi, ViConstString channelN
   if (!function_pointers_.GetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetAttributeViInt64.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetAttributeViInt64(vi, channelName, attributeId, value);
-#else
   return function_pointers_.GetAttributeViInt64(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* value)
@@ -756,11 +552,7 @@ ViStatus NiRFSALibrary::GetAttributeViReal64(ViSession vi, ViConstString channel
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetAttributeViReal64(vi, channelName, attributeId, value);
-#else
   return function_pointers_.GetAttributeViReal64(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* value)
@@ -768,11 +560,7 @@ ViStatus NiRFSALibrary::GetAttributeViSession(ViSession vi, ViConstString channe
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetAttributeViSession.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetAttributeViSession(vi, channelName, attributeId, value);
-#else
   return function_pointers_.GetAttributeViSession(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[])
@@ -780,11 +568,7 @@ ViStatus NiRFSALibrary::GetAttributeViString(ViSession vi, ViConstString channel
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetAttributeViString(vi, channelName, attributeId, bufSize, value);
-#else
   return function_pointers_.GetAttributeViString(vi, channelName, attributeId, bufSize, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetCalUserDefinedInfo(ViSession vi, ViChar info[2048])
@@ -792,11 +576,7 @@ ViStatus NiRFSALibrary::GetCalUserDefinedInfo(ViSession vi, ViChar info[2048])
   if (!function_pointers_.GetCalUserDefinedInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetCalUserDefinedInfo.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetCalUserDefinedInfo(vi, info);
-#else
   return function_pointers_.GetCalUserDefinedInfo(vi, info);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize)
@@ -804,11 +584,7 @@ ViStatus NiRFSALibrary::GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* info
   if (!function_pointers_.GetCalUserDefinedInfoMaxSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetCalUserDefinedInfoMaxSize.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetCalUserDefinedInfoMaxSize(vi, infoSize);
-#else
   return function_pointers_.GetCalUserDefinedInfoMaxSize(vi, infoSize);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
@@ -816,11 +592,7 @@ ViStatus NiRFSALibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber_
   if (!function_pointers_.GetDeembeddingSparameters) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetDeembeddingSparameters.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetDeembeddingSparameters(vi, sparameters, sparametersArraySize, numberOfSparameters, numberOfPorts);
-#else
   return function_pointers_.GetDeembeddingSparameters(vi, sparameters, sparametersArraySize, numberOfSparameters, numberOfPorts);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 responseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies)
@@ -828,11 +600,7 @@ ViStatus NiRFSALibrary::GetDeviceResponse(ViSession vi, ViConstString channelLis
   if (!function_pointers_.GetDeviceResponse) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetDeviceResponse.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetDeviceResponse(vi, channelList, responseType, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
-#else
   return function_pointers_.GetDeviceResponse(vi, channelList, responseType, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[])
@@ -840,11 +608,7 @@ ViStatus NiRFSALibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 erro
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetError.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetError(vi, errorCode, errorDescriptionBufferSize, errorDescription);
-#else
   return function_pointers_.GetError(vi, errorCode, errorDescriptionBufferSize, errorDescription);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
@@ -852,11 +616,7 @@ ViStatus NiRFSALibrary::GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, Vi
   if (!function_pointers_.GetExtCalLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetExtCalLastDateAndTime.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetExtCalLastDateAndTime(vi, year, month, day, hour, minute);
-#else
   return function_pointers_.GetExtCalLastDateAndTime(vi, year, month, day, hour, minute);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetExtCalLastTemp(ViSession vi, ViReal64* temperature)
@@ -864,11 +624,7 @@ ViStatus NiRFSALibrary::GetExtCalLastTemp(ViSession vi, ViReal64* temperature)
   if (!function_pointers_.GetExtCalLastTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetExtCalLastTemp.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetExtCalLastTemp(vi, temperature);
-#else
   return function_pointers_.GetExtCalLastTemp(vi, temperature);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* months)
@@ -876,11 +632,7 @@ ViStatus NiRFSALibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* mont
   if (!function_pointers_.GetExtCalRecommendedInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetExtCalRecommendedInterval.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetExtCalRecommendedInterval(vi, months);
-#else
   return function_pointers_.GetExtCalRecommendedInterval(vi, months);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetFetchBacklog(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64* backlog)
@@ -888,11 +640,7 @@ ViStatus NiRFSALibrary::GetFetchBacklog(ViSession vi, ViConstString channelList,
   if (!function_pointers_.GetFetchBacklog) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetFetchBacklog.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetFetchBacklog(vi, channelList, recordNumber, backlog);
-#else
   return function_pointers_.GetFetchBacklog(vi, channelList, recordNumber, backlog);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetFrequencyResponse(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies)
@@ -900,11 +648,7 @@ ViStatus NiRFSALibrary::GetFrequencyResponse(ViSession vi, ViConstString channel
   if (!function_pointers_.GetFrequencyResponse) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetFrequencyResponse.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetFrequencyResponse(vi, channelList, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
-#else
   return function_pointers_.GetFrequencyResponse(vi, channelList, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo_struct coefficientInfo[], ViInt32* numberOfCoefficientSets)
@@ -912,11 +656,7 @@ ViStatus NiRFSALibrary::GetNormalizationCoefficients(ViSession vi, ViConstString
   if (!function_pointers_.GetNormalizationCoefficients) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetNormalizationCoefficients.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetNormalizationCoefficients(vi, channelList, arraySize, coefficientInfo, numberOfCoefficientSets);
-#else
   return function_pointers_.GetNormalizationCoefficients(vi, channelList, arraySize, coefficientInfo, numberOfCoefficientSets);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetNumberOfSpectralLines(ViSession vi, ViConstString channelList, ViInt32* numberOfSpectralLines)
@@ -924,11 +664,7 @@ ViStatus NiRFSALibrary::GetNumberOfSpectralLines(ViSession vi, ViConstString cha
   if (!function_pointers_.GetNumberOfSpectralLines) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetNumberOfSpectralLines.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetNumberOfSpectralLines(vi, channelList, numberOfSpectralLines);
-#else
   return function_pointers_.GetNumberOfSpectralLines(vi, channelList, numberOfSpectralLines);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetRelayName(ViSession vi, ViConstString channelList, ViInt32 index, ViChar name[], ViInt32* bufferSize)
@@ -936,11 +672,7 @@ ViStatus NiRFSALibrary::GetRelayName(ViSession vi, ViConstString channelList, Vi
   if (!function_pointers_.GetRelayName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetRelayName.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetRelayName(vi, channelList, index, name, bufferSize);
-#else
   return function_pointers_.GetRelayName(vi, channelList, index, name, bufferSize);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetRelayOperationsCount(ViSession vi, ViConstString channelList, ViInt32 operationsCount[], ViInt32* bufferSize)
@@ -948,11 +680,7 @@ ViStatus NiRFSALibrary::GetRelayOperationsCount(ViSession vi, ViConstString chan
   if (!function_pointers_.GetRelayOperationsCount) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetRelayOperationsCount.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetRelayOperationsCount(vi, channelList, operationsCount, bufferSize);
-#else
   return function_pointers_.GetRelayOperationsCount(vi, channelList, operationsCount, bufferSize);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo_struct coefficientInfo[], ViInt32* numberOfCoefficientSets)
@@ -960,11 +688,7 @@ ViStatus NiRFSALibrary::GetScalingCoefficients(ViSession vi, ViConstString chann
   if (!function_pointers_.GetScalingCoefficients) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetScalingCoefficients.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetScalingCoefficients(vi, channelList, arraySize, coefficientInfo, numberOfCoefficientSets);
-#else
   return function_pointers_.GetScalingCoefficients(vi, channelList, arraySize, coefficientInfo, numberOfCoefficientSets);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetSelfCalLastDateAndTime(ViSession vi, ViInt64 selfCalibrationStep, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
@@ -972,11 +696,7 @@ ViStatus NiRFSALibrary::GetSelfCalLastDateAndTime(ViSession vi, ViInt64 selfCali
   if (!function_pointers_.GetSelfCalLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetSelfCalLastDateAndTime.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetSelfCalLastDateAndTime(vi, selfCalibrationStep, year, month, day, hour, minute);
-#else
   return function_pointers_.GetSelfCalLastDateAndTime(vi, selfCalibrationStep, year, month, day, hour, minute);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetSelfCalLastTemp(ViSession vi, ViInt64 selfCalibrationStep, ViReal64* temp)
@@ -984,11 +704,7 @@ ViStatus NiRFSALibrary::GetSelfCalLastTemp(ViSession vi, ViInt64 selfCalibration
   if (!function_pointers_.GetSelfCalLastTemp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetSelfCalLastTemp.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetSelfCalLastTemp(vi, selfCalibrationStep, temp);
-#else
   return function_pointers_.GetSelfCalLastTemp(vi, selfCalibrationStep, temp);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetSpectralInfoForSMT(ViSession vi, SmtSpectrumInfo_struct* spectrumInfo)
@@ -996,11 +712,7 @@ ViStatus NiRFSALibrary::GetSpectralInfoForSMT(ViSession vi, SmtSpectrumInfo_stru
   if (!function_pointers_.GetSpectralInfoForSMT) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetSpectralInfoForSMT.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetSpectralInfoForSMT(vi, spectrumInfo);
-#else
   return function_pointers_.GetSpectralInfoForSMT(vi, spectrumInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* writerHandle)
@@ -1008,11 +720,7 @@ ViStatus NiRFSALibrary::GetStreamEndpointHandle(ViSession vi, ViConstString stre
   if (!function_pointers_.GetStreamEndpointHandle) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetStreamEndpointHandle.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetStreamEndpointHandle(vi, streamEndpoint, writerHandle);
-#else
   return function_pointers_.GetStreamEndpointHandle(vi, streamEndpoint, writerHandle);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[])
@@ -1020,11 +728,7 @@ ViStatus NiRFSALibrary::GetTerminalName(ViSession vi, ViInt32 signal, ViConstStr
   if (!function_pointers_.GetTerminalName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetTerminalName.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetTerminalName(vi, signal, signalIdentifier, bufferSize, terminalName);
-#else
   return function_pointers_.GetTerminalName(vi, signal, signalIdentifier, bufferSize, terminalName);
-#endif
 }
 
 ViStatus NiRFSALibrary::GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize)
@@ -1032,11 +736,7 @@ ViStatus NiRFSALibrary::GetUserData(ViSession vi, ViConstString identifier, ViIn
   if (!function_pointers_.GetUserData) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetUserData.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_GetUserData(vi, identifier, bufferSize, data, actualDataSize);
-#else
   return function_pointers_.GetUserData(vi, identifier, bufferSize, data, actualDataSize);
-#endif
 }
 
 ViStatus NiRFSALibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi)
@@ -1044,11 +744,7 @@ ViStatus NiRFSALibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean r
   if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_init.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_init(resourceName, idQuery, reset, vi);
-#else
   return function_pointers_.Init(resourceName, idQuery, reset, vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViConstString optionString, ViSession* vi)
@@ -1056,11 +752,7 @@ ViStatus NiRFSALibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, 
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_InitWithOptions.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_InitWithOptions(resourceName, idQuery, reset, optionString, vi);
-#else
   return function_pointers_.InitWithOptions(resourceName, idQuery, reset, optionString, vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::Initiate(ViSession vi)
@@ -1068,11 +760,7 @@ ViStatus NiRFSALibrary::Initiate(ViSession vi)
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_Initiate.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_Initiate(vi);
-#else
   return function_pointers_.Initiate(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::InvalidateAllAttributes(ViSession vi)
@@ -1080,11 +768,7 @@ ViStatus NiRFSALibrary::InvalidateAllAttributes(ViSession vi)
   if (!function_pointers_.InvalidateAllAttributes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_InvalidateAllAttributes.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_InvalidateAllAttributes(vi);
-#else
   return function_pointers_.InvalidateAllAttributes(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps)
@@ -1092,11 +776,7 @@ ViStatus NiRFSALibrary::IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, Vi
   if (!function_pointers_.IsSelfCalValid) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_IsSelfCalValid.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_IsSelfCalValid(vi, selfCalValid, validSteps);
-#else
   return function_pointers_.IsSelfCalValid(vi, selfCalValid, validSteps);
-#endif
 }
 
 ViStatus NiRFSALibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
@@ -1112,11 +792,7 @@ ViStatus NiRFSALibrary::PerformThermalCorrection(ViSession vi)
   if (!function_pointers_.PerformThermalCorrection) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_PerformThermalCorrection.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_PerformThermalCorrection(vi);
-#else
   return function_pointers_.PerformThermalCorrection(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo)
@@ -1124,11 +800,7 @@ ViStatus NiRFSALibrary::ReadIQSingleRecordComplexF64(ViSession vi, ViConstString
   if (!function_pointers_.ReadIQSingleRecordComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ReadIQSingleRecordComplexF64.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ReadIQSingleRecordComplexF64(vi, channelList, timeout, data, dataArraySize, wfmInfo);
-#else
   return function_pointers_.ReadIQSingleRecordComplexF64(vi, channelList, timeout, data, dataArraySize, wfmInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::ReadPowerSpectrumF32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal32 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo)
@@ -1136,11 +808,7 @@ ViStatus NiRFSALibrary::ReadPowerSpectrumF32(ViSession vi, ViConstString channel
   if (!function_pointers_.ReadPowerSpectrumF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ReadPowerSpectrumF32.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ReadPowerSpectrumF32(vi, channelList, timeout, powerSpectrumData, dataArraySize, spectrumInfo);
-#else
   return function_pointers_.ReadPowerSpectrumF32(vi, channelList, timeout, powerSpectrumData, dataArraySize, spectrumInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::ReadPowerSpectrumF64(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal64 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo)
@@ -1148,11 +816,7 @@ ViStatus NiRFSALibrary::ReadPowerSpectrumF64(ViSession vi, ViConstString channel
   if (!function_pointers_.ReadPowerSpectrumF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ReadPowerSpectrumF64.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ReadPowerSpectrumF64(vi, channelList, timeout, powerSpectrumData, dataArraySize, spectrumInfo);
-#else
   return function_pointers_.ReadPowerSpectrumF64(vi, channelList, timeout, powerSpectrumData, dataArraySize, spectrumInfo);
-#endif
 }
 
 ViStatus NiRFSALibrary::Reset(ViSession vi)
@@ -1160,11 +824,7 @@ ViStatus NiRFSALibrary::Reset(ViSession vi)
   if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_reset.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_reset(vi);
-#else
   return function_pointers_.Reset(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId)
@@ -1172,11 +832,7 @@ ViStatus NiRFSALibrary::ResetAttribute(ViSession vi, ViConstString channelName, 
   if (!function_pointers_.ResetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ResetAttribute.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ResetAttribute(vi, channelName, attributeId);
-#else
   return function_pointers_.ResetAttribute(vi, channelName, attributeId);
-#endif
 }
 
 ViStatus NiRFSALibrary::ResetDevice(ViSession vi)
@@ -1184,11 +840,7 @@ ViStatus NiRFSALibrary::ResetDevice(ViSession vi)
   if (!function_pointers_.ResetDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ResetDevice.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ResetDevice(vi);
-#else
   return function_pointers_.ResetDevice(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::ResetWithDefaults(ViSession vi)
@@ -1196,11 +848,7 @@ ViStatus NiRFSALibrary::ResetWithDefaults(ViSession vi)
   if (!function_pointers_.ResetWithDefaults) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ResetWithDefaults.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ResetWithDefaults(vi);
-#else
   return function_pointers_.ResetWithDefaults(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::ResetWithOptions(ViSession vi, ViUInt64 stepsToOmit)
@@ -1208,11 +856,7 @@ ViStatus NiRFSALibrary::ResetWithOptions(ViSession vi, ViUInt64 stepsToOmit)
   if (!function_pointers_.ResetWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ResetWithOptions.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_ResetWithOptions(vi, stepsToOmit);
-#else
   return function_pointers_.ResetWithOptions(vi, stepsToOmit);
-#endif
 }
 
 ViStatus NiRFSALibrary::RevisionQuery(ViSession vi, ViChar driverRev[256], ViChar instrRev[256])
@@ -1220,11 +864,7 @@ ViStatus NiRFSALibrary::RevisionQuery(ViSession vi, ViChar driverRev[256], ViCha
   if (!function_pointers_.RevisionQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_revision_query.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_revision_query(vi, driverRev, instrRev);
-#else
   return function_pointers_.RevisionQuery(vi, driverRev, instrRev);
-#endif
 }
 
 ViStatus NiRFSALibrary::SelfCal(ViSession vi)
@@ -1232,11 +872,7 @@ ViStatus NiRFSALibrary::SelfCal(ViSession vi)
   if (!function_pointers_.SelfCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SelfCal.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SelfCal(vi);
-#else
   return function_pointers_.SelfCal(vi);
-#endif
 }
 
 ViStatus NiRFSALibrary::SelfCalibrate(ViSession vi, ViInt64 stepsToOmit)
@@ -1244,11 +880,7 @@ ViStatus NiRFSALibrary::SelfCalibrate(ViSession vi, ViInt64 stepsToOmit)
   if (!function_pointers_.SelfCalibrate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SelfCalibrate.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SelfCalibrate(vi, stepsToOmit);
-#else
   return function_pointers_.SelfCalibrate(vi, stepsToOmit);
-#endif
 }
 
 ViStatus NiRFSALibrary::SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minReferenceLevel, ViReal64 maxReferenceLevel)
@@ -1256,11 +888,7 @@ ViStatus NiRFSALibrary::SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, Vi
   if (!function_pointers_.SelfCalibrateRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SelfCalibrateRange.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SelfCalibrateRange(vi, stepsToOmit, minFrequency, maxFrequency, minReferenceLevel, maxReferenceLevel);
-#else
   return function_pointers_.SelfCalibrateRange(vi, stepsToOmit, minFrequency, maxFrequency, minReferenceLevel, maxReferenceLevel);
-#endif
 }
 
 ViStatus NiRFSALibrary::SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[2048])
@@ -1268,11 +896,7 @@ ViStatus NiRFSALibrary::SelfTest(ViSession vi, ViInt16* testResult, ViChar testM
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_self_test.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_self_test(vi, testResult, testMessage);
-#else
   return function_pointers_.SelfTest(vi, testResult, testMessage);
-#endif
 }
 
 ViStatus NiRFSALibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier)
@@ -1280,11 +904,7 @@ ViStatus NiRFSALibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, V
   if (!function_pointers_.SendSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SendSoftwareEdgeTrigger.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SendSoftwareEdgeTrigger(vi, trigger, triggerIdentifier);
-#else
   return function_pointers_.SendSoftwareEdgeTrigger(vi, trigger, triggerIdentifier);
-#endif
 }
 
 ViStatus NiRFSALibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value)
@@ -1292,11 +912,7 @@ ViStatus NiRFSALibrary::SetAttributeViBoolean(ViSession vi, ViConstString channe
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SetAttributeViBoolean.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SetAttributeViBoolean(vi, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViBoolean(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value)
@@ -1304,11 +920,7 @@ ViStatus NiRFSALibrary::SetAttributeViInt32(ViSession vi, ViConstString channelN
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SetAttributeViInt32.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SetAttributeViInt32(vi, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViInt32(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 value)
@@ -1316,11 +928,7 @@ ViStatus NiRFSALibrary::SetAttributeViInt64(ViSession vi, ViConstString channelN
   if (!function_pointers_.SetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SetAttributeViInt64.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SetAttributeViInt64(vi, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViInt64(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 value)
@@ -1328,11 +936,7 @@ ViStatus NiRFSALibrary::SetAttributeViReal64(ViSession vi, ViConstString channel
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SetAttributeViReal64(vi, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViReal64(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession value)
@@ -1340,11 +944,7 @@ ViStatus NiRFSALibrary::SetAttributeViSession(ViSession vi, ViConstString channe
   if (!function_pointers_.SetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SetAttributeViSession.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SetAttributeViSession(vi, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViSession(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString value)
@@ -1352,11 +952,7 @@ ViStatus NiRFSALibrary::SetAttributeViString(ViSession vi, ViConstString channel
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SetAttributeViString(vi, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiRFSALibrary::SetCalUserDefinedInfo(ViSession vi, ViConstString info)
@@ -1364,11 +960,7 @@ ViStatus NiRFSALibrary::SetCalUserDefinedInfo(ViSession vi, ViConstString info)
   if (!function_pointers_.SetCalUserDefinedInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SetCalUserDefinedInfo.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SetCalUserDefinedInfo(vi, info);
-#else
   return function_pointers_.SetCalUserDefinedInfo(vi, info);
-#endif
 }
 
 ViStatus NiRFSALibrary::SetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[])
@@ -1376,11 +968,7 @@ ViStatus NiRFSALibrary::SetUserData(ViSession vi, ViConstString identifier, ViIn
   if (!function_pointers_.SetUserData) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SetUserData.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_SetUserData(vi, identifier, bufferSize, data);
-#else
   return function_pointers_.SetUserData(vi, identifier, bufferSize, data);
-#endif
 }
 
 ViStatus NiRFSALibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)

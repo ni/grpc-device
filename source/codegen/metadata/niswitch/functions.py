@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SWITCH API metadata version 23.0.0d58
+# This file is generated from NI-SWITCH API metadata version 23.0.0f167
 functions = {
     'AbortScan': {
         'codegen_method': 'public',
@@ -148,7 +148,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'double',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViReal64'
             }
         ],
@@ -216,7 +216,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViString'
             }
         ],
@@ -1623,7 +1623,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'double',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViReal64'
             }
         ],
@@ -1691,7 +1691,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViString'
             }
         ],

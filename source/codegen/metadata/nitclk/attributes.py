@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-TClk API metadata version 23.0.0d7
+# This file is generated from NI-TClk API metadata version 23.0.0f77
 attributes = {
     1: {
         'codegen_method': 'public',

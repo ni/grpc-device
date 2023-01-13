@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12.0)
 
 project(ni_grpc_device_server
   LANGUAGES C CXX
-  VERSION 1.5.2)
+  VERSION 2.0.0)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CreateVirtualEnvironment)
@@ -91,7 +91,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -125,6 +125,7 @@ set(codegen_scripts
   )
 
 # Populated in the api loop below.
+set(nidriver_service_library_hdrs "")
 set(nidriver_service_srcs "")
 set(nidriver_client_srcs "")
 
@@ -162,6 +163,7 @@ foreach(api ${nidrivers})
   set(output_files
     ${service_output_dir}/${api}/${api}_client.cpp
     ${service_output_dir}/${api}/${api}_client.h
+    ${service_output_dir}/${api}/${api}_compilation_test.cpp
     ${service_output_dir}/${api}/${api}_library_interface.h
     ${service_output_dir}/${api}/${api}_library.cpp
     ${service_output_dir}/${api}/${api}_library.h
@@ -172,6 +174,11 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}_service_registrar.cpp
     ${service_output_dir}/${api}/${api}_service_registrar.h
   )
+  set(nidriver_service_library_hdrs
+    ${nidriver_service_library_hdrs}
+    "${service_output_dir}/${api}/${api}_library.h"
+    "${service_output_dir}/${api}/${api}_library_interface.h"
+    "${service_output_dir}/${api}/${api}_mock_library.h")
   set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (api IN_LIST nidrivers_to_build)
     set(nidriver_service_srcs
@@ -215,9 +222,9 @@ set(nidriver_service_srcs
 #----------------------------------------------------------------------
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
 get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/deviceid_restricted.proto" ABSOLUTE)
-get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
+get_filename_component(session_proto "imports/protobuf/session.proto" ABSOLUTE)
 get_filename_component(session_utilities_proto "source/protobuf/session_utilities.proto" ABSOLUTE)
-get_filename_component(nidevice_proto "source/protobuf/nidevice.proto" ABSOLUTE)
+get_filename_component(nidevice_proto "imports/protobuf/nidevice.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
@@ -242,7 +249,7 @@ function(GenerateGrpcSources)
       --cpp_out "${proto_out_path}"
       -I "${proto_path}"
       -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
-      -I ${CMAKE_SOURCE_DIR}/source/protobuf
+      -I ${CMAKE_SOURCE_DIR}/imports/protobuf
       --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
       "${proto_file}"
     DEPENDS "${proto_file}" "${session_proto}")
@@ -330,6 +337,17 @@ GenerateGrpcSources(
 )
 
 
+set(nidriver_service_library_hdrs
+  ${nidriver_service_library_hdrs}
+  "${session_proto_hdrs}"
+  "${session_grpc_hdrs}"
+  "${session_utilities_proto_hdrs}"
+  "${session_utilities_grpc_hdrs}"
+  "${nidevice_proto_hdrs}"
+  "${debugsessionproperties_restricted_proto_hdrs}"
+  "${debugsessionproperties_restricted_grpc_hdrs}"
+)
+
 foreach(api ${nidrivers})
   GenerateGrpcSources(
     PROTO
@@ -340,6 +358,10 @@ foreach(api ${nidrivers})
       "${proto_srcs_dir}/${api}.grpc.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.h"
   )
+  set(nidriver_service_library_hdrs
+    ${nidriver_service_library_hdrs}
+    "${proto_srcs_dir}/${api}.pb.h"
+    "${proto_srcs_dir}/${api}.grpc.pb.h")
   if(api IN_LIST nidrivers_to_build)
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
@@ -414,12 +436,6 @@ target_link_libraries(ni_grpc_device_server
    )
 
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
-
-if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen nimxlcTerminalAdaptor niScope niRFmxBT niRFmxInstr niRFmxLTE niRFmxNR niRFmxSpecAn niRFmxWLAN niRFSA niRFSG niswitch nisync niTClk nixnet nixntipstack)
-  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:nimxlcTerminalAdaptor.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
-  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:nimxlcTerminalAdaptor.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
-endif()
 
 #----------------------------------------------------------------------
 # Copy server_config.json to binary output directory
@@ -600,6 +616,18 @@ add_custom_command(
            ${CMAKE_SOURCE_DIR}/source/tests/assets/
            $<TARGET_FILE_DIR:UnitTestsRunner>/)
 
+foreach(api ${nidrivers_to_build})
+  set(compilation_test_sources
+    ${compilation_test_sources}
+    "${service_output_dir}/${api}/${api}_compilation_test.cpp")
+endforeach()
+add_library(CompilationTests STATIC ${compilation_test_sources})
+target_link_libraries(CompilationTests
+    ${_GRPC_GRPCPP}
+)
+add_custom_target(generated_nidriver_service_library_hdrs DEPENDS ${nidriver_service_library_hdrs})
+add_dependencies(CompilationTests generated_nidriver_service_library_hdrs)
+
 set(system_test_runner_sources
   "imports/include/nierr_Status.cpp"
   "source/tests/utilities/run_all_tests.cpp"
@@ -679,6 +707,7 @@ if(WIN32)
         "source/tests/system/nirfmxspecan_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxspecan_session_tests.cpp"
         "source/tests/system/nirfmxwlan_driver_api_tests.cpp"
+        "source/tests/system/nirfmxwlan_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxwlan_session_tests.cpp"
   )
 endif()
@@ -699,11 +728,6 @@ add_custom_command(
             ${CMAKE_SOURCE_DIR}/source/tests/assets/data/
             $<TARGET_FILE_DIR:SystemTestsRunner>/)
 
-if(WIN32)
-    target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen nimxlcTerminalAdaptor niRFmxBT niRFmxInstr niRFmxLTE niRFmxNR niRFmxSpecAn niRFmxWLAN niRFSA niRFSG niScope niswitch nisync niTClk nixnet nixntipstack)
-    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:nimxlcTerminalAdaptor.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
-    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:nimxlcTerminalAdaptor.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
-endif()
 if(_GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
     target_link_libraries(SystemTestsRunner stdc++fs)
     target_compile_definitions(SystemTestsRunner PRIVATE FS_EXPERIMENTAL)

@@ -124,6 +124,8 @@ def _get_cpp_type_for_protobuf_type(protobuf_type: str) -> str:
 
     if protobuf_type in PROTOBUF_TYPE_TO_CPP_TYPE:
         cpp_type = PROTOBUF_TYPE_TO_CPP_TYPE[protobuf_type]
+        if cpp_type in ["string"]:
+            return f"std::{cpp_type}"
         return f"{protobuf_namespace_alias()}::{cpp_type}"
 
     return protobuf_type.replace(".", "::")

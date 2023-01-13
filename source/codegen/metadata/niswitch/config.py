@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SWITCH API metadata version 23.0.0d58
+# This file is generated from NI-SWITCH API metadata version 23.0.0f167
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'
         ]
     },
-    'api_version': '23.0.0d58',
+    'api_version': '23.0.0f167',
     'c_function_prefix': 'niSwitch_',
     'c_header': 'niswitch.h',
     'close_function': 'Close',

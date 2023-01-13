@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d288
+# This file is generated from NI-DCPower API metadata version 23.0.0f517
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -684,50 +684,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ConfigureLCRCompensation': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'channelName',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'cppName': 'compensationDataSize',
-                'determine_size_from': [
-                    'compensationData'
-                ],
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'include_in_proto': False,
-                'is_size_param': True,
-                'linked_params_are_optional': False,
-                'name': 'compensationDataSize',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'compensationData',
-                'direction': 'in',
-                'grpc_type': 'bytes',
-                'name': 'compensationData',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'compensationDataSize'
-                },
-                'type': 'ViInt8[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'ConfigureLCRCustomCableCompensation': {
         'codegen_method': 'public',
         'parameters': [
@@ -823,40 +779,6 @@ functions = {
                 'grpc_type': 'sint32',
                 'name': 'function',
                 'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ConfigureOutputRange': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'channelName',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'cppName': 'rangeType',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'name': 'rangeType',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'range',
-                'direction': 'in',
-                'grpc_type': 'double',
-                'name': 'range',
-                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'
@@ -2778,46 +2700,6 @@ functions = {
                 'grpc_type': 'sint32',
                 'name': 'months',
                 'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetLCRCompensationData': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'channelName',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'cppName': 'compensationDataSize',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'include_in_proto': False,
-                'is_size_param': True,
-                'name': 'compensationDataSize',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'compensationData',
-                'direction': 'out',
-                'grpc_type': 'bytes',
-                'name': 'compensationData',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'compensationDataSize'
-                },
-                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'

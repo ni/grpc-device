@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0d39
+# This file is generated from NI-FGEN API metadata version 23.0.0f157
 functions = {
     'AbortGeneration': {
         'codegen_method': 'public',
@@ -199,7 +199,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'int64',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViInt64'
             }
         ],
@@ -3457,7 +3457,7 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'triggerId',
-                'type': 'ViString'
+                'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'
@@ -3559,7 +3559,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'int64',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViInt64'
             }
         ],

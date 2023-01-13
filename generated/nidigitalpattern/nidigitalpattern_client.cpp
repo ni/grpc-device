@@ -52,7 +52,7 @@ abort_keep_alive(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ApplyLevelsAndTimingResponse
-apply_levels_and_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const pb::string& levels_sheet, const pb::string& timing_sheet, const pb::string& initial_state_high_pins, const pb::string& initial_state_low_pins, const pb::string& initial_state_tristate_pins)
+apply_levels_and_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list, const std::string& levels_sheet, const std::string& timing_sheet, const std::string& initial_state_high_pins, const std::string& initial_state_low_pins, const std::string& initial_state_tristate_pins)
 {
   ::grpc::ClientContext context;
 
@@ -75,7 +75,7 @@ apply_levels_and_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ApplyTDROffsetsResponse
-apply_tdr_offsets(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const std::vector<double>& offsets)
+apply_tdr_offsets(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const std::vector<double>& offsets)
 {
   ::grpc::ClientContext context;
 
@@ -94,7 +94,7 @@ apply_tdr_offsets(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
 }
 
 BurstPatternResponse
-burst_pattern(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const pb::string& start_label, const bool& select_digital_function, const bool& wait_until_done, const double& timeout)
+burst_pattern(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list, const std::string& start_label, const bool& select_digital_function, const bool& wait_until_done, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -116,7 +116,7 @@ burst_pattern(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::s
 }
 
 BurstPatternSynchronizedResponse
-burst_pattern_synchronized(const StubPtr& stub, const pb::uint32& session_count, const std::vector<nidevice_grpc::Session>& sessions, const pb::string& site_list, const pb::string& start_label, const bool& select_digital_function, const bool& wait_until_done, const double& timeout)
+burst_pattern_synchronized(const StubPtr& stub, const pb::uint32& session_count, const std::vector<nidevice_grpc::Session>& sessions, const std::string& site_list, const std::string& start_label, const bool& select_digital_function, const bool& wait_until_done, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -156,7 +156,7 @@ clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ClockGeneratorAbortResponse
-clock_generator_abort(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+clock_generator_abort(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -174,7 +174,7 @@ clock_generator_abort(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 ClockGeneratorGenerateClockResponse
-clock_generator_generate_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& frequency, const bool& select_digital_function)
+clock_generator_generate_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& frequency, const bool& select_digital_function)
 {
   ::grpc::ClientContext context;
 
@@ -194,7 +194,7 @@ clock_generator_generate_clock(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ClockGeneratorInitiateResponse
-clock_generator_initiate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+clock_generator_initiate(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -246,7 +246,7 @@ commit(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ConfigureActiveLoadLevelsResponse
-configure_active_load_levels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& iol, const double& ioh, const double& vcom)
+configure_active_load_levels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& iol, const double& ioh, const double& vcom)
 {
   ::grpc::ClientContext context;
 
@@ -286,7 +286,7 @@ configure_cycle_number_history_ram_trigger(const StubPtr& stub, const nidevice_g
 }
 
 ConfigureDigitalEdgeConditionalJumpTriggerResponse
-configure_digital_edge_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_identifier, const pb::string& source, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_identifier, const std::string& source, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -313,7 +313,7 @@ configure_digital_edge_conditional_jump_trigger(const StubPtr& stub, const nidev
 }
 
 ConfigureDigitalEdgeStartTriggerResponse
-configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& source, const simple_variant<DigitalEdge, pb::int32>& edge)
+configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& source, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -382,7 +382,7 @@ configure_history_ram_cycles_to_acquire(const StubPtr& stub, const nidevice_grpc
 }
 
 ConfigurePatternBurstSitesResponse
-configure_pattern_burst_sites(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list)
+configure_pattern_burst_sites(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list)
 {
   ::grpc::ClientContext context;
 
@@ -400,7 +400,7 @@ configure_pattern_burst_sites(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigurePatternLabelHistoryRAMTriggerResponse
-configure_pattern_label_history_ram_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& label, const pb::int64& vector_offset, const pb::int64& cycle_offset, const pb::int32& pretrigger_samples)
+configure_pattern_label_history_ram_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& label, const pb::int64& vector_offset, const pb::int64& cycle_offset, const pb::int32& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -421,7 +421,7 @@ configure_pattern_label_history_ram_trigger(const StubPtr& stub, const nidevice_
 }
 
 ConfigureSoftwareEdgeConditionalJumpTriggerResponse
-configure_software_edge_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_identifier)
+configure_software_edge_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_identifier)
 {
   ::grpc::ClientContext context;
 
@@ -456,7 +456,7 @@ configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureStartLabelResponse
-configure_start_label(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& label)
+configure_start_label(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& label)
 {
   ::grpc::ClientContext context;
 
@@ -474,7 +474,7 @@ configure_start_label(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 ConfigureTerminationModeResponse
-configure_termination_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<TerminationMode, pb::int32>& mode)
+configure_termination_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const simple_variant<TerminationMode, pb::int32>& mode)
 {
   ::grpc::ClientContext context;
 
@@ -500,7 +500,7 @@ configure_termination_mode(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ConfigureTimeSetCompareEdgesStrobeResponse
-configure_time_set_compare_edges_strobe(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const double& strobe_edge)
+configure_time_set_compare_edges_strobe(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& time_set_name, const double& strobe_edge)
 {
   ::grpc::ClientContext context;
 
@@ -520,7 +520,7 @@ configure_time_set_compare_edges_strobe(const StubPtr& stub, const nidevice_grpc
 }
 
 ConfigureTimeSetCompareEdgesStrobe2xResponse
-configure_time_set_compare_edges_strobe2x(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const double& strobe_edge, const double& strobe2_edge)
+configure_time_set_compare_edges_strobe2x(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& time_set_name, const double& strobe_edge, const double& strobe2_edge)
 {
   ::grpc::ClientContext context;
 
@@ -541,7 +541,7 @@ configure_time_set_compare_edges_strobe2x(const StubPtr& stub, const nidevice_gr
 }
 
 ConfigureTimeSetDriveEdgesResponse
-configure_time_set_drive_edges(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const simple_variant<DriveFormat, pb::int32>& format, const double& drive_on_edge, const double& drive_data_edge, const double& drive_return_edge, const double& drive_off_edge)
+configure_time_set_drive_edges(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& time_set_name, const simple_variant<DriveFormat, pb::int32>& format, const double& drive_on_edge, const double& drive_data_edge, const double& drive_return_edge, const double& drive_off_edge)
 {
   ::grpc::ClientContext context;
 
@@ -572,7 +572,7 @@ configure_time_set_drive_edges(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ConfigureTimeSetDriveEdges2xResponse
-configure_time_set_drive_edges2x(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const simple_variant<DriveFormat, pb::int32>& format, const double& drive_on_edge, const double& drive_data_edge, const double& drive_return_edge, const double& drive_off_edge, const double& drive_data2_edge, const double& drive_return2_edge)
+configure_time_set_drive_edges2x(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& time_set_name, const simple_variant<DriveFormat, pb::int32>& format, const double& drive_on_edge, const double& drive_data_edge, const double& drive_return_edge, const double& drive_off_edge, const double& drive_data2_edge, const double& drive_return2_edge)
 {
   ::grpc::ClientContext context;
 
@@ -605,7 +605,7 @@ configure_time_set_drive_edges2x(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 ConfigureTimeSetDriveFormatResponse
-configure_time_set_drive_format(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const simple_variant<DriveFormat, pb::int32>& drive_format)
+configure_time_set_drive_format(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& time_set_name, const simple_variant<DriveFormat, pb::int32>& drive_format)
 {
   ::grpc::ClientContext context;
 
@@ -632,7 +632,7 @@ configure_time_set_drive_format(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 ConfigureTimeSetEdgeResponse
-configure_time_set_edge(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const simple_variant<TimeSetEdgeType, pb::int32>& edge, const double& time)
+configure_time_set_edge(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& time_set_name, const simple_variant<TimeSetEdgeType, pb::int32>& edge, const double& time)
 {
   ::grpc::ClientContext context;
 
@@ -660,7 +660,7 @@ configure_time_set_edge(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ConfigureTimeSetEdgeMultiplierResponse
-configure_time_set_edge_multiplier(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const pb::int32& edge_multiplier)
+configure_time_set_edge_multiplier(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& time_set_name, const pb::int32& edge_multiplier)
 {
   ::grpc::ClientContext context;
 
@@ -680,7 +680,7 @@ configure_time_set_edge_multiplier(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ConfigureTimeSetPeriodResponse
-configure_time_set_period(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& time_set_name, const double& period)
+configure_time_set_period(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& time_set_name, const double& period)
 {
   ::grpc::ClientContext context;
 
@@ -699,7 +699,7 @@ configure_time_set_period(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 ConfigureVoltageLevelsResponse
-configure_voltage_levels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& vil, const double& vih, const double& vol, const double& voh, const double& vterm)
+configure_voltage_levels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& vil, const double& vih, const double& vol, const double& voh, const double& vterm)
 {
   ::grpc::ClientContext context;
 
@@ -722,7 +722,7 @@ configure_voltage_levels(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CreateCaptureWaveformFromFileDigicaptureResponse
-create_capture_waveform_from_file_digicapture(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const pb::string& waveform_file_path)
+create_capture_waveform_from_file_digicapture(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& waveform_name, const std::string& waveform_file_path)
 {
   ::grpc::ClientContext context;
 
@@ -741,7 +741,7 @@ create_capture_waveform_from_file_digicapture(const StubPtr& stub, const nidevic
 }
 
 CreateCaptureWaveformParallelResponse
-create_capture_waveform_parallel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& waveform_name)
+create_capture_waveform_parallel(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
@@ -760,7 +760,7 @@ create_capture_waveform_parallel(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 CreateCaptureWaveformSerialResponse
-create_capture_waveform_serial(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& waveform_name, const pb::uint32& sample_width, const simple_variant<BitOrder, pb::int32>& bit_order)
+create_capture_waveform_serial(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& waveform_name, const pb::uint32& sample_width, const simple_variant<BitOrder, pb::int32>& bit_order)
 {
   ::grpc::ClientContext context;
 
@@ -806,7 +806,7 @@ create_channel_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 CreatePinGroupResponse
-create_pin_group(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_group_name, const pb::string& pin_list)
+create_pin_group(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_group_name, const std::string& pin_list)
 {
   ::grpc::ClientContext context;
 
@@ -825,7 +825,7 @@ create_pin_group(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 }
 
 CreatePinMapResponse
-create_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& dut_pin_list, const pb::string& system_pin_list)
+create_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& dut_pin_list, const std::string& system_pin_list)
 {
   ::grpc::ClientContext context;
 
@@ -844,7 +844,7 @@ create_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 CreateSourceWaveformFromFileTDMSResponse
-create_source_waveform_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const pb::string& waveform_file_path, const bool& write_waveform_data)
+create_source_waveform_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& waveform_name, const std::string& waveform_file_path, const bool& write_waveform_data)
 {
   ::grpc::ClientContext context;
 
@@ -864,7 +864,7 @@ create_source_waveform_from_file_tdms(const StubPtr& stub, const nidevice_grpc::
 }
 
 CreateSourceWaveformParallelResponse
-create_source_waveform_parallel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& waveform_name, const simple_variant<SourceDataMapping, pb::int32>& data_mapping)
+create_source_waveform_parallel(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& waveform_name, const simple_variant<SourceDataMapping, pb::int32>& data_mapping)
 {
   ::grpc::ClientContext context;
 
@@ -891,7 +891,7 @@ create_source_waveform_parallel(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 CreateSourceWaveformSerialResponse
-create_source_waveform_serial(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& waveform_name, const simple_variant<SourceDataMapping, pb::int32>& data_mapping, const pb::uint32& sample_width, const simple_variant<BitOrder, pb::int32>& bit_order)
+create_source_waveform_serial(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin_list, const std::string& waveform_name, const simple_variant<SourceDataMapping, pb::int32>& data_mapping, const pb::uint32& sample_width, const simple_variant<BitOrder, pb::int32>& bit_order)
 {
   ::grpc::ClientContext context;
 
@@ -927,7 +927,7 @@ create_source_waveform_serial(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateTimeSetResponse
-create_time_set(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& name)
+create_time_set(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& name)
 {
   ::grpc::ClientContext context;
 
@@ -962,7 +962,7 @@ delete_all_time_sets(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 DisableConditionalJumpTriggerResponse
-disable_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_identifier)
+disable_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_identifier)
 {
   ::grpc::ClientContext context;
 
@@ -980,7 +980,7 @@ disable_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 DisableSitesResponse
-disable_sites(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list)
+disable_sites(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list)
 {
   ::grpc::ClientContext context;
 
@@ -1034,7 +1034,7 @@ enable_match_fail_combination(const StubPtr& stub, const pb::uint32& session_cou
 }
 
 EnableSitesResponse
-enable_sites(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list)
+enable_sites(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list)
 {
   ::grpc::ClientContext context;
 
@@ -1087,7 +1087,7 @@ error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::i
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const std::string& signal_identifier, const std::string& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -1114,7 +1114,7 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
 }
 
 FetchCaptureWaveformU32Response
-fetch_capture_waveform_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const pb::string& waveform_name, const pb::int32& samples_to_read, const double& timeout)
+fetch_capture_waveform_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list, const std::string& waveform_name, const pb::int32& samples_to_read, const double& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -1135,7 +1135,7 @@ fetch_capture_waveform_u32(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 FetchHistoryRAMCycleInformationResponse
-fetch_history_ram_cycle_information(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site, const pb::int64& sample_index)
+fetch_history_ram_cycle_information(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site, const pb::int64& sample_index)
 {
   ::grpc::ClientContext context;
 
@@ -1154,7 +1154,7 @@ fetch_history_ram_cycle_information(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 FetchHistoryRAMCyclePinDataResponse
-fetch_history_ram_cycle_pin_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site, const pb::string& pin_list, const pb::int64& sample_index, const pb::int32& dut_cycle_index)
+fetch_history_ram_cycle_pin_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site, const std::string& pin_list, const pb::int64& sample_index, const pb::int32& dut_cycle_index)
 {
   ::grpc::ClientContext context;
 
@@ -1175,7 +1175,7 @@ fetch_history_ram_cycle_pin_data(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 FetchHistoryRAMScanCycleNumberResponse
-fetch_history_ram_scan_cycle_number(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site, const pb::int64& sample_index)
+fetch_history_ram_scan_cycle_number(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site, const pb::int64& sample_index)
 {
   ::grpc::ClientContext context;
 
@@ -1219,7 +1219,7 @@ frequency_counter_configure_measurement_mode(const StubPtr& stub, const nidevice
 }
 
 FrequencyCounterConfigureMeasurementTimeResponse
-frequency_counter_configure_measurement_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& measurement_time)
+frequency_counter_configure_measurement_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& measurement_time)
 {
   ::grpc::ClientContext context;
 
@@ -1238,7 +1238,7 @@ frequency_counter_configure_measurement_time(const StubPtr& stub, const nidevice
 }
 
 FrequencyCounterMeasureFrequencyResponse
-frequency_counter_measure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+frequency_counter_measure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -1256,7 +1256,7 @@ frequency_counter_measure_frequency(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -1275,7 +1275,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -1294,7 +1294,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViInt64Response
-get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute)
+get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -1313,7 +1313,7 @@ get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -1332,7 +1332,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const NiDigitalAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -1351,7 +1351,7 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -1388,7 +1388,7 @@ get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 }
 
 GetChannelNameFromStringResponse
-get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& indices)
+get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& indices)
 {
   ::grpc::ClientContext context;
 
@@ -1423,7 +1423,7 @@ get_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 GetFailCountResponse
-get_fail_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+get_fail_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -1441,7 +1441,7 @@ get_fail_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 GetHistoryRAMSampleCountResponse
-get_history_ram_sample_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site)
+get_history_ram_sample_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site)
 {
   ::grpc::ClientContext context;
 
@@ -1477,7 +1477,7 @@ get_pattern_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 }
 
 GetPatternPinIndexesResponse
-get_pattern_pin_indexes(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& start_label)
+get_pattern_pin_indexes(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& start_label)
 {
   ::grpc::ClientContext context;
 
@@ -1495,7 +1495,7 @@ get_pattern_pin_indexes(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetPatternPinListResponse
-get_pattern_pin_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& start_label)
+get_pattern_pin_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& start_label)
 {
   ::grpc::ClientContext context;
 
@@ -1531,7 +1531,7 @@ get_pin_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::in
 }
 
 GetPinResultsPinInformationResponse
-get_pin_results_pin_information(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+get_pin_results_pin_information(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -1549,7 +1549,7 @@ get_pin_results_pin_information(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 GetSitePassFailResponse
-get_site_pass_fail(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list)
+get_site_pass_fail(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list)
 {
   ::grpc::ClientContext context;
 
@@ -1567,7 +1567,7 @@ get_site_pass_fail(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 GetSiteResultsSiteNumbersResponse
-get_site_results_site_numbers(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const simple_variant<SiteResultType, pb::int32>& site_result_type)
+get_site_results_site_numbers(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list, const simple_variant<SiteResultType, pb::int32>& site_result_type)
 {
   ::grpc::ClientContext context;
 
@@ -1593,7 +1593,7 @@ get_site_results_site_numbers(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 GetTimeSetDriveFormatResponse
-get_time_set_drive_format(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin, const pb::string& time_set_name)
+get_time_set_drive_format(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin, const std::string& time_set_name)
 {
   ::grpc::ClientContext context;
 
@@ -1612,7 +1612,7 @@ get_time_set_drive_format(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 GetTimeSetEdgeResponse
-get_time_set_edge(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin, const pb::string& time_set_name, const simple_variant<TimeSetEdgeType, pb::int32>& edge)
+get_time_set_edge(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin, const std::string& time_set_name, const simple_variant<TimeSetEdgeType, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -1639,7 +1639,7 @@ get_time_set_edge(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
 }
 
 GetTimeSetEdgeMultiplierResponse
-get_time_set_edge_multiplier(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin, const pb::string& time_set_name)
+get_time_set_edge_multiplier(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin, const std::string& time_set_name)
 {
   ::grpc::ClientContext context;
 
@@ -1676,7 +1676,7 @@ get_time_set_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
 }
 
 GetTimeSetPeriodResponse
-get_time_set_period(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& time_set_name)
+get_time_set_period(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& time_set_name)
 {
   ::grpc::ClientContext context;
 
@@ -1694,7 +1694,7 @@ get_time_set_period(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 InitResponse
-init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1714,7 +1714,7 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
 }
 
 InitWithOptionsResponse
-init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init_with_options(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1769,7 +1769,7 @@ is_done(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 IsSiteEnabledResponse
-is_site_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site)
+is_site_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site)
 {
   ::grpc::ClientContext context;
 
@@ -1787,7 +1787,7 @@ is_site_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb:
 }
 
 LoadLevelsResponse
-load_levels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+load_levels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1805,7 +1805,7 @@ load_levels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::str
 }
 
 LoadPatternResponse
-load_pattern(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+load_pattern(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1823,7 +1823,7 @@ load_pattern(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
 }
 
 LoadPinMapResponse
-load_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+load_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1841,7 +1841,7 @@ load_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
 }
 
 LoadSpecificationsResponse
-load_specifications(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+load_specifications(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1859,7 +1859,7 @@ load_specifications(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 LoadTimingResponse
-load_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+load_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1877,7 +1877,7 @@ load_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::str
 }
 
 MapPinToChannelResponse
-map_pin_to_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin, const pb::int32& site, const pb::string& channel)
+map_pin_to_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& pin, const pb::int32& site, const std::string& channel)
 {
   ::grpc::ClientContext context;
 
@@ -1897,7 +1897,7 @@ map_pin_to_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 PPMUConfigureApertureTimeResponse
-ppmu_configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& aperture_time, const simple_variant<PpmuApertureTimeUnits, pb::int32>& units)
+ppmu_configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& aperture_time, const simple_variant<PpmuApertureTimeUnits, pb::int32>& units)
 {
   ::grpc::ClientContext context;
 
@@ -1924,7 +1924,7 @@ ppmu_configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 PPMUConfigureCurrentLevelResponse
-ppmu_configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& current_level)
+ppmu_configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& current_level)
 {
   ::grpc::ClientContext context;
 
@@ -1943,7 +1943,7 @@ ppmu_configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 PPMUConfigureCurrentLevelRangeResponse
-ppmu_configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& range)
+ppmu_configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -1962,7 +1962,7 @@ ppmu_configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 PPMUConfigureCurrentLimitResponse
-ppmu_configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<PpmuCurrentLimitBehavior, pb::int32>& behavior, const double& limit)
+ppmu_configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const simple_variant<PpmuCurrentLimitBehavior, pb::int32>& behavior, const double& limit)
 {
   ::grpc::ClientContext context;
 
@@ -1989,7 +1989,7 @@ ppmu_configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 PPMUConfigureCurrentLimitRangeResponse
-ppmu_configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& range)
+ppmu_configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& range)
 {
   ::grpc::ClientContext context;
 
@@ -2008,7 +2008,7 @@ ppmu_configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 PPMUConfigureOutputFunctionResponse
-ppmu_configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<PpmuOutputFunction, pb::int32>& output_function)
+ppmu_configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const simple_variant<PpmuOutputFunction, pb::int32>& output_function)
 {
   ::grpc::ClientContext context;
 
@@ -2034,7 +2034,7 @@ ppmu_configure_output_function(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 PPMUConfigureVoltageLevelResponse
-ppmu_configure_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& voltage_level)
+ppmu_configure_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& voltage_level)
 {
   ::grpc::ClientContext context;
 
@@ -2053,7 +2053,7 @@ ppmu_configure_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 PPMUConfigureVoltageLimitsResponse
-ppmu_configure_voltage_limits(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& lower_voltage_limit, const double& upper_voltage_limit)
+ppmu_configure_voltage_limits(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& lower_voltage_limit, const double& upper_voltage_limit)
 {
   ::grpc::ClientContext context;
 
@@ -2073,7 +2073,7 @@ ppmu_configure_voltage_limits(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 PPMUMeasureResponse
-ppmu_measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<PpmuMeasurementType, pb::int32>& measurement_type)
+ppmu_measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const simple_variant<PpmuMeasurementType, pb::int32>& measurement_type)
 {
   ::grpc::ClientContext context;
 
@@ -2099,7 +2099,7 @@ ppmu_measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
 }
 
 PPMUSourceResponse
-ppmu_source(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+ppmu_source(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -2117,7 +2117,7 @@ ppmu_source(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::str
 }
 
 ReadSequencerFlagResponse
-read_sequencer_flag(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& flag)
+read_sequencer_flag(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& flag)
 {
   ::grpc::ClientContext context;
 
@@ -2135,7 +2135,7 @@ read_sequencer_flag(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 ReadSequencerRegisterResponse
-read_sequencer_register(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& reg)
+read_sequencer_register(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& reg)
 {
   ::grpc::ClientContext context;
 
@@ -2153,7 +2153,7 @@ read_sequencer_register(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 ReadStaticResponse
-read_static(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+read_static(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list)
 {
   ::grpc::ClientContext context;
 
@@ -2188,7 +2188,7 @@ reset(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ResetAttributeResponse
-reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute_id)
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -2224,7 +2224,7 @@ reset_device(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SelectFunctionResponse
-select_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<SelectedFunction, pb::int32>& function)
+select_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const simple_variant<SelectedFunction, pb::int32>& function)
 {
   ::grpc::ClientContext context;
 
@@ -2284,7 +2284,7 @@ self_test(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SendSoftwareEdgeTriggerResponse
-send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SoftwareTrigger, pb::int32>& trigger, const pb::string& trigger_identifier)
+send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SoftwareTrigger, pb::int32>& trigger, const std::string& trigger_identifier)
 {
   ::grpc::ClientContext context;
 
@@ -2310,7 +2310,7 @@ send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute, const bool& value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -2330,7 +2330,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute, const simple_variant<NiDigitalInt32AttributeValues, pb::int32>& value)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute, const simple_variant<NiDigitalInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -2357,7 +2357,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViInt64Response
-set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute, const pb::int64& value)
+set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute, const pb::int64& value)
 {
   ::grpc::ClientContext context;
 
@@ -2377,7 +2377,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute, const double& value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -2397,7 +2397,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViSessionResponse
-set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute, const nidevice_grpc::Session& value)
+set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const NiDigitalAttribute& attribute, const nidevice_grpc::Session& value)
 {
   ::grpc::ClientContext context;
 
@@ -2417,7 +2417,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDigitalAttribute& attribute, const pb::string& value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiDigitalAttribute& attribute, const std::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -2437,7 +2437,7 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 TDRResponse
-tdr(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const bool& apply_offsets)
+tdr(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const bool& apply_offsets)
 {
   ::grpc::ClientContext context;
 
@@ -2474,7 +2474,7 @@ unload_all_patterns(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 UnloadSpecificationsResponse
-unload_specifications(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+unload_specifications(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -2510,7 +2510,7 @@ wait_until_done(const StubPtr& stub, const nidevice_grpc::Session& vi, const dou
 }
 
 WriteSequencerFlagResponse
-write_sequencer_flag(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& flag, const bool& value)
+write_sequencer_flag(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& flag, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -2529,7 +2529,7 @@ write_sequencer_flag(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
 }
 
 WriteSequencerFlagSynchronizedResponse
-write_sequencer_flag_synchronized(const StubPtr& stub, const pb::uint32& session_count, const std::vector<nidevice_grpc::Session>& sessions, const pb::string& flag, const bool& value)
+write_sequencer_flag_synchronized(const StubPtr& stub, const pb::uint32& session_count, const std::vector<nidevice_grpc::Session>& sessions, const std::string& flag, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -2549,7 +2549,7 @@ write_sequencer_flag_synchronized(const StubPtr& stub, const pb::uint32& session
 }
 
 WriteSequencerRegisterResponse
-write_sequencer_register(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& reg, const pb::int32& value)
+write_sequencer_register(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& reg, const pb::int32& value)
 {
   ::grpc::ClientContext context;
 
@@ -2568,7 +2568,7 @@ write_sequencer_register(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 WriteSourceWaveformBroadcastU32Response
-write_source_waveform_broadcast_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<pb::uint32>& waveform_data)
+write_source_waveform_broadcast_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& waveform_name, const std::vector<pb::uint32>& waveform_data)
 {
   ::grpc::ClientContext context;
 
@@ -2587,7 +2587,7 @@ write_source_waveform_broadcast_u32(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 WriteSourceWaveformDataFromFileTDMSResponse
-write_source_waveform_data_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const pb::string& waveform_file_path)
+write_source_waveform_data_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& waveform_name, const std::string& waveform_file_path)
 {
   ::grpc::ClientContext context;
 
@@ -2606,7 +2606,7 @@ write_source_waveform_data_from_file_tdms(const StubPtr& stub, const nidevice_gr
 }
 
 WriteSourceWaveformSiteUniqueU32Response
-write_source_waveform_site_unique_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const pb::string& waveform_name, const pb::int32& num_waveforms, const pb::int32& samples_per_waveform, const std::vector<pb::uint32>& waveform_data)
+write_source_waveform_site_unique_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& site_list, const std::string& waveform_name, const pb::int32& num_waveforms, const pb::int32& samples_per_waveform, const std::vector<pb::uint32>& waveform_data)
 {
   ::grpc::ClientContext context;
 
@@ -2628,7 +2628,7 @@ write_source_waveform_site_unique_u32(const StubPtr& stub, const nidevice_grpc::
 }
 
 WriteStaticResponse
-write_static(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<WriteStaticPinState, pb::uint32>& state)
+write_static(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const simple_variant<WriteStaticPinState, pb::uint32>& state)
 {
   ::grpc::ClientContext context;
 

@@ -101,11 +101,7 @@ ViStatus NiSwitchLibrary::AbortScan(ViSession vi)
   if (!function_pointers_.AbortScan) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_AbortScan.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_AbortScan(vi);
-#else
   return function_pointers_.AbortScan(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::CanConnect(ViSession vi, ViConstString channel1, ViConstString channel2, ViInt32* pathCapability)
@@ -113,11 +109,7 @@ ViStatus NiSwitchLibrary::CanConnect(ViSession vi, ViConstString channel1, ViCon
   if (!function_pointers_.CanConnect) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_CanConnect.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_CanConnect(vi, channel1, channel2, pathCapability);
-#else
   return function_pointers_.CanConnect(vi, channel1, channel2, pathCapability);
-#endif
 }
 
 ViStatus NiSwitchLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
@@ -125,11 +117,7 @@ ViStatus NiSwitchLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString ch
   if (!function_pointers_.CheckAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_CheckAttributeViBoolean.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_CheckAttributeViBoolean(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.CheckAttributeViBoolean(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
@@ -137,11 +125,7 @@ ViStatus NiSwitchLibrary::CheckAttributeViInt32(ViSession vi, ViConstString chan
   if (!function_pointers_.CheckAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_CheckAttributeViInt32.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_CheckAttributeViInt32(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.CheckAttributeViInt32(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
@@ -149,11 +133,7 @@ ViStatus NiSwitchLibrary::CheckAttributeViReal64(ViSession vi, ViConstString cha
   if (!function_pointers_.CheckAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_CheckAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_CheckAttributeViReal64(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.CheckAttributeViReal64(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
@@ -161,11 +141,7 @@ ViStatus NiSwitchLibrary::CheckAttributeViSession(ViSession vi, ViConstString ch
   if (!function_pointers_.CheckAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_CheckAttributeViSession.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_CheckAttributeViSession(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.CheckAttributeViSession(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
@@ -173,11 +149,7 @@ ViStatus NiSwitchLibrary::CheckAttributeViString(ViSession vi, ViConstString cha
   if (!function_pointers_.CheckAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_CheckAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_CheckAttributeViString(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.CheckAttributeViString(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ClearError(ViSession vi)
@@ -185,11 +157,7 @@ ViStatus NiSwitchLibrary::ClearError(ViSession vi)
   if (!function_pointers_.ClearError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_ClearError.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_ClearError(vi);
-#else
   return function_pointers_.ClearError(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ClearInterchangeWarnings(ViSession vi)
@@ -197,11 +165,7 @@ ViStatus NiSwitchLibrary::ClearInterchangeWarnings(ViSession vi)
   if (!function_pointers_.ClearInterchangeWarnings) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_ClearInterchangeWarnings.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_ClearInterchangeWarnings(vi);
-#else
   return function_pointers_.ClearInterchangeWarnings(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::Close(ViSession vi)
@@ -209,11 +173,7 @@ ViStatus NiSwitchLibrary::Close(ViSession vi)
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_close.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_close(vi);
-#else
   return function_pointers_.Close(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::Commit(ViSession vi)
@@ -221,11 +181,7 @@ ViStatus NiSwitchLibrary::Commit(ViSession vi)
   if (!function_pointers_.Commit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_Commit.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_Commit(vi);
-#else
   return function_pointers_.Commit(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ConfigureScanList(ViSession vi, ViConstString scanlist, ViInt32 scanMode)
@@ -233,11 +189,7 @@ ViStatus NiSwitchLibrary::ConfigureScanList(ViSession vi, ViConstString scanlist
   if (!function_pointers_.ConfigureScanList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_ConfigureScanList.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_ConfigureScanList(vi, scanlist, scanMode);
-#else
   return function_pointers_.ConfigureScanList(vi, scanlist, scanMode);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ConfigureScanTrigger(ViSession vi, ViReal64 scanDelay, ViInt32 triggerInput, ViInt32 scanAdvancedOutput)
@@ -245,11 +197,7 @@ ViStatus NiSwitchLibrary::ConfigureScanTrigger(ViSession vi, ViReal64 scanDelay,
   if (!function_pointers_.ConfigureScanTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_ConfigureScanTrigger.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_ConfigureScanTrigger(vi, scanDelay, triggerInput, scanAdvancedOutput);
-#else
   return function_pointers_.ConfigureScanTrigger(vi, scanDelay, triggerInput, scanAdvancedOutput);
-#endif
 }
 
 ViStatus NiSwitchLibrary::Connect(ViSession vi, ViConstString channel1, ViConstString channel2)
@@ -257,11 +205,7 @@ ViStatus NiSwitchLibrary::Connect(ViSession vi, ViConstString channel1, ViConstS
   if (!function_pointers_.Connect) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_Connect.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_Connect(vi, channel1, channel2);
-#else
   return function_pointers_.Connect(vi, channel1, channel2);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ConnectMultiple(ViSession vi, ViConstString connectionList)
@@ -269,11 +213,7 @@ ViStatus NiSwitchLibrary::ConnectMultiple(ViSession vi, ViConstString connection
   if (!function_pointers_.ConnectMultiple) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_ConnectMultiple.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_ConnectMultiple(vi, connectionList);
-#else
   return function_pointers_.ConnectMultiple(vi, connectionList);
-#endif
 }
 
 ViStatus NiSwitchLibrary::Disable(ViSession vi)
@@ -281,11 +221,7 @@ ViStatus NiSwitchLibrary::Disable(ViSession vi)
   if (!function_pointers_.Disable) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_Disable.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_Disable(vi);
-#else
   return function_pointers_.Disable(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::Disconnect(ViSession vi, ViConstString channel1, ViConstString channel2)
@@ -293,11 +229,7 @@ ViStatus NiSwitchLibrary::Disconnect(ViSession vi, ViConstString channel1, ViCon
   if (!function_pointers_.Disconnect) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_Disconnect.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_Disconnect(vi, channel1, channel2);
-#else
   return function_pointers_.Disconnect(vi, channel1, channel2);
-#endif
 }
 
 ViStatus NiSwitchLibrary::DisconnectAll(ViSession vi)
@@ -305,11 +237,7 @@ ViStatus NiSwitchLibrary::DisconnectAll(ViSession vi)
   if (!function_pointers_.DisconnectAll) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_DisconnectAll.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_DisconnectAll(vi);
-#else
   return function_pointers_.DisconnectAll(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::DisconnectMultiple(ViSession vi, ViConstString disconnectionList)
@@ -317,11 +245,7 @@ ViStatus NiSwitchLibrary::DisconnectMultiple(ViSession vi, ViConstString disconn
   if (!function_pointers_.DisconnectMultiple) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_DisconnectMultiple.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_DisconnectMultiple(vi, disconnectionList);
-#else
   return function_pointers_.DisconnectMultiple(vi, disconnectionList);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
@@ -329,11 +253,7 @@ ViStatus NiSwitchLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar 
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_error_message.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_error_message(vi, errorCode, errorMessage);
-#else
   return function_pointers_.ErrorMessage(vi, errorCode, errorMessage);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256])
@@ -341,11 +261,7 @@ ViStatus NiSwitchLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar er
   if (!function_pointers_.ErrorQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_error_query.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_error_query(vi, errorCode, errorMessage);
-#else
   return function_pointers_.ErrorQuery(vi, errorCode, errorMessage);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue)
@@ -353,11 +269,7 @@ ViStatus NiSwitchLibrary::GetAttributeViBoolean(ViSession vi, ViConstString chan
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetAttributeViBoolean.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.GetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue)
@@ -365,11 +277,7 @@ ViStatus NiSwitchLibrary::GetAttributeViInt32(ViSession vi, ViConstString channe
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetAttributeViInt32.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetAttributeViInt32(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.GetAttributeViInt32(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue)
@@ -377,11 +285,7 @@ ViStatus NiSwitchLibrary::GetAttributeViReal64(ViSession vi, ViConstString chann
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetAttributeViReal64(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.GetAttributeViReal64(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue)
@@ -389,11 +293,7 @@ ViStatus NiSwitchLibrary::GetAttributeViSession(ViSession vi, ViConstString chan
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetAttributeViSession.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetAttributeViSession(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.GetAttributeViSession(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[])
@@ -401,11 +301,7 @@ ViStatus NiSwitchLibrary::GetAttributeViString(ViSession vi, ViConstString chann
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetAttributeViString(vi, channelName, attributeId, arraySize, attributeValue);
-#else
   return function_pointers_.GetAttributeViString(vi, channelName, attributeId, arraySize, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelNameBuffer[])
@@ -413,11 +309,7 @@ ViStatus NiSwitchLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bu
   if (!function_pointers_.GetChannelName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetChannelName.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetChannelName(vi, index, bufferSize, channelNameBuffer);
-#else
   return function_pointers_.GetChannelName(vi, index, bufferSize, channelNameBuffer);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[])
@@ -425,11 +317,7 @@ ViStatus NiSwitchLibrary::GetError(ViSession vi, ViStatus* code, ViInt32 bufferS
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetError.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetError(vi, code, bufferSize, description);
-#else
   return function_pointers_.GetError(vi, code, bufferSize, description);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
@@ -437,11 +325,7 @@ ViStatus NiSwitchLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize
   if (!function_pointers_.GetNextCoercionRecord) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetNextCoercionRecord.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetNextCoercionRecord(vi, bufferSize, coercionRecord);
-#else
   return function_pointers_.GetNextCoercionRecord(vi, bufferSize, coercionRecord);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
@@ -449,11 +333,7 @@ ViStatus NiSwitchLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 buffer
   if (!function_pointers_.GetNextInterchangeWarning) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetNextInterchangeWarning.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetNextInterchangeWarning(vi, bufferSize, interchangeWarning);
-#else
   return function_pointers_.GetNextInterchangeWarning(vi, bufferSize, interchangeWarning);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetPath(ViSession vi, ViConstString channel1, ViConstString channel2, ViInt32 bufferSize, ViChar path[])
@@ -461,11 +341,7 @@ ViStatus NiSwitchLibrary::GetPath(ViSession vi, ViConstString channel1, ViConstS
   if (!function_pointers_.GetPath) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetPath.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetPath(vi, channel1, channel2, bufferSize, path);
-#else
   return function_pointers_.GetPath(vi, channel1, channel2, bufferSize, path);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetRelayCount(ViSession vi, ViConstString relayName, ViInt32* relayCount)
@@ -473,11 +349,7 @@ ViStatus NiSwitchLibrary::GetRelayCount(ViSession vi, ViConstString relayName, V
   if (!function_pointers_.GetRelayCount) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetRelayCount.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetRelayCount(vi, relayName, relayCount);
-#else
   return function_pointers_.GetRelayCount(vi, relayName, relayCount);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetRelayName(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[])
@@ -485,11 +357,7 @@ ViStatus NiSwitchLibrary::GetRelayName(ViSession vi, ViInt32 index, ViInt32 rela
   if (!function_pointers_.GetRelayName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetRelayName.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetRelayName(vi, index, relayNameBufferSize, relayNameBuffer);
-#else
   return function_pointers_.GetRelayName(vi, index, relayNameBufferSize, relayNameBuffer);
-#endif
 }
 
 ViStatus NiSwitchLibrary::GetRelayPosition(ViSession vi, ViConstString relayName, ViInt32* relayPosition)
@@ -497,11 +365,7 @@ ViStatus NiSwitchLibrary::GetRelayPosition(ViSession vi, ViConstString relayName
   if (!function_pointers_.GetRelayPosition) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetRelayPosition.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_GetRelayPosition(vi, relayName, relayPosition);
-#else
   return function_pointers_.GetRelayPosition(vi, relayName, relayPosition);
-#endif
 }
 
 ViStatus NiSwitchLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
@@ -509,11 +373,7 @@ ViStatus NiSwitchLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean
   if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_init.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_init(resourceName, idQuery, resetDevice, vi);
-#else
   return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionsString, ViSession* vi)
@@ -521,11 +381,7 @@ ViStatus NiSwitchLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_InitWithOptions.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_InitWithOptions(resourceName, idQuery, resetDevice, optionsString, vi);
-#else
   return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionsString, vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::InitWithTopology(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi)
@@ -533,11 +389,7 @@ ViStatus NiSwitchLibrary::InitWithTopology(ViRsrc resourceName, ViConstString to
   if (!function_pointers_.InitWithTopology) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_InitWithTopology.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_InitWithTopology(resourceName, topology, simulate, resetDevice, vi);
-#else
   return function_pointers_.InitWithTopology(resourceName, topology, simulate, resetDevice, vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::InitiateScan(ViSession vi)
@@ -545,11 +397,7 @@ ViStatus NiSwitchLibrary::InitiateScan(ViSession vi)
   if (!function_pointers_.InitiateScan) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_InitiateScan.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_InitiateScan(vi);
-#else
   return function_pointers_.InitiateScan(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::InvalidateAllAttributes(ViSession vi)
@@ -557,11 +405,7 @@ ViStatus NiSwitchLibrary::InvalidateAllAttributes(ViSession vi)
   if (!function_pointers_.InvalidateAllAttributes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_InvalidateAllAttributes.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_InvalidateAllAttributes(vi);
-#else
   return function_pointers_.InvalidateAllAttributes(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::IsDebounced(ViSession vi, ViBoolean* isDebounced)
@@ -569,11 +413,7 @@ ViStatus NiSwitchLibrary::IsDebounced(ViSession vi, ViBoolean* isDebounced)
   if (!function_pointers_.IsDebounced) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_IsDebounced.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_IsDebounced(vi, isDebounced);
-#else
   return function_pointers_.IsDebounced(vi, isDebounced);
-#endif
 }
 
 ViStatus NiSwitchLibrary::IsScanning(ViSession vi, ViBoolean* isScanning)
@@ -581,11 +421,7 @@ ViStatus NiSwitchLibrary::IsScanning(ViSession vi, ViBoolean* isScanning)
   if (!function_pointers_.IsScanning) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_IsScanning.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_IsScanning(vi, isScanning);
-#else
   return function_pointers_.IsScanning(vi, isScanning);
-#endif
 }
 
 ViStatus NiSwitchLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
@@ -601,11 +437,7 @@ ViStatus NiSwitchLibrary::RelayControl(ViSession vi, ViConstString relayName, Vi
   if (!function_pointers_.RelayControl) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_RelayControl.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_RelayControl(vi, relayName, relayAction);
-#else
   return function_pointers_.RelayControl(vi, relayName, relayAction);
-#endif
 }
 
 ViStatus NiSwitchLibrary::Reset(ViSession vi)
@@ -613,11 +445,7 @@ ViStatus NiSwitchLibrary::Reset(ViSession vi)
   if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_reset.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_reset(vi);
-#else
   return function_pointers_.Reset(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ResetInterchangeCheck(ViSession vi)
@@ -625,11 +453,7 @@ ViStatus NiSwitchLibrary::ResetInterchangeCheck(ViSession vi)
   if (!function_pointers_.ResetInterchangeCheck) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_ResetInterchangeCheck.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_ResetInterchangeCheck(vi);
-#else
   return function_pointers_.ResetInterchangeCheck(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::ResetWithDefaults(ViSession vi)
@@ -637,11 +461,7 @@ ViStatus NiSwitchLibrary::ResetWithDefaults(ViSession vi)
   if (!function_pointers_.ResetWithDefaults) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_ResetWithDefaults.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_ResetWithDefaults(vi);
-#else
   return function_pointers_.ResetWithDefaults(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256])
@@ -649,11 +469,7 @@ ViStatus NiSwitchLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRev
   if (!function_pointers_.RevisionQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_revision_query.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_revision_query(vi, instrumentDriverRevision, firmwareRevision);
-#else
   return function_pointers_.RevisionQuery(vi, instrumentDriverRevision, firmwareRevision);
-#endif
 }
 
 ViStatus NiSwitchLibrary::RouteScanAdvancedOutput(ViSession vi, ViInt32 scanAdvancedOutputConnector, ViInt32 scanAdvancedOutputBusLine, ViBoolean invert)
@@ -661,11 +477,7 @@ ViStatus NiSwitchLibrary::RouteScanAdvancedOutput(ViSession vi, ViInt32 scanAdva
   if (!function_pointers_.RouteScanAdvancedOutput) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_RouteScanAdvancedOutput.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_RouteScanAdvancedOutput(vi, scanAdvancedOutputConnector, scanAdvancedOutputBusLine, invert);
-#else
   return function_pointers_.RouteScanAdvancedOutput(vi, scanAdvancedOutputConnector, scanAdvancedOutputBusLine, invert);
-#endif
 }
 
 ViStatus NiSwitchLibrary::RouteTriggerInput(ViSession vi, ViInt32 triggerInputConnector, ViInt32 triggerInputBusLine, ViBoolean invert)
@@ -673,11 +485,7 @@ ViStatus NiSwitchLibrary::RouteTriggerInput(ViSession vi, ViInt32 triggerInputCo
   if (!function_pointers_.RouteTriggerInput) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_RouteTriggerInput.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_RouteTriggerInput(vi, triggerInputConnector, triggerInputBusLine, invert);
-#else
   return function_pointers_.RouteTriggerInput(vi, triggerInputConnector, triggerInputBusLine, invert);
-#endif
 }
 
 ViStatus NiSwitchLibrary::Scan(ViSession vi, ViConstString scanlist, ViInt16 initiation)
@@ -685,11 +493,7 @@ ViStatus NiSwitchLibrary::Scan(ViSession vi, ViConstString scanlist, ViInt16 ini
   if (!function_pointers_.Scan) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_Scan.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_Scan(vi, scanlist, initiation);
-#else
   return function_pointers_.Scan(vi, scanlist, initiation);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
@@ -697,11 +501,7 @@ ViStatus NiSwitchLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_self_test.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_self_test(vi, selfTestResult, selfTestMessage);
-#else
   return function_pointers_.SelfTest(vi, selfTestResult, selfTestMessage);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SendSoftwareTrigger(ViSession vi)
@@ -709,11 +509,7 @@ ViStatus NiSwitchLibrary::SendSoftwareTrigger(ViSession vi)
   if (!function_pointers_.SendSoftwareTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SendSoftwareTrigger.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_SendSoftwareTrigger(vi);
-#else
   return function_pointers_.SendSoftwareTrigger(vi);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue)
@@ -721,11 +517,7 @@ ViStatus NiSwitchLibrary::SetAttributeViBoolean(ViSession vi, ViConstString chan
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetAttributeViBoolean.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_SetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViBoolean(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue)
@@ -733,11 +525,7 @@ ViStatus NiSwitchLibrary::SetAttributeViInt32(ViSession vi, ViConstString channe
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetAttributeViInt32.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_SetAttributeViInt32(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViInt32(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue)
@@ -745,11 +533,7 @@ ViStatus NiSwitchLibrary::SetAttributeViReal64(ViSession vi, ViConstString chann
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_SetAttributeViReal64(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViReal64(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
@@ -757,11 +541,7 @@ ViStatus NiSwitchLibrary::SetAttributeViSession(ViSession vi, ViConstString chan
   if (!function_pointers_.SetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetAttributeViSession.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_SetAttributeViSession(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViSession(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
@@ -769,11 +549,7 @@ ViStatus NiSwitchLibrary::SetAttributeViString(ViSession vi, ViConstString chann
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_SetAttributeViString(vi, channelName, attributeId, attributeValue);
-#else
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SetContinuousScan(ViSession vi, ViBoolean continuousScan)
@@ -781,11 +557,7 @@ ViStatus NiSwitchLibrary::SetContinuousScan(ViSession vi, ViBoolean continuousSc
   if (!function_pointers_.SetContinuousScan) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetContinuousScan.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_SetContinuousScan(vi, continuousScan);
-#else
   return function_pointers_.SetContinuousScan(vi, continuousScan);
-#endif
 }
 
 ViStatus NiSwitchLibrary::SetPath(ViSession vi, ViConstString pathList)
@@ -793,11 +565,7 @@ ViStatus NiSwitchLibrary::SetPath(ViSession vi, ViConstString pathList)
   if (!function_pointers_.SetPath) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetPath.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_SetPath(vi, pathList);
-#else
   return function_pointers_.SetPath(vi, pathList);
-#endif
 }
 
 ViStatus NiSwitchLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
@@ -813,11 +581,7 @@ ViStatus NiSwitchLibrary::WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs)
   if (!function_pointers_.WaitForDebounce) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_WaitForDebounce.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_WaitForDebounce(vi, maximumTimeMs);
-#else
   return function_pointers_.WaitForDebounce(vi, maximumTimeMs);
-#endif
 }
 
 ViStatus NiSwitchLibrary::WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs)
@@ -825,11 +589,7 @@ ViStatus NiSwitchLibrary::WaitForScanComplete(ViSession vi, ViInt32 maximumTimeM
   if (!function_pointers_.WaitForScanComplete) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_WaitForScanComplete.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_WaitForScanComplete(vi, maximumTimeMs);
-#else
   return function_pointers_.WaitForScanComplete(vi, maximumTimeMs);
-#endif
 }
 
 }  // namespace niswitch_grpc

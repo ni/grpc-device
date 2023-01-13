@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-TClk API metadata version 23.0.0d7
+# This file is generated from NI-TClk API metadata version 23.0.0f77
 config = {
     'additional_headers': {
     },
-    'api_version': '23.0.0',
+    'api_version': '23.0.0f77',
     'c_function_prefix': 'niTClk_',
     'c_header': 'niTClk.h',
     'close_function': None,

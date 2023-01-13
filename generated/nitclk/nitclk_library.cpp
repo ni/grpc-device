@@ -54,11 +54,7 @@ ViStatus NiTClkLibrary::ConfigureForHomogeneousTriggers(ViUInt32 sessionCount, V
   if (!function_pointers_.ConfigureForHomogeneousTriggers) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_ConfigureForHomogeneousTriggers.");
   }
-#if defined(_MSC_VER)
-  return niTClk_ConfigureForHomogeneousTriggers(sessionCount, sessions);
-#else
   return function_pointers_.ConfigureForHomogeneousTriggers(sessionCount, sessions);
-#endif
 }
 
 ViStatus NiTClkLibrary::FinishSyncPulseSenderSynchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime)
@@ -66,11 +62,7 @@ ViStatus NiTClkLibrary::FinishSyncPulseSenderSynchronize(ViUInt32 sessionCount, 
   if (!function_pointers_.FinishSyncPulseSenderSynchronize) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_FinishSyncPulseSenderSynchronize.");
   }
-#if defined(_MSC_VER)
-  return niTClk_FinishSyncPulseSenderSynchronize(sessionCount, sessions, minTime);
-#else
   return function_pointers_.FinishSyncPulseSenderSynchronize(sessionCount, sessions, minTime);
-#endif
 }
 
 ViStatus NiTClkLibrary::GetAttributeViReal64(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64* value)
@@ -78,11 +70,7 @@ ViStatus NiTClkLibrary::GetAttributeViReal64(ViSession session, ViConstString ch
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_GetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niTClk_GetAttributeViReal64(session, channelName, attributeId, value);
-#else
   return function_pointers_.GetAttributeViReal64(session, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiTClkLibrary::GetAttributeViSession(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession* value)
@@ -90,11 +78,7 @@ ViStatus NiTClkLibrary::GetAttributeViSession(ViSession session, ViConstString c
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_GetAttributeViSession.");
   }
-#if defined(_MSC_VER)
-  return niTClk_GetAttributeViSession(session, channelName, attributeId, value);
-#else
   return function_pointers_.GetAttributeViSession(session, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiTClkLibrary::GetAttributeViString(ViSession session, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[])
@@ -102,11 +86,7 @@ ViStatus NiTClkLibrary::GetAttributeViString(ViSession session, ViConstString ch
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_GetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niTClk_GetAttributeViString(session, channelName, attributeId, bufSize, value);
-#else
   return function_pointers_.GetAttributeViString(session, channelName, attributeId, bufSize, value);
-#endif
 }
 
 ViStatus NiTClkLibrary::GetExtendedErrorInfo(ViChar errorString[], ViUInt32 errorStringSize)
@@ -114,11 +94,7 @@ ViStatus NiTClkLibrary::GetExtendedErrorInfo(ViChar errorString[], ViUInt32 erro
   if (!function_pointers_.GetExtendedErrorInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_GetExtendedErrorInfo.");
   }
-#if defined(_MSC_VER)
-  return niTClk_GetExtendedErrorInfo(errorString, errorStringSize);
-#else
   return function_pointers_.GetExtendedErrorInfo(errorString, errorStringSize);
-#endif
 }
 
 ViStatus NiTClkLibrary::Initiate(ViUInt32 sessionCount, ViSession sessions[])
@@ -126,11 +102,7 @@ ViStatus NiTClkLibrary::Initiate(ViUInt32 sessionCount, ViSession sessions[])
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_Initiate.");
   }
-#if defined(_MSC_VER)
-  return niTClk_Initiate(sessionCount, sessions);
-#else
   return function_pointers_.Initiate(sessionCount, sessions);
-#endif
 }
 
 ViStatus NiTClkLibrary::IsDone(ViUInt32 sessionCount, ViSession sessions[], ViBoolean* done)
@@ -138,11 +110,7 @@ ViStatus NiTClkLibrary::IsDone(ViUInt32 sessionCount, ViSession sessions[], ViBo
   if (!function_pointers_.IsDone) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_IsDone.");
   }
-#if defined(_MSC_VER)
-  return niTClk_IsDone(sessionCount, sessions, done);
-#else
   return function_pointers_.IsDone(sessionCount, sessions, done);
-#endif
 }
 
 ViStatus NiTClkLibrary::SetAttributeViReal64(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64 value)
@@ -150,11 +118,7 @@ ViStatus NiTClkLibrary::SetAttributeViReal64(ViSession session, ViConstString ch
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_SetAttributeViReal64.");
   }
-#if defined(_MSC_VER)
-  return niTClk_SetAttributeViReal64(session, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViReal64(session, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiTClkLibrary::SetAttributeViSession(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession value)
@@ -162,11 +126,7 @@ ViStatus NiTClkLibrary::SetAttributeViSession(ViSession session, ViConstString c
   if (!function_pointers_.SetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_SetAttributeViSession.");
   }
-#if defined(_MSC_VER)
-  return niTClk_SetAttributeViSession(session, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViSession(session, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiTClkLibrary::SetAttributeViString(ViSession session, ViConstString channelName, ViAttr attributeId, ViConstString value)
@@ -174,11 +134,7 @@ ViStatus NiTClkLibrary::SetAttributeViString(ViSession session, ViConstString ch
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_SetAttributeViString.");
   }
-#if defined(_MSC_VER)
-  return niTClk_SetAttributeViString(session, channelName, attributeId, value);
-#else
   return function_pointers_.SetAttributeViString(session, channelName, attributeId, value);
-#endif
 }
 
 ViStatus NiTClkLibrary::SetupForSyncPulseSenderSynchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime)
@@ -186,11 +142,7 @@ ViStatus NiTClkLibrary::SetupForSyncPulseSenderSynchronize(ViUInt32 sessionCount
   if (!function_pointers_.SetupForSyncPulseSenderSynchronize) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_SetupForSyncPulseSenderSynchronize.");
   }
-#if defined(_MSC_VER)
-  return niTClk_SetupForSyncPulseSenderSynchronize(sessionCount, sessions, minTime);
-#else
   return function_pointers_.SetupForSyncPulseSenderSynchronize(sessionCount, sessions, minTime);
-#endif
 }
 
 ViStatus NiTClkLibrary::Synchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTclkPeriod)
@@ -198,11 +150,7 @@ ViStatus NiTClkLibrary::Synchronize(ViUInt32 sessionCount, ViSession sessions[],
   if (!function_pointers_.Synchronize) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_Synchronize.");
   }
-#if defined(_MSC_VER)
-  return niTClk_Synchronize(sessionCount, sessions, minTclkPeriod);
-#else
   return function_pointers_.Synchronize(sessionCount, sessions, minTclkPeriod);
-#endif
 }
 
 ViStatus NiTClkLibrary::SynchronizeToSyncPulseSender(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime)
@@ -210,11 +158,7 @@ ViStatus NiTClkLibrary::SynchronizeToSyncPulseSender(ViUInt32 sessionCount, ViSe
   if (!function_pointers_.SynchronizeToSyncPulseSender) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_SynchronizeToSyncPulseSender.");
   }
-#if defined(_MSC_VER)
-  return niTClk_SynchronizeToSyncPulseSender(sessionCount, sessions, minTime);
-#else
   return function_pointers_.SynchronizeToSyncPulseSender(sessionCount, sessions, minTime);
-#endif
 }
 
 ViStatus NiTClkLibrary::WaitUntilDone(ViUInt32 sessionCount, ViSession sessions[], ViReal64 timeout)
@@ -222,11 +166,7 @@ ViStatus NiTClkLibrary::WaitUntilDone(ViUInt32 sessionCount, ViSession sessions[
   if (!function_pointers_.WaitUntilDone) {
     throw nidevice_grpc::LibraryLoadException("Could not find niTClk_WaitUntilDone.");
   }
-#if defined(_MSC_VER)
-  return niTClk_WaitUntilDone(sessionCount, sessions, timeout);
-#else
   return function_pointers_.WaitUntilDone(sessionCount, sessions, timeout);
-#endif
 }
 
 }  // namespace nitclk_grpc

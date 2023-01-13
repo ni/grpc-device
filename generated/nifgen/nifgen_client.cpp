@@ -53,7 +53,7 @@ adjust_sample_clock_relative_delay(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 AllocateNamedWaveformResponse
-allocate_named_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const pb::int32& waveform_size)
+allocate_named_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& waveform_name, const pb::int32& waveform_size)
 {
   ::grpc::ClientContext context;
 
@@ -73,7 +73,7 @@ allocate_named_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 AllocateWaveformResponse
-allocate_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_size)
+allocate_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& waveform_size)
 {
   ::grpc::ClientContext context;
 
@@ -92,7 +92,7 @@ allocate_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
 }
 
 CheckAttributeViBooleanResponse
-check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const bool& attribute_value)
+check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const bool& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -112,7 +112,7 @@ check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViInt32Response
-check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenInt32AttributeValues, pb::int32>& attribute_value)
+check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -139,7 +139,7 @@ check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViInt64Response
-check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::int64& attribute_value)
+check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const pb::int64& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -159,7 +159,7 @@ check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViReal64Response
-check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
+check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -186,7 +186,7 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 CheckAttributeViSessionResponse
-check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
+check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -206,7 +206,7 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value)
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -359,7 +359,7 @@ clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ClearUserStandardWaveformResponse
-clear_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+clear_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -411,7 +411,7 @@ commit(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ConfigureAmplitudeResponse
-configure_amplitude(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& amplitude)
+configure_amplitude(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& amplitude)
 {
   ::grpc::ClientContext context;
 
@@ -430,7 +430,7 @@ configure_amplitude(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 ConfigureArbSequenceResponse
-configure_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& sequence_handle, const double& gain, const double& offset)
+configure_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& sequence_handle, const double& gain, const double& offset)
 {
   ::grpc::ClientContext context;
 
@@ -451,7 +451,7 @@ configure_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 ConfigureArbWaveformResponse
-configure_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const double& gain, const double& offset)
+configure_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& waveform_handle, const double& gain, const double& offset)
 {
   ::grpc::ClientContext context;
 
@@ -472,7 +472,7 @@ configure_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 ConfigureChannelsResponse
-configure_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channels)
+configure_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channels)
 {
   ::grpc::ClientContext context;
 
@@ -515,7 +515,7 @@ configure_clock_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
 }
 
 ConfigureCustomFIRFilterCoefficientsResponse
-configure_custom_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& coefficients_array)
+configure_custom_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<double>& coefficients_array)
 {
   ::grpc::ClientContext context;
 
@@ -534,7 +534,7 @@ configure_custom_fir_filter_coefficients(const StubPtr& stub, const nidevice_grp
 }
 
 ConfigureDigitalEdgeScriptTriggerResponse
-configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id, const pb::string& source, const pb::int32& edge)
+configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id, const std::string& source, const pb::int32& edge)
 {
   ::grpc::ClientContext context;
 
@@ -554,7 +554,7 @@ configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureDigitalEdgeStartTriggerResponse
-configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& source, const pb::int32& edge)
+configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& source, const pb::int32& edge)
 {
   ::grpc::ClientContext context;
 
@@ -573,7 +573,7 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ConfigureDigitalLevelScriptTriggerResponse
-configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id, const pb::string& source, const simple_variant<TriggerWhen, pb::int32>& trigger_when)
+configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id, const std::string& source, const simple_variant<TriggerWhen, pb::int32>& trigger_when)
 {
   ::grpc::ClientContext context;
 
@@ -600,7 +600,7 @@ configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc:
 }
 
 ConfigureFreqListResponse
-configure_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& frequency_list_handle, const double& amplitude, const double& dc_offset, const double& start_phase)
+configure_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& frequency_list_handle, const double& amplitude, const double& dc_offset, const double& start_phase)
 {
   ::grpc::ClientContext context;
 
@@ -622,7 +622,7 @@ configure_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 ConfigureFrequencyResponse
-configure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& frequency)
+configure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& frequency)
 {
   ::grpc::ClientContext context;
 
@@ -641,7 +641,7 @@ configure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 ConfigureOperationModeResponse
-configure_operation_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& operation_mode)
+configure_operation_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& operation_mode)
 {
   ::grpc::ClientContext context;
 
@@ -660,7 +660,7 @@ configure_operation_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 ConfigureOutputEnabledResponse
-configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled)
+configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const bool& enabled)
 {
   ::grpc::ClientContext context;
 
@@ -679,7 +679,7 @@ configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 ConfigureOutputImpedanceResponse
-configure_output_impedance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& impedance)
+configure_output_impedance(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& impedance)
 {
   ::grpc::ClientContext context;
 
@@ -741,7 +741,7 @@ configure_p2p_endpoint_fullness_start_trigger(const StubPtr& stub, const nidevic
 }
 
 ConfigureReferenceClockResponse
-configure_reference_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& reference_clock_source, const double& reference_clock_frequency)
+configure_reference_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& reference_clock_source, const double& reference_clock_frequency)
 {
   ::grpc::ClientContext context;
 
@@ -760,7 +760,7 @@ configure_reference_clock(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 ConfigureSampleClockSourceResponse
-configure_sample_clock_source(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sample_clock_source)
+configure_sample_clock_source(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& sample_clock_source)
 {
   ::grpc::ClientContext context;
 
@@ -796,7 +796,7 @@ configure_sample_rate(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 ConfigureSoftwareEdgeScriptTriggerResponse
-configure_software_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id)
+configure_software_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id)
 {
   ::grpc::ClientContext context;
 
@@ -831,7 +831,7 @@ configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureStandardWaveformResponse
-configure_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Waveform, pb::int32>& waveform, const double& amplitude, const double& dc_offset, const double& frequency, const double& start_phase)
+configure_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<Waveform, pb::int32>& waveform, const double& amplitude, const double& dc_offset, const double& frequency, const double& start_phase)
 {
   ::grpc::ClientContext context;
 
@@ -861,7 +861,7 @@ configure_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 ConfigureSynchronizationResponse
-configure_synchronization(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& synchronization_source)
+configure_synchronization(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& synchronization_source)
 {
   ::grpc::ClientContext context;
 
@@ -880,7 +880,7 @@ configure_synchronization(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 ConfigureTriggerModeResponse
-configure_trigger_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<TriggerMode, pb::int32>& trigger_mode)
+configure_trigger_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<TriggerMode, pb::int32>& trigger_mode)
 {
   ::grpc::ClientContext context;
 
@@ -973,7 +973,7 @@ create_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const si
 }
 
 CreateWaveformComplexF64Response
-create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& waveform_data_array)
+create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& waveform_data_array)
 {
   ::grpc::ClientContext context;
 
@@ -992,7 +992,7 @@ create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 CreateWaveformF64Response
-create_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& waveform_data_array)
+create_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<double>& waveform_data_array)
 {
   ::grpc::ClientContext context;
 
@@ -1011,7 +1011,7 @@ create_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 CreateWaveformFromFileF64Response
-create_waveform_from_file_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order)
+create_waveform_from_file_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order)
 {
   ::grpc::ClientContext context;
 
@@ -1038,7 +1038,7 @@ create_waveform_from_file_f64(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateWaveformFromFileHWSResponse
-create_waveform_from_file_hws(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const bool& use_rate_from_waveform, const bool& use_gain_and_offset_from_waveform)
+create_waveform_from_file_hws(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& file_name, const bool& use_rate_from_waveform, const bool& use_gain_and_offset_from_waveform)
 {
   ::grpc::ClientContext context;
 
@@ -1059,7 +1059,7 @@ create_waveform_from_file_hws(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateWaveformFromFileI16Response
-create_waveform_from_file_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order)
+create_waveform_from_file_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order)
 {
   ::grpc::ClientContext context;
 
@@ -1086,7 +1086,7 @@ create_waveform_from_file_i16(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CreateWaveformI16Response
-create_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<pb::int32>& waveform_data_array)
+create_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<pb::int32>& waveform_data_array)
 {
   ::grpc::ClientContext context;
 
@@ -1105,7 +1105,7 @@ create_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 DefineUserStandardWaveformResponse
-define_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& waveform_data_array)
+define_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<double>& waveform_data_array)
 {
   ::grpc::ClientContext context;
 
@@ -1124,7 +1124,7 @@ define_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 DeleteNamedWaveformResponse
-delete_named_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name)
+delete_named_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
@@ -1143,7 +1143,7 @@ delete_named_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 DeleteScriptResponse
-delete_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& script_name)
+delete_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& script_name)
 {
   ::grpc::ClientContext context;
 
@@ -1179,7 +1179,7 @@ disable(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 DisableAnalogFilterResponse
-disable_analog_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+disable_analog_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1197,7 +1197,7 @@ disable_analog_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 DisableDigitalFilterResponse
-disable_digital_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+disable_digital_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1215,7 +1215,7 @@ disable_digital_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 DisableDigitalPatterningResponse
-disable_digital_patterning(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+disable_digital_patterning(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1233,7 +1233,7 @@ disable_digital_patterning(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 DisableScriptTriggerResponse
-disable_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id)
+disable_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id)
 {
   ::grpc::ClientContext context;
 
@@ -1268,7 +1268,7 @@ disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 EnableAnalogFilterResponse
-enable_analog_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& filter_correction_frequency)
+enable_analog_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& filter_correction_frequency)
 {
   ::grpc::ClientContext context;
 
@@ -1287,7 +1287,7 @@ enable_analog_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
 }
 
 EnableDigitalFilterResponse
-enable_digital_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+enable_digital_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1305,7 +1305,7 @@ enable_digital_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 EnableDigitalPatterningResponse
-enable_digital_patterning(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+enable_digital_patterning(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1393,7 +1393,7 @@ export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
 }
 
 ExportAttributeConfigurationFileResponse
-export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1411,7 +1411,7 @@ export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const std::string& signal_identifier, const std::string& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -1438,7 +1438,7 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1457,7 +1457,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1476,7 +1476,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViInt64Response
-get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
+get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1495,7 +1495,7 @@ get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1514,7 +1514,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1533,7 +1533,7 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1638,7 +1638,7 @@ get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 GetFIRFilterCoefficientsResponse
-get_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+get_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
 {
   ::grpc::ClientContext context;
 
@@ -1758,7 +1758,7 @@ get_self_cal_supported(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 GetStreamEndpointHandleResponse
-get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint)
+get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& stream_endpoint)
 {
   ::grpc::ClientContext context;
 
@@ -1776,7 +1776,7 @@ get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ImportAttributeConfigurationBufferResponse
-import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
+import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& configuration)
 {
   ::grpc::ClientContext context;
 
@@ -1794,7 +1794,7 @@ import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
 }
 
 ImportAttributeConfigurationFileResponse
-import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path)
+import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
@@ -1812,7 +1812,7 @@ import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 InitResponse
-init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1832,7 +1832,7 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
 }
 
 InitWithOptionsResponse
-init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+init_with_options(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1853,7 +1853,7 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
 }
 
 InitializeWithChannelsResponse
-initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channel_name, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+initialize_with_channels(const StubPtr& stub, const std::string& resource_name, const std::string& channel_name, const bool& reset_device, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1925,7 +1925,7 @@ is_done(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ManualEnableP2PStreamResponse
-manual_enable_p2p_stream(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& endpoint_name)
+manual_enable_p2p_stream(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& endpoint_name)
 {
   ::grpc::ClientContext context;
 
@@ -2028,7 +2028,7 @@ reset(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ResetAttributeResponse
-reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -2115,7 +2115,7 @@ revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 RouteSignalOutResponse
-route_signal_out(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<RouteSignalFrom, pb::int32>& route_signal_from, const simple_variant<RouteSignalTo, pb::int32>& route_signal_to)
+route_signal_out(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const simple_variant<RouteSignalFrom, pb::int32>& route_signal_from, const simple_variant<RouteSignalTo, pb::int32>& route_signal_to)
 {
   ::grpc::ClientContext context;
 
@@ -2183,7 +2183,7 @@ self_test(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SendSoftwareEdgeTriggerResponse
-send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Trigger, pb::int32>& trigger, const pb::string& trigger_id)
+send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Trigger, pb::int32>& trigger, const std::string& trigger_id)
 {
   ::grpc::ClientContext context;
 
@@ -2209,7 +2209,7 @@ send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const bool& attribute_value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const bool& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2229,7 +2229,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenInt32AttributeValues, pb::int32>& attribute_value)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2256,7 +2256,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViInt64Response
-set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::int64& attribute_value)
+set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const pb::int64& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2276,7 +2276,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2303,7 +2303,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViSessionResponse
-set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
+set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2323,7 +2323,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2350,7 +2350,7 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetNamedWaveformNextWritePositionResponse
-set_named_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const simple_variant<RelativeTo, pb::int32>& relative_to, const pb::int32& offset)
+set_named_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& waveform_name, const simple_variant<RelativeTo, pb::int32>& relative_to, const pb::int32& offset)
 {
   ::grpc::ClientContext context;
 
@@ -2378,7 +2378,7 @@ set_named_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc:
 }
 
 SetWaveformNextWritePositionResponse
-set_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const simple_variant<RelativeTo, pb::int32>& relative_to, const pb::int32& offset)
+set_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& waveform_handle, const simple_variant<RelativeTo, pb::int32>& relative_to, const pb::int32& offset)
 {
   ::grpc::ClientContext context;
 
@@ -2424,7 +2424,7 @@ wait_until_done(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb:
 }
 
 WriteBinary16WaveformResponse
-write_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<pb::int32>& data)
+write_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& waveform_handle, const std::vector<pb::int32>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2444,7 +2444,7 @@ write_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 WriteComplexBinary16WaveformResponse
-write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<nidevice_grpc::NIComplexI16>& data)
+write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& waveform_handle, const std::vector<nidevice_grpc::NIComplexI16>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2464,7 +2464,7 @@ write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 WriteNamedWaveformComplexF64Response
-write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& data)
+write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2484,7 +2484,7 @@ write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 WriteNamedWaveformComplexI16Response
-write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& data)
+write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2504,7 +2504,7 @@ write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 WriteNamedWaveformF64Response
-write_named_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<double>& data)
+write_named_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& waveform_name, const std::vector<double>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2524,7 +2524,7 @@ write_named_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 WriteNamedWaveformI16Response
-write_named_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<pb::int32>& data)
+write_named_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& waveform_name, const std::vector<pb::int32>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2544,7 +2544,7 @@ write_named_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 WriteP2PEndpointI16Response
-write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& endpoint_name, const std::vector<pb::int32>& endpoint_data)
+write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& endpoint_name, const std::vector<pb::int32>& endpoint_data)
 {
   ::grpc::ClientContext context;
 
@@ -2563,7 +2563,7 @@ write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 WriteScriptResponse
-write_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& script)
+write_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& script)
 {
   ::grpc::ClientContext context;
 
@@ -2582,7 +2582,7 @@ write_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
 }
 
 WriteWaveformResponse
-write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<double>& data)
+write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& waveform_handle, const std::vector<double>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2602,7 +2602,7 @@ write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 WriteWaveformComplexF64Response
-write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& data, const pb::int32& waveform_handle)
+write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& data, const pb::int32& waveform_handle)
 {
   ::grpc::ClientContext context;
 

@@ -43,11 +43,9 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeSourceTriggerWithChannels, (ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge), (override));
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeStartTrigger, (ViSession vi, ViConstString inputTerminal, ViInt32 edge), (override));
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeStartTriggerWithChannels, (ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge), (override));
-  MOCK_METHOD(ViStatus, ConfigureLCRCompensation, (ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[]), (override));
   MOCK_METHOD(ViStatus, ConfigureLCRCustomCableCompensation, (ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputEnabled, (ViSession vi, ViConstString channelName, ViBoolean enabled), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputFunction, (ViSession vi, ViConstString channelName, ViInt32 function), (override));
-  MOCK_METHOD(ViStatus, ConfigureOutputRange, (ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputResistance, (ViSession vi, ViConstString channelName, ViReal64 resistance), (override));
   MOCK_METHOD(ViStatus, ConfigureOvp, (ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit), (override));
   MOCK_METHOD(ViStatus, ConfigurePowerLineFrequency, (ViSession vi, ViReal64 powerlineFrequency), (override));
@@ -118,7 +116,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, GetExtCalLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetExtCalLastTemp, (ViSession vi, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetExtCalRecommendedInterval, (ViSession vi, ViInt32* months), (override));
-  MOCK_METHOD(ViStatus, GetLCRCompensationData, (ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[]), (override));
   MOCK_METHOD(ViStatus, GetLCRCompensationLastDateAndTime, (ViSession vi, ViConstString channelName, ViInt32 compensationType, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetLCRCustomCableCompensationData, (ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]), (override));
   MOCK_METHOD(ViStatus, GetNextCoercionRecord, (ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]), (override));

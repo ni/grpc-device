@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 23.0.0d46
+# This file is generated from NI-DMM API metadata version 23.0.0f147
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -184,7 +184,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViString'
             }
         ],
@@ -2517,7 +2517,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViString'
             }
         ],

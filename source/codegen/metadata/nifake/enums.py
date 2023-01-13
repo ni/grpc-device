@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d49
+# This file is generated from NI-FAKE API metadata version 23.0.0f157
 enums = {
     'Bitfield': {
         'codegen_method': 'public',
@@ -188,6 +188,20 @@ enums = {
             {
                 'name': 'GRPC_COLOR_OVERRIDE_BLACK',
                 'value': 42
+            },
+            {
+                'name': 'SAMPLE_COUNT_SAMPLE_COUNT_INFINITE',
+                'value': 0
+            }
+        ]
+    },
+    'NiFakeReal64AttributeValues': {
+        'enum-value-prefix': 'NIFAKE_REAL64',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'SAMPLE_INTERVAL_AUTO_DELAY',
+                'value': -1
             }
         ]
     },
@@ -214,6 +228,24 @@ enums = {
             {
                 'name': 'FLOAT_ENUM_SEVEN_POINT_FIVE',
                 'value': 7.5
+            }
+        ]
+    },
+    'SampleCount': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'SAMPLE_COUNT_INFINITE',
+                'value': 0
+            }
+        ]
+    },
+    'SampleInterval': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'AUTO_DELAY',
+                'value': -1
             }
         ]
     },
