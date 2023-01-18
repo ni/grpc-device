@@ -2256,6 +2256,38 @@ namespace niscope_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::GetStartTimestampInformation(::grpc::ServerContext* context, const GetStartTimestampInformationRequest* request, GetStartTimestampInformationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViUInt32 sys_time_in128_bits_t1 {};
+      ViUInt32 sys_time_in128_bits_t2 {};
+      ViUInt32 sys_time_in128_bits_t3 {};
+      ViUInt32 sys_time_in128_bits_t4 {};
+      ViReal64 device_time_in_absolute_time_units {};
+      auto status = library_->GetStartTimestampInformation(vi, &sys_time_in128_bits_t1, &sys_time_in128_bits_t2, &sys_time_in128_bits_t3, &sys_time_in128_bits_t4, &device_time_in_absolute_time_units);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_sys_time_in128_bits_t1(sys_time_in128_bits_t1);
+      response->set_sys_time_in128_bits_t2(sys_time_in128_bits_t2);
+      response->set_sys_time_in128_bits_t3(sys_time_in128_bits_t3);
+      response->set_sys_time_in128_bits_t4(sys_time_in128_bits_t4);
+      response->set_device_time_in_absolute_time_units(device_time_in_absolute_time_units);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response)
   {
     if (context->IsCancelled()) {

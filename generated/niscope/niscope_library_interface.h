@@ -8,6 +8,7 @@
 
 #include <grpcpp/grpcpp.h>
 #include <niScopeCal.h>
+#include "niScopePrivate.h"
 
 namespace niscope_grpc {
 
@@ -82,6 +83,7 @@ class NiScopeLibraryInterface {
   virtual ViStatus GetFrequencyResponse(ViSession vi, ViConstString channel, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 amplitudes[], ViReal64 phases[], ViInt32* numberOfFrequencies) = 0;
   virtual ViStatus GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 bufferSize, niScope_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets) = 0;
   virtual ViStatus GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32 bufferSize, niScope_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets) = 0;
+  virtual ViStatus GetStartTimestampInformation(ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits) = 0;
   virtual ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamName, ViUInt32* writerHandle) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;

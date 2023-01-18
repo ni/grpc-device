@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.0.0f168
+# This file is generated from NI-SCOPE API metadata version 23.3.0d9999
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -2668,6 +2668,54 @@ functions = {
                 'grpc_type': 'sint32',
                 'name': 'numberOfCoefficientSets',
                 'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetStartTimestampInformation': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'sysTimeIn128BitsT1',
+                'direction': 'out',
+                'grpc_type': 'uint32',
+                'name': 'sysTimeIn128BitsT1',
+                'type': 'ViUInt32'
+            },
+            {
+                'cppName': 'sysTimeIn128BitsT2',
+                'direction': 'out',
+                'grpc_type': 'uint32',
+                'name': 'sysTimeIn128BitsT2',
+                'type': 'ViUInt32'
+            },
+            {
+                'cppName': 'sysTimeIn128BitsT3',
+                'direction': 'out',
+                'grpc_type': 'uint32',
+                'name': 'sysTimeIn128BitsT3',
+                'type': 'ViUInt32'
+            },
+            {
+                'cppName': 'sysTimeIn128BitsT4',
+                'direction': 'out',
+                'grpc_type': 'uint32',
+                'name': 'sysTimeIn128BitsT4',
+                'type': 'ViUInt32'
+            },
+            {
+                'cppName': 'deviceTimeInAbsoluteTimeUnits',
+                'direction': 'out',
+                'grpc_type': 'double',
+                'name': 'deviceTimeInAbsoluteTimeUnits',
+                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'

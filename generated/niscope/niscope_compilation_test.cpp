@@ -342,6 +342,11 @@ ViStatus GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32
   return niScope_GetScalingCoefficients(vi, channelList, bufferSize, coefficientInfo, numberOfCoefficientSets);
 }
 
+ViStatus GetStartTimestampInformation(ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits)
+{
+  return niScope_GetStartTimestampInformation(vi, sysTimeIn128BitsT1, sysTimeIn128BitsT2, sysTimeIn128BitsT3, sysTimeIn128BitsT4, deviceTimeInAbsoluteTimeUnits);
+}
+
 ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamName, ViUInt32* writerHandle)
 {
   return niScope_GetStreamEndpointHandle(vi, streamName, writerHandle);

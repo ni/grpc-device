@@ -85,6 +85,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus GetFrequencyResponse(ViSession vi, ViConstString channel, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 amplitudes[], ViReal64 phases[], ViInt32* numberOfFrequencies);
   ViStatus GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 bufferSize, niScope_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets);
   ViStatus GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32 bufferSize, niScope_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets);
+  ViStatus GetStartTimestampInformation(ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits);
   ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamName, ViUInt32* writerHandle);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
@@ -179,6 +180,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   using GetFrequencyResponsePtr = decltype(&niScope_GetFrequencyResponse);
   using GetNormalizationCoefficientsPtr = decltype(&niScope_GetNormalizationCoefficients);
   using GetScalingCoefficientsPtr = decltype(&niScope_GetScalingCoefficients);
+  using GetStartTimestampInformationPtr = decltype(&niScope_GetStartTimestampInformation);
   using GetStreamEndpointHandlePtr = decltype(&niScope_GetStreamEndpointHandle);
   using ImportAttributeConfigurationBufferPtr = decltype(&niScope_ImportAttributeConfigurationBuffer);
   using ImportAttributeConfigurationFilePtr = decltype(&niScope_ImportAttributeConfigurationFile);
@@ -273,6 +275,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
     GetFrequencyResponsePtr GetFrequencyResponse;
     GetNormalizationCoefficientsPtr GetNormalizationCoefficients;
     GetScalingCoefficientsPtr GetScalingCoefficients;
+    GetStartTimestampInformationPtr GetStartTimestampInformation;
     GetStreamEndpointHandlePtr GetStreamEndpointHandle;
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;

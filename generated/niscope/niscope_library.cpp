@@ -88,6 +88,7 @@ NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetFrequencyResponse = reinterpret_cast<GetFrequencyResponsePtr>(shared_library_.get_function_pointer("niScope_GetFrequencyResponse"));
   function_pointers_.GetNormalizationCoefficients = reinterpret_cast<GetNormalizationCoefficientsPtr>(shared_library_.get_function_pointer("niScope_GetNormalizationCoefficients"));
   function_pointers_.GetScalingCoefficients = reinterpret_cast<GetScalingCoefficientsPtr>(shared_library_.get_function_pointer("niScope_GetScalingCoefficients"));
+  function_pointers_.GetStartTimestampInformation = reinterpret_cast<GetStartTimestampInformationPtr>(shared_library_.get_function_pointer("niScope_GetStartTimestampInformation"));
   function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_.get_function_pointer("niScope_GetStreamEndpointHandle"));
   function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niScope_ImportAttributeConfigurationBuffer"));
   function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niScope_ImportAttributeConfigurationFile"));
@@ -660,6 +661,14 @@ ViStatus NiScopeLibrary::GetScalingCoefficients(ViSession vi, ViConstString chan
     throw nidevice_grpc::LibraryLoadException("Could not find niScope_GetScalingCoefficients.");
   }
   return function_pointers_.GetScalingCoefficients(vi, channelList, bufferSize, coefficientInfo, numberOfCoefficientSets);
+}
+
+ViStatus NiScopeLibrary::GetStartTimestampInformation(ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits)
+{
+  if (!function_pointers_.GetStartTimestampInformation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niScope_GetStartTimestampInformation.");
+  }
+  return function_pointers_.GetStartTimestampInformation(vi, sysTimeIn128BitsT1, sysTimeIn128BitsT2, sysTimeIn128BitsT3, sysTimeIn128BitsT4, deviceTimeInAbsoluteTimeUnits);
 }
 
 ViStatus NiScopeLibrary::GetStreamEndpointHandle(ViSession vi, ViConstString streamName, ViUInt32* writerHandle)

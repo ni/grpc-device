@@ -1579,6 +1579,23 @@ get_scaling_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   return response;
 }
 
+GetStartTimestampInformationResponse
+get_start_timestamp_information(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetStartTimestampInformationRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetStartTimestampInformationResponse{};
+
+  raise_if_error(
+      stub->GetStartTimestampInformation(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetStreamEndpointHandleResponse
 get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& stream_name)
 {

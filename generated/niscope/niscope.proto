@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-SCOPE API metadata version 23.0.0f168
+// This file is generated from NI-SCOPE API metadata version 23.3.0d9999
 //---------------------------------------------------------------------
 // Proto file for the NI-SCOPE Metadata
 //---------------------------------------------------------------------
@@ -84,6 +84,7 @@ service NiScope {
   rpc GetFrequencyResponse(GetFrequencyResponseRequest) returns (GetFrequencyResponseResponse);
   rpc GetNormalizationCoefficients(GetNormalizationCoefficientsRequest) returns (GetNormalizationCoefficientsResponse);
   rpc GetScalingCoefficients(GetScalingCoefficientsRequest) returns (GetScalingCoefficientsResponse);
+  rpc GetStartTimestampInformation(GetStartTimestampInformationRequest) returns (GetStartTimestampInformationResponse);
   rpc GetStreamEndpointHandle(GetStreamEndpointHandleRequest) returns (GetStreamEndpointHandleResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
@@ -473,8 +474,8 @@ enum ExportableSignals {
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_ADVANCE_EVENT = 6;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_START_EVENT = 7;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_REF_EVENT = 10;
-  EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_CLOCK = 100;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_5V_OUT = 13;
+  EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_CLOCK = 100;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_SAMPLE_CLOCK = 101;
 }
 
@@ -1698,6 +1699,19 @@ message GetScalingCoefficientsResponse {
   int32 status = 1;
   repeated CoefficientInfo coefficient_info = 2;
   sint32 number_of_coefficient_sets = 3;
+}
+
+message GetStartTimestampInformationRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetStartTimestampInformationResponse {
+  int32 status = 1;
+  uint32 sys_time_in128_bits_t1 = 2;
+  uint32 sys_time_in128_bits_t2 = 3;
+  uint32 sys_time_in128_bits_t3 = 4;
+  uint32 sys_time_in128_bits_t4 = 5;
+  double device_time_in_absolute_time_units = 6;
 }
 
 message GetStreamEndpointHandleRequest {

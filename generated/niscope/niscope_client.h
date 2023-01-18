@@ -89,6 +89,7 @@ GetErrorMessageResponse get_error_message(const StubPtr& stub, const nidevice_gr
 GetFrequencyResponseResponse get_frequency_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel, const pb::int32& buffer_size);
 GetNormalizationCoefficientsResponse get_normalization_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list);
 GetScalingCoefficientsResponse get_scaling_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list);
+GetStartTimestampInformationResponse get_start_timestamp_information(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& stream_name);
 ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& configuration);
 ImportAttributeConfigurationFileResponse import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path);

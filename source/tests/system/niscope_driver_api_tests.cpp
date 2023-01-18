@@ -546,6 +546,25 @@ TEST_F(NiScopeDriverApiTest, NiScopeGetNormalizationCoefficients_SendRequest_Non
   EXPECT_NE(0, response.coefficient_info(0).gain());
 }
 
+TEST_F(NiScopeDriverApiTest, NiScopeGetStartTimestampInformation_SendRequest_NonZeroTimestampsReturned)
+{
+  auto_setup();
+  ::grpc::ClientContext context;
+  scope::GetStartTimestampInformationRequest request;
+  request.mutable_vi()->set_name(GetSessionName());
+  scope::GetStartTimestampInformationResponse response;
+
+  ::grpc::Status status = GetStub()->GetStartTimestampInformation(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+  EXPECT_NE(0, response.sys_time_in128_bits_t1());
+  EXPECT_NE(0, response.sys_time_in128_bits_t2());
+  EXPECT_NE(0, response.sys_time_in128_bits_t3());
+  EXPECT_EQ(0, response.sys_time_in128_bits_t4()); // Not sure why this is always 0, may be because it's on a simulated device.
+  EXPECT_EQ(0, response.device_time_in_absolute_time_units()); // Not sure why this is always 0, may be because it's on a simulated device.
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni

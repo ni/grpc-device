@@ -108,6 +108,7 @@ public:
   ::grpc::Status GetFrequencyResponse(::grpc::ServerContext* context, const GetFrequencyResponseRequest* request, GetFrequencyResponseResponse* response) override;
   ::grpc::Status GetNormalizationCoefficients(::grpc::ServerContext* context, const GetNormalizationCoefficientsRequest* request, GetNormalizationCoefficientsResponse* response) override;
   ::grpc::Status GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response) override;
+  ::grpc::Status GetStartTimestampInformation(::grpc::ServerContext* context, const GetStartTimestampInformationRequest* request, GetStartTimestampInformationResponse* response) override;
   ::grpc::Status GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;

@@ -84,6 +84,7 @@ class NiScopeMockLibrary : public niscope_grpc::NiScopeLibraryInterface {
   MOCK_METHOD(ViStatus, GetFrequencyResponse, (ViSession vi, ViConstString channel, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 amplitudes[], ViReal64 phases[], ViInt32* numberOfFrequencies), (override));
   MOCK_METHOD(ViStatus, GetNormalizationCoefficients, (ViSession vi, ViConstString channelList, ViInt32 bufferSize, niScope_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets), (override));
   MOCK_METHOD(ViStatus, GetScalingCoefficients, (ViSession vi, ViConstString channelList, ViInt32 bufferSize, niScope_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets), (override));
+  MOCK_METHOD(ViStatus, GetStartTimestampInformation, (ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits), (override));
   MOCK_METHOD(ViStatus, GetStreamEndpointHandle, (ViSession vi, ViConstString streamName, ViUInt32* writerHandle), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
