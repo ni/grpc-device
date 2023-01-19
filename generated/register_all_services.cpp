@@ -49,6 +49,7 @@
 #include "nirfsa/nirfsa_service_registrar.h"
 #include "nirfsg/nirfsg_service_registrar.h"
 #include "niscope/niscope_service_registrar.h"
+#include "niscope_restricted/niscope_restricted_service_registrar.h"
 #include "niswitch/niswitch_service_registrar.h"
 #include "nisync/nisync_service_registrar.h"
 #include "nitclk/nitclk_service_registrar.h"
@@ -193,6 +194,11 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       feature_toggles));
   service_vector->push_back(
     niscope_grpc::register_service(
+      server_builder, 
+      vi_session_repository,
+      feature_toggles));
+  service_vector->push_back(
+    niscope_restricted_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
