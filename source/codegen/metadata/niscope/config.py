@@ -7,7 +7,7 @@ config = {
         ],
         'niScopePrivate.h': [
             'library_interface.h'
-        ],
+        ]
     },
     'api_version': '23.3.0d9999',
     'c_function_prefix': 'niScope_',

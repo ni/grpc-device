@@ -2685,6 +2685,7 @@ functions = {
             {
                 'cppName': 'sysTimeIn128BitsT1',
                 'direction': 'out',
+                'grpc_name': 'sys_time_in_128_bits_t1',
                 'grpc_type': 'uint32',
                 'name': 'sysTimeIn128BitsT1',
                 'type': 'ViUInt32'
@@ -2692,6 +2693,7 @@ functions = {
             {
                 'cppName': 'sysTimeIn128BitsT2',
                 'direction': 'out',
+                'grpc_name': 'sys_time_in_128_bits_t2',
                 'grpc_type': 'uint32',
                 'name': 'sysTimeIn128BitsT2',
                 'type': 'ViUInt32'
@@ -2699,6 +2701,7 @@ functions = {
             {
                 'cppName': 'sysTimeIn128BitsT3',
                 'direction': 'out',
+                'grpc_name': 'sys_time_in_128_bits_t3',
                 'grpc_type': 'uint32',
                 'name': 'sysTimeIn128BitsT3',
                 'type': 'ViUInt32'
@@ -2706,6 +2709,7 @@ functions = {
             {
                 'cppName': 'sysTimeIn128BitsT4',
                 'direction': 'out',
+                'grpc_name': 'sys_time_in_128_bits_t4',
                 'grpc_type': 'uint32',
                 'name': 'sysTimeIn128BitsT4',
                 'type': 'ViUInt32'

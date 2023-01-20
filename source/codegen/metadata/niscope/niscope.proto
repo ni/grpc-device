@@ -1707,10 +1707,10 @@ message GetStartTimestampInformationRequest {
 
 message GetStartTimestampInformationResponse {
   int32 status = 1;
-  uint32 sys_time_in128_bits_t1 = 2;
-  uint32 sys_time_in128_bits_t2 = 3;
-  uint32 sys_time_in128_bits_t3 = 4;
-  uint32 sys_time_in128_bits_t4 = 5;
+  uint32 sys_time_in_128_bits_t1 = 2;
+  uint32 sys_time_in_128_bits_t2 = 3;
+  uint32 sys_time_in_128_bits_t3 = 4;
+  uint32 sys_time_in_128_bits_t4 = 5;
   double device_time_in_absolute_time_units = 6;
 }
 

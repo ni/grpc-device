@@ -558,10 +558,10 @@ TEST_F(NiScopeDriverApiTest, NiScopeGetStartTimestampInformation_SendRequest_Non
 
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
-  EXPECT_NE(0, response.sys_time_in128_bits_t1());
-  EXPECT_NE(0, response.sys_time_in128_bits_t2());
-  EXPECT_NE(0, response.sys_time_in128_bits_t3());
-  EXPECT_EQ(0, response.sys_time_in128_bits_t4()); // Not sure why this is always 0, may be because it's on a simulated device.
+  EXPECT_NE(0, response.sys_time_in_128_bits_t1());
+  EXPECT_NE(0, response.sys_time_in_128_bits_t2());
+  EXPECT_NE(0, response.sys_time_in_128_bits_t3());
+  EXPECT_EQ(0, response.sys_time_in_128_bits_t4()); // Not sure why this is always 0, may be because it's on a simulated device.
   EXPECT_EQ(0, response.device_time_in_absolute_time_units()); // Not sure why this is always 0, may be because it's on a simulated device.
 }
 
