@@ -1,0 +1,34 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-SCOPE-RESTRICTED API metadata version 23.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-SCOPE-RESTRICTED Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.scoperestricted";
+option java_outer_classname = "NiScopeRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.NiScopeRestricted";
+
+package niscope_restricted_grpc;
+
+import "session.proto";
+
+service NiScopeRestricted {
+  rpc GetStartTimestampInformation(GetStartTimestampInformationRequest) returns (GetStartTimestampInformationResponse);
+}
+
+message GetStartTimestampInformationRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetStartTimestampInformationResponse {
+  int32 status = 1;
+  uint32 sys_time_in_128_bits_t1 = 2;
+  uint32 sys_time_in_128_bits_t2 = 3;
+  uint32 sys_time_in_128_bits_t3 = 4;
+  uint32 sys_time_in_128_bits_t4 = 5;
+  double device_time_in_absolute_time_units = 6;
+}
+
