@@ -1,0 +1,35 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFMXNR-RESTRICTED API metadata version 21.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFMXNR-RESTRICTED Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxnrrestricted";
+option java_outer_classname = "NiRFmxNRRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxNRRestricted";
+
+package nirfmxnr_restricted_grpc;
+
+import "session.proto";
+
+service NiRFmxNRRestricted {
+  rpc ModAccFetchTransientPeriodLocationsTrace(ModAccFetchTransientPeriodLocationsTraceRequest) returns (ModAccFetchTransientPeriodLocationsTraceResponse);
+}
+
+message ModAccFetchTransientPeriodLocationsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchTransientPeriodLocationsTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float transient_period_locations = 4;
+  int32 actual_array_size = 5;
+}
+
