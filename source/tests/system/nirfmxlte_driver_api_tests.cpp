@@ -1110,6 +1110,7 @@ TEST_F(NiRFmxLTEDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataL
     EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
     // Intermittently gives "374603: Unable to synchronize." and outputs nan values
+    mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.0);
     if (mod_acc_fetch_composite_evm_response.status() == SYNC_FAILURE_WARNING && attempts < 5) {
       TearDown();
       SetUp();
