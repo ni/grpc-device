@@ -32,9 +32,6 @@ class NiFgenDriverApiTest : public ::testing::Test {
 
   void SetUp() override
   {
-#ifndef WIN32
-    GTEST_SKIP() << "Fgen is not supported on Linux.";
-#endif
     initialize_driver_session();
   }
 
