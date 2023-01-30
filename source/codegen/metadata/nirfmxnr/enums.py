@@ -295,6 +295,18 @@ enums = {
             }
         ]
     },
+    'AutoCellIDDetectionEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'AutoIncrementCellIDEnabled': {
         'values': [
             {
@@ -1470,6 +1482,23 @@ enums = {
             }
         ]
     },
+    'ModAccTransientPeriodEvmMode': {
+        'enum-value-prefix': 'MODACC_TRANSIENT_PERIOD_EVM_MODE',
+        'values': [
+            {
+                'name': 'DISABLED',
+                'value': 0
+            },
+            {
+                'name': 'EXCLUDE',
+                'value': 1
+            },
+            {
+                'name': 'INCLUDE',
+                'value': 2
+            }
+        ]
+    },
     'ObwAmplitudeCorrectionType': {
         'values': [
             {
@@ -2168,6 +2197,22 @@ enums = {
             {
                 'name': 'PASS',
                 'value': 1
+            }
+        ]
+    },
+    'SemOffsetFrequencyDefinition': {
+        'values': [
+            {
+                'name': 'CARRIER_CENTER_TO_MEAS_BW_CENTER',
+                'value': 0
+            },
+            {
+                'name': 'CARRIER_EDGE_TO_MEAS_BW_CENTER',
+                'value': 2
+            },
+            {
+                'name': 'SUBBLOCK_EDGE_TO_MEAS_BW_CENTER',
+                'value': 6
             }
         ]
     },
