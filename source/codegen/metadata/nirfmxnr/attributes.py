@@ -1502,6 +1502,11 @@ attributes = {
         'name': 'MODACC_RESULTS_SUBBLOCK_IQ_ORIGIN_OFFSET_MEAN',
         'type': 'float64'
     },
+    9453626: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_DETECTED_CELL_ID',
+        'type': 'int32'
+    },
     9453640: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_PUSCH_PTRS_RMS_EVM_MEAN',
@@ -1843,6 +1848,11 @@ attributes = {
     9453733: {
         'access': 'read-write',
         'name': 'MODACC_TRANSIENT_POWER_CHANGE_THRESHOLD',
+        'type': 'float64'
+    },
+    9453734: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PUSCH_DATA_TRANSIENT_RMS_EVM_MEAN',
         'type': 'float64'
     },
     9461760: {
