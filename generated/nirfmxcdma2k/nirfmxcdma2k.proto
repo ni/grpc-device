@@ -1,0 +1,65 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-rfmxcdma2k API metadata version 23.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-rfmxcdma2k Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxcdma2k";
+option java_outer_classname = "NiRFmxCDMA2k";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxCDMA2k";
+
+package nirfmxcdma2k_grpc;
+
+import "session.proto";
+
+service NiRFmxCDMA2k {
+  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
+  rpc Initialize(InitializeRequest) returns (InitializeResponse);
+}
+
+message CloseRequest {
+  nidevice_grpc.Session instrument = 1;
+  bool force_destroy = 2;
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
+message GetErrorRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  int32 error_code = 2;
+  string error_description = 3;
+}
+
+message GetErrorStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  int32 error_code = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_description = 2;
+}
+
+message InitializeRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  string option_string = 3;
+}
+
+message InitializeResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+  int32 is_new_session = 3;
+}
+
