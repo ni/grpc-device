@@ -31,17 +31,18 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSG" as the physical channel name.
 """  # noqa: W505
 
-import sys
 import math
+import sys
+import os
+
 import numpy as np
 
-import os
 sys.path.append(os.getcwd())
 
 import grpc
+import nidevice_pb2 as nidevice_grpc
 import nirfsg_pb2 as nirfsg_types
 import nirfsg_pb2_grpc as grpc_nirfsg
-import nidevice_pb2 as nidevice_grpc
 
 
 SERVER_ADDRESS = "mercury07"
@@ -77,13 +78,19 @@ def check_for_warning(response, vi):
 
 
 class Tone:
-    def __init__(self,offsetHz, gaindB):
-        self.offsetHz = offsetHz
+    """
+    Define the tone with relative offset from the carrier frequency in Hz (relative to the generator center frequency).
+    Relative power level in dBc (relative to the generator defined power level)
+    """
+    def __init__(self,offset_hz, gaindB):
+        """Construct each tone using a relative offset in Hz and relative power in dBc"""
+        self.offset_hz = offset_hz
         self.gaindB = gaindB
     def __repr__(self):
-        return 'Offset: {0} Hz and Gain: {1} dB'.format(self.offsetHz,self.gaindB)
+        return 'Offset: {0} Hz and Gain: {1} dB'.format(self.offset_hz,self.gaindB)
 
 def gcd(my_list):
+    """Greatest common denominator. Given a list of numbers find the smallest number that can divide them all."""
     result = my_list[0]
     for x in my_list[1:]:
         if result < x:
@@ -112,7 +119,7 @@ try:
     #Test Cases
     #Tones = [Tone(0, 0)]
     #Tones = [Tone(-1E6, 0), Tone(1E6, 0)]
-    Tones = [Tone(-1E6, 0), Tone(1E6, 0), Tone(-5E6, 0), Tone(5E6, 0), Tone(-10E6, 0), Tone(10E6, 0)]
+    tones = [Tone(-1E6, 0), Tone(1E6, 0), Tone(-5E6, 0), Tone(5E6, 0), Tone(-10E6, 0), Tone(10E6, 0)]
     #Tones = [Tone(-1E6, 0), Tone(1E6, -5), Tone(2.5E6, -10), Tone(3.9E6, -20), Tone(-10E6, 0)]
     #Tones = [Tone(100E3, 0), Tone(-835E3, -6)]
     #Tones = [Tone(10E6, -3), Tone(-100.1E6, -6)]
@@ -129,86 +136,92 @@ try:
     #Tones = [Tone(100E6, -20)]
     #Tones = [Tone(1, 0), Tone(10E6, -6)]
 
-    minSamplingRateHz = 4e6
-    minFrequencyStepHz = 5000
-    minWaveformSize = 100000
-    print(Tones)
+    min_sampling_rate_hz = 4e6
+    min_frequency_step_hz = 5000
+    min_waveform_size = 100000
+    print(tones)
 
 
     # Define the instrument and RF parameters
     print("Setting measurement parameters.. ", end='')
-    centerFrequency = 3e9
-    rfsgPowerLevel_dBm = -10
-    rfsgResourceName = '5840_1'    
-    rfsgSelectedPorts = ""                                              
-    rfsgWaveformName = "wfm"
+    center_frequency = 3e9
+    rfsg_power_level_dbm = -10
+    rfsg_resource_name = '5840_1'    
+    rfsg_selected_ports = ""                                              
+    rfsg_waveform_name = "wfm"
     rfsg_script = 'script GenerateWaveform repeat forever generate wfm end repeat end script'
-    rfsgExternalAttenuation = 0.0
-    rfsgFrequencyReferenceSource = nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK
-    rfsgAutomaticSharedLO = nirfsg_types.NIRFSG_INT32_ENABLE_VALUES_DISABLE
-    SamplingRateHz = max([abs(tone.offsetHz) for tone in Tones] + [minSamplingRateHz]) * 2.5 #Max rate 2.5x the max offset
-    #Greatest common denominator of the tones we need to make it divisible by Sampling Rate so we add it to the list it and then we divide it by a minimum resolution
-    FrequencyStepHz = max(gcd([abs(tone.offsetHz) for tone in Tones] + [SamplingRateHz])/minFrequencyStepHz, SamplingRateHz/minWaveformSize) 
+    rfsg_external_attenuation = 0.0
+    rfsg_frequency_reference_source = nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK
+    rfsg_automatic_shared_lo = nirfsg_types.NIRFSG_INT32_ENABLE_VALUES_DISABLE
+    #Max rate 2.5x the max offset
+    sampling_rate_hz = max([abs(tone.offset_hz) for tone in tones] + [min_sampling_rate_hz]) * 2.5 
+    #Greatest common denominator of the tones we need to make it divisible by Sampling Rate so we add
+    #  it to the list it and then we divide it by a minimum resolution
+    frequency_step_hz = max(gcd([abs(tone.offset_hz) for tone in tones] + [sampling_rate_hz])/min_frequency_step_hz, sampling_rate_hz/min_waveform_size) 
     #Sum all the tones power for scaling on the SG power
-    TonesPower = 10*math.log(sum([math.pow(10,tone.gaindB/10) for tone in Tones]),10)
-    print("FrequencyStep = {} Hz and Sampling Frequency = {} Hz and Tone Total Power = {}".format(FrequencyStepHz, SamplingRateHz, TonesPower))
+    tones_power = 10*math.log(sum([math.pow(10,tone.gaindB/10) for tone in tones]),10)
+    print("FrequencyStep = {} Hz and Sampling Frequency = {} Hz and Tone Total Power = {}".format(frequency_step_hz, sampling_rate_hz, tones_power))
 
     client.SetAttributeViString(nirfsg_types.SetAttributeViStringRequest(vi=vi, 
                                 channel_name="", 
                                 attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_SELECTED_PORTS, 
-                                value_raw = rfsgSelectedPorts)
+                                value_raw = rfsg_selected_ports)
                                 )
 
     
-    # We wante the TONES to be at a specific power, for that reason, we adjust our generator power to the desired power + whatever the tones constructive interference
+    # We wante the TONES to be at a specific power, for that reason, we adjust our generator power to
+    #  the desired power + whatever the tones constructive interference
     # This was computed above as the "tones power"
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
                             vi = vi,
                             channel_name = "",
                             attribute_id = nirfsg_types.NIRFSG_ATTRIBUTE_POWER_LEVEL,
-                            value_raw = rfsgPowerLevel_dBm + TonesPower)
+                            value_raw = rfsg_power_level_dbm + tones_power)
                             )
 
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
                             vi = vi,
                             channel_name = "",
                             attribute_id = nirfsg_types.NIRFSG_ATTRIBUTE_EXTERNAL_GAIN,
-                            value_raw = -rfsgExternalAttenuation)
+                            value_raw = -rfsg_external_attenuation)
                             )
     
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
                             vi = vi,
                             channel_name = "",
                             attribute_id = nirfsg_types.NIRFSG_ATTRIBUTE_FREQUENCY,
-                            value_raw = centerFrequency)
+                            value_raw = center_frequency)
                             )
 
     #Coarce Settings
-    for item in Tones:
-        item.offsetHz = np.floor(item.offsetHz/FrequencyStepHz)*FrequencyStepHz
+    for item in tones:
+        item.offset_hz = np.floor(item.offset_hz/frequency_step_hz)*frequency_step_hz
         print(item)
 
 
     #Init initial waveform
-    waveform = np.full(int(1/FrequencyStepHz * SamplingRateHz), 0+0j)
-    Buffer = np.full(int(1/FrequencyStepHz * SamplingRateHz), 1+0j)
+    waveform = np.full(int(1/frequency_step_hz * sampling_rate_hz), 0+0j)
+    buffer = np.full(int(1/frequency_step_hz * sampling_rate_hz), 1+0j)
     #Create Tones on waveform
-    for item in Tones:
-        phaseDrif = item.offsetHz/SamplingRateHz * 2 * np.pi
-        OffsetWaveform = [1*np.exp(i*phaseDrif*1j) for i in np.arange(0,len(waveform))]
-        waveform = waveform + np.array(OffsetWaveform) * math.pow(10,item.gaindB/20)
+    for item in tones:
+        phase_drif = item.offset_hz/sampling_rate_hz * 2 * np.pi
+        offset_waveform = [1*np.exp(i*phase_drif*1j) for i in np.arange(0,len(waveform))]
+        waveform = waveform + np.array(offset_waveform) * math.pow(10,item.gaindB/20)
 
     
-    # Waveform needs to normalize as we will use Peak Power Mode. This is easier to integrate with other pieces of code as it's the same mode.
-    # This means that what we write magnitude (sqrt(I^2 + Q^2)) be larger than 1. 1 is the maximum and corresponds to the peak power setting.
+    # Waveform needs to normalize as we will use Peak Power Mode. This is easier to integrate with
+    #  other pieces of code as it's the same mode.
+    # This means that what we write magnitude (sqrt(I^2 + Q^2)) be larger than 1. 1 is the maximum
+    #  and corresponds to the peak power setting.
     # If the power is set to -10 dBm, then a 1 means that the instantaneous power will be at -10 dBm.
-    # To normalize, we divide all numbers by the peak to average ratio. If the signal has gaps, then we should not use that section to compute power.
+    # To normalize, we divide all numbers by the peak to average ratio. If the signal has gaps,
+    #  then we should not use that section to compute power.
     
     waveform_papr = 10*math.log(np.max(np.square(abs(waveform)))/np.mean(np.square(abs(waveform))), 10)
-    waveformNorm = waveform/math.pow(10,waveform_papr/10)
-    print(f"Previous max value is: {np.max(abs(waveform))} average value is: {np.mean(abs(waveform))} and new max value is: {np.max(abs(waveformNorm))} and PAPR: {waveform_papr}")
+    waveform_normalized = waveform/math.pow(10,waveform_papr/10)
+    print(f"Previous max value is: {np.max(abs(waveform))} average value is: {np.mean(abs(waveform))} and new max value is: {np.max(abs(waveform_normalized))} and PAPR: {waveform_papr}")
     # convert to NI complex datatype
-    iqNI = [nidevice_grpc.NIComplexNumberF32(real = sample.real, imaginary = sample.imag) for sample in waveformNorm]
+    iqNI = [nidevice_grpc.NIComplexNumberF32(real = sample.real, imaginary = sample.imag) for sample in waveform_normalized]
     
     client.ConfigurePowerLevelType(nirfsg_types.ConfigurePowerLevelTypeRequest(
                             vi = vi,
@@ -225,10 +238,11 @@ try:
                             vi = vi,
                             channel_name = 'waveform::wfm',
                             attribute_id = nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_IQ_RATE,
-                            value_raw = SamplingRateHz)
+                            value_raw = sampling_rate_hz)
                             )
     
-    # Example of how to set/get parameters of a waveform, the channel_name needs to have the prefix waveform:: before the name of the waveform
+    # Example of how to set/get parameters of a waveform, the channel_name needs to have the
+    #  prefix waveform:: before the name of the waveform
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
                             vi = vi,
                             channel_name = 'waveform::wfm',
@@ -242,13 +256,14 @@ try:
                             attribute_id = nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_PAPR)
                             )
     waveform_papr = response.value
-    # The runtime scaling is to help reduce the chance of overflow the DAC by reducing the signal a little bit more. The driver compensates for this reduction and no need to compensate for this.
-    runtimeScaling = 1.5
+    # The runtime scaling is to help reduce the chance of overflow the DAC by reducing the signal
+    #  a bit more (1.5 dB). The driver compensates for this reduction and no need to compensate for this.
+    runtime_scaling = 1.5
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
                             vi = vi,
                             channel_name = 'waveform::wfm',
                             attribute_id = nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_RUNTIME_SCALING,
-                            value_raw = -runtimeScaling)
+                            value_raw = -runtime_scaling)
                             )
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
                             vi = vi,
