@@ -1,11 +1,8 @@
-"""Generate any number and power of tones.
+r"""Generate any number and power of tones using RFSG
+
 At least one tone needs to be at 0 dB. Use Power level to set the power of all the tones relative to their selected power.
 The minimum separation is mandated by a variable below. A smaller number needs more samples to meet the needs.
 The maximum separation is mandated by the instrument used.
-
-Gerardo orozco
-RF Systems R&D Semiconductor
-National Instruments
 
 The gRPC API is built from the C API. NI-RFSG documentation is installed with the driver at:
   C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niRFSG\documentation\English\RFSG.chm
@@ -32,10 +29,8 @@ If they are not passed in as command line arguments, then by default the server 
 """  # noqa: W505
 
 import math
-import sys
 import os
-
-import numpy as np
+import sys
 
 sys.path.append(os.getcwd())
 
@@ -43,6 +38,7 @@ import grpc
 import nidevice_pb2 as nidevice_grpc
 import nirfsg_pb2 as nirfsg_types
 import nirfsg_pb2_grpc as grpc_nirfsg
+import numpy as np
 
 
 SERVER_ADDRESS = "mercury07"
@@ -78,19 +74,24 @@ def check_for_warning(response, vi):
 
 
 class Tone:
+    """Class definition for Tones
+
+    Define the tone with relative offset from the carrier frequency in Hz (relative to the
+     generator center frequency).
+    Relative power level in dBc (relative to the generator defined power level).
     """
-    Define the tone with relative offset from the carrier frequency in Hz (relative to the generator center frequency).
-    Relative power level in dBc (relative to the generator defined power level)
-    """
-    def __init__(self,offset_hz, gaindB):
-        """Construct each tone using a relative offset in Hz and relative power in dBc"""
+
+    def __init__(self,offset_hz, gain_db):
+        """Construct each tone using a relative offset in Hz and relative power in dBc."""
         self.offset_hz = offset_hz
-        self.gaindB = gaindB
+        self.gain_db = gain_db
     def __repr__(self):
-        return 'Offset: {0} Hz and Gain: {1} dB'.format(self.offset_hz,self.gaindB)
+        """Used when using the print method so it displays nicer the Tones values."""
+        return 'Offset: {0} Hz and Gain: {1} dB'.format(self.offset_hz,self.gain_db)
 
 def gcd(my_list):
-    """Greatest common denominator. Given a list of numbers find the smallest number that can divide them all."""
+    """Greatest common denominator. Given a list of numbers find the smallest
+     number that can divide them all."""
     result = my_list[0]
     for x in my_list[1:]:
         if result < x:
@@ -155,11 +156,11 @@ try:
     rfsg_automatic_shared_lo = nirfsg_types.NIRFSG_INT32_ENABLE_VALUES_DISABLE
     #Max rate 2.5x the max offset
     sampling_rate_hz = max([abs(tone.offset_hz) for tone in tones] + [min_sampling_rate_hz]) * 2.5 
-    #Greatest common denominator of the tones we need to make it divisible by Sampling Rate so we add
-    #  it to the list it and then we divide it by a minimum resolution
+    #Greatest common denominator of the tones we need to make it divisible by Sampling Rate
+    # thus we add it to the list it and then we divide it by a minimum resolution
     frequency_step_hz = max(gcd([abs(tone.offset_hz) for tone in tones] + [sampling_rate_hz])/min_frequency_step_hz, sampling_rate_hz/min_waveform_size) 
     #Sum all the tones power for scaling on the SG power
-    tones_power = 10*math.log(sum([math.pow(10,tone.gaindB/10) for tone in tones]),10)
+    tones_power = 10*math.log(sum([math.pow(10,tone.gain_db/10) for tone in tones]),10)
     print("FrequencyStep = {} Hz and Sampling Frequency = {} Hz and Tone Total Power = {}".format(frequency_step_hz, sampling_rate_hz, tones_power))
 
     client.SetAttributeViString(nirfsg_types.SetAttributeViStringRequest(vi=vi, 
@@ -169,9 +170,9 @@ try:
                                 )
 
     
-    # We wante the TONES to be at a specific power, for that reason, we adjust our generator power to
-    #  the desired power + whatever the tones constructive interference
-    # This was computed above as the "tones power"
+    # We wante the TONES to be at a specific power, for that reason, we adjust 
+    # generator power to the desired power + whatever the tones constructive
+    # interference. This was computed above as the "tones power"
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
                             vi = vi,
                             channel_name = "",
@@ -206,22 +207,23 @@ try:
     for item in tones:
         phase_drif = item.offset_hz/sampling_rate_hz * 2 * np.pi
         offset_waveform = [1*np.exp(i*phase_drif*1j) for i in np.arange(0,len(waveform))]
-        waveform = waveform + np.array(offset_waveform) * math.pow(10,item.gaindB/20)
+        waveform = waveform + np.array(offset_waveform) * math.pow(10,item.gain_db/20)
 
     
-    # Waveform needs to normalize as we will use Peak Power Mode. This is easier to integrate with
-    #  other pieces of code as it's the same mode.
-    # This means that what we write magnitude (sqrt(I^2 + Q^2)) be larger than 1. 1 is the maximum
-    #  and corresponds to the peak power setting.
-    # If the power is set to -10 dBm, then a 1 means that the instantaneous power will be at -10 dBm.
-    # To normalize, we divide all numbers by the peak to average ratio. If the signal has gaps,
-    #  then we should not use that section to compute power.
+    # Waveform needs to normalize as we will use Peak Power Mode. This is easier to
+    #  integrate with other pieces of code as it's the same mode.
+    # This means that what we write magnitude (sqrt(I^2 + Q^2)) be larger than 1. 1 is
+    #  the maximum and corresponds to the peak power setting.
+    # If the power is set to -10 dBm, then a 1 means that the instantaneous power
+    #  will be at -10 dBm.
+    # To normalize, we divide all numbers by the peak to average ratio.
+    # If the signal has gaps, then we should not use that section to compute power.
     
     waveform_papr = 10*math.log(np.max(np.square(abs(waveform)))/np.mean(np.square(abs(waveform))), 10)
     waveform_normalized = waveform/math.pow(10,waveform_papr/10)
     print(f"Previous max value is: {np.max(abs(waveform))} average value is: {np.mean(abs(waveform))} and new max value is: {np.max(abs(waveform_normalized))} and PAPR: {waveform_papr}")
     # convert to NI complex datatype
-    iqNI = [nidevice_grpc.NIComplexNumberF32(real = sample.real, imaginary = sample.imag) for sample in waveform_normalized]
+    iq_ni_format = [nidevice_grpc.NIComplexNumberF32(real = sample.real, imaginary = sample.imag) for sample in waveform_normalized]
     
     client.ConfigurePowerLevelType(nirfsg_types.ConfigurePowerLevelTypeRequest(
                             vi = vi,
@@ -231,7 +233,7 @@ try:
     client.WriteArbWaveformComplexF32(nirfsg_types.WriteArbWaveformComplexF32Request(
                             vi = vi,
                             waveform_name = 'wfm',
-                            wfm_data = iqNI,
+                            wfm_data = iq_ni_format,
                             more_data_pending = False)
                             )
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
@@ -256,8 +258,9 @@ try:
                             attribute_id = nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_PAPR)
                             )
     waveform_papr = response.value
-    # The runtime scaling is to help reduce the chance of overflow the DAC by reducing the signal
-    #  a bit more (1.5 dB). The driver compensates for this reduction and no need to compensate for this.
+    # The runtime scaling is to help reduce the chance of overflow the DAC by reducing
+    #  the signal a bit more (1.5 dB). The driver compensates for this reduction and
+    #  no need to compensate for this.
     runtime_scaling = 1.5
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
                             vi = vi,
