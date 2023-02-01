@@ -1,4 +1,4 @@
-r"""Generate any number and power of tones using RFSG
+r"""Generate any number and power of tones using RFSG.
 
 At least one tone needs to be at 0 dB. Use Power level to set the power of all the tones relative to their selected power.
 The minimum separation is mandated by a variable below. A smaller number needs more samples to meet the needs.
@@ -31,8 +31,6 @@ If they are not passed in as command line arguments, then by default the server 
 import math
 import os
 import sys
-
-sys.path.append(os.getcwd())
 
 import grpc
 import nidevice_pb2 as nidevice_grpc
@@ -74,7 +72,7 @@ def check_for_warning(response, vi):
 
 
 class Tone:
-    """Class definition for Tones
+    """Class definition for tones.
 
     Define the tone with relative offset from the carrier frequency in Hz (relative to the
      generator center frequency).
@@ -86,12 +84,13 @@ class Tone:
         self.offset_hz = offset_hz
         self.gain_db = gain_db
     def __repr__(self):
-        """Used when using the print method so it displays nicer the Tones values."""
+        """Used when using the print method so it displays nicer the tones values."""
         return 'Offset: {0} Hz and Gain: {1} dB'.format(self.offset_hz,self.gain_db)
 
 def gcd(my_list):
-    """Greatest common denominator. Given a list of numbers find the smallest
-     number that can divide them all."""
+    """Greatest common denominator. 
+    Given a list of numbers find the smallest number that can divide them all.
+    """
     result = my_list[0]
     for x in my_list[1:]:
         if result < x:
@@ -112,30 +111,28 @@ try:
         )
     )
     vi = response.vi
-    #Tones to Generate
-
-    #Documentation
-    #Tones power is relative to the generated power.
+    #tones to Generate
+    #tones power is relative to the generated power.
 
     #Test Cases
-    #Tones = [Tone(0, 0)]
-    #Tones = [Tone(-1E6, 0), Tone(1E6, 0)]
-    tones = [Tone(-1E6, 0), Tone(1E6, 0), Tone(-5E6, 0), Tone(5E6, 0), Tone(-10E6, 0), Tone(10E6, 0)]
-    #Tones = [Tone(-1E6, 0), Tone(1E6, -5), Tone(2.5E6, -10), Tone(3.9E6, -20), Tone(-10E6, 0)]
-    #Tones = [Tone(100E3, 0), Tone(-835E3, -6)]
-    #Tones = [Tone(10E6, -3), Tone(-100.1E6, -6)]
-    #Tones = [Tone(1E6, 2.45), Tone(-50E6, -6)]
-    #Tones = [Tone(499E6, 0), Tone(-499E6, -6)]
-    #Tones = [Tone(1E6, 0), Tone(-50E6, -6)] + [Tone(499E6, 0), Tone(-499E6, -6)]
-    #Tones = [Tone(0, 0), Tone(-835E3, -6)]
-    #Tones = [Tone(2501200001-3e9, 0), Tone(3405200000-3e9, 0), Tone(3305300000-3e9, 0)]
+    #tones = [Tone(0, 0)]
+    tones = [Tone(-1E6, 0), Tone(1E6, 0)]
+    #tones = [Tone(-1E6, 0), Tone(1E6, 0), Tone(-5E6, 0), Tone(5E6, 0), Tone(-10E6, 0), Tone(10E6, 0)]
+    #tones = [Tone(-1E6, 0), Tone(1E6, -5), Tone(2.5E6, -10), Tone(3.9E6, -20), Tone(-10E6, 0)]
+    #tones = [Tone(100E3, 0), Tone(-835E3, -6)]
+    #tones = [Tone(10E6, -3), Tone(-100.1E6, -6)]
+    #tones = [Tone(1E6, 2.45), Tone(-50E6, -6)]
+    #tones = [Tone(499E6, 0), Tone(-499E6, -6)]
+    #tones = [Tone(1E6, 0), Tone(-50E6, -6)] + [Tone(499E6, 0), Tone(-499E6, -6)]
+    #tones = [Tone(0, 0), Tone(-835E3, -6)]
+    #tones = [Tone(2501200001-3e9, 0), Tone(3405200000-3e9, 0), Tone(3305300000-3e9, 0)]
 
     #Error Test Cases
-    #Tones = [Tone(0, -6)]
-    #Tones = [Tone(100E6, -10), Tone(-100E6, -10)]
-    #Tones = [Tone(1E9, 0), Tone(-100.1E6, -6)]
-    #Tones = [Tone(100E6, -20)]
-    #Tones = [Tone(1, 0), Tone(10E6, -6)]
+    #tones = [Tone(0, -6)]
+    #tones = [Tone(100E6, -10), Tone(-100E6, -10)]
+    #tones = [Tone(1E9, 0), Tone(-100.1E6, -6)]
+    #tones = [Tone(100E6, -20)]
+    #tones = [Tone(1, 0), Tone(10E6, -6)]
 
     min_sampling_rate_hz = 4e6
     min_frequency_step_hz = 5000
@@ -170,7 +167,7 @@ try:
                                 )
 
     
-    # We wante the TONES to be at a specific power, for that reason, we adjust 
+    # We wante the tones to be at a specific power, for that reason, we adjust 
     # generator power to the desired power + whatever the tones constructive
     # interference. This was computed above as the "tones power"
     client.SetAttributeViReal64(nirfsg_types.SetAttributeViReal64Request(
@@ -203,7 +200,7 @@ try:
     #Init initial waveform
     waveform = np.full(int(1/frequency_step_hz * sampling_rate_hz), 0+0j)
     buffer = np.full(int(1/frequency_step_hz * sampling_rate_hz), 1+0j)
-    #Create Tones on waveform
+    #Create tones on waveform
     for item in tones:
         phase_drif = item.offset_hz/sampling_rate_hz * 2 * np.pi
         offset_waveform = [1*np.exp(i*phase_drif*1j) for i in np.arange(0,len(waveform))]
