@@ -29,7 +29,6 @@ If they are not passed in as command line arguments, then by default the server 
 """  # noqa: W505
 
 import math
-import os
 import sys
 
 import grpc
@@ -79,16 +78,17 @@ class Tone:
     Relative power level in dBc (relative to the generator defined power level).
     """
 
-    def __init__(self,offset_hz, gain_db):
+    def __init__(self, offset_hz, gain_db):
         """Construct each tone using a relative offset in Hz and relative power in dBc."""
         self.offset_hz = offset_hz
         self.gain_db = gain_db
     def __repr__(self):
-        """Used when using the print method so it displays nicer the tones values."""
+        """Returns a formatted string to repreesent the  Tones."""
         return 'Offset: {0} Hz and Gain: {1} dB'.format(self.offset_hz,self.gain_db)
 
 def gcd(my_list):
     """Greatest common denominator. 
+
     Given a list of numbers find the smallest number that can divide them all.
     """
     result = my_list[0]
@@ -117,7 +117,7 @@ try:
     #Test Cases
     #tones = [Tone(0, 0)]
     tones = [Tone(-1E6, 0), Tone(1E6, 0)]
-    #tones = [Tone(-1E6, 0), Tone(1E6, 0), Tone(-5E6, 0), Tone(5E6, 0), Tone(-10E6, 0), Tone(10E6, 0)]
+    #tones = [Tone(-1E6, 0), Tone(1E6, 0), Tone(-5E6, 0), Tone(5E6, 0), Tone(-10E6, 0)]
     #tones = [Tone(-1E6, 0), Tone(1E6, -5), Tone(2.5E6, -10), Tone(3.9E6, -20), Tone(-10E6, 0)]
     #tones = [Tone(100E3, 0), Tone(-835E3, -6)]
     #tones = [Tone(10E6, -3), Tone(-100.1E6, -6)]
