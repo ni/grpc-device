@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '21.0.0',
+    'api_version': '23.0.0',
     'c_header': 'niRFmxGSM.h',
     'c_function_prefix': 'RFmxGSM_',
     'service_class_prefix': 'NiRFmxGSM',
