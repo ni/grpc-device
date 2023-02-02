@@ -14,7 +14,7 @@ class _ArtifactReadiness:
     """Class to determine whether a Path with a module-named artifact directory is release-ready."""
 
     _module_to_readiness = {}  # type: Dict[str, str]
-    _module_to_restricted = {} # type: Dict[str, bool]
+    _module_to_restricted = {}  # type: Dict[str, bool]
 
     def __init__(self, metadata_dir: Path, ignore_release_readiness: bool):
         modules = [
@@ -47,7 +47,9 @@ class _ArtifactReadiness:
         if module_name not in self._module_to_readiness:
             raise KeyError(f"No module config.py metadata for module_name: {module_path}")
 
-        return not self._module_to_restricted and self._module_to_readiness[module_name] == "Release"
+        return (
+            not self._module_to_restricted and self._module_to_readiness[module_name] == "Release"
+        )
 
     def get_release_ready_subdirs(self, directory: Path) -> Iterable[Path]:
         """Return all subdirectories of directory for which is_release_ready is True."""
