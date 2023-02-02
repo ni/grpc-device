@@ -66,9 +66,7 @@ def check_for_warning(response, vi):
         warning_message = client.ErrorMessage(
             nirfsg_types.ErrorMessageRequest(vi=vi, error_code=response.status)
         )
-        sys.stderr.write(
-            f"{warning_message.error_message}\nWarning status: {response.status}\n"
-        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 class Tone:
@@ -154,14 +152,11 @@ try:
     rfsg_frequency_reference_source = nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK
     rfsg_automatic_shared_lo = nirfsg_types.NIRFSG_INT32_ENABLE_VALUES_DISABLE
     # Max rate 2.5x the max offset
-    sampling_rate_hz = (
-        max([abs(tone.offset_hz) for tone in tones] + [min_sampling_rate_hz]) * 2.5
-    )
+    sampling_rate_hz = max([abs(tone.offset_hz) for tone in tones] + [min_sampling_rate_hz]) * 2.5
     # Greatest common denominator of the tones we need to make it divisible by Sampling Rate
     # thus we add it to the list it and then we divide it by a minimum resolution
     frequency_step_hz = max(
-        gcd([abs(tone.offset_hz) for tone in tones] + [sampling_rate_hz])
-        / min_frequency_step_hz,
+        gcd([abs(tone.offset_hz) for tone in tones] + [sampling_rate_hz]) / min_frequency_step_hz,
         sampling_rate_hz / min_waveform_size,
     )
     # Sum all the tones power for scaling on the SG power
@@ -221,9 +216,7 @@ try:
     # Create tones on waveform
     for item in tones:
         phase_drif = item.offset_hz / sampling_rate_hz * 2 * np.pi
-        offset_waveform = [
-            1 * np.exp(i * phase_drif * 1j) for i in np.arange(0, len(waveform))
-        ]
+        offset_waveform = [1 * np.exp(i * phase_drif * 1j) for i in np.arange(0, len(waveform))]
         waveform = waveform + np.array(offset_waveform) * math.pow(10, item.gain_db / 20)
     # Waveform needs to normalize as we will use Peak Power Mode. This is easier to
     #  integrate with other pieces of code as it's the same mode.
@@ -325,9 +318,7 @@ except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = (
-                entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
-            )
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
