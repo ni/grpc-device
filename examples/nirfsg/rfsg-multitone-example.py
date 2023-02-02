@@ -87,6 +87,7 @@ class Tone:
         """Make a string with Tones information."""
         return "Offset: {0} Hz and Gain: {1} dB".format(self.offset_hz, self.gain_db)
 
+
 def gcd(my_list):
     """Return the greatest common denominator.
 
