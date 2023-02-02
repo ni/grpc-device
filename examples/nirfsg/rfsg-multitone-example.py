@@ -82,13 +82,13 @@ class Tone:
         """Construct each tone using a relative offset in Hz and relative power in dBc."""
         self.offset_hz = offset_hz
         self.gain_db = gain_db
-        
+
     def __repr__(self):
-        """Returns formatted string to repreesent the  Tones."""
-        return 'Offset: {0} Hz and Gain: {1} dB'.format(self.offset_hz,self.gain_db)
+        """Make a string with Tones information."""
+        return 'Offset: {0} Hz and Gain: {1} dB'.format(self.offset_hz, self.gain_db)
 
 def gcd(my_list):
-    """Computes the greatest common denominator.
+    """Return the greatest common denominator.
 
     Given a list of numbers find the smallest number that can divide them all.
     """
