@@ -61,7 +61,7 @@ TEST_F(NiRFmxGSMDriverApiTests, Init_Close_Succeeds)
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 }  // namespace
