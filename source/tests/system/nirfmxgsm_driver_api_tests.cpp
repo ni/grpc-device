@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niRFmxGSM.h"
 #include "nirfmxgsm/nirfmxgsm_client.h"
+#include "rfmx_macros.h"
 
 using namespace ::testing;
 using namespace nirfmxgsm_grpc;
@@ -14,12 +14,6 @@ namespace system {
 namespace {
 
 const auto PXI_5663E = "5663E";
-
-template <typename TResponse>
-void EXPECT_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(0, response.status());
-}
 
 class NiRFmxGSMDriverApiTests : public Test {
  protected:
@@ -40,12 +34,6 @@ class NiRFmxGSMDriverApiTests : public Test {
   const std::unique_ptr<NiRFmxGSM::Stub>& stub() const
   {
     return stub_;
-  }
-
-  template <typename TResponse>
-  void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_SUCCESS(response);
   }
 
   template <typename TService>
