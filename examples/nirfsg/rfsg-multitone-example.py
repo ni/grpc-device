@@ -271,14 +271,14 @@ try:
         )
     )
 
-    response = client.GetAttributeViReal64(
+    response_papr = client.GetAttributeViReal64(
         nirfsg_types.GetAttributeViReal64Request(
             vi=vi,
             channel_name="waveform::wfm",
             attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_PAPR,
         )
     )
-    waveform_papr = response.value
+    waveform_papr = response_papr.value
     # The runtime scaling is to help reduce the chance of overflow the DAC by reducing
     #  the signal a bit more (1.5 dB). The driver compensates for this reduction and
     #  no need to compensate for this.
