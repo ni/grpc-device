@@ -613,7 +613,7 @@ TEST_P(ServerConfigurationParserCodeReadinessTests, CodeReadinessConfiguration_P
   EXPECT_EQ(std::get<1>(GetParam()), readiness);
 }
 
-TEST_P(ServerConfigurationParserCodeReadinessTests, CodeReadinessConfiguration_ParseFeatureToggles_FeatureOfCorrespodingReadinessIsEnabled)
+TEST_P(ServerConfigurationParserCodeReadinessTests, CodeReadinessConfiguration_ParseFeatureToggles_FeatureOfCorrespondingReadinessIsEnabled)
 {
   const auto config_json = nlohmann::json::parse(std::get<0>(GetParam()));
   const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
