@@ -149,9 +149,7 @@ try:
     rfsg_resource_name = "5840_1"
     rfsg_selected_ports = ""
     rfsg_waveform_name = "wfm"
-    rfsg_script = (
-        "script GenerateWaveform repeat forever generate wfm end repeat end script"
-    )
+    rfsg_script = "script GenerateWaveform repeat forever generate wfm end repeat end script"
     rfsg_external_attenuation = 0.0
     rfsg_frequency_reference_source = nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK
     rfsg_automatic_shared_lo = nirfsg_types.NIRFSG_INT32_ENABLE_VALUES_DISABLE
@@ -167,9 +165,7 @@ try:
         sampling_rate_hz / min_waveform_size,
     )
     # Sum all the tones power for scaling on the SG power
-    tones_power = 10 * math.log(
-        sum([math.pow(10, tone.gain_db / 10) for tone in tones]), 10
-    )
+    tones_power = 10 * math.log(sum([math.pow(10, tone.gain_db / 10) for tone in tones]), 10)
     print(
         "FrequencyStep = {} Hz and Sampling Frequency = {} Hz and Tone Total Power = {}".format(
             frequency_step_hz, sampling_rate_hz, tones_power
@@ -217,9 +213,7 @@ try:
 
     # Coarce Settings
     for item in tones:
-        item.offset_hz = (
-            np.floor(item.offset_hz / frequency_step_hz) * frequency_step_hz
-        )
+        item.offset_hz = np.floor(item.offset_hz / frequency_step_hz) * frequency_step_hz
         print(item)
     # Init initial waveform
     waveform = np.full(int(1 / frequency_step_hz * sampling_rate_hz), 0 + 0j)
@@ -230,9 +224,7 @@ try:
         offset_waveform = [
             1 * np.exp(i * phase_drif * 1j) for i in np.arange(0, len(waveform))
         ]
-        waveform = waveform + np.array(offset_waveform) * math.pow(
-            10, item.gain_db / 20
-        )
+        waveform = waveform + np.array(offset_waveform) * math.pow(10, item.gain_db / 20)
     # Waveform needs to normalize as we will use Peak Power Mode. This is easier to
     #  integrate with other pieces of code as it's the same mode.
     # This means that what we write magnitude (sqrt(I^2 + Q^2)) be larger than 1. 1 is
@@ -334,15 +326,15 @@ except grpc.RpcError as rpc_error:
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = (
-                entry.value
-                if isinstance(entry.value, str)
-                else entry.value.decode("utf-8")
+                entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             )
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 finally:
     if vi:
