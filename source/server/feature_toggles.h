@@ -16,10 +16,8 @@ class FeatureToggles {
   enum class CodeReadiness {
     kPrototype = 0,
     kIncomplete = 1,
-    kRestrictedNextRelease = 2,
-    kNextRelease = 3,
-    kRestrictedRelease = 4,
-    kRelease = 5,
+    kNextRelease = 2,
+    kRelease = 3,
   };
 
   FeatureToggles() {}

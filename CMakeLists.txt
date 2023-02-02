@@ -406,7 +406,7 @@ set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH 
 add_custom_command(
    TARGET ni_grpc_device_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_SOURCE_DIR}/source/config/localhost_restricted_config.json
+            ${CMAKE_SOURCE_DIR}/source/config/localhost_config.json
             $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------

@@ -1072,7 +1072,7 @@ namespace nirfmxinstr_restricted_grpc {
   NiRFmxInstrRestrictedFeatureToggles::NiRFmxInstrRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxinstr_restricted", CodeReadiness::kRestrictedRelease))
+        feature_toggles.is_feature_enabled("nirfmxinstr_restricted", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxinstr_restricted_grpc
