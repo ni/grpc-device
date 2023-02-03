@@ -1100,6 +1100,11 @@ def get_driver_readiness(config: dict) -> str:
     return config.get("code_readiness", "Release")
 
 
+def is_driver_restricted(config: dict) -> str:
+    """Get the is_restricted config setting."""
+    return config.get("is_restricted", False)
+
+
 def get_grpc_field_name(param: dict) -> str:
     """Get the name of the protobuf field for the given param.
 

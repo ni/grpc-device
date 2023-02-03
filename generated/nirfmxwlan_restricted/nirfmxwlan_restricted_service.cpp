@@ -165,7 +165,7 @@ namespace nirfmxwlan_restricted_grpc {
   NiRFmxWLANRestrictedFeatureToggles::NiRFmxWLANRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxwlan_restricted", CodeReadiness::kRestrictedRelease))
+        feature_toggles.is_feature_enabled("nirfmxwlan_restricted", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxwlan_restricted_grpc
