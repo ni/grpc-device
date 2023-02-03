@@ -38,7 +38,7 @@ import nirfsg_pb2_grpc as grpc_nirfsg
 import numpy as np
 
 
-SERVER_ADDRESS = "mercury07"
+SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
 SESSION_NAME = "NI-RFSG-Session"
 
@@ -176,7 +176,7 @@ try:
         )
     )
 
-    # We wante the tones to be at a specific power, for that reason, we adjust
+    # We want the tones to be at a specific power, for that reason, we adjust
     # generator power to the desired power + whatever the tones constructive
     # interference. This was computed above as the "tones power"
     client.SetAttributeViReal64(
@@ -206,7 +206,7 @@ try:
         )
     )
 
-    # Coarce Settings
+    # Coerce Settings
     for item in tones:
         item.offset_hz = np.floor(item.offset_hz / frequency_step_hz) * frequency_step_hz
         print(item)
