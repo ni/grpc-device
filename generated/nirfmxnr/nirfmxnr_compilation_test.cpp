@@ -732,6 +732,11 @@ int32 ModAccFetchSubblockInBandEmissionTrace(niRFmxInstrHandle instrumentHandle,
   return RFmxNR_ModAccFetchSubblockInBandEmissionTrace(instrumentHandle, selectorString, timeout, subblockInBandEmission, subblockInBandEmissionMask, subblockInBandEmissionRBIndices, arraySize, actualArraySize);
 }
 
+int32 ModAccFetchTransientPeriodLocationsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 transientPeriodLocations[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxNR_ModAccFetchTransientPeriodLocationsTrace(instrumentHandle, selectorString, timeout, x0, dx, transientPeriodLocations, arraySize, actualArraySize);
+}
+
 int32 ModAccValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid)
 {
   return RFmxNR_ModAccValidateCalibrationData(instrumentHandle, selectorString, calibrationDataValid);

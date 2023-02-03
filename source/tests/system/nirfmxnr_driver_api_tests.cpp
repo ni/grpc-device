@@ -325,6 +325,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   std::vector<float64> componentCarrierQuadratureErrorMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[2];
   ModAccFetchRMSEVMPerSymbolMeanTraceResponse mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[2];
+  ModAccFetchTransientPeriodLocationsTraceResponse mod_acc_fetch_transient_period_locations_trace_response[2];
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++) {
     const auto carrier_string_response = EXPECT_SUCCESS(session, client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i));
     auto modacc_results_composite_rms_evm_mean_response = client::get_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
@@ -348,6 +349,8 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
     EXPECT_NR_SYNC_FAILURE_WARNING(session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i]);
     mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
     EXPECT_NR_SYNC_FAILURE_WARNING(session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i]);
+    mod_acc_fetch_transient_period_locations_trace_response[i] = client::mod_acc_fetch_transient_period_locations_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
+    EXPECT_NR_SYNC_FAILURE_WARNING(session, mod_acc_fetch_transient_period_locations_trace_response[i]);
   }
 
   EXPECT_TRUE(isnan(compositeRMSEVMMean[0]));

@@ -166,6 +166,7 @@ NiRFmxNRLibrary::NiRFmxNRLibrary() : shared_library_(kLibraryName)
   function_pointers_.ModAccFetchSSSRMSEVMPerSymbolMeanTrace = reinterpret_cast<ModAccFetchSSSRMSEVMPerSymbolMeanTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchSSSRMSEVMPerSymbolMeanTrace"));
   function_pointers_.ModAccFetchSpectralFlatnessTrace = reinterpret_cast<ModAccFetchSpectralFlatnessTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchSpectralFlatnessTrace"));
   function_pointers_.ModAccFetchSubblockInBandEmissionTrace = reinterpret_cast<ModAccFetchSubblockInBandEmissionTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchSubblockInBandEmissionTrace"));
+  function_pointers_.ModAccFetchTransientPeriodLocationsTrace = reinterpret_cast<ModAccFetchTransientPeriodLocationsTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchTransientPeriodLocationsTrace"));
   function_pointers_.ModAccValidateCalibrationData = reinterpret_cast<ModAccValidateCalibrationDataPtr>(shared_library_.get_function_pointer("RFmxNR_ModAccValidateCalibrationData"));
   function_pointers_.OBWCfgAveraging = reinterpret_cast<OBWCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxNR_OBWCfgAveraging"));
   function_pointers_.OBWCfgRBWFilter = reinterpret_cast<OBWCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxNR_OBWCfgRBWFilter"));
@@ -1410,6 +1411,14 @@ int32 NiRFmxNRLibrary::ModAccFetchSubblockInBandEmissionTrace(niRFmxInstrHandle 
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchSubblockInBandEmissionTrace.");
   }
   return function_pointers_.ModAccFetchSubblockInBandEmissionTrace(instrumentHandle, selectorString, timeout, subblockInBandEmission, subblockInBandEmissionMask, subblockInBandEmissionRBIndices, arraySize, actualArraySize);
+}
+
+int32 NiRFmxNRLibrary::ModAccFetchTransientPeriodLocationsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 transientPeriodLocations[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchTransientPeriodLocationsTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchTransientPeriodLocationsTrace.");
+  }
+  return function_pointers_.ModAccFetchTransientPeriodLocationsTrace(instrumentHandle, selectorString, timeout, x0, dx, transientPeriodLocations, arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid)

@@ -163,6 +163,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   int32 ModAccFetchSSSRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 sssrmsevmPerSymbolMean[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchSpectralFlatnessTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectralFlatness[], float32 spectralFlatnessLowerMask[], float32 spectralFlatnessUpperMask[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchSubblockInBandEmissionTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 subblockInBandEmission[], float64 subblockInBandEmissionMask[], float64 subblockInBandEmissionRBIndices[], int32 arraySize, int32* actualArraySize);
+  int32 ModAccFetchTransientPeriodLocationsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 transientPeriodLocations[], int32 arraySize, int32* actualArraySize);
   int32 ModAccValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid);
   int32 OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType);
   int32 OBWCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType);
@@ -383,6 +384,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   using ModAccFetchSSSRMSEVMPerSymbolMeanTracePtr = decltype(&RFmxNR_ModAccFetchSSSRMSEVMPerSymbolMeanTrace);
   using ModAccFetchSpectralFlatnessTracePtr = decltype(&RFmxNR_ModAccFetchSpectralFlatnessTrace);
   using ModAccFetchSubblockInBandEmissionTracePtr = decltype(&RFmxNR_ModAccFetchSubblockInBandEmissionTrace);
+  using ModAccFetchTransientPeriodLocationsTracePtr = decltype(&RFmxNR_ModAccFetchTransientPeriodLocationsTrace);
   using ModAccValidateCalibrationDataPtr = decltype(&RFmxNR_ModAccValidateCalibrationData);
   using OBWCfgAveragingPtr = decltype(&RFmxNR_OBWCfgAveraging);
   using OBWCfgRBWFilterPtr = decltype(&RFmxNR_OBWCfgRBWFilter);
@@ -603,6 +605,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     ModAccFetchSSSRMSEVMPerSymbolMeanTracePtr ModAccFetchSSSRMSEVMPerSymbolMeanTrace;
     ModAccFetchSpectralFlatnessTracePtr ModAccFetchSpectralFlatnessTrace;
     ModAccFetchSubblockInBandEmissionTracePtr ModAccFetchSubblockInBandEmissionTrace;
+    ModAccFetchTransientPeriodLocationsTracePtr ModAccFetchTransientPeriodLocationsTrace;
     ModAccValidateCalibrationDataPtr ModAccValidateCalibrationData;
     OBWCfgAveragingPtr OBWCfgAveraging;
     OBWCfgRBWFilterPtr OBWCfgRBWFilter;
