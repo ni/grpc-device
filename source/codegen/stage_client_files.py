@@ -48,7 +48,7 @@ class _ArtifactReadiness:
             raise KeyError(f"No module config.py metadata for module_name: {module_path}")
 
         return (
-            not self._module_to_restricted and self._module_to_readiness[module_name] == "Release"
+            not self._module_to_restricted[module_name] and self._module_to_readiness[module_name] == "Release"
         )
 
     def get_release_ready_subdirs(self, directory: Path) -> Iterable[Path]:
