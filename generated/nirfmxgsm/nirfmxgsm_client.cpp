@@ -17,6 +17,700 @@
 
 namespace nirfmxgsm_grpc::experimental::client {
 
+AbortMeasurementsResponse
+abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AbortMeasurementsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = AbortMeasurementsResponse{};
+
+  raise_if_error(
+      stub->AbortMeasurements(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AnalyzeIQ1WaveformResponse
+analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iq, request.mutable_iq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1Waveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AutoLevelResponse
+auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_interval)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AutoLevelRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_measurement_interval(measurement_interval);
+
+  auto response = AutoLevelResponse{};
+
+  raise_if_error(
+      stub->AutoLevel(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildOffsetStringResponse
+build_offset_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& offset_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildOffsetStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_offset_number(offset_number);
+
+  auto response = BuildOffsetStringResponse{};
+
+  raise_if_error(
+      stub->BuildOffsetString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildSignalStringResponse
+build_signal_string(const StubPtr& stub, const std::string& signal_name, const std::string& result_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildSignalStringRequest{};
+  request.set_signal_name(signal_name);
+  request.set_result_name(result_name);
+
+  auto response = BuildSignalStringResponse{};
+
+  raise_if_error(
+      stub->BuildSignalString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildSlotStringResponse
+build_slot_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& slot_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildSlotStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_slot_number(slot_number);
+
+  auto response = BuildSlotStringResponse{};
+
+  raise_if_error(
+      stub->BuildSlotString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgAutoTSCDetectionEnabledResponse
+cfg_auto_tsc_detection_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AutoTscDetectionEnabled, pb::int32>& auto_tsc_detection_enabled)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgAutoTSCDetectionEnabledRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto auto_tsc_detection_enabled_ptr = auto_tsc_detection_enabled.get_if<AutoTscDetectionEnabled>();
+  const auto auto_tsc_detection_enabled_raw_ptr = auto_tsc_detection_enabled.get_if<pb::int32>();
+  if (auto_tsc_detection_enabled_ptr) {
+    request.set_auto_tsc_detection_enabled(*auto_tsc_detection_enabled_ptr);
+  }
+  else if (auto_tsc_detection_enabled_raw_ptr) {
+    request.set_auto_tsc_detection_enabled_raw(*auto_tsc_detection_enabled_raw_ptr);
+  }
+
+  auto response = CfgAutoTSCDetectionEnabledResponse{};
+
+  raise_if_error(
+      stub->CfgAutoTSCDetectionEnabled(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgBandResponse
+cfg_band(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<Band, pb::int32>& band)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgBandRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto band_ptr = band.get_if<Band>();
+  const auto band_raw_ptr = band.get_if<pb::int32>();
+  if (band_ptr) {
+    request.set_band(*band_ptr);
+  }
+  else if (band_raw_ptr) {
+    request.set_band_raw(*band_raw_ptr);
+  }
+
+  auto response = CfgBandResponse{};
+
+  raise_if_error(
+      stub->CfgBand(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgBurstSynchronizationTypeResponse
+cfg_burst_synchronization_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<BurstSynchronizationType, pb::int32>& burst_synchronization_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgBurstSynchronizationTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto burst_synchronization_type_ptr = burst_synchronization_type.get_if<BurstSynchronizationType>();
+  const auto burst_synchronization_type_raw_ptr = burst_synchronization_type.get_if<pb::int32>();
+  if (burst_synchronization_type_ptr) {
+    request.set_burst_synchronization_type(*burst_synchronization_type_ptr);
+  }
+  else if (burst_synchronization_type_raw_ptr) {
+    request.set_burst_synchronization_type_raw(*burst_synchronization_type_raw_ptr);
+  }
+
+  auto response = CfgBurstSynchronizationTypeResponse{};
+
+  raise_if_error(
+      stub->CfgBurstSynchronizationType(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgDigitalEdgeTriggerResponse
+cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DigitalEdgeTriggerSource, std::string>& digital_edge_source, const simple_variant<DigitalEdgeTriggerEdge, pb::int32>& digital_edge, const double& trigger_delay, const pb::int32& enable_trigger)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgDigitalEdgeTriggerRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto digital_edge_source_ptr = digital_edge_source.get_if<DigitalEdgeTriggerSource>();
+  const auto digital_edge_source_raw_ptr = digital_edge_source.get_if<std::string>();
+  if (digital_edge_source_ptr) {
+    request.set_digital_edge_source_mapped(*digital_edge_source_ptr);
+  }
+  else if (digital_edge_source_raw_ptr) {
+    request.set_digital_edge_source_raw(*digital_edge_source_raw_ptr);
+  }
+  const auto digital_edge_ptr = digital_edge.get_if<DigitalEdgeTriggerEdge>();
+  const auto digital_edge_raw_ptr = digital_edge.get_if<pb::int32>();
+  if (digital_edge_ptr) {
+    request.set_digital_edge(*digital_edge_ptr);
+  }
+  else if (digital_edge_raw_ptr) {
+    request.set_digital_edge_raw(*digital_edge_raw_ptr);
+  }
+  request.set_trigger_delay(trigger_delay);
+  request.set_enable_trigger(enable_trigger);
+
+  auto response = CfgDigitalEdgeTriggerResponse{};
+
+  raise_if_error(
+      stub->CfgDigitalEdgeTrigger(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgExternalAttenuationResponse
+cfg_external_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& external_attenuation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgExternalAttenuationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_external_attenuation(external_attenuation);
+
+  auto response = CfgExternalAttenuationResponse{};
+
+  raise_if_error(
+      stub->CfgExternalAttenuation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgFrequencyResponse
+cfg_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& center_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_center_frequency(center_frequency);
+
+  auto response = CfgFrequencyResponse{};
+
+  raise_if_error(
+      stub->CfgFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgFrequencyARFCNResponse
+cfg_frequency_arfcn(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<LinkDirection, pb::int32>& link_direction, const simple_variant<Band, pb::int32>& band, const pb::int32& arfcn)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgFrequencyARFCNRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto link_direction_ptr = link_direction.get_if<LinkDirection>();
+  const auto link_direction_raw_ptr = link_direction.get_if<pb::int32>();
+  if (link_direction_ptr) {
+    request.set_link_direction(*link_direction_ptr);
+  }
+  else if (link_direction_raw_ptr) {
+    request.set_link_direction_raw(*link_direction_raw_ptr);
+  }
+  const auto band_ptr = band.get_if<Band>();
+  const auto band_raw_ptr = band.get_if<pb::int32>();
+  if (band_ptr) {
+    request.set_band(*band_ptr);
+  }
+  else if (band_raw_ptr) {
+    request.set_band_raw(*band_raw_ptr);
+  }
+  request.set_arfcn(arfcn);
+
+  auto response = CfgFrequencyARFCNResponse{};
+
+  raise_if_error(
+      stub->CfgFrequencyARFCN(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgFrequencyReferenceResponse
+cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<FrequencyReferenceSource, std::string>& frequency_reference_source, const double& frequency_reference_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgFrequencyReferenceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+  const auto frequency_reference_source_ptr = frequency_reference_source.get_if<FrequencyReferenceSource>();
+  const auto frequency_reference_source_raw_ptr = frequency_reference_source.get_if<std::string>();
+  if (frequency_reference_source_ptr) {
+    request.set_frequency_reference_source_mapped(*frequency_reference_source_ptr);
+  }
+  else if (frequency_reference_source_raw_ptr) {
+    request.set_frequency_reference_source_raw(*frequency_reference_source_raw_ptr);
+  }
+  request.set_frequency_reference_frequency(frequency_reference_frequency);
+
+  auto response = CfgFrequencyReferenceResponse{};
+
+  raise_if_error(
+      stub->CfgFrequencyReference(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgIQPowerEdgeTriggerResponse
+cfg_iq_power_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& iq_power_edge_source, const simple_variant<IQPowerEdgeTriggerSlope, pb::int32>& iq_power_edge_slope, const double& iq_power_edge_level, const double& trigger_delay, const simple_variant<TriggerMinimumQuietTimeMode, pb::int32>& minimum_quiet_time_mode, const double& minimum_quiet_time, const simple_variant<IQPowerEdgeTriggerLevelType, pb::int32>& iq_power_edge_level_type, const pb::int32& enable_trigger)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgIQPowerEdgeTriggerRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_iq_power_edge_source(iq_power_edge_source);
+  const auto iq_power_edge_slope_ptr = iq_power_edge_slope.get_if<IQPowerEdgeTriggerSlope>();
+  const auto iq_power_edge_slope_raw_ptr = iq_power_edge_slope.get_if<pb::int32>();
+  if (iq_power_edge_slope_ptr) {
+    request.set_iq_power_edge_slope(*iq_power_edge_slope_ptr);
+  }
+  else if (iq_power_edge_slope_raw_ptr) {
+    request.set_iq_power_edge_slope_raw(*iq_power_edge_slope_raw_ptr);
+  }
+  request.set_iq_power_edge_level(iq_power_edge_level);
+  request.set_trigger_delay(trigger_delay);
+  const auto minimum_quiet_time_mode_ptr = minimum_quiet_time_mode.get_if<TriggerMinimumQuietTimeMode>();
+  const auto minimum_quiet_time_mode_raw_ptr = minimum_quiet_time_mode.get_if<pb::int32>();
+  if (minimum_quiet_time_mode_ptr) {
+    request.set_minimum_quiet_time_mode(*minimum_quiet_time_mode_ptr);
+  }
+  else if (minimum_quiet_time_mode_raw_ptr) {
+    request.set_minimum_quiet_time_mode_raw(*minimum_quiet_time_mode_raw_ptr);
+  }
+  request.set_minimum_quiet_time(minimum_quiet_time);
+  const auto iq_power_edge_level_type_ptr = iq_power_edge_level_type.get_if<IQPowerEdgeTriggerLevelType>();
+  const auto iq_power_edge_level_type_raw_ptr = iq_power_edge_level_type.get_if<pb::int32>();
+  if (iq_power_edge_level_type_ptr) {
+    request.set_iq_power_edge_level_type(*iq_power_edge_level_type_ptr);
+  }
+  else if (iq_power_edge_level_type_raw_ptr) {
+    request.set_iq_power_edge_level_type_raw(*iq_power_edge_level_type_raw_ptr);
+  }
+  request.set_enable_trigger(enable_trigger);
+
+  auto response = CfgIQPowerEdgeTriggerResponse{};
+
+  raise_if_error(
+      stub->CfgIQPowerEdgeTrigger(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgLinkDirectionResponse
+cfg_link_direction(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<LinkDirection, pb::int32>& link_direction)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgLinkDirectionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto link_direction_ptr = link_direction.get_if<LinkDirection>();
+  const auto link_direction_raw_ptr = link_direction.get_if<pb::int32>();
+  if (link_direction_ptr) {
+    request.set_link_direction(*link_direction_ptr);
+  }
+  else if (link_direction_raw_ptr) {
+    request.set_link_direction_raw(*link_direction_raw_ptr);
+  }
+
+  auto response = CfgLinkDirectionResponse{};
+
+  raise_if_error(
+      stub->CfgLinkDirection(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgMechanicalAttenuationResponse
+cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<MechanicalAttenuationAuto, pb::int32>& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgMechanicalAttenuationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+  const auto mechanical_attenuation_auto_ptr = mechanical_attenuation_auto.get_if<MechanicalAttenuationAuto>();
+  const auto mechanical_attenuation_auto_raw_ptr = mechanical_attenuation_auto.get_if<pb::int32>();
+  if (mechanical_attenuation_auto_ptr) {
+    request.set_mechanical_attenuation_auto(*mechanical_attenuation_auto_ptr);
+  }
+  else if (mechanical_attenuation_auto_raw_ptr) {
+    request.set_mechanical_attenuation_auto_raw(*mechanical_attenuation_auto_raw_ptr);
+  }
+  request.set_mechanical_attenuation_value(mechanical_attenuation_value);
+
+  auto response = CfgMechanicalAttenuationResponse{};
+
+  raise_if_error(
+      stub->CfgMechanicalAttenuation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgNumberOfTimeslotsResponse
+cfg_number_of_timeslots(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_timeslots)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgNumberOfTimeslotsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_number_of_timeslots(number_of_timeslots);
+
+  auto response = CfgNumberOfTimeslotsResponse{};
+
+  raise_if_error(
+      stub->CfgNumberOfTimeslots(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgPowerControlLevelResponse
+cfg_power_control_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& power_control_level)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgPowerControlLevelRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_power_control_level(power_control_level);
+
+  auto response = CfgPowerControlLevelResponse{};
+
+  raise_if_error(
+      stub->CfgPowerControlLevel(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgRFResponse
+cfg_rf(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& center_frequency, const double& reference_level, const double& external_attenuation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgRFRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_center_frequency(center_frequency);
+  request.set_reference_level(reference_level);
+  request.set_external_attenuation(external_attenuation);
+
+  auto response = CfgRFResponse{};
+
+  raise_if_error(
+      stub->CfgRF(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgRFAttenuationResponse
+cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgRFAttenuationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+  const auto rf_attenuation_auto_ptr = rf_attenuation_auto.get_if<RFAttenuationAuto>();
+  const auto rf_attenuation_auto_raw_ptr = rf_attenuation_auto.get_if<pb::int32>();
+  if (rf_attenuation_auto_ptr) {
+    request.set_rf_attenuation_auto(*rf_attenuation_auto_ptr);
+  }
+  else if (rf_attenuation_auto_raw_ptr) {
+    request.set_rf_attenuation_auto_raw(*rf_attenuation_auto_raw_ptr);
+  }
+  request.set_rf_attenuation_value(rf_attenuation_value);
+
+  auto response = CfgRFAttenuationResponse{};
+
+  raise_if_error(
+      stub->CfgRFAttenuation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgReferenceLevelResponse
+cfg_reference_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& reference_level)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgReferenceLevelRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_reference_level(reference_level);
+
+  auto response = CfgReferenceLevelResponse{};
+
+  raise_if_error(
+      stub->CfgReferenceLevel(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgSignalTypeResponse
+cfg_signal_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModulationType, pb::int32>& modulation_type, const simple_variant<BurstType, pb::int32>& burst_type, const simple_variant<HBFilterWidth, pb::int32>& hb_filter_width)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgSignalTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto modulation_type_ptr = modulation_type.get_if<ModulationType>();
+  const auto modulation_type_raw_ptr = modulation_type.get_if<pb::int32>();
+  if (modulation_type_ptr) {
+    request.set_modulation_type(*modulation_type_ptr);
+  }
+  else if (modulation_type_raw_ptr) {
+    request.set_modulation_type_raw(*modulation_type_raw_ptr);
+  }
+  const auto burst_type_ptr = burst_type.get_if<BurstType>();
+  const auto burst_type_raw_ptr = burst_type.get_if<pb::int32>();
+  if (burst_type_ptr) {
+    request.set_burst_type(*burst_type_ptr);
+  }
+  else if (burst_type_raw_ptr) {
+    request.set_burst_type_raw(*burst_type_raw_ptr);
+  }
+  const auto hb_filter_width_ptr = hb_filter_width.get_if<HBFilterWidth>();
+  const auto hb_filter_width_raw_ptr = hb_filter_width.get_if<pb::int32>();
+  if (hb_filter_width_ptr) {
+    request.set_hb_filter_width(*hb_filter_width_ptr);
+  }
+  else if (hb_filter_width_raw_ptr) {
+    request.set_hb_filter_width_raw(*hb_filter_width_raw_ptr);
+  }
+
+  auto response = CfgSignalTypeResponse{};
+
+  raise_if_error(
+      stub->CfgSignalType(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgSoftwareEdgeTriggerResponse
+cfg_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& trigger_delay, const pb::int32& enable_trigger)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgSoftwareEdgeTriggerRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_trigger_delay(trigger_delay);
+  request.set_enable_trigger(enable_trigger);
+
+  auto response = CfgSoftwareEdgeTriggerResponse{};
+
+  raise_if_error(
+      stub->CfgSoftwareEdgeTrigger(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgTSCResponse
+cfg_tsc(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<Tsc, pb::int32>& tsc)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgTSCRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto tsc_ptr = tsc.get_if<Tsc>();
+  const auto tsc_raw_ptr = tsc.get_if<pb::int32>();
+  if (tsc_ptr) {
+    request.set_tsc(*tsc_ptr);
+  }
+  else if (tsc_raw_ptr) {
+    request.set_tsc_raw(*tsc_raw_ptr);
+  }
+
+  auto response = CfgTSCResponse{};
+
+  raise_if_error(
+      stub->CfgTSC(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CheckMeasurementStatusResponse
+check_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CheckMeasurementStatusRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CheckMeasurementStatusResponse{};
+
+  raise_if_error(
+      stub->CheckMeasurementStatus(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ClearAllNamedResultsResponse
+clear_all_named_results(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearAllNamedResultsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = ClearAllNamedResultsResponse{};
+
+  raise_if_error(
+      stub->ClearAllNamedResults(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ClearNamedResultResponse
+clear_named_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearNamedResultRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = ClearNamedResultResponse{};
+
+  raise_if_error(
+      stub->ClearNamedResult(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CloneSignalConfigurationResponse
+clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& old_signal_name, const std::string& new_signal_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloneSignalConfigurationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_old_signal_name(old_signal_name);
+  request.set_new_signal_name(new_signal_name);
+
+  auto response = CloneSignalConfigurationResponse{};
+
+  raise_if_error(
+      stub->CloneSignalConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CloseResponse
 close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy)
 {
@@ -30,6 +724,476 @@ close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool&
 
   raise_if_error(
       stub->Close(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CommitResponse
+commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CommitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CommitResponse{};
+
+  raise_if_error(
+      stub->Commit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CreateSignalConfigurationResponse
+create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateSignalConfigurationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_signal_name(signal_name);
+
+  auto response = CreateSignalConfigurationResponse{};
+
+  raise_if_error(
+      stub->CreateSignalConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DeleteSignalConfigurationResponse
+delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DeleteSignalConfigurationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_signal_name(signal_name);
+
+  auto response = DeleteSignalConfigurationResponse{};
+
+  raise_if_error(
+      stub->DeleteSignalConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DisableTriggerResponse
+disable_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DisableTriggerRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = DisableTriggerResponse{};
+
+  raise_if_error(
+      stub->DisableTrigger(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAllNamedResultNamesResponse
+get_all_named_result_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAllNamedResultNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetAllNamedResultNamesResponse{};
+
+  raise_if_error(
+      stub->GetAllNamedResultNames(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeF32Response
+get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeF32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeF32Response{};
+
+  raise_if_error(
+      stub->GetAttributeF32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeF32ArrayResponse
+get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeF32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeF32ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeF32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeF64Response
+get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeF64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeF64Response{};
+
+  raise_if_error(
+      stub->GetAttributeF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeF64ArrayResponse
+get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeF64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeF64ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeF64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI16Response
+get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI16Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI16Response{};
+
+  raise_if_error(
+      stub->GetAttributeI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI32Response
+get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI32Response{};
+
+  raise_if_error(
+      stub->GetAttributeI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI32ArrayResponse
+get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI32ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeI32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI64Response
+get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI64Response{};
+
+  raise_if_error(
+      stub->GetAttributeI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI64ArrayResponse
+get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI64ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeI64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI8Response
+get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI8Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI8Response{};
+
+  raise_if_error(
+      stub->GetAttributeI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI8ArrayResponse
+get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI8ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI8ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeI8Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeNIComplexDoubleArrayResponse
+get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeNIComplexDoubleArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeNIComplexDoubleArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeNIComplexDoubleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeNIComplexSingleArrayResponse
+get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeNIComplexSingleArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeNIComplexSingleArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeNIComplexSingleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeStringResponse
+get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeStringRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetAttributeString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU16Response
+get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU16Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU16Response{};
+
+  raise_if_error(
+      stub->GetAttributeU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU32Response
+get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU32Response{};
+
+  raise_if_error(
+      stub->GetAttributeU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU32ArrayResponse
+get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU32ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeU32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU64ArrayResponse
+get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU64ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeU64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU8Response
+get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU8Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU8Response{};
+
+  raise_if_error(
+      stub->GetAttributeU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU8ArrayResponse
+get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU8ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU8ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeU8Array(&context, request, &response),
       context);
 
   return response;
@@ -71,18 +1235,1254 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 InitializeResponse
-initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string)
+initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = InitializeRequest{};
   request.set_resource_name(resource_name);
   request.set_option_string(option_string);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitializeResponse{};
 
   raise_if_error(
       stub->Initialize(&context, request, &response),
+      context);
+
+  return response;
+}
+
+InitializeFromNIRFSASessionResponse
+initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitializeFromNIRFSASessionRequest{};
+  request.mutable_nirfsa_session()->CopyFrom(nirfsa_session);
+  request.set_initialization_behavior(initialization_behavior);
+
+  auto response = InitializeFromNIRFSASessionResponse{};
+
+  raise_if_error(
+      stub->InitializeFromNIRFSASession(&context, request, &response),
+      context);
+
+  return response;
+}
+
+InitiateResponse
+initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitiateRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+
+  auto response = InitiateResponse{};
+
+  raise_if_error(
+      stub->Initiate(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccCfgAveragingResponse
+mod_acc_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccCfgAveragingRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<ModAccAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
+  request.set_averaging_count(averaging_count);
+
+  auto response = ModAccCfgAveragingResponse{};
+
+  raise_if_error(
+      stub->ModAccCfgAveraging(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccCfgDroopCompensationEnabledResponse
+mod_acc_cfg_droop_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccDroopCompensationEnabled, pb::int32>& droop_compensation_enabled)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccCfgDroopCompensationEnabledRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto droop_compensation_enabled_ptr = droop_compensation_enabled.get_if<ModAccDroopCompensationEnabled>();
+  const auto droop_compensation_enabled_raw_ptr = droop_compensation_enabled.get_if<pb::int32>();
+  if (droop_compensation_enabled_ptr) {
+    request.set_droop_compensation_enabled(*droop_compensation_enabled_ptr);
+  }
+  else if (droop_compensation_enabled_raw_ptr) {
+    request.set_droop_compensation_enabled_raw(*droop_compensation_enabled_raw_ptr);
+  }
+
+  auto response = ModAccCfgDroopCompensationEnabledResponse{};
+
+  raise_if_error(
+      stub->ModAccCfgDroopCompensationEnabled(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchConstellationTraceResponse
+mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchConstellationTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchConstellationTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchDemodulatedBitsResponse
+mod_acc_fetch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchDemodulatedBitsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchDemodulatedBitsResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchDemodulatedBits(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchDetectedTSCResponse
+mod_acc_fetch_detected_tsc(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchDetectedTSCRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchDetectedTSCResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchDetectedTSC(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchDetectedTSCArrayResponse
+mod_acc_fetch_detected_tsc_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchDetectedTSCArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchDetectedTSCArrayResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchDetectedTSCArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchEVMResponse
+mod_acc_fetch_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchEVMRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchEVMResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchEVM(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchEVMAmplitudeDroopResponse
+mod_acc_fetch_evm_amplitude_droop(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchEVMAmplitudeDroopRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchEVMAmplitudeDroopResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchEVMAmplitudeDroop(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchEVMMagnitudeErrorResponse
+mod_acc_fetch_evm_magnitude_error(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchEVMMagnitudeErrorRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchEVMMagnitudeErrorResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchEVMMagnitudeError(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchEVMPhaseErrorResponse
+mod_acc_fetch_evm_phase_error(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchEVMPhaseErrorRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchEVMPhaseErrorResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchEVMPhaseError(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchEVMTraceResponse
+mod_acc_fetch_evm_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchEVMTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchEVMTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchEVMTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchIQImpairmentsResponse
+mod_acc_fetch_iq_impairments(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchIQImpairmentsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchIQImpairmentsResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchIQImpairments(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchMagnitudeErrorTraceResponse
+mod_acc_fetch_magnitude_error_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchMagnitudeErrorTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchMagnitudeErrorTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchMagnitudeErrorTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPFERResponse
+mod_acc_fetch_pfer(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPFERRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPFERResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPFER(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPhaseErrorTraceResponse
+mod_acc_fetch_phase_error_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPhaseErrorTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPhaseErrorTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPhaseErrorTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSCfgAveragingResponse
+orfs_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<OrfsAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<OrfsAveragingType, pb::int32>& averaging_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSCfgAveragingRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<OrfsAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
+  request.set_averaging_count(averaging_count);
+  const auto averaging_type_ptr = averaging_type.get_if<OrfsAveragingType>();
+  const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
+  if (averaging_type_ptr) {
+    request.set_averaging_type(*averaging_type_ptr);
+  }
+  else if (averaging_type_raw_ptr) {
+    request.set_averaging_type_raw(*averaging_type_raw_ptr);
+  }
+
+  auto response = ORFSCfgAveragingResponse{};
+
+  raise_if_error(
+      stub->ORFSCfgAveraging(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSCfgEvaluationSymbolsResponse
+orfs_cfg_evaluation_symbols(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& evaluation_symbols_start, const simple_variant<OrfsEvaluationSymbolsIncludeTsc, pb::int32>& evaluation_symbols_include_tsc, const double& evaluation_symbols_stop)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSCfgEvaluationSymbolsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_evaluation_symbols_start(evaluation_symbols_start);
+  const auto evaluation_symbols_include_tsc_ptr = evaluation_symbols_include_tsc.get_if<OrfsEvaluationSymbolsIncludeTsc>();
+  const auto evaluation_symbols_include_tsc_raw_ptr = evaluation_symbols_include_tsc.get_if<pb::int32>();
+  if (evaluation_symbols_include_tsc_ptr) {
+    request.set_evaluation_symbols_include_tsc(*evaluation_symbols_include_tsc_ptr);
+  }
+  else if (evaluation_symbols_include_tsc_raw_ptr) {
+    request.set_evaluation_symbols_include_tsc_raw(*evaluation_symbols_include_tsc_raw_ptr);
+  }
+  request.set_evaluation_symbols_stop(evaluation_symbols_stop);
+
+  auto response = ORFSCfgEvaluationSymbolsResponse{};
+
+  raise_if_error(
+      stub->ORFSCfgEvaluationSymbols(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSCfgMeasurementTypeResponse
+orfs_cfg_measurement_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<OrfsMeasurementType, pb::int32>& measurement_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSCfgMeasurementTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto measurement_type_ptr = measurement_type.get_if<OrfsMeasurementType>();
+  const auto measurement_type_raw_ptr = measurement_type.get_if<pb::int32>();
+  if (measurement_type_ptr) {
+    request.set_measurement_type(*measurement_type_ptr);
+  }
+  else if (measurement_type_raw_ptr) {
+    request.set_measurement_type_raw(*measurement_type_raw_ptr);
+  }
+
+  auto response = ORFSCfgMeasurementTypeResponse{};
+
+  raise_if_error(
+      stub->ORFSCfgMeasurementType(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSCfgModulationCustomOffsetFrequencyArrayResponse
+orfs_cfg_modulation_custom_offset_frequency_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& modulation_custom_offset_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSCfgModulationCustomOffsetFrequencyArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(modulation_custom_offset_frequency, request.mutable_modulation_custom_offset_frequency());
+
+  auto response = ORFSCfgModulationCustomOffsetFrequencyArrayResponse{};
+
+  raise_if_error(
+      stub->ORFSCfgModulationCustomOffsetFrequencyArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSCfgNoiseCompensationEnabledResponse
+orfs_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<OrfsNoiseCompensationEnabled, pb::int32>& noise_compensation_enabled)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSCfgNoiseCompensationEnabledRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto noise_compensation_enabled_ptr = noise_compensation_enabled.get_if<OrfsNoiseCompensationEnabled>();
+  const auto noise_compensation_enabled_raw_ptr = noise_compensation_enabled.get_if<pb::int32>();
+  if (noise_compensation_enabled_ptr) {
+    request.set_noise_compensation_enabled(*noise_compensation_enabled_ptr);
+  }
+  else if (noise_compensation_enabled_raw_ptr) {
+    request.set_noise_compensation_enabled_raw(*noise_compensation_enabled_raw_ptr);
+  }
+
+  auto response = ORFSCfgNoiseCompensationEnabledResponse{};
+
+  raise_if_error(
+      stub->ORFSCfgNoiseCompensationEnabled(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSCfgOffsetFrequencyModeResponse
+orfs_cfg_offset_frequency_mode(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<OrfsOffsetFrequencyMode, pb::int32>& offset_frequency_mode)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSCfgOffsetFrequencyModeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto offset_frequency_mode_ptr = offset_frequency_mode.get_if<OrfsOffsetFrequencyMode>();
+  const auto offset_frequency_mode_raw_ptr = offset_frequency_mode.get_if<pb::int32>();
+  if (offset_frequency_mode_ptr) {
+    request.set_offset_frequency_mode(*offset_frequency_mode_ptr);
+  }
+  else if (offset_frequency_mode_raw_ptr) {
+    request.set_offset_frequency_mode_raw(*offset_frequency_mode_raw_ptr);
+  }
+
+  auto response = ORFSCfgOffsetFrequencyModeResponse{};
+
+  raise_if_error(
+      stub->ORFSCfgOffsetFrequencyMode(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSCfgSwitchingCustomOffsetFrequencyArrayResponse
+orfs_cfg_switching_custom_offset_frequency_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& switching_custom_offset_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSCfgSwitchingCustomOffsetFrequencyArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(switching_custom_offset_frequency, request.mutable_switching_custom_offset_frequency());
+
+  auto response = ORFSCfgSwitchingCustomOffsetFrequencyArrayResponse{};
+
+  raise_if_error(
+      stub->ORFSCfgSwitchingCustomOffsetFrequencyArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSFetchModulationPowerTraceResponse
+orfs_fetch_modulation_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSFetchModulationPowerTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ORFSFetchModulationPowerTraceResponse{};
+
+  raise_if_error(
+      stub->ORFSFetchModulationPowerTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSFetchModulationResultsArrayResponse
+orfs_fetch_modulation_results_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSFetchModulationResultsArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ORFSFetchModulationResultsArrayResponse{};
+
+  raise_if_error(
+      stub->ORFSFetchModulationResultsArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSFetchSwitchingPowerTraceResponse
+orfs_fetch_switching_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSFetchSwitchingPowerTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ORFSFetchSwitchingPowerTraceResponse{};
+
+  raise_if_error(
+      stub->ORFSFetchSwitchingPowerTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ORFSFetchSwitchingResultsArrayResponse
+orfs_fetch_switching_results_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ORFSFetchSwitchingResultsArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ORFSFetchSwitchingResultsArrayResponse{};
+
+  raise_if_error(
+      stub->ORFSFetchSwitchingResultsArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PVTCfgAveragingResponse
+pvt_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PvtAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<PvtAveragingType, pb::int32>& averaging_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PVTCfgAveragingRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<PvtAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
+  request.set_averaging_count(averaging_count);
+  const auto averaging_type_ptr = averaging_type.get_if<PvtAveragingType>();
+  const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
+  if (averaging_type_ptr) {
+    request.set_averaging_type(*averaging_type_ptr);
+  }
+  else if (averaging_type_raw_ptr) {
+    request.set_averaging_type_raw(*averaging_type_raw_ptr);
+  }
+
+  auto response = PVTCfgAveragingResponse{};
+
+  raise_if_error(
+      stub->PVTCfgAveraging(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PVTFetchMeasurementStatusResponse
+pvt_fetch_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PVTFetchMeasurementStatusRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = PVTFetchMeasurementStatusResponse{};
+
+  raise_if_error(
+      stub->PVTFetchMeasurementStatus(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PVTFetchPowerTraceResponse
+pvt_fetch_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PVTFetchPowerTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = PVTFetchPowerTraceResponse{};
+
+  raise_if_error(
+      stub->PVTFetchPowerTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PVTFetchSlotMeasurementResponse
+pvt_fetch_slot_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PVTFetchSlotMeasurementRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = PVTFetchSlotMeasurementResponse{};
+
+  raise_if_error(
+      stub->PVTFetchSlotMeasurement(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PVTFetchSlotMeasurementArrayResponse
+pvt_fetch_slot_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PVTFetchSlotMeasurementArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = PVTFetchSlotMeasurementArrayResponse{};
+
+  raise_if_error(
+      stub->PVTFetchSlotMeasurementArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ResetAttributeResponse
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetAttributeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = ResetAttributeResponse{};
+
+  raise_if_error(
+      stub->ResetAttribute(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ResetToDefaultResponse
+reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetToDefaultRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = ResetToDefaultResponse{};
+
+  raise_if_error(
+      stub->ResetToDefault(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SelectMeasurementsResponse
+select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const bool& enable_all_traces)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SelectMeasurementsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto measurements_ptr = measurements.get_if<MeasurementTypes>();
+  const auto measurements_raw_ptr = measurements.get_if<pb::uint32>();
+  if (measurements_ptr) {
+    request.set_measurements(*measurements_ptr);
+  }
+  else if (measurements_raw_ptr) {
+    request.set_measurements_raw(*measurements_raw_ptr);
+  }
+  request.set_enable_all_traces(enable_all_traces);
+
+  auto response = SelectMeasurementsResponse{};
+
+  raise_if_error(
+      stub->SelectMeasurements(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SendSoftwareEdgeTriggerResponse
+send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SendSoftwareEdgeTriggerRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+
+  auto response = SendSoftwareEdgeTriggerResponse{};
+
+  raise_if_error(
+      stub->SendSoftwareEdgeTrigger(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeF32Response
+set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const float& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeF32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeF32Response{};
+
+  raise_if_error(
+      stub->SetAttributeF32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeF32ArrayResponse
+set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<float>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeF32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeF32ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeF32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeF64Response
+set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const double& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeF64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeF64Response{};
+
+  raise_if_error(
+      stub->SetAttributeF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeF64ArrayResponse
+set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<double>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeF64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeF64ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeF64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI16Response
+set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const pb::int32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI16Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeI16Response{};
+
+  raise_if_error(
+      stub->SetAttributeI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI32Response
+set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const simple_variant<NiRFmxGSMInt32AttributeValues, pb::int32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  const auto attr_val_ptr = attr_val.get_if<NiRFmxGSMInt32AttributeValues>();
+  const auto attr_val_raw_ptr = attr_val.get_if<pb::int32>();
+  if (attr_val_ptr) {
+    request.set_attr_val(*attr_val_ptr);
+  }
+  else if (attr_val_raw_ptr) {
+    request.set_attr_val_raw(*attr_val_raw_ptr);
+  }
+
+  auto response = SetAttributeI32Response{};
+
+  raise_if_error(
+      stub->SetAttributeI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI32ArrayResponse
+set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeI32ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeI32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI64Response
+set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const pb::int64& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeI64Response{};
+
+  raise_if_error(
+      stub->SetAttributeI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI64ArrayResponse
+set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<pb::int64>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeI64ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeI64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI8Response
+set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const pb::int32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI8Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeI8Response{};
+
+  raise_if_error(
+      stub->SetAttributeI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI8ArrayResponse
+set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI8ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeI8ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeI8Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeNIComplexDoubleArrayResponse
+set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeNIComplexDoubleArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeNIComplexDoubleArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeNIComplexDoubleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeNIComplexSingleArrayResponse
+set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumberF32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeNIComplexSingleArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeNIComplexSingleArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeNIComplexSingleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeStringResponse
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const simple_variant<NiRFmxGSMStringAttributeValuesMapped, std::string>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeStringRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  const auto attr_val_ptr = attr_val.get_if<NiRFmxGSMStringAttributeValuesMapped>();
+  const auto attr_val_raw_ptr = attr_val.get_if<std::string>();
+  if (attr_val_ptr) {
+    request.set_attr_val_mapped(*attr_val_ptr);
+  }
+  else if (attr_val_raw_ptr) {
+    request.set_attr_val_raw(*attr_val_raw_ptr);
+  }
+
+  auto response = SetAttributeStringResponse{};
+
+  raise_if_error(
+      stub->SetAttributeString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU16Response
+set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const pb::uint32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU16Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeU16Response{};
+
+  raise_if_error(
+      stub->SetAttributeU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU32Response
+set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const pb::uint32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeU32Response{};
+
+  raise_if_error(
+      stub->SetAttributeU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU32ArrayResponse
+set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<pb::uint32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeU32ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeU32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU64ArrayResponse
+set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<pb::uint64>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeU64ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeU64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU8Response
+set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const pb::uint32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU8Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeU8Response{};
+
+  raise_if_error(
+      stub->SetAttributeU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU8ArrayResponse
+set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::string& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU8ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeU8ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeU8Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WaitForAcquisitionCompleteResponse
+wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WaitForAcquisitionCompleteRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_timeout(timeout);
+
+  auto response = WaitForAcquisitionCompleteResponse{};
+
+  raise_if_error(
+      stub->WaitForAcquisitionComplete(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WaitForMeasurementCompleteResponse
+wait_for_measurement_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WaitForMeasurementCompleteRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = WaitForMeasurementCompleteResponse{};
+
+  raise_if_error(
+      stub->WaitForMeasurementComplete(&context, request, &response),
       context);
 
   return response;
