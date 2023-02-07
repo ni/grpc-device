@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.0.0f168
+# This file is generated from NI-SCOPE API metadata version 23.3.0d9999
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'
         ]
     },
-    'api_version': '23.0.0f168',
+    'api_version': '23.3.0d9999',
     'c_function_prefix': 'niScope_',
     'c_header': 'niScopeCal.h',
     'close_function': 'Close',

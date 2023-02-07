@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-SCOPE API metadata version 23.0.0f168
+// This file is generated from NI-SCOPE API metadata version 23.3.0d9999
 //---------------------------------------------------------------------
 // Proto file for the NI-SCOPE Metadata
 //---------------------------------------------------------------------
@@ -473,8 +473,8 @@ enum ExportableSignals {
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_ADVANCE_EVENT = 6;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_START_EVENT = 7;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_REF_EVENT = 10;
-  EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_CLOCK = 100;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_5V_OUT = 13;
+  EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_CLOCK = 100;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_SAMPLE_CLOCK = 101;
 }
 
@@ -1439,6 +1439,7 @@ message FetchArrayMeasurementRequest {
     ArrayMeasurement array_meas_function = 4;
     sint32 array_meas_function_raw = 5;
   }
+  sint32 meas_wfm_size = 6;
 }
 
 message FetchArrayMeasurementResponse {

@@ -228,8 +228,10 @@ void CheckStatus(int status)
         break;
     }
 
-    ViInt32 measurement_waveform_size;
-    CheckStatus(library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size));
+    ViInt32 measurement_waveform_size = request->meas_wfm_size();
+    if (measurement_waveform_size < 0) {
+      CheckStatus(library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));

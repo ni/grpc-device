@@ -1140,7 +1140,7 @@ fetch(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& 
 }
 
 FetchArrayMeasurementResponse
-fetch_array_measurement(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const simple_variant<ArrayMeasurement, pb::int32>& array_meas_function)
+fetch_array_measurement(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const simple_variant<ArrayMeasurement, pb::int32>& array_meas_function, const pb::int32& meas_wfm_size)
 {
   ::grpc::ClientContext context;
 
@@ -1156,6 +1156,7 @@ fetch_array_measurement(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   else if (array_meas_function_raw_ptr) {
     request.set_array_meas_function_raw(*array_meas_function_raw_ptr);
   }
+  request.set_meas_wfm_size(meas_wfm_size);
 
   auto response = FetchArrayMeasurementResponse{};
 
