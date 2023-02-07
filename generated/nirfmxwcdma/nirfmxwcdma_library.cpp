@@ -21,10 +21,192 @@ NiRFmxWCDMALibrary::NiRFmxWCDMALibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
+  function_pointers_.ACPCfgAveraging = reinterpret_cast<ACPCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPCfgAveraging"));
+  function_pointers_.ACPCfgMeasurementMethod = reinterpret_cast<ACPCfgMeasurementMethodPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPCfgMeasurementMethod"));
+  function_pointers_.ACPCfgNoiseCompensationEnabled = reinterpret_cast<ACPCfgNoiseCompensationEnabledPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPCfgNoiseCompensationEnabled"));
+  function_pointers_.ACPCfgNumberOfOffsets = reinterpret_cast<ACPCfgNumberOfOffsetsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPCfgNumberOfOffsets"));
+  function_pointers_.ACPCfgOffsetPowerReference = reinterpret_cast<ACPCfgOffsetPowerReferencePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPCfgOffsetPowerReference"));
+  function_pointers_.ACPCfgRBWFilter = reinterpret_cast<ACPCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPCfgRBWFilter"));
+  function_pointers_.ACPCfgSweepTime = reinterpret_cast<ACPCfgSweepTimePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPCfgSweepTime"));
+  function_pointers_.ACPFetchAbsolutePowersTrace = reinterpret_cast<ACPFetchAbsolutePowersTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPFetchAbsolutePowersTrace"));
+  function_pointers_.ACPFetchCarrierMeasurement = reinterpret_cast<ACPFetchCarrierMeasurementPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPFetchCarrierMeasurement"));
+  function_pointers_.ACPFetchCarrierMeasurementArray = reinterpret_cast<ACPFetchCarrierMeasurementArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPFetchCarrierMeasurementArray"));
+  function_pointers_.ACPFetchOffsetMeasurement = reinterpret_cast<ACPFetchOffsetMeasurementPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPFetchOffsetMeasurement"));
+  function_pointers_.ACPFetchOffsetMeasurementArray = reinterpret_cast<ACPFetchOffsetMeasurementArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPFetchOffsetMeasurementArray"));
+  function_pointers_.ACPFetchRelativePowersTrace = reinterpret_cast<ACPFetchRelativePowersTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPFetchRelativePowersTrace"));
+  function_pointers_.ACPFetchSpectrum = reinterpret_cast<ACPFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPFetchSpectrum"));
+  function_pointers_.ACPFetchTotalCarrierPower = reinterpret_cast<ACPFetchTotalCarrierPowerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ACPFetchTotalCarrierPower"));
+  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_AbortMeasurements"));
+  function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxWCDMA_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_.get_function_pointer("RFmxWCDMA_AnalyzeSpectrum1Waveform"));
+  function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxWCDMA_AutoLevel"));
+  function_pointers_.BuildCarrierString = reinterpret_cast<BuildCarrierStringPtr>(shared_library_.get_function_pointer("RFmxWCDMA_BuildCarrierString"));
+  function_pointers_.BuildChannelString = reinterpret_cast<BuildChannelStringPtr>(shared_library_.get_function_pointer("RFmxWCDMA_BuildChannelString"));
+  function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_.get_function_pointer("RFmxWCDMA_BuildOffsetString"));
+  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_.get_function_pointer("RFmxWCDMA_BuildSignalString"));
+  function_pointers_.CDACfgMeasurementChannel = reinterpret_cast<CDACfgMeasurementChannelPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDACfgMeasurementChannel"));
+  function_pointers_.CDACfgPowerUnit = reinterpret_cast<CDACfgPowerUnitPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDACfgPowerUnit"));
+  function_pointers_.CDACfgSynchronizationModeAndInterval = reinterpret_cast<CDACfgSynchronizationModeAndIntervalPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDACfgSynchronizationModeAndInterval"));
+  function_pointers_.CDAFetchCodeDomainIAndQPower = reinterpret_cast<CDAFetchCodeDomainIAndQPowerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchCodeDomainIAndQPower"));
+  function_pointers_.CDAFetchCodeDomainIAndQPowerTrace = reinterpret_cast<CDAFetchCodeDomainIAndQPowerTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchCodeDomainIAndQPowerTrace"));
+  function_pointers_.CDAFetchCodeDomainPower = reinterpret_cast<CDAFetchCodeDomainPowerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchCodeDomainPower"));
+  function_pointers_.CDAFetchCodeDomainPowerTrace = reinterpret_cast<CDAFetchCodeDomainPowerTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchCodeDomainPowerTrace"));
+  function_pointers_.CDAFetchSymbolEVM = reinterpret_cast<CDAFetchSymbolEVMPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchSymbolEVM"));
+  function_pointers_.CDAFetchSymbolEVMTrace = reinterpret_cast<CDAFetchSymbolEVMTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchSymbolEVMTrace"));
+  function_pointers_.CDAFetchSymbolMagnitudeErrorTrace = reinterpret_cast<CDAFetchSymbolMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchSymbolMagnitudeErrorTrace"));
+  function_pointers_.CDAFetchSymbolPhaseErrorTrace = reinterpret_cast<CDAFetchSymbolPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchSymbolPhaseErrorTrace"));
+  function_pointers_.CDAFetchSymbolPowerTrace = reinterpret_cast<CDAFetchSymbolPowerTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CDAFetchSymbolPowerTrace"));
+  function_pointers_.CHPCfgAveraging = reinterpret_cast<CHPCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CHPCfgAveraging"));
+  function_pointers_.CHPCfgRBWFilter = reinterpret_cast<CHPCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CHPCfgRBWFilter"));
+  function_pointers_.CHPCfgSweepTime = reinterpret_cast<CHPCfgSweepTimePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CHPCfgSweepTime"));
+  function_pointers_.CHPFetchCarrierMeasurement = reinterpret_cast<CHPFetchCarrierMeasurementPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CHPFetchCarrierMeasurement"));
+  function_pointers_.CHPFetchCarrierMeasurementArray = reinterpret_cast<CHPFetchCarrierMeasurementArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CHPFetchCarrierMeasurementArray"));
+  function_pointers_.CHPFetchSpectrum = reinterpret_cast<CHPFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CHPFetchSpectrum"));
+  function_pointers_.CHPFetchTotalCarrierPower = reinterpret_cast<CHPFetchTotalCarrierPowerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CHPFetchTotalCarrierPower"));
+  function_pointers_.CfgBand = reinterpret_cast<CfgBandPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgBand"));
+  function_pointers_.CfgCarrierFrequency = reinterpret_cast<CfgCarrierFrequencyPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgCarrierFrequency"));
+  function_pointers_.CfgCarrierFrequencyArray = reinterpret_cast<CfgCarrierFrequencyArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgCarrierFrequencyArray"));
+  function_pointers_.CfgChannelConfigurationMode = reinterpret_cast<CfgChannelConfigurationModePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgChannelConfigurationMode"));
+  function_pointers_.CfgContiguousCarriers = reinterpret_cast<CfgContiguousCarriersPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgContiguousCarriers"));
+  function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgDigitalEdgeTrigger"));
+  function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgExternalAttenuation"));
+  function_pointers_.CfgFrequency = reinterpret_cast<CfgFrequencyPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgFrequency"));
+  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgFrequencyReference"));
+  function_pointers_.CfgFrequencyUARFCN = reinterpret_cast<CfgFrequencyUARFCNPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgFrequencyUARFCN"));
+  function_pointers_.CfgIQPowerEdgeTrigger = reinterpret_cast<CfgIQPowerEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgIQPowerEdgeTrigger"));
+  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgMechanicalAttenuation"));
+  function_pointers_.CfgNumberOfCarriers = reinterpret_cast<CfgNumberOfCarriersPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgNumberOfCarriers"));
+  function_pointers_.CfgNumberOfChannels = reinterpret_cast<CfgNumberOfChannelsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgNumberOfChannels"));
+  function_pointers_.CfgNumberOfChannelsArray = reinterpret_cast<CfgNumberOfChannelsArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgNumberOfChannelsArray"));
+  function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgRF"));
+  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgRFAttenuation"));
+  function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgReferenceLevel"));
+  function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgSoftwareEdgeTrigger"));
+  function_pointers_.CfgUplinkScrambling = reinterpret_cast<CfgUplinkScramblingPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgUplinkScrambling"));
+  function_pointers_.CfgUplinkScramblingArray = reinterpret_cast<CfgUplinkScramblingArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgUplinkScramblingArray"));
+  function_pointers_.CfgUplinkTestModel = reinterpret_cast<CfgUplinkTestModelPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgUplinkTestModel"));
+  function_pointers_.CfgUplinkTestModelArray = reinterpret_cast<CfgUplinkTestModelArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgUplinkTestModelArray"));
+  function_pointers_.CfgUserDefinedChannel = reinterpret_cast<CfgUserDefinedChannelPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgUserDefinedChannel"));
+  function_pointers_.CfgUserDefinedChannelArray = reinterpret_cast<CfgUserDefinedChannelArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CfgUserDefinedChannelArray"));
+  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CheckMeasurementStatus"));
+  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ClearAllNamedResults"));
+  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ClearNamedResult"));
+  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CloneSignalConfiguration"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("RFmxWCDMA_Close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("RFmxWCDMA_Commit"));
+  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxWCDMA_CreateSignalConfiguration"));
+  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxWCDMA_DeleteSignalConfiguration"));
+  function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_DisableTrigger"));
+  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAllNamedResultNames"));
+  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeF32"));
+  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeF32Array"));
+  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeF64"));
+  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeF64Array"));
+  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeI16"));
+  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeI32"));
+  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeI32Array"));
+  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeI64"));
+  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeI64Array"));
+  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeI8"));
+  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeNIComplexSingleArray"));
+  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeString"));
+  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeU16"));
+  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeU32"));
+  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeU32Array"));
+  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeU64Array"));
+  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeU8"));
+  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetAttributeU8Array"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxWCDMA_GetErrorString"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxWCDMA_Initialize"));
+  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxWCDMA_InitializeFromNIRFSASession"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("RFmxWCDMA_Initiate"));
+  function_pointers_.ModAccCfgReferenceWaveform = reinterpret_cast<ModAccCfgReferenceWaveformPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccCfgReferenceWaveform"));
+  function_pointers_.ModAccCfgSynchronizationModeAndInterval = reinterpret_cast<ModAccCfgSynchronizationModeAndIntervalPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccCfgSynchronizationModeAndInterval"));
+  function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchConstellationTrace"));
+  function_pointers_.ModAccFetchDetectedChannel = reinterpret_cast<ModAccFetchDetectedChannelPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchDetectedChannel"));
+  function_pointers_.ModAccFetchDetectedChannelArray = reinterpret_cast<ModAccFetchDetectedChannelArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchDetectedChannelArray"));
+  function_pointers_.ModAccFetchEVM = reinterpret_cast<ModAccFetchEVMPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchEVM"));
+  function_pointers_.ModAccFetchEVMArray = reinterpret_cast<ModAccFetchEVMArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchEVMArray"));
+  function_pointers_.ModAccFetchEVMTrace = reinterpret_cast<ModAccFetchEVMTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchEVMTrace"));
+  function_pointers_.ModAccFetchIQImpairments = reinterpret_cast<ModAccFetchIQImpairmentsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchIQImpairments"));
+  function_pointers_.ModAccFetchIQImpairmentsArray = reinterpret_cast<ModAccFetchIQImpairmentsArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchIQImpairmentsArray"));
+  function_pointers_.ModAccFetchMagnitudeErrorTrace = reinterpret_cast<ModAccFetchMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchMagnitudeErrorTrace"));
+  function_pointers_.ModAccFetchMulticarrierIQImpairments = reinterpret_cast<ModAccFetchMulticarrierIQImpairmentsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchMulticarrierIQImpairments"));
+  function_pointers_.ModAccFetchNumberOfDetectedChannels = reinterpret_cast<ModAccFetchNumberOfDetectedChannelsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchNumberOfDetectedChannels"));
+  function_pointers_.ModAccFetchNumberOfDetectedChannelsArray = reinterpret_cast<ModAccFetchNumberOfDetectedChannelsArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchNumberOfDetectedChannelsArray"));
+  function_pointers_.ModAccFetchPeakActiveCDE = reinterpret_cast<ModAccFetchPeakActiveCDEPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchPeakActiveCDE"));
+  function_pointers_.ModAccFetchPeakActiveCDEArray = reinterpret_cast<ModAccFetchPeakActiveCDEArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchPeakActiveCDEArray"));
+  function_pointers_.ModAccFetchPeakCDE = reinterpret_cast<ModAccFetchPeakCDEPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchPeakCDE"));
+  function_pointers_.ModAccFetchPeakCDEArray = reinterpret_cast<ModAccFetchPeakCDEArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchPeakCDEArray"));
+  function_pointers_.ModAccFetchPhaseErrorTrace = reinterpret_cast<ModAccFetchPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchPhaseErrorTrace"));
+  function_pointers_.ModAccFetchRCDE = reinterpret_cast<ModAccFetchRCDEPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchRCDE"));
+  function_pointers_.ModAccFetchRCDEArray = reinterpret_cast<ModAccFetchRCDEArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchRCDEArray"));
+  function_pointers_.ModAccFetchRCDETrace = reinterpret_cast<ModAccFetchRCDETracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchRCDETrace"));
+  function_pointers_.ModAccFetchReferenceWaveform = reinterpret_cast<ModAccFetchReferenceWaveformPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ModAccFetchReferenceWaveform"));
+  function_pointers_.OBWCfgAveraging = reinterpret_cast<OBWCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxWCDMA_OBWCfgAveraging"));
+  function_pointers_.OBWCfgRBWFilter = reinterpret_cast<OBWCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxWCDMA_OBWCfgRBWFilter"));
+  function_pointers_.OBWCfgSweepTime = reinterpret_cast<OBWCfgSweepTimePtr>(shared_library_.get_function_pointer("RFmxWCDMA_OBWCfgSweepTime"));
+  function_pointers_.OBWFetchMeasurement = reinterpret_cast<OBWFetchMeasurementPtr>(shared_library_.get_function_pointer("RFmxWCDMA_OBWFetchMeasurement"));
+  function_pointers_.OBWFetchSpectrum = reinterpret_cast<OBWFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxWCDMA_OBWFetchSpectrum"));
+  function_pointers_.QEVMCfgAveraging = reinterpret_cast<QEVMCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxWCDMA_QEVMCfgAveraging"));
+  function_pointers_.QEVMCfgMeasurementLength = reinterpret_cast<QEVMCfgMeasurementLengthPtr>(shared_library_.get_function_pointer("RFmxWCDMA_QEVMCfgMeasurementLength"));
+  function_pointers_.QEVMFetchConstellationTrace = reinterpret_cast<QEVMFetchConstellationTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_QEVMFetchConstellationTrace"));
+  function_pointers_.QEVMFetchEVM = reinterpret_cast<QEVMFetchEVMPtr>(shared_library_.get_function_pointer("RFmxWCDMA_QEVMFetchEVM"));
+  function_pointers_.QEVMFetchEVMTrace = reinterpret_cast<QEVMFetchEVMTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_QEVMFetchEVMTrace"));
+  function_pointers_.QEVMFetchIQImpairments = reinterpret_cast<QEVMFetchIQImpairmentsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_QEVMFetchIQImpairments"));
+  function_pointers_.QEVMFetchMagnitudeErrorTrace = reinterpret_cast<QEVMFetchMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_QEVMFetchMagnitudeErrorTrace"));
+  function_pointers_.QEVMFetchPhaseErrorTrace = reinterpret_cast<QEVMFetchPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_QEVMFetchPhaseErrorTrace"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("RFmxWCDMA_ResetAttribute"));
+  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_.get_function_pointer("RFmxWCDMA_ResetToDefault"));
+  function_pointers_.SEMCfgAveraging = reinterpret_cast<SEMCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMCfgAveraging"));
+  function_pointers_.SEMCfgSweepTime = reinterpret_cast<SEMCfgSweepTimePtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMCfgSweepTime"));
+  function_pointers_.SEMFetchCarrierMeasurement = reinterpret_cast<SEMFetchCarrierMeasurementPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchCarrierMeasurement"));
+  function_pointers_.SEMFetchCarrierMeasurementArray = reinterpret_cast<SEMFetchCarrierMeasurementArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchCarrierMeasurementArray"));
+  function_pointers_.SEMFetchLowerOffsetMargin = reinterpret_cast<SEMFetchLowerOffsetMarginPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchLowerOffsetMargin"));
+  function_pointers_.SEMFetchLowerOffsetMarginArray = reinterpret_cast<SEMFetchLowerOffsetMarginArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchLowerOffsetMarginArray"));
+  function_pointers_.SEMFetchLowerOffsetPower = reinterpret_cast<SEMFetchLowerOffsetPowerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchLowerOffsetPower"));
+  function_pointers_.SEMFetchLowerOffsetPowerArray = reinterpret_cast<SEMFetchLowerOffsetPowerArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchLowerOffsetPowerArray"));
+  function_pointers_.SEMFetchMeasurementStatus = reinterpret_cast<SEMFetchMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchMeasurementStatus"));
+  function_pointers_.SEMFetchSpectrum = reinterpret_cast<SEMFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchSpectrum"));
+  function_pointers_.SEMFetchTotalCarrierPower = reinterpret_cast<SEMFetchTotalCarrierPowerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchTotalCarrierPower"));
+  function_pointers_.SEMFetchUpperOffsetMargin = reinterpret_cast<SEMFetchUpperOffsetMarginPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchUpperOffsetMargin"));
+  function_pointers_.SEMFetchUpperOffsetMarginArray = reinterpret_cast<SEMFetchUpperOffsetMarginArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchUpperOffsetMarginArray"));
+  function_pointers_.SEMFetchUpperOffsetPower = reinterpret_cast<SEMFetchUpperOffsetPowerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchUpperOffsetPower"));
+  function_pointers_.SEMFetchUpperOffsetPowerArray = reinterpret_cast<SEMFetchUpperOffsetPowerArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SEMFetchUpperOffsetPowerArray"));
+  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SelectMeasurements"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeF32"));
+  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeF32Array"));
+  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeF64"));
+  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeF64Array"));
+  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeI16"));
+  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeI32"));
+  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeI32Array"));
+  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeI64"));
+  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeI64Array"));
+  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeI8"));
+  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeNIComplexSingleArray"));
+  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeString"));
+  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeU16"));
+  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeU32"));
+  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeU32Array"));
+  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeU64Array"));
+  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeU8"));
+  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SetAttributeU8Array"));
+  function_pointers_.SlotPhaseCfgSynchronizationModeAndInterval = reinterpret_cast<SlotPhaseCfgSynchronizationModeAndIntervalPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SlotPhaseCfgSynchronizationModeAndInterval"));
+  function_pointers_.SlotPhaseFetchChipPhaseErrorLinearFitTrace = reinterpret_cast<SlotPhaseFetchChipPhaseErrorLinearFitTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_SlotPhaseFetchChipPhaseErrorLinearFitTrace"));
+  function_pointers_.SlotPhaseFetchChipPhaseErrorTrace = reinterpret_cast<SlotPhaseFetchChipPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxWCDMA_SlotPhaseFetchChipPhaseErrorTrace"));
+  function_pointers_.SlotPhaseFetchMeasurement = reinterpret_cast<SlotPhaseFetchMeasurementPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SlotPhaseFetchMeasurement"));
+  function_pointers_.SlotPhaseFetchPhaseDiscontinuities = reinterpret_cast<SlotPhaseFetchPhaseDiscontinuitiesPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SlotPhaseFetchPhaseDiscontinuities"));
+  function_pointers_.SlotPowerCfgSynchronizationModeAndInterval = reinterpret_cast<SlotPowerCfgSynchronizationModeAndIntervalPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SlotPowerCfgSynchronizationModeAndInterval"));
+  function_pointers_.SlotPowerFetchPowers = reinterpret_cast<SlotPowerFetchPowersPtr>(shared_library_.get_function_pointer("RFmxWCDMA_SlotPowerFetchPowers"));
+  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_.get_function_pointer("RFmxWCDMA_WaitForAcquisitionComplete"));
+  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_.get_function_pointer("RFmxWCDMA_WaitForMeasurementComplete"));
 }
 
 NiRFmxWCDMALibrary::~NiRFmxWCDMALibrary()
@@ -38,12 +220,780 @@ NiRFmxWCDMALibrary::~NiRFmxWCDMALibrary()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
+int32 NiRFmxWCDMALibrary::ACPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.ACPCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPCfgAveraging.");
+  }
+  return function_pointers_.ACPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxWCDMALibrary::ACPCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
+{
+  if (!function_pointers_.ACPCfgMeasurementMethod) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPCfgMeasurementMethod.");
+  }
+  return function_pointers_.ACPCfgMeasurementMethod(instrumentHandle, selectorString, measurementMethod);
+}
+
+int32 NiRFmxWCDMALibrary::ACPCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)
+{
+  if (!function_pointers_.ACPCfgNoiseCompensationEnabled) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPCfgNoiseCompensationEnabled.");
+  }
+  return function_pointers_.ACPCfgNoiseCompensationEnabled(instrumentHandle, selectorString, noiseCompensationEnabled);
+}
+
+int32 NiRFmxWCDMALibrary::ACPCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfOffsets)
+{
+  if (!function_pointers_.ACPCfgNumberOfOffsets) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPCfgNumberOfOffsets.");
+  }
+  return function_pointers_.ACPCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
+}
+
+int32 NiRFmxWCDMALibrary::ACPCfgOffsetPowerReference(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 offsetPowerReferenceCarrier, int32 offsetPowerReferenceSpecific)
+{
+  if (!function_pointers_.ACPCfgOffsetPowerReference) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPCfgOffsetPowerReference.");
+  }
+  return function_pointers_.ACPCfgOffsetPowerReference(instrumentHandle, selectorString, offsetPowerReferenceCarrier, offsetPowerReferenceSpecific);
+}
+
+int32 NiRFmxWCDMALibrary::ACPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  if (!function_pointers_.ACPCfgRBWFilter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPCfgRBWFilter.");
+  }
+  return function_pointers_.ACPCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 NiRFmxWCDMALibrary::ACPCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  if (!function_pointers_.ACPCfgSweepTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPCfgSweepTime.");
+  }
+  return function_pointers_.ACPCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 NiRFmxWCDMALibrary::ACPFetchAbsolutePowersTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 absolutePowersTrace[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchAbsolutePowersTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPFetchAbsolutePowersTrace.");
+  }
+  return function_pointers_.ACPFetchAbsolutePowersTrace(instrumentHandle, selectorString, timeout, traceIndex, x0, dx, absolutePowersTrace, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ACPFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* relativePower)
+{
+  if (!function_pointers_.ACPFetchCarrierMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPFetchCarrierMeasurement.");
+  }
+  return function_pointers_.ACPFetchCarrierMeasurement(instrumentHandle, selectorString, timeout, absolutePower, relativePower);
+}
+
+int32 NiRFmxWCDMALibrary::ACPFetchCarrierMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absolutePower[], float64 relativePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchCarrierMeasurementArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPFetchCarrierMeasurementArray.");
+  }
+  return function_pointers_.ACPFetchCarrierMeasurementArray(instrumentHandle, selectorString, timeout, absolutePower, relativePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ACPFetchOffsetMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerRelativePower, float64* upperRelativePower, float64* lowerAbsolutePower, float64* upperAbsolutePower)
+{
+  if (!function_pointers_.ACPFetchOffsetMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPFetchOffsetMeasurement.");
+  }
+  return function_pointers_.ACPFetchOffsetMeasurement(instrumentHandle, selectorString, timeout, lowerRelativePower, upperRelativePower, lowerAbsolutePower, upperAbsolutePower);
+}
+
+int32 NiRFmxWCDMALibrary::ACPFetchOffsetMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 lowerRelativePower[], float64 upperRelativePower[], float64 lowerAbsolutePower[], float64 upperAbsolutePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchOffsetMeasurementArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPFetchOffsetMeasurementArray.");
+  }
+  return function_pointers_.ACPFetchOffsetMeasurementArray(instrumentHandle, selectorString, timeout, lowerRelativePower, upperRelativePower, lowerAbsolutePower, upperAbsolutePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ACPFetchRelativePowersTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 relativePowersTrace[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchRelativePowersTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPFetchRelativePowersTrace.");
+  }
+  return function_pointers_.ACPFetchRelativePowersTrace(instrumentHandle, selectorString, timeout, traceIndex, x0, dx, relativePowersTrace, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPFetchSpectrum.");
+  }
+  return function_pointers_.ACPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ACPFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
+{
+  if (!function_pointers_.ACPFetchTotalCarrierPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ACPFetchTotalCarrierPower.");
+  }
+  return function_pointers_.ACPFetchTotalCarrierPower(instrumentHandle, selectorString, timeout, totalCarrierPower);
+}
+
+int32 NiRFmxWCDMALibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.AbortMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_AbortMeasurements.");
+  }
+  return function_pointers_.AbortMeasurements(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxWCDMALibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1Waveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_AnalyzeIQ1Waveform.");
+  }
+  return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 NiRFmxWCDMALibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeSpectrum1Waveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_AnalyzeSpectrum1Waveform.");
+  }
+  return function_pointers_.AnalyzeSpectrum1Waveform(instrumentHandle, selectorString, resultName, x0, dx, spectrum, arraySize, reset, reserved);
+}
+
+int32 NiRFmxWCDMALibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel)
+{
+  if (!function_pointers_.AutoLevel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_AutoLevel.");
+  }
+  return function_pointers_.AutoLevel(instrumentHandle, selectorString, measurementInterval, referenceLevel);
+}
+
+int32 NiRFmxWCDMALibrary::BuildCarrierString(char selectorString[], int32 carrierNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildCarrierString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_BuildCarrierString.");
+  }
+  return function_pointers_.BuildCarrierString(selectorString, carrierNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxWCDMALibrary::BuildChannelString(char selectorString[], int32 channelNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildChannelString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_BuildChannelString.");
+  }
+  return function_pointers_.BuildChannelString(selectorString, channelNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxWCDMALibrary::BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildOffsetString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_BuildOffsetString.");
+  }
+  return function_pointers_.BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxWCDMALibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildSignalString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_BuildSignalString.");
+  }
+  return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+}
+
+int32 NiRFmxWCDMALibrary::CDACfgMeasurementChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spreadingFactor, int32 spreadingCode, int32 modulationType, int32 branch)
+{
+  if (!function_pointers_.CDACfgMeasurementChannel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDACfgMeasurementChannel.");
+  }
+  return function_pointers_.CDACfgMeasurementChannel(instrumentHandle, selectorString, spreadingFactor, spreadingCode, modulationType, branch);
+}
+
+int32 NiRFmxWCDMALibrary::CDACfgPowerUnit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 powerUnit)
+{
+  if (!function_pointers_.CDACfgPowerUnit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDACfgPowerUnit.");
+  }
+  return function_pointers_.CDACfgPowerUnit(instrumentHandle, selectorString, powerUnit);
+}
+
+int32 NiRFmxWCDMALibrary::CDACfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  if (!function_pointers_.CDACfgSynchronizationModeAndInterval) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDACfgSynchronizationModeAndInterval.");
+  }
+  return function_pointers_.CDACfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchCodeDomainIAndQPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* iMeanActivePower, float64* qMeanActivePower, float64* iPeakInactivePower, float64* qPeakInactivePower)
+{
+  if (!function_pointers_.CDAFetchCodeDomainIAndQPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchCodeDomainIAndQPower.");
+  }
+  return function_pointers_.CDAFetchCodeDomainIAndQPower(instrumentHandle, selectorString, timeout, iMeanActivePower, qMeanActivePower, iPeakInactivePower, qPeakInactivePower);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchCodeDomainIAndQPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 iCodeDomainPowers[], float32 qCodeDomainPowers[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchCodeDomainIAndQPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchCodeDomainIAndQPowerTrace.");
+  }
+  return function_pointers_.CDAFetchCodeDomainIAndQPowerTrace(instrumentHandle, selectorString, timeout, iCodeDomainPowers, qCodeDomainPowers, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchCodeDomainPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalPower, float64* totalActivePower, float64* meanActivePower, float64* peakActivePower, float64* meanInactivePower, float64* peakInactivePower)
+{
+  if (!function_pointers_.CDAFetchCodeDomainPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchCodeDomainPower.");
+  }
+  return function_pointers_.CDAFetchCodeDomainPower(instrumentHandle, selectorString, timeout, totalPower, totalActivePower, meanActivePower, peakActivePower, meanInactivePower, peakInactivePower);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchCodeDomainPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 codeDomainPowers[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchCodeDomainPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchCodeDomainPowerTrace.");
+  }
+  return function_pointers_.CDAFetchCodeDomainPowerTrace(instrumentHandle, selectorString, timeout, codeDomainPowers, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchSymbolEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsSymbolEVM, float64* peakSymbolEVM, float64* rmsSymbolMagnitudeError, float64* rmsSymbolPhaseError, float64* meanSymbolPower, float64* chipRateError)
+{
+  if (!function_pointers_.CDAFetchSymbolEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchSymbolEVM.");
+  }
+  return function_pointers_.CDAFetchSymbolEVM(instrumentHandle, selectorString, timeout, rmsSymbolEVM, peakSymbolEVM, rmsSymbolMagnitudeError, rmsSymbolPhaseError, meanSymbolPower, chipRateError);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchSymbolEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolEVM[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchSymbolEVMTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchSymbolEVMTrace.");
+  }
+  return function_pointers_.CDAFetchSymbolEVMTrace(instrumentHandle, selectorString, timeout, symbolEVM, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchSymbolMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolMagnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchSymbolMagnitudeErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchSymbolMagnitudeErrorTrace.");
+  }
+  return function_pointers_.CDAFetchSymbolMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, symbolMagnitudeError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchSymbolPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchSymbolPhaseErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchSymbolPhaseErrorTrace.");
+  }
+  return function_pointers_.CDAFetchSymbolPhaseErrorTrace(instrumentHandle, selectorString, timeout, symbolPhaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::CDAFetchSymbolPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolPowers[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchSymbolPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CDAFetchSymbolPowerTrace.");
+  }
+  return function_pointers_.CDAFetchSymbolPowerTrace(instrumentHandle, selectorString, timeout, symbolPowers, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.CHPCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CHPCfgAveraging.");
+  }
+  return function_pointers_.CHPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxWCDMALibrary::CHPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  if (!function_pointers_.CHPCfgRBWFilter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CHPCfgRBWFilter.");
+  }
+  return function_pointers_.CHPCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 NiRFmxWCDMALibrary::CHPCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  if (!function_pointers_.CHPCfgSweepTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CHPCfgSweepTime.");
+  }
+  return function_pointers_.CHPCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 NiRFmxWCDMALibrary::CHPFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* relativePower)
+{
+  if (!function_pointers_.CHPFetchCarrierMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CHPFetchCarrierMeasurement.");
+  }
+  return function_pointers_.CHPFetchCarrierMeasurement(instrumentHandle, selectorString, timeout, absolutePower, relativePower);
+}
+
+int32 NiRFmxWCDMALibrary::CHPFetchCarrierMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absolutePower[], float64 relativePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CHPFetchCarrierMeasurementArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CHPFetchCarrierMeasurementArray.");
+  }
+  return function_pointers_.CHPFetchCarrierMeasurementArray(instrumentHandle, selectorString, timeout, absolutePower, relativePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::CHPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CHPFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CHPFetchSpectrum.");
+  }
+  return function_pointers_.CHPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::CHPFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
+{
+  if (!function_pointers_.CHPFetchTotalCarrierPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CHPFetchTotalCarrierPower.");
+  }
+  return function_pointers_.CHPFetchTotalCarrierPower(instrumentHandle, selectorString, timeout, totalCarrierPower);
+}
+
+int32 NiRFmxWCDMALibrary::CfgBand(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 band)
+{
+  if (!function_pointers_.CfgBand) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgBand.");
+  }
+  return function_pointers_.CfgBand(instrumentHandle, selectorString, band);
+}
+
+int32 NiRFmxWCDMALibrary::CfgCarrierFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency)
+{
+  if (!function_pointers_.CfgCarrierFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgCarrierFrequency.");
+  }
+  return function_pointers_.CfgCarrierFrequency(instrumentHandle, selectorString, carrierFrequency);
+}
+
+int32 NiRFmxWCDMALibrary::CfgCarrierFrequencyArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency[], int32 numberOfElements)
+{
+  if (!function_pointers_.CfgCarrierFrequencyArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgCarrierFrequencyArray.");
+  }
+  return function_pointers_.CfgCarrierFrequencyArray(instrumentHandle, selectorString, carrierFrequency, numberOfElements);
+}
+
+int32 NiRFmxWCDMALibrary::CfgChannelConfigurationMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelConfigurationMode)
+{
+  if (!function_pointers_.CfgChannelConfigurationMode) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgChannelConfigurationMode.");
+  }
+  return function_pointers_.CfgChannelConfigurationMode(instrumentHandle, selectorString, channelConfigurationMode);
+}
+
+int32 NiRFmxWCDMALibrary::CfgContiguousCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers, int32 carrierAtCenterFrequency)
+{
+  if (!function_pointers_.CfgContiguousCarriers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgContiguousCarriers.");
+  }
+  return function_pointers_.CfgContiguousCarriers(instrumentHandle, selectorString, numberOfCarriers, carrierAtCenterFrequency);
+}
+
+int32 NiRFmxWCDMALibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgDigitalEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgDigitalEdgeTrigger.");
+  }
+  return function_pointers_.CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
+}
+
+int32 NiRFmxWCDMALibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation)
+{
+  if (!function_pointers_.CfgExternalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgExternalAttenuation.");
+  }
+  return function_pointers_.CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
+}
+
+int32 NiRFmxWCDMALibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency)
+{
+  if (!function_pointers_.CfgFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgFrequency.");
+  }
+  return function_pointers_.CfgFrequency(instrumentHandle, selectorString, centerFrequency);
+}
+
+int32 NiRFmxWCDMALibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
+{
+  if (!function_pointers_.CfgFrequencyReference) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgFrequencyReference.");
+  }
+  return function_pointers_.CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+}
+
+int32 NiRFmxWCDMALibrary::CfgFrequencyUARFCN(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 linkDirection, int32 band, int32 uarfcn)
+{
+  if (!function_pointers_.CfgFrequencyUARFCN) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgFrequencyUARFCN.");
+  }
+  return function_pointers_.CfgFrequencyUARFCN(instrumentHandle, selectorString, linkDirection, band, uarfcn);
+}
+
+int32 NiRFmxWCDMALibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char iqPowerEdgeSource[], int32 iqPowerEdgeSlope, float64 iqPowerEdgeLevel, float64 triggerDelay, int32 minimumQuietTimeMode, float64 minimumQuietTime, int32 iqPowerEdgeLevelType, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgIQPowerEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgIQPowerEdgeTrigger.");
+  }
+  return function_pointers_.CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, minimumQuietTimeMode, minimumQuietTime, iqPowerEdgeLevelType, enableTrigger);
+}
+
+int32 NiRFmxWCDMALibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
+{
+  if (!function_pointers_.CfgMechanicalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgMechanicalAttenuation.");
+  }
+  return function_pointers_.CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+}
+
+int32 NiRFmxWCDMALibrary::CfgNumberOfCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers)
+{
+  if (!function_pointers_.CfgNumberOfCarriers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgNumberOfCarriers.");
+  }
+  return function_pointers_.CfgNumberOfCarriers(instrumentHandle, selectorString, numberOfCarriers);
+}
+
+int32 NiRFmxWCDMALibrary::CfgNumberOfChannels(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfChannels)
+{
+  if (!function_pointers_.CfgNumberOfChannels) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgNumberOfChannels.");
+  }
+  return function_pointers_.CfgNumberOfChannels(instrumentHandle, selectorString, numberOfChannels);
+}
+
+int32 NiRFmxWCDMALibrary::CfgNumberOfChannelsArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfChannels[], int32 numberOfElements)
+{
+  if (!function_pointers_.CfgNumberOfChannelsArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgNumberOfChannelsArray.");
+  }
+  return function_pointers_.CfgNumberOfChannelsArray(instrumentHandle, selectorString, numberOfChannels, numberOfElements);
+}
+
+int32 NiRFmxWCDMALibrary::CfgRF(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency, float64 referenceLevel, float64 externalAttenuation)
+{
+  if (!function_pointers_.CfgRF) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgRF.");
+  }
+  return function_pointers_.CfgRF(instrumentHandle, selectorString, centerFrequency, referenceLevel, externalAttenuation);
+}
+
+int32 NiRFmxWCDMALibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
+{
+  if (!function_pointers_.CfgRFAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgRFAttenuation.");
+  }
+  return function_pointers_.CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+}
+
+int32 NiRFmxWCDMALibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
+{
+  if (!function_pointers_.CfgReferenceLevel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgReferenceLevel.");
+  }
+  return function_pointers_.CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
+}
+
+int32 NiRFmxWCDMALibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgSoftwareEdgeTrigger.");
+  }
+  return function_pointers_.CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
+}
+
+int32 NiRFmxWCDMALibrary::CfgUplinkScrambling(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkScramblingCode, int32 uplinkScramblingType)
+{
+  if (!function_pointers_.CfgUplinkScrambling) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgUplinkScrambling.");
+  }
+  return function_pointers_.CfgUplinkScrambling(instrumentHandle, selectorString, uplinkScramblingCode, uplinkScramblingType);
+}
+
+int32 NiRFmxWCDMALibrary::CfgUplinkScramblingArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkScramblingType[], int32 uplinkScramblingCode[], int32 numberOfElements)
+{
+  if (!function_pointers_.CfgUplinkScramblingArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgUplinkScramblingArray.");
+  }
+  return function_pointers_.CfgUplinkScramblingArray(instrumentHandle, selectorString, uplinkScramblingType, uplinkScramblingCode, numberOfElements);
+}
+
+int32 NiRFmxWCDMALibrary::CfgUplinkTestModel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkTestModel)
+{
+  if (!function_pointers_.CfgUplinkTestModel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgUplinkTestModel.");
+  }
+  return function_pointers_.CfgUplinkTestModel(instrumentHandle, selectorString, uplinkTestModel);
+}
+
+int32 NiRFmxWCDMALibrary::CfgUplinkTestModelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkTestModel[], int32 numberOfElements)
+{
+  if (!function_pointers_.CfgUplinkTestModelArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgUplinkTestModelArray.");
+  }
+  return function_pointers_.CfgUplinkTestModelArray(instrumentHandle, selectorString, uplinkTestModel, numberOfElements);
+}
+
+int32 NiRFmxWCDMALibrary::CfgUserDefinedChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spreadingFactor, int32 spreadingCode, int32 modulationType, int32 branch)
+{
+  if (!function_pointers_.CfgUserDefinedChannel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgUserDefinedChannel.");
+  }
+  return function_pointers_.CfgUserDefinedChannel(instrumentHandle, selectorString, spreadingFactor, spreadingCode, modulationType, branch);
+}
+
+int32 NiRFmxWCDMALibrary::CfgUserDefinedChannelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spreadingFactor[], int32 spreadingCode[], int32 modulationType[], int32 branch[], int32 numberOfElements)
+{
+  if (!function_pointers_.CfgUserDefinedChannelArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CfgUserDefinedChannelArray.");
+  }
+  return function_pointers_.CfgUserDefinedChannelArray(instrumentHandle, selectorString, spreadingFactor, spreadingCode, modulationType, branch, numberOfElements);
+}
+
+int32 NiRFmxWCDMALibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* done)
+{
+  if (!function_pointers_.CheckMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CheckMeasurementStatus.");
+  }
+  return function_pointers_.CheckMeasurementStatus(instrumentHandle, selectorString, done);
+}
+
+int32 NiRFmxWCDMALibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearAllNamedResults) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ClearAllNamedResults.");
+  }
+  return function_pointers_.ClearAllNamedResults(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxWCDMALibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearNamedResult) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ClearNamedResult.");
+  }
+  return function_pointers_.ClearNamedResult(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxWCDMALibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
+{
+  if (!function_pointers_.CloneSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CloneSignalConfiguration.");
+  }
+  return function_pointers_.CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
+}
+
 int32 NiRFmxWCDMALibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
 {
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_Close.");
   }
   return function_pointers_.Close(instrumentHandle, forceDestroy);
+}
+
+int32 NiRFmxWCDMALibrary::Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.Commit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_Commit.");
+  }
+  return function_pointers_.Commit(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxWCDMALibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.CreateSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_CreateSignalConfiguration.");
+  }
+  return function_pointers_.CreateSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxWCDMALibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.DeleteSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_DeleteSignalConfiguration.");
+  }
+  return function_pointers_.DeleteSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxWCDMALibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.DisableTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_DisableTrigger.");
+  }
+  return function_pointers_.DisableTrigger(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxWCDMALibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
+{
+  if (!function_pointers_.GetAllNamedResultNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAllNamedResultNames.");
+  }
+  return function_pointers_.GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
+{
+  if (!function_pointers_.GetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeF32.");
+  }
+  return function_pointers_.GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeF32Array.");
+  }
+  return function_pointers_.GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
+{
+  if (!function_pointers_.GetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeF64.");
+  }
+  return function_pointers_.GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeF64Array.");
+  }
+  return function_pointers_.GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
+{
+  if (!function_pointers_.GetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeI16.");
+  }
+  return function_pointers_.GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
+{
+  if (!function_pointers_.GetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeI32.");
+  }
+  return function_pointers_.GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeI32Array.");
+  }
+  return function_pointers_.GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
+{
+  if (!function_pointers_.GetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeI64.");
+  }
+  return function_pointers_.GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeI64Array.");
+  }
+  return function_pointers_.GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
+{
+  if (!function_pointers_.GetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeI8.");
+  }
+  return function_pointers_.GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeI8Array.");
+  }
+  return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeNIComplexDoubleArray.");
+  }
+  return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeNIComplexSingleArray.");
+  }
+  return function_pointers_.GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
+{
+  if (!function_pointers_.GetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeString.");
+  }
+  return function_pointers_.GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
+{
+  if (!function_pointers_.GetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeU16.");
+  }
+  return function_pointers_.GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
+{
+  if (!function_pointers_.GetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeU32.");
+  }
+  return function_pointers_.GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeU32Array.");
+  }
+  return function_pointers_.GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeU64Array.");
+  }
+  return function_pointers_.GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
+{
+  if (!function_pointers_.GetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeU8.");
+  }
+  return function_pointers_.GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_GetAttributeU8Array.");
+  }
+  return function_pointers_.GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
 int32 NiRFmxWCDMALibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -68,6 +1018,694 @@ int32 NiRFmxWCDMALibrary::Initialize(char resourceName[], char optionString[], n
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_Initialize.");
   }
   return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
+}
+
+int32 NiRFmxWCDMALibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
+{
+  if (!function_pointers_.InitializeFromNIRFSASession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_InitializeFromNIRFSASession.");
+  }
+  return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, handleOut);
+}
+
+int32 NiRFmxWCDMALibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
+{
+  if (!function_pointers_.Initiate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_Initiate.");
+  }
+  return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize)
+{
+  if (!function_pointers_.ModAccCfgReferenceWaveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccCfgReferenceWaveform.");
+  }
+  return function_pointers_.ModAccCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  if (!function_pointers_.ModAccCfgSynchronizationModeAndInterval) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccCfgSynchronizationModeAndInterval.");
+  }
+  return function_pointers_.ModAccCfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchConstellationTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchConstellationTrace.");
+  }
+  return function_pointers_.ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchDetectedChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* detectedSpreadingFactor, int32* detectedSpreadingCode, int32* detectedModulationType, int32* detectedBranch)
+{
+  if (!function_pointers_.ModAccFetchDetectedChannel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchDetectedChannel.");
+  }
+  return function_pointers_.ModAccFetchDetectedChannel(instrumentHandle, selectorString, timeout, detectedSpreadingFactor, detectedSpreadingCode, detectedModulationType, detectedBranch);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchDetectedChannelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 detectedSpreadingFactor[], int32 detectedSpreadingCode[], int32 detectedModulationType[], int32 detectedBranch[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchDetectedChannelArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchDetectedChannelArray.");
+  }
+  return function_pointers_.ModAccFetchDetectedChannelArray(instrumentHandle, selectorString, timeout, detectedSpreadingFactor, detectedSpreadingCode, detectedModulationType, detectedBranch, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsevm, float64* peakEVM, float64* rho, float64* frequencyError, float64* chipRateError, float64* rmsMagnitudeError, float64* rmsPhaseError)
+{
+  if (!function_pointers_.ModAccFetchEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchEVM.");
+  }
+  return function_pointers_.ModAccFetchEVM(instrumentHandle, selectorString, timeout, rmsevm, peakEVM, rho, frequencyError, chipRateError, rmsMagnitudeError, rmsPhaseError);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchEVMArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 rmsevm[], float64 peakEVM[], float64 rho[], float64 frequencyError[], float64 chipRateError[], float64 rmsMagnitudeError[], float64 rmsPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchEVMArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchEVMArray.");
+  }
+  return function_pointers_.ModAccFetchEVMArray(instrumentHandle, selectorString, timeout, rmsevm, peakEVM, rho, frequencyError, chipRateError, rmsMagnitudeError, rmsPhaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 evm[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchEVMTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchEVMTrace.");
+  }
+  return function_pointers_.ModAccFetchEVMTrace(instrumentHandle, selectorString, timeout, x0, dx, evm, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* iqOriginOffset, float64* iqGainImbalance, float64* iqQuadratureError)
+{
+  if (!function_pointers_.ModAccFetchIQImpairments) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchIQImpairments.");
+  }
+  return function_pointers_.ModAccFetchIQImpairments(instrumentHandle, selectorString, timeout, iqOriginOffset, iqGainImbalance, iqQuadratureError);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchIQImpairmentsArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 iqOriginOffset[], float64 iqGainImbalance[], float64 iqQuadratureError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchIQImpairmentsArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchIQImpairmentsArray.");
+  }
+  return function_pointers_.ModAccFetchIQImpairmentsArray(instrumentHandle, selectorString, timeout, iqOriginOffset, iqGainImbalance, iqQuadratureError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 magnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMagnitudeErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchMagnitudeErrorTrace.");
+  }
+  return function_pointers_.ModAccFetchMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, magnitudeError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchMulticarrierIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* multicarrierIQOriginOffset, float64* multicarrierIQGainImbalance, float64* multicarrierIQQuadratureError)
+{
+  if (!function_pointers_.ModAccFetchMulticarrierIQImpairments) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchMulticarrierIQImpairments.");
+  }
+  return function_pointers_.ModAccFetchMulticarrierIQImpairments(instrumentHandle, selectorString, timeout, multicarrierIQOriginOffset, multicarrierIQGainImbalance, multicarrierIQQuadratureError);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchNumberOfDetectedChannels(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* numberOfDetectedChannels)
+{
+  if (!function_pointers_.ModAccFetchNumberOfDetectedChannels) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchNumberOfDetectedChannels.");
+  }
+  return function_pointers_.ModAccFetchNumberOfDetectedChannels(instrumentHandle, selectorString, timeout, numberOfDetectedChannels);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchNumberOfDetectedChannelsArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 numberofDetectedChannels[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchNumberOfDetectedChannelsArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchNumberOfDetectedChannelsArray.");
+  }
+  return function_pointers_.ModAccFetchNumberOfDetectedChannelsArray(instrumentHandle, selectorString, timeout, numberofDetectedChannels, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchPeakActiveCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakActiveCDE, int32* peakActiveCDESpreadingFactor, int32* peakActiveCDECode, int32* peakActiveCDEBranch)
+{
+  if (!function_pointers_.ModAccFetchPeakActiveCDE) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchPeakActiveCDE.");
+  }
+  return function_pointers_.ModAccFetchPeakActiveCDE(instrumentHandle, selectorString, timeout, peakActiveCDE, peakActiveCDESpreadingFactor, peakActiveCDECode, peakActiveCDEBranch);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchPeakActiveCDEArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 peakActiveCDE[], int32 peakActiveCDESpreadingFactor[], int32 peakActiveCDECode[], int32 peakActiveCDEBranch[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchPeakActiveCDEArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchPeakActiveCDEArray.");
+  }
+  return function_pointers_.ModAccFetchPeakActiveCDEArray(instrumentHandle, selectorString, timeout, peakActiveCDE, peakActiveCDESpreadingFactor, peakActiveCDECode, peakActiveCDEBranch, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchPeakCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakCDE, int32* peakCDECode, int32* peakCDEBranch)
+{
+  if (!function_pointers_.ModAccFetchPeakCDE) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchPeakCDE.");
+  }
+  return function_pointers_.ModAccFetchPeakCDE(instrumentHandle, selectorString, timeout, peakCDE, peakCDECode, peakCDEBranch);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchPeakCDEArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 peakCDE[], int32 peakCDECode[], int32 peakCDEBranch[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchPeakCDEArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchPeakCDEArray.");
+  }
+  return function_pointers_.ModAccFetchPeakCDEArray(instrumentHandle, selectorString, timeout, peakCDE, peakCDECode, peakCDEBranch, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchPhaseErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchPhaseErrorTrace.");
+  }
+  return function_pointers_.ModAccFetchPhaseErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchRCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakRCDE, int32* peakRCDESpreadingFactor, int32* peakRCDECode, int32* peakRCDEBranch)
+{
+  if (!function_pointers_.ModAccFetchRCDE) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchRCDE.");
+  }
+  return function_pointers_.ModAccFetchRCDE(instrumentHandle, selectorString, timeout, peakRCDE, peakRCDESpreadingFactor, peakRCDECode, peakRCDEBranch);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchRCDEArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 peakRCDE[], int32 peakRCDESpreadingFactor[], int32 peakRCDECode[], int32 peakRCDEBranch[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchRCDEArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchRCDEArray.");
+  }
+  return function_pointers_.ModAccFetchRCDEArray(instrumentHandle, selectorString, timeout, peakRCDE, peakRCDESpreadingFactor, peakRCDECode, peakRCDEBranch, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchRCDETrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 rcde[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchRCDETrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchRCDETrace.");
+  }
+  return function_pointers_.ModAccFetchRCDETrace(instrumentHandle, selectorString, timeout, rcde, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchReferenceWaveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchReferenceWaveform.");
+  }
+  return function_pointers_.ModAccFetchReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveform, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.OBWCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_OBWCfgAveraging.");
+  }
+  return function_pointers_.OBWCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxWCDMALibrary::OBWCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  if (!function_pointers_.OBWCfgRBWFilter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_OBWCfgRBWFilter.");
+  }
+  return function_pointers_.OBWCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 NiRFmxWCDMALibrary::OBWCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  if (!function_pointers_.OBWCfgSweepTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_OBWCfgSweepTime.");
+  }
+  return function_pointers_.OBWCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 NiRFmxWCDMALibrary::OBWFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* occupiedBandwidth, float64* absolutePower, float64* startFrequency, float64* stopFrequency)
+{
+  if (!function_pointers_.OBWFetchMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_OBWFetchMeasurement.");
+  }
+  return function_pointers_.OBWFetchMeasurement(instrumentHandle, selectorString, timeout, occupiedBandwidth, absolutePower, startFrequency, stopFrequency);
+}
+
+int32 NiRFmxWCDMALibrary::OBWFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.OBWFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_OBWFetchSpectrum.");
+  }
+  return function_pointers_.OBWFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.QEVMCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMCfgAveraging.");
+  }
+  return function_pointers_.QEVMCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementLength)
+{
+  if (!function_pointers_.QEVMCfgMeasurementLength) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMCfgMeasurementLength.");
+  }
+  return function_pointers_.QEVMCfgMeasurementLength(instrumentHandle, selectorString, measurementLength);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.QEVMFetchConstellationTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMFetchConstellationTrace.");
+  }
+  return function_pointers_.QEVMFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMFetchEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSEVM, float64* maximumPeakEVM, float64* meanFrequencyError, float64* meanMagnitudeError, float64* meanPhaseError, float64* meanChipRateError)
+{
+  if (!function_pointers_.QEVMFetchEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMFetchEVM.");
+  }
+  return function_pointers_.QEVMFetchEVM(instrumentHandle, selectorString, timeout, meanRMSEVM, maximumPeakEVM, meanFrequencyError, meanMagnitudeError, meanPhaseError, meanChipRateError);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMFetchEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 evm[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.QEVMFetchEVMTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMFetchEVMTrace.");
+  }
+  return function_pointers_.QEVMFetchEVMTrace(instrumentHandle, selectorString, timeout, x0, dx, evm, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanIQOriginOffset, float64* meanIQGainImbalance, float64* meanIQQuadratureError, float64* maximumIQOriginOffset, float64* maximumIQGainImbalance, float64* maximumIQQuadratureError)
+{
+  if (!function_pointers_.QEVMFetchIQImpairments) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMFetchIQImpairments.");
+  }
+  return function_pointers_.QEVMFetchIQImpairments(instrumentHandle, selectorString, timeout, meanIQOriginOffset, meanIQGainImbalance, meanIQQuadratureError, maximumIQOriginOffset, maximumIQGainImbalance, maximumIQQuadratureError);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMFetchMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 magnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.QEVMFetchMagnitudeErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMFetchMagnitudeErrorTrace.");
+  }
+  return function_pointers_.QEVMFetchMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, magnitudeError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMFetchPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.QEVMFetchPhaseErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMFetchPhaseErrorTrace.");
+  }
+  return function_pointers_.QEVMFetchPhaseErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
+{
+  if (!function_pointers_.ResetAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ResetAttribute.");
+  }
+  return function_pointers_.ResetAttribute(instrumentHandle, selectorString, attributeID);
+}
+
+int32 NiRFmxWCDMALibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ResetToDefault) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ResetToDefault.");
+  }
+  return function_pointers_.ResetToDefault(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxWCDMALibrary::SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.SEMCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMCfgAveraging.");
+  }
+  return function_pointers_.SEMCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxWCDMALibrary::SEMCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  if (!function_pointers_.SEMCfgSweepTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMCfgSweepTime.");
+  }
+  return function_pointers_.SEMCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absoluteIntegratedPower, float64* relativeIntegratedPower)
+{
+  if (!function_pointers_.SEMFetchCarrierMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchCarrierMeasurement.");
+  }
+  return function_pointers_.SEMFetchCarrierMeasurement(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchCarrierMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absoluteIntegratedPower[], float64 relativeIntegratedPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchCarrierMeasurementArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchCarrierMeasurementArray.");
+  }
+  return function_pointers_.SEMFetchCarrierMeasurementArray(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchLowerOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
+{
+  if (!function_pointers_.SEMFetchLowerOffsetMargin) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchLowerOffsetMargin.");
+  }
+  return function_pointers_.SEMFetchLowerOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchLowerOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchLowerOffsetMarginArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchLowerOffsetMarginArray.");
+  }
+  return function_pointers_.SEMFetchLowerOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchLowerOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absoluteIntegratedPower, float64* relativeIntegratedPower, float64* absolutePeakPower, float64* peakFrequency, float64* relativePeakPower)
+{
+  if (!function_pointers_.SEMFetchLowerOffsetPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchLowerOffsetPower.");
+  }
+  return function_pointers_.SEMFetchLowerOffsetPower(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchLowerOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absoluteIntegratedPower[], float64 relativeIntegratedPower[], float64 absolutePeakPower[], float64 peakFrequency[], float64 relativePeakPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchLowerOffsetPowerArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchLowerOffsetPowerArray.");
+  }
+  return function_pointers_.SEMFetchLowerOffsetPowerArray(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
+{
+  if (!function_pointers_.SEMFetchMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchMeasurementStatus.");
+  }
+  return function_pointers_.SEMFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], float32 relativeMask[], float32 absoluteMask[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchSpectrum.");
+  }
+  return function_pointers_.SEMFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, relativeMask, absoluteMask, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
+{
+  if (!function_pointers_.SEMFetchTotalCarrierPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchTotalCarrierPower.");
+  }
+  return function_pointers_.SEMFetchTotalCarrierPower(instrumentHandle, selectorString, timeout, totalCarrierPower);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchUpperOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
+{
+  if (!function_pointers_.SEMFetchUpperOffsetMargin) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchUpperOffsetMargin.");
+  }
+  return function_pointers_.SEMFetchUpperOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchUpperOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchUpperOffsetMarginArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchUpperOffsetMarginArray.");
+  }
+  return function_pointers_.SEMFetchUpperOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchUpperOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absoluteIntegratedPower, float64* relativeIntegratedPower, float64* absolutePeakPower, float64* peakFrequency, float64* relativePeakPower)
+{
+  if (!function_pointers_.SEMFetchUpperOffsetPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchUpperOffsetPower.");
+  }
+  return function_pointers_.SEMFetchUpperOffsetPower(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower);
+}
+
+int32 NiRFmxWCDMALibrary::SEMFetchUpperOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absoluteIntegratedPower[], float64 relativeIntegratedPower[], float64 absolutePeakPower[], float64 peakFrequency[], float64 relativePeakPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchUpperOffsetPowerArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SEMFetchUpperOffsetPowerArray.");
+  }
+  return function_pointers_.SEMFetchUpperOffsetPowerArray(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
+{
+  if (!function_pointers_.SelectMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SelectMeasurements.");
+  }
+  return function_pointers_.SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
+}
+
+int32 NiRFmxWCDMALibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
+{
+  if (!function_pointers_.SendSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SendSoftwareEdgeTrigger.");
+  }
+  return function_pointers_.SendSoftwareEdgeTrigger(instrumentHandle);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
+{
+  if (!function_pointers_.SetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeF32.");
+  }
+  return function_pointers_.SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeF32Array.");
+  }
+  return function_pointers_.SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
+{
+  if (!function_pointers_.SetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeF64.");
+  }
+  return function_pointers_.SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeF64Array.");
+  }
+  return function_pointers_.SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
+{
+  if (!function_pointers_.SetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeI16.");
+  }
+  return function_pointers_.SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
+{
+  if (!function_pointers_.SetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeI32.");
+  }
+  return function_pointers_.SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeI32Array.");
+  }
+  return function_pointers_.SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
+{
+  if (!function_pointers_.SetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeI64.");
+  }
+  return function_pointers_.SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeI64Array.");
+  }
+  return function_pointers_.SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
+{
+  if (!function_pointers_.SetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeI8.");
+  }
+  return function_pointers_.SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeI8Array.");
+  }
+  return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeNIComplexDoubleArray.");
+  }
+  return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeNIComplexSingleArray.");
+  }
+  return function_pointers_.SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
+{
+  if (!function_pointers_.SetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeString.");
+  }
+  return function_pointers_.SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
+{
+  if (!function_pointers_.SetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeU16.");
+  }
+  return function_pointers_.SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
+{
+  if (!function_pointers_.SetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeU32.");
+  }
+  return function_pointers_.SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeU32Array.");
+  }
+  return function_pointers_.SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeU64Array.");
+  }
+  return function_pointers_.SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
+{
+  if (!function_pointers_.SetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeU8.");
+  }
+  return function_pointers_.SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxWCDMALibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SetAttributeU8Array.");
+  }
+  return function_pointers_.SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SlotPhaseCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  if (!function_pointers_.SlotPhaseCfgSynchronizationModeAndInterval) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SlotPhaseCfgSynchronizationModeAndInterval.");
+  }
+  return function_pointers_.SlotPhaseCfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 NiRFmxWCDMALibrary::SlotPhaseFetchChipPhaseErrorLinearFitTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 chipPhaseErrorLinearFit[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SlotPhaseFetchChipPhaseErrorLinearFitTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SlotPhaseFetchChipPhaseErrorLinearFitTrace.");
+  }
+  return function_pointers_.SlotPhaseFetchChipPhaseErrorLinearFitTrace(instrumentHandle, selectorString, timeout, x0, dx, chipPhaseErrorLinearFit, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SlotPhaseFetchChipPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 chipPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SlotPhaseFetchChipPhaseErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SlotPhaseFetchChipPhaseErrorTrace.");
+  }
+  return function_pointers_.SlotPhaseFetchChipPhaseErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, chipPhaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SlotPhaseFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPhaseDiscontinuity, int32* discontinuityCountGreaterThanLimit1, int32* discontinuityCountGreaterThanLimit2, int32* discontinuityMinimumDistance)
+{
+  if (!function_pointers_.SlotPhaseFetchMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SlotPhaseFetchMeasurement.");
+  }
+  return function_pointers_.SlotPhaseFetchMeasurement(instrumentHandle, selectorString, timeout, maximumPhaseDiscontinuity, discontinuityCountGreaterThanLimit1, discontinuityCountGreaterThanLimit2, discontinuityMinimumDistance);
+}
+
+int32 NiRFmxWCDMALibrary::SlotPhaseFetchPhaseDiscontinuities(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 slotPhaseDiscontinuity[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SlotPhaseFetchPhaseDiscontinuities) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SlotPhaseFetchPhaseDiscontinuities.");
+  }
+  return function_pointers_.SlotPhaseFetchPhaseDiscontinuities(instrumentHandle, selectorString, timeout, slotPhaseDiscontinuity, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::SlotPowerCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  if (!function_pointers_.SlotPowerCfgSynchronizationModeAndInterval) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SlotPowerCfgSynchronizationModeAndInterval.");
+  }
+  return function_pointers_.SlotPowerCfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 NiRFmxWCDMALibrary::SlotPowerFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 slotPower[], float64 slotPowerDelta[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SlotPowerFetchPowers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_SlotPowerFetchPowers.");
+  }
+  return function_pointers_.SlotPowerFetchPowers(instrumentHandle, selectorString, timeout, slotPower, slotPowerDelta, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
+{
+  if (!function_pointers_.WaitForAcquisitionComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_WaitForAcquisitionComplete.");
+  }
+  return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
+}
+
+int32 NiRFmxWCDMALibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  if (!function_pointers_.WaitForMeasurementComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_WaitForMeasurementComplete.");
+  }
+  return function_pointers_.WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
 }
 
 }  // namespace nirfmxwcdma_grpc

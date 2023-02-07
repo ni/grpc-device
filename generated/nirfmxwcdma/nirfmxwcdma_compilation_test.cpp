@@ -7,9 +7,489 @@
 
 namespace nirfmxwcdma_grpc {
 
+int32 ACPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  return RFmxWCDMA_ACPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 ACPCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
+{
+  return RFmxWCDMA_ACPCfgMeasurementMethod(instrumentHandle, selectorString, measurementMethod);
+}
+
+int32 ACPCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)
+{
+  return RFmxWCDMA_ACPCfgNoiseCompensationEnabled(instrumentHandle, selectorString, noiseCompensationEnabled);
+}
+
+int32 ACPCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfOffsets)
+{
+  return RFmxWCDMA_ACPCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
+}
+
+int32 ACPCfgOffsetPowerReference(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 offsetPowerReferenceCarrier, int32 offsetPowerReferenceSpecific)
+{
+  return RFmxWCDMA_ACPCfgOffsetPowerReference(instrumentHandle, selectorString, offsetPowerReferenceCarrier, offsetPowerReferenceSpecific);
+}
+
+int32 ACPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  return RFmxWCDMA_ACPCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 ACPCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  return RFmxWCDMA_ACPCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 ACPFetchAbsolutePowersTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 absolutePowersTrace[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ACPFetchAbsolutePowersTrace(instrumentHandle, selectorString, timeout, traceIndex, x0, dx, absolutePowersTrace, arraySize, actualArraySize);
+}
+
+int32 ACPFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* relativePower)
+{
+  return RFmxWCDMA_ACPFetchCarrierMeasurement(instrumentHandle, selectorString, timeout, absolutePower, relativePower);
+}
+
+int32 ACPFetchCarrierMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absolutePower[], float64 relativePower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ACPFetchCarrierMeasurementArray(instrumentHandle, selectorString, timeout, absolutePower, relativePower, arraySize, actualArraySize);
+}
+
+int32 ACPFetchOffsetMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerRelativePower, float64* upperRelativePower, float64* lowerAbsolutePower, float64* upperAbsolutePower)
+{
+  return RFmxWCDMA_ACPFetchOffsetMeasurement(instrumentHandle, selectorString, timeout, lowerRelativePower, upperRelativePower, lowerAbsolutePower, upperAbsolutePower);
+}
+
+int32 ACPFetchOffsetMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 lowerRelativePower[], float64 upperRelativePower[], float64 lowerAbsolutePower[], float64 upperAbsolutePower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ACPFetchOffsetMeasurementArray(instrumentHandle, selectorString, timeout, lowerRelativePower, upperRelativePower, lowerAbsolutePower, upperAbsolutePower, arraySize, actualArraySize);
+}
+
+int32 ACPFetchRelativePowersTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 relativePowersTrace[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ACPFetchRelativePowersTrace(instrumentHandle, selectorString, timeout, traceIndex, x0, dx, relativePowersTrace, arraySize, actualArraySize);
+}
+
+int32 ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ACPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 ACPFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
+{
+  return RFmxWCDMA_ACPFetchTotalCarrierPower(instrumentHandle, selectorString, timeout, totalCarrierPower);
+}
+
+int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxWCDMA_AbortMeasurements(instrumentHandle, selectorString);
+}
+
+int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxWCDMA_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxWCDMA_AnalyzeSpectrum1Waveform(instrumentHandle, selectorString, resultName, x0, dx, spectrum, arraySize, reset, reserved);
+}
+
+int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel)
+{
+  return RFmxWCDMA_AutoLevel(instrumentHandle, selectorString, measurementInterval, referenceLevel);
+}
+
+int32 BuildCarrierString(char selectorString[], int32 carrierNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxWCDMA_BuildCarrierString(selectorString, carrierNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildChannelString(char selectorString[], int32 channelNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxWCDMA_BuildChannelString(selectorString, channelNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxWCDMA_BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  return RFmxWCDMA_BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+}
+
+int32 CDACfgMeasurementChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spreadingFactor, int32 spreadingCode, int32 modulationType, int32 branch)
+{
+  return RFmxWCDMA_CDACfgMeasurementChannel(instrumentHandle, selectorString, spreadingFactor, spreadingCode, modulationType, branch);
+}
+
+int32 CDACfgPowerUnit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 powerUnit)
+{
+  return RFmxWCDMA_CDACfgPowerUnit(instrumentHandle, selectorString, powerUnit);
+}
+
+int32 CDACfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  return RFmxWCDMA_CDACfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 CDAFetchCodeDomainIAndQPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* iMeanActivePower, float64* qMeanActivePower, float64* iPeakInactivePower, float64* qPeakInactivePower)
+{
+  return RFmxWCDMA_CDAFetchCodeDomainIAndQPower(instrumentHandle, selectorString, timeout, iMeanActivePower, qMeanActivePower, iPeakInactivePower, qPeakInactivePower);
+}
+
+int32 CDAFetchCodeDomainIAndQPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 iCodeDomainPowers[], float32 qCodeDomainPowers[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_CDAFetchCodeDomainIAndQPowerTrace(instrumentHandle, selectorString, timeout, iCodeDomainPowers, qCodeDomainPowers, arraySize, actualArraySize);
+}
+
+int32 CDAFetchCodeDomainPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalPower, float64* totalActivePower, float64* meanActivePower, float64* peakActivePower, float64* meanInactivePower, float64* peakInactivePower)
+{
+  return RFmxWCDMA_CDAFetchCodeDomainPower(instrumentHandle, selectorString, timeout, totalPower, totalActivePower, meanActivePower, peakActivePower, meanInactivePower, peakInactivePower);
+}
+
+int32 CDAFetchCodeDomainPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 codeDomainPowers[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_CDAFetchCodeDomainPowerTrace(instrumentHandle, selectorString, timeout, codeDomainPowers, arraySize, actualArraySize);
+}
+
+int32 CDAFetchSymbolEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsSymbolEVM, float64* peakSymbolEVM, float64* rmsSymbolMagnitudeError, float64* rmsSymbolPhaseError, float64* meanSymbolPower, float64* chipRateError)
+{
+  return RFmxWCDMA_CDAFetchSymbolEVM(instrumentHandle, selectorString, timeout, rmsSymbolEVM, peakSymbolEVM, rmsSymbolMagnitudeError, rmsSymbolPhaseError, meanSymbolPower, chipRateError);
+}
+
+int32 CDAFetchSymbolEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolEVM[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_CDAFetchSymbolEVMTrace(instrumentHandle, selectorString, timeout, symbolEVM, arraySize, actualArraySize);
+}
+
+int32 CDAFetchSymbolMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolMagnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_CDAFetchSymbolMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, symbolMagnitudeError, arraySize, actualArraySize);
+}
+
+int32 CDAFetchSymbolPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_CDAFetchSymbolPhaseErrorTrace(instrumentHandle, selectorString, timeout, symbolPhaseError, arraySize, actualArraySize);
+}
+
+int32 CDAFetchSymbolPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolPowers[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_CDAFetchSymbolPowerTrace(instrumentHandle, selectorString, timeout, symbolPowers, arraySize, actualArraySize);
+}
+
+int32 CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  return RFmxWCDMA_CHPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 CHPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  return RFmxWCDMA_CHPCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 CHPCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  return RFmxWCDMA_CHPCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 CHPFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absolutePower, float64* relativePower)
+{
+  return RFmxWCDMA_CHPFetchCarrierMeasurement(instrumentHandle, selectorString, timeout, absolutePower, relativePower);
+}
+
+int32 CHPFetchCarrierMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absolutePower[], float64 relativePower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_CHPFetchCarrierMeasurementArray(instrumentHandle, selectorString, timeout, absolutePower, relativePower, arraySize, actualArraySize);
+}
+
+int32 CHPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_CHPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 CHPFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
+{
+  return RFmxWCDMA_CHPFetchTotalCarrierPower(instrumentHandle, selectorString, timeout, totalCarrierPower);
+}
+
+int32 CfgBand(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 band)
+{
+  return RFmxWCDMA_CfgBand(instrumentHandle, selectorString, band);
+}
+
+int32 CfgCarrierFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency)
+{
+  return RFmxWCDMA_CfgCarrierFrequency(instrumentHandle, selectorString, carrierFrequency);
+}
+
+int32 CfgCarrierFrequencyArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency[], int32 numberOfElements)
+{
+  return RFmxWCDMA_CfgCarrierFrequencyArray(instrumentHandle, selectorString, carrierFrequency, numberOfElements);
+}
+
+int32 CfgChannelConfigurationMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelConfigurationMode)
+{
+  return RFmxWCDMA_CfgChannelConfigurationMode(instrumentHandle, selectorString, channelConfigurationMode);
+}
+
+int32 CfgContiguousCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers, int32 carrierAtCenterFrequency)
+{
+  return RFmxWCDMA_CfgContiguousCarriers(instrumentHandle, selectorString, numberOfCarriers, carrierAtCenterFrequency);
+}
+
+int32 CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger)
+{
+  return RFmxWCDMA_CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
+}
+
+int32 CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation)
+{
+  return RFmxWCDMA_CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
+}
+
+int32 CfgFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency)
+{
+  return RFmxWCDMA_CfgFrequency(instrumentHandle, selectorString, centerFrequency);
+}
+
+int32 CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
+{
+  return RFmxWCDMA_CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+}
+
+int32 CfgFrequencyUARFCN(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 linkDirection, int32 band, int32 uarfcn)
+{
+  return RFmxWCDMA_CfgFrequencyUARFCN(instrumentHandle, selectorString, linkDirection, band, uarfcn);
+}
+
+int32 CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char iqPowerEdgeSource[], int32 iqPowerEdgeSlope, float64 iqPowerEdgeLevel, float64 triggerDelay, int32 minimumQuietTimeMode, float64 minimumQuietTime, int32 iqPowerEdgeLevelType, int32 enableTrigger)
+{
+  return RFmxWCDMA_CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, minimumQuietTimeMode, minimumQuietTime, iqPowerEdgeLevelType, enableTrigger);
+}
+
+int32 CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
+{
+  return RFmxWCDMA_CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+}
+
+int32 CfgNumberOfCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers)
+{
+  return RFmxWCDMA_CfgNumberOfCarriers(instrumentHandle, selectorString, numberOfCarriers);
+}
+
+int32 CfgNumberOfChannels(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfChannels)
+{
+  return RFmxWCDMA_CfgNumberOfChannels(instrumentHandle, selectorString, numberOfChannels);
+}
+
+int32 CfgNumberOfChannelsArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfChannels[], int32 numberOfElements)
+{
+  return RFmxWCDMA_CfgNumberOfChannelsArray(instrumentHandle, selectorString, numberOfChannels, numberOfElements);
+}
+
+int32 CfgRF(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency, float64 referenceLevel, float64 externalAttenuation)
+{
+  return RFmxWCDMA_CfgRF(instrumentHandle, selectorString, centerFrequency, referenceLevel, externalAttenuation);
+}
+
+int32 CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
+{
+  return RFmxWCDMA_CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+}
+
+int32 CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
+{
+  return RFmxWCDMA_CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
+}
+
+int32 CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
+{
+  return RFmxWCDMA_CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
+}
+
+int32 CfgUplinkScrambling(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkScramblingCode, int32 uplinkScramblingType)
+{
+  return RFmxWCDMA_CfgUplinkScrambling(instrumentHandle, selectorString, uplinkScramblingCode, uplinkScramblingType);
+}
+
+int32 CfgUplinkScramblingArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkScramblingType[], int32 uplinkScramblingCode[], int32 numberOfElements)
+{
+  return RFmxWCDMA_CfgUplinkScramblingArray(instrumentHandle, selectorString, uplinkScramblingType, uplinkScramblingCode, numberOfElements);
+}
+
+int32 CfgUplinkTestModel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkTestModel)
+{
+  return RFmxWCDMA_CfgUplinkTestModel(instrumentHandle, selectorString, uplinkTestModel);
+}
+
+int32 CfgUplinkTestModelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkTestModel[], int32 numberOfElements)
+{
+  return RFmxWCDMA_CfgUplinkTestModelArray(instrumentHandle, selectorString, uplinkTestModel, numberOfElements);
+}
+
+int32 CfgUserDefinedChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spreadingFactor, int32 spreadingCode, int32 modulationType, int32 branch)
+{
+  return RFmxWCDMA_CfgUserDefinedChannel(instrumentHandle, selectorString, spreadingFactor, spreadingCode, modulationType, branch);
+}
+
+int32 CfgUserDefinedChannelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spreadingFactor[], int32 spreadingCode[], int32 modulationType[], int32 branch[], int32 numberOfElements)
+{
+  return RFmxWCDMA_CfgUserDefinedChannelArray(instrumentHandle, selectorString, spreadingFactor, spreadingCode, modulationType, branch, numberOfElements);
+}
+
+int32 CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* done)
+{
+  return RFmxWCDMA_CheckMeasurementStatus(instrumentHandle, selectorString, done);
+}
+
+int32 ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxWCDMA_ClearAllNamedResults(instrumentHandle, selectorString);
+}
+
+int32 ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxWCDMA_ClearNamedResult(instrumentHandle, selectorString);
+}
+
+int32 CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
+{
+  return RFmxWCDMA_CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
+}
+
 int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
 {
   return RFmxWCDMA_Close(instrumentHandle, forceDestroy);
+}
+
+int32 Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxWCDMA_Commit(instrumentHandle, selectorString);
+}
+
+int32 CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  return RFmxWCDMA_CreateSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  return RFmxWCDMA_DeleteSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxWCDMA_DisableTrigger(instrumentHandle, selectorString);
+}
+
+int32 GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
+{
+  return RFmxWCDMA_GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
+}
+
+int32 GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
+{
+  return RFmxWCDMA_GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
+{
+  return RFmxWCDMA_GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
+{
+  return RFmxWCDMA_GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
+{
+  return RFmxWCDMA_GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
+{
+  return RFmxWCDMA_GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
+{
+  return RFmxWCDMA_GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
+{
+  return RFmxWCDMA_GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
+}
+
+int32 GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
+{
+  return RFmxWCDMA_GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
+{
+  return RFmxWCDMA_GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
+{
+  return RFmxWCDMA_GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
 int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -25,6 +505,436 @@ int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 
 int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession)
 {
   return RFmxWCDMA_Initialize(resourceName, optionString, handleOut, isNewSession);
+}
+
+int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
+{
+  return RFmxWCDMA_InitializeFromNIRFSASession(nirfsaSession, handleOut);
+}
+
+int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
+{
+  return RFmxWCDMA_Initiate(instrumentHandle, selectorString, resultName);
+}
+
+int32 ModAccCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize)
+{
+  return RFmxWCDMA_ModAccCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
+}
+
+int32 ModAccCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  return RFmxWCDMA_ModAccCfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchDetectedChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* detectedSpreadingFactor, int32* detectedSpreadingCode, int32* detectedModulationType, int32* detectedBranch)
+{
+  return RFmxWCDMA_ModAccFetchDetectedChannel(instrumentHandle, selectorString, timeout, detectedSpreadingFactor, detectedSpreadingCode, detectedModulationType, detectedBranch);
+}
+
+int32 ModAccFetchDetectedChannelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 detectedSpreadingFactor[], int32 detectedSpreadingCode[], int32 detectedModulationType[], int32 detectedBranch[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchDetectedChannelArray(instrumentHandle, selectorString, timeout, detectedSpreadingFactor, detectedSpreadingCode, detectedModulationType, detectedBranch, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsevm, float64* peakEVM, float64* rho, float64* frequencyError, float64* chipRateError, float64* rmsMagnitudeError, float64* rmsPhaseError)
+{
+  return RFmxWCDMA_ModAccFetchEVM(instrumentHandle, selectorString, timeout, rmsevm, peakEVM, rho, frequencyError, chipRateError, rmsMagnitudeError, rmsPhaseError);
+}
+
+int32 ModAccFetchEVMArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 rmsevm[], float64 peakEVM[], float64 rho[], float64 frequencyError[], float64 chipRateError[], float64 rmsMagnitudeError[], float64 rmsPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchEVMArray(instrumentHandle, selectorString, timeout, rmsevm, peakEVM, rho, frequencyError, chipRateError, rmsMagnitudeError, rmsPhaseError, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 evm[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchEVMTrace(instrumentHandle, selectorString, timeout, x0, dx, evm, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* iqOriginOffset, float64* iqGainImbalance, float64* iqQuadratureError)
+{
+  return RFmxWCDMA_ModAccFetchIQImpairments(instrumentHandle, selectorString, timeout, iqOriginOffset, iqGainImbalance, iqQuadratureError);
+}
+
+int32 ModAccFetchIQImpairmentsArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 iqOriginOffset[], float64 iqGainImbalance[], float64 iqQuadratureError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchIQImpairmentsArray(instrumentHandle, selectorString, timeout, iqOriginOffset, iqGainImbalance, iqQuadratureError, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 magnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, magnitudeError, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchMulticarrierIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* multicarrierIQOriginOffset, float64* multicarrierIQGainImbalance, float64* multicarrierIQQuadratureError)
+{
+  return RFmxWCDMA_ModAccFetchMulticarrierIQImpairments(instrumentHandle, selectorString, timeout, multicarrierIQOriginOffset, multicarrierIQGainImbalance, multicarrierIQQuadratureError);
+}
+
+int32 ModAccFetchNumberOfDetectedChannels(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* numberOfDetectedChannels)
+{
+  return RFmxWCDMA_ModAccFetchNumberOfDetectedChannels(instrumentHandle, selectorString, timeout, numberOfDetectedChannels);
+}
+
+int32 ModAccFetchNumberOfDetectedChannelsArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 numberofDetectedChannels[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchNumberOfDetectedChannelsArray(instrumentHandle, selectorString, timeout, numberofDetectedChannels, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchPeakActiveCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakActiveCDE, int32* peakActiveCDESpreadingFactor, int32* peakActiveCDECode, int32* peakActiveCDEBranch)
+{
+  return RFmxWCDMA_ModAccFetchPeakActiveCDE(instrumentHandle, selectorString, timeout, peakActiveCDE, peakActiveCDESpreadingFactor, peakActiveCDECode, peakActiveCDEBranch);
+}
+
+int32 ModAccFetchPeakActiveCDEArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 peakActiveCDE[], int32 peakActiveCDESpreadingFactor[], int32 peakActiveCDECode[], int32 peakActiveCDEBranch[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchPeakActiveCDEArray(instrumentHandle, selectorString, timeout, peakActiveCDE, peakActiveCDESpreadingFactor, peakActiveCDECode, peakActiveCDEBranch, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchPeakCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakCDE, int32* peakCDECode, int32* peakCDEBranch)
+{
+  return RFmxWCDMA_ModAccFetchPeakCDE(instrumentHandle, selectorString, timeout, peakCDE, peakCDECode, peakCDEBranch);
+}
+
+int32 ModAccFetchPeakCDEArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 peakCDE[], int32 peakCDECode[], int32 peakCDEBranch[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchPeakCDEArray(instrumentHandle, selectorString, timeout, peakCDE, peakCDECode, peakCDEBranch, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchPhaseErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseError, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchRCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakRCDE, int32* peakRCDESpreadingFactor, int32* peakRCDECode, int32* peakRCDEBranch)
+{
+  return RFmxWCDMA_ModAccFetchRCDE(instrumentHandle, selectorString, timeout, peakRCDE, peakRCDESpreadingFactor, peakRCDECode, peakRCDEBranch);
+}
+
+int32 ModAccFetchRCDEArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 peakRCDE[], int32 peakRCDESpreadingFactor[], int32 peakRCDECode[], int32 peakRCDEBranch[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchRCDEArray(instrumentHandle, selectorString, timeout, peakRCDE, peakRCDESpreadingFactor, peakRCDECode, peakRCDEBranch, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchRCDETrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 rcde[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchRCDETrace(instrumentHandle, selectorString, timeout, rcde, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveform, arraySize, actualArraySize);
+}
+
+int32 OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  return RFmxWCDMA_OBWCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 OBWCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  return RFmxWCDMA_OBWCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 OBWCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  return RFmxWCDMA_OBWCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 OBWFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* occupiedBandwidth, float64* absolutePower, float64* startFrequency, float64* stopFrequency)
+{
+  return RFmxWCDMA_OBWFetchMeasurement(instrumentHandle, selectorString, timeout, occupiedBandwidth, absolutePower, startFrequency, stopFrequency);
+}
+
+int32 OBWFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_OBWFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 QEVMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  return RFmxWCDMA_QEVMCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 QEVMCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementLength)
+{
+  return RFmxWCDMA_QEVMCfgMeasurementLength(instrumentHandle, selectorString, measurementLength);
+}
+
+int32 QEVMFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_QEVMFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 QEVMFetchEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSEVM, float64* maximumPeakEVM, float64* meanFrequencyError, float64* meanMagnitudeError, float64* meanPhaseError, float64* meanChipRateError)
+{
+  return RFmxWCDMA_QEVMFetchEVM(instrumentHandle, selectorString, timeout, meanRMSEVM, maximumPeakEVM, meanFrequencyError, meanMagnitudeError, meanPhaseError, meanChipRateError);
+}
+
+int32 QEVMFetchEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 evm[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_QEVMFetchEVMTrace(instrumentHandle, selectorString, timeout, x0, dx, evm, arraySize, actualArraySize);
+}
+
+int32 QEVMFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanIQOriginOffset, float64* meanIQGainImbalance, float64* meanIQQuadratureError, float64* maximumIQOriginOffset, float64* maximumIQGainImbalance, float64* maximumIQQuadratureError)
+{
+  return RFmxWCDMA_QEVMFetchIQImpairments(instrumentHandle, selectorString, timeout, meanIQOriginOffset, meanIQGainImbalance, meanIQQuadratureError, maximumIQOriginOffset, maximumIQGainImbalance, maximumIQQuadratureError);
+}
+
+int32 QEVMFetchMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 magnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_QEVMFetchMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, magnitudeError, arraySize, actualArraySize);
+}
+
+int32 QEVMFetchPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_QEVMFetchPhaseErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseError, arraySize, actualArraySize);
+}
+
+int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
+{
+  return RFmxWCDMA_ResetAttribute(instrumentHandle, selectorString, attributeID);
+}
+
+int32 ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxWCDMA_ResetToDefault(instrumentHandle, selectorString);
+}
+
+int32 SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  return RFmxWCDMA_SEMCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 SEMCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  return RFmxWCDMA_SEMCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 SEMFetchCarrierMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absoluteIntegratedPower, float64* relativeIntegratedPower)
+{
+  return RFmxWCDMA_SEMFetchCarrierMeasurement(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower);
+}
+
+int32 SEMFetchCarrierMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absoluteIntegratedPower[], float64 relativeIntegratedPower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SEMFetchCarrierMeasurementArray(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, arraySize, actualArraySize);
+}
+
+int32 SEMFetchLowerOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
+{
+  return RFmxWCDMA_SEMFetchLowerOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
+}
+
+int32 SEMFetchLowerOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SEMFetchLowerOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
+}
+
+int32 SEMFetchLowerOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absoluteIntegratedPower, float64* relativeIntegratedPower, float64* absolutePeakPower, float64* peakFrequency, float64* relativePeakPower)
+{
+  return RFmxWCDMA_SEMFetchLowerOffsetPower(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower);
+}
+
+int32 SEMFetchLowerOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absoluteIntegratedPower[], float64 relativeIntegratedPower[], float64 absolutePeakPower[], float64 peakFrequency[], float64 relativePeakPower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SEMFetchLowerOffsetPowerArray(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower, arraySize, actualArraySize);
+}
+
+int32 SEMFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
+{
+  return RFmxWCDMA_SEMFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
+}
+
+int32 SEMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], float32 relativeMask[], float32 absoluteMask[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SEMFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, relativeMask, absoluteMask, arraySize, actualArraySize);
+}
+
+int32 SEMFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower)
+{
+  return RFmxWCDMA_SEMFetchTotalCarrierPower(instrumentHandle, selectorString, timeout, totalCarrierPower);
+}
+
+int32 SEMFetchUpperOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
+{
+  return RFmxWCDMA_SEMFetchUpperOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
+}
+
+int32 SEMFetchUpperOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SEMFetchUpperOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
+}
+
+int32 SEMFetchUpperOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absoluteIntegratedPower, float64* relativeIntegratedPower, float64* absolutePeakPower, float64* peakFrequency, float64* relativePeakPower)
+{
+  return RFmxWCDMA_SEMFetchUpperOffsetPower(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower);
+}
+
+int32 SEMFetchUpperOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absoluteIntegratedPower[], float64 relativeIntegratedPower[], float64 absolutePeakPower[], float64 peakFrequency[], float64 relativePeakPower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SEMFetchUpperOffsetPowerArray(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower, arraySize, actualArraySize);
+}
+
+int32 SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
+{
+  return RFmxWCDMA_SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
+}
+
+int32 SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
+{
+  return RFmxWCDMA_SendSoftwareEdgeTrigger(instrumentHandle);
+}
+
+int32 SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
+{
+  return RFmxWCDMA_SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
+{
+  return RFmxWCDMA_SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
+{
+  return RFmxWCDMA_SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
+{
+  return RFmxWCDMA_SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
+{
+  return RFmxWCDMA_SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
+{
+  return RFmxWCDMA_SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
+{
+  return RFmxWCDMA_SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
+{
+  return RFmxWCDMA_SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
+{
+  return RFmxWCDMA_SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
+{
+  return RFmxWCDMA_SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
+{
+  return RFmxWCDMA_SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SlotPhaseCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  return RFmxWCDMA_SlotPhaseCfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 SlotPhaseFetchChipPhaseErrorLinearFitTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 chipPhaseErrorLinearFit[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SlotPhaseFetchChipPhaseErrorLinearFitTrace(instrumentHandle, selectorString, timeout, x0, dx, chipPhaseErrorLinearFit, arraySize, actualArraySize);
+}
+
+int32 SlotPhaseFetchChipPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 chipPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SlotPhaseFetchChipPhaseErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, chipPhaseError, arraySize, actualArraySize);
+}
+
+int32 SlotPhaseFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPhaseDiscontinuity, int32* discontinuityCountGreaterThanLimit1, int32* discontinuityCountGreaterThanLimit2, int32* discontinuityMinimumDistance)
+{
+  return RFmxWCDMA_SlotPhaseFetchMeasurement(instrumentHandle, selectorString, timeout, maximumPhaseDiscontinuity, discontinuityCountGreaterThanLimit1, discontinuityCountGreaterThanLimit2, discontinuityMinimumDistance);
+}
+
+int32 SlotPhaseFetchPhaseDiscontinuities(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 slotPhaseDiscontinuity[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SlotPhaseFetchPhaseDiscontinuities(instrumentHandle, selectorString, timeout, slotPhaseDiscontinuity, arraySize, actualArraySize);
+}
+
+int32 SlotPowerCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  return RFmxWCDMA_SlotPowerCfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 SlotPowerFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 slotPower[], float64 slotPowerDelta[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_SlotPowerFetchPowers(instrumentHandle, selectorString, timeout, slotPower, slotPowerDelta, arraySize, actualArraySize);
+}
+
+int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
+{
+  return RFmxWCDMA_WaitForAcquisitionComplete(instrumentHandle, timeout);
+}
+
+int32 WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  return RFmxWCDMA_WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
 }
 
 }  // namespace nirfmxwcdma_grpc
