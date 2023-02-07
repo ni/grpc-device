@@ -19,13 +19,22 @@ message GetCalibrationInformationRequest {
 }
 
 message GetCalibrationInformationResponse {
-  bool calibration_internal_support = 1;
-  google.protobuf.Timestamp calibration_internal_last_reading = 2;
-  double calibration_internal_last_temperature_c = 3;
-  uint32 calibration_internal_details_count = 4;
-  string calibration_internal_name = 5;
-  bool calibration_external_support = 6;
-  google.protobuf.Timestamp calibration_external_last_reading = 7;
-  google.protobuf.Timestamp calibration_external_next_reading = 8;
-  double calibration_external_last_temperature_c = 9;
+  bool calibration_internal_last_reading_available = 1;
+  repeated google.protobuf.Timestamp calibration_internal_last_reading = 2;
+  bool calibration_internal_last_temperature_c_available = 3;
+  repeated double calibration_internal_last_temperature_c = 4;
+  bool calibration_internal_name_available = 5;
+  repeated string calibration_internal_name = 6;
+  bool calibration_internal_support_avaliable = 7;
+  bool calibration_internal_support = 8;
+  bool calibration_internal_details_count_available = 9;
+  uint32 calibration_internal_details_count = 10;
+  bool calibration_external_support_available = 11;
+  bool calibration_external_support = 12;
+  bool calibration_external_last_reading_available = 13;
+  google.protobuf.Timestamp calibration_external_last_reading = 14;
+  bool calibration_external_next_reading_available = 15;
+  google.protobuf.Timestamp calibration_external_next_reading = 16;
+  bool calibration_external_last_temperature_c_available = 17;
+  double calibration_external_last_temperature_c = 18;
 }

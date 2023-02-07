@@ -37,14 +37,23 @@ class CalibrationOperationsRestrictedService final : public CalibrationOperation
   ::grpc::Status get_calibration_data(
       ::grpc::ServerContext* context,
       const DeviceId& device_id,
+      bool* calibration_internal_last_reading_available,
+      google::protobuf::RepeatedPtrField<google::protobuf::Timestamp>* calibration_internal_last_reading,
+      bool* calibration_internal_last_temperature_c_available,
+      google::protobuf::RepeatedField<double>* calibration_internal_last_temperature_c,
+      bool* calibration_internal_name_available,
+      google::protobuf::RepeatedPtrField<google::protobuf::string>* calibration_internal_name,
+      bool* calibration_internal_support_available,
       bool* calibration_internal_support,
-      google::protobuf::Timestamp* calibration_internal_last_reading,
-      double* calibration_internal_last_temperature_c,
+      bool* calibration_internal_details_count_available,
       google::protobuf::uint32* calibration_internal_details_count,
-      std::string* calibration_internal_name,
+      bool* calibration_external_support_available,
       bool* calibration_external_support,
+      bool* calibration_external_last_reading_available,
       google::protobuf::Timestamp* calibration_external_last_reading,
+      bool* calibration_external_next_reading_available,
       google::protobuf::Timestamp* calibration_external_next_reading,
+      bool* calibration_external_last_temperature_c_available,
       double* calibration_external_last_temperature_c);
 };
 
