@@ -229,7 +229,10 @@ void CheckStatus(int status)
     }
 
     ViInt32 measurement_waveform_size = request->meas_wfm_size();
-    if (measurement_waveform_size < 0) {
+    if (request->info_only()) {
+      measurement_waveform_size = 0;
+    }
+    else if (measurement_waveform_size <= 0) {
       CheckStatus(library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size));
     }
 

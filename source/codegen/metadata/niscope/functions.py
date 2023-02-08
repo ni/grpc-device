@@ -1658,6 +1658,14 @@ functions = {
                     'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]'
+            },
+            {
+                'cppName': 'infoOnly',
+                'direction': 'in',
+                'grpc_type': 'bool',
+                'name': 'infoOnly',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
