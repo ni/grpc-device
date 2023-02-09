@@ -1439,8 +1439,7 @@ message FetchArrayMeasurementRequest {
     ArrayMeasurement array_meas_function = 4;
     sint32 array_meas_function_raw = 5;
   }
-  sint32 meas_wfm_size = 6;
-  bool info_only = 7;
+  optional sint32 meas_wfm_size = 6;
 }
 
 message FetchArrayMeasurementResponse {

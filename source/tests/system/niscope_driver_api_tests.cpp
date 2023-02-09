@@ -323,7 +323,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequestWithoutWfmS
   EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
 }
 
-TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequestWithZeroMeasWfmSize_FetchCompletesUsingActualMeasurementWaveformSize)
+TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequestWithZeroMeasWfmSize_FetchCompletesWithZeroMeasurementWaveformSize)
 {
   auto_setup();
   initiate_acquisition();
@@ -331,7 +331,6 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequestWithZeroMea
   const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   const niscope_grpc::ArrayMeasurement measurement_func = niscope_grpc::ArrayMeasurement::ARRAY_MEASUREMENT_NISCOPE_VAL_INVERSE;
   const int32 zero_waveform_size = 0;
-  const int32 expected_waveform_size = get_actual_measurement_waveform_size(measurement_func);
   ::grpc::ClientContext context;
   scope::FetchArrayMeasurementRequest request;
   request.mutable_vi()->set_name(GetSessionName());
@@ -345,33 +344,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequestWithZeroMea
 
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
-  EXPECT_EQ(expected_num_waveforms * expected_waveform_size, response.meas_wfm_size());
-  EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
-}
-
-TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequestWithInfoOnlyTrue_FetchCompletesUsingZeroWaveformSize)
-{
-  auto_setup();
-  initiate_acquisition();
-  const char* channel_list = "0";
-  const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
-  const niscope_grpc::ArrayMeasurement measurement_func = niscope_grpc::ArrayMeasurement::ARRAY_MEASUREMENT_NISCOPE_VAL_INVERSE;
-  const int32 waveform_size_to_discard_on_server = 42;
-  ::grpc::ClientContext context;
-  scope::FetchArrayMeasurementRequest request;
-  request.mutable_vi()->set_name(GetSessionName());
-  request.set_channel_list(channel_list);
-  request.set_timeout(10000);
-  request.set_array_meas_function(measurement_func);
-  request.set_meas_wfm_size(waveform_size_to_discard_on_server);
-  request.set_info_only(true);
-  scope::FetchArrayMeasurementResponse response;
-
-  ::grpc::Status status = GetStub()->FetchArrayMeasurement(&context, request, &response);
-
-  EXPECT_TRUE(status.ok());
-  expect_api_success(response.status());
-  EXPECT_EQ(0, response.meas_wfm_size());
+  EXPECT_EQ(zero_waveform_size, response.meas_wfm_size());
   EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
 }
 

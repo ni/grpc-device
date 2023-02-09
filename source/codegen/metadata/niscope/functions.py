@@ -1634,6 +1634,7 @@ functions = {
                 'cppName': 'measWfmSize',
                 'direction': 'in',
                 'grpc_type': 'sint32',
+                'is_optional': True,
                 'name': 'measWfmSize',
                 'type': 'ViInt32'
             },
@@ -1658,14 +1659,6 @@ functions = {
                     'value': 'actual_num_wfms'
                 },
                 'type': 'struct niScope_wfmInfo[]'
-            },
-            {
-                'cppName': 'infoOnly',
-                'direction': 'in',
-                'grpc_type': 'bool',
-                'name': 'infoOnly',
-                'proto_only': True,
-                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'

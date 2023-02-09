@@ -67,7 +67,7 @@ ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer
 ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportableSignals, pb::int32>& signal, const std::string& signal_identifier, const simple_variant<ClockingTerminalValues, std::string>& output_terminal);
 FetchResponse fetch(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int32& num_samples);
-FetchArrayMeasurementResponse fetch_array_measurement(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const simple_variant<ArrayMeasurement, pb::int32>& array_meas_function, const pb::int32& meas_wfm_size, const bool& info_only);
+FetchArrayMeasurementResponse fetch_array_measurement(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const simple_variant<ArrayMeasurement, pb::int32>& array_meas_function, const pb::int32& meas_wfm_size);
 FetchBinary16Response fetch_binary16(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int32& num_samples);
 FetchBinary32Response fetch_binary32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int32& num_samples);
 FetchBinary8Response fetch_binary8(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int32& num_samples);

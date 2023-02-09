@@ -105,6 +105,7 @@ PARAM_SCHEMA = Schema(
         Optional("is_size_param"): bool,
         Optional("linked_params_are_optional"): bool,
         Optional("mapped-enum"): str,
+        Optional("is_optional"): bool,
     }
 )
 
@@ -302,6 +303,15 @@ def _validate_function(function_name: str, metadata: dict):
                             raise Exception(
                                 f"{metadata['config']['namespace_component']} allows duplicate resource handles in the session repository. Therefore, the handle we'd get for \"{parameter['name']}\" can't be mapped back to a Session to provide to the client!"
                             )
+                if common_helpers.is_optional_param(parameter):
+                    if common_helpers.is_enum(parameter):
+                        raise Exception(
+                            f"\"{parameter['name']}\" is marked optional and an enum which doesn't make sense!"
+                        )
+                    if function.get("codegen_method", "public") != "CustomCode":
+                        raise Exception(
+                            f"\"{parameter['name']}\" is marked optional but the function is not marked CustomCode!"
+                        )
     except Exception as e:
         raise Exception(f"Failed to validate function {function_name}") from e
 

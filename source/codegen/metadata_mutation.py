@@ -193,7 +193,7 @@ def mark_non_proto_params(parameters):
                 if "determine_size_from" not in size_param:
                     size_param["determine_size_from"] = []
                 size_param["determine_size_from"].append(param["name"])
-                is_optional = common_helpers.is_optional(param)
+                is_optional = common_helpers.has_optional_size_tag(param)
                 if is_optional != size_param.get("linked_params_are_optional", is_optional):
                     raise Exception(
                         "Code generator does not support linked params that are a mix of optional and required",
