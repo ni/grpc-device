@@ -1157,7 +1157,7 @@ def is_get_last_error_output_param(parameter: dict) -> bool:
 
 
 def is_optional_param(parameter: dict) -> bool:
-    """Whether the parameter is marked is_optional"""
+    """Whether the parameter is marked is_optional."""
     return parameter.get("is_optional", False)
 
 
