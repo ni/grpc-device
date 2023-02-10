@@ -3158,8 +3158,8 @@ functions = {
                 'type': 'char[]'
             },
             {
+                'bitfield_as_enum_array': 'MeasurementTypes',
                 'direction': 'in',
-                'enum': 'MeasurementTypes',
                 'name': 'measurements',
                 'type': 'uInt32'
             },

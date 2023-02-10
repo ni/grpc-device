@@ -3297,21 +3297,14 @@ sem_fetch_upper_offset_power_array(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 SelectMeasurementsResponse
-select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const bool& enable_all_traces)
+select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<std::vector<MeasurementTypes>, std::int32_t>& measurements, const bool& enable_all_traces)
 {
   ::grpc::ClientContext context;
 
   auto request = SelectMeasurementsRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  const auto measurements_ptr = measurements.get_if<MeasurementTypes>();
-  const auto measurements_raw_ptr = measurements.get_if<pb::uint32>();
-  if (measurements_ptr) {
-    request.set_measurements(*measurements_ptr);
-  }
-  else if (measurements_raw_ptr) {
-    request.set_measurements_raw(*measurements_raw_ptr);
-  }
+  request.set_measurements_raw(copy_bitfield_as_enum_array(measurements));
   request.set_enable_all_traces(enable_all_traces);
 
   auto response = SelectMeasurementsResponse{};

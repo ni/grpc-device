@@ -177,7 +177,7 @@ SEMFetchUpperOffsetMarginResponse sem_fetch_upper_offset_margin(const StubPtr& s
 SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 SEMFetchUpperOffsetPowerResponse sem_fetch_upper_offset_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 SEMFetchUpperOffsetPowerArrayResponse sem_fetch_upper_offset_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
-SelectMeasurementsResponse select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const bool& enable_all_traces);
+SelectMeasurementsResponse select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<std::vector<MeasurementTypes>, std::int32_t>& measurements, const bool& enable_all_traces);
 SendSoftwareEdgeTriggerResponse send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 SetAttributeF32Response set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxWCDMAAttribute& attribute_id, const float& attr_val);
 SetAttributeF32ArrayResponse set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxWCDMAAttribute& attribute_id, const std::vector<float>& attr_val);
