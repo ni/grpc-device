@@ -580,8 +580,8 @@ def _has_strlen_bug(parameter: dict) -> bool:
     return has_size_mechanism_tag(parameter, "strlen-bug")
 
 
-def is_optional(parameter: dict) -> bool:
-    """Whether the given parameter is marked as optional."""
+def has_optional_size_tag(parameter: dict) -> bool:
+    """Whether the given parameter has a size mechanism tag "optional"."""
     return has_size_mechanism_tag(parameter, "optional")
 
 
@@ -1152,8 +1152,13 @@ def is_return_value(parameter: dict) -> bool:
 
 
 def is_get_last_error_output_param(parameter: dict) -> bool:
-    """Return True if pararameter is a get_last_error parameter."""
+    """Return True if parameter is a get_last_error parameter."""
     return "get_last_error" in parameter
+
+
+def is_optional_param(parameter: dict) -> bool:
+    """Whether the parameter is marked is_optional."""
+    return parameter.get("is_optional", False)
 
 
 def get_driver_api_params(parameters: List[dict]) -> List[dict]:
