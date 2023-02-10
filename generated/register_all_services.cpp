@@ -186,6 +186,7 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
     nirfmxwcdma_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
+      vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
