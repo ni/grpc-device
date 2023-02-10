@@ -1726,10 +1726,8 @@ message ResetToDefaultResponse {
 message SelectMeasurementsRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  oneof measurements_enum {
-    MeasurementTypes measurements = 3;
-    uint32 measurements_raw = 4;
-  }
+  repeated MeasurementTypes measurements_array = 3;
+  uint32 measurements_raw = 4;
   bool enable_all_traces = 5;
 }
 

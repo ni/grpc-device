@@ -6130,21 +6130,9 @@ namespace nirfmxwcdma_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      uInt32 measurements;
-      switch (request->measurements_enum_case()) {
-        case nirfmxwcdma_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurements: {
-          measurements = static_cast<uInt32>(request->measurements());
-          break;
-        }
-        case nirfmxwcdma_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurementsRaw: {
-          measurements = static_cast<uInt32>(request->measurements_raw());
-          break;
-        }
-        case nirfmxwcdma_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::MEASUREMENTS_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurements was not specified or out of range");
-          break;
-        }
-      }
+      const auto measurements = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
+        request->measurements_array(),
+        request->measurements_raw());
 
       int32 enable_all_traces = request->enable_all_traces();
       auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);

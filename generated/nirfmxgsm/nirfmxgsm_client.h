@@ -115,7 +115,7 @@ PVTFetchSlotMeasurementResponse pvt_fetch_slot_measurement(const StubPtr& stub, 
 PVTFetchSlotMeasurementArrayResponse pvt_fetch_slot_measurement_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ResetAttributeResponse reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id);
 ResetToDefaultResponse reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
-SelectMeasurementsResponse select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const bool& enable_all_traces);
+SelectMeasurementsResponse select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<std::vector<MeasurementTypes>, std::int32_t>& measurements, const bool& enable_all_traces);
 SendSoftwareEdgeTriggerResponse send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 SetAttributeF32Response set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const float& attr_val);
 SetAttributeF32ArrayResponse set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxGSMAttribute& attribute_id, const std::vector<float>& attr_val);
