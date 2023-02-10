@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.3.0d9999
+# This file is generated from NI-SCOPE API metadata version 23.3.0d127
 enums = {
     'AcquisitionStatus': {
         'codegen_method': 'public',

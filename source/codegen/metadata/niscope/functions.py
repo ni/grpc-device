@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.3.0d9999
+# This file is generated from NI-SCOPE API metadata version 23.3.0d127
 functions = {
     'Abort': {
         'codegen_method': 'public',
