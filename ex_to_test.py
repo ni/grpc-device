@@ -60,12 +60,12 @@ def _convert(txt, driver_pascal):
         txt, prints = txt.split("    if (menuBrkFlg)\n", 1)
         prints = "    if (menuBrkFlg)\n" + prints
     elif (
-        driver_pascal == "RFmxGSM"
-        and "  if( measurementStatus == RFMXGSM_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS)"
+        driver_pascal == "RFmxWCDMA"
+        and "  if( measurementStatus == RFMXWCDMA_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS)"
         in txt
     ):
         splitter = (
-            "  if( measurementStatus == RFMXGSM_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS)"
+            "  if( measurementStatus == RFMXWCDMA_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS)"
         )
         txt, prints = txt.split(splitter, 1)
         prints = splitter + prints
@@ -100,7 +100,7 @@ def _convert(txt, driver_pascal):
         )
         if re.search(r"\n+  " + comment_pattern + r"\n+", txt):
             txt, fetch = re.split(r"\n+  " + comment_pattern + r"\n+", txt, 1)
-        elif driver_pascal == "RFmxGSM":
+        elif driver_pascal == "RFmxWCDMA":
             txt, initiate_line, fetch = re.split(
                 r"(\n *RFmxCheckWarn\(" + driver_pascal + r"_Initiate\(.*)", txt
             )
@@ -1488,6 +1488,7 @@ ALL_DRIVERS = {
 
 def _convert_rfmx_driver(driver="SpecAn"):
     examples_dir = pathlib.Path(
+        #TODO: Update the following path to point to where the C examples are located on disk
         f"C:/dev/ni-central/src/rfmx/{ALL_DRIVERS[driver]}/RFmx{ALL_DRIVERS[driver]}C/source/examples/"
     )
     # examples_dir = examples_dir / "Advanced/"
