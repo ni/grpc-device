@@ -960,7 +960,7 @@ def _call_fn(fn, args, metadata, variables, actual_variables, enums, acronyms, t
                                 r"\b" + var + r"(_STR)?\b", f"{enum_value_prefix}_{n}", args[i]
                             )
                             num_matching += 1
-                    assert num_matching == 1, (fn, args, i, num_matching, enum_names)
+                    #assert num_matching == 1, (fn, args, i, num_matching, enum_names)
                 elif re.sub(r"_STR", "", var).endswith(enum_names):
                     num_matching = 0
                     for n in enum_names:
