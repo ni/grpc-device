@@ -53,6 +53,14 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model)
   return client::initialize(stub, "FakeDevice", options);
 }
 
+nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model)
+{
+  auto response = init(stub, model);
+  auto session = response.instrument();
+  EXPECT_RESPONSE_SUCCESS(response);
+  return session;
+}
+
 TEST_F(NiRFmxGSMDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
@@ -70,7 +78,7 @@ TEST_F(NiRFmxGSMDriverApiTests, EvmFromExample_FetchData_DataLooksReasonable)
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 890.2e6, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_number_of_timeslots(stub(), session, "", NUMBER_OF_TIMESLOTS));
   EXPECT_SUCCESS(session, client::cfg_auto_tsc_detection_enabled(stub(), session, "", AUTO_TSC_DETECTION_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::cfg_signal_type(stub(), session, "slot::all", MODULATION_TYPE_8PSK, BURST_TYPE_NB, HB_FILTER_WIDTH_NARROW));
@@ -121,7 +129,7 @@ TEST_F(NiRFmxGSMDriverApiTests, ModAccOrfsPvtCompositeFromExample_FetchData_Data
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 890.2e6, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::cfg_band(stub(), session, "", BAND_PGSM));
   EXPECT_SUCCESS(session, client::cfg_link_direction(stub(), session, "", LINK_DIRECTION_UPLINK));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC | MEASUREMENT_TYPES_ORFS | MEASUREMENT_TYPES_PVT, true));
   EXPECT_SUCCESS(session, client::cfg_number_of_timeslots(stub(), session, "", NUMBER_OF_TIMESLOTS));
   EXPECT_SUCCESS(session, client::mod_acc_cfg_averaging(stub(), session, "", MODACC_AVERAGING_ENABLED_FALSE, 10));
@@ -234,7 +242,7 @@ TEST_F(NiRFmxGSMDriverApiTests, OrfsFromExample_FetchData_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.0));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 890.2e6));
   EXPECT_SUCCESS(session, client::cfg_link_direction(stub(), session, "", LINK_DIRECTION_UPLINK));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_number_of_timeslots(stub(), session, "", 1));
   EXPECT_SUCCESS(session, client::cfg_signal_type(stub(), session, "slot::all", MODULATION_TYPE_8PSK, BURST_TYPE_NB, HB_FILTER_WIDTH_NARROW));
   if(autoLevel)
@@ -314,7 +322,7 @@ TEST_F(NiRFmxGSMDriverApiTests, PferFromExample_FetchData_DataLooksReasonable)
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 890.2e6, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_number_of_timeslots(stub(), session, "", NUMBER_OF_TIMESLOTS));
   EXPECT_SUCCESS(session, client::cfg_signal_type(stub(), session, "slot::all", MODULATION_TYPE_GMSK, BURST_TYPE_NB, HB_FILTER_WIDTH_NARROW));
   EXPECT_SUCCESS(session, client::cfg_auto_tsc_detection_enabled(stub(), session, "", AUTO_TSC_DETECTION_ENABLED_TRUE));
@@ -360,7 +368,7 @@ TEST_F(NiRFmxGSMDriverApiTests, PvtFromExample_FetchData_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 890.2e6, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::cfg_band(stub(), session, "", BAND_PGSM));
   EXPECT_SUCCESS(session, client::cfg_link_direction(stub(), session, "", LINK_DIRECTION_UPLINK));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_number_of_timeslots(stub(), session, "", NUMBER_OF_TIME_SLOTS));
   EXPECT_SUCCESS(session, client::cfg_auto_tsc_detection_enabled(stub(), session, "", AUTO_TSC_DETECTION_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::cfg_signal_type(stub(), session, "slot::all", MODULATION_TYPE_8PSK, BURST_TYPE_NB, HB_FILTER_WIDTH_NARROW));
