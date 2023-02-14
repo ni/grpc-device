@@ -267,8 +267,8 @@ TEST_F(NiRFmxWCDMADriverApiTests, CdaFromExample_FetchData_DataLooksReasonable)
   EXPECT_GT(0.0, cda_fetch_symbol_evm_response.mean_symbol_power());
   EXPECT_NE(0.0, cda_fetch_symbol_evm_response.chip_rate_error());
   EXPECT_SUCCESS(session, cda_fetch_code_domain_power_response);
-  EXPECT_LE(0.0, cda_fetch_code_domain_power_response.total_power());
-  EXPECT_LE(0.0, cda_fetch_code_domain_power_response.total_active_power());
+  EXPECT_LT(0.0, cda_fetch_code_domain_power_response.total_power());
+  EXPECT_EQ(0.0, cda_fetch_code_domain_power_response.total_active_power());
   EXPECT_TRUE(isnan(cda_fetch_code_domain_power_response.mean_inactive_power()));
   EXPECT_TRUE(isnan(cda_fetch_code_domain_power_response.peak_inactive_power()));
   EXPECT_SUCCESS(session, cda_fetch_code_domain_i_and_q_power_response);
@@ -343,7 +343,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ModAccMarkerModeFromExample_FetchData_DataLook
   EXPECT_NE(0.0, mod_acc_fetch_iq_impairments_response.iq_quadrature_error());
   EXPECT_SUCCESS(session, mod_acc_fetch_peak_cde_response);
   EXPECT_LT(0.0, mod_acc_fetch_peak_cde_response.peak_cde());
-  EXPECT_LE(0, mod_acc_fetch_peak_cde_response.peak_cde_code());
+  EXPECT_EQ(0, mod_acc_fetch_peak_cde_response.peak_cde_code());
   EXPECT_LE(0, mod_acc_fetch_peak_cde_response.peak_cde_branch());
   EXPECT_SUCCESS(session, mod_acc_fetch_peak_active_cde_response);
   EXPECT_LT(0.0, mod_acc_fetch_peak_active_cde_response.peak_active_cde());
@@ -402,7 +402,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ModAccSingleCarrierFromExample_FetchData_DataL
   EXPECT_SUCCESS(session, mod_acc_fetch_peak_cde_response);
   EXPECT_GT(0.0, mod_acc_fetch_peak_cde_response.peak_cde());
   EXPECT_LE(0, mod_acc_fetch_peak_cde_response.peak_cde_code());
-  EXPECT_LE(0, mod_acc_fetch_peak_cde_response.peak_cde_branch());
+  EXPECT_EQ(1, mod_acc_fetch_peak_cde_response.peak_cde_branch());
   EXPECT_SUCCESS(session, mod_acc_fetch_peak_active_cde_response);
   EXPECT_GT(0.0, mod_acc_fetch_peak_active_cde_response.peak_active_cde());
   EXPECT_EQ(2, mod_acc_fetch_peak_active_cde_response.peak_active_cde_spreading_factor());
@@ -627,9 +627,9 @@ TEST_F(NiRFmxWCDMADriverApiTests, SlotPhaseFromExample_FetchData_DataLooksReason
 
   EXPECT_SUCCESS(session, slot_phase_fetch_measurement_response);
   EXPECT_NE(0.0, slot_phase_fetch_measurement_response.maximum_phase_discontinuity());
-  EXPECT_LE(0, slot_phase_fetch_measurement_response.discontinuity_count_greater_than_limit1());
-  EXPECT_LE(0, slot_phase_fetch_measurement_response.discontinuity_count_greater_than_limit2());
-  EXPECT_NE(0, slot_phase_fetch_measurement_response.discontinuity_minimum_distance());
+  EXPECT_LT(0, slot_phase_fetch_measurement_response.discontinuity_count_greater_than_limit1());
+  EXPECT_LT(0, slot_phase_fetch_measurement_response.discontinuity_count_greater_than_limit2());
+  EXPECT_EQ(1, slot_phase_fetch_measurement_response.discontinuity_minimum_distance());
   EXPECT_SUCCESS(session, slot_phase_fetch_phase_discontinuities_response);
   EXPECT_EQ(15, slot_phase_fetch_phase_discontinuities_response.slot_phase_discontinuity_size());
   EXPECT_EQ(15, slot_phase_fetch_phase_discontinuities_response.slot_phase_discontinuity().size());
@@ -639,7 +639,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, SlotPhaseFromExample_FetchData_DataLooksReason
   EXPECT_LT(0.0, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.dx());
   EXPECT_EQ(38400, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit_size());
   EXPECT_EQ(38400, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit().size());
-  EXPECT_GE(0.0, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit(0));
+  EXPECT_EQ(0.0, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit(0));
   EXPECT_SUCCESS(session, slot_phase_fetch_chip_phase_error_trace_response);
   EXPECT_EQ(0.0, slot_phase_fetch_chip_phase_error_trace_response.x0());
   EXPECT_LT(0.0, slot_phase_fetch_chip_phase_error_trace_response.dx());
