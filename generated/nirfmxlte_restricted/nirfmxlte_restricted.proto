@@ -1,0 +1,20 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFMXLTE-RESTRICTED API metadata version 21.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFMXLTE-RESTRICTED Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxlterestricted";
+option java_outer_classname = "NiRFmxLTERestricted";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxLTERestricted";
+
+package nirfmxlte_restricted_grpc;
+
+import "session.proto";
+
+service NiRFmxLTERestricted {
+}
+
