@@ -230,6 +230,7 @@ TEST_F(NiRFmxGSMDriverApiTests, ModAccOrfsPvtCompositeFromExample_FetchData_Data
 // NOTE: disabled due to "typedef struct" in example's source code
 TEST_F(NiRFmxGSMDriverApiTests, DISABLED_MultiSlotPvtFromExample_FetchData_DataLooksReasonable)
 {
+  GTEST_SKIP() << "skipped due to 'typedef struct' in example's source code";
 }
 
 TEST_F(NiRFmxGSMDriverApiTests, OrfsFromExample_FetchData_DataLooksReasonable)
