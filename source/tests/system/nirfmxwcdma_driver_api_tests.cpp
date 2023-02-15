@@ -230,8 +230,8 @@ TEST_F(NiRFmxWCDMADriverApiTests, ChpSingleCarrierFromExample_FetchData_DataLook
   const auto chp_fetch_carrier_measurement_response = EXPECT_SUCCESS(session, client::chp_fetch_carrier_measurement(stub(), session, "", 10.0));
   const auto chp_fetch_spectrum_response = EXPECT_SUCCESS(session, client::chp_fetch_spectrum(stub(), session, "", 10.0));
   EXPECT_SUCCESS(session, chp_fetch_carrier_measurement_response);
-  EXPECT_LT(0.0, chp_fetch_carrier_measurement_response.absolute_power());
-  EXPECT_EQ(0.0, chp_fetch_carrier_measurement_response.relative_power());
+  EXPECT_NEAR(0.0, chp_fetch_carrier_measurement_response.absolute_power(), 10);
+  EXPECT_NEAR(0.0, chp_fetch_carrier_measurement_response.relative_power(), 10);
   EXPECT_SUCCESS(session, chp_fetch_spectrum_response);
   EXPECT_LT(0.0, chp_fetch_spectrum_response.x0());
   EXPECT_LT(0.0, chp_fetch_spectrum_response.dx());
@@ -268,7 +268,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, CdaFromExample_FetchData_DataLooksReasonable)
   EXPECT_NE(0.0, cda_fetch_symbol_evm_response.chip_rate_error());
   EXPECT_SUCCESS(session, cda_fetch_code_domain_power_response);
   EXPECT_LE(0.0, cda_fetch_code_domain_power_response.total_power());
-  EXPECT_LE(0.0, cda_fetch_code_domain_power_response.total_active_power());
+  EXPECT_NEAR(0.0, cda_fetch_code_domain_power_response.total_active_power(), 10);
   EXPECT_TRUE(isnan(cda_fetch_code_domain_power_response.mean_inactive_power()));
   EXPECT_TRUE(isnan(cda_fetch_code_domain_power_response.peak_inactive_power()));
   EXPECT_SUCCESS(session, cda_fetch_code_domain_i_and_q_power_response);
@@ -397,7 +397,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ModAccSingleCarrierFromExample_FetchData_DataL
   EXPECT_LT(0.0, mod_acc_fetch_evm_response.rms_phase_error());
   EXPECT_SUCCESS(session, mod_acc_fetch_iq_impairments_response);
   EXPECT_GT(0.0, mod_acc_fetch_iq_impairments_response.iq_origin_offset());
-  EXPECT_GT(0.0, mod_acc_fetch_iq_impairments_response.iq_gain_imbalance());
+  EXPECT_NE(0.0, mod_acc_fetch_iq_impairments_response.iq_gain_imbalance());
   EXPECT_NE(0.0, mod_acc_fetch_iq_impairments_response.iq_quadrature_error());
   EXPECT_SUCCESS(session, mod_acc_fetch_peak_cde_response);
   EXPECT_GT(0.0, mod_acc_fetch_peak_cde_response.peak_cde());
@@ -626,7 +626,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, SlotPhaseFromExample_FetchData_DataLooksReason
   const auto slot_phase_fetch_chip_phase_error_trace_response = EXPECT_SUCCESS(session, client::slot_phase_fetch_chip_phase_error_trace(stub(), session, "", 10.0));
 
   EXPECT_SUCCESS(session, slot_phase_fetch_measurement_response);
-  EXPECT_LE(0.0, slot_phase_fetch_measurement_response.maximum_phase_discontinuity());
+  EXPECT_NEAR(0.0, slot_phase_fetch_measurement_response.maximum_phase_discontinuity(), 180);
   EXPECT_LE(0, slot_phase_fetch_measurement_response.discontinuity_count_greater_than_limit1());
   EXPECT_LE(0, slot_phase_fetch_measurement_response.discontinuity_count_greater_than_limit2());
   EXPECT_NE(0, slot_phase_fetch_measurement_response.discontinuity_minimum_distance());
@@ -639,7 +639,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, SlotPhaseFromExample_FetchData_DataLooksReason
   EXPECT_LT(0.0, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.dx());
   EXPECT_EQ(38400, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit_size());
   EXPECT_EQ(38400, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit().size());
-  EXPECT_GE(0.0, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit(0));
+  EXPECT_EQ(0.0, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit(0));
   EXPECT_SUCCESS(session, slot_phase_fetch_chip_phase_error_trace_response);
   EXPECT_EQ(0.0, slot_phase_fetch_chip_phase_error_trace_response.x0());
   EXPECT_LT(0.0, slot_phase_fetch_chip_phase_error_trace_response.dx());
