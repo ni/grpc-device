@@ -227,10 +227,80 @@ TEST_F(NiRFmxGSMDriverApiTests, ModAccOrfsPvtCompositeFromExample_FetchData_Data
   EXPECT_EQ(0, pvt_fetch_measurement_status_response.measurement_status());
 }
 
-// NOTE: disabled due to "typedef struct" in example's source code
-TEST_F(NiRFmxGSMDriverApiTests, DISABLED_MultiSlotPvtFromExample_FetchData_DataLooksReasonable)
+TEST_F(NiRFmxGSMDriverApiTests, MultiSlotPvtFromExample_FetchData_DataLooksReasonable)
 {
-  GTEST_SKIP() << "skipped due to 'typedef struct' in example's source code";
+  const auto NUMBER_OF_SLOTS = 1;
+  std::vector<int> slotConfigurationModulationType(NUMBER_OF_SLOTS);
+  std::vector<int> slotConfigurationBurstType(NUMBER_OF_SLOTS);
+  std::vector<int> slotConfigurationHBFilterWidth(NUMBER_OF_SLOTS);
+  std::vector<int> slotConfigurationTSC(NUMBER_OF_SLOTS);
+  std::vector<int> slotConfigurationPowerControlLevel(NUMBER_OF_SLOTS);
+  for (int i = 0 ; i < NUMBER_OF_SLOTS; i++)
+  {
+    slotConfigurationModulationType[i] = NIRFMXGSM_INT32_MODULATION_TYPE_8PSK;
+    slotConfigurationBurstType[i] = NIRFMXGSM_INT32_BURST_TYPE_NB;
+    slotConfigurationHBFilterWidth[i] = NIRFMXGSM_INT32_HB_FILTER_WIDTH_NARROW;
+    slotConfigurationTSC[i] = TSC_TSC0;
+    slotConfigurationPowerControlLevel[i] = 0;
+  }
+  auto session = init_session(stub(), PXI_5663E);
+  EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
+  EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 890.2e6, 0.0, 0.0));
+  EXPECT_SUCCESS(session, client::cfg_band(stub(), session, "", BAND_PGSM));
+  EXPECT_SUCCESS(session, client::cfg_link_direction(stub(), session, "", LINK_DIRECTION_UPLINK));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 582e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::cfg_auto_tsc_detection_enabled(stub(), session, "", AUTO_TSC_DETECTION_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::cfg_number_of_timeslots(stub(), session, "", NUMBER_OF_SLOTS));
+  for (int i = 0; i < NUMBER_OF_SLOTS; i++)
+  {
+    auto slot_string_response = client::build_slot_string(stub(), "", i);
+    EXPECT_SUCCESS(session, slot_string_response);
+    EXPECT_SUCCESS(session, client::cfg_signal_type(stub(), session, slot_string_response.selector_string_out(), slotConfigurationModulationType[i], slotConfigurationBurstType[i], slotConfigurationHBFilterWidth[i]));
+    EXPECT_SUCCESS(session, client::cfg_tsc(stub(), session, slot_string_response.selector_string_out(), slotConfigurationTSC[i]));
+    EXPECT_SUCCESS(session, client::cfg_power_control_level(stub(), session, slot_string_response.selector_string_out(), slotConfigurationPowerControlLevel[i]));
+  }
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_PVT, true));
+  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXGSM_ATTRIBUTE_PVT_RBW_FILTER_BANDWIDTH, 500000.0));
+  EXPECT_SUCCESS(session, client::pvt_cfg_averaging(stub(), session, "", PVT_AVERAGING_ENABLED_FALSE, 10, PVT_AVERAGING_TYPE_RMS));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+
+  const auto pvt_fetch_measurement_status_response = client::pvt_fetch_measurement_status(stub(), session, "", 10.0);
+  const auto pvt_fetch_slot_measurement_array_response = client::pvt_fetch_slot_measurement_array(stub(), session, "", 10.0);
+  const auto pvt_fetch_power_trace_response = client::pvt_fetch_power_trace(stub(), session, "", 10.0);
+
+  EXPECT_SUCCESS(session, pvt_fetch_measurement_status_response);
+  EXPECT_EQ(0, pvt_fetch_measurement_status_response.measurement_status());
+  EXPECT_SUCCESS(session, pvt_fetch_slot_measurement_array_response);
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_average_power_size());
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_average_power().size());
+  EXPECT_NE(0.0, pvt_fetch_slot_measurement_array_response.slot_average_power(0));
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_burst_width_size());
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_burst_width().size());
+  EXPECT_NE(0.0, pvt_fetch_slot_measurement_array_response.slot_burst_width(0));
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_measurement_status_size());
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_measurement_status().size());
+  EXPECT_EQ(0, pvt_fetch_slot_measurement_array_response.slot_measurement_status(0));
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_maximum_power_size());
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_maximum_power().size());
+  EXPECT_NE(0.0, pvt_fetch_slot_measurement_array_response.slot_maximum_power(0));
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_minimum_power_size());
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_minimum_power().size());
+  EXPECT_NE(0.0, pvt_fetch_slot_measurement_array_response.slot_minimum_power(0));
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_burst_threshold_size());
+  EXPECT_NE(0, pvt_fetch_slot_measurement_array_response.slot_burst_threshold().size());
+  EXPECT_NE(0.0, pvt_fetch_slot_measurement_array_response.slot_burst_threshold(0));
+  EXPECT_SUCCESS(session, pvt_fetch_power_trace_response);
+  EXPECT_NE(0.0, pvt_fetch_power_trace_response.x0());
+  EXPECT_NE(0.0, pvt_fetch_power_trace_response.dx());
+  EXPECT_NE(0, pvt_fetch_power_trace_response.upper_mask_size());
+  EXPECT_NE(0, pvt_fetch_power_trace_response.upper_mask().size());
+  EXPECT_NE(0.0, pvt_fetch_power_trace_response.upper_mask(0));
+  EXPECT_NE(0, pvt_fetch_power_trace_response.signal_power_size());
+  EXPECT_NE(0, pvt_fetch_power_trace_response.signal_power().size());
+  EXPECT_NE(0.0, pvt_fetch_power_trace_response.signal_power(0));
+  EXPECT_NE(0, pvt_fetch_power_trace_response.lower_mask_size());
+  EXPECT_NE(0, pvt_fetch_power_trace_response.lower_mask().size());
+  EXPECT_TRUE(isinf(pvt_fetch_power_trace_response.lower_mask(0)));
 }
 
 TEST_F(NiRFmxGSMDriverApiTests, OrfsFromExample_FetchData_DataLooksReasonable)
