@@ -141,7 +141,7 @@ try:
             nirfmxwcdma_types.CfgRFAttenuationRequest(
                 instrument=instr,
                 channel_name="",
-                rf_attenuation_auto= nirfmxwcdma_types.RF_ATTENUATION_AUTO_TRUE,
+                rf_attenuation_auto=nirfmxwcdma_types.RF_ATTENUATION_AUTO_TRUE,
                 rf_attenuation_value=10.0,
             )
         )
@@ -154,12 +154,13 @@ try:
                 selector_string="",
                 digital_edge_source_mapped=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_SOURCE_PFI0,
                 digital_edge=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
-                trigger_delay=0.000000, enable_trigger=False,
+                trigger_delay=0.000000,
+                enable_trigger=False,
             )
         )
     )
 
-    if(auto_level):
+    if auto_level:
         auto_level_response = raise_if_error(
             client.AutoLevel(
                 nirfmxwcdma_types.AutoLevelRequest(
@@ -196,7 +197,8 @@ try:
     raise_if_error(
         client.ACPCfgMeasurementMethod(
             nirfmxwcdma_types.ACPCfgMeasurementMethodRequest(
-                instrument=instr, selector_string="",
+                instrument=instr,
+                selector_string="",
                 measurement_method=nirfmxwcdma_types.ACP_MEASUREMENT_METHOD_NORMAL,
             )
         )
@@ -208,7 +210,8 @@ try:
                 instrument=instr,
                 selector_string="",
                 averaging_enabled=nirfmxwcdma_types.ACP_AVERAGING_ENABLED_FALSE,
-                averaging_count=10, averaging_type=nirfmxwcdma_types.ACP_AVERAGING_TYPE_RMS,
+                averaging_count=10,
+                averaging_type=nirfmxwcdma_types.ACP_AVERAGING_TYPE_RMS,
             )
         )
     )
@@ -216,7 +219,8 @@ try:
     raise_if_error(
         client.ACPCfgSweepTime(
             nirfmxwcdma_types.ACPCfgSweepTimeRequest(
-                instrument=instr, selector_string="",
+                instrument=instr,
+                selector_string="",
                 sweep_time_auto=nirfmxwcdma_types.ACP_SWEEP_TIME_AUTO_TRUE,
                 sweep_time_interval=0.000667,
             )
@@ -277,7 +281,8 @@ try:
     acp_fetch_carrier_measurement_response = raise_if_error(
         client.ACPFetchCarrierMeasurement(
             nirfmxwcdma_types.ACPFetchCarrierMeasurementRequest(
-                instrument=instr, selector_string="",
+                instrument=instr,
+                selector_string="",
                 timeout=10.000000,
             )
         )
@@ -309,7 +314,7 @@ try:
         print(f"Upper Relative Power (dB)      : {upper_relative_power[i]}")
         print(f"Lower Absolute Power (dBm)     : {lower_absolute_power[i]}")
         print(f"Upper Absolute Power (dBm)     : {upper_absolute_power[i]}")
-        print("-------------------------------------------------")        
+        print("-------------------------------------------------")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
@@ -325,5 +330,4 @@ except grpc.RpcError as rpc_error:
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
-        client.Close(nirfmxwcdma_types.CloseRequest(
-            instrument=instr, force_destroy=False))
+        client.Close(nirfmxwcdma_types.CloseRequest(instrument=instr, force_destroy=False))

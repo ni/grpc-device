@@ -237,7 +237,9 @@ try:
     )
 
     peak_active_cde = mod_acc_fetch_peak_active_cde_response.peak_active_cde
-    peak_active_cde_spreading_factor = mod_acc_fetch_peak_active_cde_response.peak_active_cde_spreading_factor
+    peak_active_cde_spreading_factor = (
+        mod_acc_fetch_peak_active_cde_response.peak_active_cde_spreading_factor
+    )
     peak_active_cde_code = mod_acc_fetch_peak_active_cde_response.peak_active_cde_code
     peak_active_cde_branch = mod_acc_fetch_peak_active_cde_response.peak_active_cde_branch
 
@@ -265,7 +267,7 @@ try:
             )
         )
     )
-    
+
     x0 = mod_acc_fetch_evm_trace_response.x0
     dx = mod_acc_fetch_evm_trace_response.dx
     evm = mod_acc_fetch_evm_trace_response.evm
@@ -323,5 +325,4 @@ except grpc.RpcError as rpc_error:
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
-        client.Close(nirfmxwcdma_types.CloseRequest(
-            instrument=instr, force_destroy=False))
+        client.Close(nirfmxwcdma_types.CloseRequest(instrument=instr, force_destroy=False))
