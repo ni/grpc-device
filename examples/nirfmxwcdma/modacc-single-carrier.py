@@ -21,7 +21,8 @@ Getting Started:
 To run this example, install "RFmx WCDMA" on the server machine.
 Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-wcdma.html
 
-For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a
+gRPC Client" wiki page.
 Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 
 Refer to the NI-RFmxWCDMA gRPC Wiki for the latest C Function Reference:
@@ -29,9 +30,11 @@ Link: https://github.com/ni/grpc-device/wiki/NI-RFmxWCDMA-C-Function-Reference
 
 Running from command line:
 
-Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
   > python RFmxWcdmaModAccSingleCarrier.c <server_address> <port_number> <physical_channel_name>
-If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name
 """
 
 import sys
@@ -62,8 +65,9 @@ channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_nirfmxwcdma.NiRFmxWCDMAStub(channel)
 instr = None
 
-# Raise an exception if an error was returned
+
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.GetError(
             nirfmxwcdma_types.GetErrorRequest(
@@ -309,7 +313,7 @@ except grpc.RpcError as rpc_error:
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

@@ -25,7 +25,8 @@ Getting Started:
 To run this example, install "RFmx WCDMA" on the server machine.
 Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-wcdma.html
 
-For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a
+gRPC Client" wiki page.
 Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 
 Refer to the NI-RFmxWCDMA gRPC Wiki for the latest C Function Reference:
@@ -33,9 +34,11 @@ Link: https://github.com/ni/grpc-device/wiki/NI-RFmxWCDMA-C-Function-Reference
 
 Running from command line:
 
-Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
   > python acp-single-carrier.py <server_address> <port_number> <physical_channel_name>
-If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name
 """
 
 import sys
@@ -71,8 +74,8 @@ instr = None
 NUMBER_OF_OFFSETS = 2
 
 
-# Raise an exception if an error was returned
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.GetError(
             nirfmxwcdma_types.GetErrorRequest(
@@ -116,7 +119,8 @@ try:
     raise_if_error(
         client.CfgFrequency(
             nirfmxwcdma_types.CfgFrequencyRequest(
-                instrument=instr, selector_string="",
+                instrument=instr,
+                selector_string="",
                 center_frequency=1.95e9,
             )
         )
@@ -260,15 +264,15 @@ try:
         )
     )
 
-    lowerRelativePower = acp_fetch_offset_measurement_array_response.lower_relative_power
-    upperRelativePower = acp_fetch_offset_measurement_array_response.upper_relative_power
-    lowerAbsolutePower = acp_fetch_offset_measurement_array_response.lower_absolute_power
-    upperAbsolutePower = acp_fetch_offset_measurement_array_response.upper_absolute_power
+    lower_relative_power = acp_fetch_offset_measurement_array_response.lower_relative_power
+    upper_relative_power = acp_fetch_offset_measurement_array_response.upper_relative_power
+    lower_absolute_power = acp_fetch_offset_measurement_array_response.lower_absolute_power
+    upper_absolute_power = acp_fetch_offset_measurement_array_response.upper_absolute_power
 
-    assert len(lowerRelativePower) == NUMBER_OF_OFFSETS, len(lowerRelativePower)
-    assert len(upperRelativePower) == NUMBER_OF_OFFSETS, len(upperRelativePower)
-    assert len(lowerAbsolutePower) == NUMBER_OF_OFFSETS, len(lowerAbsolutePower)
-    assert len(upperAbsolutePower) == NUMBER_OF_OFFSETS, len(upperAbsolutePower)
+    assert len(lower_relative_power) == NUMBER_OF_OFFSETS, len(lower_relative_power)
+    assert len(upper_relative_power) == NUMBER_OF_OFFSETS, len(upper_relative_power)
+    assert len(lower_absolute_power) == NUMBER_OF_OFFSETS, len(lower_absolute_power)
+    assert len(upper_absolute_power) == NUMBER_OF_OFFSETS, len(upper_absolute_power)
 
     acp_fetch_carrier_measurement_response = raise_if_error(
         client.ACPFetchCarrierMeasurement(
@@ -296,15 +300,15 @@ try:
     dx = acp_fetch_spectrum_response.dx
     spectrum = acp_fetch_spectrum_response.spectrum
 
-    print(f"\nCarrier Absolute Power  (dBm)    : {absolute_power}")
+    print(f"\nCarrier Absolute Power  (dBm)  : {absolute_power}")
 
     print("\nOffset Channel Measurements: ")
     for i in range(NUMBER_OF_OFFSETS):
         print(f"Offset  :  {i}")
-        print(f"Lower Relative Power (dB)      : {lowerRelativePower[i]}")
-        print(f"Upper Relative Power (dB)      : {upperRelativePower[i]}")
-        print(f"Lower Absolute Power (dBm)     : {lowerAbsolutePower[i]}")
-        print(f"Upper Absolute Power (dBm)     : {upperAbsolutePower[i]}")
+        print(f"Lower Relative Power (dB)      : {lower_relative_power[i]}")
+        print(f"Upper Relative Power (dB)      : {upper_relative_power[i]}")
+        print(f"Lower Absolute Power (dBm)     : {lower_absolute_power[i]}")
+        print(f"Upper Absolute Power (dBm)     : {upper_absolute_power[i]}")
         print("-------------------------------------------------")        
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
@@ -313,7 +317,7 @@ except grpc.RpcError as rpc_error:
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
