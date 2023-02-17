@@ -24,6 +24,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 ACPCfgCarrierIntegrationBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth);
   int32 ACPCfgCarrierMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 carrierMode);
   int32 ACPCfgCarrierRRCFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rrcFilterEnabled, float64 rrcAlpha);
+  int32 ACPCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints);
   int32 ACPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding);
   int32 ACPCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod);
   int32 ACPCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled);
@@ -102,6 +103,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 CCDFRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanPower, float64* meanPowerPercentile, float64* peakPower, int32* measuredSamplesCount);
   int32 CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType);
   int32 CHPCfgCarrierOffset(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency);
+  int32 CHPCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints);
   int32 CHPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding);
   int32 CHPCfgIntegrationBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth);
   int32 CHPCfgNumberOfCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers);
@@ -282,7 +284,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 OBWFetchSpectrumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize);
   int32 OBWRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* occupiedBandwidth, float64* averagePower, float64* frequencyResolution, float64* startFrequency, float64* stopFrequency);
   int32 PAVTCfgMeasurementBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementBandwidth);
-  int32 PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurermentOffset, float64 measurermentLength);
+  int32 PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementLength);
   int32 PAVTCfgMeasurementIntervalMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementIntervalMode);
   int32 PAVTCfgMeasurementLocationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementLocationType);
   int32 PAVTCfgNumberOfSegments(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfSegments);
@@ -439,6 +441,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using ACPCfgCarrierIntegrationBandwidthPtr = decltype(&RFmxSpecAn_ACPCfgCarrierIntegrationBandwidth);
   using ACPCfgCarrierModePtr = decltype(&RFmxSpecAn_ACPCfgCarrierMode);
   using ACPCfgCarrierRRCFilterPtr = decltype(&RFmxSpecAn_ACPCfgCarrierRRCFilter);
+  using ACPCfgDetectorPtr = decltype(&RFmxSpecAn_ACPCfgDetector);
   using ACPCfgFFTPtr = decltype(&RFmxSpecAn_ACPCfgFFT);
   using ACPCfgMeasurementMethodPtr = decltype(&RFmxSpecAn_ACPCfgMeasurementMethod);
   using ACPCfgNoiseCompensationEnabledPtr = decltype(&RFmxSpecAn_ACPCfgNoiseCompensationEnabled);
@@ -517,6 +520,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using CCDFReadPtr = decltype(&RFmxSpecAn_CCDFRead);
   using CHPCfgAveragingPtr = decltype(&RFmxSpecAn_CHPCfgAveraging);
   using CHPCfgCarrierOffsetPtr = decltype(&RFmxSpecAn_CHPCfgCarrierOffset);
+  using CHPCfgDetectorPtr = decltype(&RFmxSpecAn_CHPCfgDetector);
   using CHPCfgFFTPtr = decltype(&RFmxSpecAn_CHPCfgFFT);
   using CHPCfgIntegrationBandwidthPtr = decltype(&RFmxSpecAn_CHPCfgIntegrationBandwidth);
   using CHPCfgNumberOfCarriersPtr = decltype(&RFmxSpecAn_CHPCfgNumberOfCarriers);
@@ -854,6 +858,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     ACPCfgCarrierIntegrationBandwidthPtr ACPCfgCarrierIntegrationBandwidth;
     ACPCfgCarrierModePtr ACPCfgCarrierMode;
     ACPCfgCarrierRRCFilterPtr ACPCfgCarrierRRCFilter;
+    ACPCfgDetectorPtr ACPCfgDetector;
     ACPCfgFFTPtr ACPCfgFFT;
     ACPCfgMeasurementMethodPtr ACPCfgMeasurementMethod;
     ACPCfgNoiseCompensationEnabledPtr ACPCfgNoiseCompensationEnabled;
@@ -932,6 +937,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     CCDFReadPtr CCDFRead;
     CHPCfgAveragingPtr CHPCfgAveraging;
     CHPCfgCarrierOffsetPtr CHPCfgCarrierOffset;
+    CHPCfgDetectorPtr CHPCfgDetector;
     CHPCfgFFTPtr CHPCfgFFT;
     CHPCfgIntegrationBandwidthPtr CHPCfgIntegrationBandwidth;
     CHPCfgNumberOfCarriersPtr CHPCfgNumberOfCarriers;

@@ -37,6 +37,11 @@ int32 ACPCfgCarrierRRCFilter(niRFmxInstrHandle instrumentHandle, char selectorSt
   return RFmxSpecAn_ACPCfgCarrierRRCFilter(instrumentHandle, selectorString, rrcFilterEnabled, rrcAlpha);
 }
 
+int32 ACPCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints)
+{
+  return RFmxSpecAn_ACPCfgDetector(instrumentHandle, selectorString, detectorType, detectorPoints);
+}
+
 int32 ACPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
 {
   return RFmxSpecAn_ACPCfgFFT(instrumentHandle, selectorString, fftWindow, fftPadding);
@@ -425,6 +430,11 @@ int32 CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[],
 int32 CHPCfgCarrierOffset(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency)
 {
   return RFmxSpecAn_CHPCfgCarrierOffset(instrumentHandle, selectorString, carrierFrequency);
+}
+
+int32 CHPCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints)
+{
+  return RFmxSpecAn_CHPCfgDetector(instrumentHandle, selectorString, detectorType, detectorPoints);
 }
 
 int32 CHPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
@@ -1327,9 +1337,9 @@ int32 PAVTCfgMeasurementBandwidth(niRFmxInstrHandle instrumentHandle, char selec
   return RFmxSpecAn_PAVTCfgMeasurementBandwidth(instrumentHandle, selectorString, measurementBandwidth);
 }
 
-int32 PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurermentOffset, float64 measurermentLength)
+int32 PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementLength)
 {
-  return RFmxSpecAn_PAVTCfgMeasurementInterval(instrumentHandle, selectorString, measurermentOffset, measurermentLength);
+  return RFmxSpecAn_PAVTCfgMeasurementInterval(instrumentHandle, selectorString, measurementOffset, measurementLength);
 }
 
 int32 PAVTCfgMeasurementIntervalMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementIntervalMode)
