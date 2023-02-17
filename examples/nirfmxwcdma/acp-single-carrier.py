@@ -1,0 +1,325 @@
+r"""Fetch ACP data.
+
+Steps:
+1. Open a new RFmx Session.
+2. Configure Frequency Reference.
+3. Configure basic signal properties (Center Frequency, RF Attenuation and External Attenuation)
+4. Configure Trigger Type and Trigger Parameters.
+5. Configure Reference Level.
+6. Select ACP measurement and enable Traces.
+7. Configure Measurement Method.
+8. Configure Averaging Parameters for ACP measurement.
+9. Configure Sweep Time Parameters.
+10. Configure Noise Compensation Parameter.
+11. Configure Number of offset channels.
+12. Initiate the Measurement.
+13. Fetch ACP Measurements and Traces.
+14. Close RFmx Session.
+
+
+The gRPC API is built from the C API. RFmx WCDMA documentation is installed with the driver at:
+C:\Program Files (x86)\National Instruments\RFmx\WCDMA\Documentation\wcdmacvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx WCDMA" on the server machine.
+Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-wcdma.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmxWCDMA gRPC Wiki for the latest C Function Reference:
+Link: https://github.com/ni/grpc-device/wiki/NI-RFmxWCDMA-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
+  > python acp-single-carrier.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+"""
+
+import sys
+
+import grpc
+import nirfmxwcdma_pb2 as nirfmxwcdma_types
+import nirfmxwcdma_pb2_grpc as grpc_nirfmxwcdma
+
+server_address = "localhost"
+server_port = "31763"
+session_name = "RFmxWCDMASession"
+
+# Resource name and options for a simulated 5663 client.
+resource = "SimulatedDevice"
+options = "Simulate=1,DriverSetup=Model:5663"
+
+# Read in cmd args
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) >= 4:
+    resource = sys.argv[3]
+    options = ""
+
+# Create a gRPC channel + client.
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+client = grpc_nirfmxwcdma.NiRFmxWCDMAStub(channel)
+instr = None
+
+
+# Maximum size of an error message
+NUMBER_OF_OFFSETS = 2
+
+
+# Raise an exception if an error was returned
+def raise_if_error(response):
+    if response.status != 0:
+        error_response = client.GetError(
+            nirfmxwcdma_types.GetErrorRequest(
+                instrument=instr,
+            )
+        )
+        if response.status < 0:
+            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
+        else:
+            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
+
+    return response
+
+
+try:
+    auto_level = True
+
+    # Initialize a session
+    initialize_response = raise_if_error(
+        client.Initialize(
+            nirfmxwcdma_types.InitializeRequest(
+                session_name=session_name,
+                resource_name=resource,
+                option_string=options,
+            )
+        )
+    )
+    instr = initialize_response.instrument
+
+    raise_if_error(
+        client.CfgFrequencyReference(
+            nirfmxwcdma_types.CfgFrequencyReferenceRequest(
+                instrument=instr,
+                channel_name="",
+                frequency_reference_source_mapped=nirfmxwcdma_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+                frequency_reference_frequency=10e6,
+            )
+        )
+    )
+
+    raise_if_error(
+        client.CfgFrequency(
+            nirfmxwcdma_types.CfgFrequencyRequest(
+                instrument=instr, selector_string="",
+                center_frequency=1.95e9,
+            )
+        )
+    )
+    
+    raise_if_error(
+        client.CfgExternalAttenuation(
+            nirfmxwcdma_types.CfgExternalAttenuationRequest(
+                instrument=instr,
+                selector_string="",
+                external_attenuation=0.000000,
+            )
+        )
+    )
+
+    raise_if_error(
+        client.CfgRFAttenuation(
+            nirfmxwcdma_types.CfgRFAttenuationRequest(
+                instrument=instr,
+                channel_name="",
+                rf_attenuation_auto= nirfmxwcdma_types.RF_ATTENUATION_AUTO_TRUE,
+                rf_attenuation_value=10.0,
+            )
+        )
+    )
+    
+    raise_if_error(
+        client.CfgDigitalEdgeTrigger(
+            nirfmxwcdma_types.CfgDigitalEdgeTriggerRequest(
+                instrument=instr,
+                selector_string="",
+                digital_edge_source_mapped=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_SOURCE_PFI0,
+                digital_edge=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
+                trigger_delay=0.000000, enable_trigger=False,
+            )
+        )
+    )
+
+    if(auto_level):
+        auto_level_response = raise_if_error(
+            client.AutoLevel(
+                nirfmxwcdma_types.AutoLevelRequest(
+                    instrument=instr,
+                    selector_string="",
+                    measurement_interval=0.010000,
+                )
+            )
+        )
+        reference_level = auto_level_response.reference_level
+        print(f"Reference level (dBm)          : {reference_level}")
+    else:
+        raise_if_error(
+            client.CfgReferenceLevel(
+                nirfmxwcdma_types.CfgReferenceLevelRequest(
+                    instrument=instr,
+                    selector_string="",
+                    reference_level=0.000000,
+                )
+            )
+        )
+    
+    raise_if_error(
+        client.SelectMeasurements(
+            nirfmxwcdma_types.SelectMeasurementsRequest(
+                instrument=instr,
+                selector_string="",
+                measurements_array=[nirfmxwcdma_types.MEASUREMENT_TYPES_ACP],
+                enable_all_traces=True,
+            )
+        )
+    )
+    
+    raise_if_error(
+        client.ACPCfgMeasurementMethod(
+            nirfmxwcdma_types.ACPCfgMeasurementMethodRequest(
+                instrument=instr, selector_string="",
+                measurement_method=nirfmxwcdma_types.ACP_MEASUREMENT_METHOD_NORMAL,
+            )
+        )
+    )
+
+    raise_if_error(
+        client.ACPCfgAveraging(
+            nirfmxwcdma_types.ACPCfgAveragingRequest(
+                instrument=instr,
+                selector_string="",
+                averaging_enabled=nirfmxwcdma_types.ACP_AVERAGING_ENABLED_FALSE,
+                averaging_count=10, averaging_type=nirfmxwcdma_types.ACP_AVERAGING_TYPE_RMS,
+            )
+        )
+    )
+     
+    raise_if_error(
+        client.ACPCfgSweepTime(
+            nirfmxwcdma_types.ACPCfgSweepTimeRequest(
+                instrument=instr, selector_string="",
+                sweep_time_auto=nirfmxwcdma_types.ACP_SWEEP_TIME_AUTO_TRUE,
+                sweep_time_interval=0.000667,
+            )
+        )
+    )
+
+    raise_if_error(
+        client.ACPCfgNoiseCompensationEnabled(
+            nirfmxwcdma_types.ACPCfgNoiseCompensationEnabledRequest(
+                instrument=instr,
+                selector_string="",
+                noise_compensation_enabled=nirfmxwcdma_types.ACP_NOISE_COMPENSATION_ENABLED_FALSE,
+            )
+        )
+    )
+
+    raise_if_error(
+        client.ACPCfgNumberOfOffsets(
+            nirfmxwcdma_types.ACPCfgNumberOfOffsetsRequest(
+                instrument=instr,
+                selector_string="",
+                number_of_offsets=NUMBER_OF_OFFSETS,
+            )
+        )
+    )
+
+    raise_if_error(
+        client.Initiate(
+            nirfmxwcdma_types.InitiateRequest(
+                instrument=instr,
+                selector_string="",
+                result_name="",
+            )
+        )
+    )
+
+    # Fetch the measurements array
+    acp_fetch_offset_measurement_array_response = raise_if_error(
+        client.ACPFetchOffsetMeasurementArray(
+            nirfmxwcdma_types.ACPFetchOffsetMeasurementArrayRequest(
+                instrument=instr,
+                selector_string="",
+                timeout=10.000000,
+            )
+        )
+    )
+
+    lowerRelativePower = acp_fetch_offset_measurement_array_response.lower_relative_power
+    upperRelativePower = acp_fetch_offset_measurement_array_response.upper_relative_power
+    lowerAbsolutePower = acp_fetch_offset_measurement_array_response.lower_absolute_power
+    upperAbsolutePower = acp_fetch_offset_measurement_array_response.upper_absolute_power
+
+    assert len(lowerRelativePower) == NUMBER_OF_OFFSETS, len(lowerRelativePower)
+    assert len(upperRelativePower) == NUMBER_OF_OFFSETS, len(upperRelativePower)
+    assert len(lowerAbsolutePower) == NUMBER_OF_OFFSETS, len(lowerAbsolutePower)
+    assert len(upperAbsolutePower) == NUMBER_OF_OFFSETS, len(upperAbsolutePower)
+
+    acp_fetch_carrier_measurement_response = raise_if_error(
+        client.ACPFetchCarrierMeasurement(
+            nirfmxwcdma_types.ACPFetchCarrierMeasurementRequest(
+                instrument=instr, selector_string="",
+                timeout=10.000000,
+            )
+        )
+    )
+
+    absolute_power = acp_fetch_carrier_measurement_response.absolute_power
+    relative_power = acp_fetch_carrier_measurement_response.relative_power
+
+    acp_fetch_spectrum_response = raise_if_error(
+        client.ACPFetchSpectrum(
+            nirfmxwcdma_types.ACPFetchSpectrumRequest(
+                instrument=instr,
+                selector_string="",
+                timeout=10.000000,
+            )
+        )
+    )
+
+    x0 = acp_fetch_spectrum_response.x0
+    dx = acp_fetch_spectrum_response.dx
+    spectrum = acp_fetch_spectrum_response.spectrum
+
+    print(f"\nCarrier Absolute Power  (dBm)    : {absolute_power}")
+
+    print("\nOffset Channel Measurements: ")
+    for i in range(NUMBER_OF_OFFSETS):
+        print(f"Offset  :  {i}")
+        print(f"Lower Relative Power (dB)      : {lowerRelativePower[i]}")
+        print(f"Upper Relative Power (dB)      : {upperRelativePower[i]}")
+        print(f"Lower Absolute Power (dBm)     : {lowerAbsolutePower[i]}")
+        print(f"Upper Absolute Power (dBm)     : {upperAbsolutePower[i]}")
+        print("-------------------------------------------------")        
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    sys.stderr.write(f"{error_message}\n")
+finally:
+    if instr:
+        client.Close(nirfmxwcdma_types.CloseRequest(
+            instrument=instr, force_destroy=False))
