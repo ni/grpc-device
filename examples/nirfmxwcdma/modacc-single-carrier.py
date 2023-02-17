@@ -81,8 +81,8 @@ def raise_if_error(response):
 
     return response
 
-try:
 
+try:
     actual_array_size = 0
 
     evm = None  # (%)
@@ -126,7 +126,8 @@ try:
     raise_if_error(
         client.CfgDigitalEdgeTrigger(
             nirfmxwcdma_types.CfgDigitalEdgeTriggerRequest(
-                instrument=instr, selector_string="",
+                instrument=instr,
+                selector_string="",
                 digital_edge_source_mapped=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_SOURCE_PFI0,
                 digital_edge=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
                 trigger_delay=0.000000,
@@ -254,6 +255,7 @@ try:
     peak_rcde_spreading_factor = mod_acc_fetch_rcde_response.peak_rcde_spreading_factor
     peak_rcde_code = mod_acc_fetch_rcde_response.peak_rcde_code
     peak_rcde_branch = mod_acc_fetch_rcde_response.peak_rcde_branch
+
     mod_acc_fetch_evm_trace_response = raise_if_error(
         client.ModAccFetchEVMTrace(
             nirfmxwcdma_types.ModAccFetchEVMTraceRequest(

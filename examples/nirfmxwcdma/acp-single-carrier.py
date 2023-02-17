@@ -125,7 +125,7 @@ try:
             )
         )
     )
-    
+        
     raise_if_error(
         client.CfgExternalAttenuation(
             nirfmxwcdma_types.CfgExternalAttenuationRequest(
