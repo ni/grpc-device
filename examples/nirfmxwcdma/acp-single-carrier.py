@@ -125,7 +125,7 @@ try:
             )
         )
     )
-        
+
     raise_if_error(
         client.CfgExternalAttenuation(
             nirfmxwcdma_types.CfgExternalAttenuationRequest(
@@ -146,7 +146,7 @@ try:
             )
         )
     )
-    
+
     raise_if_error(
         client.CfgDigitalEdgeTrigger(
             nirfmxwcdma_types.CfgDigitalEdgeTriggerRequest(
@@ -181,7 +181,7 @@ try:
                 )
             )
         )
-    
+
     raise_if_error(
         client.SelectMeasurements(
             nirfmxwcdma_types.SelectMeasurementsRequest(
@@ -192,7 +192,7 @@ try:
             )
         )
     )
-    
+
     raise_if_error(
         client.ACPCfgMeasurementMethod(
             nirfmxwcdma_types.ACPCfgMeasurementMethodRequest(
@@ -212,7 +212,7 @@ try:
             )
         )
     )
-     
+
     raise_if_error(
         client.ACPCfgSweepTime(
             nirfmxwcdma_types.ACPCfgSweepTimeRequest(

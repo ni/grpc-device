@@ -132,7 +132,7 @@ try:
                 digital_edge=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
                 trigger_delay=0.000000,
                 enable_trigger=False,
-           )
+            )
         )
     )
 
@@ -189,7 +189,7 @@ try:
             )
         )
     )
-    
+
     rms_evm = mod_acc_fetch_evm_response.rms_evm
     peak_evm = mod_acc_fetch_evm_response.peak_evm
     rho = mod_acc_fetch_evm_response.rho
