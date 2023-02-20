@@ -43,43 +43,41 @@ import grpc
 import nirfmxwcdma_pb2 as nirfmxwcdma_types
 import nirfmxwcdma_pb2_grpc as grpc_nirfmxwcdma
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "RFmxWCDMASession"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "RFmxWCDMASession"
 
 # Resource name and options for a simulated 5663 client.
-resource = "SimulatedDevice"
-options = "Simulate=1,DriverSetup=Model:5663"
+RESOURCE = "SimulatedDevice"
+OPTIONS = "Simulate=1,DriverSetup=Model:5663"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 # Create a gRPC channel + client.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfmxwcdma.NiRFmxWCDMAStub(channel)
 instr = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.GetError(
-            nirfmxwcdma_types.GetErrorRequest(
-                instrument=instr,
+def check_for_warning(response, instrument):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.GetErrorString(
+            nirfmxwcdma_types.GetErrorStringRequest(
+                instrument=instrument,
+                error_code=response.status,
             )
         )
-        if response.status < 0:
-            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
-        else:
-            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
-
-    return response
+        sys.stderr.write(
+            f"{warning_message.error_description}\nWarning status: {response.status}\n"
+        )
 
 
 try:
@@ -89,106 +87,90 @@ try:
     constellation = None
 
     # Initialize a session
-    initialize_response = raise_if_error(
-        client.Initialize(
-            nirfmxwcdma_types.InitializeRequest(
-                session_name=session_name,
-                resource_name=resource,
-                option_string=options,
-            )
+    initialize_response = client.Initialize(
+        nirfmxwcdma_types.InitializeRequest(
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     instr = initialize_response.instrument
+    check_for_warning(initialize_response, instr)
 
-    raise_if_error(
-        client.CfgFrequencyReference(
-            nirfmxwcdma_types.CfgFrequencyReferenceRequest(
-                instrument=instr,
-                channel_name="",
-                frequency_reference_source_mapped=nirfmxwcdma_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
-                frequency_reference_frequency=10e6,
-            )
+    client.CfgFrequencyReference(
+        nirfmxwcdma_types.CfgFrequencyReferenceRequest(
+            instrument=instr,
+            channel_name="",
+            frequency_reference_source_mapped=nirfmxwcdma_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+            frequency_reference_frequency=10e6,
         )
     )
 
-    raise_if_error(
-        client.CfgRF(
-            nirfmxwcdma_types.CfgRFRequest(
-                instrument=instr,
-                selector_string="",
-                center_frequency=1.95e9,
-                reference_level=0.000000,
-                external_attenuation=0.000000,
-            )
+    client.CfgRF(
+        nirfmxwcdma_types.CfgRFRequest(
+            instrument=instr,
+            selector_string="",
+            center_frequency=1.95e9,
+            reference_level=0.000000,
+            external_attenuation=0.000000,
         )
     )
 
-    raise_if_error(
-        client.CfgDigitalEdgeTrigger(
-            nirfmxwcdma_types.CfgDigitalEdgeTriggerRequest(
-                instrument=instr,
-                selector_string="",
-                digital_edge_source_mapped=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_SOURCE_PFI0,
-                digital_edge=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
-                trigger_delay=0.000000,
-                enable_trigger=False,
-            )
+    client.CfgDigitalEdgeTrigger(
+        nirfmxwcdma_types.CfgDigitalEdgeTriggerRequest(
+            instrument=instr,
+            selector_string="",
+            digital_edge_source_mapped=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_SOURCE_PFI0,
+            digital_edge=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
+            trigger_delay=0.000000,
+            enable_trigger=False,
         )
     )
 
-    raise_if_error(
-        client.CfgUplinkScrambling(
-            nirfmxwcdma_types.CfgUplinkScramblingRequest(
-                instrument=instr,
-                selector_string="",
-                uplink_scrambling_code=0x0,
-                uplink_scrambling_type=nirfmxwcdma_types.UPLINK_SCRAMBLING_TYPE_LONG,
-            )
+    client.CfgUplinkScrambling(
+        nirfmxwcdma_types.CfgUplinkScramblingRequest(
+            instrument=instr,
+            selector_string="",
+            uplink_scrambling_code=0x0,
+            uplink_scrambling_type=nirfmxwcdma_types.UPLINK_SCRAMBLING_TYPE_LONG,
         )
     )
 
-    raise_if_error(
-        client.SelectMeasurements(
-            nirfmxwcdma_types.SelectMeasurementsRequest(
-                instrument=instr,
-                selector_string="",
-                measurements_array=[nirfmxwcdma_types.MEASUREMENT_TYPES_MODACC],
-                enable_all_traces=True,
-            )
+    client.SelectMeasurements(
+        nirfmxwcdma_types.SelectMeasurementsRequest(
+            instrument=instr,
+            selector_string="",
+            measurements_array=[nirfmxwcdma_types.MEASUREMENT_TYPES_MODACC],
+            enable_all_traces=True,
         )
     )
 
-    raise_if_error(
-        client.ModAccCfgSynchronizationModeAndInterval(
-            nirfmxwcdma_types.ModAccCfgSynchronizationModeAndIntervalRequest(
-                instrument=instr,
-                selector_string="",
-                synchronization_mode=nirfmxwcdma_types.MODACC_SYNCHRONIZATION_MODE_SLOT,
-                measurement_offset=0,
-                measurement_length=1,
-            )
+    client.ModAccCfgSynchronizationModeAndInterval(
+        nirfmxwcdma_types.ModAccCfgSynchronizationModeAndIntervalRequest(
+            instrument=instr,
+            selector_string="",
+            synchronization_mode=nirfmxwcdma_types.MODACC_SYNCHRONIZATION_MODE_SLOT,
+            measurement_offset=0,
+            measurement_length=1,
         )
     )
 
-    raise_if_error(
-        client.Initiate(
-            nirfmxwcdma_types.InitiateRequest(
-                instrument=instr,
-                selector_string="",
-                result_name="",
-            )
+    client.Initiate(
+        nirfmxwcdma_types.InitiateRequest(
+            instrument=instr,
+            selector_string="",
+            result_name="",
         )
     )
 
-    mod_acc_fetch_evm_response = raise_if_error(
-        client.ModAccFetchEVM(
-            nirfmxwcdma_types.ModAccFetchEVMRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.000000,
-            )
+    mod_acc_fetch_evm_response = client.ModAccFetchEVM(
+        nirfmxwcdma_types.ModAccFetchEVMRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.000000,
         )
     )
+    check_for_warning(mod_acc_fetch_evm_response, instr)
 
     rms_evm = mod_acc_fetch_evm_response.rms_evm
     peak_evm = mod_acc_fetch_evm_response.peak_evm
@@ -198,43 +180,40 @@ try:
     rms_magnitude_error = mod_acc_fetch_evm_response.rms_magnitude_error
     rms_phase_error = mod_acc_fetch_evm_response.rms_phase_error
 
-    mod_acc_fetch_iq_impairments_response = raise_if_error(
-        client.ModAccFetchIQImpairments(
-            nirfmxwcdma_types.ModAccFetchIQImpairmentsRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.000000,
-            )
+    mod_acc_fetch_iq_impairments_response = client.ModAccFetchIQImpairments(
+        nirfmxwcdma_types.ModAccFetchIQImpairmentsRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.000000,
         )
     )
+    check_for_warning(mod_acc_fetch_iq_impairments_response, instr)
 
     iq_origin_offset = mod_acc_fetch_iq_impairments_response.iq_origin_offset
     iq_gain_imbalance = mod_acc_fetch_iq_impairments_response.iq_gain_imbalance
     iq_quadrature_error = mod_acc_fetch_iq_impairments_response.iq_quadrature_error
 
-    mod_acc_fetch_peak_cde_response = raise_if_error(
-        client.ModAccFetchPeakCDE(
-            nirfmxwcdma_types.ModAccFetchPeakCDERequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.000000,
-            )
+    mod_acc_fetch_peak_cde_response = client.ModAccFetchPeakCDE(
+        nirfmxwcdma_types.ModAccFetchPeakCDERequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.000000,
         )
     )
+    check_for_warning(mod_acc_fetch_peak_cde_response, instr)
 
     peak_cde = mod_acc_fetch_peak_cde_response.peak_cde
     peak_cde_code = mod_acc_fetch_peak_cde_response.peak_cde_code
     peak_cde_branch = mod_acc_fetch_peak_cde_response.peak_cde_branch
 
-    mod_acc_fetch_peak_active_cde_response = raise_if_error(
-        client.ModAccFetchPeakActiveCDE(
-            nirfmxwcdma_types.ModAccFetchPeakActiveCDERequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.000000,
-            )
+    mod_acc_fetch_peak_active_cde_response = client.ModAccFetchPeakActiveCDE(
+        nirfmxwcdma_types.ModAccFetchPeakActiveCDERequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.000000,
         )
     )
+    check_for_warning(mod_acc_fetch_peak_active_cde_response, instr)
 
     peak_active_cde = mod_acc_fetch_peak_active_cde_response.peak_active_cde
     peak_active_cde_spreading_factor = (
@@ -243,44 +222,41 @@ try:
     peak_active_cde_code = mod_acc_fetch_peak_active_cde_response.peak_active_cde_code
     peak_active_cde_branch = mod_acc_fetch_peak_active_cde_response.peak_active_cde_branch
 
-    mod_acc_fetch_rcde_response = raise_if_error(
-        client.ModAccFetchRCDE(
-            nirfmxwcdma_types.ModAccFetchRCDERequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.000000,
-            )
+    mod_acc_fetch_rcde_response = client.ModAccFetchRCDE(
+        nirfmxwcdma_types.ModAccFetchRCDERequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.000000,
         )
     )
+    check_for_warning(mod_acc_fetch_rcde_response, instr)
 
     peak_rcde = mod_acc_fetch_rcde_response.peak_rcde
     peak_rcde_spreading_factor = mod_acc_fetch_rcde_response.peak_rcde_spreading_factor
     peak_rcde_code = mod_acc_fetch_rcde_response.peak_rcde_code
     peak_rcde_branch = mod_acc_fetch_rcde_response.peak_rcde_branch
 
-    mod_acc_fetch_evm_trace_response = raise_if_error(
-        client.ModAccFetchEVMTrace(
-            nirfmxwcdma_types.ModAccFetchEVMTraceRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.000000,
-            )
+    mod_acc_fetch_evm_trace_response = client.ModAccFetchEVMTrace(
+        nirfmxwcdma_types.ModAccFetchEVMTraceRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.000000,
         )
     )
+    check_for_warning(mod_acc_fetch_evm_trace_response, instr)
 
     x0 = mod_acc_fetch_evm_trace_response.x0
     dx = mod_acc_fetch_evm_trace_response.dx
     evm = mod_acc_fetch_evm_trace_response.evm
 
-    mod_acc_fetch_constellation_trace_response = raise_if_error(
-        client.ModAccFetchConstellationTrace(
-            nirfmxwcdma_types.ModAccFetchConstellationTraceRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.000000,
-            )
+    mod_acc_fetch_constellation_trace_response = client.ModAccFetchConstellationTrace(
+        nirfmxwcdma_types.ModAccFetchConstellationTraceRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.000000,
         )
     )
+    check_for_warning(mod_acc_fetch_constellation_trace_response, instr)
 
     constellation = mod_acc_fetch_constellation_trace_response.constellation
 
@@ -317,7 +293,7 @@ except grpc.RpcError as rpc_error:
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
