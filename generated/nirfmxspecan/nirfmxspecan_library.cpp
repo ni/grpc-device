@@ -27,6 +27,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.ACPCfgCarrierIntegrationBandwidth = reinterpret_cast<ACPCfgCarrierIntegrationBandwidthPtr>(shared_library_.get_function_pointer("RFmxSpecAn_ACPCfgCarrierIntegrationBandwidth"));
   function_pointers_.ACPCfgCarrierMode = reinterpret_cast<ACPCfgCarrierModePtr>(shared_library_.get_function_pointer("RFmxSpecAn_ACPCfgCarrierMode"));
   function_pointers_.ACPCfgCarrierRRCFilter = reinterpret_cast<ACPCfgCarrierRRCFilterPtr>(shared_library_.get_function_pointer("RFmxSpecAn_ACPCfgCarrierRRCFilter"));
+  function_pointers_.ACPCfgDetector = reinterpret_cast<ACPCfgDetectorPtr>(shared_library_.get_function_pointer("RFmxSpecAn_ACPCfgDetector"));
   function_pointers_.ACPCfgFFT = reinterpret_cast<ACPCfgFFTPtr>(shared_library_.get_function_pointer("RFmxSpecAn_ACPCfgFFT"));
   function_pointers_.ACPCfgMeasurementMethod = reinterpret_cast<ACPCfgMeasurementMethodPtr>(shared_library_.get_function_pointer("RFmxSpecAn_ACPCfgMeasurementMethod"));
   function_pointers_.ACPCfgNoiseCompensationEnabled = reinterpret_cast<ACPCfgNoiseCompensationEnabledPtr>(shared_library_.get_function_pointer("RFmxSpecAn_ACPCfgNoiseCompensationEnabled"));
@@ -105,6 +106,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.CCDFRead = reinterpret_cast<CCDFReadPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CCDFRead"));
   function_pointers_.CHPCfgAveraging = reinterpret_cast<CHPCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CHPCfgAveraging"));
   function_pointers_.CHPCfgCarrierOffset = reinterpret_cast<CHPCfgCarrierOffsetPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CHPCfgCarrierOffset"));
+  function_pointers_.CHPCfgDetector = reinterpret_cast<CHPCfgDetectorPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CHPCfgDetector"));
   function_pointers_.CHPCfgFFT = reinterpret_cast<CHPCfgFFTPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CHPCfgFFT"));
   function_pointers_.CHPCfgIntegrationBandwidth = reinterpret_cast<CHPCfgIntegrationBandwidthPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CHPCfgIntegrationBandwidth"));
   function_pointers_.CHPCfgNumberOfCarriers = reinterpret_cast<CHPCfgNumberOfCarriersPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CHPCfgNumberOfCarriers"));
@@ -493,6 +495,14 @@ int32 NiRFmxSpecAnLibrary::ACPCfgCarrierRRCFilter(niRFmxInstrHandle instrumentHa
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgCarrierRRCFilter.");
   }
   return function_pointers_.ACPCfgCarrierRRCFilter(instrumentHandle, selectorString, rrcFilterEnabled, rrcAlpha);
+}
+
+int32 NiRFmxSpecAnLibrary::ACPCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints)
+{
+  if (!function_pointers_.ACPCfgDetector) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_ACPCfgDetector.");
+  }
+  return function_pointers_.ACPCfgDetector(instrumentHandle, selectorString, detectorType, detectorPoints);
 }
 
 int32 NiRFmxSpecAnLibrary::ACPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
@@ -1117,6 +1127,14 @@ int32 NiRFmxSpecAnLibrary::CHPCfgCarrierOffset(niRFmxInstrHandle instrumentHandl
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgCarrierOffset.");
   }
   return function_pointers_.CHPCfgCarrierOffset(instrumentHandle, selectorString, carrierFrequency);
+}
+
+int32 NiRFmxSpecAnLibrary::CHPCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints)
+{
+  if (!function_pointers_.CHPCfgDetector) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CHPCfgDetector.");
+  }
+  return function_pointers_.CHPCfgDetector(instrumentHandle, selectorString, detectorType, detectorPoints);
 }
 
 int32 NiRFmxSpecAnLibrary::CHPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding)
@@ -2559,12 +2577,12 @@ int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementBandwidth(niRFmxInstrHandle instrum
   return function_pointers_.PAVTCfgMeasurementBandwidth(instrumentHandle, selectorString, measurementBandwidth);
 }
 
-int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurermentOffset, float64 measurermentLength)
+int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementLength)
 {
   if (!function_pointers_.PAVTCfgMeasurementInterval) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PAVTCfgMeasurementInterval.");
   }
-  return function_pointers_.PAVTCfgMeasurementInterval(instrumentHandle, selectorString, measurermentOffset, measurermentLength);
+  return function_pointers_.PAVTCfgMeasurementInterval(instrumentHandle, selectorString, measurementOffset, measurementLength);
 }
 
 int32 NiRFmxSpecAnLibrary::PAVTCfgMeasurementIntervalMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementIntervalMode)

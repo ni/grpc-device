@@ -264,6 +264,47 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::ACPCfgDetector(::grpc::ServerContext* context, const ACPCfgDetectorRequest* request, ACPCfgDetectorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 detector_type;
+      switch (request->detector_type_enum_case()) {
+        case nirfmxspecan_grpc::ACPCfgDetectorRequest::DetectorTypeEnumCase::kDetectorType: {
+          detector_type = static_cast<int32>(request->detector_type());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgDetectorRequest::DetectorTypeEnumCase::kDetectorTypeRaw: {
+          detector_type = static_cast<int32>(request->detector_type_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgDetectorRequest::DetectorTypeEnumCase::DETECTOR_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for detector_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 detector_points = request->detector_points();
+      auto status = library_->ACPCfgDetector(instrument, selector_string, detector_type, detector_points);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::ACPCfgFFT(::grpc::ServerContext* context, const ACPCfgFFTRequest* request, ACPCfgFFTResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3367,6 +3408,47 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 carrier_frequency = request->carrier_frequency();
       auto status = library_->CHPCfgCarrierOffset(instrument, selector_string, carrier_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::CHPCfgDetector(::grpc::ServerContext* context, const CHPCfgDetectorRequest* request, CHPCfgDetectorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 detector_type;
+      switch (request->detector_type_enum_case()) {
+        case nirfmxspecan_grpc::CHPCfgDetectorRequest::DetectorTypeEnumCase::kDetectorType: {
+          detector_type = static_cast<int32>(request->detector_type());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgDetectorRequest::DetectorTypeEnumCase::kDetectorTypeRaw: {
+          detector_type = static_cast<int32>(request->detector_type_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgDetectorRequest::DetectorTypeEnumCase::DETECTOR_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for detector_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 detector_points = request->detector_points();
+      auto status = library_->CHPCfgDetector(instrument, selector_string, detector_type, detector_points);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

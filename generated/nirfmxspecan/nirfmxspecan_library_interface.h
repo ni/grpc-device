@@ -21,6 +21,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 ACPCfgCarrierIntegrationBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth) = 0;
   virtual int32 ACPCfgCarrierMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 carrierMode) = 0;
   virtual int32 ACPCfgCarrierRRCFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rrcFilterEnabled, float64 rrcAlpha) = 0;
+  virtual int32 ACPCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints) = 0;
   virtual int32 ACPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding) = 0;
   virtual int32 ACPCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod) = 0;
   virtual int32 ACPCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled) = 0;
@@ -99,6 +100,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 CCDFRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanPower, float64* meanPowerPercentile, float64* peakPower, int32* measuredSamplesCount) = 0;
   virtual int32 CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) = 0;
   virtual int32 CHPCfgCarrierOffset(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 carrierFrequency) = 0;
+  virtual int32 CHPCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints) = 0;
   virtual int32 CHPCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding) = 0;
   virtual int32 CHPCfgIntegrationBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 integrationBandwidth) = 0;
   virtual int32 CHPCfgNumberOfCarriers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCarriers) = 0;
@@ -279,7 +281,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 OBWFetchSpectrumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OBWRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* occupiedBandwidth, float64* averagePower, float64* frequencyResolution, float64* startFrequency, float64* stopFrequency) = 0;
   virtual int32 PAVTCfgMeasurementBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementBandwidth) = 0;
-  virtual int32 PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurermentOffset, float64 measurermentLength) = 0;
+  virtual int32 PAVTCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementLength) = 0;
   virtual int32 PAVTCfgMeasurementIntervalMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementIntervalMode) = 0;
   virtual int32 PAVTCfgMeasurementLocationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementLocationType) = 0;
   virtual int32 PAVTCfgNumberOfSegments(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfSegments) = 0;
