@@ -1,4 +1,4 @@
-r"""ORFS example
+r"""ORFS example.
 
 Steps:
 1. Open a new RFmx Session.
@@ -110,36 +110,151 @@ try:
     switch_relative_power = None
     actual_array_size = 0
 
-    initialize_response = client.Initialize(nirfmxgsm_types.InitializeRequest(session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS))
+    initialize_response = client.Initialize(
+        nirfmxgsm_types.InitializeRequest(
+            session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
+        )
+    )
     instr = initialize_response.instrument
-    client.CfgFrequencyReference(nirfmxgsm_types.CfgFrequencyReferenceRequest(instrument=instr, channel_name="", frequency_reference_source_mapped=nirfmxgsm_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, frequency_reference_frequency=10e6))
-    client.CfgExternalAttenuation(nirfmxgsm_types.CfgExternalAttenuationRequest(instrument=instr, selector_string="", external_attenuation=0.0))
-    client.CfgFrequency(nirfmxgsm_types.CfgFrequencyRequest(instrument=instr, selector_string="", center_frequency=890.2e6))
-    client.CfgLinkDirection(nirfmxgsm_types.CfgLinkDirectionRequest(instrument=instr, selector_string="", link_direction=nirfmxgsm_types.LINK_DIRECTION_UPLINK))
-    client.CfgIQPowerEdgeTrigger(nirfmxgsm_types.CfgIQPowerEdgeTriggerRequest(instrument=instr, selector_string="", iq_power_edge_source="0", iq_power_edge_slope=nirfmxgsm_types.NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, iq_power_edge_level=-20.0, trigger_delay=0.0, minimum_quiet_time_mode=nirfmxgsm_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, minimum_quiet_time=582e-6, iq_power_edge_level_type=nirfmxgsm_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, enable_trigger=True))
-    client.CfgNumberOfTimeslots(nirfmxgsm_types.CfgNumberOfTimeslotsRequest(instrument=instr, selector_string="", number_of_timeslots=1))
+    client.CfgFrequencyReference(
+        nirfmxgsm_types.CfgFrequencyReferenceRequest(
+            instrument=instr,
+            channel_name="",
+            frequency_reference_source_mapped=nirfmxgsm_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+            frequency_reference_frequency=10e6,
+        )
+    )
+    client.CfgExternalAttenuation(
+        nirfmxgsm_types.CfgExternalAttenuationRequest(
+            instrument=instr, selector_string="", external_attenuation=0.0
+        )
+    )
+    client.CfgFrequency(
+        nirfmxgsm_types.CfgFrequencyRequest(
+            instrument=instr, selector_string="", center_frequency=890.2e6
+        )
+    )
+    client.CfgLinkDirection(
+        nirfmxgsm_types.CfgLinkDirectionRequest(
+            instrument=instr,
+            selector_string="",
+            link_direction=nirfmxgsm_types.LINK_DIRECTION_UPLINK,
+        )
+    )
+    client.CfgIQPowerEdgeTrigger(
+        nirfmxgsm_types.CfgIQPowerEdgeTriggerRequest(
+            instrument=instr,
+            selector_string="",
+            iq_power_edge_source="0",
+            iq_power_edge_slope=nirfmxgsm_types.NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING,
+            iq_power_edge_level=-20.0,
+            trigger_delay=0.0,
+            minimum_quiet_time_mode=nirfmxgsm_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
+            minimum_quiet_time=582e-6,
+            iq_power_edge_level_type=nirfmxgsm_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
+            enable_trigger=True,
+        )
+    )
+    client.CfgNumberOfTimeslots(
+        nirfmxgsm_types.CfgNumberOfTimeslotsRequest(
+            instrument=instr, selector_string="", number_of_timeslots=1
+        )
+    )
 
-    client.CfgSignalType(nirfmxgsm_types.CfgSignalTypeRequest(instrument=instr, selector_string="slot::all", modulation_type=nirfmxgsm_types.MODULATION_TYPE_8PSK, burst_type=nirfmxgsm_types.BURST_TYPE_NB, hb_filter_width=nirfmxgsm_types.HB_FILTER_WIDTH_NARROW))
+    client.CfgSignalType(
+        nirfmxgsm_types.CfgSignalTypeRequest(
+            instrument=instr,
+            selector_string="slot::all",
+            modulation_type=nirfmxgsm_types.MODULATION_TYPE_8PSK,
+            burst_type=nirfmxgsm_types.BURST_TYPE_NB,
+            hb_filter_width=nirfmxgsm_types.HB_FILTER_WIDTH_NARROW,
+        )
+    )
 
-    if(auto_level):
-        auto_level_response = client.AutoLevel(nirfmxgsm_types.AutoLevelRequest(instrument=instr, selector_string="", measurement_interval=0.0046))
+    if auto_level:
+        auto_level_response = client.AutoLevel(
+            nirfmxgsm_types.AutoLevelRequest(
+                instrument=instr, selector_string="", measurement_interval=0.0046
+            )
+        )
         auto_reference_level = auto_level_response.reference_level
         print(f"Reference Level                     : {auto_reference_level}\n")
     else:
-        client.CfgReferenceLevel(nirfmxgsm_types.CfgReferenceLevelRequest(instrument=instr, selector_string="", reference_level=0.0))
+        client.CfgReferenceLevel(
+            nirfmxgsm_types.CfgReferenceLevelRequest(
+                instrument=instr, selector_string="", reference_level=0.0
+            )
+        )
 
-    client.CfgAutoTSCDetectionEnabled(nirfmxgsm_types.CfgAutoTSCDetectionEnabledRequest(instrument=instr, selector_string="", auto_tsc_detection_enabled=nirfmxgsm_types.AUTO_TSC_DETECTION_ENABLED_TRUE))
-    client.CfgTSC(nirfmxgsm_types.CfgTSCRequest(instrument=instr, selector_string="slot::all", tsc=nirfmxgsm_types.TSC_TSC0))
-    client.SelectMeasurements(nirfmxgsm_types.SelectMeasurementsRequest(instrument=instr, selector_string="", measurements_raw=nirfmxgsm_types.MEASUREMENT_TYPES_ORFS, enable_all_traces=True))
-    client.ORFSCfgNoiseCompensationEnabled(nirfmxgsm_types.ORFSCfgNoiseCompensationEnabledRequest(instrument=instr, selector_string="", noise_compensation_enabled=nirfmxgsm_types.ORFS_NOISE_COMPENSATION_ENABLED_FALSE))
-    client.ORFSCfgMeasurementType(nirfmxgsm_types.ORFSCfgMeasurementTypeRequest(instrument=instr, selector_string="", measurement_type=nirfmxgsm_types.ORFS_MEASUREMENT_TYPE_MODULATION_AND_SWITCHING))
-    client.ORFSCfgOffsetFrequencyMode(nirfmxgsm_types.ORFSCfgOffsetFrequencyModeRequest(instrument=instr, selector_string="", offset_frequency_mode=nirfmxgsm_types.ORFS_OFFSET_FREQUENCY_MODE_STANDARD))
-    client.ORFSCfgEvaluationSymbols(nirfmxgsm_types.ORFSCfgEvaluationSymbolsRequest(instrument=instr, selector_string="", evaluation_symbols_start=50.0, evaluation_symbols_include_tsc=0, evaluation_symbols_stop=90.0))
-    client.ORFSCfgAveraging(nirfmxgsm_types.ORFSCfgAveragingRequest(instrument=instr, selector_string="", averaging_enabled=nirfmxgsm_types.ORFS_AVERAGING_ENABLED_FALSE, averaging_count=10, averaging_type=nirfmxgsm_types.ORFS_AVERAGING_TYPE_LOG))
-    initiate_response = client.Initiate(nirfmxgsm_types.InitiateRequest(instrument=instr, selector_string="", result_name=""))
+    client.CfgAutoTSCDetectionEnabled(
+        nirfmxgsm_types.CfgAutoTSCDetectionEnabledRequest(
+            instrument=instr,
+            selector_string="",
+            auto_tsc_detection_enabled=nirfmxgsm_types.AUTO_TSC_DETECTION_ENABLED_TRUE,
+        )
+    )
+    client.CfgTSC(
+        nirfmxgsm_types.CfgTSCRequest(
+            instrument=instr, selector_string="slot::all", tsc=nirfmxgsm_types.TSC_TSC0
+        )
+    )
+    client.SelectMeasurements(
+        nirfmxgsm_types.SelectMeasurementsRequest(
+            instrument=instr,
+            selector_string="",
+            measurements_raw=nirfmxgsm_types.MEASUREMENT_TYPES_ORFS,
+            enable_all_traces=True,
+        )
+    )
+    client.ORFSCfgNoiseCompensationEnabled(
+        nirfmxgsm_types.ORFSCfgNoiseCompensationEnabledRequest(
+            instrument=instr,
+            selector_string="",
+            noise_compensation_enabled=nirfmxgsm_types.ORFS_NOISE_COMPENSATION_ENABLED_FALSE,
+        )
+    )
+    client.ORFSCfgMeasurementType(
+        nirfmxgsm_types.ORFSCfgMeasurementTypeRequest(
+            instrument=instr,
+            selector_string="",
+            measurement_type=nirfmxgsm_types.ORFS_MEASUREMENT_TYPE_MODULATION_AND_SWITCHING,
+        )
+    )
+    client.ORFSCfgOffsetFrequencyMode(
+        nirfmxgsm_types.ORFSCfgOffsetFrequencyModeRequest(
+            instrument=instr,
+            selector_string="",
+            offset_frequency_mode=nirfmxgsm_types.ORFS_OFFSET_FREQUENCY_MODE_STANDARD,
+        )
+    )
+    client.ORFSCfgEvaluationSymbols(
+        nirfmxgsm_types.ORFSCfgEvaluationSymbolsRequest(
+            instrument=instr,
+            selector_string="",
+            evaluation_symbols_start=50.0,
+            evaluation_symbols_include_tsc=0,
+            evaluation_symbols_stop=90.0,
+        )
+    )
+    client.ORFSCfgAveraging(
+        nirfmxgsm_types.ORFSCfgAveragingRequest(
+            instrument=instr,
+            selector_string="",
+            averaging_enabled=nirfmxgsm_types.ORFS_AVERAGING_ENABLED_FALSE,
+            averaging_count=10,
+            averaging_type=nirfmxgsm_types.ORFS_AVERAGING_TYPE_LOG,
+        )
+    )
+    initiate_response = client.Initiate(
+        nirfmxgsm_types.InitiateRequest(instrument=instr, selector_string="", result_name="")
+    )
     check_for_warning(initiate_response, instr)
 
-    orfs_fetch_modulation_results_array_response = client.ORFSFetchModulationResultsArray(nirfmxgsm_types.ORFSFetchModulationResultsArrayRequest(instrument=instr, selector_string="", timeout=10.0))
+    orfs_fetch_modulation_results_array_response = client.ORFSFetchModulationResultsArray(
+        nirfmxgsm_types.ORFSFetchModulationResultsArrayRequest(
+            instrument=instr, selector_string="", timeout=10.0
+        )
+    )
     check_for_warning(orfs_fetch_modulation_results_array_response, instr)
     modulation_carrier_power = orfs_fetch_modulation_results_array_response.modulation_carrier_power
     mod_lower_relative_power = orfs_fetch_modulation_results_array_response.lower_relative_power
@@ -147,7 +262,11 @@ try:
     mod_lower_absolute_power = orfs_fetch_modulation_results_array_response.lower_absolute_power
     mod_upper_absolute_power = orfs_fetch_modulation_results_array_response.upper_absolute_power
 
-    orfs_fetch_switching_results_array_response = client.ORFSFetchSwitchingResultsArray(nirfmxgsm_types.ORFSFetchSwitchingResultsArrayRequest(instrument=instr, selector_string="", timeout=10.0))
+    orfs_fetch_switching_results_array_response = client.ORFSFetchSwitchingResultsArray(
+        nirfmxgsm_types.ORFSFetchSwitchingResultsArrayRequest(
+            instrument=instr, selector_string="", timeout=10.0
+        )
+    )
     check_for_warning(orfs_fetch_switching_results_array_response, instr)
     switching_carrier_power = orfs_fetch_switching_results_array_response.switching_carrier_power
     switch_lower_relative_power = orfs_fetch_switching_results_array_response.lower_relative_power
@@ -155,13 +274,21 @@ try:
     switch_lower_absolute_power = orfs_fetch_switching_results_array_response.lower_absolute_power
     switch_upper_absolute_power = orfs_fetch_switching_results_array_response.upper_absolute_power
 
-    orfs_fetch_modulation_power_trace_response = client.ORFSFetchModulationPowerTrace(nirfmxgsm_types.ORFSFetchModulationPowerTraceRequest(instrument=instr, selector_string="", timeout=10.0))
+    orfs_fetch_modulation_power_trace_response = client.ORFSFetchModulationPowerTrace(
+        nirfmxgsm_types.ORFSFetchModulationPowerTraceRequest(
+            instrument=instr, selector_string="", timeout=10.0
+        )
+    )
     check_for_warning(orfs_fetch_modulation_power_trace_response, instr)
     mod_offset_frequency = orfs_fetch_modulation_power_trace_response.offset_frequency
     mod_absolute_power = orfs_fetch_modulation_power_trace_response.absolute_power
     mod_relative_power = orfs_fetch_modulation_power_trace_response.relative_power
 
-    orfs_fetch_switching_power_trace_response = client.ORFSFetchSwitchingPowerTrace(nirfmxgsm_types.ORFSFetchSwitchingPowerTraceRequest(instrument=instr, selector_string="", timeout=10.0))
+    orfs_fetch_switching_power_trace_response = client.ORFSFetchSwitchingPowerTrace(
+        nirfmxgsm_types.ORFSFetchSwitchingPowerTraceRequest(
+            instrument=instr, selector_string="", timeout=10.0
+        )
+    )
     check_for_warning(orfs_fetch_switching_power_trace_response, instr)
     switch_offset_frequency = orfs_fetch_switching_power_trace_response.offset_frequency
     switch_absolute_power = orfs_fetch_switching_power_trace_response.absolute_power
@@ -185,5 +312,4 @@ try:
         print(f"Upper Relative Power (dB)           : {switch_upper_relative_power[i]}")
 finally:
     if instr:
-        client.Close(nirfmxgsm_types.CloseRequest(
-            instrument=instr, force_destroy=False))
+        client.Close(nirfmxgsm_types.CloseRequest(instrument=instr, force_destroy=False))

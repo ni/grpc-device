@@ -1,4 +1,4 @@
-r"""EVM example
+r"""EVM example.
 
 Steps:
 1. Open a new RFmx Session.
@@ -74,7 +74,7 @@ def check_for_warning(response, instrument):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.GetErrorString(
-            nirfmxlte_types.GetErrorStringRequest(
+            nirfmxgsm_types.GetErrorStringRequest(
                 instrument=instrument,
                 error_code=response.status,
             )
@@ -89,22 +89,94 @@ try:
     constellation_trace = None
     actual_array_size = 0
 
-    initialize_response = client.Initialize(nirfmxgsm_types.InitializeRequest(session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS))
+    initialize_response = client.Initialize(
+        nirfmxgsm_types.InitializeRequest(
+            session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
+        )
+    )
     instr = initialize_response.instrument
-    client.CfgFrequencyReference(nirfmxgsm_types.CfgFrequencyReferenceRequest(instrument=instr, channel_name="", frequency_reference_source_mapped=nirfmxgsm_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, frequency_reference_frequency=10e6))
-    client.CfgRF(nirfmxgsm_types.CfgRFRequest(instrument=instr, selector_string="", center_frequency=890.2e6, reference_level=0.0, external_attenuation=0.0))
-    client.CfgIQPowerEdgeTrigger(nirfmxgsm_types.CfgIQPowerEdgeTriggerRequest(instrument=instr, selector_string="", iq_power_edge_source="0", iq_power_edge_slope=nirfmxgsm_types.NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, iq_power_edge_level=-20.00, trigger_delay=0.0, minimum_quiet_time_mode=nirfmxgsm_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, minimum_quiet_time=582e-6, iq_power_edge_level_type=nirfmxgsm_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, enable_trigger=True))
-    client.CfgNumberOfTimeslots(nirfmxgsm_types.CfgNumberOfTimeslotsRequest(instrument=instr, selector_string="", number_of_timeslots=NUMBER_OF_TIMESLOTS))
-    client.CfgAutoTSCDetectionEnabled(nirfmxgsm_types.CfgAutoTSCDetectionEnabledRequest(instrument=instr, selector_string="", auto_tsc_detection_enabled=nirfmxgsm_types.AUTO_TSC_DETECTION_ENABLED_TRUE))
-    client.CfgSignalType(nirfmxgsm_types.CfgSignalTypeRequest(instrument=instr, selector_string="slot::all", modulation_type=nirfmxgsm_types.MODULATION_TYPE_8PSK, burst_type=nirfmxgsm_types.BURST_TYPE_NB, hb_filter_width=nirfmxgsm_types.HB_FILTER_WIDTH_NARROW))
-    client.CfgTSC(nirfmxgsm_types.CfgTSCRequest(instrument=instr, selector_string="slot::all", tsc=nirfmxgsm_types.TSC_TSC0))
-    client.SelectMeasurements(nirfmxgsm_types.SelectMeasurementsRequest(instrument=instr, selector_string="", measurements_raw=nirfmxgsm_types.MEASUREMENT_TYPES_MODACC, enable_all_traces=True))
-    client.ModAccCfgAveraging(nirfmxgsm_types.ModAccCfgAveragingRequest(instrument=instr, selector_string="", averaging_enabled=nirfmxgsm_types.MODACC_AVERAGING_ENABLED_FALSE, averaging_count=10))
+    client.CfgFrequencyReference(
+        nirfmxgsm_types.CfgFrequencyReferenceRequest(
+            instrument=instr,
+            channel_name="",
+            frequency_reference_source_mapped=nirfmxgsm_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+            frequency_reference_frequency=10e6,
+        )
+    )
+    client.CfgRF(
+        nirfmxgsm_types.CfgRFRequest(
+            instrument=instr,
+            selector_string="",
+            center_frequency=890.2e6,
+            reference_level=0.0,
+            external_attenuation=0.0,
+        )
+    )
+    client.CfgIQPowerEdgeTrigger(
+        nirfmxgsm_types.CfgIQPowerEdgeTriggerRequest(
+            instrument=instr,
+            selector_string="",
+            iq_power_edge_source="0",
+            iq_power_edge_slope=nirfmxgsm_types.NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING,
+            iq_power_edge_level=-20.00,
+            trigger_delay=0.0,
+            minimum_quiet_time_mode=nirfmxgsm_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
+            minimum_quiet_time=582e-6,
+            iq_power_edge_level_type=nirfmxgsm_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
+            enable_trigger=True,
+        )
+    )
+    client.CfgNumberOfTimeslots(
+        nirfmxgsm_types.CfgNumberOfTimeslotsRequest(
+            instrument=instr, selector_string="", number_of_timeslots=NUMBER_OF_TIMESLOTS
+        )
+    )
+    client.CfgAutoTSCDetectionEnabled(
+        nirfmxgsm_types.CfgAutoTSCDetectionEnabledRequest(
+            instrument=instr,
+            selector_string="",
+            auto_tsc_detection_enabled=nirfmxgsm_types.AUTO_TSC_DETECTION_ENABLED_TRUE,
+        )
+    )
+    client.CfgSignalType(
+        nirfmxgsm_types.CfgSignalTypeRequest(
+            instrument=instr,
+            selector_string="slot::all",
+            modulation_type=nirfmxgsm_types.MODULATION_TYPE_8PSK,
+            burst_type=nirfmxgsm_types.BURST_TYPE_NB,
+            hb_filter_width=nirfmxgsm_types.HB_FILTER_WIDTH_NARROW,
+        )
+    )
+    client.CfgTSC(
+        nirfmxgsm_types.CfgTSCRequest(
+            instrument=instr, selector_string="slot::all", tsc=nirfmxgsm_types.TSC_TSC0
+        )
+    )
+    client.SelectMeasurements(
+        nirfmxgsm_types.SelectMeasurementsRequest(
+            instrument=instr,
+            selector_string="",
+            measurements_raw=nirfmxgsm_types.MEASUREMENT_TYPES_MODACC,
+            enable_all_traces=True,
+        )
+    )
+    client.ModAccCfgAveraging(
+        nirfmxgsm_types.ModAccCfgAveragingRequest(
+            instrument=instr,
+            selector_string="",
+            averaging_enabled=nirfmxgsm_types.MODACC_AVERAGING_ENABLED_FALSE,
+            averaging_count=10,
+        )
+    )
 
-    initiate_response = client.Initiate(nirfmxgsm_types.InitiateRequest(instrument=instr, selector_string="", result_name=""))
+    initiate_response = client.Initiate(
+        nirfmxgsm_types.InitiateRequest(instrument=instr, selector_string="", result_name="")
+    )
     check_for_warning(initiate_response, instr)
 
-    mod_acc_fetch_evm_response = client.ModAccFetchEVM(nirfmxgsm_types.ModAccFetchEVMRequest(instrument=instr, selector_string="", timeout=10.0))
+    mod_acc_fetch_evm_response = client.ModAccFetchEVM(
+        nirfmxgsm_types.ModAccFetchEVMRequest(instrument=instr, selector_string="", timeout=10.0)
+    )
     check_for_warning(mod_acc_fetch_evm_response, instr)
     mean_rmsevm = mod_acc_fetch_evm_response.mean_rms_evm
     maximum_rmsevm = mod_acc_fetch_evm_response.maximum_rms_evm
@@ -114,24 +186,40 @@ try:
     mean_frequency_error = mod_acc_fetch_evm_response.mean_frequency_error
     peak_evm_symbol = mod_acc_fetch_evm_response.peak_evm_symbol
 
-    mod_acc_fetch_iq_impairments_response = client.ModAccFetchIQImpairments(nirfmxgsm_types.ModAccFetchIQImpairmentsRequest(instrument=instr, selector_string="", timeout=10.0))
+    mod_acc_fetch_iq_impairments_response = client.ModAccFetchIQImpairments(
+        nirfmxgsm_types.ModAccFetchIQImpairmentsRequest(
+            instrument=instr, selector_string="", timeout=10.0
+        )
+    )
     check_for_warning(mod_acc_fetch_iq_impairments_response, instr)
     mean_iq_gain_imbalance = mod_acc_fetch_iq_impairments_response.mean_iq_gain_imbalance
     maximum_iq_gain_imbalance = mod_acc_fetch_iq_impairments_response.maximum_iq_gain_imbalance
     mean_iq_origin_offset = mod_acc_fetch_iq_impairments_response.mean_iq_origin_offset
     maximum_iq_origin_offset = mod_acc_fetch_iq_impairments_response.maximum_iq_origin_offset
 
-    mod_acc_fetch_detected_tsc_array_response = client.ModAccFetchDetectedTSCArray(nirfmxgsm_types.ModAccFetchDetectedTSCArrayRequest(instrument=instr, selector_string="", timeout=10.0))
+    mod_acc_fetch_detected_tsc_array_response = client.ModAccFetchDetectedTSCArray(
+        nirfmxgsm_types.ModAccFetchDetectedTSCArrayRequest(
+            instrument=instr, selector_string="", timeout=10.0
+        )
+    )
     check_for_warning(mod_acc_fetch_detected_tsc_array_response, instr)
     detected_tsc = mod_acc_fetch_detected_tsc_array_response.detected_tsc
 
-    mod_acc_fetch_evm_trace_response = client.ModAccFetchEVMTrace(nirfmxgsm_types.ModAccFetchEVMTraceRequest(instrument=instr, selector_string="", timeout=10.0))
+    mod_acc_fetch_evm_trace_response = client.ModAccFetchEVMTrace(
+        nirfmxgsm_types.ModAccFetchEVMTraceRequest(
+            instrument=instr, selector_string="", timeout=10.0
+        )
+    )
     check_for_warning(mod_acc_fetch_evm_trace_response, instr)
     x0 = mod_acc_fetch_evm_trace_response.x0
     dx = mod_acc_fetch_evm_trace_response.dx
     evm = mod_acc_fetch_evm_trace_response.evm
 
-    mod_acc_fetch_constellation_trace_response = client.ModAccFetchConstellationTrace(nirfmxgsm_types.ModAccFetchConstellationTraceRequest(instrument=instr, selector_string="", timeout=10.0))
+    mod_acc_fetch_constellation_trace_response = client.ModAccFetchConstellationTrace(
+        nirfmxgsm_types.ModAccFetchConstellationTraceRequest(
+            instrument=instr, selector_string="", timeout=10.0
+        )
+    )
     check_for_warning(mod_acc_fetch_constellation_trace_response, instr)
     constellation_trace = mod_acc_fetch_constellation_trace_response.constellation_trace
 
@@ -152,11 +240,10 @@ try:
 
     print("\n----------------Detected tsc-------------------")
     for i in range(NUMBER_OF_TIMESLOTS):
-        if(detected_tsc[i] < 0):
-                print(f"Slot {i}                             : Unknown")
+        if detected_tsc[i] < 0:
+            print(f"Slot {i}                             : Unknown")
         else:
-                print(f"Slot {i}                          : tsc{detected_tsc[i]}")
+            print(f"Slot {i}                          : tsc{detected_tsc[i]}")
 finally:
     if instr:
-        client.Close(nirfmxgsm_types.CloseRequest(
-            instrument=instr, force_destroy=False))
+        client.Close(nirfmxgsm_types.CloseRequest(instrument=instr, force_destroy=False))
