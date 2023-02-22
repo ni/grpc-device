@@ -639,7 +639,8 @@ TEST_F(NiRFmxWCDMADriverApiTests, SlotPhaseFromExample_FetchData_DataLooksReason
   EXPECT_LT(0.0, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.dx());
   EXPECT_EQ(38400, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit_size());
   EXPECT_EQ(38400, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit().size());
-  // EXPECT_EQ(0.0, slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit(0));
+  auto linear_fit_zero = slot_phase_fetch_chip_phase_error_linear_fit_trace_response.chip_phase_error_linear_fit(0);
+  EXPECT_TRUE(isnan(linear_fit_zero) || 0.0 == linear_fit_zero);
   EXPECT_SUCCESS(session, slot_phase_fetch_chip_phase_error_trace_response);
   EXPECT_EQ(0.0, slot_phase_fetch_chip_phase_error_trace_response.x0());
   EXPECT_LT(0.0, slot_phase_fetch_chip_phase_error_trace_response.dx());
