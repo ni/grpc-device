@@ -1013,6 +1013,11 @@ attributes = {
         'name': 'MODACC_RESULTS_SPECTRAL_FLATNESS_RANGE2_MAXIMUM_TO_RANGE1_MINIMUM',
         'type': 'float64'
     },
+    3162160: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_MAXIMUM_PEAK_IQ_ORIGIN_OFFSET',
+        'type': 'float64'
+    },
     3162162: {
         'access': 'read-write',
         'enum': 'ModAccEvmWithExclusionPeriodEnabled',
@@ -1401,6 +1406,35 @@ attributes = {
         'enum': 'ModAccMulticarrierTimeSynchronizationMode',
         'name': 'MODACC_MULTICARRIER_TIME_SYNCHRONIZATION_MODE',
         'type': 'int32'
+    },
+    3162239: {
+        'access': 'read-write',
+        'enum': 'ModAccPreFftErrorEstimationInterval',
+        'name': 'MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL',
+        'type': 'int32'
+    },
+    3162240: {
+        'access': 'read-write',
+        'enum': 'ModAccSymbolClockErrorEstimationEnabled',
+        'name': 'MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED',
+        'type': 'int32'
+    },
+    3162241: {
+        'access': 'read-write',
+        'enum': 'ModAccTimingTrackingEnabled',
+        'name': 'MODACC_TIMING_TRACKING_ENABLED',
+        'type': 'int32'
+    },
+    3162242: {
+        'access': 'read-write',
+        'enum': 'ModAccPhaseTrackingEnabled',
+        'name': 'MODACC_PHASE_TRACKING_ENABLED',
+        'type': 'int32'
+    },
+    3162243: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_MAXIMUM_PEAK_FREQUENCY_ERROR',
+        'type': 'float64'
     },
     3170304: {
         'access': 'read-write',
