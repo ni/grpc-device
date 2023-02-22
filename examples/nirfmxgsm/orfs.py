@@ -1,44 +1,50 @@
-# Steps:
-# 1. Open a new RFmx Session.
-# 2. Configure Frequency Reference.
-# 3. Configure External Attenuation.
-# 4. Configure Center Frequency.
-# 5. Configure Link Direction.
-# 6. Configure Trigger Parameters for IQ Power Edge Trigger.
-# 7. Configure Number of Timeslots.
-# 8. Configure Signal Type.
-# 9. Configure Auto Level.
-# 10. Configure Auto tsc Detection Enabled.
-# 11. Configure tsc.
-# 12. Select  ORFS  measurement and enable Traces.
-# 13. Configure Noise Compensation Enabled.
-# 14. Configure Measurement Type.
-# 15. Configure Offset Frequency Mode.
-# 16. Configure Evaluation Symbols.
-# 17. Configure Averaging Parameters.
-# 18. Initiate the Measurement.
-# 19. Fetch ORFS Measurements and Traces.
-# 20. Close RFmx Session.
-#
-# The gRPC API is built from the C API. RFmx GSM documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\GSM\Documentation\rfmxgsmcvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx GSM" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-gsm-edge-.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmx GSM gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmx-GSM-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python orfs.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+r"""ORFS example
+
+Steps:
+1. Open a new RFmx Session.
+2. Configure Frequency Reference.
+3. Configure External Attenuation.
+4. Configure Center Frequency.
+5. Configure Link Direction.
+6. Configure Trigger Parameters for IQ Power Edge Trigger.
+7. Configure Number of Timeslots.
+8. Configure Signal Type.
+9. Configure Auto Level.
+10. Configure Auto tsc Detection Enabled.
+11. Configure tsc.
+12. Select  ORFS  measurement and enable Traces.
+13. Configure Noise Compensation Enabled.
+14. Configure Measurement Type.
+15. Configure Offset Frequency Mode.
+16. Configure Evaluation Symbols.
+17. Configure Averaging Parameters.
+18. Initiate the Measurement.
+19. Fetch ORFS Measurements and Traces.
+20. Close RFmx Session.
+
+The gRPC API is built from the C API. RFmx GSM documentation is installed with the driver at:
+C:\Program Files (x86)\National Instruments\RFmx\GSM\Documentation\rfmxgsmcvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx GSM" on the server machine.
+Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-gsm-edge-.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page.
+Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmx GSM gRPC Wiki for the latest C Function Reference:
+Link: https://github.com/ni/grpc-device/wiki/NI-RFmx-GSM-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python orfs.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name
+"""
 
 import sys
 
@@ -73,7 +79,7 @@ def check_for_warning(response, instrument):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.GetErrorString(
-            nirfmxlte_types.GetErrorStringRequest(
+            nirfmxgsm_types.GetErrorStringRequest(
                 instrument=instrument,
                 error_code=response.status,
             )

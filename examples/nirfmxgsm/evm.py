@@ -1,37 +1,43 @@
-# Steps:
-# 1. Open a new RFmx Session.
-# 2. Configure Frequency Reference.
-# 3. Configure basic signal properties (Center Frequency, Reference Level and External Attenuation).
-# 4. Configure Trigger Parameters for IQ Power Edge Trigger.
-# 5. Configure Number of Timeslots.
-# 6. Configure Auto tsc Detection Enabled.
-# 7. Configure Signal Type.
-# 8. Configure tsc.
-# 9. Select ModAcc measurement and enable Traces.
-# 10. Configure Averaging Parameters for ModAcc measurement.
-# 11. Initiate the Measurement.
-# 12. Fetch ModAcc Measurements and Traces.
-# 13. Close RFmx Session.
-#
-# The gRPC API is built from the C API. RFmx GSM documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\GSM\Documentation\rfmxgsmcvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx GSM" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-gsm-edge-.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmx GSM gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmx-GSM-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python evm.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+r"""EVM example
+
+Steps:
+1. Open a new RFmx Session.
+2. Configure Frequency Reference.
+3. Configure basic signal properties (Center Frequency, Reference Level and External Attenuation).
+4. Configure Trigger Parameters for IQ Power Edge Trigger.
+5. Configure Number of Timeslots.
+6. Configure Auto tsc Detection Enabled.
+7. Configure Signal Type.
+8. Configure tsc.
+9. Select ModAcc measurement and enable Traces.
+10. Configure Averaging Parameters for ModAcc measurement.
+11. Initiate the Measurement.
+12. Fetch ModAcc Measurements and Traces.
+13. Close RFmx Session.
+
+The gRPC API is built from the C API. RFmx GSM documentation is installed with the driver at:
+C:\Program Files (x86)\National Instruments\RFmx\GSM\Documentation\rfmxgsmcvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx GSM" on the server machine.
+Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-gsm-edge-.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page.
+Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmx GSM gRPC Wiki for the latest C Function Reference:
+Link: https://github.com/ni/grpc-device/wiki/NI-RFmx-GSM-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python evm.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name
+"""
 
 import sys
 
