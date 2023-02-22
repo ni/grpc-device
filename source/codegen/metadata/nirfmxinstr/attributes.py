@@ -18,7 +18,7 @@ attributes = {
     },
     5: {
         'access': 'read-write',
-        'name': 'RF_ATTENUATION_VALUE',
+        'name': 'RF_ATTENUATION',
         'type': 'float64'
     },
     6: {
@@ -29,7 +29,7 @@ attributes = {
     },
     7: {
         'access': 'read-write',
-        'name': 'MECHANICAL_ATTENUATION_VALUE',
+        'name': 'MECHANICAL_ATTENUATION',
         'type': 'float64'
     },
     8: {
@@ -40,7 +40,6 @@ attributes = {
     },
     9: {
         'access': 'read-write',
-        'enum': 'FrequencySettlingUnits',
         'name': 'FREQUENCY_SETTLING_UNITS',
         'type': 'int32'
     },
@@ -68,6 +67,7 @@ attributes = {
     },
     14: {
         'access': 'read-write',
+        'enum': 'PreampEnabled',
         'name': 'PREAMP_ENABLED',
         'type': 'int32'
     },
@@ -110,7 +110,7 @@ attributes = {
     },
     23: {
         'access': 'read-write',
-        'enum': 'OspDelayEnabled',
+        'enum': 'OSPDelay',
         'name': 'OSP_DELAY_ENABLED',
         'type': 'int32'
     },
@@ -161,7 +161,6 @@ attributes = {
     },
     33: {
         'access': 'read-write',
-        'enum': 'LOExportEnabled',
         'name': 'LO_EXPORT_ENABLED',
         'type': 'int32'
     },
@@ -184,55 +183,55 @@ attributes = {
     },
     37: {
         'access': 'read-write',
-        'enum': 'CleanerSpectrumEnabled',
-        'name': 'CLEANER_SPECTRUM_ENABLED',
+        'enum': 'CleanerSpectrum',
+        'name': 'CLEANER_SPECTRUM',
         'type': 'int32'
     },
     39: {
         'access': 'read-write',
-        'enum': 'RecommendedAcquisitionType',
-        'name': 'RECOMMENDED_ACQUISITION_TYPE',
+        'enum': 'RecommendedSettingsAcquisitionType',
+        'name': 'RECOMMENDED_SETTINGS_ACQUISITION_TYPE',
         'type': 'int32'
     },
     40: {
         'access': 'read-write',
-        'name': 'RECOMMENDED_NUMBER_OF_RECORDS',
+        'name': 'RECOMMENDED_SETTINGS_NUMBER_OF_RECORDS',
         'type': 'int32'
     },
     41: {
         'access': 'read-write',
-        'name': 'RECOMMENDED_TRIGGER_MINIMUM_QUIET_TIME',
+        'name': 'RECOMMENDED_SETTINGS_TRIGGER_MIN_QUIET_TIME',
         'type': 'float64'
     },
     42: {
         'access': 'read-write',
-        'name': 'RECOMMENDED_IQ_ACQUISITION_TIME',
+        'name': 'RECOMMENDED_SETTINGS_IQ_ACQUISITION_TIME',
         'type': 'float64'
     },
     43: {
         'access': 'read-write',
-        'name': 'RECOMMENDED_IQ_MINIMUM_SAMPLE_RATE',
+        'name': 'RECOMMENDED_SETTINGS_IQ_MINIMUM_SAMPLE_RATE',
         'type': 'float64'
     },
     44: {
         'access': 'read-write',
-        'name': 'RECOMMENDED_IQ_PRE_TRIGGER_TIME',
+        'name': 'RECOMMENDED_SETTINGS_IQ_PRE_TRIGGER_TIME',
         'type': 'float64'
     },
     45: {
         'access': 'read-write',
-        'name': 'RECOMMENDED_SPECTRAL_ACQUISITION_SPAN',
+        'name': 'RECOMMENDED_SETTINGS_SPECTRAL_ACQUISITION_SPAN',
         'type': 'float64'
     },
     46: {
         'access': 'read-write',
-        'enum': 'RecommendedSpectralFftWindow',
-        'name': 'RECOMMENDED_SPECTRAL_FFT_WINDOW',
+        'enum': 'RecommendedSettingsSpectralFfTWindow',
+        'name': 'RECOMMENDED_SETTINGS_SPECTRAL_FFT_WINDOW',
         'type': 'int32'
     },
     47: {
         'access': 'read-write',
-        'name': 'RECOMMENDED_SPECTRAL_RESOLUTION_BANDWIDTH',
+        'name': 'RECOMMENDED_SETTINGS_SPECTRAL_RESOLUTION_BANDWIDTH',
         'type': 'float64'
     },
     48: {
@@ -283,7 +282,7 @@ attributes = {
     },
     57: {
         'access': 'read-write',
-        'name': 'RECOMMENDED_CENTER_FREQUENCY',
+        'name': 'RECOMMENDED_SETTINGS_CENTER_FREQUENCY',
         'type': 'float64'
     },
     58: {
@@ -302,6 +301,11 @@ attributes = {
         'access': 'read-write',
         'name': 'LO_FREQUENCY',
         'type': 'float64'
+    },
+    65: {
+        'access': 'read-write',
+        'name': 'SELECTOR_STRING',
+        'type': 'char[]'
     },
     68: {
         'access': 'read-write',
@@ -326,13 +330,13 @@ attributes = {
     },
     74: {
         'access': 'read-write',
-        'enum': 'AutomaticSGSASharedLOEnabled',
-        'name': 'AUTOMATIC_SG_SA_SHARED_LO_ENABLED',
+        'enum': 'AutomaticSGSASharedLO',
+        'name': 'AUTOMATIC_SG_SA_SHARED_LO',
         'type': 'int32'
     },
     77: {
         'access': 'read-write',
-        'enum': 'OverflowErrorReporting',
+        'enum': 'AdvancedOverflowErrorReporting',
         'name': 'OVERFLOW_ERROR_REPORTING',
         'type': 'int32'
     },
@@ -353,8 +357,8 @@ attributes = {
     },
     90: {
         'access': 'read-write',
-        'enum': 'LOPllFractionalModeEnabled',
-        'name': 'LO_PLL_FRACTIONAL_MODE_ENABLED',
+        'enum': 'LOPLLFractionalMode',
+        'name': 'LO_PLL_FRACTIONAL_MODE',
         'type': 'int32'
     },
     91: {
