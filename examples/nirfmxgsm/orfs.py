@@ -146,7 +146,7 @@ try:
             instrument=instr,
             selector_string="",
             iq_power_edge_source="0",
-            iq_power_edge_slope=nirfmxgsm_types.NIRFMXGSM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING,
+            iq_power_edge_slope=nirfmxgsm_types.IQ_POWER_EDGE_TRIGGER_SLOPE_RISING,
             iq_power_edge_level=-20.0,
             trigger_delay=0.0,
             minimum_quiet_time_mode=nirfmxgsm_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
@@ -232,7 +232,7 @@ try:
             instrument=instr,
             selector_string="",
             evaluation_symbols_start=50.0,
-            evaluation_symbols_include_tsc=0,
+            evaluation_symbols_include_tsc=nirfmxgsm_types.ORFS_EVALUATION_SYMBOLS_INCLUDE_TSC_FALSE,
             evaluation_symbols_stop=90.0,
         )
     )
