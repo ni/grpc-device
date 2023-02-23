@@ -370,11 +370,11 @@ enums = {
     'DigitalEdgeTriggerEdge': {
         'values': [
             {
-                'name': 'RISING_EDGE',
+                'name': 'RISING',
                 'value': 0
             },
             {
-                'name': 'FALLING_EDGE',
+                'name': 'FALLING',
                 'value': 1
             }
         ]
@@ -572,11 +572,11 @@ enums = {
     'IQPowerEdgeTriggerSlope': {
         'values': [
             {
-                'name': 'RISING_SLOPE',
+                'name': 'RISING',
                 'value': 0
             },
             {
-                'name': 'FALLING_SLOPE',
+                'name': 'FALLING',
                 'value': 1
             }
         ]
