@@ -310,6 +310,19 @@ try:
         print(f"Lower Relative Power (dB)           : {switch_lower_relative_power[i]}")
         print(f"Upper Absolute Power (dBm)          : {switch_upper_absolute_power[i]}")
         print(f"Upper Relative Power (dB)           : {switch_upper_relative_power[i]}")
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
         client.Close(nirfmxgsm_types.CloseRequest(instrument=instr, force_destroy=False))
