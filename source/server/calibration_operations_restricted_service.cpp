@@ -147,6 +147,7 @@ CalibrationOperationsRestrictedService::CalibrationOperationsRestrictedService(:
       if (NISysCfg_Failed(status)) {
         if (status == NISysCfg_PropDoesNotExist) {
           status = NISysCfg_OK;
+          break;
         }
         else {
           return status;
@@ -156,11 +157,13 @@ CalibrationOperationsRestrictedService::CalibrationOperationsRestrictedService(:
         calibration_internal_name->Add(internal_calibration_name);
         *calibration_internal_name_available = true;
       }
-
+    }
+    for (int i = 0; i < syscfg_details; ++i) {
       status = library->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyInternalCalibrationLastTemp, i, &syscfg_temp);
       if (NISysCfg_Failed(status)) {
         if (status == NISysCfg_PropDoesNotExist) {
           status = NISysCfg_OK;
+          break;
         }
         else {
           return status;
@@ -170,11 +173,13 @@ CalibrationOperationsRestrictedService::CalibrationOperationsRestrictedService(:
         calibration_internal_last_temperature_c->Add(syscfg_temp);
         *calibration_internal_last_temperature_c_available = true;
       }
-
+    }
+    for (int i = 0; i < syscfg_details; ++i) {
       status = library->GetResourceIndexedProperty(resource, NISysCfgIndexedPropertyInternalCalibrationLastTime, i, &syscfg_time);
       if (NISysCfg_Failed(status)) {
         if (status == NISysCfg_PropDoesNotExist) {
           status = NISysCfg_OK;
+          break;
         }
         else {
           return status;
