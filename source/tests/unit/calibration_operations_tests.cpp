@@ -42,29 +42,40 @@ static NISysCfgStatus SetBoolToTrue(void* value)
   *static_cast<bool*>(value) = true;
   return NISysCfg_OK;
 }
+const CVIAbsoluteTime TestTime0 = {{55564}};
+
+const CVIAbsoluteTime TestTime1 = {{9569}};
+
+const CVIAbsoluteTime TestTime2 = {{8864}};
+
 static NISysCfgStatus SetTimestampToStatic0(void* value)
 {
-  *reinterpret_cast<NISysCfgTimestampUTC*>(value) = {{55564}};
+  *reinterpret_cast<NISysCfgTimestampUTC*>(value) = *reinterpret_cast<const NISysCfgTimestampUTC*>(&TestTime0);
   return NISysCfg_OK;
 }
 static NISysCfgStatus SetTimestampToStatic1(void* value)
 {
-  *reinterpret_cast<NISysCfgTimestampUTC*>(value) = {{9569}};
+  *reinterpret_cast<NISysCfgTimestampUTC*>(value) = *reinterpret_cast<const NISysCfgTimestampUTC*>(&TestTime1);
   return NISysCfg_OK;
 }
 
 static NISysCfgStatus SetTimestampToStatic2(void* value)
 {
-  *reinterpret_cast<NISysCfgTimestampUTC*>(value) = {{8864}};
+  *reinterpret_cast<NISysCfgTimestampUTC*>(value) = *reinterpret_cast<const NISysCfgTimestampUTC*>(&TestTime2);
   return NISysCfg_OK;
 }
 
-const std::string TestString1 = "DAQ";
+const std::string TestString0 = "DAQ";
 
-const std::string TestString2 = "PXI";
+const std::string TestString1 = "PXI";
 
-const std::string TestString3 = "MyRIO";
+const std::string TestString2 = "MyRIO";
 
+static NISysCfgStatus SetString0(void* value)
+{
+  strcpy(static_cast<char*>(value), TestString0.c_str());
+  return NISysCfg_OK;
+}
 static NISysCfgStatus SetString1(void* value)
 {
   strcpy(static_cast<char*>(value), TestString1.c_str());
@@ -75,27 +86,28 @@ static NISysCfgStatus SetString2(void* value)
   strcpy(static_cast<char*>(value), TestString2.c_str());
   return NISysCfg_OK;
 }
-static NISysCfgStatus SetString3(void* value)
+
+const double TestDouble0 = 7.8;
+
+const double TestDouble1 = 8.342;
+
+const double TestDouble2 = 72.3;
+
+static NISysCfgStatus SetDouble0(void* value)
 {
-  strcpy(static_cast<char*>(value), TestString3.c_str());
+  *static_cast<double*>(value) = TestDouble0;
   return NISysCfg_OK;
 }
 
 static NISysCfgStatus SetDouble1(void* value)
 {
-  *static_cast<double*>(value) = 7.8;
+  *static_cast<double*>(value) = TestDouble1;
   return NISysCfg_OK;
 }
 
 static NISysCfgStatus SetDouble2(void* value)
 {
-  *static_cast<double*>(value) = 8.342;
-  return NISysCfg_OK;
-}
-
-static NISysCfgStatus SetDouble3(void* value)
-{
-  *static_cast<double*>(value) = 72.3;
+  *static_cast<double*>(value) = TestDouble2;
   return NISysCfg_OK;
 }
 
@@ -209,9 +221,13 @@ TEST(CalibrationOperationsTests, DeviceIsPresent_QueryExternalCalibrationLastTim
       .WillOnce(Return(NISysCfg_OK));
   EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyExternalCalibrationLastTime, _))
       .WillOnce(WithArg<2>(SetTimestampToStatic0));
+
+  google::protobuf::Timestamp ExpectedTime3;
+  nidevice_grpc::converters::convert_to_grpc(SetTimestampToStatic0, &ExpectedTime3);
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
+
   EXPECT_TRUE(status.ok());
-  EXPECT_TRUE(response.calibration_external_last_reading());
+  EXPECT_EQ(ExpectedTime3, response.calibration_external_last_reading());
   EXPECT_TRUE(response.calibration_external_last_reading_available());
 }
 
@@ -276,8 +292,12 @@ TEST(CalibrationOperationsTests, DeviceIsPresent_QueryCalibrationNextRecommended
   EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyRecommendedNextCalibrationTime, _))
       .WillOnce(WithArg<2>(SetTimestampToStatic0));
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
+
+  google::protobuf::Timestamp ExpectedTime4;
+  nidevice_grpc::converters::convert_to_grpc(SetTimestampToStatic0, &ExpectedTime4);
+
   EXPECT_TRUE(status.ok());
-  EXPECT_TRUE(response.calibration_external_next_reading());
+  EXPECT_EQ(ExpectedTime4, response.calibration_external_next_reading());
   EXPECT_TRUE(response.calibration_external_next_reading_available());
 }
 
@@ -309,14 +329,17 @@ TEST(CalibrationOperationsTests, DeviceIsPresent_QueryInternalCalibrationNameSup
   EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyNumberOfInternalCalibrationDetails, _))
       .WillOnce(WithArg<2>(SetUintToThree));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyInternalCalibrationName, 0, _))
-      .WillOnce(WithArg<2>(SetString1));
+      .WillOnce(WithArg<2>(SetString0));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyInternalCalibrationName, 1, _))
-      .WillOnce(WithArg<2>(SetString2));
+      .WillOnce(WithArg<2>(SetString1));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyInternalCalibrationName, 2, _))
-      .WillOnce(WithArg<2>(SetString3));
+      .WillOnce(WithArg<2>(SetString2));
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
   EXPECT_TRUE(status.ok());
-  EXPECT_TRUE(response.calibration_internal_name());
+  EXPECT_EQ(TestString0, response.calibration_internal_name().at(0));
+  EXPECT_EQ(TestString1, response.calibration_internal_name().at(1));
+  EXPECT_EQ(TestString2, response.calibration_internal_name().at(2));
+
   EXPECT_TRUE(response.calibration_internal_name_available());
 }
 
@@ -357,7 +380,17 @@ TEST(CalibrationOperationsTests, DeviceIsPresent_QueryInternalCalibrationLastTim
       .WillOnce(WithArg<2>(SetTimestampToStatic2));
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
   EXPECT_TRUE(status.ok());
-  EXPECT_TRUE(response.calibration_internal_last_reading());
+  google::protobuf::Timestamp ExpectedTime0;
+  google::protobuf::Timestamp ExpectedTime1;
+  google::protobuf::Timestamp ExpectedTime2;
+
+  nidevice_grpc::converters::convert_to_grpc(TestTime0, &ExpectedTime0);
+  nidevice_grpc::converters::convert_to_grpc(TestTime1, &ExpectedTime1);
+  nidevice_grpc::converters::convert_to_grpc(TestTime2, &ExpectedTime2);
+
+  EXPECT_EQ(ExpectedTime0, response.calibration_internal_last_reading().at(0));
+  EXPECT_EQ(ExpectedTime1, response.calibration_internal_last_reading().at(1));
+  EXPECT_EQ(ExpectedTime2, response.calibration_internal_last_reading().at(2));
   EXPECT_TRUE(response.calibration_internal_last_reading_available());
 }
 
@@ -391,14 +424,17 @@ TEST(CalibrationOperationsTests, DeviceIsPresent_QueryInternalCalibrationLastTem
   EXPECT_CALL(mock_library, GetResourceProperty(_, NISysCfgResourcePropertyNumberOfInternalCalibrationDetails, _))
       .WillOnce(WithArg<2>(SetUintToThree));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyInternalCalibrationLastTemp, 0, _))
-      .WillOnce(WithArg<2>(SetDouble1));
+      .WillOnce(WithArg<2>(SetDouble0));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyInternalCalibrationLastTemp, 1, _))
-      .WillOnce(WithArg<2>(SetDouble2));
+      .WillOnce(WithArg<2>(SetDouble1));
   EXPECT_CALL(mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyInternalCalibrationLastTemp, 2, _))
-      .WillOnce(WithArg<2>(SetDouble3));
+      .WillOnce(WithArg<2>(SetDouble2));
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
   EXPECT_TRUE(status.ok());
-  EXPECT_TRUE(response.calibration_internal_last_temperature_c());
+  EXPECT_EQ(TestDouble0, response.calibration_internal_last_temperature_c().at(0));
+  EXPECT_EQ(TestDouble1, response.calibration_internal_last_temperature_c().at(1));
+  EXPECT_EQ(TestDouble2, response.calibration_internal_last_temperature_c().at(2));
+
   EXPECT_TRUE(response.calibration_internal_last_temperature_c_available());
 }
 
