@@ -370,11 +370,11 @@ enums = {
     'DigitalEdgeTriggerEdge': {
         'values': [
             {
-                'name': 'RISING_EDGE',
+                'name': 'RISING',
                 'value': 0
             },
             {
-                'name': 'FALLING_EDGE',
+                'name': 'FALLING',
                 'value': 1
             }
         ]
@@ -455,83 +455,83 @@ enums = {
     'DownlinkTestModel': {
         'values': [
             {
-                'name': 'TEST_MODEL_1_16DPCH',
+                'name': '1_16DPCH',
                 'value': 0
             },
             {
-                'name': 'TEST_MODEL_1_32DPCH',
+                'name': '1_32DPCH',
                 'value': 1
             },
             {
-                'name': 'TEST_MODEL_1_64DPCH',
+                'name': '1_64DPCH',
                 'value': 2
             },
             {
-                'name': 'TEST_MODEL_1_16DPCH_SCCPCH',
+                'name': '1_16DPCH_SCCPCH',
                 'value': 3
             },
             {
-                'name': 'TEST_MODEL_1_32DPCH_SCCPCH',
+                'name': '1_32DPCH_SCCPCH',
                 'value': 4
             },
             {
-                'name': 'TEST_MODEL_1_64DPCH_SCCPCH',
+                'name': '1_64DPCH_SCCPCH',
                 'value': 5
             },
             {
-                'name': 'TEST_MODEL_2',
+                'name': '2',
                 'value': 6
             },
             {
-                'name': 'TEST_MODEL_2_SCCPCH',
+                'name': '2_SCCPCH',
                 'value': 7
             },
             {
-                'name': 'TEST_MODEL_3_16DPCH',
+                'name': '3_16DPCH',
                 'value': 8
             },
             {
-                'name': 'TEST_MODEL_3_32DPCH',
+                'name': '3_32DPCH',
                 'value': 9
             },
             {
-                'name': 'TEST_MODEL_3_16DPCH_SCCPCH',
+                'name': '3_16DPCH_SCCPCH',
                 'value': 10
             },
             {
-                'name': 'TEST_MODEL_3_32DPCH_SCCPCH',
+                'name': '3_32DPCH_SCCPCH',
                 'value': 11
             },
             {
-                'name': 'TEST_MODEL_4',
+                'name': '4',
                 'value': 12
             },
             {
-                'name': 'TEST_MODEL_4_PCPICH',
+                'name': '4_PCPICH',
                 'value': 13
             },
             {
-                'name': 'TEST_MODEL_5_2HSPDSCH_16QAM',
+                'name': '5_2HSPDSCH_16QAM',
                 'value': 14
             },
             {
-                'name': 'TEST_MODEL_5_4HSPDSCH_4DPCH_16QAM',
+                'name': '5_4HSPDSCH_4DPCH_16QAM',
                 'value': 15
             },
             {
-                'name': 'TEST_MODEL_5_4HSPDSCH_14DPCH_16QAM',
+                'name': '5_4HSPDSCH_14DPCH_16QAM',
                 'value': 16
             },
             {
-                'name': 'TEST_MODEL_5_8HSPDSCH_16QAM',
+                'name': '5_8HSPDSCH_16QAM',
                 'value': 17
             },
             {
-                'name': 'TEST_MODEL_6_4HSPDSCH_64QAM',
+                'name': '6_4HSPDSCH_64QAM',
                 'value': 18
             },
             {
-                'name': 'TEST_MODEL_6_8HSPDSCH_64QAM',
+                'name': '6_8HSPDSCH_64QAM',
                 'value': 19
             }
         ]
@@ -572,11 +572,11 @@ enums = {
     'IQPowerEdgeTriggerSlope': {
         'values': [
             {
-                'name': 'RISING_SLOPE',
+                'name': 'RISING',
                 'value': 0
             },
             {
-                'name': 'FALLING_SLOPE',
+                'name': 'FALLING',
                 'value': 1
             }
         ]
