@@ -58,15 +58,15 @@ enums = {
     'BurstSynchronizationType': {
         'values': [
             {
-                'name': 'BURST_SYNC_TYPE_TSC',
+                'name': 'TSC',
                 'value': 0
             },
             {
-                'name': 'BURST_SYNC_TYPE_AMPLITUDE',
+                'name': 'AMPLITUDE',
                 'value': 1
             },
             {
-                'name': 'BURST_SYNC_TYPE_NONE',
+                'name': 'NONE',
                 'value': 2
             }
         ]
