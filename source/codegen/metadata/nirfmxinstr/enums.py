@@ -15,26 +15,14 @@ enums = {
             }
         ]
     },
-    'AdvancedOverflowErrorReporting': {
+    'AutomaticSGSASharedLOEnabled': {
         'values': [
             {
-                'name': 'WARNING',
+                'name': 'FALSE',
                 'value': 0
             },
             {
-                'name': 'DISABLED',
-                'value': 1
-            }
-        ]
-    },
-    'AutomaticSGSASharedLO': {
-        'values': [
-            {
-                'name': 'DISABLED',
-                'value': 0
-            },
-            {
-                'name': 'ENABLED',
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -51,14 +39,14 @@ enums = {
             }
         ]
     },
-    'CleanerSpectrum': {
+    'CleanerSpectrumEnabled': {
         'values': [
             {
-                'name': 'DISABLED',
+                'name': 'FALSE',
                 'value': 0
             },
             {
-                'name': 'ENABLED',
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -238,6 +226,22 @@ enums = {
             }
         ]
     },
+    'FrequencySettlingUnits': {
+        'values': [
+            {
+                'name': 'PPM',
+                'value': 0
+            },
+            {
+                'name': 'SECONDS_AFTER_IO',
+                'value': 2
+            },
+            {
+                'name': 'SECONDS_AFTER_LOCK',
+                'value': 1
+            }
+        ]
+    },
     'InputIsolationEnabled': {
         'values': [
             {
@@ -251,6 +255,18 @@ enums = {
         ]
     },
     'LO2ExportEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'LOExportEnabled': {
         'values': [
             {
                 'name': 'FALSE',
@@ -286,15 +302,14 @@ enums = {
             }
         ]
     },
-    'LOPLLFractionalMode': {
-        'enum-value-prefix': 'LO_PLL_FRACTIONAL_MODE',
+    'LOPllFractionalModeEnabled': {
         'values': [
             {
-                'name': 'DISABLED',
+                'name': 'FALSE',
                 'value': 0
             },
             {
-                'name': 'ENABLED',
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -372,18 +387,6 @@ enums = {
             }
         ]
     },
-    'OSPDelay': {
-        'values': [
-            {
-                'name': 'DISABLED',
-                'value': 0
-            },
-            {
-                'name': 'ENABLED',
-                'value': 1
-            }
-        ]
-    },
     'OptimizePathForSignalBandwidth': {
         'values': [
             {
@@ -396,6 +399,18 @@ enums = {
             },
             {
                 'name': 'ENABLED',
+                'value': 1
+            }
+        ]
+    },
+    'OspDelayEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -458,10 +473,18 @@ enums = {
             {
                 'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
+            }
+        ]
+    },
+    'OverflowErrorReporting': {
+        'values': [
+            {
+                'name': 'DISABLED',
+                'value': 1
             },
             {
-                'name': 'DO_NOT_EXPORT',
-                'value': ''
+                'name': 'WARNING',
+                'value': 0
             }
         ]
     },
@@ -504,10 +527,6 @@ enums = {
                 'value': 256
             },
             {
-                'name': 'PULSE',
-                'value': 2048
-            },
-            {
                 'name': 'SPECAN',
                 'value': 1
             },
@@ -529,22 +548,6 @@ enums = {
             }
         ]
     },
-    'PreampEnabled': {
-        'values': [
-            {
-                'name': 'DISABLED',
-                'value': 0
-            },
-            {
-                'name': 'ENABLED',
-                'value': 1
-            },
-            {
-                'name': 'AUTOMATIC',
-                'value': 3
-            }
-        ]
-    },
     'RFAttenuationAuto': {
         'values': [
             {
@@ -557,44 +560,24 @@ enums = {
             }
         ]
     },
-    'RecommendedSettingsAcquisitionType': {
+    'RecommendedAcquisitionType': {
         'values': [
             {
                 'name': 'IQ',
                 'value': 0
             },
             {
-                'name': 'SPECTRAL',
-                'value': 1
+                'name': 'IQ_OR_SPECTRAL',
+                'value': 2
             },
             {
-                'name': 'IQORSPECTRAL',
-                'value': 2
+                'name': 'SPECTRAL',
+                'value': 1
             }
         ]
     },
-    'RecommendedSettingsSpectralFfTWindow': {
+    'RecommendedSpectralFftWindow': {
         'values': [
-            {
-                'name': 'NONE',
-                'value': 0
-            },
-            {
-                'name': 'FLAT_TOP',
-                'value': 1
-            },
-            {
-                'name': 'HANNING',
-                'value': 2
-            },
-            {
-                'name': 'HAMMING',
-                'value': 3
-            },
-            {
-                'name': 'GAUSSIAN',
-                'value': 4
-            },
             {
                 'name': 'BLACKMAN',
                 'value': 5
@@ -604,8 +587,28 @@ enums = {
                 'value': 6
             },
             {
+                'name': 'FLAT_TOP',
+                'value': 1
+            },
+            {
+                'name': 'GAUSSIAN',
+                'value': 4
+            },
+            {
+                'name': 'HAMMING',
+                'value': 3
+            },
+            {
+                'name': 'HANNING',
+                'value': 2
+            },
+            {
                 'name': 'KAISER_BESSEL',
                 'value': 7
+            },
+            {
+                'name': 'NONE',
+                'value': 0
             }
         ]
     },
