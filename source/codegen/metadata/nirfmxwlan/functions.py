@@ -4799,6 +4799,58 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'OFDMModAccFetchPreambleAveragePowers80211be': {
+        'cname': 'RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11be',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'rl_sig_average_power_mean',
+                'name': 'rlsigAveragePowerMean',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'u_sig_average_power_mean',
+                'name': 'usigAveragePowerMean',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'eht_sig_average_power_mean',
+                'name': 'ehtsigAveragePowerMean',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'eht_stf_average_power_mean',
+                'name': 'ehtstfAveragePowerMean',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'eht_ltf_average_power_mean',
+                'name': 'ehtltfAveragePowerMean',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'OFDMModAccFetchPreambleAveragePowers80211n': {
         'cname': 'RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11n',
         'parameters': [
@@ -5028,6 +5080,58 @@ functions = {
                 'direction': 'out',
                 'grpc_name': 'he_ltf_peak_power_maximum',
                 'name': 'heltfPeakPowerMaximum',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'OFDMModAccFetchPreamblePeakPowers80211be': {
+        'cname': 'RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11be',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'rl_sig_peak_power_maximum',
+                'name': 'rlsigPeakPowerMaximum',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'u_sig_peak_power_maximum',
+                'name': 'usigPeakPowerMaximum',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'eht_sig_peak_power_maximum',
+                'name': 'ehtsigPeakPowerMaximum',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'eht_stf_peak_power_maximum',
+                'name': 'ehtstfPeakPowerMaximum',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'eht_ltf_peak_power_maximum',
+                'name': 'ehtltfPeakPowerMaximum',
                 'type': 'float64'
             }
         ],
