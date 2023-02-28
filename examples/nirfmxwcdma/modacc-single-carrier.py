@@ -121,7 +121,7 @@ try:
             instrument=instr,
             selector_string="",
             digital_edge_source_mapped=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_SOURCE_PFI0,
-            digital_edge=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
+            digital_edge=nirfmxwcdma_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING,
             trigger_delay=0.000000,
             enable_trigger=False,
         )

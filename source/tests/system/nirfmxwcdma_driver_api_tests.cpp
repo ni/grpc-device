@@ -83,7 +83,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, AcpMultiCarrierFromExample_FetchData_DataLooks
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 1.95e9));
   EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.0));
   EXPECT_SUCCESS(session, client::cfg_rf_attenuation(stub(), session, "", RF_ATTENUATION_AUTO_TRUE, 10.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::cfg_contiguous_carriers(stub(), session, "", NUMBER_OF_CARRIERS, -1));
   EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 0.01));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_ACP, true));
@@ -141,7 +141,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, AcpSingleCarrierFromExample_FetchData_DataLook
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 1.95e9 ));
   EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.0));
   EXPECT_SUCCESS(session, client::cfg_rf_attenuation(stub(), session, "",  RF_ATTENUATION_AUTO_TRUE, 10.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 0.01));
 
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_ACP, true));
@@ -186,7 +186,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ChpMultiCarrierFromExample_FetchData_DataLooks
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::cfg_contiguous_carriers(stub(), session, "", NUMBER_OF_CARRIERS, -1));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_CHP, true));
   EXPECT_SUCCESS(session, client::chp_cfg_sweep_time(stub(), session, "", CHP_SWEEP_TIME_AUTO_TRUE, 0.000667));
@@ -221,7 +221,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ChpSingleCarrierFromExample_FetchData_DataLook
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_CHP, true));
   EXPECT_SUCCESS(session, client::chp_cfg_sweep_time(stub(), session, "", CHP_SWEEP_TIME_AUTO_TRUE, 0.000667));
   EXPECT_SUCCESS(session, client::chp_cfg_averaging(stub(), session, "", CHP_AVERAGING_ENABLED_FALSE, 10, CHP_AVERAGING_TYPE_RMS));
@@ -245,7 +245,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, CdaFromExample_FetchData_DataLooksReasonable)
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::cfg_uplink_scrambling(stub(), session, "", 0, UPLINK_SCRAMBLING_TYPE_LONG));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_CDA, true));
   EXPECT_SUCCESS(session, client::cda_cfg_synchronization_mode_and_interval(stub(), session, "", CDA_SYNCHRONIZATION_MODE_SLOT, 0, 1));
@@ -299,7 +299,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ModAccMarkerModeFromExample_FetchData_DataLook
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, true));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, true));
   EXPECT_SUCCESS(session, client::cfg_uplink_scrambling(stub(), session, "", 0x0, UPLINK_SCRAMBLING_TYPE_LONG));
   EXPECT_SUCCESS(session, client::cfg_channel_configuration_mode(stub(), session, "", CHANNEL_CONFIGURATION_MODE_TEST_MODEL));
   EXPECT_SUCCESS(session, client::cfg_uplink_test_model(stub(), session, "", UPLINK_TEST_MODEL_R6C_2_1));  
@@ -373,7 +373,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ModAccSingleCarrierFromExample_FetchData_DataL
   session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::cfg_uplink_scrambling(stub(), session, "", 0, UPLINK_SCRAMBLING_TYPE_LONG));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true)); 
   EXPECT_SUCCESS(session, client::mod_acc_cfg_synchronization_mode_and_interval(stub(), session, "", MODACC_SYNCHRONIZATION_MODE_SLOT, 0, 1));  
@@ -430,7 +430,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ObwMultiCarrierFromExample_FetchData_DataLooks
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.00, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::cfg_contiguous_carriers(stub(), session, "", 2, -1));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OBW, true));
   EXPECT_SUCCESS(session, client::obw_cfg_sweep_time(stub(), session, "", OBW_SWEEP_TIME_AUTO_TRUE, 0.000667));
@@ -458,7 +458,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, ObwSingleCarrierFromExample_FetchData_DataLook
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OBW, true));
   EXPECT_SUCCESS(session, client::obw_cfg_sweep_time(stub(), session, "", OBW_SWEEP_TIME_AUTO_TRUE, 0.000667));
   EXPECT_SUCCESS(session, client::obw_cfg_averaging(stub(), session, "", OBW_AVERAGING_ENABLED_FALSE, 10, OBW_AVERAGING_TYPE_RMS));
@@ -485,7 +485,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, QevmFromExample_FetchData_DataLooksReasonable)
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_QEVM, true));
   EXPECT_SUCCESS(session, client::qevm_cfg_averaging(stub(), session, "", QEVM_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::qevm_cfg_measurement_length(stub(), session, "", 2560));
@@ -529,7 +529,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, SemSingleCarrierFromExample_FetchData_DataLook
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.00, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::cfg_band(stub(), session, "", 1));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SEM, true));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 0.000667));
@@ -592,7 +592,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, SlotPowerFromExample_FetchData_DataLooksReason
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.00, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::cfg_uplink_scrambling(stub(), session, "", 0, UPLINK_SCRAMBLING_TYPE_LONG));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SLOTPOWER, true));
   EXPECT_SUCCESS(session, client::slot_power_cfg_synchronization_mode_and_interval(stub(), session, "", SLOT_POWER_SYNCHRONIZATION_MODE_SLOT, 0, 15));
@@ -614,7 +614,7 @@ TEST_F(NiRFmxWCDMADriverApiTests, SlotPhaseFromExample_FetchData_DataLooksReason
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.95e9, 0.00, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PFI0, DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, false));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SLOTPHASE, true));
   EXPECT_SUCCESS(session, client::cfg_uplink_scrambling(stub(), session, "", 0, UPLINK_SCRAMBLING_TYPE_LONG));
   EXPECT_SUCCESS(session, client::slot_power_cfg_synchronization_mode_and_interval(stub(), session, "", SLOT_PHASE_SYNCHRONIZATION_MODE_SLOT, 0, 15));
