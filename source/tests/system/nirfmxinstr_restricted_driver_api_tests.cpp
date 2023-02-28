@@ -117,14 +117,14 @@ TEST_F(NiRFmxInstrRestrictedDriverApiTests, SetAttributeOutOfRange_GetAttributeD
 {
   const double attenuation = 150.0;
   const auto session = init_session(stub(), PXI_5663E);
-  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION, attenuation));
+  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE, attenuation));
   initiate_to_enter_committed_state(session);
 
-  auto get_desired_attr_response = restricted_client::get_attribute_desired_f64(restricted_stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION);
+  auto get_desired_attr_response = restricted_client::get_attribute_desired_f64(restricted_stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE);
   EXPECT_RESPONSE_SUCCESS(get_desired_attr_response);
   EXPECT_EQ(get_desired_attr_response.attr_val(), attenuation);
 
-  auto get_attr_response = client::get_attribute_f64(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION);
+  auto get_attr_response = client::get_attribute_f64(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE);
   EXPECT_LT(get_attr_response.attr_val(), get_desired_attr_response.attr_val());
 }
 
