@@ -21,10 +21,177 @@ NiRFmxTDSCDMALibrary::NiRFmxTDSCDMALibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
+  function_pointers_.ACPCfgAveraging = reinterpret_cast<ACPCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPCfgAveraging"));
+  function_pointers_.ACPCfgMeasurementMethod = reinterpret_cast<ACPCfgMeasurementMethodPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPCfgMeasurementMethod"));
+  function_pointers_.ACPCfgNoiseCompensationEnabled = reinterpret_cast<ACPCfgNoiseCompensationEnabledPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPCfgNoiseCompensationEnabled"));
+  function_pointers_.ACPCfgNumberOfOffsets = reinterpret_cast<ACPCfgNumberOfOffsetsPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPCfgNumberOfOffsets"));
+  function_pointers_.ACPCfgRBWFilter = reinterpret_cast<ACPCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPCfgRBWFilter"));
+  function_pointers_.ACPCfgSweepTime = reinterpret_cast<ACPCfgSweepTimePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPCfgSweepTime"));
+  function_pointers_.ACPFetchAbsolutePowersTrace = reinterpret_cast<ACPFetchAbsolutePowersTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPFetchAbsolutePowersTrace"));
+  function_pointers_.ACPFetchCarrierAbsolutePower = reinterpret_cast<ACPFetchCarrierAbsolutePowerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPFetchCarrierAbsolutePower"));
+  function_pointers_.ACPFetchOffsetMeasurement = reinterpret_cast<ACPFetchOffsetMeasurementPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPFetchOffsetMeasurement"));
+  function_pointers_.ACPFetchOffsetMeasurementArray = reinterpret_cast<ACPFetchOffsetMeasurementArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPFetchOffsetMeasurementArray"));
+  function_pointers_.ACPFetchRelativePowersTrace = reinterpret_cast<ACPFetchRelativePowersTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPFetchRelativePowersTrace"));
+  function_pointers_.ACPFetchSpectrum = reinterpret_cast<ACPFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ACPFetchSpectrum"));
+  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_AbortMeasurements"));
+  function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_AnalyzeSpectrum1Waveform"));
+  function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_AutoLevel"));
+  function_pointers_.BuildChannelString = reinterpret_cast<BuildChannelStringPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_BuildChannelString"));
+  function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_BuildOffsetString"));
+  function_pointers_.BuildSegmentString = reinterpret_cast<BuildSegmentStringPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_BuildSegmentString"));
+  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_BuildSignalString"));
+  function_pointers_.CDACfgAveraging = reinterpret_cast<CDACfgAveragingPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDACfgAveraging"));
+  function_pointers_.CDACfgMeasurementChannel = reinterpret_cast<CDACfgMeasurementChannelPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDACfgMeasurementChannel"));
+  function_pointers_.CDACfgPowerUnit = reinterpret_cast<CDACfgPowerUnitPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDACfgPowerUnit"));
+  function_pointers_.CDACfgSynchronizationModeAndOffset = reinterpret_cast<CDACfgSynchronizationModeAndOffsetPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDACfgSynchronizationModeAndOffset"));
+  function_pointers_.CDAFetchCodeDomainPower = reinterpret_cast<CDAFetchCodeDomainPowerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchCodeDomainPower"));
+  function_pointers_.CDAFetchIQImpairments = reinterpret_cast<CDAFetchIQImpairmentsPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchIQImpairments"));
+  function_pointers_.CDAFetchMaximumCodeDomainPowerTrace = reinterpret_cast<CDAFetchMaximumCodeDomainPowerTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchMaximumCodeDomainPowerTrace"));
+  function_pointers_.CDAFetchMaximumSymbolEVMTrace = reinterpret_cast<CDAFetchMaximumSymbolEVMTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchMaximumSymbolEVMTrace"));
+  function_pointers_.CDAFetchMaximumSymbolMagnitudeErrorTrace = reinterpret_cast<CDAFetchMaximumSymbolMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchMaximumSymbolMagnitudeErrorTrace"));
+  function_pointers_.CDAFetchMaximumSymbolPhaseErrorTrace = reinterpret_cast<CDAFetchMaximumSymbolPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchMaximumSymbolPhaseErrorTrace"));
+  function_pointers_.CDAFetchMeanCodeDomainPowerTrace = reinterpret_cast<CDAFetchMeanCodeDomainPowerTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchMeanCodeDomainPowerTrace"));
+  function_pointers_.CDAFetchMeanSymbolEVMTrace = reinterpret_cast<CDAFetchMeanSymbolEVMTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchMeanSymbolEVMTrace"));
+  function_pointers_.CDAFetchMeanSymbolMagnitudeErrorTrace = reinterpret_cast<CDAFetchMeanSymbolMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchMeanSymbolMagnitudeErrorTrace"));
+  function_pointers_.CDAFetchMeanSymbolPhaseErrorTrace = reinterpret_cast<CDAFetchMeanSymbolPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchMeanSymbolPhaseErrorTrace"));
+  function_pointers_.CDAFetchSymbolConstellationTrace = reinterpret_cast<CDAFetchSymbolConstellationTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchSymbolConstellationTrace"));
+  function_pointers_.CDAFetchSymbolEVM = reinterpret_cast<CDAFetchSymbolEVMPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CDAFetchSymbolEVM"));
+  function_pointers_.CHPCfgAveraging = reinterpret_cast<CHPCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CHPCfgAveraging"));
+  function_pointers_.CHPCfgRBWFilter = reinterpret_cast<CHPCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CHPCfgRBWFilter"));
+  function_pointers_.CHPCfgSweepTime = reinterpret_cast<CHPCfgSweepTimePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CHPCfgSweepTime"));
+  function_pointers_.CHPFetchCarrierAbsolutePower = reinterpret_cast<CHPFetchCarrierAbsolutePowerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CHPFetchCarrierAbsolutePower"));
+  function_pointers_.CHPFetchSpectrum = reinterpret_cast<CHPFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CHPFetchSpectrum"));
+  function_pointers_.CfgChannelConfigurationMode = reinterpret_cast<CfgChannelConfigurationModePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgChannelConfigurationMode"));
+  function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgDigitalEdgeTrigger"));
+  function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgExternalAttenuation"));
+  function_pointers_.CfgFrequency = reinterpret_cast<CfgFrequencyPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgFrequency"));
+  function_pointers_.CfgFrequencyChannelNumber = reinterpret_cast<CfgFrequencyChannelNumberPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgFrequencyChannelNumber"));
+  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgFrequencyReference"));
+  function_pointers_.CfgIQPowerEdgeTrigger = reinterpret_cast<CfgIQPowerEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgIQPowerEdgeTrigger"));
+  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgMechanicalAttenuation"));
+  function_pointers_.CfgMidambleShift = reinterpret_cast<CfgMidambleShiftPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgMidambleShift"));
+  function_pointers_.CfgNumberOfChannels = reinterpret_cast<CfgNumberOfChannelsPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgNumberOfChannels"));
+  function_pointers_.CfgPilot = reinterpret_cast<CfgPilotPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgPilot"));
+  function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgRF"));
+  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgRFAttenuation"));
+  function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgReferenceLevel"));
+  function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgSoftwareEdgeTrigger"));
+  function_pointers_.CfgUplinkScramblingCode = reinterpret_cast<CfgUplinkScramblingCodePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgUplinkScramblingCode"));
+  function_pointers_.CfgUserDefinedChannel = reinterpret_cast<CfgUserDefinedChannelPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgUserDefinedChannel"));
+  function_pointers_.CfgUserDefinedChannelArray = reinterpret_cast<CfgUserDefinedChannelArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CfgUserDefinedChannelArray"));
+  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CheckMeasurementStatus"));
+  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ClearAllNamedResults"));
+  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ClearNamedResult"));
+  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CloneSignalConfiguration"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_Close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_Commit"));
+  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_CreateSignalConfiguration"));
+  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_DeleteSignalConfiguration"));
+  function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_DisableTrigger"));
+  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAllNamedResultNames"));
+  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeF32"));
+  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeF32Array"));
+  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeF64"));
+  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeF64Array"));
+  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeI16"));
+  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeI32"));
+  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeI32Array"));
+  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeI64"));
+  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeI64Array"));
+  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeI8"));
+  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeNIComplexSingleArray"));
+  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeString"));
+  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeU16"));
+  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeU32"));
+  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeU32Array"));
+  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeU64Array"));
+  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeU8"));
+  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetAttributeU8Array"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_GetErrorString"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_Initialize"));
+  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_InitializeFromNIRFSASession"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_Initiate"));
+  function_pointers_.ModAccCfgAveraging = reinterpret_cast<ModAccCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccCfgAveraging"));
+  function_pointers_.ModAccCfgSlotType = reinterpret_cast<ModAccCfgSlotTypePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccCfgSlotType"));
+  function_pointers_.ModAccCfgSynchronizationModeAndInterval = reinterpret_cast<ModAccCfgSynchronizationModeAndIntervalPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccCfgSynchronizationModeAndInterval"));
+  function_pointers_.ModAccFetchCodeDomainErrorTrace = reinterpret_cast<ModAccFetchCodeDomainErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchCodeDomainErrorTrace"));
+  function_pointers_.ModAccFetchCompositeEVM = reinterpret_cast<ModAccFetchCompositeEVMPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchCompositeEVM"));
+  function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchConstellationTrace"));
+  function_pointers_.ModAccFetchDataActiveCDE = reinterpret_cast<ModAccFetchDataActiveCDEPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchDataActiveCDE"));
+  function_pointers_.ModAccFetchDataCDE = reinterpret_cast<ModAccFetchDataCDEPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchDataCDE"));
+  function_pointers_.ModAccFetchDataEVM = reinterpret_cast<ModAccFetchDataEVMPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchDataEVM"));
+  function_pointers_.ModAccFetchDataRCDE = reinterpret_cast<ModAccFetchDataRCDEPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchDataRCDE"));
+  function_pointers_.ModAccFetchDetectedChannel = reinterpret_cast<ModAccFetchDetectedChannelPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchDetectedChannel"));
+  function_pointers_.ModAccFetchDetectedChannelArray = reinterpret_cast<ModAccFetchDetectedChannelArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchDetectedChannelArray"));
+  function_pointers_.ModAccFetchEVMTrace = reinterpret_cast<ModAccFetchEVMTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchEVMTrace"));
+  function_pointers_.ModAccFetchIQImpairments = reinterpret_cast<ModAccFetchIQImpairmentsPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchIQImpairments"));
+  function_pointers_.ModAccFetchMagnitudeErrorTrace = reinterpret_cast<ModAccFetchMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchMagnitudeErrorTrace"));
+  function_pointers_.ModAccFetchMaximumCodeDomainErrorTrace = reinterpret_cast<ModAccFetchMaximumCodeDomainErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchMaximumCodeDomainErrorTrace"));
+  function_pointers_.ModAccFetchMaximumEVMTrace = reinterpret_cast<ModAccFetchMaximumEVMTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchMaximumEVMTrace"));
+  function_pointers_.ModAccFetchMaximumMagnitudeErrorTrace = reinterpret_cast<ModAccFetchMaximumMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchMaximumMagnitudeErrorTrace"));
+  function_pointers_.ModAccFetchMaximumPhaseErrorTrace = reinterpret_cast<ModAccFetchMaximumPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchMaximumPhaseErrorTrace"));
+  function_pointers_.ModAccFetchMidambleAndDataPower = reinterpret_cast<ModAccFetchMidambleAndDataPowerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchMidambleAndDataPower"));
+  function_pointers_.ModAccFetchMidambleEVM = reinterpret_cast<ModAccFetchMidambleEVMPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchMidambleEVM"));
+  function_pointers_.ModAccFetchNumberOfDetectedChannels = reinterpret_cast<ModAccFetchNumberOfDetectedChannelsPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchNumberOfDetectedChannels"));
+  function_pointers_.ModAccFetchPhaseErrorTrace = reinterpret_cast<ModAccFetchPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchPhaseErrorTrace"));
+  function_pointers_.ModAccFetchPilotEVM = reinterpret_cast<ModAccFetchPilotEVMPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ModAccFetchPilotEVM"));
+  function_pointers_.OBWCfgAveraging = reinterpret_cast<OBWCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_OBWCfgAveraging"));
+  function_pointers_.OBWCfgRBWFilter = reinterpret_cast<OBWCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_OBWCfgRBWFilter"));
+  function_pointers_.OBWCfgSweepTime = reinterpret_cast<OBWCfgSweepTimePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_OBWCfgSweepTime"));
+  function_pointers_.OBWFetchMeasurement = reinterpret_cast<OBWFetchMeasurementPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_OBWFetchMeasurement"));
+  function_pointers_.OBWFetchSpectrum = reinterpret_cast<OBWFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_OBWFetchSpectrum"));
+  function_pointers_.PVTCfgAveraging = reinterpret_cast<PVTCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_PVTCfgAveraging"));
+  function_pointers_.PVTCfgMeasurementMethod = reinterpret_cast<PVTCfgMeasurementMethodPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_PVTCfgMeasurementMethod"));
+  function_pointers_.PVTFetchMeasurementStatus = reinterpret_cast<PVTFetchMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_PVTFetchMeasurementStatus"));
+  function_pointers_.PVTFetchPowers = reinterpret_cast<PVTFetchPowersPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_PVTFetchPowers"));
+  function_pointers_.PVTFetchSegmentMeasurement = reinterpret_cast<PVTFetchSegmentMeasurementPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_PVTFetchSegmentMeasurement"));
+  function_pointers_.PVTFetchSegmentMeasurementArray = reinterpret_cast<PVTFetchSegmentMeasurementArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_PVTFetchSegmentMeasurementArray"));
+  function_pointers_.PVTFetchSignalPowerTrace = reinterpret_cast<PVTFetchSignalPowerTracePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_PVTFetchSignalPowerTrace"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ResetAttribute"));
+  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_ResetToDefault"));
+  function_pointers_.SEMCfgAveraging = reinterpret_cast<SEMCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMCfgAveraging"));
+  function_pointers_.SEMCfgSweepTime = reinterpret_cast<SEMCfgSweepTimePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMCfgSweepTime"));
+  function_pointers_.SEMFetchCarrierAbsoluteIntegratedPower = reinterpret_cast<SEMFetchCarrierAbsoluteIntegratedPowerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchCarrierAbsoluteIntegratedPower"));
+  function_pointers_.SEMFetchLowerOffsetMargin = reinterpret_cast<SEMFetchLowerOffsetMarginPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchLowerOffsetMargin"));
+  function_pointers_.SEMFetchLowerOffsetMarginArray = reinterpret_cast<SEMFetchLowerOffsetMarginArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchLowerOffsetMarginArray"));
+  function_pointers_.SEMFetchLowerOffsetPower = reinterpret_cast<SEMFetchLowerOffsetPowerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchLowerOffsetPower"));
+  function_pointers_.SEMFetchLowerOffsetPowerArray = reinterpret_cast<SEMFetchLowerOffsetPowerArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchLowerOffsetPowerArray"));
+  function_pointers_.SEMFetchMeasurementStatus = reinterpret_cast<SEMFetchMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchMeasurementStatus"));
+  function_pointers_.SEMFetchSpectrum = reinterpret_cast<SEMFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchSpectrum"));
+  function_pointers_.SEMFetchUpperOffsetMargin = reinterpret_cast<SEMFetchUpperOffsetMarginPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchUpperOffsetMargin"));
+  function_pointers_.SEMFetchUpperOffsetMarginArray = reinterpret_cast<SEMFetchUpperOffsetMarginArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchUpperOffsetMarginArray"));
+  function_pointers_.SEMFetchUpperOffsetPower = reinterpret_cast<SEMFetchUpperOffsetPowerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchUpperOffsetPower"));
+  function_pointers_.SEMFetchUpperOffsetPowerArray = reinterpret_cast<SEMFetchUpperOffsetPowerArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SEMFetchUpperOffsetPowerArray"));
+  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SelectMeasurements"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeF32"));
+  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeF32Array"));
+  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeF64"));
+  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeF64Array"));
+  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeI16"));
+  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeI32"));
+  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeI32Array"));
+  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeI64"));
+  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeI64Array"));
+  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeI8"));
+  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeNIComplexSingleArray"));
+  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeString"));
+  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeU16"));
+  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeU32"));
+  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeU32Array"));
+  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeU64Array"));
+  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeU8"));
+  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SetAttributeU8Array"));
+  function_pointers_.SlotPowerCfgMeasurementLength = reinterpret_cast<SlotPowerCfgMeasurementLengthPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SlotPowerCfgMeasurementLength"));
+  function_pointers_.SlotPowerFetchPowers = reinterpret_cast<SlotPowerFetchPowersPtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_SlotPowerFetchPowers"));
+  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_WaitForAcquisitionComplete"));
+  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_.get_function_pointer("RFmxTDSCDMA_WaitForMeasurementComplete"));
 }
 
 NiRFmxTDSCDMALibrary::~NiRFmxTDSCDMALibrary()
@@ -38,12 +205,716 @@ NiRFmxTDSCDMALibrary::~NiRFmxTDSCDMALibrary()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
+int32 NiRFmxTDSCDMALibrary::ACPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.ACPCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPCfgAveraging.");
+  }
+  return function_pointers_.ACPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
+{
+  if (!function_pointers_.ACPCfgMeasurementMethod) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPCfgMeasurementMethod.");
+  }
+  return function_pointers_.ACPCfgMeasurementMethod(instrumentHandle, selectorString, measurementMethod);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)
+{
+  if (!function_pointers_.ACPCfgNoiseCompensationEnabled) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPCfgNoiseCompensationEnabled.");
+  }
+  return function_pointers_.ACPCfgNoiseCompensationEnabled(instrumentHandle, selectorString, noiseCompensationEnabled);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfOffsets)
+{
+  if (!function_pointers_.ACPCfgNumberOfOffsets) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPCfgNumberOfOffsets.");
+  }
+  return function_pointers_.ACPCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  if (!function_pointers_.ACPCfgRBWFilter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPCfgRBWFilter.");
+  }
+  return function_pointers_.ACPCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  if (!function_pointers_.ACPCfgSweepTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPCfgSweepTime.");
+  }
+  return function_pointers_.ACPCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPFetchAbsolutePowersTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 absolutePowersTrace[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchAbsolutePowersTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPFetchAbsolutePowersTrace.");
+  }
+  return function_pointers_.ACPFetchAbsolutePowersTrace(instrumentHandle, selectorString, timeout, traceIndex, x0, dx, absolutePowersTrace, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPFetchCarrierAbsolutePower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* carrierAbsolutePower)
+{
+  if (!function_pointers_.ACPFetchCarrierAbsolutePower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPFetchCarrierAbsolutePower.");
+  }
+  return function_pointers_.ACPFetchCarrierAbsolutePower(instrumentHandle, selectorString, timeout, carrierAbsolutePower);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPFetchOffsetMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerRelativePower, float64* upperRelativePower, float64* lowerAbsolutePower, float64* upperAbsolutePower)
+{
+  if (!function_pointers_.ACPFetchOffsetMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPFetchOffsetMeasurement.");
+  }
+  return function_pointers_.ACPFetchOffsetMeasurement(instrumentHandle, selectorString, timeout, lowerRelativePower, upperRelativePower, lowerAbsolutePower, upperAbsolutePower);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPFetchOffsetMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 lowerRelativePower[], float64 upperRelativePower[], float64 lowerAbsolutePower[], float64 upperAbsolutePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchOffsetMeasurementArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPFetchOffsetMeasurementArray.");
+  }
+  return function_pointers_.ACPFetchOffsetMeasurementArray(instrumentHandle, selectorString, timeout, lowerRelativePower, upperRelativePower, lowerAbsolutePower, upperAbsolutePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPFetchRelativePowersTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 traceIndex, float64* x0, float64* dx, float32 relativePowersTrace[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchRelativePowersTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPFetchRelativePowersTrace.");
+  }
+  return function_pointers_.ACPFetchRelativePowersTrace(instrumentHandle, selectorString, timeout, traceIndex, x0, dx, relativePowersTrace, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ACPFetchSpectrum.");
+  }
+  return function_pointers_.ACPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.AbortMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_AbortMeasurements.");
+  }
+  return function_pointers_.AbortMeasurements(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxTDSCDMALibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1Waveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_AnalyzeIQ1Waveform.");
+  }
+  return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 NiRFmxTDSCDMALibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeSpectrum1Waveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_AnalyzeSpectrum1Waveform.");
+  }
+  return function_pointers_.AnalyzeSpectrum1Waveform(instrumentHandle, selectorString, resultName, x0, dx, spectrum, arraySize, reset, reserved);
+}
+
+int32 NiRFmxTDSCDMALibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel)
+{
+  if (!function_pointers_.AutoLevel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_AutoLevel.");
+  }
+  return function_pointers_.AutoLevel(instrumentHandle, selectorString, measurementInterval, referenceLevel);
+}
+
+int32 NiRFmxTDSCDMALibrary::BuildChannelString(char selectorString[], int32 channelNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildChannelString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_BuildChannelString.");
+  }
+  return function_pointers_.BuildChannelString(selectorString, channelNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxTDSCDMALibrary::BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildOffsetString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_BuildOffsetString.");
+  }
+  return function_pointers_.BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxTDSCDMALibrary::BuildSegmentString(char selectorString[], int32 segmentNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildSegmentString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_BuildSegmentString.");
+  }
+  return function_pointers_.BuildSegmentString(selectorString, segmentNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxTDSCDMALibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildSignalString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_BuildSignalString.");
+  }
+  return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDACfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.CDACfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDACfgAveraging.");
+  }
+  return function_pointers_.CDACfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDACfgMeasurementChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spreadingFactor, int32 channelizationCode)
+{
+  if (!function_pointers_.CDACfgMeasurementChannel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDACfgMeasurementChannel.");
+  }
+  return function_pointers_.CDACfgMeasurementChannel(instrumentHandle, selectorString, spreadingFactor, channelizationCode);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDACfgPowerUnit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 powerUnit)
+{
+  if (!function_pointers_.CDACfgPowerUnit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDACfgPowerUnit.");
+  }
+  return function_pointers_.CDACfgPowerUnit(instrumentHandle, selectorString, powerUnit);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDACfgSynchronizationModeAndOffset(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset)
+{
+  if (!function_pointers_.CDACfgSynchronizationModeAndOffset) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDACfgSynchronizationModeAndOffset.");
+  }
+  return function_pointers_.CDACfgSynchronizationModeAndOffset(instrumentHandle, selectorString, synchronizationMode, measurementOffset);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchCodeDomainPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanTotalPower, float64* meanTotalActivePower, float64* meanActivePower, float64* maximumPeakActivePower, float64* meanInactivePower, float64* maximumPeakInactivePower)
+{
+  if (!function_pointers_.CDAFetchCodeDomainPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchCodeDomainPower.");
+  }
+  return function_pointers_.CDAFetchCodeDomainPower(instrumentHandle, selectorString, timeout, meanTotalPower, meanTotalActivePower, meanActivePower, maximumPeakActivePower, meanInactivePower, maximumPeakInactivePower);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* iqOriginOffset, float64* iqGainImbalance, float64* iqQuadratureError)
+{
+  if (!function_pointers_.CDAFetchIQImpairments) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchIQImpairments.");
+  }
+  return function_pointers_.CDAFetchIQImpairments(instrumentHandle, selectorString, timeout, iqOriginOffset, iqGainImbalance, iqQuadratureError);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchMaximumCodeDomainPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 maximumCodeDomainPowers[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchMaximumCodeDomainPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchMaximumCodeDomainPowerTrace.");
+  }
+  return function_pointers_.CDAFetchMaximumCodeDomainPowerTrace(instrumentHandle, selectorString, timeout, maximumCodeDomainPowers, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchMaximumSymbolEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 maximumSymbolEVM[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchMaximumSymbolEVMTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchMaximumSymbolEVMTrace.");
+  }
+  return function_pointers_.CDAFetchMaximumSymbolEVMTrace(instrumentHandle, selectorString, timeout, maximumSymbolEVM, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchMaximumSymbolMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 maximumSymbolMagnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchMaximumSymbolMagnitudeErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchMaximumSymbolMagnitudeErrorTrace.");
+  }
+  return function_pointers_.CDAFetchMaximumSymbolMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, maximumSymbolMagnitudeError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchMaximumSymbolPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 maximumSymbolPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchMaximumSymbolPhaseErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchMaximumSymbolPhaseErrorTrace.");
+  }
+  return function_pointers_.CDAFetchMaximumSymbolPhaseErrorTrace(instrumentHandle, selectorString, timeout, maximumSymbolPhaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchMeanCodeDomainPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 meanCodeDomainPowers[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchMeanCodeDomainPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchMeanCodeDomainPowerTrace.");
+  }
+  return function_pointers_.CDAFetchMeanCodeDomainPowerTrace(instrumentHandle, selectorString, timeout, meanCodeDomainPowers, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchMeanSymbolEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 meanSymbolEVM[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchMeanSymbolEVMTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchMeanSymbolEVMTrace.");
+  }
+  return function_pointers_.CDAFetchMeanSymbolEVMTrace(instrumentHandle, selectorString, timeout, meanSymbolEVM, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchMeanSymbolMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 meanSymbolMagnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchMeanSymbolMagnitudeErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchMeanSymbolMagnitudeErrorTrace.");
+  }
+  return function_pointers_.CDAFetchMeanSymbolMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, meanSymbolMagnitudeError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchMeanSymbolPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 meanSymbolPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchMeanSymbolPhaseErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchMeanSymbolPhaseErrorTrace.");
+  }
+  return function_pointers_.CDAFetchMeanSymbolPhaseErrorTrace(instrumentHandle, selectorString, timeout, meanSymbolPhaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchSymbolConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle symbolConstellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchSymbolConstellationTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchSymbolConstellationTrace.");
+  }
+  return function_pointers_.CDAFetchSymbolConstellationTrace(instrumentHandle, selectorString, timeout, symbolConstellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchSymbolEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSSymbolEVM, float64* maximumPeakSymbolEVM, float64* frequencyError, float64* chipRateError, float64* meanRMSSymbolMagnitudeError, float64* meanRMSSymbolPhaseError, float64* meanSymbolPower)
+{
+  if (!function_pointers_.CDAFetchSymbolEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchSymbolEVM.");
+  }
+  return function_pointers_.CDAFetchSymbolEVM(instrumentHandle, selectorString, timeout, meanRMSSymbolEVM, maximumPeakSymbolEVM, frequencyError, chipRateError, meanRMSSymbolMagnitudeError, meanRMSSymbolPhaseError, meanSymbolPower);
+}
+
+int32 NiRFmxTDSCDMALibrary::CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.CHPCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CHPCfgAveraging.");
+  }
+  return function_pointers_.CHPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxTDSCDMALibrary::CHPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  if (!function_pointers_.CHPCfgRBWFilter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CHPCfgRBWFilter.");
+  }
+  return function_pointers_.CHPCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 NiRFmxTDSCDMALibrary::CHPCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  if (!function_pointers_.CHPCfgSweepTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CHPCfgSweepTime.");
+  }
+  return function_pointers_.CHPCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 NiRFmxTDSCDMALibrary::CHPFetchCarrierAbsolutePower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* carrierAbsolutePower)
+{
+  if (!function_pointers_.CHPFetchCarrierAbsolutePower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CHPFetchCarrierAbsolutePower.");
+  }
+  return function_pointers_.CHPFetchCarrierAbsolutePower(instrumentHandle, selectorString, timeout, carrierAbsolutePower);
+}
+
+int32 NiRFmxTDSCDMALibrary::CHPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CHPFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CHPFetchSpectrum.");
+  }
+  return function_pointers_.CHPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgChannelConfigurationMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelConfigurationMode)
+{
+  if (!function_pointers_.CfgChannelConfigurationMode) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgChannelConfigurationMode.");
+  }
+  return function_pointers_.CfgChannelConfigurationMode(instrumentHandle, selectorString, channelConfigurationMode);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgDigitalEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgDigitalEdgeTrigger.");
+  }
+  return function_pointers_.CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation)
+{
+  if (!function_pointers_.CfgExternalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgExternalAttenuation.");
+  }
+  return function_pointers_.CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency)
+{
+  if (!function_pointers_.CfgFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgFrequency.");
+  }
+  return function_pointers_.CfgFrequency(instrumentHandle, selectorString, centerFrequency);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgFrequencyChannelNumber(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelNumber)
+{
+  if (!function_pointers_.CfgFrequencyChannelNumber) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgFrequencyChannelNumber.");
+  }
+  return function_pointers_.CfgFrequencyChannelNumber(instrumentHandle, selectorString, channelNumber);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
+{
+  if (!function_pointers_.CfgFrequencyReference) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgFrequencyReference.");
+  }
+  return function_pointers_.CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char iqPowerEdgeSource[], int32 iqPowerEdgeSlope, float64 iqPowerEdgeLevel, float64 triggerDelay, int32 minimumQuietTimeMode, float64 minimumQuietTime, int32 iqPowerEdgeLevelType, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgIQPowerEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgIQPowerEdgeTrigger.");
+  }
+  return function_pointers_.CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, minimumQuietTimeMode, minimumQuietTime, iqPowerEdgeLevelType, enableTrigger);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
+{
+  if (!function_pointers_.CfgMechanicalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgMechanicalAttenuation.");
+  }
+  return function_pointers_.CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgMidambleShift(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 midambleAutoDetectionMode, int32 maximumNumberOfUsers, int32 midambleShift)
+{
+  if (!function_pointers_.CfgMidambleShift) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgMidambleShift.");
+  }
+  return function_pointers_.CfgMidambleShift(instrumentHandle, selectorString, midambleAutoDetectionMode, maximumNumberOfUsers, midambleShift);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgNumberOfChannels(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfChannels)
+{
+  if (!function_pointers_.CfgNumberOfChannels) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgNumberOfChannels.");
+  }
+  return function_pointers_.CfgNumberOfChannels(instrumentHandle, selectorString, numberOfChannels);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgPilot(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 pilotCode)
+{
+  if (!function_pointers_.CfgPilot) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgPilot.");
+  }
+  return function_pointers_.CfgPilot(instrumentHandle, selectorString, pilotCode);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgRF(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency, float64 referenceLevel, float64 externalAttenuation)
+{
+  if (!function_pointers_.CfgRF) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgRF.");
+  }
+  return function_pointers_.CfgRF(instrumentHandle, selectorString, centerFrequency, referenceLevel, externalAttenuation);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
+{
+  if (!function_pointers_.CfgRFAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgRFAttenuation.");
+  }
+  return function_pointers_.CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
+{
+  if (!function_pointers_.CfgReferenceLevel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgReferenceLevel.");
+  }
+  return function_pointers_.CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgSoftwareEdgeTrigger.");
+  }
+  return function_pointers_.CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgUplinkScramblingCode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 uplinkScramblingCode)
+{
+  if (!function_pointers_.CfgUplinkScramblingCode) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgUplinkScramblingCode.");
+  }
+  return function_pointers_.CfgUplinkScramblingCode(instrumentHandle, selectorString, uplinkScramblingCode);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgUserDefinedChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 slotIndex, int32 channelType, int32 slotFormat, int32 modulationType, int32 channelizationCode)
+{
+  if (!function_pointers_.CfgUserDefinedChannel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgUserDefinedChannel.");
+  }
+  return function_pointers_.CfgUserDefinedChannel(instrumentHandle, selectorString, slotIndex, channelType, slotFormat, modulationType, channelizationCode);
+}
+
+int32 NiRFmxTDSCDMALibrary::CfgUserDefinedChannelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 slotIndex[], int32 channelType[], int32 slotFormat[], int32 modulationType[], int32 channelizationCode[], int32 numberOfElements)
+{
+  if (!function_pointers_.CfgUserDefinedChannelArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CfgUserDefinedChannelArray.");
+  }
+  return function_pointers_.CfgUserDefinedChannelArray(instrumentHandle, selectorString, slotIndex, channelType, slotFormat, modulationType, channelizationCode, numberOfElements);
+}
+
+int32 NiRFmxTDSCDMALibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* done)
+{
+  if (!function_pointers_.CheckMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CheckMeasurementStatus.");
+  }
+  return function_pointers_.CheckMeasurementStatus(instrumentHandle, selectorString, done);
+}
+
+int32 NiRFmxTDSCDMALibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearAllNamedResults) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ClearAllNamedResults.");
+  }
+  return function_pointers_.ClearAllNamedResults(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxTDSCDMALibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearNamedResult) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ClearNamedResult.");
+  }
+  return function_pointers_.ClearNamedResult(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxTDSCDMALibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
+{
+  if (!function_pointers_.CloneSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CloneSignalConfiguration.");
+  }
+  return function_pointers_.CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
+}
+
 int32 NiRFmxTDSCDMALibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
 {
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_Close.");
   }
   return function_pointers_.Close(instrumentHandle, forceDestroy);
+}
+
+int32 NiRFmxTDSCDMALibrary::Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.Commit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_Commit.");
+  }
+  return function_pointers_.Commit(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxTDSCDMALibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.CreateSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CreateSignalConfiguration.");
+  }
+  return function_pointers_.CreateSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxTDSCDMALibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.DeleteSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_DeleteSignalConfiguration.");
+  }
+  return function_pointers_.DeleteSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxTDSCDMALibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.DisableTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_DisableTrigger.");
+  }
+  return function_pointers_.DisableTrigger(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
+{
+  if (!function_pointers_.GetAllNamedResultNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAllNamedResultNames.");
+  }
+  return function_pointers_.GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
+{
+  if (!function_pointers_.GetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeF32.");
+  }
+  return function_pointers_.GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeF32Array.");
+  }
+  return function_pointers_.GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
+{
+  if (!function_pointers_.GetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeF64.");
+  }
+  return function_pointers_.GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeF64Array.");
+  }
+  return function_pointers_.GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
+{
+  if (!function_pointers_.GetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeI16.");
+  }
+  return function_pointers_.GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
+{
+  if (!function_pointers_.GetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeI32.");
+  }
+  return function_pointers_.GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeI32Array.");
+  }
+  return function_pointers_.GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
+{
+  if (!function_pointers_.GetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeI64.");
+  }
+  return function_pointers_.GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeI64Array.");
+  }
+  return function_pointers_.GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
+{
+  if (!function_pointers_.GetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeI8.");
+  }
+  return function_pointers_.GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeI8Array.");
+  }
+  return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeNIComplexDoubleArray.");
+  }
+  return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeNIComplexSingleArray.");
+  }
+  return function_pointers_.GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
+{
+  if (!function_pointers_.GetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeString.");
+  }
+  return function_pointers_.GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
+{
+  if (!function_pointers_.GetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeU16.");
+  }
+  return function_pointers_.GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
+{
+  if (!function_pointers_.GetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeU32.");
+  }
+  return function_pointers_.GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeU32Array.");
+  }
+  return function_pointers_.GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeU64Array.");
+  }
+  return function_pointers_.GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
+{
+  if (!function_pointers_.GetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeU8.");
+  }
+  return function_pointers_.GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_GetAttributeU8Array.");
+  }
+  return function_pointers_.GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
 int32 NiRFmxTDSCDMALibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -68,6 +939,638 @@ int32 NiRFmxTDSCDMALibrary::Initialize(char resourceName[], char optionString[],
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_Initialize.");
   }
   return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
+}
+
+int32 NiRFmxTDSCDMALibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
+{
+  if (!function_pointers_.InitializeFromNIRFSASession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_InitializeFromNIRFSASession.");
+  }
+  return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, handleOut);
+}
+
+int32 NiRFmxTDSCDMALibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
+{
+  if (!function_pointers_.Initiate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_Initiate.");
+  }
+  return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.ModAccCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccCfgAveraging.");
+  }
+  return function_pointers_.ModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccCfgSlotType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 slotType)
+{
+  if (!function_pointers_.ModAccCfgSlotType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccCfgSlotType.");
+  }
+  return function_pointers_.ModAccCfgSlotType(instrumentHandle, selectorString, slotType);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength)
+{
+  if (!function_pointers_.ModAccCfgSynchronizationModeAndInterval) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccCfgSynchronizationModeAndInterval.");
+  }
+  return function_pointers_.ModAccCfgSynchronizationModeAndInterval(instrumentHandle, selectorString, synchronizationMode, measurementOffset, measurementLength);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchCodeDomainErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 codeDomainError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchCodeDomainErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchCodeDomainErrorTrace.");
+  }
+  return function_pointers_.ModAccFetchCodeDomainErrorTrace(instrumentHandle, selectorString, timeout, codeDomainError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchCompositeEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsCompositeEVM, float64* peakCompositeEVM, float64* compositeRho, float64* frequencyError, float64* chipRateError, float64* rmsCompositeMagnitudeError, float64* rmsCompositePhaseError)
+{
+  if (!function_pointers_.ModAccFetchCompositeEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchCompositeEVM.");
+  }
+  return function_pointers_.ModAccFetchCompositeEVM(instrumentHandle, selectorString, timeout, rmsCompositeEVM, peakCompositeEVM, compositeRho, frequencyError, chipRateError, rmsCompositeMagnitudeError, rmsCompositePhaseError);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchConstellationTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchConstellationTrace.");
+  }
+  return function_pointers_.ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchDataActiveCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataActiveCDE, int32* peakDataActiveCDESpreadingFactor, int32* peakDataActiveCDECode, int32* peakDataActiveCDENumberOfChannels)
+{
+  if (!function_pointers_.ModAccFetchDataActiveCDE) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchDataActiveCDE.");
+  }
+  return function_pointers_.ModAccFetchDataActiveCDE(instrumentHandle, selectorString, timeout, maximumPeakDataActiveCDE, peakDataActiveCDESpreadingFactor, peakDataActiveCDECode, peakDataActiveCDENumberOfChannels);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchDataCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataCDE, int32* peakDataCDESpreadingFactor, int32* peakDataCDECode)
+{
+  if (!function_pointers_.ModAccFetchDataCDE) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchDataCDE.");
+  }
+  return function_pointers_.ModAccFetchDataCDE(instrumentHandle, selectorString, timeout, maximumPeakDataCDE, peakDataCDESpreadingFactor, peakDataCDECode);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchDataEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsDataEVM, float64* peakDataEVM, float64* dataRho, float64* rmsDataMagnitudeError, float64* rmsDataPhaseError)
+{
+  if (!function_pointers_.ModAccFetchDataEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchDataEVM.");
+  }
+  return function_pointers_.ModAccFetchDataEVM(instrumentHandle, selectorString, timeout, rmsDataEVM, peakDataEVM, dataRho, rmsDataMagnitudeError, rmsDataPhaseError);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchDataRCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataRCDE, int32* peakDataRCDESpreadingFactor, int32* peakDataRCDECode)
+{
+  if (!function_pointers_.ModAccFetchDataRCDE) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchDataRCDE.");
+  }
+  return function_pointers_.ModAccFetchDataRCDE(instrumentHandle, selectorString, timeout, maximumPeakDataRCDE, peakDataRCDESpreadingFactor, peakDataRCDECode);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchDetectedChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* detectedSlotIndex, int32* detectedSpreadingFactor, int32* detectedModulationType, int32* detectedChannelizationCode)
+{
+  if (!function_pointers_.ModAccFetchDetectedChannel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchDetectedChannel.");
+  }
+  return function_pointers_.ModAccFetchDetectedChannel(instrumentHandle, selectorString, timeout, detectedSlotIndex, detectedSpreadingFactor, detectedModulationType, detectedChannelizationCode);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchDetectedChannelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 detectedSlotIndex[], int32 detectedSpreadingFactor[], int32 detectedModulationType[], int32 detectedChannelizationCode[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchDetectedChannelArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchDetectedChannelArray.");
+  }
+  return function_pointers_.ModAccFetchDetectedChannelArray(instrumentHandle, selectorString, timeout, detectedSlotIndex, detectedSpreadingFactor, detectedModulationType, detectedChannelizationCode, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 evm[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchEVMTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchEVMTrace.");
+  }
+  return function_pointers_.ModAccFetchEVMTrace(instrumentHandle, selectorString, timeout, x0, dx, evm, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* iqOriginOffset, float64* iqGainImbalance, float64* iqQuadratureError)
+{
+  if (!function_pointers_.ModAccFetchIQImpairments) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchIQImpairments.");
+  }
+  return function_pointers_.ModAccFetchIQImpairments(instrumentHandle, selectorString, timeout, iqOriginOffset, iqGainImbalance, iqQuadratureError);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 magnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMagnitudeErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchMagnitudeErrorTrace.");
+  }
+  return function_pointers_.ModAccFetchMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, magnitudeError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchMaximumCodeDomainErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 maximumCodeDomainError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMaximumCodeDomainErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchMaximumCodeDomainErrorTrace.");
+  }
+  return function_pointers_.ModAccFetchMaximumCodeDomainErrorTrace(instrumentHandle, selectorString, timeout, maximumCodeDomainError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchMaximumEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVM[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMaximumEVMTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchMaximumEVMTrace.");
+  }
+  return function_pointers_.ModAccFetchMaximumEVMTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumEVM, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchMaximumMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumMagnitudeError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMaximumMagnitudeErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchMaximumMagnitudeErrorTrace.");
+  }
+  return function_pointers_.ModAccFetchMaximumMagnitudeErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumMagnitudeError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchMaximumPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumPhaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMaximumPhaseErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchMaximumPhaseErrorTrace.");
+  }
+  return function_pointers_.ModAccFetchMaximumPhaseErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumPhaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchMidambleAndDataPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* midamblePower, float64* dataField1Power, float64* dataField2Power)
+{
+  if (!function_pointers_.ModAccFetchMidambleAndDataPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchMidambleAndDataPower.");
+  }
+  return function_pointers_.ModAccFetchMidambleAndDataPower(instrumentHandle, selectorString, timeout, midamblePower, dataField1Power, dataField2Power);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchMidambleEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsMidambleEVM, float64* peakMidambleEVM, float64* midambleRho, float64* rmsMidambleMagnitudeError, float64* rmsMidamblePhaseError)
+{
+  if (!function_pointers_.ModAccFetchMidambleEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchMidambleEVM.");
+  }
+  return function_pointers_.ModAccFetchMidambleEVM(instrumentHandle, selectorString, timeout, rmsMidambleEVM, peakMidambleEVM, midambleRho, rmsMidambleMagnitudeError, rmsMidamblePhaseError);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchNumberOfDetectedChannels(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* numberOfDetectedChannels)
+{
+  if (!function_pointers_.ModAccFetchNumberOfDetectedChannels) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchNumberOfDetectedChannels.");
+  }
+  return function_pointers_.ModAccFetchNumberOfDetectedChannels(instrumentHandle, selectorString, timeout, numberOfDetectedChannels);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchPhaseErrorTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchPhaseErrorTrace.");
+  }
+  return function_pointers_.ModAccFetchPhaseErrorTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseError, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchPilotEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsPilotEVM, float64* peakPilotEVM, float64* pilotRho, float64* rmsPilotMagnitudeError, float64* rmsPilotPhaseError)
+{
+  if (!function_pointers_.ModAccFetchPilotEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchPilotEVM.");
+  }
+  return function_pointers_.ModAccFetchPilotEVM(instrumentHandle, selectorString, timeout, rmsPilotEVM, peakPilotEVM, pilotRho, rmsPilotMagnitudeError, rmsPilotPhaseError);
+}
+
+int32 NiRFmxTDSCDMALibrary::OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.OBWCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_OBWCfgAveraging.");
+  }
+  return function_pointers_.OBWCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxTDSCDMALibrary::OBWCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType)
+{
+  if (!function_pointers_.OBWCfgRBWFilter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_OBWCfgRBWFilter.");
+  }
+  return function_pointers_.OBWCfgRBWFilter(instrumentHandle, selectorString, rbwAuto, rbw, rbwFilterType);
+}
+
+int32 NiRFmxTDSCDMALibrary::OBWCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  if (!function_pointers_.OBWCfgSweepTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_OBWCfgSweepTime.");
+  }
+  return function_pointers_.OBWCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 NiRFmxTDSCDMALibrary::OBWFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* occupiedBandwidth, float64* absolutePower, float64* startFrequency, float64* stopFrequency)
+{
+  if (!function_pointers_.OBWFetchMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_OBWFetchMeasurement.");
+  }
+  return function_pointers_.OBWFetchMeasurement(instrumentHandle, selectorString, timeout, occupiedBandwidth, absolutePower, startFrequency, stopFrequency);
+}
+
+int32 NiRFmxTDSCDMALibrary::OBWFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.OBWFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_OBWFetchSpectrum.");
+  }
+  return function_pointers_.OBWFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::PVTCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.PVTCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_PVTCfgAveraging.");
+  }
+  return function_pointers_.PVTCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxTDSCDMALibrary::PVTCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
+{
+  if (!function_pointers_.PVTCfgMeasurementMethod) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_PVTCfgMeasurementMethod.");
+  }
+  return function_pointers_.PVTCfgMeasurementMethod(instrumentHandle, selectorString, measurementMethod);
+}
+
+int32 NiRFmxTDSCDMALibrary::PVTFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
+{
+  if (!function_pointers_.PVTFetchMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_PVTFetchMeasurementStatus.");
+  }
+  return function_pointers_.PVTFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
+}
+
+int32 NiRFmxTDSCDMALibrary::PVTFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanAbsoluteONPower, float64* meanAbsoluteOFFPower)
+{
+  if (!function_pointers_.PVTFetchPowers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_PVTFetchPowers.");
+  }
+  return function_pointers_.PVTFetchPowers(instrumentHandle, selectorString, timeout, meanAbsoluteONPower, meanAbsoluteOFFPower);
+}
+
+int32 NiRFmxTDSCDMALibrary::PVTFetchSegmentMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* segmentStatus, float64* segmentMargin, float64* segmentMarginTime, float64* segmentMeanAbsolutePower, float64* segmentMaximumAbsolutePower, float64* segmentMinimumAbsolutePower)
+{
+  if (!function_pointers_.PVTFetchSegmentMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_PVTFetchSegmentMeasurement.");
+  }
+  return function_pointers_.PVTFetchSegmentMeasurement(instrumentHandle, selectorString, timeout, segmentStatus, segmentMargin, segmentMarginTime, segmentMeanAbsolutePower, segmentMaximumAbsolutePower, segmentMinimumAbsolutePower);
+}
+
+int32 NiRFmxTDSCDMALibrary::PVTFetchSegmentMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 segmentStatus[], float64 segmentMargin[], float64 segmentMarginTime[], float64 segmentMeanAbsolutePower[], float64 segmentMaximumAbsolutePower[], float64 segmentMinimumAbsolutePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.PVTFetchSegmentMeasurementArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_PVTFetchSegmentMeasurementArray.");
+  }
+  return function_pointers_.PVTFetchSegmentMeasurementArray(instrumentHandle, selectorString, timeout, segmentStatus, segmentMargin, segmentMarginTime, segmentMeanAbsolutePower, segmentMaximumAbsolutePower, segmentMinimumAbsolutePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::PVTFetchSignalPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 signalPower[], float32 absoluteLimit[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.PVTFetchSignalPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_PVTFetchSignalPowerTrace.");
+  }
+  return function_pointers_.PVTFetchSignalPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, signalPower, absoluteLimit, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
+{
+  if (!function_pointers_.ResetAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ResetAttribute.");
+  }
+  return function_pointers_.ResetAttribute(instrumentHandle, selectorString, attributeID);
+}
+
+int32 NiRFmxTDSCDMALibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ResetToDefault) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ResetToDefault.");
+  }
+  return function_pointers_.ResetToDefault(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType)
+{
+  if (!function_pointers_.SEMCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMCfgAveraging.");
+  }
+  return function_pointers_.SEMCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMCfgSweepTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sweepTimeAuto, float64 sweepTimeInterval)
+{
+  if (!function_pointers_.SEMCfgSweepTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMCfgSweepTime.");
+  }
+  return function_pointers_.SEMCfgSweepTime(instrumentHandle, selectorString, sweepTimeAuto, sweepTimeInterval);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchCarrierAbsoluteIntegratedPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* carrierAbsoluteIntegratedPower)
+{
+  if (!function_pointers_.SEMFetchCarrierAbsoluteIntegratedPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchCarrierAbsoluteIntegratedPower.");
+  }
+  return function_pointers_.SEMFetchCarrierAbsoluteIntegratedPower(instrumentHandle, selectorString, timeout, carrierAbsoluteIntegratedPower);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchLowerOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
+{
+  if (!function_pointers_.SEMFetchLowerOffsetMargin) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchLowerOffsetMargin.");
+  }
+  return function_pointers_.SEMFetchLowerOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchLowerOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchLowerOffsetMarginArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchLowerOffsetMarginArray.");
+  }
+  return function_pointers_.SEMFetchLowerOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchLowerOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absoluteIntegratedPower, float64* relativeIntegratedPower, float64* absolutePeakPower, float64* peakFrequency, float64* relativePeakPower)
+{
+  if (!function_pointers_.SEMFetchLowerOffsetPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchLowerOffsetPower.");
+  }
+  return function_pointers_.SEMFetchLowerOffsetPower(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchLowerOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absoluteIntegratedPower[], float64 relativeIntegratedPower[], float64 absolutePeakPower[], float64 peakFrequency[], float64 relativePeakPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchLowerOffsetPowerArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchLowerOffsetPowerArray.");
+  }
+  return function_pointers_.SEMFetchLowerOffsetPowerArray(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
+{
+  if (!function_pointers_.SEMFetchMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchMeasurementStatus.");
+  }
+  return function_pointers_.SEMFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], float32 relativeMask[], float32 absoluteMask[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchSpectrum.");
+  }
+  return function_pointers_.SEMFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, relativeMask, absoluteMask, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchUpperOffsetMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus, float64* margin, float64* marginFrequency, float64* marginAbsolutePower, float64* marginRelativePower)
+{
+  if (!function_pointers_.SEMFetchUpperOffsetMargin) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchUpperOffsetMargin.");
+  }
+  return function_pointers_.SEMFetchUpperOffsetMargin(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchUpperOffsetMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 measurementStatus[], float64 margin[], float64 marginFrequency[], float64 marginAbsolutePower[], float64 marginRelativePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchUpperOffsetMarginArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchUpperOffsetMarginArray.");
+  }
+  return function_pointers_.SEMFetchUpperOffsetMarginArray(instrumentHandle, selectorString, timeout, measurementStatus, margin, marginFrequency, marginAbsolutePower, marginRelativePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchUpperOffsetPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* absoluteIntegratedPower, float64* relativeIntegratedPower, float64* absolutePeakPower, float64* peakFrequency, float64* relativePeakPower)
+{
+  if (!function_pointers_.SEMFetchUpperOffsetPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchUpperOffsetPower.");
+  }
+  return function_pointers_.SEMFetchUpperOffsetPower(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower);
+}
+
+int32 NiRFmxTDSCDMALibrary::SEMFetchUpperOffsetPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 absoluteIntegratedPower[], float64 relativeIntegratedPower[], float64 absolutePeakPower[], float64 peakFrequency[], float64 relativePeakPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SEMFetchUpperOffsetPowerArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SEMFetchUpperOffsetPowerArray.");
+  }
+  return function_pointers_.SEMFetchUpperOffsetPowerArray(instrumentHandle, selectorString, timeout, absoluteIntegratedPower, relativeIntegratedPower, absolutePeakPower, peakFrequency, relativePeakPower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
+{
+  if (!function_pointers_.SelectMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SelectMeasurements.");
+  }
+  return function_pointers_.SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
+}
+
+int32 NiRFmxTDSCDMALibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
+{
+  if (!function_pointers_.SendSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SendSoftwareEdgeTrigger.");
+  }
+  return function_pointers_.SendSoftwareEdgeTrigger(instrumentHandle);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
+{
+  if (!function_pointers_.SetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeF32.");
+  }
+  return function_pointers_.SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeF32Array.");
+  }
+  return function_pointers_.SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
+{
+  if (!function_pointers_.SetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeF64.");
+  }
+  return function_pointers_.SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeF64Array.");
+  }
+  return function_pointers_.SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
+{
+  if (!function_pointers_.SetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeI16.");
+  }
+  return function_pointers_.SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
+{
+  if (!function_pointers_.SetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeI32.");
+  }
+  return function_pointers_.SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeI32Array.");
+  }
+  return function_pointers_.SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
+{
+  if (!function_pointers_.SetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeI64.");
+  }
+  return function_pointers_.SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeI64Array.");
+  }
+  return function_pointers_.SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
+{
+  if (!function_pointers_.SetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeI8.");
+  }
+  return function_pointers_.SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeI8Array.");
+  }
+  return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeNIComplexDoubleArray.");
+  }
+  return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeNIComplexSingleArray.");
+  }
+  return function_pointers_.SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
+{
+  if (!function_pointers_.SetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeString.");
+  }
+  return function_pointers_.SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
+{
+  if (!function_pointers_.SetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeU16.");
+  }
+  return function_pointers_.SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
+{
+  if (!function_pointers_.SetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeU32.");
+  }
+  return function_pointers_.SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeU32Array.");
+  }
+  return function_pointers_.SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeU64Array.");
+  }
+  return function_pointers_.SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
+{
+  if (!function_pointers_.SetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeU8.");
+  }
+  return function_pointers_.SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxTDSCDMALibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SetAttributeU8Array.");
+  }
+  return function_pointers_.SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::SlotPowerCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementLength)
+{
+  if (!function_pointers_.SlotPowerCfgMeasurementLength) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SlotPowerCfgMeasurementLength.");
+  }
+  return function_pointers_.SlotPowerCfgMeasurementLength(instrumentHandle, selectorString, measurementLength);
+}
+
+int32 NiRFmxTDSCDMALibrary::SlotPowerFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 slotPower[], float64 slotPowerDelta[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SlotPowerFetchPowers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_SlotPowerFetchPowers.");
+  }
+  return function_pointers_.SlotPowerFetchPowers(instrumentHandle, selectorString, timeout, slotPower, slotPowerDelta, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
+{
+  if (!function_pointers_.WaitForAcquisitionComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_WaitForAcquisitionComplete.");
+  }
+  return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
+}
+
+int32 NiRFmxTDSCDMALibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  if (!function_pointers_.WaitForMeasurementComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_WaitForMeasurementComplete.");
+  }
+  return function_pointers_.WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
 }
 
 }  // namespace nirfmxtdscdma_grpc
