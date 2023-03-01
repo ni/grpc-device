@@ -822,6 +822,11 @@ int32 ModAccFetchMaximumEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, ch
   return RFmxLTE_ModAccFetchMaximumEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumEVMPerSymbol, arraySize, actualArraySize);
 }
 
+int32 ModAccFetchMaximumFrequencyErrorPerSlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumFrequencyErrorPerSlot[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxLTE_ModAccFetchMaximumFrequencyErrorPerSlotTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumFrequencyErrorPerSlot, arraySize, actualArraySize);
+}
+
 int32 ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumMagnitudeErrorPerSymbol[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxLTE_ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumMagnitudeErrorPerSymbol, arraySize, actualArraySize);

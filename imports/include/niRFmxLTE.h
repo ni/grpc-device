@@ -3032,6 +3032,17 @@ int32 __stdcall RFmxLTE_ModAccFetchSynchronizationSignalEVMArray(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxLTE_ModAccFetchMaximumFrequencyErrorPerSlotTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 maximumFrequencyErrorPerSlot[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxLTE_ModAccFetchSRSEVMArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],

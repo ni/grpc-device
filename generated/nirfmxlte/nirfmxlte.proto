@@ -180,6 +180,7 @@ service NiRFmxLTE {
   rpc ModAccFetchMaximumEVMPerSlotTrace(ModAccFetchMaximumEVMPerSlotTraceRequest) returns (ModAccFetchMaximumEVMPerSlotTraceResponse);
   rpc ModAccFetchMaximumEVMPerSubcarrierTrace(ModAccFetchMaximumEVMPerSubcarrierTraceRequest) returns (ModAccFetchMaximumEVMPerSubcarrierTraceResponse);
   rpc ModAccFetchMaximumEVMPerSymbolTrace(ModAccFetchMaximumEVMPerSymbolTraceRequest) returns (ModAccFetchMaximumEVMPerSymbolTraceResponse);
+  rpc ModAccFetchMaximumFrequencyErrorPerSlotTrace(ModAccFetchMaximumFrequencyErrorPerSlotTraceRequest) returns (ModAccFetchMaximumFrequencyErrorPerSlotTraceResponse);
   rpc ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(ModAccFetchMaximumMagnitudeErrorPerSymbolTraceRequest) returns (ModAccFetchMaximumMagnitudeErrorPerSymbolTraceResponse);
   rpc ModAccFetchMaximumPhaseErrorPerSymbolTrace(ModAccFetchMaximumPhaseErrorPerSymbolTraceRequest) returns (ModAccFetchMaximumPhaseErrorPerSymbolTraceResponse);
   rpc ModAccFetchNPUSCHConstellationTrace(ModAccFetchNPUSCHConstellationTraceRequest) returns (ModAccFetchNPUSCHConstellationTraceResponse);
@@ -3531,6 +3532,20 @@ message ModAccFetchMaximumEVMPerSymbolTraceResponse {
   double x0 = 2;
   double dx = 3;
   repeated float maximum_evm_per_symbol = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchMaximumFrequencyErrorPerSlotTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchMaximumFrequencyErrorPerSlotTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float maximum_frequency_error_per_slot = 4;
   int32 actual_array_size = 5;
 }
 

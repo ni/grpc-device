@@ -184,6 +184,7 @@ NiRFmxLTELibrary::NiRFmxLTELibrary() : shared_library_(kLibraryName)
   function_pointers_.ModAccFetchMaximumEVMPerSlotTrace = reinterpret_cast<ModAccFetchMaximumEVMPerSlotTracePtr>(shared_library_.get_function_pointer("RFmxLTE_ModAccFetchMaximumEVMPerSlotTrace"));
   function_pointers_.ModAccFetchMaximumEVMPerSubcarrierTrace = reinterpret_cast<ModAccFetchMaximumEVMPerSubcarrierTracePtr>(shared_library_.get_function_pointer("RFmxLTE_ModAccFetchMaximumEVMPerSubcarrierTrace"));
   function_pointers_.ModAccFetchMaximumEVMPerSymbolTrace = reinterpret_cast<ModAccFetchMaximumEVMPerSymbolTracePtr>(shared_library_.get_function_pointer("RFmxLTE_ModAccFetchMaximumEVMPerSymbolTrace"));
+  function_pointers_.ModAccFetchMaximumFrequencyErrorPerSlotTrace = reinterpret_cast<ModAccFetchMaximumFrequencyErrorPerSlotTracePtr>(shared_library_.get_function_pointer("RFmxLTE_ModAccFetchMaximumFrequencyErrorPerSlotTrace"));
   function_pointers_.ModAccFetchMaximumMagnitudeErrorPerSymbolTrace = reinterpret_cast<ModAccFetchMaximumMagnitudeErrorPerSymbolTracePtr>(shared_library_.get_function_pointer("RFmxLTE_ModAccFetchMaximumMagnitudeErrorPerSymbolTrace"));
   function_pointers_.ModAccFetchMaximumPhaseErrorPerSymbolTrace = reinterpret_cast<ModAccFetchMaximumPhaseErrorPerSymbolTracePtr>(shared_library_.get_function_pointer("RFmxLTE_ModAccFetchMaximumPhaseErrorPerSymbolTrace"));
   function_pointers_.ModAccFetchNPUSCHConstellationTrace = reinterpret_cast<ModAccFetchNPUSCHConstellationTracePtr>(shared_library_.get_function_pointer("RFmxLTE_ModAccFetchNPUSCHConstellationTrace"));
@@ -1621,6 +1622,14 @@ int32 NiRFmxLTELibrary::ModAccFetchMaximumEVMPerSymbolTrace(niRFmxInstrHandle in
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchMaximumEVMPerSymbolTrace.");
   }
   return function_pointers_.ModAccFetchMaximumEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumEVMPerSymbol, arraySize, actualArraySize);
+}
+
+int32 NiRFmxLTELibrary::ModAccFetchMaximumFrequencyErrorPerSlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumFrequencyErrorPerSlot[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMaximumFrequencyErrorPerSlotTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchMaximumFrequencyErrorPerSlotTrace.");
+  }
+  return function_pointers_.ModAccFetchMaximumFrequencyErrorPerSlotTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumFrequencyErrorPerSlot, arraySize, actualArraySize);
 }
 
 int32 NiRFmxLTELibrary::ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumMagnitudeErrorPerSymbol[], int32 arraySize, int32* actualArraySize)
