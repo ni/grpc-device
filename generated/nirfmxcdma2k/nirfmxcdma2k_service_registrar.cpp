@@ -17,11 +17,13 @@ namespace {
 struct LibraryAndService {
   LibraryAndService(
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>& resource_repository,
+    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& vi_session_resource_repository,
     const NiRFmxCDMA2kFeatureToggles& feature_toggles) 
       : library(), 
       service(
         &library, 
         resource_repository,
+        vi_session_resource_repository,
         feature_toggles) {
   }
   NiRFmxCDMA2kLibrary library;
@@ -32,6 +34,7 @@ struct LibraryAndService {
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder, 
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>& resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& vi_session_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
   auto toggles = NiRFmxCDMA2kFeatureToggles(feature_toggles);
@@ -40,6 +43,7 @@ std::shared_ptr<void> register_service(
   {
     auto library_and_service_ptr = std::make_shared<LibraryAndService>(
       resource_repository,
+      vi_session_resource_repository,
       toggles);
     auto& service = library_and_service_ptr->service;
     builder.RegisterService(&service);
