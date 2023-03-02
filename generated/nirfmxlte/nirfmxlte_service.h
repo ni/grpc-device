@@ -206,6 +206,7 @@ public:
   ::grpc::Status ModAccFetchMaximumEVMPerSlotTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSlotTraceRequest* request, ModAccFetchMaximumEVMPerSlotTraceResponse* response) override;
   ::grpc::Status ModAccFetchMaximumEVMPerSubcarrierTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSubcarrierTraceRequest* request, ModAccFetchMaximumEVMPerSubcarrierTraceResponse* response) override;
   ::grpc::Status ModAccFetchMaximumEVMPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSymbolTraceRequest* request, ModAccFetchMaximumEVMPerSymbolTraceResponse* response) override;
+  ::grpc::Status ModAccFetchMaximumFrequencyErrorPerSlotTrace(::grpc::ServerContext* context, const ModAccFetchMaximumFrequencyErrorPerSlotTraceRequest* request, ModAccFetchMaximumFrequencyErrorPerSlotTraceResponse* response) override;
   ::grpc::Status ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumMagnitudeErrorPerSymbolTraceRequest* request, ModAccFetchMaximumMagnitudeErrorPerSymbolTraceResponse* response) override;
   ::grpc::Status ModAccFetchMaximumPhaseErrorPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumPhaseErrorPerSymbolTraceRequest* request, ModAccFetchMaximumPhaseErrorPerSymbolTraceResponse* response) override;
   ::grpc::Status ModAccFetchNPUSCHConstellationTrace(::grpc::ServerContext* context, const ModAccFetchNPUSCHConstellationTraceRequest* request, ModAccFetchNPUSCHConstellationTraceResponse* response) override;
