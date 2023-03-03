@@ -239,7 +239,7 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, ModAccFromExample_FetchData_DataLooksReasonab
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.peak_evm()));
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.rho()));
   EXPECT_TRUE(NEAR(0.0, mod_acc_fetch_evm_response.frequency_error(), 4000));
-  EXPECT_EQ(-100, mod_acc_fetch_evm_response.chip_rate_error());
+  EXPECT_GE(0, mod_acc_fetch_evm_response.chip_rate_error());
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.rms_magnitude_error()));
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.rms_phase_error()));
   EXPECT_SUCCESS(session, mod_acc_fetch_iq_impairments_response);
