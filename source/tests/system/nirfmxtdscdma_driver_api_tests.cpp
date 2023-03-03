@@ -53,6 +53,14 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model)
   return client::initialize(stub, "FakeDevice", options);
 }
 
+nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model)
+{
+  auto response = init(stub, model);
+  auto session = response.instrument();
+  EXPECT_RESPONSE_SUCCESS(response);
+  return session;
+}
+
 TEST_F(NiRFmxTDSCDMADriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
@@ -67,22 +75,13 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, Init_Close_Succeeds)
 TEST_F(NiRFmxTDSCDMADriverApiTests, AcpFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_OFFSETS = 2;
-  int32 autoLevel = RFMXTDSCDMA_VAL_FALSE;
-  // TODO: Conversion process ignored auto_level_response.reference_level
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e+6));
   EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.00));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 1.91e+9));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  if(autoLevel)
-  {
-    EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 0.005));
-  }
-  else
-  {
-    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", 0.00));
-  }
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_ACP, true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", 0.00));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_ACP, true));
   EXPECT_SUCCESS(session, client::acp_cfg_averaging(stub(), session, "", ACP_AVERAGING_ENABLED_FALSE, 10, ACP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::acp_cfg_sweep_time(stub(), session, "", ACP_SWEEP_TIME_AUTO_TRUE, 0.000660));
   EXPECT_SUCCESS(session, client::acp_cfg_noise_compensation_enabled(stub(), session, "", ACP_NOISE_COMPENSATION_ENABLED_FALSE));
@@ -122,8 +121,8 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, CdaFromExample_FetchData_DataLooksReasonable
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10E+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91E+9, 0.00, 0.00));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_CDA, true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_CDA, true));
   EXPECT_SUCCESS(session, client::cda_cfg_averaging(stub(), session, "", CDA_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::cda_cfg_synchronization_mode_and_offset(stub(), session, "", CDA_SYNCHRONIZATION_MODE_SLOT, 0));
   EXPECT_SUCCESS(session, client::cda_cfg_measurement_channel(stub(), session, "", 16, 1));
@@ -176,8 +175,8 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, ChpFromExample_FetchData_DataLooksReasonable
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91e+9, 0.00, 0.00));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_CHP , true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_CHP , true));
   EXPECT_SUCCESS(session, client::chp_cfg_sweep_time(stub(), session, "", CHP_SWEEP_TIME_AUTO_TRUE, 660E-6));
   EXPECT_SUCCESS(session, client::chp_cfg_averaging(stub(), session, "", CHP_AVERAGING_ENABLED_FALSE, 10, CHP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -201,8 +200,8 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, ModAccFromExample_FetchData_DataLooksReasona
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10E+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91E+9, 0.00, 0.00));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 80E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_MODACC , true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 80E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC , true));
   EXPECT_SUCCESS(session, client::mod_acc_cfg_averaging(stub(), session, "", MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::cfg_uplink_scrambling_code(stub(), session, "", 0));
   EXPECT_SUCCESS(session, client::mod_acc_cfg_synchronization_mode_and_interval(stub(), session, "", MODACC_SYNCHRONIZATION_MODE_SLOT, 0, 1));
@@ -216,7 +215,6 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, ModAccFromExample_FetchData_DataLooksReasona
   const auto mod_acc_fetch_midamble_evm_response = client::mod_acc_fetch_midamble_evm(stub(), session, "", 10.00);
   const auto mod_acc_fetch_midamble_and_data_power_response = client::mod_acc_fetch_midamble_and_data_power(stub(), session, "", 10.00);
   const auto mod_acc_fetch_evm_trace_response = client::mod_acc_fetch_evm_trace(stub(), session, "", 10.00);
-  int32 actualArraySize = mod_acc_fetch_evm_trace_response.evm_size();
 
   EXPECT_SUCCESS(session, mod_acc_fetch_composite_evm_response);
   EXPECT_EQ(0.0, mod_acc_fetch_composite_evm_response.rms_composite_evm());
@@ -263,8 +261,8 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, ModAccAcpChpObwSemCompositeFromExample_Fetch
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91e+9, 0.00, 0.00));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 80E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_MODACC|NIRFMXTDSCDMA_INT32_SEM| NIRFMXTDSCDMA_INT32_ACP|NIRFMXTDSCDMA_INT32_CHP|NIRFMXTDSCDMA_INT32_OBW, true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 80E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC | MEASUREMENT_TYPES_SEM| MEASUREMENT_TYPES_ACP | MEASUREMENT_TYPES_CHP | MEASUREMENT_TYPES_OBW, true));
   EXPECT_SUCCESS(session, client::cfg_midamble_shift(stub(), session, "", MIDAMBLE_AUTO_DETECTION_MODE_MIDAMBLE_SHIFT, MAX_NUMBER_OF_USERS, 8));
   EXPECT_SUCCESS(session, client::mod_acc_cfg_synchronization_mode_and_interval(stub(), session, "", MODACC_SYNCHRONIZATION_MODE_SLOT, 0, 1));
   EXPECT_SUCCESS(session, client::cfg_uplink_scrambling_code(stub(), session, "", 0));
@@ -278,57 +276,13 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, ModAccAcpChpObwSemCompositeFromExample_Fetch
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32* lowerOffsetMeasurementStatus = NULL;
-  float64* lowerOffsetMargin = NULL;
-  float64* lowerOffsetMarginFrequency = NULL;
-  float64* lowerOffsetMarginAbsolutePower = NULL;
-  float64* lowerOffsetMarginRelativePower = NULL;
-  int32* upperOffsetMeasurementStatus = NULL;
-  float64* upperOffsetMargin = NULL;
-  float64* upperOffsetMarginFrequency = NULL;
-  float64* upperOffsetMarginAbsolutePower = NULL;
-  float64* upperOffsetMarginRelativePower = NULL;
-  SEMFetchLowerOffsetMarginArrayResponse sem_fetch_lower_offset_margin_array_response;
-  SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array_response;
   const auto mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.00);
   const auto acp_fetch_offset_measurement_array_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.00);
   const auto acp_fetch_carrier_absolute_power_response = client::acp_fetch_carrier_absolute_power(stub(), session, "", 10.00);
   const auto chp_fetch_carrier_absolute_power_response = client::chp_fetch_carrier_absolute_power(stub(), session, "", 10.00);
   const auto obw_fetch_measurement_response = client::obw_fetch_measurement(stub(), session, "", 10.00);
   const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.00);
-  int32 lowerOffsetMarginArraySize = sem_fetch_lower_offset_margin_array_response.measurement_status_size();
-  if( lowerOffsetMarginArraySize > 0 )
-  {
-    lowerOffsetMeasurementStatus = (int32 *) malloc(sizeof(int32) * lowerOffsetMarginArraySize);
-    lowerOffsetMargin = (float64 *) malloc(sizeof(float64) * lowerOffsetMarginArraySize);
-    lowerOffsetMarginFrequency = (float64 *) malloc(sizeof(float64) * lowerOffsetMarginArraySize);
-    lowerOffsetMarginAbsolutePower = (float64 *) malloc(sizeof(float64) * lowerOffsetMarginArraySize);
-    lowerOffsetMarginRelativePower = (float64 *) malloc(sizeof(float64) * lowerOffsetMarginArraySize);
-    if( lowerOffsetMeasurementStatus && lowerOffsetMargin && lowerOffsetMarginFrequency && lowerOffsetMarginAbsolutePower && lowerOffsetMarginRelativePower )
-    {
-        sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.00);
-    }
-    else
-    {
-    }
-  }
   const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.00);
-  int32 upperOffsetMarginArraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-  if( upperOffsetMarginArraySize > 0 )
-  {
-    upperOffsetMeasurementStatus = (int32 *) malloc(sizeof(int32) * upperOffsetMarginArraySize);
-    upperOffsetMargin = (float64 *) malloc(sizeof(float64) * upperOffsetMarginArraySize);
-    upperOffsetMarginFrequency = (float64 *) malloc(sizeof(float64) * upperOffsetMarginArraySize);
-    upperOffsetMarginAbsolutePower = (float64 *) malloc(sizeof(float64) * upperOffsetMarginArraySize);
-    upperOffsetMarginRelativePower = (float64 *) malloc(sizeof(float64) * upperOffsetMarginArraySize);
-    if( upperOffsetMeasurementStatus && upperOffsetMargin && upperOffsetMarginFrequency && upperOffsetMarginAbsolutePower && upperOffsetMarginRelativePower )
-    {
-        sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.00);
-    }
-    else
-    {
-    }
-  }
   const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.00);
   const auto sem_fetch_carrier_absolute_integrated_power_response = client::sem_fetch_carrier_absolute_integrated_power(stub(), session, "", 10.00);
 
@@ -437,9 +391,9 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, ModAccPilotFromExample_FetchData_DataLooksRe
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10E+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91E+9, 0.00, 0.00));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 50E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 50E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_pilot(stub(), session, "", 0));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_MODACC , true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC , true));
   EXPECT_SUCCESS(session, client::mod_acc_cfg_averaging(stub(), session, "", MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::mod_acc_cfg_slot_type(stub(), session, "", MODACC_MEASUREMENT_SLOT_TYPE_PILOT));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -484,8 +438,8 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, ObwFromExample_FetchData_DataLooksReasonable
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91e+9, 0.00, 0.00));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_OBW, true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OBW, true));
   EXPECT_SUCCESS(session, client::obw_cfg_sweep_time(stub(), session, "", OBW_SWEEP_TIME_AUTO_TRUE, 660e-6));
   EXPECT_SUCCESS(session, client::obw_cfg_averaging(stub(), session, "", OBW_AVERAGING_ENABLED_FALSE, 10, OBW_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -511,20 +465,17 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, PvtFromExample_FetchData_DataLooksReasonable
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10E+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91E+9, 0.00, 0.00));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_PVT , true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_PVT , true));
   EXPECT_SUCCESS(session, client::cfg_midamble_shift(stub(), session, "", MIDAMBLE_AUTO_DETECTION_MODE_MIDAMBLE_SHIFT, 16, 8));
   EXPECT_SUCCESS(session, client::pvt_cfg_measurement_method(stub(), session, "", PVT_MEASUREMENT_METHOD_NORMAL));
   EXPECT_SUCCESS(session, client::pvt_cfg_averaging(stub(), session, "", PVT_AVERAGING_ENABLED_FALSE, 10, PVT_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 segmentMeasurementArraySize = 0;
   const auto pvt_fetch_measurement_status_response = client::pvt_fetch_measurement_status(stub(), session, "", 10.00);
   const auto pvt_fetch_powers_response = client::pvt_fetch_powers(stub(), session, "", 10.00);
   const auto pvt_fetch_segment_measurement_array_response = client::pvt_fetch_segment_measurement_array(stub(), session, "", 10.00);
   const auto pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, "", 10.00);
-    for (int i = 0; i < segmentMeasurementArraySize; i++)
-  {
 
   EXPECT_SUCCESS(session, pvt_fetch_measurement_status_response);
   EXPECT_EQ(0, pvt_fetch_measurement_status_response.measurement_status());
@@ -566,58 +517,14 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, SemFromExample_FetchData_DataLooksReasonable
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10E+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91e+9, 0.000000, 0.000000));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.000000, 0.000000, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_SEM, true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.000000, 0.000000, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SEM, true));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 660E-6));
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32* lowerOffsetMeasurementStatus = NULL;
-  float64* lowerOffsetMargin = NULL;
-  float64* lowerOffsetMarginFrequency = NULL;
-  float64* lowerOffsetMarginAbsolutePower = NULL;
-  float64* lowerOffsetMarginRelativePower = NULL;
-  int32* upperOffsetMeasurementStatus = NULL;
-  float64* upperOffsetMargin = NULL;
-  float64* upperOffsetMarginFrequency = NULL;
-  float64* upperOffsetMarginAbsolutePower = NULL;
-  float64* upperOffsetMarginRelativePower = NULL;
-  SEMFetchLowerOffsetMarginArrayResponse sem_fetch_lower_offset_margin_array_response;
-  SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array_response;
   const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.000000);
-  int32 lowerOffsetMarginArraySize = sem_fetch_lower_offset_margin_array_response.measurement_status_size();
-  if( lowerOffsetMarginArraySize > 0 )
-  {
-    lowerOffsetMeasurementStatus = (int32 *) malloc(sizeof(int32) * lowerOffsetMarginArraySize);
-    lowerOffsetMargin = (float64 *) malloc(sizeof(float64) * lowerOffsetMarginArraySize);
-    lowerOffsetMarginFrequency = (float64 *) malloc(sizeof(float64) * lowerOffsetMarginArraySize);
-    lowerOffsetMarginAbsolutePower = (float64 *) malloc(sizeof(float64) * lowerOffsetMarginArraySize);
-    lowerOffsetMarginRelativePower = (float64 *) malloc(sizeof(float64) * lowerOffsetMarginArraySize);
-    if( lowerOffsetMeasurementStatus && lowerOffsetMargin && lowerOffsetMarginFrequency && lowerOffsetMarginAbsolutePower && lowerOffsetMarginRelativePower )
-    {
-        sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.000000);
-    }
-    else
-    {
-    }
-  }
   const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.000000);
-  int32 upperOffsetMarginArraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-  if( upperOffsetMarginArraySize > 0 )
-  {
-    upperOffsetMeasurementStatus = (int32 *) malloc(sizeof(int32) * upperOffsetMarginArraySize);
-    upperOffsetMargin = (float64 *) malloc(sizeof(float64) * upperOffsetMarginArraySize);
-    upperOffsetMarginFrequency = (float64 *) malloc(sizeof(float64) * upperOffsetMarginArraySize);
-    upperOffsetMarginAbsolutePower = (float64 *) malloc(sizeof(float64) * upperOffsetMarginArraySize);
-    upperOffsetMarginRelativePower = (float64 *) malloc(sizeof(float64) * upperOffsetMarginArraySize);
-    if( upperOffsetMeasurementStatus && upperOffsetMargin && upperOffsetMarginFrequency && upperOffsetMarginAbsolutePower && upperOffsetMarginRelativePower )
-    {
-        sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.000000);
-    }
-    else
-    {
-    }
-  }
   const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.000000);
   const auto sem_fetch_carrier_absolute_integrated_power_response = client::sem_fetch_carrier_absolute_integrated_power(stub(), session, "", 10.000000);
   const auto sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.000000);
@@ -710,11 +617,10 @@ TEST_F(NiRFmxTDSCDMADriverApiTests, SlotPowerFromExample_FetchData_DataLooksReas
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e+6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1.91e+9, 0.00, 0.00));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", NIRFMXTDSCDMA_INT32_IQ_POWER_EDGE_RISING_SLOPE, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", NIRFMXTDSCDMA_INT32_SLOTPOWER, true));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.00, 0.00, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 16E-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SLOTPOWER, true));
   EXPECT_SUCCESS(session, client::slot_power_cfg_measurement_length(stub(), session, "", NUMBER_OF_SLOTS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
-
 
   const auto slot_power_fetch_powers_response = client::slot_power_fetch_powers(stub(), session, "", 10.0);
 
