@@ -35,10 +35,6 @@ If they are not passed in as command line arguments, then by default the server 
 
 import sys
 
-import os
-
-sys.path.append(os.getcwd())
-
 import grpc
 import nidevice_pb2 as nidevice_grpc
 import nirfmxinstr_pb2 as nirfmxinstr_types
