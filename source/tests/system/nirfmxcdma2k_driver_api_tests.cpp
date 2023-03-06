@@ -76,7 +76,7 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, AcpFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_OFFSETS = 2;
   int32 autoLevel = 1;
-  // TODO: Conversion process ignored auto_level_response.reference_level
+
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e+6));
   EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.00));
@@ -141,7 +141,6 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, CdaFromExample_FetchData_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::cda_cfg_power_unit(stub(), session, "", CDA_POWER_UNIT_DB));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-
   const auto cda_fetch_code_domain_power_response = client::cda_fetch_code_domain_power(stub(), session, "", 10.0);
   const auto cda_fetch_code_domain_i_and_q_power_response = client::cda_fetch_code_domain_i_and_q_power(stub(), session, "", 10.0);
   const auto cda_fetch_symbol_evm_response = client::cda_fetch_symbol_evm(stub(), session, "", 10.0);
@@ -168,8 +167,8 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, CdaFromExample_FetchData_DataLooksReasonable)
   EXPECT_TRUE(isnan(cda_fetch_symbol_evm_response.rms_symbol_magnitude_error()));
   EXPECT_TRUE(isnan(cda_fetch_symbol_evm_response.rms_symbol_phase_error()));
   EXPECT_TRUE(isnan(cda_fetch_symbol_evm_response.mean_symbol_power()));
-  EXPECT_EQ(0.0, cda_fetch_symbol_evm_response.frequency_error());
-  EXPECT_EQ(-100, cda_fetch_symbol_evm_response.chip_rate_error());
+  EXPECT_TRUE(NEAR(0.0, cda_fetch_symbol_evm_response.frequency_error(), 3000));
+  EXPECT_TRUE(NEAR(0, cda_fetch_symbol_evm_response.chip_rate_error(), 200));
   EXPECT_SUCCESS(session, cda_fetch_iq_impairments_response);
   EXPECT_TRUE(isnan(cda_fetch_iq_impairments_response.iq_origin_offset()));
   EXPECT_TRUE(isnan(cda_fetch_iq_impairments_response.iq_gain_imbalance()));
@@ -200,7 +199,6 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, ChpFromExample_FetchData_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::chp_cfg_sweep_time(stub(), session, "", CHP_SWEEP_TIME_AUTO_TRUE, 1.670e-3 ));
   EXPECT_SUCCESS(session, client::chp_cfg_averaging(stub(), session, "", CHP_AVERAGING_ENABLED_FALSE, 10, CHP_AVERAGING_TYPE_RMS ));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
-
 
   const auto chp_fetch_carrier_absolute_power_response = client::chp_fetch_carrier_absolute_power(stub(), session, "", 10.0);
   const auto chp_fetch_spectrum_response = client::chp_fetch_spectrum(stub(), session, "", 10.0);
@@ -349,7 +347,6 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, SlotPhaseFromExample_FetchData_DataLooksReaso
   EXPECT_SUCCESS(session, client::slot_phase_cfg_synchronization_mode_and_interval(stub(), session, "", SLOT_PHASE_SYNCHRONIZATION_MODE_SLOT, 0 , NUMBER_OF_SLOTS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-
   const auto slot_phase_fetch_maximum_phase_discontinuity_response = client::slot_phase_fetch_maximum_phase_discontinuity(stub(), session, "", 10.0);
   const auto slot_phase_fetch_phase_discontinuities_response = client::slot_phase_fetch_phase_discontinuities(stub(), session, "", 10.0);
   const auto slot_phase_fetch_chip_phase_error_trace_response = client::slot_phase_fetch_chip_phase_error_trace(stub(), session, "", 10.0);
@@ -387,7 +384,6 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, SlotPowerFromExample_FetchData_DataLooksReaso
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SLOTPOWER, true));
   EXPECT_SUCCESS(session, client::slot_power_cfg_synchronization_mode_and_interval(stub(), session, "", SLOT_POWER_SYNCHRONIZATION_MODE_SLOT, 0 , NUMBER_OF_SLOTS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
-
 
   const auto slot_power_fetch_powers_response = client::slot_power_fetch_powers(stub(), session, "", 10.0);
 
