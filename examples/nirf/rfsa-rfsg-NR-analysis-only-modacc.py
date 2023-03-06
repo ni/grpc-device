@@ -96,13 +96,9 @@ def raise_if_error(response):
             )
         )
         if response.status < 0:
-            raise RuntimeError(
-                f"Error: {error_response.error_description or response.status}"
-            )
+            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
         else:
-            sys.stderr.write(
-                f"Warning: {error_response.error_description or response.status}\n"
-            )
+            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
     return response
 
 
@@ -222,9 +218,7 @@ try:
         )
     )
     raise_if_error(
-        rfsgclient.WriteScript(
-            nirfsg_types.WriteScriptRequest(vi=rfsgsession, script=rfsg_script)
-        )
+        rfsgclient.WriteScript(nirfsg_types.WriteScriptRequest(vi=rfsgsession, script=rfsg_script))
     )
     raise_if_error(
         rfsgclient.ExportSignal(
@@ -243,9 +237,7 @@ try:
     nr_subcarrier_spacing = 30e3
     nr_auto_resource_block_detection_enabled = True
     nr_pusch_modulation_type = nirfmxnr_types.NIRFMXNR_INT32_PUSCH_MODULATION_TYPE_QAM64
-    nr_measurement_length_unit = (
-        nirfmxnr_types.NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT
-    )
+    nr_measurement_length_unit = nirfmxnr_types.NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT
     nr_link_direction = nirfmxnr_types.NIRFMXNR_INT32_LINK_DIRECTION_UPLINK
     nr_measurement_offset = 0
     nr_measurement_length = 1
@@ -395,9 +387,7 @@ try:
     )
     raise_if_error(
         rfsaclient.ConfigureIQRate(
-            nirfsa_types.ConfigureIQRateRequest(
-                vi=rfsasession, iq_rate=minimum_sample_rate
-            )
+            nirfsa_types.ConfigureIQRateRequest(vi=rfsasession, iq_rate=minimum_sample_rate)
         )
     )
     print(f"Done")
@@ -424,9 +414,7 @@ try:
         )
 
         iq = [
-            nidevice_grpc.NIComplexNumberF32(
-                real=sample.real, imaginary=sample.imaginary
-            )
+            nidevice_grpc.NIComplexNumberF32(real=sample.real, imaginary=sample.imaginary)
             for sample in read_response.data
         ]
 
@@ -457,22 +445,18 @@ except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = (
-                entry.value
-                if isinstance(entry.value, str)
-                else entry.value.decode("utf-8")
-            )
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 finally:
     if rfmxsession:
-        rfmxclient.Close(
-            nirfmxnr_types.CloseRequest(instrument=rfmxsession, force_destroy=True)
-        )
+        rfmxclient.Close(nirfmxnr_types.CloseRequest(instrument=rfmxsession, force_destroy=True))
     if rfsasession:
         rfsaclient.Close(nirfsa_types.CloseRequest(vi=rfsasession))
     raise_if_error(rfsgclient.Abort(nirfsg_types.AbortRequest(vi=rfsgsession)))
