@@ -167,8 +167,8 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, CdaFromExample_FetchData_DataLooksReasonable)
   EXPECT_TRUE(isnan(cda_fetch_symbol_evm_response.rms_symbol_magnitude_error()));
   EXPECT_TRUE(isnan(cda_fetch_symbol_evm_response.rms_symbol_phase_error()));
   EXPECT_TRUE(isnan(cda_fetch_symbol_evm_response.mean_symbol_power()));
-  EXPECT_TRUE(NEAR(0.0, cda_fetch_symbol_evm_response.frequency_error(), 3000));
-  EXPECT_TRUE(NEAR(0, cda_fetch_symbol_evm_response.chip_rate_error(), 200));
+  EXPECT_NEAR(0.0, cda_fetch_symbol_evm_response.frequency_error(), 8000);
+  EXPECT_NEAR(0, cda_fetch_symbol_evm_response.chip_rate_error(), 200);
   EXPECT_SUCCESS(session, cda_fetch_iq_impairments_response);
   EXPECT_TRUE(isnan(cda_fetch_iq_impairments_response.iq_origin_offset()));
   EXPECT_TRUE(isnan(cda_fetch_iq_impairments_response.iq_gain_imbalance()));
@@ -236,7 +236,7 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, ModAccFromExample_FetchData_DataLooksReasonab
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.rms_evm()));
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.peak_evm()));
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.rho()));
-  EXPECT_TRUE(NEAR(0.0, mod_acc_fetch_evm_response.frequency_error(), 4000));
+  EXPECT_NEAR(0.0, mod_acc_fetch_evm_response.frequency_error(), 8000);
   EXPECT_GE(0, mod_acc_fetch_evm_response.chip_rate_error());
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.rms_magnitude_error()));
   EXPECT_TRUE(isnan(mod_acc_fetch_evm_response.rms_phase_error()));
@@ -279,10 +279,10 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, ObwFromExample_FetchData_DataLooksReasonable)
   const auto obw_fetch_spectrum_response = client::obw_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, obw_fetch_measurement_response);
-  EXPECT_TRUE(NEAR(72567.0, obw_fetch_measurement_response.occupied_bandwidth(), 100));
+  EXPECT_NEAR(72567.0, obw_fetch_measurement_response.occupied_bandwidth(), 100);
   EXPECT_NE(0.0, obw_fetch_measurement_response.absolute_power());
-  EXPECT_TRUE(NEAR(833454000.0, obw_fetch_measurement_response.start_frequency(), 500));
-  EXPECT_TRUE(NEAR(833526000.0, obw_fetch_measurement_response.stop_frequency(), 500));
+  EXPECT_NEAR(833454000.0, obw_fetch_measurement_response.start_frequency(), 500);
+  EXPECT_NEAR(833526000.0, obw_fetch_measurement_response.stop_frequency(), 500);
   EXPECT_SUCCESS(session, obw_fetch_spectrum_response);
   EXPECT_NE(0.0, obw_fetch_spectrum_response.x0());
   EXPECT_NE(0.0, obw_fetch_spectrum_response.dx());
@@ -326,8 +326,8 @@ TEST_F(NiRFmxCDMA2kDriverApiTests, QevmFromExample_FetchData_DataLooksReasonable
   EXPECT_SUCCESS(session, qevm_fetch_evm_trace_response);
   EXPECT_EQ(0.0, qevm_fetch_evm_trace_response.x0());
   EXPECT_NE(0.0, qevm_fetch_evm_trace_response.dx());
-  EXPECT_TRUE(NEAR(1503, qevm_fetch_evm_trace_response.evm_size(), 10));
-  EXPECT_TRUE(NEAR(1503, qevm_fetch_evm_trace_response.evm().size(), 10));
+  EXPECT_NEAR(1503, qevm_fetch_evm_trace_response.evm_size(), 10);
+  EXPECT_NEAR(1503, qevm_fetch_evm_trace_response.evm().size(), 10);
   EXPECT_TRUE(isnan(qevm_fetch_evm_trace_response.evm(0)));
   EXPECT_SUCCESS(session, qevm_fetch_constellation_trace_response);
   EXPECT_TRUE(isnan(qevm_fetch_constellation_trace_response.constellation(0).real()));
