@@ -262,6 +262,11 @@ int32 CreateAIPosRVDTChan(TaskHandle task, const char physicalChannel[], const c
   return DAQmxCreateAIPosRVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
 }
 
+int32 CreateAIPowerChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 voltageSetpoint, float64 currentSetpoint, bool32 outputEnable)
+{
+  return DAQmxCreateAIPowerChan(task, physicalChannel, nameToAssignToChannel, voltageSetpoint, currentSetpoint, outputEnable);
+}
+
 int32 CreateAIPressureBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
 {
   return DAQmxCreateAIPressureBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
@@ -652,9 +657,9 @@ int32 GetAnalogPowerUpStates(const char deviceName[], const char channelName[], 
   return DAQmxGetAnalogPowerUpStates(deviceName, channelName, state, channelType, channelName0, state0, channelType0, channelName1, state1, channelType1, channelName2, state2, channelType2, channelName3, state3, channelType3, channelName4, state4, channelType4, channelName5, state5, channelType5, channelName6, state6, channelType6, channelName7, state7, channelType7, channelName8, state8, channelType8, channelName9, state9, channelType9, channelName10, state10, channelType10, channelName11, state11, channelType11, channelName12, state12, channelType12, channelName13, state13, channelType13, channelName14, state14, channelType14, channelName15, state15, channelType15, channelName16, state16, channelType16, channelName17, state17, channelType17, channelName18, state18, channelType18, channelName19, state19, channelType19, channelName20, state20, channelType20, channelName21, state21, channelType21, channelName22, state22, channelType22, channelName23, state23, channelType23, channelName24, state24, channelType24, channelName25, state25, channelType25, channelName26, state26, channelType26, channelName27, state27, channelType27, channelName28, state28, channelType28, channelName29, state29, channelType29, channelName30, state30, channelType30, channelName31, state31, channelType31, channelName32, state32, channelType32, channelName33, state33, channelType33, channelName34, state34, channelType34, channelName35, state35, channelType35, channelName36, state36, channelType36, channelName37, state37, channelType37, channelName38, state38, channelType38, channelName39, state39, channelType39, channelName40, state40, channelType40, channelName41, state41, channelType41, channelName42, state42, channelType42, channelName43, state43, channelType43, channelName44, state44, channelType44, channelName45, state45, channelType45, channelName46, state46, channelType46, channelName47, state47, channelType47, channelName48, state48, channelType48, channelName49, state49, channelType49, channelName50, state50, channelType50, channelName51, state51, channelType51, channelName52, state52, channelType52, channelName53, state53, channelType53, channelName54, state54, channelType54, channelName55, state55, channelType55, channelName56, state56, channelType56, channelName57, state57, channelType57, channelName58, state58, channelType58, channelName59, state59, channelType59, channelName60, state60, channelType60, channelName61, state61, channelType61, channelName62, state62, channelType62, channelName63, state63, channelType63, channelName64, state64, channelType64, channelName65, state65, channelType65, channelName66, state66, channelType66, channelName67, state67, channelType67, channelName68, state68, channelType68, channelName69, state69, channelType69, channelName70, state70, channelType70, channelName71, state71, channelType71, channelName72, state72, channelType72, channelName73, state73, channelType73, channelName74, state74, channelType74, channelName75, state75, channelType75, channelName76, state76, channelType76, channelName77, state77, channelType77, channelName78, state78, channelType78, channelName79, state79, channelType79, channelName80, state80, channelType80, channelName81, state81, channelType81, channelName82, state82, channelType82, channelName83, state83, channelType83, channelName84, state84, channelType84, channelName85, state85, channelType85, channelName86, state86, channelType86, channelName87, state87, channelType87, channelName88, state88, channelType88, channelName89, state89, channelType89, channelName90, state90, channelType90, channelName91, state91, channelType91, channelName92, state92, channelType92, channelName93, state93, channelType93, channelName94, state94, channelType94, channelName95, state95, channelType95);
 }
 
-int32 GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySize)
+int32 GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr)
 {
-  return DAQmxGetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
+  return DAQmxGetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySizePtr);
 }
 
 int32 GetArmStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
@@ -815,6 +820,11 @@ int32 GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char va
 int32 GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
 {
   return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+}
+
+int32 GetExtendedErrorInfo(char errorString[], uInt32 bufferSize)
+{
+  return DAQmxGetExtendedErrorInfo(errorString, bufferSize);
 }
 
 int32 GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data)
@@ -1315,6 +1325,21 @@ int32 ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, in
 int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
 {
   return DAQmxReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 ReadPowerBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  return DAQmxReadPowerBinaryI16(task, numSampsPerChan, timeout, fillMode, readArrayVoltage, readArrayCurrent, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 ReadPowerF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArrayVoltage[], float64 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  return DAQmxReadPowerF64(task, numSampsPerChan, timeout, fillMode, readArrayVoltage, readArrayCurrent, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 ReadPowerScalarF64(TaskHandle task, float64 timeout, float64* voltage, float64* current, bool32* reserved)
+{
+  return DAQmxReadPowerScalarF64(task, timeout, voltage, current, reserved);
 }
 
 int32 ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved)
