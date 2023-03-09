@@ -2060,6 +2060,41 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateAIPowerChan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'nameToAssignToChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'voltageSetpoint',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentSetpoint',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'outputEnable',
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateAIPressureBridgePolynomialChan': {
         'parameters': [
             {
@@ -6014,7 +6049,7 @@ functions = {
                 'name': 'stateArray',
                 'size': {
                     'mechanism': 'passed-in-by-ptr',
-                    'value': 'arraySize'
+                    'value': 'arraySizePtr'
                 },
                 'type': 'float64[]'
             },
@@ -6024,13 +6059,13 @@ functions = {
                 'name': 'channelTypeArray',
                 'size': {
                     'mechanism': 'passed-in-by-ptr',
-                    'value': 'arraySize'
+                    'value': 'arraySizePtr'
                 },
                 'type': 'int32[]'
             },
             {
                 'direction': 'in',
-                'name': 'arraySize',
+                'name': 'arraySizePtr',
                 'type': 'uInt32'
             }
         ],
@@ -6957,7 +6992,6 @@ functions = {
         'returns': 'int32'
     },
     'GetExtendedErrorInfo': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'out',
@@ -10276,6 +10310,165 @@ functions = {
                 'direction': 'out',
                 'name': 'sampsPerChanRead',
                 'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pointer': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadPowerBinaryI16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'out',
+                'name': 'readArrayVoltage',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'int16[]'
+            },
+            {
+                'coerced': True,
+                'direction': 'out',
+                'name': 'readArrayCurrent',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'int16[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pointer': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadPowerF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'numSampsPerChan',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'GroupBy',
+                'name': 'fillMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArrayVoltage',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'readArrayCurrent',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySizeInSamps'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeInSamps',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sampsPerChanRead',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pointer': True,
+                'type': 'bool32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ReadPowerScalarF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'voltage',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'current',
+                'type': 'float64'
             },
             {
                 'direction': 'in',
