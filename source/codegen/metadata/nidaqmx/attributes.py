@@ -3798,6 +3798,57 @@ attributes = {
             'name': 'AO_COMMON_MODE_OFFSET',
             'resettable': True,
             'type': 'float64'
+        },
+        12756: {
+            'access': 'read-write',
+            'name': 'PWR_VOLTAGE_SETPOINT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12757: {
+            'access': 'read-write',
+            'name': 'PWR_CURRENT_SETPOINT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12758: {
+            'access': 'read-write',
+            'name': 'PWR_OUTPUT_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12759: {
+            'access': 'read',
+            'enum': 'PowerOutputState',
+            'name': 'PWR_OUTPUT_STATE',
+            'resettable': False,
+            'type': 'int32'
+        },
+        12760: {
+            'access': 'read-write',
+            'enum': 'PowerIdleOutputBehavior',
+            'name': 'PWR_IDLE_OUTPUT_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12761: {
+            'access': 'read',
+            'name': 'PWR_VOLTAGE_DEV_SCALING_COEFF',
+            'resettable': False,
+            'type': 'float64[]'
+        },
+        12762: {
+            'access': 'read',
+            'name': 'PWR_CURRENT_DEV_SCALING_COEFF',
+            'resettable': False,
+            'type': 'float64[]'
+        },
+        12763: {
+            'access': 'read-write',
+            'enum': 'Sense',
+            'name': 'PWR_REMOTE_SENSE',
+            'resettable': True,
+            'type': 'int32'
         }
     },
     'Device': {
@@ -5658,6 +5709,42 @@ attributes = {
         12691: {
             'access': 'read',
             'name': 'POWER_SUPPLY_FAULT_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12765: {
+            'access': 'read',
+            'name': 'REMOTE_SENSE_ERROR_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12766: {
+            'access': 'read',
+            'name': 'REMOTE_SENSE_ERROR_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12767: {
+            'access': 'read',
+            'name': 'AUX_POWER_ERROR_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12768: {
+            'access': 'read',
+            'name': 'AUX_POWER_ERROR_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12774: {
+            'access': 'read',
+            'name': 'REVERSE_VOLTAGE_ERROR_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12775: {
+            'access': 'read',
+            'name': 'REVERSE_VOLTAGE_ERROR_CHANS',
             'resettable': False,
             'type': 'char[]'
         }
