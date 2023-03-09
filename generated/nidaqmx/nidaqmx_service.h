@@ -93,6 +93,7 @@ public:
   ::grpc::Status CreateAIPosEddyCurrProxProbeChan(::grpc::ServerContext* context, const CreateAIPosEddyCurrProxProbeChanRequest* request, CreateAIPosEddyCurrProxProbeChanResponse* response) override;
   ::grpc::Status CreateAIPosLVDTChan(::grpc::ServerContext* context, const CreateAIPosLVDTChanRequest* request, CreateAIPosLVDTChanResponse* response) override;
   ::grpc::Status CreateAIPosRVDTChan(::grpc::ServerContext* context, const CreateAIPosRVDTChanRequest* request, CreateAIPosRVDTChanResponse* response) override;
+  ::grpc::Status CreateAIPowerChan(::grpc::ServerContext* context, const CreateAIPowerChanRequest* request, CreateAIPowerChanResponse* response) override;
   ::grpc::Status CreateAIPressureBridgePolynomialChan(::grpc::ServerContext* context, const CreateAIPressureBridgePolynomialChanRequest* request, CreateAIPressureBridgePolynomialChanResponse* response) override;
   ::grpc::Status CreateAIPressureBridgeTableChan(::grpc::ServerContext* context, const CreateAIPressureBridgeTableChanRequest* request, CreateAIPressureBridgeTableChanResponse* response) override;
   ::grpc::Status CreateAIPressureBridgeTwoPointLinChan(::grpc::ServerContext* context, const CreateAIPressureBridgeTwoPointLinChanRequest* request, CreateAIPressureBridgeTwoPointLinChanResponse* response) override;
@@ -204,6 +205,7 @@ public:
   ::grpc::Status GetExportedSignalAttributeInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeInt32Request* request, GetExportedSignalAttributeInt32Response* response) override;
   ::grpc::Status GetExportedSignalAttributeString(::grpc::ServerContext* context, const GetExportedSignalAttributeStringRequest* request, GetExportedSignalAttributeStringResponse* response) override;
   ::grpc::Status GetExportedSignalAttributeUInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeUInt32Request* request, GetExportedSignalAttributeUInt32Response* response) override;
+  ::grpc::Status GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response) override;
   ::grpc::Status GetFirstSampClkWhen(::grpc::ServerContext* context, const GetFirstSampClkWhenRequest* request, GetFirstSampClkWhenResponse* response) override;
   ::grpc::Status GetFirstSampTimestampVal(::grpc::ServerContext* context, const GetFirstSampTimestampValRequest* request, GetFirstSampTimestampValResponse* response) override;
   ::grpc::Status GetNthTaskChannel(::grpc::ServerContext* context, const GetNthTaskChannelRequest* request, GetNthTaskChannelResponse* response) override;
@@ -304,6 +306,9 @@ public:
   ::grpc::Status ReadDigitalU16(::grpc::ServerContext* context, const ReadDigitalU16Request* request, ReadDigitalU16Response* response) override;
   ::grpc::Status ReadDigitalU32(::grpc::ServerContext* context, const ReadDigitalU32Request* request, ReadDigitalU32Response* response) override;
   ::grpc::Status ReadDigitalU8(::grpc::ServerContext* context, const ReadDigitalU8Request* request, ReadDigitalU8Response* response) override;
+  ::grpc::Status ReadPowerBinaryI16(::grpc::ServerContext* context, const ReadPowerBinaryI16Request* request, ReadPowerBinaryI16Response* response) override;
+  ::grpc::Status ReadPowerF64(::grpc::ServerContext* context, const ReadPowerF64Request* request, ReadPowerF64Response* response) override;
+  ::grpc::Status ReadPowerScalarF64(::grpc::ServerContext* context, const ReadPowerScalarF64Request* request, ReadPowerScalarF64Response* response) override;
   ::grpc::Status ReadRaw(::grpc::ServerContext* context, const ReadRawRequest* request, ReadRawResponse* response) override;
   ::grpc::ServerWriteReactor<RegisterDoneEventResponse>* RegisterDoneEvent(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request) override;
   ::grpc::ServerWriteReactor<RegisterEveryNSamplesEventResponse>* RegisterEveryNSamplesEvent(::grpc::CallbackServerContext* context, const RegisterEveryNSamplesEventRequest* request) override;
