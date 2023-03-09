@@ -162,6 +162,22 @@ ATTRIBUTE_SCHEMA = Schema(
         Optional("python_name"): str,
         Optional("codegen_method"): str,
         Optional("grpc_type"): str,
+        Optional("c_function_name"): str,
+        Optional("calling_convention"): str,
+        Optional("bitfield_enum"): str,
+        Optional("ctypes_data_type"): str,
+        Optional("handle_parameters"): dict,
+        Optional("python_object_constructor_params"): dict,
+        Optional("has_explicit_read_buffer_size"): bool,        
+        Optional("python_object_has_factory"): bool,        
+        Optional("python_object_module_location"): str,        
+        Optional("python_object_type"): str,
+        Optional("has_explicit_write_buffer_size"): bool,
+        Optional("is_list"): bool,
+        Optional("is_python_object"): bool,
+        Optional("python_class_name"): str,
+        Optional("python_data_type"): str,
+        Optional("python_description"): str
     }
 )
 
@@ -173,11 +189,13 @@ SIMPLE_ATTRIBUTE_SCHEMA = Schema(
 
 ENUM_SCHEMA = Schema(
     {
+        Optional("python_name"): str,
         "values": [
             {
                 "name": str,
                 "value": Or(str, int, float),
                 Optional("python_name"): str,
+                Optional("python_value_name"): str,
                 Optional("documentation"): DOCUMENTATION_SCHEMA,
                 Optional("type"): str,
             }
