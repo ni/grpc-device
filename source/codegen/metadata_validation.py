@@ -31,6 +31,8 @@ class RULES:
     # In general, enums shouldn't have duplicate values. This is helpful for catching typos although
     # there are a few enums that have legitimate duplicates.
     ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES = "ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES"
+    # This is helpful in avoiding enums inclusion in the .proto files.
+    ENUMS_SHOULD_BE_USED = "ENUMS_SHOULD_BE_USED"
 
 
 DOCUMENTATION_SCHEMA = Schema(
@@ -205,7 +207,10 @@ def validate_metadata(metadata: dict):
         attribute_enums = _get_attribute_enums(metadata)
         used_enums = function_enums.union(attribute_enums)
         for enum_name in metadata["enums"]:
-            _validate_enum(enum_name, used_enums, metadata)
+            if not _rule_is_suppressed(
+                metadata, RULES.ENUMS_SHOULD_BE_USED, ["enums", enum_name]
+            ):
+                _validate_enum(enum_name, used_enums, metadata)
     except Exception as e:
         raise Exception(f"Failed to validate {metadata['config']['namespace_component']}") from e
 
