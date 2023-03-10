@@ -274,6 +274,7 @@ attributes = {
             'c_function_name': 'AIImpedance',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_double',
+            'enum': 'Impedance1',
             'handle_parameters': {
                 'channelHandle': {
                     'accessor': 'self._name',
@@ -6324,7 +6325,7 @@ attributes = {
             'name': 'CI_ENCODER_DECODING_TYPE',
             'python_class_name': 'CIChannel',
             'python_data_type': 'EncoderType2',
-            'python_description': 'Specifies how to count and interpret the pulses the encoder generates on signal A and signal B. **EncoderType2.X1**, **EncoderType2.X2**, and **EncoderType2.X4** are valid for quadrature encoders only. **EncoderType2.TWO_PULSE_COUNTING** is valid for two-pulse encoders only.',
+            'python_description': 'Specifies how to count and interpret the pulses the encoder generates on signal A and signal B. **EncoderType2.X_1**, **EncoderType2.X_2**, and **EncoderType2.X_4** are valid for quadrature encoders only. **EncoderType2.TWO_PULSE_COUNTING** is valid for two-pulse encoders only.',
             'resettable': True,
             'type': 'int32'
         },
@@ -23834,78 +23835,6 @@ attributes = {
             'python_class_name': 'DaqStream',
             'python_data_type': 'str',
             'python_description': 'Indicates a list of names of all virtual channels in the task for which reverse voltage error condition has been detected. You must read the Reverse Voltage Error Channels Exist property before you read this property. Otherwise, you will receive an error.',
-            'resettable': False,
-            'type': 'char[]'
-        },
-        12765: {
-            'access': 'read',
-            'name': 'REMOTE_SENSE_ERROR_CHANS_EXIST',
-            'resettable': False,
-            'type': 'bool32'
-        },
-        12766: {
-            'access': 'read',
-            'name': 'REMOTE_SENSE_ERROR_CHANS',
-            'resettable': False,
-            'type': 'char[]'
-        },
-        12767: {
-            'access': 'read',
-            'name': 'AUX_POWER_ERROR_CHANS_EXIST',
-            'resettable': False,
-            'type': 'bool32'
-        },
-        12768: {
-            'access': 'read',
-            'name': 'AUX_POWER_ERROR_CHANS',
-            'resettable': False,
-            'type': 'char[]'
-        },
-        12774: {
-            'access': 'read',
-            'name': 'REVERSE_VOLTAGE_ERROR_CHANS_EXIST',
-            'resettable': False,
-            'type': 'bool32'
-        },
-        12775: {
-            'access': 'read',
-            'name': 'REVERSE_VOLTAGE_ERROR_CHANS',
-            'resettable': False,
-            'type': 'char[]'
-        },
-        12765: {
-            'access': 'read',
-            'name': 'REMOTE_SENSE_ERROR_CHANS_EXIST',
-            'resettable': False,
-            'type': 'bool32'
-        },
-        12766: {
-            'access': 'read',
-            'name': 'REMOTE_SENSE_ERROR_CHANS',
-            'resettable': False,
-            'type': 'char[]'
-        },
-        12767: {
-            'access': 'read',
-            'name': 'AUX_POWER_ERROR_CHANS_EXIST',
-            'resettable': False,
-            'type': 'bool32'
-        },
-        12768: {
-            'access': 'read',
-            'name': 'AUX_POWER_ERROR_CHANS',
-            'resettable': False,
-            'type': 'char[]'
-        },
-        12774: {
-            'access': 'read',
-            'name': 'REVERSE_VOLTAGE_ERROR_CHANS_EXIST',
-            'resettable': False,
-            'type': 'bool32'
-        },
-        12775: {
-            'access': 'read',
-            'name': 'REVERSE_VOLTAGE_ERROR_CHANS',
             'resettable': False,
             'type': 'char[]'
         }
