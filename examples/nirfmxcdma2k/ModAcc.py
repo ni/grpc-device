@@ -88,7 +88,6 @@ try:
             session_name=SESSION_NAME,
             resource_name=RESOURCE,
             option_string=OPTIONS,
-            initialization_behavior=None,
         )
     )
     instr = initialize_response.instrument
