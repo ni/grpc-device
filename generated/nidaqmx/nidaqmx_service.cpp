@@ -15416,7 +15416,22 @@ namespace nidaqmx_grpc {
         }
       }
 
-      float64 value = request->value();
+      float64 value;
+      switch (request->value_enum_case()) {
+        case nidaqmx_grpc::SetChanAttributeDoubleRequest::ValueEnumCase::kValue: {
+          value = static_cast<float64>(request->value());
+          break;
+        }
+        case nidaqmx_grpc::SetChanAttributeDoubleRequest::ValueEnumCase::kValueRaw: {
+          value = static_cast<float64>(request->value_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetChanAttributeDoubleRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto size = 0U;
       auto status = library_->SetChanAttributeDouble(task, channel, attribute, value, size);
       if (!status_ok(status)) {
