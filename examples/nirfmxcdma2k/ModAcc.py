@@ -31,8 +31,8 @@ Link: https://github.com/ni/grpc-device/wiki/NI-RFmxCDMA2k-C-Function-Reference
 
 Running from command line:
 
-Server machine's IP address, port number, and physical channel name can be passed as separate command
-line arguments.
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
   > python RFmxCdma2kModAcc.c <server_address> <port_number> <physical_channel_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "SimulatedDevice" as the resource name
