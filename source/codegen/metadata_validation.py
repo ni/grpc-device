@@ -197,7 +197,6 @@ ENUM_SCHEMA = Schema(
                 "name": str,
                 "value": Or(str, int, float),
                 Optional("python_name"): str,
-                Optional("python_value_name"): str,
                 Optional("documentation"): DOCUMENTATION_SCHEMA,
                 Optional("type"): str,
             }
