@@ -1612,7 +1612,6 @@ enums = {
         ]
     },
     'DAQmxErrors': {
-        'force-include': True,
         'values': [
             {
                 'documentation': {
@@ -13790,7 +13789,6 @@ enums = {
         ]
     },
     'DAQmxWarnings': {
-        'force-include': True,
         'values': [
             {
                 'documentation': {

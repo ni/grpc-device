@@ -4,3 +4,7 @@
 enums_override_metadata = {
 }
 
+enums_validation_suppressions = {
+    "DAQmxErrors": ["ENUMS_SHOULD_BE_USED"],
+    "DAQmxWarnings": ["ENUMS_SHOULD_BE_USED"]
+}
