@@ -102,6 +102,7 @@ try:
         )
     )
     instr = initialize_response.instrument
+    check_for_warning(initialize_response, instr)
 
     # Configure CDMA2k ACP measurement parameters
     client.CfgFrequencyReference(
@@ -214,10 +215,10 @@ try:
         )
     )
     check_for_warning(acp_fetch_offset_measurement_array_response, instr)
-    lowerRelativePower = acp_fetch_offset_measurement_array_response.lower_relative_power
-    upperRelativePower = acp_fetch_offset_measurement_array_response.upper_relative_power
-    upperAbsolutePower = acp_fetch_offset_measurement_array_response.lower_absolute_power
-    lowerAbsolutePower = acp_fetch_offset_measurement_array_response.upper_absolute_power
+    lower_relative_power = acp_fetch_offset_measurement_array_response.lower_relative_power
+    upper_relative_power = acp_fetch_offset_measurement_array_response.upper_relative_power
+    upper_absolute_power = acp_fetch_offset_measurement_array_response.lower_absolute_power
+    lower_absolute_power = acp_fetch_offset_measurement_array_response.upper_absolute_power
 
     acp_fetch_carrier_absolute_power_response = client.ACPFetchCarrierAbsolutePower(
         nirfmxcdma2k_types.ACPFetchCarrierAbsolutePowerRequest(
@@ -244,10 +245,10 @@ try:
 
     for i in range(NUMBER_OF_OFFSETS):
         print(f"\nOFFSET {i}")
-        print(f"Lower Relative Power (dB)                : {lowerRelativePower[i]}")
-        print(f"Upper Relative Power (dB)                : {upperRelativePower[i]}")
-        print(f"Lower Absolute Power (dBm)               : {lowerAbsolutePower[i]}")
-        print(f"Upper Absolute Power (dBm)               : {upperAbsolutePower[i]}")
+        print(f"Lower Relative Power (dB)                : {lower_relative_power[i]}")
+        print(f"Upper Relative Power (dB)                : {upper_relative_power[i]}")
+        print(f"Lower Absolute Power (dBm)               : {upper_absolute_power[i]}")
+        print(f"Upper Absolute Power (dBm)               : {lower_absolute_power[i]}")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
