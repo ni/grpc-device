@@ -23872,6 +23872,42 @@ attributes = {
             'name': 'REVERSE_VOLTAGE_ERROR_CHANS',
             'resettable': False,
             'type': 'char[]'
+        },
+        12765: {
+            'access': 'read',
+            'name': 'REMOTE_SENSE_ERROR_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12766: {
+            'access': 'read',
+            'name': 'REMOTE_SENSE_ERROR_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12767: {
+            'access': 'read',
+            'name': 'AUX_POWER_ERROR_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12768: {
+            'access': 'read',
+            'name': 'AUX_POWER_ERROR_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12774: {
+            'access': 'read',
+            'name': 'REVERSE_VOLTAGE_ERROR_CHANS_EXIST',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12775: {
+            'access': 'read',
+            'name': 'REVERSE_VOLTAGE_ERROR_CHANS',
+            'resettable': False,
+            'type': 'char[]'
         }
     },
     'RealTime': {
