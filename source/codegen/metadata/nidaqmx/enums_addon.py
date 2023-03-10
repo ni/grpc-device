@@ -5,6 +5,14 @@ enums_override_metadata = {
 }
 
 enums_validation_suppressions = {
+    "CouplingTypes": ["ENUMS_SHOULD_BE_USED"],
     "DAQmxErrors": ["ENUMS_SHOULD_BE_USED"],
-    "DAQmxWarnings": ["ENUMS_SHOULD_BE_USED"]
+    "DAQmxWarnings": ["ENUMS_SHOULD_BE_USED"],
+    "FillMode": ["ENUMS_SHOULD_BE_USED"],
+    "Save": ["ENUMS_SHOULD_BE_USED"],
+    "SignalModifiers": ["ENUMS_SHOULD_BE_USED"],
+    "TaskMode": ["ENUMS_SHOULD_BE_USED"],
+    "TermCfg": ["ENUMS_SHOULD_BE_USED"],
+    "TriggerUsageTypes": ["ENUMS_SHOULD_BE_USED"],
+    "WDTTaskAction": ["ENUMS_SHOULD_BE_USED"]
 }
