@@ -224,9 +224,7 @@ def validate_metadata(metadata: dict):
         attribute_enums = _get_attribute_enums(metadata)
         used_enums = function_enums.union(attribute_enums)
         for enum_name in metadata["enums"]:
-            if not _rule_is_suppressed(
-                metadata, RULES.ENUMS_SHOULD_BE_USED, ["enums", enum_name]
-            ):
+            if not _rule_is_suppressed(metadata, RULES.ENUMS_SHOULD_BE_USED, ["enums", enum_name]):
                 _validate_enum(enum_name, used_enums, metadata)
     except Exception as e:
         raise Exception(f"Failed to validate {metadata['config']['namespace_component']}") from e
