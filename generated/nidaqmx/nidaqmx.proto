@@ -3839,14 +3839,6 @@ enum ChannelInt32AttributeValues {
   CHANNEL_INT32_VOLTAGE_UNITS2_FROM_CUSTOM_SCALE = 10065;
 }
 
-enum ChannelFloat64AttributeValues {
-  CHANNEL_FLOAT64_UNSPECIFIED = 0;
-  CHANNEL_FLOAT64_IMPEDANCE1_50_OHMS = 50;
-  CHANNEL_FLOAT64_IMPEDANCE1_75_OHMS = 75;
-  CHANNEL_FLOAT64_IMPEDANCE1_1_M_OHM = 1000000;
-  CHANNEL_FLOAT64_IMPEDANCE1_10_G_OHMS = 10000000000;
-}
-
 enum DeviceInt32AttributeValues {
   option allow_alias = true;
   DEVICE_INT32_UNSPECIFIED = 0;
@@ -9089,10 +9081,7 @@ message SetChanAttributeDoubleRequest {
     ChannelDoubleAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
-  oneof value_enum {
-    ChannelFloat64AttributeValues value = 5;
-    double value_raw = 6;
-  }
+  double value = 5;
 }
 
 message SetChanAttributeDoubleResponse {

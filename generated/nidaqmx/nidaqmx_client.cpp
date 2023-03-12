@@ -8712,7 +8712,7 @@ set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 SetChanAttributeDoubleResponse
-set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelDoubleAttribute, pb::int32>& attribute, const simple_variant<ChannelFloat64AttributeValues, double>& value)
+set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelDoubleAttribute, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -8727,14 +8727,7 @@ set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
   else if (attribute_raw_ptr) {
     request.set_attribute_raw(*attribute_raw_ptr);
   }
-  const auto value_ptr = value.get_if<ChannelFloat64AttributeValues>();
-  const auto value_raw_ptr = value.get_if<double>();
-  if (value_ptr) {
-    request.set_value(*value_ptr);
-  }
-  else if (value_raw_ptr) {
-    request.set_value_raw(*value_raw_ptr);
-  }
+  request.set_value(value);
 
   auto response = SetChanAttributeDoubleResponse{};
 
