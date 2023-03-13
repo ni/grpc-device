@@ -15615,7 +15615,8 @@ enums = {
                 'documentation': {
                     'description': 'Default.'
                 },
-                'name': 'DEFAULT',
+                'name': 'CFG_DEFAULT',
+                'python_name': 'DEFAULT',
                 'value': -1
             },
             {
