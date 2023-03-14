@@ -6049,7 +6049,7 @@ functions = {
                 'name': 'stateArray',
                 'size': {
                     'mechanism': 'passed-in-by-ptr',
-                    'value': 'arraySizePtr'
+                    'value': 'arraySize'
                 },
                 'type': 'float64[]'
             },
@@ -6059,13 +6059,13 @@ functions = {
                 'name': 'channelTypeArray',
                 'size': {
                     'mechanism': 'passed-in-by-ptr',
-                    'value': 'arraySizePtr'
+                    'value': 'arraySize'
                 },
                 'type': 'int32[]'
             },
             {
                 'direction': 'in',
-                'name': 'arraySizePtr',
+                'name': 'arraySize',
                 'type': 'uInt32'
             }
         ],
@@ -6992,6 +6992,7 @@ functions = {
         'returns': 'int32'
     },
     'GetExtendedErrorInfo': {
+        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'out',
