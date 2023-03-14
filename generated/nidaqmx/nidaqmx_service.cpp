@@ -7777,22 +7777,22 @@ namespace nidaqmx_grpc {
     try {
       auto channel_names_mbcs = convert_from_grpc<std::string>(request->channel_names());
       auto channel_names = channel_names_mbcs.c_str();
-      uInt32 array_size_ptr_copy = request->array_size_ptr();
-      response->mutable_state_array()->Resize(array_size_ptr_copy, 0);
+      uInt32 array_size_copy = request->array_size();
+      response->mutable_state_array()->Resize(array_size_copy, 0);
       float64* state_array = response->mutable_state_array()->mutable_data();
-      response->mutable_channel_type_array_raw()->Resize(array_size_ptr_copy, 0);
+      response->mutable_channel_type_array_raw()->Resize(array_size_copy, 0);
       int32* channel_type_array = reinterpret_cast<int32*>(response->mutable_channel_type_array_raw()->mutable_data());
-      auto status = library_->GetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, &array_size_ptr_copy);
+      auto status = library_->GetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, &array_size_copy);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_state_array()->Resize(array_size_ptr_copy, 0);
+      response->mutable_state_array()->Resize(array_size_copy, 0);
         response->mutable_channel_type_array()->Clear();
-        response->mutable_channel_type_array()->Reserve(array_size_ptr_copy);
+        response->mutable_channel_type_array()->Reserve(array_size_copy);
         std::transform(
           response->channel_type_array_raw().begin(),
-          response->channel_type_array_raw().begin() + array_size_ptr_copy,
+          response->channel_type_array_raw().begin() + array_size_copy,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_channel_type_array()),
           [&](auto x) {
               return static_cast<nidaqmx_grpc::PowerUpChannelType>(x);
@@ -9307,47 +9307,6 @@ namespace nidaqmx_grpc {
       response->set_status(status);
       response->set_value(value);
       return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDAQmxService::GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-
-      while (true) {
-        auto status = library_->GetExtendedErrorInfo(nullptr, 0);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForTaskHandle(context, status, 0);
-        }
-        uInt32 buffer_size = status;
-
-        std::string error_string;
-        if (buffer_size > 0) {
-            error_string.resize(buffer_size - 1);
-        }
-        status = library_->GetExtendedErrorInfo((char*)error_string.data(), buffer_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForTaskHandle(context, status, 0);
-        }
-        response->set_status(status);
-        std::string error_string_utf8;
-        convert_to_grpc(error_string, &error_string_utf8);
-        response->set_error_string(error_string_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
-        return ::grpc::Status::OK;
-      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();

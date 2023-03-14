@@ -143,7 +143,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ExportSignal(TaskHandle task, int32 signalID, const char outputTerminal[]) = 0;
   virtual int32 GetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
   virtual int32 GetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
-  virtual int32 GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr) = 0;
+  virtual int32 GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySize) = 0;
   virtual int32 GetArmStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetAutoConfiguredCDAQSyncConnections(char portList[], uInt32 portListSize) = 0;

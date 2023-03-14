@@ -205,7 +205,6 @@ public:
   ::grpc::Status GetExportedSignalAttributeInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeInt32Request* request, GetExportedSignalAttributeInt32Response* response) override;
   ::grpc::Status GetExportedSignalAttributeString(::grpc::ServerContext* context, const GetExportedSignalAttributeStringRequest* request, GetExportedSignalAttributeStringResponse* response) override;
   ::grpc::Status GetExportedSignalAttributeUInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeUInt32Request* request, GetExportedSignalAttributeUInt32Response* response) override;
-  ::grpc::Status GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response) override;
   ::grpc::Status GetFirstSampClkWhen(::grpc::ServerContext* context, const GetFirstSampClkWhenRequest* request, GetFirstSampClkWhenResponse* response) override;
   ::grpc::Status GetFirstSampTimestampVal(::grpc::ServerContext* context, const GetFirstSampTimestampValRequest* request, GetFirstSampTimestampValResponse* response) override;
   ::grpc::Status GetNthTaskChannel(::grpc::ServerContext* context, const GetNthTaskChannelRequest* request, GetNthTaskChannelResponse* response) override;

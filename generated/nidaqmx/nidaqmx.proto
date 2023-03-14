@@ -180,7 +180,6 @@ service NiDAQmx {
   rpc GetExportedSignalAttributeInt32(GetExportedSignalAttributeInt32Request) returns (GetExportedSignalAttributeInt32Response);
   rpc GetExportedSignalAttributeString(GetExportedSignalAttributeStringRequest) returns (GetExportedSignalAttributeStringResponse);
   rpc GetExportedSignalAttributeUInt32(GetExportedSignalAttributeUInt32Request) returns (GetExportedSignalAttributeUInt32Response);
-  rpc GetExtendedErrorInfo(GetExtendedErrorInfoRequest) returns (GetExtendedErrorInfoResponse);
   rpc GetFirstSampClkWhen(GetFirstSampClkWhenRequest) returns (GetFirstSampClkWhenResponse);
   rpc GetFirstSampTimestampVal(GetFirstSampTimestampValRequest) returns (GetFirstSampTimestampValResponse);
   rpc GetNthTaskChannel(GetNthTaskChannelRequest) returns (GetNthTaskChannelResponse);
@@ -3090,8 +3089,8 @@ enum GpsSignalType1 {
 }
 
 enum GroupBy {
-  GROUP_BY_CHANNEL = 0;
-  GROUP_BY_SCAN_NUMBER = 1;
+  GROUP_BY_GROUP_BY_CHANNEL = 0;
+  GROUP_BY_GROUP_BY_SCAN_NUMBER = 1;
 }
 
 enum InputTermCfgWithDefault {
@@ -3159,7 +3158,7 @@ enum LogicFamily {
   LOGIC_FAMILY_UNSPECIFIED = 0;
   LOGIC_FAMILY_2POINT_5_V = 14620;
   LOGIC_FAMILY_3POINT_3_V = 14621;
-  LOGIC_FAMILY_5V = 14619;
+  LOGIC_FAMILY_5_V = 14619;
 }
 
 enum Polarity2 {
@@ -3697,7 +3696,7 @@ enum ChannelInt32AttributeValues {
   CHANNEL_INT32_LEVEL1_LOW = 10214;
   CHANNEL_INT32_LOGIC_FAMILY_2POINT_5_V = 14620;
   CHANNEL_INT32_LOGIC_FAMILY_3POINT_3_V = 14621;
-  CHANNEL_INT32_LOGIC_FAMILY_5V = 14619;
+  CHANNEL_INT32_LOGIC_FAMILY_5_V = 14619;
   CHANNEL_INT32_LOGIC_LVL_BEHAVIOR_LOGIC_LEVEL_PULL_UP = 16064;
   CHANNEL_INT32_LOGIC_LVL_BEHAVIOR_NONE = 10230;
   CHANNEL_INT32_MODULATION_TYPE_AM = 14756;
@@ -6899,7 +6898,7 @@ message GetAnalogPowerUpStatesResponse {
 
 message GetAnalogPowerUpStatesWithOutputTypeRequest {
   string channel_names = 1;
-  uint32 array_size_ptr = 2;
+  uint32 array_size = 2;
 }
 
 message GetAnalogPowerUpStatesWithOutputTypeResponse {
@@ -7301,14 +7300,6 @@ message GetExportedSignalAttributeUInt32Request {
 message GetExportedSignalAttributeUInt32Response {
   int32 status = 1;
   uint32 value = 2;
-}
-
-message GetExtendedErrorInfoRequest {
-}
-
-message GetExtendedErrorInfoResponse {
-  int32 status = 1;
-  string error_string = 2;
 }
 
 message GetFirstSampClkWhenRequest {
