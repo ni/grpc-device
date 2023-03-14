@@ -145,7 +145,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ExportSignal, (TaskHandle task, int32 signalID, const char outputTerminal[]), (override));
   MOCK_METHOD(int32, GetAIChanCalCalDate, (TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute), (override));
   MOCK_METHOD(int32, GetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute), (override));
-  MOCK_METHOD(int32, GetAnalogPowerUpStatesWithOutputType, (const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr), (override));
+  MOCK_METHOD(int32, GetAnalogPowerUpStatesWithOutputType, (const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySize), (override));
   MOCK_METHOD(int32, GetArmStartTrigTimestampVal, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetAutoConfiguredCDAQSyncConnections, (char portList[], uInt32 portListSize), (override));

@@ -15448,14 +15448,14 @@ enums = {
                 'documentation': {
                     'description': 'Group by Channel'
                 },
-                'name': 'CHANNEL',
+                'name': 'GROUP_BY_CHANNEL',
                 'value': 0
             },
             {
                 'documentation': {
                     'description': 'Group by Scan Number'
                 },
-                'name': 'SCAN_NUMBER',
+                'name': 'GROUP_BY_SCAN_NUMBER',
                 'value': 1
             }
         ]
@@ -15886,8 +15886,7 @@ enums = {
                 'documentation': {
                     'description': 'Compatible with TTL and 5 V CMOS signals.'
                 },
-                'name': '5V',
-                'python_name': '5_V',
+                'name': '5_V',
                 'value': 14619
             }
         ]

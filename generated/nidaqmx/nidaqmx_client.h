@@ -152,7 +152,7 @@ ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Ses
 GetAIChanCalCalDateResponse get_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_name);
 GetAIChanCalExpDateResponse get_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_name);
 GetAnalogPowerUpStatesResponse get_analog_power_up_states(const StubPtr& stub, const std::string& device_name, const std::vector<AnalogPowerUpChannelAndType>& channels);
-GetAnalogPowerUpStatesWithOutputTypeResponse get_analog_power_up_states_with_output_type(const StubPtr& stub, const std::string& channel_names, const pb::uint32& array_size_ptr);
+GetAnalogPowerUpStatesWithOutputTypeResponse get_analog_power_up_states_with_output_type(const StubPtr& stub, const std::string& channel_names, const pb::uint32& array_size);
 GetArmStartTrigTimestampValResponse get_arm_start_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetArmStartTrigTrigWhenResponse get_arm_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetAutoConfiguredCDAQSyncConnectionsResponse get_auto_configured_cdaq_sync_connections(const StubPtr& stub);
@@ -185,7 +185,6 @@ GetExportedSignalAttributeDoubleResponse get_exported_signal_attribute_double(co
 GetExportedSignalAttributeInt32Response get_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalInt32Attribute, pb::int32>& attribute);
 GetExportedSignalAttributeStringResponse get_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalStringAttribute, pb::int32>& attribute);
 GetExportedSignalAttributeUInt32Response get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalUInt32Attribute, pb::int32>& attribute);
-GetExtendedErrorInfoResponse get_extended_error_info(const StubPtr& stub);
 GetFirstSampClkWhenResponse get_first_samp_clk_when(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetFirstSampTimestampValResponse get_first_samp_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetNthTaskChannelResponse get_nth_task_channel(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::uint32& index);

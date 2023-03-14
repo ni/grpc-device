@@ -31,7 +31,10 @@ class RULES:
     # In general, enums shouldn't have duplicate values. This is helpful for catching typos although
     # there are a few enums that have legitimate duplicates.
     ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES = "ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES"
-    # This is helpful in avoiding enums inclusion in the .proto files.
+    # The ENUMS_SHOULD_BE_USED validation rule is intended to catch enums that are not mapped to functions
+    # or attributes because of incomplete or mishandled metadata. Note that any unreferenced enums will not
+    # be included in the proto file. These enums should be reviewed, and if they are correctly
+    # included-but-not-referenced and are not required to be in the proto file, the rule can be suppressed.
     ENUMS_SHOULD_BE_USED = "ENUMS_SHOULD_BE_USED"
 
 
