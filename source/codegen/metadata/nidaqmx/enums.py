@@ -71,6 +71,7 @@ enums = {
         ]
     },
     'AIMeasurementType': {
+        'python_name': 'UsageTypeAI',
         'values': [
             {
                 'documentation': {
@@ -84,6 +85,7 @@ enums = {
                     'description': 'Voltage RMS measurement.'
                 },
                 'name': 'VOLTAGE_RMS',
+                'python_name': 'VOLTAGE_ACRMS',
                 'value': 10350
             },
             {
@@ -98,6 +100,7 @@ enums = {
                     'description': 'Current RMS measurement.'
                 },
                 'name': 'CURRENT_RMS',
+                'python_name': 'CURRENT_ACRMS',
                 'value': 10351
             },
             {
@@ -119,6 +122,7 @@ enums = {
                     'description': ' Frequency measurement using a frequency to voltage converter.'
                 },
                 'name': 'FREQ_VOLTAGE',
+                'python_name': 'FREQUENCY_VOLTAGE',
                 'value': 10181
             },
             {
@@ -133,6 +137,7 @@ enums = {
                     'description': 'Temperature measurement using a thermocouple.'
                 },
                 'name': 'TEMP_TC',
+                'python_name': 'TEMPERATURE_THERMOCOUPLE',
                 'value': 10303
             },
             {
@@ -140,6 +145,7 @@ enums = {
                     'description': 'Temperature measurement using a thermistor.'
                 },
                 'name': 'TEMP_THRMSTR',
+                'python_name': 'TEMPERATURE_THERMISTOR',
                 'value': 10302
             },
             {
@@ -147,6 +153,7 @@ enums = {
                     'description': 'Temperature measurement using an RTD.'
                 },
                 'name': 'TEMP_RTD',
+                'python_name': 'TEMPERATURE_RTD',
                 'value': 10301
             },
             {
@@ -154,6 +161,7 @@ enums = {
                     'description': ' Temperature measurement using a built-in sensor on a terminal block or device.  On SCXI modules, for example, this could be the CJC sensor.'
                 },
                 'name': 'TEMP_BUILT_IN_SENSOR',
+                'python_name': 'TEMPERATURE_BUILT_IN_SENSOR',
                 'value': 10311
             },
             {
@@ -161,6 +169,7 @@ enums = {
                     'description': 'Strain measurement.'
                 },
                 'name': 'STRAIN_GAGE',
+                'python_name': 'STRAIN_STRAIN_GAGE',
                 'value': 10300
             },
             {
@@ -175,6 +184,7 @@ enums = {
                     'description': 'Position measurement using an LVDT.'
                 },
                 'name': 'POSITION_LVDT',
+                'python_name': 'POSITION_LINEAR_LVDT',
                 'value': 10352
             },
             {
@@ -182,6 +192,7 @@ enums = {
                     'description': 'Position measurement using an RVDT.'
                 },
                 'name': 'POSITION_RVDT',
+                'python_name': 'POSITION_ANGULAR_RVDT',
                 'value': 10353
             },
             {
@@ -189,6 +200,7 @@ enums = {
                     'description': 'Position measurement using an eddy current proximity probe.'
                 },
                 'name': 'POSITION_EDDY_CURRENT_PROXIMITY_PROBE',
+                'python_name': 'POSITION_EDDY_CURRENT_PROX_PROBE',
                 'value': 14835
             },
             {
@@ -196,6 +208,7 @@ enums = {
                     'description': 'Acceleration measurement using an accelerometer.'
                 },
                 'name': 'ACCELEROMETER',
+                'python_name': 'ACCELERATION_ACCELEROMETER_CURRENT_INPUT',
                 'value': 10356
             },
             {
@@ -259,6 +272,7 @@ enums = {
                     'description': 'Measurement type defined by TEDS.'
                 },
                 'name': 'TEDS_SENSOR',
+                'python_name': 'TEDS',
                 'value': 12531
             },
             {
@@ -303,6 +317,7 @@ enums = {
         ]
     },
     'AOOutputChannelType': {
+        'python_name': 'UsageTypeAO',
         'values': [
             {
                 'documentation': {
@@ -323,6 +338,7 @@ enums = {
                     'description': 'Function generation.'
                 },
                 'name': 'FUNC_GEN',
+                'python_name': 'FUNCTION_GENERATION',
                 'value': 14750
             }
         ]
@@ -378,12 +394,14 @@ enums = {
         ]
     },
     'AccelSensitivityUnits1': {
+        'python_name': 'AccelSensitivityUnits',
         'values': [
             {
                 'documentation': {
                     'description': 'mVolts/g.'
                 },
                 'name': 'M_VOLTS_PER_G',
+                'python_name': 'MILLIVOLTS_PER_G',
                 'value': 12509
             },
             {
@@ -396,12 +414,14 @@ enums = {
         ]
     },
     'AccelUnits2': {
+        'python_name': 'AccelUnits',
         'values': [
             {
                 'documentation': {
                     'description': '1 g is approximately equal to 9.81 m/s/s.'
                 },
                 'name': 'ACCEL_UNIT_G',
+                'python_name': 'G',
                 'value': 10186
             },
             {
@@ -434,6 +454,7 @@ enums = {
                     'description': 'Acquire or generate a finite number of samples.'
                 },
                 'name': 'FINITE_SAMPS',
+                'python_name': 'FINITE',
                 'value': 10178
             },
             {
@@ -441,6 +462,7 @@ enums = {
                     'description': 'Acquire or generate samples until you stop the task.'
                 },
                 'name': 'CONT_SAMPS',
+                'python_name': 'CONTINUOUS',
                 'value': 10123
             },
             {
@@ -459,6 +481,7 @@ enums = {
                     'description': ' Pause the measurement or generation while the signal is above the threshold.'
                 },
                 'name': 'ABOVE_LVL',
+                'python_name': 'ABOVE',
                 'value': 10093
             },
             {
@@ -466,6 +489,7 @@ enums = {
                     'description': ' Pause the measurement or generation while the signal is below the threshold.'
                 },
                 'name': 'BELOW_LVL',
+                'python_name': 'BELOW',
                 'value': 10107
             }
         ]
@@ -489,6 +513,7 @@ enums = {
         ]
     },
     'AngleUnits1': {
+        'python_name': 'AngleUnits',
         'values': [
             {
                 'documentation': {
@@ -514,6 +539,7 @@ enums = {
         ]
     },
     'AngleUnits2': {
+        'python_name': 'AngleUnits',
         'values': [
             {
                 'documentation': {
@@ -546,6 +572,7 @@ enums = {
         ]
     },
     'AngleUnits3': {
+        'python_name': 'AngleUnits',
         'values': [
             {
                 'documentation': {
@@ -628,6 +655,7 @@ enums = {
         ]
     },
     'AutoZeroType1': {
+        'python_name': 'AutoZeroType',
         'values': [
             {
                 'documentation': {
@@ -653,6 +681,7 @@ enums = {
         ]
     },
     'BridgeConfiguration1': {
+        'python_name': 'BridgeConfiguration',
         'values': [
             {
                 'documentation': {
@@ -698,6 +727,7 @@ enums = {
                     'description': 'Millivolts per volt.'
                 },
                 'name': 'M_VOLTS_PER_VOLT',
+                'python_name': 'MILLIVOLTS_PER_VOLT',
                 'value': 15897
             }
         ]
@@ -737,6 +767,7 @@ enums = {
                     'description': 'Pounds per square inch.'
                 },
                 'name': 'POUNDS_PER_SQUARE_INCH',
+                'python_name': 'POUNDS_PER_SQ_INCH',
                 'value': 15879
             },
             {
@@ -801,6 +832,7 @@ enums = {
                     'description': 'Volts per volt.'
                 },
                 'name': 'VOLTS_PER_VOLT',
+                'python_name': 'VOLTS_PER_VOLT',
                 'value': 15896
             },
             {
@@ -808,6 +840,7 @@ enums = {
                     'description': 'Millivolts per volt.'
                 },
                 'name': 'M_VOLTS_PER_VOLT',
+                'python_name': 'MILLIVOLTS_PER_VOLT',
                 'value': 15897
             },
             {
@@ -922,6 +955,7 @@ enums = {
         ]
     },
     'CIMeasurementType': {
+        'python_name': 'UsageTypeCI',
         'values': [
             {
                 'documentation': {
@@ -935,6 +969,7 @@ enums = {
                     'description': 'Measure the frequency of a digital signal.'
                 },
                 'name': 'FREQ',
+                'python_name': 'FREQUENCY',
                 'value': 10179
             },
             {
@@ -949,6 +984,7 @@ enums = {
                     'description': 'Measure the width of a pulse of a digital signal.'
                 },
                 'name': 'PULSE_WIDTH',
+                'python_name': 'PULSE_WIDTH_DIGITAL',
                 'value': 10359
             },
             {
@@ -956,6 +992,7 @@ enums = {
                     'description': ' Measure the time between state transitions of a digital signal.'
                 },
                 'name': 'SEMI_PERIOD',
+                'python_name': 'PULSE_WIDTH_DIGITAL_SEMI_PERIOD',
                 'value': 10289
             },
             {
@@ -963,6 +1000,7 @@ enums = {
                     'description': ' Pulse measurement, returning the result as frequency and duty cycle.'
                 },
                 'name': 'PULSE_FREQUENCY',
+                'python_name': 'PULSE_FREQ',
                 'value': 15864
             },
             {
@@ -991,6 +1029,7 @@ enums = {
                     'description': 'Angular position measurement using an angular encoder.'
                 },
                 'name': 'POSITION_ANG_ENCODER',
+                'python_name': 'POSITION_ANGULAR_ENCODER',
                 'value': 10360
             },
             {
@@ -998,6 +1037,7 @@ enums = {
                     'description': 'Linear position measurement using a linear encoder.'
                 },
                 'name': 'POSITION_LIN_ENCODER',
+                'python_name': 'POSITION_LINEAR_ENCODER',
                 'value': 10361
             },
             {
@@ -1005,6 +1045,7 @@ enums = {
                     'description': 'Angular velocity measurement using an angular encoder.'
                 },
                 'name': 'VELOCITY_ANG_ENCODER',
+                'python_name': 'VELOCITY_ANGULAR_ENCODER',
                 'value': 16078
             },
             {
@@ -1012,6 +1053,7 @@ enums = {
                     'description': 'Linear velocity measurement using a linear encoder.'
                 },
                 'name': 'VELOCITY_LIN_ENCODER',
+                'python_name': 'VELOCITY_LINEAR_ENCODER',
                 'value': 16079
             },
             {
@@ -1019,6 +1061,7 @@ enums = {
                     'description': 'Measure time between edges of two digital signals.'
                 },
                 'name': 'TWO_EDGE_SEP',
+                'python_name': 'PULSE_WIDTH_DIGITAL_TWO_EDGE_SEPARATION',
                 'value': 10267
             },
             {
@@ -1026,11 +1069,13 @@ enums = {
                     'description': ' Timestamp measurement, synchronizing the counter to a GPS receiver.'
                 },
                 'name': 'GPS_TIMESTAMP',
+                'python_name': 'TIME_GPS',
                 'value': 10362
             }
         ]
     },
     'CJCSource1': {
+        'python_name': 'CJCSource',
         'values': [
             {
                 'documentation': {
@@ -1044,6 +1089,7 @@ enums = {
                     'description': 'You must specify the cold-junction temperature.'
                 },
                 'name': 'CONST_VAL',
+                'python_name': 'CONSTANT_USER_VALUE',
                 'value': 10116
             },
             {
@@ -1051,11 +1097,13 @@ enums = {
                     'description': 'Use a channel for cold-junction compensation.'
                 },
                 'name': 'CHAN',
+                'python_name': 'SCANNABLE_CHANNEL',
                 'value': 10113
             }
         ]
     },
     'COOutputType': {
+        'python_name': 'UsageTypeCO',
         'values': [
             {
                 'documentation': {
@@ -1069,6 +1117,7 @@ enums = {
                     'description': 'Generate digital pulses defined by frequency and duty cycle.'
                 },
                 'name': 'PULSE_FREQ',
+                'python_name': 'PULSE_FREQUENCY',
                 'value': 10119
             },
             {
@@ -1087,6 +1136,7 @@ enums = {
                     'description': 'Analog input channel.'
                 },
                 'name': 'AI',
+                'python_name': 'ANALOG_INPUT',
                 'value': 10100
             },
             {
@@ -1094,6 +1144,7 @@ enums = {
                     'description': 'Analog output channel.'
                 },
                 'name': 'AO',
+                'python_name': 'ANALOG_OUTPUT',
                 'value': 10102
             },
             {
@@ -1101,6 +1152,7 @@ enums = {
                     'description': 'Digital input channel.'
                 },
                 'name': 'DI',
+                'python_name': 'DIGITAL_INPUT',
                 'value': 10151
             },
             {
@@ -1108,6 +1160,7 @@ enums = {
                     'description': 'Digital output channel.'
                 },
                 'name': 'DO',
+                'python_name': 'DIGITAL_OUTPUT',
                 'value': 10153
             },
             {
@@ -1115,6 +1168,7 @@ enums = {
                     'description': 'Counter input channel.'
                 },
                 'name': 'CI',
+                'python_name': 'COUNTER_INPUT',
                 'value': 10131
             },
             {
@@ -1122,6 +1176,7 @@ enums = {
                     'description': 'Counter output channel.'
                 },
                 'name': 'CO',
+                'python_name': 'COUNTER_OUTPUT',
                 'value': 10132
             }
         ]
@@ -1184,6 +1239,7 @@ enums = {
         ]
     },
     'CountDirection1': {
+        'python_name': 'CountDirection',
         'values': [
             {
                 'documentation': {
@@ -1204,6 +1260,7 @@ enums = {
                     'description': ' The state of a digital line controls the count direction. Each counter has a  default count direction terminal.'
                 },
                 'name': 'EXT_CONTROLLED',
+                'python_name': 'EXTERNAL_SOURCE',
                 'value': 10326
             }
         ]
@@ -1215,6 +1272,7 @@ enums = {
                     'description': ' Use one counter that uses a constant timebase to measure the input signal.'
                 },
                 'name': 'LOW_FREQ_1_CTR',
+                'python_name': 'LOW_FREQUENCY_1_COUNTER',
                 'value': 10105
             },
             {
@@ -1222,6 +1280,7 @@ enums = {
                     'description': ' Use two counters, one of which counts pulses of the signal to measure during  the specified measurement time.'
                 },
                 'name': 'HIGH_FREQ_2_CTR',
+                'python_name': 'HIGH_FREQUENCY_2_COUNTERS',
                 'value': 10157
             },
             {
@@ -1229,6 +1288,7 @@ enums = {
                     'description': ' Use one counter to divide the frequency of the input signal to create a  lower-frequency signal that the second counter can more easily measure.'
                 },
                 'name': 'LARGE_RNG_2_CTR',
+                'python_name': 'LARGE_RANGE_2_COUNTERS',
                 'value': 10205
             },
             {
@@ -1236,11 +1296,13 @@ enums = {
                     'description': ' Uses one counter with configuration options to control the amount of averaging  or filtering applied to the counter measurements. Set filtering options to  balance measurement accuracy and noise versus latency.'
                 },
                 'name': 'DYN_AVG',
+                'python_name': 'DYNAMIC_AVERAGING',
                 'value': 16065
             }
         ]
     },
     'Coupling1': {
+        'python_name': 'Coupling',
         'values': [
             {
                 'documentation': {
@@ -1266,6 +1328,7 @@ enums = {
         ]
     },
     'Coupling2': {
+        'python_name': 'Coupling',
         'values': [
             {
                 'documentation': {
@@ -1283,7 +1346,54 @@ enums = {
             }
         ]
     },
+    'CouplingTypes': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Device supports AC coupling'
+                },
+                'name': 'AC',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports DC coupling'
+                },
+                'name': 'DC',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports ground coupling'
+                },
+                'name': 'GROUND',
+                'value': 4
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports High Frequency Reject coupling'
+                },
+                'name': 'HF_REJECT',
+                'value': 8
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports Low Frequency Reject coupling'
+                },
+                'name': 'LF_REJECT',
+                'value': 16
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports Noise Reject coupling'
+                },
+                'name': 'NOISE_REJECT',
+                'value': 32
+            }
+        ]
+    },
     'CurrentShuntResistorLocation1': {
+        'python_name': 'CurrentShuntResistorLocation',
         'values': [
             {
                 'documentation': {
@@ -1302,9 +1412,11 @@ enums = {
         ]
     },
     'CurrentShuntResistorLocationWithDefault': {
+        'python_name': 'CurrentShuntResistorLocation',
         'values': [
             {
                 'name': 'DEFAULT',
+                'python_name': 'LET_DRIVER_CHOOSE',
                 'value': -1
             },
             {
@@ -1324,6 +1436,7 @@ enums = {
         ]
     },
     'CurrentUnits1': {
+        'python_name': 'CurrentUnits',
         'values': [
             {
                 'documentation': {
@@ -1349,6 +1462,7 @@ enums = {
         ]
     },
     'CurrentUnits2': {
+        'python_name': 'CurrentUnits',
         'values': [
             {
                 'name': 'AMPS',
@@ -14459,12 +14573,14 @@ enums = {
         ]
     },
     'DataJustification1': {
+        'python_name': 'DataJustification',
         'values': [
             {
                 'documentation': {
                     'description': 'Samples occupy the lower bits of the integer.'
                 },
                 'name': 'RIGHT_JUSTIFIED',
+                'python_name': 'RIGHT',
                 'value': 10279
             },
             {
@@ -14472,11 +14588,13 @@ enums = {
                     'description': 'Samples occupy the higher bits of the integer.'
                 },
                 'name': 'LEFT_JUSTIFIED',
+                'python_name': 'LEFT',
                 'value': 10209
             }
         ]
     },
     'DataTransferMechanism': {
+        'python_name': 'DataTransferActiveTransferMode',
         'values': [
             {
                 'documentation': {
@@ -14490,6 +14608,7 @@ enums = {
                     'description': ' Data transfers take place independently from the application. Using interrupts  increases CPU usage because the CPU must service interrupt requests. Typically,  you should use interrupts if the device is out of DMA channels.'
                 },
                 'name': 'INTERRUPTS',
+                'python_name': 'INTERRUPT',
                 'value': 10204
             },
             {
@@ -14497,6 +14616,7 @@ enums = {
                     'description': ' Data transfers take place when you call an NI-DAQmx Read function or an  NI-DAQmx Write function.'
                 },
                 'name': 'PROGRAMMED_IO',
+                'python_name': 'POLLED',
                 'value': 10264
             },
             {
@@ -14504,6 +14624,7 @@ enums = {
                     'description': ' Data transfers take place independently from the application using a USB bulk  pipe.'
                 },
                 'name': 'US_BBULK',
+                'python_name': 'USB_BULK',
                 'value': 12590
             }
         ]
@@ -14515,6 +14636,7 @@ enums = {
                     'description': ' Deassert the signal when more than half of the onboard memory of the device  fills.'
                 },
                 'name': 'ONBRD_MEM_MORE_THAN_HALF_FULL',
+                'python_name': 'ON_BOARD_MEMORY_MORE_THAN_HALF_FULL',
                 'value': 10237
             },
             {
@@ -14522,6 +14644,7 @@ enums = {
                     'description': 'Deassert the signal when the onboard memory fills.'
                 },
                 'name': 'ONBRD_MEM_FULL',
+                'python_name': 'ON_BOARD_MEMORY_FULL',
                 'value': 10236
             },
             {
@@ -14529,6 +14652,7 @@ enums = {
                     'description': ' Deassert the signal when the amount of space available in the onboard memory is  below the value specified with  DAQmx_Exported_RdyForXferEvent_DeassertCondCustomThreshold.'
                 },
                 'name': 'ONBRD_MEM_CUSTOM_THRESHOLD',
+                'python_name': 'ONBOARD_MEMORY_CUSTOM_THRESHOLD',
                 'value': 12577
             }
         ]
@@ -14552,6 +14676,7 @@ enums = {
         ]
     },
     'DigitalLineState': {
+        'python_name': 'Level',
         'values': [
             {
                 'documentation': {
@@ -14584,6 +14709,7 @@ enums = {
         ]
     },
     'DigitalPatternCondition1': {
+        'python_name': 'DigitalPatternCondition',
         'values': [
             {
                 'documentation': {
@@ -14602,12 +14728,14 @@ enums = {
         ]
     },
     'DigitalWidthUnits1': {
+        'python_name': 'DigitalWidthUnits',
         'values': [
             {
                 'documentation': {
                     'description': 'Complete periods of the Sample Clock.'
                 },
                 'name': 'SAMP_CLK_PERIODS',
+                'python_name': 'SAMPLE_CLOCK_PERIODS',
                 'value': 10286
             },
             {
@@ -14627,6 +14755,7 @@ enums = {
         ]
     },
     'DigitalWidthUnits2': {
+        'python_name': 'DigitalWidthUnits',
         'values': [
             {
                 'documentation': {
@@ -14645,6 +14774,7 @@ enums = {
         ]
     },
     'DigitalWidthUnits3': {
+        'python_name': 'DigitalWidthUnits',
         'values': [
             {
                 'documentation': {
@@ -14656,6 +14786,7 @@ enums = {
         ]
     },
     'DigitalWidthUnits4': {
+        'python_name': 'DigitalWidthUnits',
         'values': [
             {
                 'documentation': {
@@ -14669,6 +14800,7 @@ enums = {
                     'description': 'Sample Clock Periods.'
                 },
                 'name': 'SAMPLE_CLK_PERIODS',
+                'python_name': 'SAMPLE_CLOCK_PERIODS',
                 'value': 10286
             }
         ]
@@ -14680,6 +14812,7 @@ enums = {
                     'description': 'mVolts/mil.'
                 },
                 'name': 'M_VOLTS_PER_MIL',
+                'python_name': 'MILLIVOLTS_PER_MIL',
                 'value': 14836
             },
             {
@@ -14687,6 +14820,7 @@ enums = {
                     'description': 'Volts/mil.'
                 },
                 'name': 'VOLTS_PER_MIL',
+                'python_name': 'VOLTS_PER_MIL',
                 'value': 14837
             },
             {
@@ -14694,6 +14828,7 @@ enums = {
                     'description': 'mVolts/mMeter.'
                 },
                 'name': 'M_VOLTS_PER_MILLIMETER',
+                'python_name': 'MILLIVOLTS_PER_MILLIMETER',
                 'value': 14838
             },
             {
@@ -14701,6 +14836,7 @@ enums = {
                     'description': 'Volts/mMeter.'
                 },
                 'name': 'VOLTS_PER_MILLIMETER',
+                'python_name': 'VOLTS_PER_MILLIMETER',
                 'value': 14839
             },
             {
@@ -14708,11 +14844,13 @@ enums = {
                     'description': 'mVolts/micron.'
                 },
                 'name': 'M_VOLTS_PER_MICRON',
+                'python_name': 'MILLIVOLTS_PER_MICRON',
                 'value': 14840
             }
         ]
     },
     'Edge1': {
+        'python_name': 'Edge',
         'values': [
             {
                 'documentation': {
@@ -14731,12 +14869,14 @@ enums = {
         ]
     },
     'EncoderType2': {
+        'python_name': 'EncoderType',
         'values': [
             {
                 'documentation': {
                     'description': ' If signal A leads signal B, count the rising edges of signal A. If signal B  leads signal A, count the falling edges of signal A.'
                 },
                 'name': 'X1',
+                'python_name': 'X_1',
                 'value': 10090
             },
             {
@@ -14744,6 +14884,7 @@ enums = {
                     'description': 'Count the rising and falling edges of signal A.'
                 },
                 'name': 'X2',
+                'python_name': 'X_2',
                 'value': 10091
             },
             {
@@ -14751,6 +14892,7 @@ enums = {
                     'description': 'Count the rising and falling edges of signal A and signal B.'
                 },
                 'name': 'X4',
+                'python_name': 'X_4',
                 'value': 10092
             },
             {
@@ -14763,12 +14905,14 @@ enums = {
         ]
     },
     'EncoderZIndexPhase1': {
+        'python_name': 'EncoderZIndexPhase',
         'values': [
             {
                 'documentation': {
                     'description': 'Reset the measurement when signal A and signal B are high.'
                 },
                 'name': 'A_HIGH_B_HIGH',
+                'python_name': 'AHIGH_BHIGH',
                 'value': 10040
             },
             {
@@ -14776,6 +14920,7 @@ enums = {
                     'description': ' Reset the measurement when signal A is high and signal B is low.'
                 },
                 'name': 'A_HIGH_B_LOW',
+                'python_name': 'AHIGH_BLOW',
                 'value': 10041
             },
             {
@@ -14783,6 +14928,7 @@ enums = {
                     'description': ' Reset the measurement when signal A is low and signal B high.'
                 },
                 'name': 'A_LOW_B_HIGH',
+                'python_name': 'ALOW_BHIGH',
                 'value': 10042
             },
             {
@@ -14790,6 +14936,7 @@ enums = {
                     'description': 'Reset the measurement when signal A and signal B are low.'
                 },
                 'name': 'A_LOW_B_LOW',
+                'python_name': 'ALOW_BLOW',
                 'value': 10043
             }
         ]
@@ -14819,6 +14966,7 @@ enums = {
                     'description': 'DC excitation.'
                 },
                 'name': 'DC',
+                'python_name': 'USE_DC',
                 'value': 10050
             },
             {
@@ -14826,6 +14974,7 @@ enums = {
                     'description': 'AC excitation.'
                 },
                 'name': 'AC',
+                'python_name': 'USE_AC',
                 'value': 10045
             }
         ]
@@ -14837,6 +14986,7 @@ enums = {
                     'description': 'Drive excitation output to zero.'
                 },
                 'name': 'ZERO_VOLTS_OR_AMPS',
+                'python_name': 'ZERO_VOLTS_OR_AMPERES',
                 'value': 12526
             },
             {
@@ -14880,6 +15030,7 @@ enums = {
                     'description': 'Voltage excitation.'
                 },
                 'name': 'VOLTAGE',
+                'python_name': 'USE_VOLTAGE',
                 'value': 10322
             },
             {
@@ -14887,6 +15038,7 @@ enums = {
                     'description': 'Current excitation.'
                 },
                 'name': 'CURRENT',
+                'python_name': 'USE_CURRENT',
                 'value': 10134
             }
         ]
@@ -14908,6 +15060,7 @@ enums = {
         ]
     },
     'ExportActions2': {
+        'python_name': 'ExportAction',
         'values': [
             {
                 'documentation': {
@@ -14926,6 +15079,7 @@ enums = {
         ]
     },
     'ExportActions3': {
+        'python_name': 'ExportAction',
         'values': [
             {
                 'documentation': {
@@ -14939,11 +15093,13 @@ enums = {
                     'description': ' The exported Sample Clock goes high at the beginning of the sample and goes low  when the last AI Convert begins.'
                 },
                 'name': 'LVL',
+                'python_name': 'LEVEL',
                 'value': 10210
             }
         ]
     },
     'ExportActions5': {
+        'python_name': 'ExportAction',
         'values': [
             {
                 'documentation': {
@@ -14958,6 +15114,24 @@ enums = {
                 },
                 'name': 'PULSE',
                 'value': 10265
+            }
+        ]
+    },
+    'FillMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Group by Channel'
+                },
+                'name': 'GROUP_BY_CHANNEL',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': 'Group by Scan Number'
+                },
+                'name': 'GROUP_BY_SCAN_NUMBER',
+                'value': 1
             }
         ]
     },
@@ -14994,6 +15168,7 @@ enums = {
         ]
     },
     'FilterResponse1': {
+        'python_name': 'FilterResponse',
         'values': [
             {
                 'documentation': {
@@ -15037,6 +15212,7 @@ enums = {
         ]
     },
     'FilterType2': {
+        'python_name': 'FilterType',
         'values': [
             {
                 'documentation': {
@@ -15082,6 +15258,7 @@ enums = {
                     'description': 'Millivolts per newton.'
                 },
                 'name': 'M_VOLTS_PER_NEWTON',
+                'python_name': 'MILLIVOLTS_PER_NEWTON',
                 'value': 15891
             },
             {
@@ -15089,6 +15266,7 @@ enums = {
                     'description': 'Millivolts per pound.'
                 },
                 'name': 'M_VOLTS_PER_POUND',
+                'python_name': 'MILLIVOLTS_PER_POUND',
                 'value': 15892
             }
         ]
@@ -15169,6 +15347,7 @@ enums = {
         ]
     },
     'FrequencyUnits2': {
+        'python_name': 'FrequencyUnits',
         'values': [
             {
                 'documentation': {
@@ -15180,6 +15359,7 @@ enums = {
         ]
     },
     'FrequencyUnits3': {
+        'python_name': 'FrequencyUnits',
         'values': [
             {
                 'documentation': {
@@ -15237,6 +15417,7 @@ enums = {
         ]
     },
     'GpsSignalType1': {
+        'python_name': 'GpsSignalType',
         'values': [
             {
                 'documentation': {
@@ -15304,6 +15485,38 @@ enums = {
             }
         ]
     },
+    'Impedance1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': '50 Ohms.'
+                },
+                'name': '50_OHMS',
+                'value': 50
+            },
+            {
+                'documentation': {
+                    'description': '75 Ohms.'
+                },
+                'name': '75_OHMS',
+                'value': 75
+            },
+            {
+                'documentation': {
+                    'description': '1 M Ohm.'
+                },
+                'name': '1_M_OHM',
+                'value': 1000000
+            },
+            {
+                'documentation': {
+                    'description': '10 G Ohm.'
+                },
+                'name': '10_G_OHMS',
+                'value': 10000000000
+            }
+        ]
+    },
     'InputDataTransferCondition': {
         'values': [
             {
@@ -15311,6 +15524,7 @@ enums = {
                     'description': ' Transfer data from the device when more than half of the onboard memory of the  device fills.'
                 },
                 'name': 'ON_BRD_MEM_MORE_THAN_HALF_FULL',
+                'python_name': 'ON_BOARD_MEMORY_MORE_THAN_HALF_FULL',
                 'value': 10237
             },
             {
@@ -15318,6 +15532,7 @@ enums = {
                     'description': ' Transfer data from the device when there is data in the onboard memory.'
                 },
                 'name': 'ON_BRD_MEM_NOT_EMPTY',
+                'python_name': 'ON_BOARD_MEMORY_NOT_EMPTY',
                 'value': 10241
             },
             {
@@ -15325,6 +15540,7 @@ enums = {
                     'description': ' Transfer data from the device when the number of samples specified with  DAQmx_AI_DataXferCustomThreshold are in the device FIFO.'
                 },
                 'name': 'ONBRD_MEM_CUSTOM_THRESHOLD',
+                'python_name': 'ONBOARD_MEMORY_CUSTOM_THRESHOLD',
                 'value': 12577
             },
             {
@@ -15332,11 +15548,13 @@ enums = {
                     'description': 'Transfer data when the acquisition is complete.'
                 },
                 'name': 'WHEN_ACQ_COMPLETE',
+                'python_name': 'WHEN_ACQUISITION_COMPLETE',
                 'value': 12546
             }
         ]
     },
     'InputTermCfg': {
+        'python_name': 'TerminalConfiguration',
         'values': [
             {
                 'documentation': {
@@ -15357,6 +15575,7 @@ enums = {
                     'description': 'Differential.'
                 },
                 'name': 'DIFF',
+                'python_name': 'DIFF',
                 'value': 10106
             },
             {
@@ -15364,17 +15583,20 @@ enums = {
                     'description': 'Pseudodifferential.'
                 },
                 'name': 'PSEUDO_DIFF',
+                'python_name': 'PSEUDO_DIFF',
                 'value': 12529
             }
         ]
     },
     'InputTermCfg2': {
+        'python_name': 'TerminalConfiguration',
         'values': [
             {
                 'documentation': {
                     'description': 'Differential.'
                 },
                 'name': 'DIFF',
+                'python_name': 'BAL_DIFF',
                 'value': 10106
             },
             {
@@ -15387,37 +15609,44 @@ enums = {
         ]
     },
     'InputTermCfgWithDefault': {
+        'python_name': 'TerminalConfiguration',
         'values': [
             {
+                'documentation': {
+                    'description': 'Default.'
+                },
                 'name': 'CFG_DEFAULT',
+                'python_name': 'DEFAULT',
                 'value': -1
             },
             {
                 'documentation': {
-                    'description': 'RSE'
+                    'description': 'Referenced Single-Ended.'
                 },
                 'name': 'RSE',
                 'value': 10083
             },
             {
                 'documentation': {
-                    'description': 'NRSE'
+                    'description': 'Non-Referenced Single-Ended.'
                 },
                 'name': 'NRSE',
                 'value': 10078
             },
             {
                 'documentation': {
-                    'description': 'Differential'
+                    'description': 'Differential.'
                 },
                 'name': 'DIFF',
+                'python_name': 'BAL_DIFF',
                 'value': 10106
             },
             {
                 'documentation': {
-                    'description': 'Pseudodifferential'
+                    'description': 'Pseudodifferential.'
                 },
                 'name': 'PSEUDO_DIFF',
+                'python_name': 'PSEUDODIFFERENTIAL',
                 'value': 12529
             }
         ]
@@ -15426,21 +15655,25 @@ enums = {
         'values': [
             {
                 'name': 'DO_NOT_INVERT_POLARITY',
+                'python_name': 'NO',
                 'value': 0
             },
             {
                 'name': 'INVERT_POLARITY',
+                'python_name': 'YES',
                 'value': 1
             }
         ]
     },
     'LVDTSensitivityUnits1': {
+        'python_name': 'LVDTSensitivityUnits',
         'values': [
             {
                 'documentation': {
                     'description': 'mVolts/Volt/mMeter.'
                 },
                 'name': 'M_VOLTS_PER_VOLT_PER_MILLIMETER',
+                'python_name': 'MILLIVOLTS_PER_VOLT_PER_MILLIMETER',
                 'value': 12506
             },
             {
@@ -15448,11 +15681,13 @@ enums = {
                     'description': 'mVolts/Volt/0.001 Inch.'
                 },
                 'name': 'M_VOLTS_PER_VOLT_PER_MILLI_INCH',
+                'python_name': 'MILLIVOLTS_PER_VOLT_PER_MILLI_INCH',
                 'value': 12505
             }
         ]
     },
     'LengthUnits2': {
+        'python_name': 'LengthUnits',
         'values': [
             {
                 'documentation': {
@@ -15478,6 +15713,7 @@ enums = {
         ]
     },
     'LengthUnits3': {
+        'python_name': 'LengthUnits',
         'values': [
             {
                 'documentation': {
@@ -15535,6 +15771,7 @@ enums = {
         ]
     },
     'Level1': {
+        'python_name': 'Level',
         'values': [
             {
                 'documentation': {
@@ -15634,6 +15871,7 @@ enums = {
                     'description': 'Compatible with 2.5 V CMOS signals.'
                 },
                 'name': '2POINT_5_V',
+                'python_name': '2_POINT_5_V',
                 'value': 14620
             },
             {
@@ -15641,6 +15879,7 @@ enums = {
                     'description': 'Compatible with LVTTL signals.'
                 },
                 'name': '3POINT_3_V',
+                'python_name': '3_POINT_3_V',
                 'value': 14621
             },
             {
@@ -15659,6 +15898,7 @@ enums = {
                     'description': 'High logic.'
                 },
                 'name': 'LOGIC_LEVEL_PULL_UP',
+                'python_name': 'PULL_UP',
                 'value': 16064
             },
             {
@@ -15671,12 +15911,14 @@ enums = {
         ]
     },
     'MIOAIConvertTbSrc': {
+        'python_name': 'MIOAIConvertTimebaseSource',
         'values': [
             {
                 'documentation': {
                     'description': 'Use the same source as Sample Clock timebase.'
                 },
                 'name': 'SAME_AS_SAMP_TIMEBASE',
+                'python_name': 'SAME_AS_SAMP_TIMEBASE',
                 'value': 10284
             },
             {
@@ -15684,6 +15926,7 @@ enums = {
                     'description': 'Use the same source as the Master Timebase.'
                 },
                 'name': 'SAME_AS_MASTER_TIMEBASE',
+                'python_name': 'SAME_AS_MASTER_TIMEBASE',
                 'value': 10282
             },
             {
@@ -15691,6 +15934,7 @@ enums = {
                     'description': 'Use the onboard 100 MHz timebase.'
                 },
                 'name': '100_MHZ_TIMEBASE',
+                'python_name': '100_MHZ_TIMEBASE',
                 'value': 15857
             },
             {
@@ -15698,6 +15942,7 @@ enums = {
                     'description': 'Use the onboard 80 MHz timebase.'
                 },
                 'name': '80_MHZ_TIMEBASE',
+                'python_name': '80_MHZ_TIMEBASE',
                 'value': 14636
             },
             {
@@ -15705,6 +15950,7 @@ enums = {
                     'description': 'Use the onboard 20 MHz timebase.'
                 },
                 'name': '20_MHZ_TIMEBASE',
+                'python_name': '20_MHZ_TIMEBASE',
                 'value': 12537
             },
             {
@@ -15826,6 +16072,7 @@ enums = {
                     'description': ' Transfer data to the device only when there is no data in the onboard memory of  the device.'
                 },
                 'name': 'ON_BRD_MEM_EMPTY',
+                'python_name': 'ON_BOARD_MEMORY_EMPTY',
                 'value': 10235
             },
             {
@@ -15833,6 +16080,7 @@ enums = {
                     'description': ' Transfer data to the device any time the onboard memory is less than half full.'
                 },
                 'name': 'ON_BRD_MEM_HALF_FULL_OR_LESS',
+                'python_name': 'ON_BOARD_MEMORY_HALF_FULL_OR_LESS',
                 'value': 10239
             },
             {
@@ -15840,11 +16088,13 @@ enums = {
                     'description': ' Transfer data to the device any time the onboard memory of the device is not  full.'
                 },
                 'name': 'ON_BRD_MEM_NOT_FULL',
+                'python_name': 'ON_BOARD_MEMORY_LESS_THAN_FULL',
                 'value': 10242
             }
         ]
     },
     'OutputTermCfg': {
+        'python_name': 'TerminalConfiguration',
         'values': [
             {
                 'documentation': {
@@ -15858,6 +16108,7 @@ enums = {
                     'description': 'Differential.'
                 },
                 'name': 'DIFF',
+                'python_name': 'BAL_DIFF',
                 'value': 10106
             },
             {
@@ -15865,6 +16116,7 @@ enums = {
                     'description': 'Pseudodifferential.'
                 },
                 'name': 'PSEUDO_DIFF',
+                'python_name': 'PSEUDODIFFERENTIAL',
                 'value': 12529
             }
         ]
@@ -15876,6 +16128,7 @@ enums = {
                     'description': 'Stop task and return an error.'
                 },
                 'name': 'STOP_TASK_AND_ERROR',
+                'python_name': 'STOP_TASK_AND_ERROR',
                 'value': 15862
             },
             {
@@ -15883,17 +16136,20 @@ enums = {
                     'description': ' NI-DAQmx ignores Sample Clock overruns, and the task continues to run.'
                 },
                 'name': 'IGNORE_OVERRUNS',
+                'python_name': 'IGNORE_OVERRUNS',
                 'value': 15863
             }
         ]
     },
     'OverwriteMode1': {
+        'python_name': 'OverwriteMode',
         'values': [
             {
                 'documentation': {
                     'description': ' When an acquisition encounters unread data in the buffer, the acquisition  continues and overwrites the unread samples with new ones. You can read the new  samples by setting DAQmx_Read_RelativeTo to DAQmx_Val_MostRecentSamp and  setting DAQmx_Read_Offset to the appropriate number of samples.'
                 },
                 'name': 'OVERWRITE_UNREAD_SAMPS',
+                'python_name': 'OVERWRITE_UNREAD_SAMPLES',
                 'value': 10252
             },
             {
@@ -15901,11 +16157,13 @@ enums = {
                     'description': ' The acquisition stops when it encounters a sample in the buffer that you have  not read.'
                 },
                 'name': 'DO_NOT_OVERWRITE_UNREAD_SAMPS',
+                'python_name': 'DO_NOT_OVERWRITE_UNREAD_SAMPLES',
                 'value': 10159
             }
         ]
     },
     'Polarity2': {
+        'python_name': 'Polarity',
         'values': [
             {
                 'documentation': {
@@ -15923,7 +16181,7 @@ enums = {
             }
         ]
     },
-    'PowerIdleOutputBehavior': { 
+    'PowerIdleOutputBehavior': {
         'values': [
             {
                 'documentation': {
@@ -15941,7 +16199,7 @@ enums = {
             }
         ]
     },
-    'PowerOutputState': { 
+    'PowerOutputState': {
         'values': [
             {
                 'documentation': {
@@ -16037,6 +16295,7 @@ enums = {
                     'description': 'Pounds per square inch.'
                 },
                 'name': 'POUNDS_PER_SQUARE_INCH',
+                'python_name': 'POUNDS_PER_SQ_INCH',
                 'value': 15879
             },
             {
@@ -16132,6 +16391,7 @@ enums = {
                     'description': 'Dynamic Signal Acquisition.'
                 },
                 'name': 'DYNAMIC_SIGNAL_ACQUISITION',
+                'python_name': 'DSA',
                 'value': 14649
             },
             {
@@ -16235,6 +16495,7 @@ enums = {
         ]
     },
     'RTDType1': {
+        'python_name': 'RTDType',
         'values': [
             {
                 'documentation': {
@@ -16288,12 +16549,14 @@ enums = {
         ]
     },
     'RVDTSensitivityUnits1': {
+        'python_name': 'RVDTSensitivityUnits',
         'values': [
             {
                 'documentation': {
                     'description': 'mVolts/Volt/Degree.'
                 },
                 'name': 'M_VOLTS_PER_VOLT_PER_DEGREE',
+                'python_name': 'MILLIVOLTS_PER_VOLT_PER_DEGREE',
                 'value': 12507
             },
             {
@@ -16301,6 +16564,7 @@ enums = {
                     'description': 'mVolts/Volt/Radian.'
                 },
                 'name': 'M_VOLTS_PER_VOLT_PER_RADIAN',
+                'python_name': 'MILLIVOLTS_PER_VOLT_PER_RADIAN',
                 'value': 12508
             }
         ]
@@ -16344,6 +16608,7 @@ enums = {
                     'description': ' Start reading samples relative to the last sample returned by the previous  read. For the first read operation, this position is the first sample acquired  or the first pretrigger sample if you configured a reference trigger for the  task.'
                 },
                 'name': 'CURR_READ_POS',
+                'python_name': 'CURRENT_READ_POSITION',
                 'value': 10425
             },
             {
@@ -16351,6 +16616,7 @@ enums = {
                     'description': ' Start reading samples relative to the first sample after the reference trigger  occurred.'
                 },
                 'name': 'REF_TRIG',
+                'python_name': 'REFERENCE_TRIGGER',
                 'value': 10426
             },
             {
@@ -16358,6 +16624,7 @@ enums = {
                     'description': ' Start reading samples relative to the first pretrigger sample. You specify the  number of pretrigger samples to acquire when you configure a reference trigger.'
                 },
                 'name': 'FIRST_PRETRIG_SAMP',
+                'python_name': 'FIRST_PRETRIGGER_SAMPLE',
                 'value': 10427
             },
             {
@@ -16365,17 +16632,20 @@ enums = {
                     'description': ' Start reading samples relative to the next sample acquired. For example, use  this value and set DAQmx_Read_Offset to -1 to read the last sample acquired.'
                 },
                 'name': 'MOST_RECENT_SAMP',
+                'python_name': 'MOST_RECENT_SAMPLE',
                 'value': 10428
             }
         ]
     },
     'RegenerationMode1': {
+        'python_name': 'RegenerationMode',
         'values': [
             {
                 'documentation': {
                     'description': ' Allow NI-DAQmx to regenerate samples that the device previously generated. When  you choose this value, the write marker returns to the beginning of the buffer  after the device generates all samples currently in the buffer.'
                 },
                 'name': 'ALLOW_REGEN',
+                'python_name': 'ALLOW_REGENERATION',
                 'value': 10097
             },
             {
@@ -16383,6 +16653,7 @@ enums = {
                     'description': ' Do not allow NI-DAQmx to regenerate samples the device previously generated.  When you choose this value, NI-DAQmx waits for you to write more samples to the  buffer or until the timeout expires.'
                 },
                 'name': 'DO_NOT_ALLOW_REGEN',
+                'python_name': 'DONT_ALLOW_REGENERATION',
                 'value': 10158
             }
         ]
@@ -16413,6 +16684,7 @@ enums = {
         ]
     },
     'ResistanceUnits1': {
+        'python_name': 'ResistanceUnits',
         'values': [
             {
                 'documentation': {
@@ -16438,6 +16710,7 @@ enums = {
         ]
     },
     'ResistanceUnits2': {
+        'python_name': 'ResistanceUnits',
         'values': [
             {
                 'name': 'OHMS',
@@ -16468,6 +16741,7 @@ enums = {
         ]
     },
     'ResolutionType1': {
+        'python_name': 'ResolutionType',
         'values': [
             {
                 'documentation': {
@@ -16485,6 +16759,7 @@ enums = {
                     'description': 'Repeat the last sample.'
                 },
                 'name': 'REPEATED_DATA',
+                'python_name': 'REPEAT_LAST_SAMPLE',
                 'value': 16062
             },
             {
@@ -16492,17 +16767,20 @@ enums = {
                     'description': 'Return the sentinel value.'
                 },
                 'name': 'SENTINEL_VALUE',
+                'python_name': 'RETURN_SENTINEL_VALUE',
                 'value': 16063
             }
         ]
     },
     'SampleClockActiveOrInactiveEdgeSelection': {
+        'python_name': 'ActiveOrInactiveEdgeSelection',
         'values': [
             {
                 'documentation': {
                     'description': 'Active edges.'
                 },
                 'name': 'SAMP_CLK_ACTIVE_EDGE',
+                'python_name': 'ACTIVE',
                 'value': 14617
             },
             {
@@ -16510,6 +16788,7 @@ enums = {
                     'description': 'Inactive edges.'
                 },
                 'name': 'SAMP_CLK_INACTIVE_EDGE',
+                'python_name': 'INACTIVE',
                 'value': 14618
             }
         ]
@@ -16539,6 +16818,7 @@ enums = {
                     'description': ' Acquire or generate samples on the specified edge of the sample clock.'
                 },
                 'name': 'SAMP_CLK',
+                'python_name': 'SAMPLE_CLOCK',
                 'value': 10388
             },
             {
@@ -16581,7 +16861,24 @@ enums = {
                     'description': ' Device acquires or generates samples on each sample clock edge, but does not  respond to certain triggers until a few sample clock edges later. Pipelining  allows higher data transfer rates at the cost of increased trigger response  latency.  Refer to the device documentation for information about which  triggers pipelining affects. This timing type allows handshaking with some  devices using the Pause trigger, the Ready for Transfer event, or the Data  Active event. Refer to the device documentation for more information.'
                 },
                 'name': 'PIPELINED_SAMP_CLK',
+                'python_name': 'PIPELINED_SAMPLE_CLOCK',
                 'value': 14668
+            }
+        ]
+    },
+    'Save': {
+        'values': [
+            {
+                'name': 'OVERWRITE',
+                'value': 1
+            },
+            {
+                'name': 'ALLOW_INTERACTIVE_EDITING',
+                'value': 2
+            },
+            {
+                'name': 'ALLOW_INTERACTIVE_DELETION',
+                'value': 4
             }
         ]
     },
@@ -16643,6 +16940,7 @@ enums = {
         ]
     },
     'ScaleType2': {
+        'python_name': 'ScaleType',
         'values': [
             {
                 'documentation': {
@@ -16661,6 +16959,7 @@ enums = {
         ]
     },
     'ScaleType3': {
+        'python_name': 'ScaleType',
         'values': [
             {
                 'documentation': {
@@ -16683,6 +16982,7 @@ enums = {
         ]
     },
     'ScaleType4': {
+        'python_name': 'ScaleType',
         'values': [
             {
                 'documentation': {
@@ -16855,17 +17155,20 @@ enums = {
             },
             {
                 'name': 'WDT_EXPIRED_EVENT',
+                'python_name': 'WATCHDOG_TIMER_EXPIRED_EVENT',
                 'value': 12512
             }
         ]
     },
     'Signal2': {
+        'python_name': 'Signal',
         'values': [
             {
                 'documentation': {
                     'description': ' Timed Loop executes each time the Sample Complete Event occurs.'
                 },
                 'name': 'SAMPLE_COMPLETE_EVENT',
+                'python_name': 'SAMPLE_COMPLETE',
                 'value': 12530
             },
             {
@@ -16891,13 +17194,33 @@ enums = {
             }
         ]
     },
+    'SignalModifiers': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Do not invert polarity'
+                },
+                'name': 'DO_NOT_INVERT_POLARITY',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': 'Invert polarity'
+                },
+                'name': 'INVERT_POLARITY',
+                'value': 1
+            }
+        ]
+    },
     'Slope1': {
+        'python_name': 'Slope',
         'values': [
             {
                 'documentation': {
                     'description': 'Trigger on the rising slope of the signal.'
                 },
                 'name': 'RISING_SLOPE',
+                'python_name': 'RISING',
                 'value': 10280
             },
             {
@@ -16905,17 +17228,20 @@ enums = {
                     'description': 'Trigger on the falling slope of the signal.'
                 },
                 'name': 'FALLING_SLOPE',
+                'python_name': 'FALLING',
                 'value': 10171
             }
         ]
     },
     'SoundPressureUnits1': {
+        'python_name': 'SoundPressureUnits',
         'values': [
             {
                 'documentation': {
                     'description': 'Pascals.'
                 },
                 'name': 'PASCALS',
+                'python_name': 'PA',
                 'value': 10081
             },
             {
@@ -16946,6 +17272,7 @@ enums = {
         ]
     },
     'StrainGageBridgeType1': {
+        'python_name': 'StrainGageBridgeType',
         'values': [
             {
                 'documentation': {
@@ -17065,6 +17392,7 @@ enums = {
                     'description': ' A rectangular rosette consists of three strain gages, each separated by a 45  degree angle.'
                 },
                 'name': 'RECTANGULAR_ROSETTE',
+                'python_name': 'RECTANGULAR',
                 'value': 15968
             },
             {
@@ -17072,6 +17400,7 @@ enums = {
                     'description': ' A delta rosette consists of three strain gages, each separated by a 60 degree  angle.'
                 },
                 'name': 'DELTA_ROSETTE',
+                'python_name': 'DELTA',
                 'value': 15969
             },
             {
@@ -17079,11 +17408,13 @@ enums = {
                     'description': ' A tee rosette consists of two gages oriented at 90 degrees with respect to each  other.'
                 },
                 'name': 'TEE_ROSETTE',
+                'python_name': 'TEE',
                 'value': 15970
             }
         ]
     },
     'StrainUnits1': {
+        'python_name': 'StrainUnits',
         'values': [
             {
                 'documentation': {
@@ -17115,6 +17446,7 @@ enums = {
                     'description': 'Digital Edge synchronization.'
                 },
                 'name': 'DIG_EDGE',
+                'python_name': 'DIGITAL_EDGE',
                 'value': 10150
             },
             {
@@ -17240,6 +17572,59 @@ enums = {
             }
         ]
     },
+    'TaskMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Start'
+                },
+                'name': 'TASK_START',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': 'Stop'
+                },
+                'name': 'TASK_STOP',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': 'Verify'
+                },
+                'name': 'TASK_VERIFY',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': 'Commit'
+                },
+                'name': 'TASK_COMMIT',
+                'value': 3
+            },
+            {
+                'documentation': {
+                    'description': 'Reserve'
+                },
+                'name': 'TASK_RESERVE',
+                'value': 4
+            },
+            {
+                'documentation': {
+                    'description': 'Unreserve'
+                },
+                'name': 'TASK_UNRESERVE',
+                'value': 5
+            },
+            {
+                'documentation': {
+                    'description': 'Abort'
+                },
+                'name': 'TASK_ABORT',
+                'value': 6
+            }
+        ]
+    },
     'TemperatureUnits': {
         'values': [
             {
@@ -17261,6 +17646,7 @@ enums = {
                     'description': 'Kelvins.'
                 },
                 'name': 'KELVINS',
+                'python_name': 'K',
                 'value': 10325
             },
             {
@@ -17273,6 +17659,7 @@ enums = {
         ]
     },
     'TemperatureUnits1': {
+        'python_name': 'TemperatureUnits',
         'values': [
             {
                 'documentation': {
@@ -17293,6 +17680,7 @@ enums = {
                     'description': 'Kelvins.'
                 },
                 'name': 'KELVINS',
+                'python_name': 'K',
                 'value': 10325
             },
             {
@@ -17311,13 +17699,47 @@ enums = {
             }
         ]
     },
+    'TermCfg': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'RSE terminal configuration'
+                },
+                'name': 'RSE',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': 'NRSE terminal configuration'
+                },
+                'name': 'NRSE',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': 'Differential terminal configuration'
+                },
+                'name': 'DIFF',
+                'value': 4
+            },
+            {
+                'documentation': {
+                    'description': 'Pseudodifferential terminal configuration'
+                },
+                'name': 'PSEUDO_DIFF',
+                'value': 8
+            }
+        ]
+    },
     'ThermocoupleType1': {
+        'python_name': 'ThermocoupleType',
         'values': [
             {
                 'documentation': {
                     'description': 'J-type thermocouple.'
                 },
                 'name': 'J_TYPE_TC',
+                'python_name': 'J',
                 'value': 10072
             },
             {
@@ -17325,6 +17747,7 @@ enums = {
                     'description': 'K-type thermocouple.'
                 },
                 'name': 'K_TYPE_TC',
+                'python_name': 'K',
                 'value': 10073
             },
             {
@@ -17332,6 +17755,7 @@ enums = {
                     'description': 'N-type thermocouple.'
                 },
                 'name': 'N_TYPE_TC',
+                'python_name': 'N',
                 'value': 10077
             },
             {
@@ -17339,6 +17763,7 @@ enums = {
                     'description': 'R-type thermocouple.'
                 },
                 'name': 'R_TYPE_TC',
+                'python_name': 'R',
                 'value': 10082
             },
             {
@@ -17346,6 +17771,7 @@ enums = {
                     'description': 'S-type thermocouple.'
                 },
                 'name': 'S_TYPE_TC',
+                'python_name': 'S',
                 'value': 10085
             },
             {
@@ -17353,6 +17779,7 @@ enums = {
                     'description': 'T-type thermocouple.'
                 },
                 'name': 'T_TYPE_TC',
+                'python_name': 'T',
                 'value': 10086
             },
             {
@@ -17360,6 +17787,7 @@ enums = {
                     'description': 'B-type thermocouple.'
                 },
                 'name': 'B_TYPE_TC',
+                'python_name': 'B',
                 'value': 10047
             },
             {
@@ -17367,6 +17795,7 @@ enums = {
                     'description': 'E-type thermocouple.'
                 },
                 'name': 'E_TYPE_TC',
+                'python_name': 'E',
                 'value': 10055
             }
         ]
@@ -17390,6 +17819,7 @@ enums = {
         ]
     },
     'TimeUnits2': {
+        'python_name': 'TimeUnits',
         'values': [
             {
                 'documentation': {
@@ -17401,6 +17831,7 @@ enums = {
         ]
     },
     'TimeUnits3': {
+        'python_name': 'TimeUnits',
         'values': [
             {
                 'documentation': {
@@ -17444,12 +17875,14 @@ enums = {
         ]
     },
     'Timescale2': {
+        'python_name': 'Timescale',
         'values': [
             {
                 'documentation': {
                     'description': 'Use the host device.'
                 },
                 'name': 'HOST_TIME',
+                'python_name': 'USE_HOST',
                 'value': 16126
             },
             {
@@ -17457,6 +17890,7 @@ enums = {
                     'description': 'Use the I/O device.'
                 },
                 'name': 'IO_DEVICE_TIME',
+                'python_name': 'USE_IO_DEVICE',
                 'value': 16127
             }
         ]
@@ -17465,30 +17899,31 @@ enums = {
         'values': [
             {
                 'documentation': {
-                    'description': 'Start Trigger'
+                    'description': 'Start Trigger timestamp.'
                 },
                 'name': 'START_TRIGGER',
                 'value': 12491
             },
             {
                 'documentation': {
-                    'description': 'Reference Trigger'
+                    'description': 'Reference Trigger timestamp.'
                 },
                 'name': 'REFERENCE_TRIGGER',
                 'value': 12490
             },
             {
                 'documentation': {
-                    'description': 'Arm Start Trigger'
+                    'description': 'Arm Start Trigger timestamp.'
                 },
                 'name': 'ARM_START_TRIGGER',
                 'value': 14641
             },
             {
                 'documentation': {
-                    'description': 'First Sample Timestamp'
+                    'description': 'First Sample timestamp.'
                 },
                 'name': 'FIRST_SAMPLE_TIMESTAMP',
+                'python_name': 'FIRST_SAMPLE',
                 'value': 16130
             }
         ]
@@ -17533,12 +17968,14 @@ enums = {
         ]
     },
     'TriggerType10': {
+        'python_name': 'TriggerType',
         'values': [
             {
                 'documentation': {
                     'description': 'Trigger when an analog signal signal crosses a threshold.'
                 },
                 'name': 'ANLG_EDGE',
+                'python_name': 'ANALOG_EDGE',
                 'value': 10099
             },
             {
@@ -17546,6 +17983,7 @@ enums = {
                     'description': ' Trigger when any of the configured analog signals cross their respective  thresholds.'
                 },
                 'name': 'ANLG_MULTI_EDGE',
+                'python_name': 'ANALOG_MULTI_EDGE',
                 'value': 16108
             },
             {
@@ -17553,6 +17991,7 @@ enums = {
                     'description': 'Trigger on the rising or falling edge of a digital signal.'
                 },
                 'name': 'DIG_EDGE',
+                'python_name': 'DIGITAL_EDGE',
                 'value': 10150
             },
             {
@@ -17560,6 +17999,7 @@ enums = {
                     'description': ' Trigger when digital physical channels match a digital pattern.'
                 },
                 'name': 'DIG_PATTERN',
+                'python_name': 'DIGITAL_PATTERN',
                 'value': 10398
             },
             {
@@ -17567,6 +18007,7 @@ enums = {
                     'description': ' Trigger when an analog signal enters or leaves a range of values. The range is  in the units of the measurement.'
                 },
                 'name': 'ANLG_WIN',
+                'python_name': 'ANALOG_WINDOW',
                 'value': 10103
             },
             {
@@ -17586,12 +18027,14 @@ enums = {
         ]
     },
     'TriggerType4': {
+        'python_name': 'TriggerType',
         'values': [
             {
                 'documentation': {
                     'description': 'Trigger on a rising or falling edge of a digital signal.'
                 },
                 'name': 'DIG_EDGE',
+                'python_name': 'DIGITAL_EDGE',
                 'value': 10150
             },
             {
@@ -17611,12 +18054,14 @@ enums = {
         ]
     },
     'TriggerType5': {
+        'python_name': 'TriggerType',
         'values': [
             {
                 'documentation': {
                     'description': ' Advance to the next entry in a scan list on the rising or falling edge of a  digital signal.'
                 },
                 'name': 'DIG_EDGE',
+                'python_name': 'DIGITAL_EDGE',
                 'value': 10150
             },
             {
@@ -17636,12 +18081,14 @@ enums = {
         ]
     },
     'TriggerType6': {
+        'python_name': 'TriggerType',
         'values': [
             {
                 'documentation': {
                     'description': ' Pause the measurement or generation while an analog signal is above or below a  level.'
                 },
                 'name': 'ANLG_LVL',
+                'python_name': 'ANALOG_LEVEL',
                 'value': 10101
             },
             {
@@ -17649,6 +18096,7 @@ enums = {
                     'description': ' Pause the measurement or generation while an analog signal is either inside or  outside of a range of values.'
                 },
                 'name': 'ANLG_WIN',
+                'python_name': 'ANALOG_WINDOW',
                 'value': 10103
             },
             {
@@ -17656,6 +18104,7 @@ enums = {
                     'description': ' Pause the measurement or generation while a digital signal is at either a high  or low state.'
                 },
                 'name': 'DIG_LVL',
+                'python_name': 'DIGITAL_LEVEL',
                 'value': 10152
             },
             {
@@ -17663,6 +18112,7 @@ enums = {
                     'description': ' Pause the measurement or generation while digital physical channels either  match or do not match a digital pattern.'
                 },
                 'name': 'DIG_PATTERN',
+                'python_name': 'DIGITAL_PATTERN',
                 'value': 10398
             },
             {
@@ -17675,12 +18125,14 @@ enums = {
         ]
     },
     'TriggerType8': {
+        'python_name': 'TriggerType',
         'values': [
             {
                 'documentation': {
                     'description': 'Trigger when an analog signal signal crosses a threshold.'
                 },
                 'name': 'ANLG_EDGE',
+                'python_name': 'ANALOG_EDGE',
                 'value': 10099
             },
             {
@@ -17688,6 +18140,7 @@ enums = {
                     'description': ' Trigger when any of the configured analog signals cross their respective  thresholds.'
                 },
                 'name': 'ANLG_MULTI_EDGE',
+                'python_name': 'ANALOG_MULTI_EDGE',
                 'value': 16108
             },
             {
@@ -17695,6 +18148,7 @@ enums = {
                     'description': 'Trigger on the rising or falling edge of a digital signal.'
                 },
                 'name': 'DIG_EDGE',
+                'python_name': 'DIGITAL_EDGE',
                 'value': 10150
             },
             {
@@ -17702,6 +18156,7 @@ enums = {
                     'description': ' Trigger when digital physical channels match a digital pattern.'
                 },
                 'name': 'DIG_PATTERN',
+                'python_name': 'DIGITAL_PATTERN',
                 'value': 10398
             },
             {
@@ -17709,6 +18164,7 @@ enums = {
                     'description': ' Trigger when an analog signal enters or leaves a range of values. The range is  in the units of the measurement.'
                 },
                 'name': 'ANLG_WIN',
+                'python_name': 'ANALOG_WINDOW',
                 'value': 10103
             },
             {
@@ -17728,6 +18184,7 @@ enums = {
         ]
     },
     'TriggerType9': {
+        'python_name': 'TriggerType',
         'values': [
             {
                 'documentation': {
@@ -17791,6 +18248,52 @@ enums = {
             }
         ]
     },
+    'TriggerUsageTypes': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Device supports advance triggers'
+                },
+                'name': 'ADVANCE',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports pause triggers'
+                },
+                'name': 'PAUSE',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports reference triggers'
+                },
+                'name': 'REFERENCE',
+                'value': 4
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports start triggers'
+                },
+                'name': 'START',
+                'value': 8
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports handshake triggers'
+                },
+                'name': 'HANDSHAKE',
+                'value': 16
+            },
+            {
+                'documentation': {
+                    'description': 'Device supports arm start triggers'
+                },
+                'name': 'ARM_START',
+                'value': 32
+            }
+        ]
+    },
     'UnderflowBehavior': {
         'values': [
             {
@@ -17805,6 +18308,7 @@ enums = {
                     'description': 'Pause the task until samples are available in the FIFO.'
                 },
                 'name': 'PAUSE_UNTIL_DATA_AVAILABLE',
+                'python_name': 'PAUSE_UNTIL_DATA_AVAILABLE',
                 'value': 14616
             }
         ]
@@ -17851,6 +18355,7 @@ enums = {
                     'description': 'Kelvins.'
                 },
                 'name': 'KELVINS',
+                'python_name': 'K',
                 'value': 10325
             },
             {
@@ -17872,6 +18377,7 @@ enums = {
                     'description': 'Hertz.'
                 },
                 'name': 'HZ',
+                'python_name': 'HERTZ',
                 'value': 10373
             },
             {
@@ -17977,6 +18483,7 @@ enums = {
                     'description': 'Pascals.'
                 },
                 'name': 'PASCALS',
+                'python_name': 'PA',
                 'value': 10081
             },
             {
@@ -18005,6 +18512,7 @@ enums = {
                     'description': 'Pounds per square inch.'
                 },
                 'name': 'POUNDS_PER_SQUARE_INCH',
+                'python_name': 'POUNDS_PER_SQ_INCH',
                 'value': 15879
             },
             {
@@ -18054,6 +18562,7 @@ enums = {
                     'description': 'Millivolts per volt.'
                 },
                 'name': 'M_VOLTS_PER_VOLT',
+                'python_name': 'MILLIVOLTS_PER_VOLT',
                 'value': 15897
             },
             {
@@ -18093,6 +18602,7 @@ enums = {
                     'description': 'Millivolts per inch per second.'
                 },
                 'name': 'MILLI_VOLTS_PER_INCH_PER_SECOND',
+                'python_name': 'MILLIVOLTS_PER_INCH_PER_SECOND',
                 'value': 15964
             }
         ]
@@ -18169,6 +18679,7 @@ enums = {
         ]
     },
     'VoltageUnits1': {
+        'python_name': 'VoltageUnits',
         'values': [
             {
                 'documentation': {
@@ -18194,6 +18705,7 @@ enums = {
         ]
     },
     'VoltageUnits2': {
+        'python_name': 'VoltageUnits',
         'values': [
             {
                 'documentation': {
@@ -18208,6 +18720,24 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'WDTTaskAction': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Reset Timer'
+                },
+                'name': 'RESET_TIMER',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': 'Clear Expiration'
+                },
+                'name': 'CLEAR_EXPIRATION',
+                'value': 1
             }
         ]
     },
@@ -18244,6 +18774,7 @@ enums = {
         ]
     },
     'WaitMode2': {
+        'python_name': 'WaitMode',
         'values': [
             {
                 'documentation': {
@@ -18269,6 +18800,7 @@ enums = {
         ]
     },
     'WaitMode3': {
+        'python_name': 'WaitMode',
         'values': [
             {
                 'documentation': {
@@ -18287,6 +18819,7 @@ enums = {
         ]
     },
     'WaitMode4': {
+        'python_name': 'WaitMode',
         'values': [
             {
                 'documentation': {
@@ -18347,7 +18880,7 @@ enums = {
             },
             {
                 'documentation': {
-                    'description': 'Expiration does not affect the port. Do not change the state of any lines in the port, and do not lock the port.'
+                    'description': ' Expiration does not affect the port. Do not change the state of any lines in  the port, and do not lock the port.'
                 },
                 'name': 'NO_CHANGE',
                 'value': 10160
@@ -18404,6 +18937,7 @@ enums = {
                     'description': 'Trigger when the signal enters the window.'
                 },
                 'name': 'ENTERING_WIN',
+                'python_name': 'ENTERING_WINDOW',
                 'value': 10163
             },
             {
@@ -18411,6 +18945,7 @@ enums = {
                     'description': 'Trigger when the signal leaves the window.'
                 },
                 'name': 'LEAVING_WIN',
+                'python_name': 'LEAVING_WINDOW',
                 'value': 10208
             }
         ]
@@ -18422,6 +18957,7 @@ enums = {
                     'description': ' Pause the measurement or generation while the trigger is inside the window.'
                 },
                 'name': 'INSIDE_WIN',
+                'python_name': 'INSIDE_WINDOW',
                 'value': 10199
             },
             {
@@ -18429,6 +18965,7 @@ enums = {
                     'description': ' Pause the measurement or generation while the signal is outside the window.'
                 },
                 'name': 'OUTSIDE_WIN',
+                'python_name': 'OUTSIDE_WINDOW',
                 'value': 10251
             }
         ]
@@ -18472,6 +19009,7 @@ enums = {
                     'description': ' Write samples relative to the current position in the buffer.'
                 },
                 'name': 'CURR_WRITE_POS',
+                'python_name': 'CURRENT_WRITE_POSITION',
                 'value': 10430
             }
         ]
