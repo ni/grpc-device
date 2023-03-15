@@ -4297,7 +4297,7 @@ namespace nirfmxgsm_grpc {
   NiRFmxGSMFeatureToggles::NiRFmxGSMFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxgsm", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxgsm", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxgsm_grpc
