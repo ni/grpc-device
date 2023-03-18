@@ -42,6 +42,7 @@ class RULES:
 DOCUMENTATION_SCHEMA = Schema(
     {
         "description": str,
+        Optional("python_description"): str,
         Optional("note"): str,
         Optional("table_body"): list,
         Optional("caution"): str,
@@ -158,6 +159,7 @@ ATTRIBUTE_SCHEMA = Schema(
         "type": str,
         Optional("resettable"): bool,
         Optional("enum"): str,
+        Optional("python_enum"): str,
         Optional("channel_based"): bool,
         Optional("attribute_class"): str,
         Optional("type_in_documentation"): str,
