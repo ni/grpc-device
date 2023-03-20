@@ -1,4 +1,4 @@
-r"""Demostration on how to use RFSA, RFSG and RFmx in Analysis Only mode.
+r"""Demonstration on how to use RFSA, RFSG and RFmx in Analysis Only mode.
 
 This example shows how to generate a TDMS waveform using RFSG, to capture the raw IQ data using
 RFSA and to demodulate it using RFmx Analysis Only mode.
