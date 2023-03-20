@@ -179,7 +179,7 @@ try:
             )
         )
     )
-    ###### Configure RFSG Settigs ######
+    ###### Configure RFSG Settings ######
     raise_if_error(
         rfsgclient.SetAttributeViReal64(
             nirfsg_types.SetAttributeViReal64Request(
