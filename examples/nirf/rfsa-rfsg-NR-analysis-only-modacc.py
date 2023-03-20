@@ -66,7 +66,7 @@ if len(sys.argv) >= 4:
     RESOURCE = sys.argv[3]
     OPTIONS = ""
 # Create a gRPC channel + client.
-# Use a larger buffer for the messages as we are transfering the raw data from instrument.
+# Use a larger buffer for the messages as we are transferring the raw data from instrument.
 # In this example up to 1.6M samples
 options = [("grpc.max_receive_message_length", 2**21)]
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}", options=options)
