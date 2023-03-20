@@ -14,8 +14,11 @@ The gRPC API is built from the C API. RFmx NR documentation is installed with th
 
 Getting Started:
 
-To run this example, install "RFmx NR" on the server machine:
+To run this example, install "RFmx NR", "RFSA" and "RFSG" on the server machine:
   https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-nr.html
+  https://www.ni.com/en-us/support/downloads/drivers/download.ni-rfsa.html
+  https://www.ni.com/en-us/support/downloads/drivers/download.ni-rfsg.html
+
 
 For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
 Client" wiki page:
@@ -45,7 +48,7 @@ import nirfsa_pb2_grpc as grpc_nirfsa
 import nirfsg_pb2 as nirfsg_types
 import nirfsg_pb2_grpc as grpc_nirfsg
 
-SERVER_ADDRESS = "mercury07"
+SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
 RFMXSESSION_NAME = "RFmxNRSession"
 RFSASESSION_NAME = "RfsaSession"
@@ -247,7 +250,7 @@ try:
                 instrument=rfmxsession,
                 selector_string="",
                 attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_LINK_DIRECTION,
-                attr_val_raw=nr_link_direction,
+                attr_val=nr_link_direction,
             )
         )
     )
@@ -257,7 +260,7 @@ try:
                 instrument=rfmxsession,
                 selector_string="",
                 attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE,
-                attr_val_raw=nr_frequency_range,
+                attr_val=nr_frequency_range,
             )
         )
     )
