@@ -26,10 +26,10 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSG" as the physical channel name.
 """  # noqa: W505
 
+import math
 import sys
 
 import grpc
-import math
 import nidevice_pb2 as nidevice_grpc
 import nirfsg_pb2 as nirfsg_types
 import nirfsg_pb2_grpc as grpc_nirfsg
