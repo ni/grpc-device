@@ -7131,7 +7131,7 @@ namespace nirfmxwcdma_grpc {
   NiRFmxWCDMAFeatureToggles::NiRFmxWCDMAFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxwcdma", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxwcdma", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxwcdma_grpc
