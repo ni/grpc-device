@@ -234,7 +234,7 @@ try:
         )
     )
 
-    ###### Configure NR Settigs ######
+    ###### Configure NR Settings ######
     nr_frequency_range = nirfmxnr_types.NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1
     nr_carrier_bandwidth = 100e6
     nr_subcarrier_spacing = 30e3
