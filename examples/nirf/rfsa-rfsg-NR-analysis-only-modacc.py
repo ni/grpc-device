@@ -147,7 +147,7 @@ try:
     file_path = r"C:\Users\Public\Documents\National Instruments\NI-RFmx\NR\Examples\C\Support\NR_FR1_UL_BW-100MHz_SCS-30kHz.tdms"
 
     print(f"Configuring RFmx NR, RFSG and RFSA settings...", end="")
-    ###### Configure RFSA Settigs ######
+    ###### Configure RFSA Settings ######
     raise_if_error(
         rfsaclient.ConfigureRefClock(
             nirfsa_types.ConfigureRefClockRequest(
