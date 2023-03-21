@@ -39,7 +39,7 @@ SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
 SESSION_NAME = "NI-RFSG-Session"
 
-# Resource name, channel name and options for a simulated 5652 client.
+# Resource name, channel name and options for a VST client.
 RESOURCE = "5840_1"
 OPTIONS = ""
 
@@ -142,6 +142,10 @@ try:
     raise_if_error(client.Abort(nirfsg_types.AbortRequest(vi=vi)))
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -152,6 +156,6 @@ except grpc.RpcError as rpc_error:
 finally:
     if vi:
         client.ConfigureOutputEnabled(
-            nirfsg_types.ConfigureOutputEnabledRequest(output_enabled=False)
+            nirfsg_types.ConfigureOutputEnabledRequest(vi=vi, output_enabled=False)
         )
         client.Close(nirfsg_types.CloseRequest(vi=vi))
