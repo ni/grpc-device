@@ -39,6 +39,10 @@ class _ArtifactReadiness:
         if "session" == module_name:
             return True
 
+        # Special case for multidriver examples for RF located in this folder
+        if module_name in ["session", "nirf"]:
+            return True
+
         if module_name not in self._module_to_readiness:
             raise KeyError(f"No module config.py metadata for module_name: {module_path}")
 
