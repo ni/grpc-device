@@ -60,9 +60,7 @@ vi = None
 def raise_if_error(response):
     """Raise an exception if an error was returned."""
     if response.status != 0:
-        response = client.ErrorMessage(
-            nirfsg_types.ErrorMessageRequest(error_code=response.status)
-        )
+        response = client.ErrorMessage(nirfsg_types.ErrorMessageRequest(error_code=response.status))
         raise Exception(f"Error: {response.error_string}")
 
 
