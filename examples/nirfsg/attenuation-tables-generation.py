@@ -113,8 +113,8 @@ try:
     # We ned a table that it is frequencies x 2 x 2. Easier to fill it as a 3D matrix
     sparam = np.zeros(shape=(len(frequency_table_hz), 2, 2))
     for index in range(len(frequency_table_hz)):
-        sparam[index, 0, 1] = s[index] #S12
-        sparam[index, 1, 0] = s[index] #S21
+        sparam[index, 0, 1] = s[index]  # S12
+        sparam[index, 1, 0] = s[index]  # S21
     # Now flatten into a list
     sparam = sparam.reshape(np.prod(np.shape(sparam)))
     sparam = sparam.tolist()
