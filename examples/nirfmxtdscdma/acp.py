@@ -1,38 +1,44 @@
-# Steps:
-# 1. Open a new RFmx session.
-# 2. Configure Frequency Reference.
-# 3. Configure External Attenuation.
-# 4. Configure the Center Frequency directly or via Channel Number.
-# 5. Configure Trigger Type and Trigger Parameters.
-# 6. Configure the Reference Level directly or via Auto Level.
-# 7. Select ACP measurement and enable traces.
-# 8. Configure Averaging parameters.
-# 9. Configure Sweep Time parameters.
-# 10. Configure Noise Compensation parameter.
-# 11. Configure Number of Offset Channels.
-# 12. Initiate the Measurement.
-# 13[A-E]. Fetch ACP Measurements and Traces.
-# 14. Close the RFmx session.
-#
-# The gRPC API is built from the C API. RFmx TDSCDMA documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\TDSCDMA\Documentation\tdscdmacvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx TDSCDMA" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-tdscdma.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmxTDSCDMA gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxTDSCDMA-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python acp.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+r"""Acp example.
+
+Steps:
+1. Open a new RFmx session.
+2. Configure Frequency Reference.
+3. Configure External Attenuation.
+4. Configure the Center Frequency directly or via Channel Number.
+5. Configure Trigger Type and Trigger Parameters.
+6. Configure the Reference Level directly or via Auto Level.
+7. Select ACP measurement and enable traces.
+8. Configure Averaging parameters.
+9. Configure Sweep Time parameters.
+10. Configure Noise Compensation parameter.
+11. Configure Number of Offset Channels.
+12. Initiate the Measurement.
+13[A-E]. Fetch ACP Measurements and Traces.
+14. Close the RFmx session.
+
+The gRPC API is built from the C API. RFmx TDSCDMA documentation is installed with the driver at:
+C:\Program Files (x86)\National Instruments\RFmx\TDSCDMA\Documentation\tdscdmacvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx TDSCDMA" on the server machine.
+Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-tdscdma.html
+
+For instructions on how to use protoc to generate gRPC client interfaces,
+see our "Creating a gRPC Client" wiki page.
+Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmxTDSCDMA gRPC Wiki for the latest C Function Reference:
+Link: https://github.com/ni/grpc-device/wiki/NI-RFmxTDSCDMA-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python acp.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name
+"""
 
 
 import sys
@@ -71,7 +77,7 @@ def check_for_warning(response, instrument):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.GetErrorString(
-            nirfmxgsm_types.GetErrorStringRequest(
+            nirfmxtdscdma_types.GetErrorStringRequest(
                 instrument=instrument,
                 error_code=response.status,
             )
