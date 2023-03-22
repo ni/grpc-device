@@ -109,12 +109,12 @@ try:
     attenuation_table_db = [3, 3]
 
     # Convert to S parameters: Linear attenuation
-    s12 = [math.pow(10, x / 20) for x in attenuation_table_db]
+    s = [math.pow(10, -x / 20) for x in attenuation_table_db]
     # We ned a table that it is frequencies x 2 x 2. Easier to fill it as a 3D matrix
     sparam = np.zeros(shape=(len(frequency_table_hz), 2, 2))
     for index in range(len(frequency_table_hz)):
-        sparam[index, 0, 1] = s12[index]
-        sparam[index, 1, 0] = s12[index]
+        sparam[index, 0, 1] = s[index] #S12
+        sparam[index, 1, 0] = s[index] #S21
     # Now flatten into a list
     sparam = sparam.reshape(np.prod(np.shape(sparam)))
     sparam = sparam.tolist()
