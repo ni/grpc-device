@@ -21,7 +21,7 @@ Running from command line:
 
 Server machine's IP address, port number, and physical channel name can be passed as separate
 command line arguments.
-  > python getting-started-single-tone-generation.py <server_address> <port_number> <resource_name>
+  > python attenuation-tables-generation.py <server_address> <port_number> <resource_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "SimulatedRFSG" as the physical channel name.
 """  # noqa: W505
