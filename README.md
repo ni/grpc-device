@@ -10,23 +10,23 @@ For more detailed information on the server and API design refer to the [wiki](h
 Indicates the most recent driver version used to test builds of the current source. Supported driver versions for specific releases will be found in the release notes for that version.
 
 |NI Driver|Version Tested (Windows)|Version Tested (Linux) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Version Tested (Linux RT)|
-| :------------------------ | :------| :------------ | :------------ |
-| NI-DAQmx                  | 21.0.0 | 21.0.0        | 21.0.0        |
-| NI-DCPower                | 20.6.0 | 20.1.0        | 20.7.0        |
-| NI-Digital Pattern Driver | 20.6.0 | Not Supported | Not Supported |
-| NI-DMM                    | 20.0.0 | 20.1.0        | 20.5.0        |
-| NI-FGEN                   | 20.0.0 | Not Supported | Not Supported |
-| NI-RFmx Bluetooth         | 22.5.0 | Not Supported | Not Supported |
-| NI-RFmx LTE               | 22.5.0 | Not Supported | Not Supported |
-| NI-RFmx NR                | 22.5.0 | Not Supported | Not Supported |
-| NI-RFmx SpecAn            | 22.5.0 | Not Supported | Not Supported |
-| NI-RFmx WLAN              | 22.5.0 | Not Supported | Not Supported |
-| NI-RFSA                   | 21.0.0 | 21.0.0        | Not Supported |
-| NI-RFSG                   | 21.0.0 | 21.0.0        | Not Supported |
-| NI-SCOPE                  | 20.7.0 | 20.1.0        | 20.7.0        |
-| NI-SWITCH                 | 20.0.0 | 20.1.0        | 20.5.0        |
-| NI-XNET                   | 21.5.0 | 21.5.0        | 21.5.0        |
-| NI-TClk                   | 20.7.0 | 20.0.0        | 20.7.0        |
+| :------------------------ | :------ | :------------ | :------------ |
+| NI-DAQmx                  | 21.0.0  | 21.0.0        | 21.0.0        |
+| NI-DCPower                | 2023 Q1 | 2023 Q1       | 2023 Q1       |
+| NI-Digital Pattern Driver | 2023 Q1 | Not Supported | Not Supported |
+| NI-DMM                    | 2023 Q1 | 2023 Q1       | 2023 Q1       |
+| NI-FGEN                   | 2023 Q1 | 2023 Q1       | 2023 Q1       |
+| NI-RFmx Bluetooth         | 2022 Q3 | Not Supported | Not Supported |
+| NI-RFmx LTE               | 2022 Q3 | Not Supported | Not Supported |
+| NI-RFmx NR                | 2022 Q3 | Not Supported | Not Supported |
+| NI-RFmx SpecAn            | 2022 Q3 | Not Supported | Not Supported |
+| NI-RFmx WLAN              | 2022 Q3 | Not Supported | Not Supported |
+| NI-RFSA                   | 21.0.0  | 21.0.0        | Not Supported |
+| NI-RFSG                   | 21.0.0  | 21.0.0        | Not Supported |
+| NI-SCOPE                  | 2023 Q1 | 2023 Q1       | 2023 Q1       |
+| NI-SWITCH                 | 2023 Q1 | 2023 Q1       | 2023 Q1       |
+| NI-XNET                   | 21.5.0  | 21.5.0        | 21.5.0        |
+| NI-TClk                   | 2023 Q1 | 2023 Q1       | 2023 Q1       |
 
 ## Build Status
 ![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)

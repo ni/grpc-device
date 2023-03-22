@@ -71,6 +71,42 @@ enums = {
             }
         ]
     },
+    'AcpDetectorType': {
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'SAMPLE',
+                'value': 1
+            },
+            {
+                'name': 'NORMAL',
+                'value': 2
+            },
+            {
+                'name': 'PEAK',
+                'value': 3
+            },
+            {
+                'name': 'NEGATIVE_PEAK',
+                'value': 4
+            },
+            {
+                'name': 'AVERAGE_RMS',
+                'value': 5
+            },
+            {
+                'name': 'AVERAGE_VOLTAGE',
+                'value': 6
+            },
+            {
+                'name': 'AVERAGE_LOG',
+                'value': 7
+            }
+        ]
+    },
     'AcpFftOverlapMode': {
         'values': [
             {
@@ -704,6 +740,42 @@ enums = {
             {
                 'name': 'TRUE',
                 'value': 1
+            }
+        ]
+    },
+    'ChpDetectorType': {
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'SAMPLE',
+                'value': 1
+            },
+            {
+                'name': 'NORMAL',
+                'value': 2
+            },
+            {
+                'name': 'PEAK',
+                'value': 3
+            },
+            {
+                'name': 'NEGATIVE_PEAK',
+                'value': 4
+            },
+            {
+                'name': 'AVERAGE_RMS',
+                'value': 5
+            },
+            {
+                'name': 'AVERAGE_VOLTAGE',
+                'value': 6
+            },
+            {
+                'name': 'AVERAGE_LOG',
+                'value': 7
             }
         ]
     },
@@ -2264,6 +2336,19 @@ enums = {
             },
             {
                 'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'NFYFactorNoiseSourceType': {
+        'enum-value-prefix': 'NF_Y_FACTOR_NOISE_SOURCE_TYPE',
+        'values': [
+            {
+                'name': 'EXTERNAL_NOISE_SOURCE',
+                'value': 0
+            },
+            {
+                'name': 'RF_SIGNAL_GENERATOR',
                 'value': 1
             }
         ]

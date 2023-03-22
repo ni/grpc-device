@@ -43,6 +43,8 @@
 #define RFMXSPECAN_ATTR_ACP_RBW_FILTER_BANDWIDTH_DEFINITION                            0x00101038
 #define RFMXSPECAN_ATTR_ACP_SWEEP_TIME_AUTO                                            0x0010101e
 #define RFMXSPECAN_ATTR_ACP_SWEEP_TIME_INTERVAL                                        0x0010101f
+#define RFMXSPECAN_ATTR_ACP_DETECTOR_TYPE                                              0x00101042
+#define RFMXSPECAN_ATTR_ACP_DETECTOR_POINTS                                            0x00101043
 #define RFMXSPECAN_ATTR_ACP_POWER_UNITS                                                0x00101013
 #define RFMXSPECAN_ATTR_ACP_MEASUREMENT_METHOD                                         0x00101012
 #define RFMXSPECAN_ATTR_ACP_SEQUENTIAL_FFT_SIZE                                        0x0010103a
@@ -114,6 +116,8 @@
 #define RFMXSPECAN_ATTR_CHP_RBW_FILTER_BANDWIDTH_DEFINITION                            0x0010301e
 #define RFMXSPECAN_ATTR_CHP_SWEEP_TIME_AUTO                                            0x00103011
 #define RFMXSPECAN_ATTR_CHP_SWEEP_TIME_INTERVAL                                        0x00103012
+#define RFMXSPECAN_ATTR_CHP_DETECTOR_TYPE                                              0x00103013
+#define RFMXSPECAN_ATTR_CHP_DETECTOR_POINTS                                            0x00103026
 #define RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_MODE                                     0x00103025
 #define RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_AVERAGING_AUTO                           0x00103024
 #define RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_AVERAGING_COUNT                          0x00103023
@@ -500,6 +504,8 @@
 #define RFMXSPECAN_ATTR_NF_CALIBRATION_LOSS_TEMPERATURE                                0x00120020
 #define RFMXSPECAN_ATTR_NF_MEASUREMENT_METHOD                                          0x00120009
 #define RFMXSPECAN_ATTR_NF_Y_FACTOR_MODE                                               0x0012000a
+#define RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_TYPE                                  0x00120041
+#define RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_RF_SIGNAL_GENERATOR_PORT              0x00120042
 #define RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_ENR_FREQUENCY                         0x0012000d
 #define RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_ENR                                   0x0012000c
 #define RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_COLD_TEMPERATURE                      0x0012000e
@@ -749,6 +755,16 @@
 #define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_NORMAL                                                  0
 #define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_DYNAMIC_RANGE                                           1
 #define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT                                          2
+
+// Values for RFMXSPECAN_ATTR_ACP_DETECTOR_TYPE
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NONE                                                         0
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_SAMPLE                                                       1
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NORMAL                                                       2
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_PEAK                                                         3
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NEGATIVE_PEAK                                                4
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_RMS                                                  5
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_VOLTAGE                                              6
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_LOG                                                  7
 
 // Values for RFMXSPECAN_ATTR_ACP_POWER_UNITS
 #define RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM                                                            0
@@ -1292,6 +1308,10 @@
 #define RFMXSPECAN_VAL_NF_Y_FACTOR_MODE_MEASURE                                                       0
 #define RFMXSPECAN_VAL_NF_Y_FACTOR_MODE_CALIBRATE                                                     1
 
+// Values for RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_TYPE
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_TYPE_EXTERNAL_NOISE_SOURCE                            0
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_TYPE_RF_SIGNAL_GENERATOR                              1
+
 // Values for RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED
 #define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_FALSE                       0
 #define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_TRUE                        1
@@ -1465,6 +1485,16 @@
 // Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_BANDWIDTH_DEFINITION
 #define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
 #define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
+
+// Values for RFMXSPECAN_ATTR_CHP_DETECTOR_TYPE
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NONE                                                         0
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_SAMPLE                                                       1
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NORMAL                                                       2
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_PEAK                                                         3
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NEGATIVE_PEAK                                                4
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_RMS                                                  5
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_VOLTAGE                                              6
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_LOG                                                  7
 
 // Values for RFMXSPECAN_ATTR_CHP_CARRIER_RRC_FILTER_ENABLED
 #define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_FALSE                                           0
@@ -3148,6 +3178,13 @@ int32 __stdcall RFmxSpecAn_HarmCfgHarmonicArray(
    int32 numberOfElements
 );
 
+int32 __stdcall RFmxSpecAn_ACPCfgDetector(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 detectorType,
+   int32 detectorPoints
+);
+
 int32 __stdcall RFmxSpecAn_ACPCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4004,6 +4041,13 @@ int32 __stdcall RFmxSpecAn_CHPCfgSweepTime(
    char selectorString[],
    int32 sweepTimeAuto,
    float64 sweepTimeInterval
+);
+
+int32 __stdcall RFmxSpecAn_CHPCfgDetector(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 detectorType,
+   int32 detectorPoints
 );
 
 int32 __stdcall RFmxSpecAn_CHPCfgNumberOfCarriers(
@@ -5653,6 +5697,30 @@ int32 __stdcall RFmxSpecAn_ACPSetSweepTimeInterval(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_ACPGetDetectorType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPSetDetectorType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPGetDetectorPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPSetDetectorPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_ACPGetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -6371,6 +6439,30 @@ int32 __stdcall RFmxSpecAn_CHPSetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_CHPGetDetectorType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_CHPSetDetectorType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_CHPGetDetectorPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_CHPSetDetectorPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_CHPGetNoiseCalibrationMode(
@@ -11278,6 +11370,31 @@ int32 __stdcall RFmxSpecAn_NFSetYFactorMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceRFSignalGeneratorPort(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceRFSignalGeneratorPort(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
 );
 
 int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceENRFrequency(

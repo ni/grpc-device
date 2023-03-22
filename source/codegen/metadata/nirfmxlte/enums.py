@@ -1189,6 +1189,36 @@ enums = {
             }
         ]
     },
+    'ModAccPhaseTrackingEnabled': {
+        'enum-value-prefix': 'MODACC_PHASE_TRACKING_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'ModAccPreFftErrorEstimationInterval': {
+        'enum-value-prefix': 'MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL',
+        'values': [
+            {
+                'name': 'SLOT',
+                'value': 0
+            },
+            {
+                'name': 'SUBFRAME',
+                'value': 1
+            },
+            {
+                'name': 'MEASUREMENT_LENGTH',
+                'value': 2
+            }
+        ]
+    },
     'ModAccSpectralFlatnessCondition': {
         'enum-value-prefix': 'MODACC_SPECTRAL_FLATNESS_CONDITION',
         'values': [
@@ -1215,6 +1245,19 @@ enums = {
             }
         ]
     },
+    'ModAccSymbolClockErrorEstimationEnabled': {
+        'enum-value-prefix': 'MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'ModAccSynchronizationMode': {
         'enum-value-prefix': 'MODACC_SYNCHRONIZATION_MODE',
         'values': [
@@ -1229,6 +1272,19 @@ enums = {
             {
                 'name': 'MARKER',
                 'value': 2
+            }
+        ]
+    },
+    'ModAccTimingTrackingEnabled': {
+        'enum-value-prefix': 'MODACC_TIMING_TRACKING_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
             }
         ]
     },
@@ -1675,12 +1731,24 @@ enums = {
                 'value': 7
             },
             {
-                'name': 'NS27',
+                'name': 'NS27_OR_NS43',
                 'value': 8
             },
             {
                 'name': 'NS35',
                 'value': 9
+            },
+            {
+                'name': 'NS28',
+                'value': 10
+            },
+            {
+                'name': 'CANS09',
+                'value': 11
+            },
+            {
+                'name': 'CANS10',
+                'value': 12
             }
         ]
     },

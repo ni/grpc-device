@@ -154,6 +154,33 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ACPCfgDetector': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcpDetectorType',
+                'name': 'detectorType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'detectorPoints',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ACPCfgFFT': {
         'parameters': [
             {
@@ -2917,6 +2944,33 @@ functions = {
                 'direction': 'in',
                 'name': 'carrierFrequency',
                 'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CHPCfgDetector': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ChpDetectorType',
+                'name': 'detectorType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'detectorPoints',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'
@@ -8944,14 +8998,12 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_name': 'measurement_offset',
-                'name': 'measurermentOffset',
+                'name': 'measurementOffset',
                 'type': 'float64'
             },
             {
                 'direction': 'in',
-                'grpc_name': 'measurement_length',
-                'name': 'measurermentLength',
+                'name': 'measurementLength',
                 'type': 'float64'
             }
         ],

@@ -225,6 +225,11 @@ attributes = {
         'name': 'MODACC_COMPOSITE_RESULTS_INCLUDE_PTRS',
         'type': 'int32'
     },
+    9437244: {
+        'access': 'read-write',
+        'name': 'SUB_BAND_ALLOCATION',
+        'type': 'char[]'
+    },
     9437245: {
         'access': 'read-write',
         'name': 'NUMBER_OF_BANDWIDTH_PARTS',
@@ -560,6 +565,12 @@ attributes = {
         'access': 'read-write',
         'name': 'PBCH_DMRS_POWER',
         'type': 'float64'
+    },
+    9437324: {
+        'access': 'read-write',
+        'enum': 'AutoCellIDDetectionEnabled',
+        'name': 'AUTO_CELL_ID_DETECTION_ENABLED',
+        'type': 'int32'
     },
     9437326: {
         'access': 'read-write',
@@ -1491,6 +1502,11 @@ attributes = {
         'name': 'MODACC_RESULTS_SUBBLOCK_IQ_ORIGIN_OFFSET_MEAN',
         'type': 'float64'
     },
+    9453626: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_DETECTED_CELL_ID',
+        'type': 'int32'
+    },
     9453640: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_PUSCH_PTRS_RMS_EVM_MEAN',
@@ -1816,6 +1832,27 @@ attributes = {
     9453730: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_COMPONENT_CARRIER_SLOT_IQ_ORIGIN_OFFSET_MAXIMUM',
+        'type': 'float64'
+    },
+    9453731: {
+        'access': 'read-write',
+        'enum': 'ModAccTransientPeriodEvmMode',
+        'name': 'MODACC_TRANSIENT_PERIOD_EVM_MODE',
+        'type': 'int32'
+    },
+    9453732: {
+        'access': 'read-write',
+        'name': 'MODACC_TRANSIENT_PERIOD',
+        'type': 'float64'
+    },
+    9453733: {
+        'access': 'read-write',
+        'name': 'MODACC_TRANSIENT_POWER_CHANGE_THRESHOLD',
+        'type': 'float64'
+    },
+    9453734: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PUSCH_DATA_TRANSIENT_RMS_EVM_MEAN',
         'type': 'float64'
     },
     9461760: {
@@ -2258,6 +2295,12 @@ attributes = {
         'access': 'read-write',
         'enum': 'SemFftWindow',
         'name': 'SEM_FFT_WINDOW',
+        'type': 'int32'
+    },
+    9470018: {
+        'access': 'read-write',
+        'enum': 'SemOffsetFrequencyDefinition',
+        'name': 'SEM_OFFSET_FREQUENCY_DEFINITION',
         'type': 'int32'
     },
     9474048: {

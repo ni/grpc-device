@@ -32,9 +32,6 @@ class NiFgenDriverApiTest : public ::testing::Test {
 
   void SetUp() override
   {
-#ifndef WIN32
-    GTEST_SKIP() << "Fgen is not supported on Linux.";
-#endif
     initialize_driver_session();
   }
 
@@ -588,6 +585,9 @@ TEST_F(NiFgenDriverApiTest, ExportTriggerMode_ResetAndImportConfiguration_Trigge
 
 TEST_F(NiFgenDriverApiTest, AllocateWaveform_WriteWaveformComplexF64_WaveformWrittenSuccessfully)
 {
+#ifndef WIN32
+  GTEST_SKIP() << "The Onboard Signal Processing (OSP) functionality of the PXI-5441 is not supported on Linux.";
+#endif
   std::string channel_name = "0";
   int waveform_size = 5;
   configure_output_mode(channel_name.c_str(), fgen::OutputMode::OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB);

@@ -181,6 +181,7 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   int32 ModAccFetchMaximumEVMPerSlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMPerSlot[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchMaximumEVMPerSubcarrierTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMPerSubcarrier[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchMaximumEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMPerSymbol[], int32 arraySize, int32* actualArraySize);
+  int32 ModAccFetchMaximumFrequencyErrorPerSlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumFrequencyErrorPerSlot[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumMagnitudeErrorPerSymbol[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchMaximumPhaseErrorPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumPhaseErrorPerSymbol[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchNPUSCHConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dataConstellation[], int32 dataConstellationArraySize, int32* dataConstellationActualArraySize, NIComplexSingle dmrsConstellation[], int32 dmrsConstellationArraySize, int32* dmrsConstellationActualArraySize);
@@ -468,6 +469,7 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   using ModAccFetchMaximumEVMPerSlotTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumEVMPerSlotTrace);
   using ModAccFetchMaximumEVMPerSubcarrierTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumEVMPerSubcarrierTrace);
   using ModAccFetchMaximumEVMPerSymbolTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumEVMPerSymbolTrace);
+  using ModAccFetchMaximumFrequencyErrorPerSlotTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumFrequencyErrorPerSlotTrace);
   using ModAccFetchMaximumMagnitudeErrorPerSymbolTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumMagnitudeErrorPerSymbolTrace);
   using ModAccFetchMaximumPhaseErrorPerSymbolTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumPhaseErrorPerSymbolTrace);
   using ModAccFetchNPUSCHConstellationTracePtr = decltype(&RFmxLTE_ModAccFetchNPUSCHConstellationTrace);
@@ -755,6 +757,7 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     ModAccFetchMaximumEVMPerSlotTracePtr ModAccFetchMaximumEVMPerSlotTrace;
     ModAccFetchMaximumEVMPerSubcarrierTracePtr ModAccFetchMaximumEVMPerSubcarrierTrace;
     ModAccFetchMaximumEVMPerSymbolTracePtr ModAccFetchMaximumEVMPerSymbolTrace;
+    ModAccFetchMaximumFrequencyErrorPerSlotTracePtr ModAccFetchMaximumFrequencyErrorPerSlotTrace;
     ModAccFetchMaximumMagnitudeErrorPerSymbolTracePtr ModAccFetchMaximumMagnitudeErrorPerSymbolTrace;
     ModAccFetchMaximumPhaseErrorPerSymbolTracePtr ModAccFetchMaximumPhaseErrorPerSymbolTrace;
     ModAccFetchNPUSCHConstellationTracePtr ModAccFetchNPUSCHConstellationTrace;

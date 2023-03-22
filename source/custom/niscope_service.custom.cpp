@@ -228,8 +228,16 @@ void CheckStatus(int status)
         break;
     }
 
-    ViInt32 measurement_waveform_size;
-    CheckStatus(library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size));
+    // meas_wfm_size is marked optional in the proto file.
+    // If it was set to a non-negative value, use it.
+    // If it wasn't set or if it was set to a negative number, use the ActualMeasWfmSize.
+    ViInt32 measurement_waveform_size = -1;
+    if (request->has_meas_wfm_size()) {
+      measurement_waveform_size = request->meas_wfm_size();
+    }
+    if (measurement_waveform_size < 0) {
+      CheckStatus(library_->ActualMeasWfmSize(vi, array_meas_function, &measurement_waveform_size));
+    }
 
     ViInt32 num_waveforms;
     CheckStatus(library_->ActualNumWfms(vi, channel_list, &num_waveforms));

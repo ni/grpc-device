@@ -49,6 +49,7 @@ public:
   ::grpc::Status ACPCfgCarrierIntegrationBandwidth(::grpc::ServerContext* context, const ACPCfgCarrierIntegrationBandwidthRequest* request, ACPCfgCarrierIntegrationBandwidthResponse* response) override;
   ::grpc::Status ACPCfgCarrierMode(::grpc::ServerContext* context, const ACPCfgCarrierModeRequest* request, ACPCfgCarrierModeResponse* response) override;
   ::grpc::Status ACPCfgCarrierRRCFilter(::grpc::ServerContext* context, const ACPCfgCarrierRRCFilterRequest* request, ACPCfgCarrierRRCFilterResponse* response) override;
+  ::grpc::Status ACPCfgDetector(::grpc::ServerContext* context, const ACPCfgDetectorRequest* request, ACPCfgDetectorResponse* response) override;
   ::grpc::Status ACPCfgFFT(::grpc::ServerContext* context, const ACPCfgFFTRequest* request, ACPCfgFFTResponse* response) override;
   ::grpc::Status ACPCfgMeasurementMethod(::grpc::ServerContext* context, const ACPCfgMeasurementMethodRequest* request, ACPCfgMeasurementMethodResponse* response) override;
   ::grpc::Status ACPCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const ACPCfgNoiseCompensationEnabledRequest* request, ACPCfgNoiseCompensationEnabledResponse* response) override;
@@ -127,6 +128,7 @@ public:
   ::grpc::Status CCDFRead(::grpc::ServerContext* context, const CCDFReadRequest* request, CCDFReadResponse* response) override;
   ::grpc::Status CHPCfgAveraging(::grpc::ServerContext* context, const CHPCfgAveragingRequest* request, CHPCfgAveragingResponse* response) override;
   ::grpc::Status CHPCfgCarrierOffset(::grpc::ServerContext* context, const CHPCfgCarrierOffsetRequest* request, CHPCfgCarrierOffsetResponse* response) override;
+  ::grpc::Status CHPCfgDetector(::grpc::ServerContext* context, const CHPCfgDetectorRequest* request, CHPCfgDetectorResponse* response) override;
   ::grpc::Status CHPCfgFFT(::grpc::ServerContext* context, const CHPCfgFFTRequest* request, CHPCfgFFTResponse* response) override;
   ::grpc::Status CHPCfgIntegrationBandwidth(::grpc::ServerContext* context, const CHPCfgIntegrationBandwidthRequest* request, CHPCfgIntegrationBandwidthResponse* response) override;
   ::grpc::Status CHPCfgNumberOfCarriers(::grpc::ServerContext* context, const CHPCfgNumberOfCarriersRequest* request, CHPCfgNumberOfCarriersResponse* response) override;

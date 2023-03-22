@@ -722,6 +722,11 @@ int32 OFDMModAccFetchPreambleAveragePowers80211ax(niRFmxInstrHandle instrumentHa
   return RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ax(instrumentHandle, selectorString, timeout, rlsigAveragePowerMean, hesigaAveragePowerMean, hesigbAveragePowerMean, hestfAveragePowerMean, heltfAveragePowerMean);
 }
 
+int32 OFDMModAccFetchPreambleAveragePowers80211be(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigAveragePowerMean, float64* usigAveragePowerMean, float64* ehtsigAveragePowerMean, float64* ehtstfAveragePowerMean, float64* ehtltfAveragePowerMean)
+{
+  return RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11be(instrumentHandle, selectorString, timeout, rlsigAveragePowerMean, usigAveragePowerMean, ehtsigAveragePowerMean, ehtstfAveragePowerMean, ehtltfAveragePowerMean);
+}
+
 int32 OFDMModAccFetchPreambleAveragePowers80211n(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* htsigAveragePowerMean, float64* htstfAveragePowerMean, float64* htdltfAveragePowerMean, float64* hteltfAveragePowerMean)
 {
   return RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11n(instrumentHandle, selectorString, timeout, htsigAveragePowerMean, htstfAveragePowerMean, htdltfAveragePowerMean, hteltfAveragePowerMean);
@@ -745,6 +750,11 @@ int32 OFDMModAccFetchPreamblePeakPowers80211ac(niRFmxInstrHandle instrumentHandl
 int32 OFDMModAccFetchPreamblePeakPowers80211ax(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigPeakPowerMaximum, float64* hesigaPeakPowerMaximum, float64* hesigbPeakPowerMaximum, float64* hestfPeakPowerMaximum, float64* heltfPeakPowerMaximum)
 {
   return RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ax(instrumentHandle, selectorString, timeout, rlsigPeakPowerMaximum, hesigaPeakPowerMaximum, hesigbPeakPowerMaximum, hestfPeakPowerMaximum, heltfPeakPowerMaximum);
+}
+
+int32 OFDMModAccFetchPreamblePeakPowers80211be(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigPeakPowerMaximum, float64* usigPeakPowerMaximum, float64* ehtsigPeakPowerMaximum, float64* ehtstfPeakPowerMaximum, float64* ehtltfPeakPowerMaximum)
+{
+  return RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11be(instrumentHandle, selectorString, timeout, rlsigPeakPowerMaximum, usigPeakPowerMaximum, ehtsigPeakPowerMaximum, ehtstfPeakPowerMaximum, ehtltfPeakPowerMaximum);
 }
 
 int32 OFDMModAccFetchPreamblePeakPowers80211n(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* htsigPeakPowerMaximum, float64* htstfPeakPowerMaximum, float64* htdltfPeakPowerMaximum, float64* hteltfPeakPowerMaximum)

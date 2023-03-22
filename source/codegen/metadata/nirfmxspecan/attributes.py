@@ -450,6 +450,17 @@ attributes = {
         'name': 'ACP_NOISE_CALIBRATION_MODE',
         'type': 'int32'
     },
+    1052738: {
+        'access': 'read-write',
+        'enum': 'AcpDetectorType',
+        'name': 'ACP_DETECTOR_TYPE',
+        'type': 'int32'
+    },
+    1052739: {
+        'access': 'read-write',
+        'name': 'ACP_DETECTOR_POINTS',
+        'type': 'int32'
+    },
     1056768: {
         'access': 'read-write',
         'name': 'CCDF_MEASUREMENT_ENABLED',
@@ -645,6 +656,12 @@ attributes = {
         'name': 'CHP_SWEEP_TIME_INTERVAL',
         'type': 'float64'
     },
+    1060883: {
+        'access': 'read-write',
+        'enum': 'ChpDetectorType',
+        'name': 'CHP_DETECTOR_TYPE',
+        'type': 'int32'
+    },
     1060884: {
         'access': 'read-write',
         'name': 'CHP_ALL_TRACES_ENABLED',
@@ -740,6 +757,11 @@ attributes = {
         'access': 'read-write',
         'enum': 'ChpNoiseCalibrationMode',
         'name': 'CHP_NOISE_CALIBRATION_MODE',
+        'type': 'int32'
+    },
+    1060902: {
+        'access': 'read-write',
+        'name': 'CHP_DETECTOR_POINTS',
         'type': 'int32'
     },
     1064960: {
@@ -3352,6 +3374,17 @@ attributes = {
         'access': 'read-write',
         'name': 'NF_FREQUENCY_CONVERTER_IMAGE_REJECTION',
         'type': 'float64'
+    },
+    1179713: {
+        'access': 'read-write',
+        'enum': 'NFYFactorNoiseSourceType',
+        'name': 'NF_Y_FACTOR_NOISE_SOURCE_TYPE',
+        'type': 'int32'
+    },
+    1179714: {
+        'access': 'read-write',
+        'name': 'NF_Y_FACTOR_NOISE_SOURCE_RF_SIGNAL_GENERATOR_PORT',
+        'type': 'char[]'
     },
     1245184: {
         'access': 'read-write',

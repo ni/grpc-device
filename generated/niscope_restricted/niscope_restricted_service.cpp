@@ -78,7 +78,7 @@ namespace niscope_restricted_grpc {
   NiScopeRestrictedFeatureToggles::NiScopeRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("niscope_restricted", CodeReadiness::kRestrictedRelease))
+        feature_toggles.is_feature_enabled("niscope_restricted", CodeReadiness::kRelease))
   {
   }
 } // namespace niscope_restricted_grpc

@@ -87,6 +87,7 @@ attributes = {
     },
     10485777: {
         'access': 'read-write',
+        'enum': 'Standard',
         'name': 'AUTO_DETECT_SIGNAL_DETECTED_STANDARD',
         'type': 'int32'
     },
@@ -1560,6 +1561,71 @@ attributes = {
         'enum': 'OfdmModAccPhaseRotationCoefficient3',
         'name': 'OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_3',
         'type': 'int32'
+    },
+    10502331: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_L_SIG_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    10502332: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_SIG_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    10502333: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_SIG_B_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    10502334: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_U_SIG_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    10502335: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_EHT_SIG_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    10502336: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_U_SIG_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502337: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_U_SIG_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
+    10502338: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_EHT_SIG_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502339: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_EHT_SIG_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
+    10502340: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_EHT_STF_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502341: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_EHT_STF_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
+    10502342: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_EHT_LTF_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502343: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_EHT_LTF_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
     },
     10506240: {
         'access': 'read-write',
