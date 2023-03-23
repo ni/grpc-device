@@ -65,9 +65,6 @@ if len(sys.argv) >= 4:
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfmxtdscdma.NiRFmxTDSCDMAStub(channel)
 
-# Maximum size of an error message
-MAX_NUMBER_OF_USERS = 16
-
 
 def check_for_warning(response, instrument):
     """Print to console if the status indicates a warning."""
@@ -157,7 +154,7 @@ try:
             instrument=instr,
             selector_string="",
             midamble_auto_detection_mode=nirfmxtdscdma_types.MIDAMBLE_AUTO_DETECTION_MODE_MIDAMBLE_SHIFT,
-            maximum_number_of_users=MAX_NUMBER_OF_USERS,
+            maximum_number_of_users=16,
             midamble_shift=8,
         )
     )

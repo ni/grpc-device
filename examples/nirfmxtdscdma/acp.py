@@ -69,7 +69,6 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfmxtdscdma.NiRFmxTDSCDMAStub(channel)
 
 
-# Maximum size of an error message
 NUMBER_OF_OFFSETS = 2
 
 
