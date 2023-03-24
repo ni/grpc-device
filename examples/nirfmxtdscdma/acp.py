@@ -67,6 +67,7 @@ if len(sys.argv) >= 4:
 # Create a gRPC channel + client.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfmxtdscdma.NiRFmxTDSCDMAStub(channel)
+instr = None
 
 
 NUMBER_OF_OFFSETS = 2

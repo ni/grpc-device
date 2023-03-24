@@ -64,6 +64,7 @@ if len(sys.argv) >= 4:
 # Create a gRPC channel + client.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfmxtdscdma.NiRFmxTDSCDMAStub(channel)
+instr = None
 
 
 def check_for_warning(response, instrument):
