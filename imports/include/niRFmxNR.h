@@ -240,6 +240,8 @@
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PTRS_RMS_EVM_MEAN                                 0x00904048
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PTRS_PEAK_EVM_MAXIMUM                             0x00904049
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_DATA_TRANSIENT_RMS_EVM_MEAN                       0x009040a6
+#define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_MAXIMUM                         0x009040a7
+#define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_SLOT_INDEX                      0x009040a8
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN                                 0x00904055
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN                                0x00904056
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN                                0x00904057
@@ -2704,6 +2706,17 @@ int32 __stdcall RFmxNR_ModAccFetchPDSCHDataConstellationTraceSplit(
    float64 timeout,
    float32 I[],
    float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPUSCHPhaseOffsetTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 PUSCHPhaseOffset[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5846,6 +5859,18 @@ int32 __stdcall RFmxNR_ModAccGetResultsPUSCHDataTransientRMSEVMMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPUSCHPeakPhaseOffsetMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPUSCHPeakPhaseOffsetSlotIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
 );
 
 int32 __stdcall RFmxNR_ModAccGetResultsPDSCHQPSKRMSEVMMean(

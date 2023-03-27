@@ -149,6 +149,7 @@ service NiRFmxNR {
   rpc ModAccFetchPUSCHDataConstellationTrace(ModAccFetchPUSCHDataConstellationTraceRequest) returns (ModAccFetchPUSCHDataConstellationTraceResponse);
   rpc ModAccFetchPUSCHDemodulatedBits(ModAccFetchPUSCHDemodulatedBitsRequest) returns (ModAccFetchPUSCHDemodulatedBitsResponse);
   rpc ModAccFetchPUSCHPTRSConstellationTrace(ModAccFetchPUSCHPTRSConstellationTraceRequest) returns (ModAccFetchPUSCHPTRSConstellationTraceResponse);
+  rpc ModAccFetchPUSCHPhaseOffsetTrace(ModAccFetchPUSCHPhaseOffsetTraceRequest) returns (ModAccFetchPUSCHPhaseOffsetTraceResponse);
   rpc ModAccFetchPeakEVMPerSlotMaximumTrace(ModAccFetchPeakEVMPerSlotMaximumTraceRequest) returns (ModAccFetchPeakEVMPerSlotMaximumTraceResponse);
   rpc ModAccFetchPeakEVMPerSubcarrierMaximumTrace(ModAccFetchPeakEVMPerSubcarrierMaximumTraceRequest) returns (ModAccFetchPeakEVMPerSubcarrierMaximumTraceResponse);
   rpc ModAccFetchPeakEVMPerSymbolMaximumTrace(ModAccFetchPeakEVMPerSymbolMaximumTraceRequest) returns (ModAccFetchPeakEVMPerSymbolMaximumTraceResponse);
@@ -587,6 +588,8 @@ enum NiRFmxNRAttribute {
   NIRFMXNR_ATTRIBUTE_MODACC_TRANSIENT_PERIOD = 9453732;
   NIRFMXNR_ATTRIBUTE_MODACC_TRANSIENT_POWER_CHANGE_THRESHOLD = 9453733;
   NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_DATA_TRANSIENT_RMS_EVM_MEAN = 9453734;
+  NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_MAXIMUM = 9453735;
+  NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_SLOT_INDEX = 9453736;
   NIRFMXNR_ATTRIBUTE_OBW_MEASUREMENT_ENABLED = 9461760;
   NIRFMXNR_ATTRIBUTE_OBW_SPAN = 9461763;
   NIRFMXNR_ATTRIBUTE_OBW_RBW_FILTER_AUTO_BANDWIDTH = 9461766;
@@ -2993,6 +2996,20 @@ message ModAccFetchPUSCHPTRSConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 pusch_ptrs_constellation = 2;
   int32 actual_array_size = 3;
+}
+
+message ModAccFetchPUSCHPhaseOffsetTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPUSCHPhaseOffsetTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float pusch_phase_offset = 4;
+  int32 actual_array_size = 5;
 }
 
 message ModAccFetchPeakEVMPerSlotMaximumTraceRequest {

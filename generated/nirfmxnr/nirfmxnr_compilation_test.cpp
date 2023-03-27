@@ -667,6 +667,11 @@ int32 ModAccFetchPUSCHPTRSConstellationTrace(niRFmxInstrHandle instrumentHandle,
   return RFmxNR_ModAccFetchPUSCHPTRSConstellationTrace(instrumentHandle, selectorString, timeout, puschptrsConstellation, arraySize, actualArraySize);
 }
 
+int32 ModAccFetchPUSCHPhaseOffsetTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 puschPhaseOffset[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxNR_ModAccFetchPUSCHPhaseOffsetTrace(instrumentHandle, selectorString, timeout, x0, dx, puschPhaseOffset, arraySize, actualArraySize);
+}
+
 int32 ModAccFetchPeakEVMPerSlotMaximumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 peakEVMPerSlotMaximum[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxNR_ModAccFetchPeakEVMPerSlotMaximumTrace(instrumentHandle, selectorString, timeout, x0, dx, peakEVMPerSlotMaximum, arraySize, actualArraySize);
