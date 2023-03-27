@@ -5132,6 +5132,51 @@ namespace nirfmxnr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxNRService::ModAccFetchPUSCHPhaseOffsetTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHPhaseOffsetTraceRequest* request, ModAccFetchPUSCHPhaseOffsetTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPUSCHPhaseOffsetTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_pusch_phase_offset()->Resize(actual_array_size, 0);
+        float32* pusch_phase_offset = response->mutable_pusch_phase_offset()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPUSCHPhaseOffsetTrace(instrument, selector_string, timeout, &x0, &dx, pusch_phase_offset, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_pusch_phase_offset()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxNRService::ModAccFetchPeakEVMPerSlotMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSlotMaximumTraceRequest* request, ModAccFetchPeakEVMPerSlotMaximumTraceResponse* response)
   {
     if (context->IsCancelled()) {

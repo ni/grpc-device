@@ -153,6 +153,7 @@ NiRFmxNRLibrary::NiRFmxNRLibrary() : shared_library_(kLibraryName)
   function_pointers_.ModAccFetchPUSCHDataConstellationTrace = reinterpret_cast<ModAccFetchPUSCHDataConstellationTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchPUSCHDataConstellationTrace"));
   function_pointers_.ModAccFetchPUSCHDemodulatedBits = reinterpret_cast<ModAccFetchPUSCHDemodulatedBitsPtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchPUSCHDemodulatedBits"));
   function_pointers_.ModAccFetchPUSCHPTRSConstellationTrace = reinterpret_cast<ModAccFetchPUSCHPTRSConstellationTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchPUSCHPTRSConstellationTrace"));
+  function_pointers_.ModAccFetchPUSCHPhaseOffsetTrace = reinterpret_cast<ModAccFetchPUSCHPhaseOffsetTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchPUSCHPhaseOffsetTrace"));
   function_pointers_.ModAccFetchPeakEVMPerSlotMaximumTrace = reinterpret_cast<ModAccFetchPeakEVMPerSlotMaximumTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchPeakEVMPerSlotMaximumTrace"));
   function_pointers_.ModAccFetchPeakEVMPerSubcarrierMaximumTrace = reinterpret_cast<ModAccFetchPeakEVMPerSubcarrierMaximumTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchPeakEVMPerSubcarrierMaximumTrace"));
   function_pointers_.ModAccFetchPeakEVMPerSymbolMaximumTrace = reinterpret_cast<ModAccFetchPeakEVMPerSymbolMaximumTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchPeakEVMPerSymbolMaximumTrace"));
@@ -1307,6 +1308,14 @@ int32 NiRFmxNRLibrary::ModAccFetchPUSCHPTRSConstellationTrace(niRFmxInstrHandle 
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPUSCHPTRSConstellationTrace.");
   }
   return function_pointers_.ModAccFetchPUSCHPTRSConstellationTrace(instrumentHandle, selectorString, timeout, puschptrsConstellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxNRLibrary::ModAccFetchPUSCHPhaseOffsetTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 puschPhaseOffset[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchPUSCHPhaseOffsetTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPUSCHPhaseOffsetTrace.");
+  }
+  return function_pointers_.ModAccFetchPUSCHPhaseOffsetTrace(instrumentHandle, selectorString, timeout, x0, dx, puschPhaseOffset, arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPeakEVMPerSlotMaximumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 peakEVMPerSlotMaximum[], int32 arraySize, int32* actualArraySize)
