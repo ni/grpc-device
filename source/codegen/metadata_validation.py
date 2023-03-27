@@ -128,7 +128,6 @@ FUNCTION_SCHEMA = Schema(
     {
         "parameters": [PARAM_SCHEMA],
         "returns": str,
-        "calling_convention": str,
         Optional("cname"): str,
         Optional("codegen_method"): And(
             str,
@@ -157,6 +156,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("status_expression"): str,
         Optional("include_in_client"): bool,
         Optional("exclude_from_get_last_error"): bool,
+        Optional("calling_convention"): str,
         Optional("python_class_name"): str,
         Optional("handle_parameter"): dict,
         Optional("adaptor_parameter"): dict,
