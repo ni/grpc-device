@@ -1855,6 +1855,16 @@ attributes = {
         'name': 'MODACC_RESULTS_PUSCH_DATA_TRANSIENT_RMS_EVM_MEAN',
         'type': 'float64'
     },
+    9453735: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_MAXIMUM',
+        'type': 'float64'
+    },
+    9453736: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_SLOT_INDEX',
+        'type': 'int32'
+    },
     9461760: {
         'access': 'read-write',
         'name': 'OBW_MEASUREMENT_ENABLED',

@@ -2695,6 +2695,25 @@ mod_acc_fetch_puschptrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPUSCHPhaseOffsetTraceResponse
+mod_acc_fetch_pusch_phase_offset_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPUSCHPhaseOffsetTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPUSCHPhaseOffsetTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPUSCHPhaseOffsetTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPeakEVMPerSlotMaximumTraceResponse
 mod_acc_fetch_peak_evm_per_slot_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

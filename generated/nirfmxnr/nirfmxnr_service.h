@@ -175,6 +175,7 @@ public:
   ::grpc::Status ModAccFetchPUSCHDataConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHDataConstellationTraceRequest* request, ModAccFetchPUSCHDataConstellationTraceResponse* response) override;
   ::grpc::Status ModAccFetchPUSCHDemodulatedBits(::grpc::ServerContext* context, const ModAccFetchPUSCHDemodulatedBitsRequest* request, ModAccFetchPUSCHDemodulatedBitsResponse* response) override;
   ::grpc::Status ModAccFetchPUSCHPTRSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHPTRSConstellationTraceRequest* request, ModAccFetchPUSCHPTRSConstellationTraceResponse* response) override;
+  ::grpc::Status ModAccFetchPUSCHPhaseOffsetTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHPhaseOffsetTraceRequest* request, ModAccFetchPUSCHPhaseOffsetTraceResponse* response) override;
   ::grpc::Status ModAccFetchPeakEVMPerSlotMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSlotMaximumTraceRequest* request, ModAccFetchPeakEVMPerSlotMaximumTraceResponse* response) override;
   ::grpc::Status ModAccFetchPeakEVMPerSubcarrierMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSubcarrierMaximumTraceRequest* request, ModAccFetchPeakEVMPerSubcarrierMaximumTraceResponse* response) override;
   ::grpc::Status ModAccFetchPeakEVMPerSymbolMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSymbolMaximumTraceRequest* request, ModAccFetchPeakEVMPerSymbolMaximumTraceResponse* response) override;
