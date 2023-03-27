@@ -113,6 +113,14 @@ PARAM_SCHEMA = Schema(
         Optional("linked_params_are_optional"): bool,
         Optional("mapped-enum"): str,
         Optional("is_optional"): bool,
+        Optional("optional"): bool,
+        Optional("ctypes_data_type"): Or(str, None),
+        Optional("has_explicit_buffer_size"): bool,
+        Optional("is_list"): bool,
+        Optional("python_data_type"): str,
+        Optional("python_type_annotation"): str,
+        Optional("python_description"): str,
+        Optional("default"): Or(str, bool, None),
     }
 )
 
@@ -120,6 +128,7 @@ FUNCTION_SCHEMA = Schema(
     {
         "parameters": [PARAM_SCHEMA],
         "returns": str,
+        "calling_convention": str,
         Optional("cname"): str,
         Optional("codegen_method"): And(
             str,
@@ -130,6 +139,7 @@ FUNCTION_SCHEMA = Schema(
                 "CustomCode",
                 "no",
                 "python-only",
+                "grpc-only",
                 "CustomCodeCustomProtoMessage",
             ),
         ),
@@ -147,6 +157,11 @@ FUNCTION_SCHEMA = Schema(
         Optional("status_expression"): str,
         Optional("include_in_client"): bool,
         Optional("exclude_from_get_last_error"): bool,
+        Optional("python_class_name"): str,
+        Optional("handle_parameter"): dict,
+        Optional("adaptor_parameter"): dict,
+        Optional("is_python_factory"): bool,
+        Optional("python_description"): str,
     }
 )
 

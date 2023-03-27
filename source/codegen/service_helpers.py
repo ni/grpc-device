@@ -327,7 +327,7 @@ def filter_api_functions(functions, only_mockable_functions=True):
 
 def filter_proto_rpc_functions_to_generate(functions):
     """Return function metadata only for functions to include for generating proto rpc methods."""
-    functions_for_code_gen = {"public"}
+    functions_for_code_gen = {"public", "grpc-only"}
     return [
         name
         for name, function in functions.items()
