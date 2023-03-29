@@ -120,7 +120,7 @@ PARAM_SCHEMA = Schema(
         Optional("python_data_type"): str,
         Optional("python_type_annotation"): str,
         Optional("python_description"): str,
-        Optional("default"): Or(str, bool, None),
+        Optional("python_default_value"): Or(str, bool, int, float, None),
     }
 )
 
