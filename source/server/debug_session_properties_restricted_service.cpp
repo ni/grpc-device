@@ -12,7 +12,7 @@ DebugSessionPropertiesRestrictedFeatureToggles::DebugSessionPropertiesRestricted
 }
 
 DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService(::nidevice_grpc::SysCfgLibraryInterface* library)
-    : SysCfgSessionHandler(library)
+    : SysCfgResourceAccessor(library)
 {
 }
 
@@ -66,64 +66,6 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   return set_bool_property(context, kDebugSessionServerOutOfProcessPropertyId, request->device_id(), request->out_of_process());
 }
 
-::grpc::Status DebugSessionPropertiesRestrictedService::access_syscfg_resource_by_device_id_filter(
-  ::grpc::ServerContext* context,
-  const nidevice_restricted_grpc::DeviceId& device_id,
-  std::function<NISysCfgStatus(nidevice_grpc::SysCfgLibraryInterface*, NISysCfgResourceHandle, bool*)> syscfg_resource_action_func)
-{
-  NISysCfgStatus status = NISysCfg_OK;
-  NISysCfgSessionHandle session = NULL;
-  NISysCfgFilterHandle filter = NULL;
-  NISysCfgEnumResourceHandle resources_handle = NULL;
-  NISysCfgResourceHandle resource = NULL;
-  bool no_hardware_found = false;
-
-  try {
-    auto library = get_syscfg_library_interface();
-    if (NISysCfg_Succeeded(status = open_or_get_localhost_syscfg_session(&session))) {
-      if (NISysCfg_Succeeded(status = library->CreateFilter(session, &filter))) {
-        library->SetFilterProperty(filter, NISysCfgFilterPropertyIsDevice, NISysCfgBoolTrue);
-        library->SetFilterProperty(filter, NISysCfgFilterPropertyUserAlias, device_id.name().c_str());
-        library->SetFilterProperty(filter, NISysCfgFilterPropertySerialNumber, device_id.serial_number().c_str());
-        library->SetFilterProperty(filter, NISysCfgFilterPropertyProductId, device_id.product_id());
-        if (NISysCfg_Succeeded(status = library->FindHardware(session, NISysCfgFilterModeMatchValuesAll, filter, NULL, &resources_handle))) {
-          if ((status = library->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
-            bool save_changes = false;
-            if (NISysCfg_Succeeded(status = syscfg_resource_action_func(library, resource, &save_changes))) {
-              if (save_changes) {
-                NISysCfgBool changes_require_restart = NISysCfgBoolFalse;
-                char* detailed_changes = nullptr;
-                status = library->SaveResourceChanges(resource, &changes_require_restart, &detailed_changes);
-                library->FreeDetailedString(detailed_changes);
-              }
-            }
-            library->CloseHandle(resource);
-          }
-          else{
-            no_hardware_found = true;
-          }
-          library->CloseHandle(resources_handle);
-        }
-        library->CloseHandle(filter);
-      }
-    }
-  }
-  catch (nidevice_grpc::NonDriverException& ex) {
-    return ex.GetStatus();
-  }
-
-  if (NISysCfg_Failed(status)) {
-    std::string description(kDebugSessionPropertyAccessFailedMessage);
-    return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
-  }
-
-  if (no_hardware_found) {
-    return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, kDebugSessionPropertyAccessFailedMessage);
-  }
-
-  return ::grpc::Status::OK;
-}
-
 ::grpc::Status DebugSessionPropertiesRestrictedService::get_bool_property(
   ::grpc::ServerContext* context,
   NISysCfgResourceProperty property_id,
@@ -136,7 +78,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
     *value = syscfg_value != NISysCfgBoolFalse;
     return status;
   };
-  return access_syscfg_resource_by_device_id_filter(context, device_id, get_bool_lambda);
+  return access_syscfg_resource_by_device_id_filter(context, device_id, kDebugSessionPropertyAccessFailedMessage, get_bool_lambda);
 }
 
 ::grpc::Status DebugSessionPropertiesRestrictedService::get_uint_property(
@@ -148,7 +90,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   auto get_uint_lambda = [&] (nidevice_grpc::SysCfgLibraryInterface* library, NISysCfgResourceHandle resource, bool* save_changes) {
       return library->GetResourceProperty(resource, property_id, value);
   };
-  return access_syscfg_resource_by_device_id_filter(context, device_id, get_uint_lambda);
+  return access_syscfg_resource_by_device_id_filter(context, device_id, kDebugSessionPropertyAccessFailedMessage, get_uint_lambda);
 }
 
 ::grpc::Status DebugSessionPropertiesRestrictedService::set_bool_property(
@@ -162,7 +104,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
     *save_changes = true;
     return library->SetResourceProperty(resource, property_id, syscfg_value);
   };
-  return access_syscfg_resource_by_device_id_filter(context, device_id, set_bool_lambda);
+  return access_syscfg_resource_by_device_id_filter(context, device_id, kDebugSessionPropertyAccessFailedMessage, set_bool_lambda);
 }
 
 ::grpc::Status DebugSessionPropertiesRestrictedService::set_uint_property(
@@ -175,7 +117,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
     *save_changes = true;
     return library->SetResourceProperty(resource, property_id, value);
   };
-  return access_syscfg_resource_by_device_id_filter(context, device_id, set_uint_lambda);
+  return access_syscfg_resource_by_device_id_filter(context, device_id, kDebugSessionPropertyAccessFailedMessage, set_uint_lambda);
 }
 
 }  // namespace nidevice_restricted_grpc
