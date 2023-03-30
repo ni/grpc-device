@@ -34,17 +34,17 @@ const NISysCfgTimestampUTC kIntCalLastTime1 = {{2}};
 const NISysCfgTimestampUTC kIntCalLastTime2 = {{3}};
 const NISysCfgTimestampUTC kIntCalLastTime3 = {{4}};
 
-static google::protobuf::Timestamp convertSysCfgTimestampToProtobufTimestamp(const NISysCfgTimestampUTC& sysCfgTimestamp)
+static google::protobuf::Timestamp convert_syscfg_timestamp_to_protobuf_timestamp(const NISysCfgTimestampUTC& syscfg_timestamp)
 {
-  google::protobuf::Timestamp protobufTimestamp;
-  nidevice_grpc::converters::convert_to_grpc(*reinterpret_cast<const CVIAbsoluteTime*>(&sysCfgTimestamp), &protobufTimestamp);
-  return protobufTimestamp;
+  google::protobuf::Timestamp protobuf_timestamp;
+  nidevice_grpc::converters::convert_to_grpc(*reinterpret_cast<const CVIAbsoluteTime*>(&syscfg_timestamp), &protobuf_timestamp);
+  return protobuf_timestamp;
 }
 
-const google::protobuf::Timestamp kIntCalLastTimeProtobufTimestamp0 = convertSysCfgTimestampToProtobufTimestamp(kIntCalLastTime0);
-const google::protobuf::Timestamp kIntCalLastTimeProtobufTimestamp1 = convertSysCfgTimestampToProtobufTimestamp(kIntCalLastTime1);
-const google::protobuf::Timestamp kIntCalLastTimeProtobufTimestamp2 = convertSysCfgTimestampToProtobufTimestamp(kIntCalLastTime2);
-const google::protobuf::Timestamp kIntCalLastTimeProtobufTimestamp3 = convertSysCfgTimestampToProtobufTimestamp(kIntCalLastTime3);
+const google::protobuf::Timestamp kIntCalLastTimeProtobufTimestamp0 = convert_syscfg_timestamp_to_protobuf_timestamp(kIntCalLastTime0);
+const google::protobuf::Timestamp kIntCalLastTimeProtobufTimestamp1 = convert_syscfg_timestamp_to_protobuf_timestamp(kIntCalLastTime1);
+const google::protobuf::Timestamp kIntCalLastTimeProtobufTimestamp2 = convert_syscfg_timestamp_to_protobuf_timestamp(kIntCalLastTime2);
+const google::protobuf::Timestamp kIntCalLastTimeProtobufTimestamp3 = convert_syscfg_timestamp_to_protobuf_timestamp(kIntCalLastTime3);
 
 const double kExtCalLastTemp0 = 45.6;
 const double kExtCalLastTemp1 = 56.7;
@@ -52,21 +52,21 @@ const double kExtCalLastTemp1 = 56.7;
 const NISysCfgTimestampUTC kExtCalLastTime0 = {{5}};
 const NISysCfgTimestampUTC kExtCalLastTime1 = {{6}};
 
-const google::protobuf::Timestamp kExtCalLastTimeProtobufTimestamp0 = convertSysCfgTimestampToProtobufTimestamp(kExtCalLastTime0);
-const google::protobuf::Timestamp kExtCalLastTimeProtobufTimestamp1 = convertSysCfgTimestampToProtobufTimestamp(kExtCalLastTime1);
+const google::protobuf::Timestamp kExtCalLastTimeProtobufTimestamp0 = convert_syscfg_timestamp_to_protobuf_timestamp(kExtCalLastTime0);
+const google::protobuf::Timestamp kExtCalLastTimeProtobufTimestamp1 = convert_syscfg_timestamp_to_protobuf_timestamp(kExtCalLastTime1);
 
 const NISysCfgTimestampUTC kNextCalTime0 = {{7}};
 const NISysCfgTimestampUTC kNextCalTime1 = {{8}};
 
-const google::protobuf::Timestamp kNextCalTimeProtobufTimestamp0 = convertSysCfgTimestampToProtobufTimestamp(kNextCalTime0);
-const google::protobuf::Timestamp kNextCalTimeProtobufTimestamp1 = convertSysCfgTimestampToProtobufTimestamp(kNextCalTime1);
+const google::protobuf::Timestamp kNextCalTimeProtobufTimestamp0 = convert_syscfg_timestamp_to_protobuf_timestamp(kNextCalTime0);
+const google::protobuf::Timestamp kNextCalTimeProtobufTimestamp1 = convert_syscfg_timestamp_to_protobuf_timestamp(kNextCalTime1);
 
 ACTION_P(CopyStringToArg3, value)
 {
-  strcpy_s(static_cast<char*>(arg3), NISYSCFG_SIMPLE_STRING_LENGTH, value);
+  strcpy(static_cast<char*>(arg3), value);
 }
 
-void ConfigMockLibraryCalPropsDoNotExist(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
+static void configure_mock_library_calibration_properties_do_not_exist(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
 { 
   EXPECT_CALL(*mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK));
@@ -90,14 +90,16 @@ void ConfigMockLibraryCalPropsDoNotExist(NiceMock<ni::tests::utilities::SysCfgMo
       .WillOnce(Return(NISysCfg_PropDoesNotExist));
 }
 
-void ConfigMockLibraryNoCalSupport(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
+static void configure_mock_library_no_calibration_support(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
 { 
+  unsigned int number_of_internal_calibration_regions = 0;
+
   EXPECT_CALL(*mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK));
   EXPECT_CALL(*mock_library, GetResourceProperty(_, NISysCfgResourcePropertySupportsInternalCalibration, _))
       .WillOnce(DoAll(CastAndSetArgPointee<2>(NISysCfgBoolFalse), Return(NISysCfg_OK)));
   EXPECT_CALL(*mock_library, GetResourceProperty(_, NISysCfgResourcePropertyNumberOfInternalCalibrationDetails, _))
-      .WillOnce(DoAll(CastAndSetArgPointee<2>(unsigned int(0)), Return(NISysCfg_OK)));
+      .WillOnce(DoAll(CastAndSetArgPointee<2>(number_of_internal_calibration_regions), Return(NISysCfg_OK)));
   EXPECT_CALL(*mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyInternalCalibrationName, _, _))
       .Times(0);
   EXPECT_CALL(*mock_library, GetResourceIndexedProperty(_, NISysCfgIndexedPropertyInternalCalibrationLastTemp, _, _))
@@ -114,38 +116,38 @@ void ConfigMockLibraryNoCalSupport(NiceMock<ni::tests::utilities::SysCfgMockLibr
       .WillOnce(Return(NISysCfg_PropDoesNotExist));
 }
 
-void ConfigMockLibraryNoIndexedProps(
+static void configure_mock_library_no_indexed_properties(
   NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library,
-  NISysCfgBool intCalSupported,
-  unsigned int numberOfIntCalRegions,
-  NISysCfgBool extCalSupported,
-  double extCalLastTemp,
-  NISysCfgTimestampUTC extCalLastTime,
-  NISysCfgTimestampUTC nextCalTime)
+  NISysCfgBool internal_calibration_supported,
+  unsigned int number_of_internal_calibration_regions,
+  NISysCfgBool external_calibration_supported,
+  double external_calibration_last_temperature,
+  NISysCfgTimestampUTC external_calibration_last_time,
+  NISysCfgTimestampUTC next_calibration_time)
 { 
   EXPECT_CALL(*mock_library, NextResource)
       .WillOnce(Return(NISysCfg_OK));
   EXPECT_CALL(*mock_library, GetResourceProperty(_, NISysCfgResourcePropertySupportsInternalCalibration, _))
-      .WillOnce(DoAll(CastAndSetArgPointee<2>(intCalSupported), Return(NISysCfg_OK)));
+      .WillOnce(DoAll(CastAndSetArgPointee<2>(internal_calibration_supported), Return(NISysCfg_OK)));
   EXPECT_CALL(*mock_library, GetResourceProperty(_, NISysCfgResourcePropertyNumberOfInternalCalibrationDetails, _))
-      .WillOnce(DoAll(CastAndSetArgPointee<2>(numberOfIntCalRegions), Return(NISysCfg_OK)));
+      .WillOnce(DoAll(CastAndSetArgPointee<2>(number_of_internal_calibration_regions), Return(NISysCfg_OK)));
   EXPECT_CALL(*mock_library, GetResourceProperty(_, NISysCfgResourcePropertySupportsExternalCalibration, _))
-      .WillOnce(DoAll(CastAndSetArgPointee<2>(extCalSupported), Return(NISysCfg_OK)));
+      .WillOnce(DoAll(CastAndSetArgPointee<2>(external_calibration_supported), Return(NISysCfg_OK)));
   EXPECT_CALL(*mock_library, GetResourceProperty(_, NISysCfgResourcePropertyExternalCalibrationLastTemp, _))
-      .WillOnce(DoAll(CastAndSetArgPointee<2>(extCalLastTemp), Return(NISysCfg_OK)));
+      .WillOnce(DoAll(CastAndSetArgPointee<2>(external_calibration_last_temperature), Return(NISysCfg_OK)));
   EXPECT_CALL(*mock_library, GetResourceProperty(_, NISysCfgResourcePropertyExternalCalibrationLastTime, _))
-      .WillOnce(DoAll(CastAndSetArgPointee<2>(extCalLastTime), Return(NISysCfg_OK)));
+      .WillOnce(DoAll(CastAndSetArgPointee<2>(external_calibration_last_time), Return(NISysCfg_OK)));
   EXPECT_CALL(*mock_library, GetResourceProperty(_, NISysCfgResourcePropertyRecommendedNextCalibrationTime, _))
-      .WillOnce(DoAll(CastAndSetArgPointee<2>(nextCalTime), Return(NISysCfg_OK)));
+      .WillOnce(DoAll(CastAndSetArgPointee<2>(next_calibration_time), Return(NISysCfg_OK)));
 }
 
-void ConfigMockLibraryOneIntCalRegion(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
+static void configure_mock_library_one_internal_calibration_region(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
 {
-  ConfigMockLibraryNoIndexedProps(
+  configure_mock_library_no_indexed_properties(
     mock_library,
-    NISysCfgBoolTrue, //intCalSupported
-    1, //numberOfIntCalRegions
-    NISysCfgBoolTrue, //extCalSupported
+    NISysCfgBoolTrue, //internal_calibration_supported
+    1, //number_of_internal_calibration_regions
+    NISysCfgBoolTrue, //external_calibration_supported
     kExtCalLastTemp0,
     kExtCalLastTime0,
     kNextCalTime0);
@@ -158,13 +160,13 @@ void ConfigMockLibraryOneIntCalRegion(NiceMock<ni::tests::utilities::SysCfgMockL
       .WillOnce(DoAll(CastAndSetArgPointee<3>(kIntCalLastTime0), Return(NISysCfg_OK)));
 }
 
-void ConfigMockLibraryThreeIntCalRegions(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
+static void configure_mock_library_three_internal_calibration_regions(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
 {
-  ConfigMockLibraryNoIndexedProps(
+  configure_mock_library_no_indexed_properties(
     mock_library,
-    NISysCfgBoolTrue, //intCalSupported
-    3, //numberOfIntCalRegions
-    NISysCfgBoolTrue, //extCalSupported
+    NISysCfgBoolTrue, //internal_calibration_supported
+    3, //number_of_internal_calibration_regions
+    NISysCfgBoolTrue, //external_calibration_supported
     kExtCalLastTemp1,
     kExtCalLastTime1,
     kNextCalTime1);
@@ -189,13 +191,13 @@ void ConfigMockLibraryThreeIntCalRegions(NiceMock<ni::tests::utilities::SysCfgMo
       .WillOnce(DoAll(CastAndSetArgPointee<3>(kIntCalLastTime3), Return(NISysCfg_OK)));
 }
 
-void ConfigMockLibraryThreeIntCalRegionsIndexedPropsDoNotExist(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
+static void configure_mock_library_three_internal_calibration_regions_indexed_properties_do_not_exist(NiceMock<ni::tests::utilities::SysCfgMockLibrary>* mock_library)
 {
-  ConfigMockLibraryNoIndexedProps(
+  configure_mock_library_no_indexed_properties(
     mock_library,
-    NISysCfgBoolTrue, //intCalSupported
-    3, //numberOfIntCalRegions
-    NISysCfgBoolTrue, //extCalSupported
+    NISysCfgBoolTrue, //internal_calibration_supported
+    3, //number_of_internal_calibration_regions
+    NISysCfgBoolTrue, //external_calibration_supported
     kExtCalLastTemp1,
     kExtCalLastTime1,
     kNextCalTime1);
@@ -215,7 +217,7 @@ TEST(CalibrationOperationsTests, SupportsIntCal_GetCalibrationInformation_Respon
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -231,7 +233,7 @@ TEST(CalibrationOperationsTests, DoesNotSupportIntCal_GetCalibrationInformation_
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryNoCalSupport(&mock_library);
+  configure_mock_library_no_calibration_support(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -247,7 +249,7 @@ TEST(CalibrationOperationsTests, SupportsIntCalPropDoesNotExist_GetCalibrationIn
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryCalPropsDoNotExist(&mock_library);
+  configure_mock_library_calibration_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -262,7 +264,7 @@ TEST(CalibrationOperationsTests, NoIntCalRegions_GetCalibrationInformation_Respo
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryNoCalSupport(&mock_library);
+  configure_mock_library_no_calibration_support(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -278,7 +280,7 @@ TEST(CalibrationOperationsTests, OneIntCalRegion_GetCalibrationInformation_Respo
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -294,7 +296,7 @@ TEST(CalibrationOperationsTests, ThreeIntCalRegions_GetCalibrationInformation_Re
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryThreeIntCalRegions(&mock_library);
+  configure_mock_library_three_internal_calibration_regions(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -310,7 +312,7 @@ TEST(CalibrationOperationsTests, NumberOfIntCalDetailsPropDoesNotExist_GetCalibr
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryCalPropsDoNotExist(&mock_library);
+  configure_mock_library_calibration_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -325,7 +327,7 @@ TEST(CalibrationOperationsTests, OneIntCalName_GetCalibrationInformation_Respons
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -345,7 +347,7 @@ TEST(CalibrationOperationsTests, ThreeIntCalNames_GetCalibrationInformation_Resp
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryThreeIntCalRegions(&mock_library);
+  configure_mock_library_three_internal_calibration_regions(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -367,7 +369,7 @@ TEST(CalibrationOperationsTests, IntCalNamePropDoesNotExist_GetCalibrationInform
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryThreeIntCalRegionsIndexedPropsDoNotExist(&mock_library);
+  configure_mock_library_three_internal_calibration_regions_indexed_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -382,7 +384,7 @@ TEST(CalibrationOperationsTests, OneIntCalLastTemp_GetCalibrationInformation_Res
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -402,7 +404,7 @@ TEST(CalibrationOperationsTests, ThreeIntCalLastTemps_GetCalibrationInformation_
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryThreeIntCalRegions(&mock_library);
+  configure_mock_library_three_internal_calibration_regions(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -424,7 +426,7 @@ TEST(CalibrationOperationsTests, IntCalLastTempPropDoesNotExist_GetCalibrationIn
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryThreeIntCalRegionsIndexedPropsDoNotExist(&mock_library);
+  configure_mock_library_three_internal_calibration_regions_indexed_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -439,7 +441,7 @@ TEST(CalibrationOperationsTests, OneIntCalLastTime_GetCalibrationInformation_Res
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -459,7 +461,7 @@ TEST(CalibrationOperationsTests, ThreeIntCalLastTimes_GetCalibrationInformation_
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryThreeIntCalRegions(&mock_library);
+  configure_mock_library_three_internal_calibration_regions(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -481,7 +483,7 @@ TEST(CalibrationOperationsTests, IntCalLastTimePropDoesNotExist_GetCalibrationIn
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryThreeIntCalRegionsIndexedPropsDoNotExist(&mock_library);
+  configure_mock_library_three_internal_calibration_regions_indexed_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -496,7 +498,7 @@ TEST(CalibrationOperationsTests, SupportsExtCal_GetCalibrationInformation_Respon
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -512,7 +514,7 @@ TEST(CalibrationOperationsTests, DoesNotSupportExtCal_GetCalibrationInformation_
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryNoCalSupport(&mock_library);
+  configure_mock_library_no_calibration_support(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -528,7 +530,7 @@ TEST(CalibrationOperationsTests, SupportsExtCalPropDoesNotExist_GetCalibrationIn
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryCalPropsDoNotExist(&mock_library);
+  configure_mock_library_calibration_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -543,7 +545,7 @@ TEST(CalibrationOperationsTests, ExtCalLastTempPropExists_GetCalibrationInformat
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -559,7 +561,7 @@ TEST(CalibrationOperationsTests, ExtCalLastTempPropDoesNotExist_GetCalibrationIn
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryCalPropsDoNotExist(&mock_library);
+  configure_mock_library_calibration_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -574,7 +576,7 @@ TEST(CalibrationOperationsTests, ExtCalLastTimePropExists_GetCalibrationInformat
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -590,7 +592,7 @@ TEST(CalibrationOperationsTests, ExtCalLastTimePropDoesNotExist_GetCalibrationIn
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryCalPropsDoNotExist(&mock_library);
+  configure_mock_library_calibration_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -605,7 +607,7 @@ TEST(CalibrationOperationsTests, NextCalTimePropExists_GetCalibrationInformation
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryOneIntCalRegion(&mock_library);
+  configure_mock_library_one_internal_calibration_region(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
@@ -621,7 +623,7 @@ TEST(CalibrationOperationsTests, NextCalTimePropDoesNotExist_GetCalibrationInfor
   ::grpc::ServerContext context;
   nidevice_restricted_grpc::GetCalibrationInformationRequest request;
   nidevice_restricted_grpc::GetCalibrationInformationResponse response;
-  ConfigMockLibraryCalPropsDoNotExist(&mock_library);
+  configure_mock_library_calibration_properties_do_not_exist(&mock_library);
 
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
