@@ -54,13 +54,15 @@ struct CastAndSetArgumentPointeeAction {
   A value;
 
   template <typename... Args>
-  void operator()(const Args&... args) const {
+  void operator()(const Args&... args) const
+  {
     *static_cast<A*>(::std::get<N>(std::tie(args...))) = value;
   }
 };
 
 template <size_t N, typename T>
-CastAndSetArgumentPointeeAction<N, T> CastAndSetArgPointee(T value) {
+CastAndSetArgumentPointeeAction<N, T> CastAndSetArgPointee(T value)
+{
   return {std::move(value)};
 }
 
