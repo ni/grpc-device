@@ -64,8 +64,6 @@ def _need_linux_rt_feed_update(metadata_dir: str, changed_files: Set[str]) -> bo
         and not load_metadata(f"{metadata_dir}/{driver}/")["config"].get("linux_rt_support", False)
     ]
     non_rt_driver_changes = set()
-    print(f"\nNon-RT Drivers\n")
-    pprint(non_rt_drivers)
     for non_rt_driver in non_rt_drivers:
         non_rt_driver_changes |= _get_non_rt_driver_changes(non_rt_driver, remaining_changes)
     _print_changed_files("Changes related to drivers not supported on RT:", non_rt_driver_changes)
