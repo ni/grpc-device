@@ -113,7 +113,7 @@ PARAM_SCHEMA = Schema(
         Optional("linked_params_are_optional"): bool,
         Optional("mapped-enum"): str,
         Optional("is_optional"): bool,
-        Optional("optional"): bool,
+        Optional("is_optional_in_python"): bool,
         Optional("ctypes_data_type"): Or(str, None),
         Optional("has_explicit_buffer_size"): bool,
         Optional("is_list"): bool,
