@@ -27,7 +27,7 @@ jobs:
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
-            os: ubuntu-18.04,
+            os: ubuntu-20.04,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "",
             glibc_version: "2_27",
