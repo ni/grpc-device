@@ -26,6 +26,6 @@ message GetCalibrationInformationResponse {
   repeated google.protobuf.Timestamp internal_calibration_last_times = 5;
   optional bool supports_external_calibration = 6;
   optional double external_calibration_last_temperature = 7;
-  optional google.protobuf.Timestamp external_calibration_last_time = 8;
-  optional google.protobuf.Timestamp recommended_next_calibration_time = 9;
+  google.protobuf.Timestamp external_calibration_last_time = 8;
+  google.protobuf.Timestamp recommended_next_calibration_time = 9;
 }
