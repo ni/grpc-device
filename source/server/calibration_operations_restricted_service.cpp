@@ -24,15 +24,14 @@ CalibrationOperationsRestrictedService::CalibrationOperationsRestrictedService(:
   bool supports_internal_calibration = false;
   bool number_of_internal_calibration_details_available = false;
   uint32_t number_of_internal_calibration_details = 0;
-  bool internal_calibration_names_available = false;
-  bool internal_calibration_last_temperatures_available = false;
-  bool internal_calibration_last_times_available = false;
   bool supports_external_calibration_available = false;
   bool supports_external_calibration = false;
   bool external_calibration_last_temperature_available = false;
   double external_calibration_last_temperature = 0.0;
   bool external_calibration_last_time_available = false;
+  google::protobuf::Timestamp external_calibration_last_time;
   bool recommended_next_calibration_time_available = false;
+  google::protobuf::Timestamp recommended_next_calibration_time;
 
   auto status = get_calibration_info(
     context,
@@ -41,41 +40,41 @@ CalibrationOperationsRestrictedService::CalibrationOperationsRestrictedService(:
     &supports_internal_calibration,
     &number_of_internal_calibration_details_available,
     &number_of_internal_calibration_details,
-    &internal_calibration_names_available,
     response->mutable_internal_calibration_names(),
-    &internal_calibration_last_temperatures_available,
     response->mutable_internal_calibration_last_temperatures(),
-    &internal_calibration_last_times_available,
     response->mutable_internal_calibration_last_times(),
     &supports_external_calibration_available,
     &supports_external_calibration,
     &external_calibration_last_temperature_available,
     &external_calibration_last_temperature,
     &external_calibration_last_time_available,
-    response->mutable_external_calibration_last_time(),
+    &external_calibration_last_time,
     &recommended_next_calibration_time_available,
-    response->mutable_recommended_next_calibration_time());
+    &recommended_next_calibration_time);
 
-  response->set_supports_internal_calibration_available(supports_internal_calibration_available);
-  response->set_supports_internal_calibration(supports_internal_calibration);
-  response->set_number_of_internal_calibration_details_available(number_of_internal_calibration_details_available);
-  response->set_number_of_internal_calibration_details(number_of_internal_calibration_details);
-  response->set_internal_calibration_names_available(internal_calibration_names_available);
-  response->set_internal_calibration_last_temperatures_available(internal_calibration_last_temperatures_available);
-  response->set_internal_calibration_last_times_available(internal_calibration_last_times_available);
-  response->set_supports_external_calibration_available(supports_external_calibration_available);
-  response->set_supports_external_calibration(supports_external_calibration);
-  response->set_external_calibration_last_temperature_available(external_calibration_last_temperature_available);
-  response->set_external_calibration_last_temperature(external_calibration_last_temperature);
-  response->set_external_calibration_last_time_available(external_calibration_last_time_available);
-  response->set_recommended_next_calibration_time_available(recommended_next_calibration_time_available);
+  if (supports_internal_calibration_available) {
+    response->set_supports_internal_calibration(supports_internal_calibration);
+  }
+  if (number_of_internal_calibration_details_available) {
+    response->set_number_of_internal_calibration_details(number_of_internal_calibration_details);
+  }
+  if (supports_external_calibration_available) {
+    response->set_supports_external_calibration(supports_external_calibration);
+  }
+  if (external_calibration_last_temperature_available) {
+    response->set_external_calibration_last_temperature(external_calibration_last_temperature);
+  }
+  if (external_calibration_last_time_available) {
+    *response->mutable_external_calibration_last_time() = external_calibration_last_time;
+  }
+  if (recommended_next_calibration_time_available) {
+    *response->mutable_recommended_next_calibration_time() = recommended_next_calibration_time;
+  }
 
   return status;
 }
 
-static void AssignIfAvailable(
-  bool* available,
-  std::function<void()> set_value_func, NISysCfgStatus& status)
+static void AssignIfAvailable(bool* available, std::function<void()> set_value_func, NISysCfgStatus& status)
 {
   if (NISysCfg_Failed(status)) {
     *available = false;
@@ -96,11 +95,8 @@ static void AssignIfAvailable(
   bool* supports_internal_calibration,
   bool* number_of_internal_calibration_details_available,
   uint32_t* number_of_internal_calibration_details,
-  bool* internal_calibration_names_available,
   google::protobuf::RepeatedPtrField<std::string>* internal_calibration_names,
-  bool* internal_calibration_last_temperatures_available,
   google::protobuf::RepeatedField<double>* internal_calibration_last_temperatures,
-  bool* internal_calibration_last_times_available,
   google::protobuf::RepeatedPtrField<google::protobuf::Timestamp>* internal_calibration_last_times,
   bool* supports_external_calibration_available,
   bool* supports_external_calibration,
@@ -146,11 +142,12 @@ static void AssignIfAvailable(
       auto set_internal_calibration_names_func = [&] () {
         internal_calibration_names->Add(syscfg_string);
       };
-      AssignIfAvailable(internal_calibration_names_available, set_internal_calibration_names_func, status);
+      bool internal_calibration_names_available = false;
+      AssignIfAvailable(&internal_calibration_names_available, set_internal_calibration_names_func, status);
       if (NISysCfg_Failed(status)) {
         return status;
       }
-      if (!(*internal_calibration_names_available)) {
+      if (!internal_calibration_names_available) {
         break;
       }
     }
@@ -161,11 +158,12 @@ static void AssignIfAvailable(
       auto set_internal_calibration_last_temperatures_func = [&] () {
         internal_calibration_last_temperatures->Add(syscfg_double);
       };
-      AssignIfAvailable(internal_calibration_last_temperatures_available, set_internal_calibration_last_temperatures_func, status);
+      bool internal_calibration_last_temperatures_available = false;
+      AssignIfAvailable(&internal_calibration_last_temperatures_available, set_internal_calibration_last_temperatures_func, status);
       if (NISysCfg_Failed(status)) {
         return status;
       }
-      if (!(*internal_calibration_last_temperatures_available)) {
+      if (!internal_calibration_last_temperatures_available) {
         break;
       }
     }
@@ -177,11 +175,12 @@ static void AssignIfAvailable(
         CVIAbsoluteTime syscfg_time_convert = *reinterpret_cast<CVIAbsoluteTime*>(&syscfg_time);
         nidevice_grpc::converters::convert_to_grpc(syscfg_time_convert, internal_calibration_last_times->Add());
       };
-      AssignIfAvailable(internal_calibration_last_times_available, set_internal_calibration_last_times_func, status);
+      bool internal_calibration_last_times_available = false;
+      AssignIfAvailable(&internal_calibration_last_times_available, set_internal_calibration_last_times_func, status);
       if (NISysCfg_Failed(status)) {
         return status;
       }
-      if (!(*internal_calibration_last_times_available)) {
+      if (!internal_calibration_last_times_available) {
         break;
       }
     }

@@ -222,8 +222,8 @@ TEST(CalibrationOperationsTests, SupportsIntCal_GetCalibrationInformation_Respon
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_supports_internal_calibration());
   EXPECT_TRUE(response.supports_internal_calibration());
-  EXPECT_TRUE(response.supports_internal_calibration_available());
 }
 
 TEST(CalibrationOperationsTests, DoesNotSupportIntCal_GetCalibrationInformation_ResponseWritten)
@@ -238,8 +238,8 @@ TEST(CalibrationOperationsTests, DoesNotSupportIntCal_GetCalibrationInformation_
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_supports_internal_calibration());
   EXPECT_FALSE(response.supports_internal_calibration());
-  EXPECT_TRUE(response.supports_internal_calibration_available());
 }
 
 TEST(CalibrationOperationsTests, SupportsIntCalPropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -254,7 +254,8 @@ TEST(CalibrationOperationsTests, SupportsIntCalPropDoesNotExist_GetCalibrationIn
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.supports_internal_calibration_available());
+  EXPECT_FALSE(response.has_supports_internal_calibration());
+  EXPECT_FALSE(response.supports_internal_calibration());
 }
 
 TEST(CalibrationOperationsTests, NoIntCalRegions_GetCalibrationInformation_ResponseWritten)
@@ -269,8 +270,8 @@ TEST(CalibrationOperationsTests, NoIntCalRegions_GetCalibrationInformation_Respo
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_number_of_internal_calibration_details());
   EXPECT_EQ(0, response.number_of_internal_calibration_details());
-  EXPECT_TRUE(response.number_of_internal_calibration_details_available());
 }
 
 TEST(CalibrationOperationsTests, OneIntCalRegion_GetCalibrationInformation_ResponseWritten)
@@ -285,8 +286,8 @@ TEST(CalibrationOperationsTests, OneIntCalRegion_GetCalibrationInformation_Respo
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_number_of_internal_calibration_details());
   EXPECT_EQ(1, response.number_of_internal_calibration_details());
-  EXPECT_TRUE(response.number_of_internal_calibration_details_available());
 }
 
 TEST(CalibrationOperationsTests, ThreeIntCalRegions_GetCalibrationInformation_ResponseWritten)
@@ -301,8 +302,8 @@ TEST(CalibrationOperationsTests, ThreeIntCalRegions_GetCalibrationInformation_Re
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_number_of_internal_calibration_details());
   EXPECT_EQ(3, response.number_of_internal_calibration_details());
-  EXPECT_TRUE(response.number_of_internal_calibration_details_available());
 }
 
 TEST(CalibrationOperationsTests, NumberOfIntCalDetailsPropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -317,7 +318,8 @@ TEST(CalibrationOperationsTests, NumberOfIntCalDetailsPropDoesNotExist_GetCalibr
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.number_of_internal_calibration_details_available());
+  EXPECT_FALSE(response.has_number_of_internal_calibration_details());
+  EXPECT_EQ(0, response.number_of_internal_calibration_details());
 }
 
 TEST(CalibrationOperationsTests, OneIntCalName_GetCalibrationInformation_ResponseWritten)
@@ -337,7 +339,6 @@ TEST(CalibrationOperationsTests, OneIntCalName_GetCalibrationInformation_Respons
   {
     EXPECT_EQ(kIntCalName0, response.internal_calibration_names()[0]);
   }
-  EXPECT_TRUE(response.internal_calibration_names_available());
 }
 
 TEST(CalibrationOperationsTests, ThreeIntCalNames_GetCalibrationInformation_ResponseWritten)
@@ -359,7 +360,6 @@ TEST(CalibrationOperationsTests, ThreeIntCalNames_GetCalibrationInformation_Resp
     EXPECT_EQ(kIntCalName2, response.internal_calibration_names()[1]);
     EXPECT_EQ(kIntCalName3, response.internal_calibration_names()[2]);
   }
-  EXPECT_TRUE(response.internal_calibration_names_available());
 }
 
 TEST(CalibrationOperationsTests, IntCalNamePropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -374,7 +374,7 @@ TEST(CalibrationOperationsTests, IntCalNamePropDoesNotExist_GetCalibrationInform
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.internal_calibration_names_available());
+  EXPECT_EQ(0, response.internal_calibration_names().size());
 }
 
 TEST(CalibrationOperationsTests, OneIntCalLastTemp_GetCalibrationInformation_ResponseWritten)
@@ -394,7 +394,6 @@ TEST(CalibrationOperationsTests, OneIntCalLastTemp_GetCalibrationInformation_Res
   {
     EXPECT_EQ(kIntCalLastTemp0, response.internal_calibration_last_temperatures()[0]);
   }
-  EXPECT_TRUE(response.internal_calibration_last_temperatures_available());
 }
 
 TEST(CalibrationOperationsTests, ThreeIntCalLastTemps_GetCalibrationInformation_ResponseWritten)
@@ -416,7 +415,6 @@ TEST(CalibrationOperationsTests, ThreeIntCalLastTemps_GetCalibrationInformation_
     EXPECT_EQ(kIntCalLastTemp2, response.internal_calibration_last_temperatures()[1]);
     EXPECT_EQ(kIntCalLastTemp3, response.internal_calibration_last_temperatures()[2]);
   }
-  EXPECT_TRUE(response.internal_calibration_last_temperatures_available());
 }
 
 TEST(CalibrationOperationsTests, IntCalLastTempPropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -431,7 +429,7 @@ TEST(CalibrationOperationsTests, IntCalLastTempPropDoesNotExist_GetCalibrationIn
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.internal_calibration_last_temperatures_available());
+  EXPECT_EQ(0, response.internal_calibration_last_temperatures().size());
 }
 
 TEST(CalibrationOperationsTests, OneIntCalLastTime_GetCalibrationInformation_ResponseWritten)
@@ -451,7 +449,6 @@ TEST(CalibrationOperationsTests, OneIntCalLastTime_GetCalibrationInformation_Res
   {
     EXPECT_EQ(kIntCalLastTimeProtobufTimestamp0, response.internal_calibration_last_times()[0]);
   }
-  EXPECT_TRUE(response.internal_calibration_last_times_available());
 }
 
 TEST(CalibrationOperationsTests, ThreeIntCalLastTimes_GetCalibrationInformation_ResponseWritten)
@@ -473,7 +470,6 @@ TEST(CalibrationOperationsTests, ThreeIntCalLastTimes_GetCalibrationInformation_
     EXPECT_EQ(kIntCalLastTimeProtobufTimestamp2, response.internal_calibration_last_times()[1]);
     EXPECT_EQ(kIntCalLastTimeProtobufTimestamp3, response.internal_calibration_last_times()[2]);
   }
-  EXPECT_TRUE(response.internal_calibration_last_times_available());
 }
 
 TEST(CalibrationOperationsTests, IntCalLastTimePropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -488,7 +484,7 @@ TEST(CalibrationOperationsTests, IntCalLastTimePropDoesNotExist_GetCalibrationIn
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.internal_calibration_last_times_available());
+  EXPECT_EQ(0, response.internal_calibration_last_times().size());
 }
 
 TEST(CalibrationOperationsTests, SupportsExtCal_GetCalibrationInformation_ResponseWritten)
@@ -503,8 +499,8 @@ TEST(CalibrationOperationsTests, SupportsExtCal_GetCalibrationInformation_Respon
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_supports_external_calibration());
   EXPECT_TRUE(response.supports_external_calibration());
-  EXPECT_TRUE(response.supports_external_calibration_available());
 }
 
 TEST(CalibrationOperationsTests, DoesNotSupportExtCal_GetCalibrationInformation_ResponseWritten)
@@ -519,8 +515,8 @@ TEST(CalibrationOperationsTests, DoesNotSupportExtCal_GetCalibrationInformation_
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_supports_external_calibration());
   EXPECT_FALSE(response.supports_external_calibration());
-  EXPECT_TRUE(response.supports_external_calibration_available());
 }
 
 TEST(CalibrationOperationsTests, SupportsExtCalPropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -535,7 +531,8 @@ TEST(CalibrationOperationsTests, SupportsExtCalPropDoesNotExist_GetCalibrationIn
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.supports_external_calibration_available());
+  EXPECT_FALSE(response.has_supports_external_calibration());
+  EXPECT_FALSE(response.supports_external_calibration());
 }
 
 TEST(CalibrationOperationsTests, ExtCalLastTempPropExists_GetCalibrationInformation_ResponseWritten)
@@ -550,8 +547,8 @@ TEST(CalibrationOperationsTests, ExtCalLastTempPropExists_GetCalibrationInformat
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_external_calibration_last_temperature());
   EXPECT_EQ(kExtCalLastTemp0, response.external_calibration_last_temperature());
-  EXPECT_TRUE(response.external_calibration_last_temperature_available());
 }
 
 TEST(CalibrationOperationsTests, ExtCalLastTempPropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -566,7 +563,8 @@ TEST(CalibrationOperationsTests, ExtCalLastTempPropDoesNotExist_GetCalibrationIn
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.external_calibration_last_temperature_available());
+  EXPECT_FALSE(response.has_external_calibration_last_temperature());
+  EXPECT_EQ(0.0, response.external_calibration_last_temperature());
 }
 
 TEST(CalibrationOperationsTests, ExtCalLastTimePropExists_GetCalibrationInformation_ResponseWritten)
@@ -581,8 +579,8 @@ TEST(CalibrationOperationsTests, ExtCalLastTimePropExists_GetCalibrationInformat
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_external_calibration_last_time());
   EXPECT_EQ(kExtCalLastTimeProtobufTimestamp0, response.external_calibration_last_time());
-  EXPECT_TRUE(response.external_calibration_last_time_available());
 }
 
 TEST(CalibrationOperationsTests, ExtCalLastTimePropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -597,7 +595,8 @@ TEST(CalibrationOperationsTests, ExtCalLastTimePropDoesNotExist_GetCalibrationIn
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.external_calibration_last_time_available());
+  EXPECT_FALSE(response.has_external_calibration_last_time());
+  EXPECT_EQ(::google::protobuf::Timestamp::default_instance(), response.external_calibration_last_time());
 }
 
 TEST(CalibrationOperationsTests, NextCalTimePropExists_GetCalibrationInformation_ResponseWritten)
@@ -612,8 +611,8 @@ TEST(CalibrationOperationsTests, NextCalTimePropExists_GetCalibrationInformation
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
+  EXPECT_TRUE(response.has_recommended_next_calibration_time());
   EXPECT_EQ(kNextCalTimeProtobufTimestamp0, response.recommended_next_calibration_time());
-  EXPECT_TRUE(response.recommended_next_calibration_time_available());
 }
 
 TEST(CalibrationOperationsTests, NextCalTimePropDoesNotExist_GetCalibrationInformation_ResponseWritten)
@@ -628,7 +627,8 @@ TEST(CalibrationOperationsTests, NextCalTimePropDoesNotExist_GetCalibrationInfor
   ::grpc::Status status = service.GetCalibrationInformation(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_FALSE(response.recommended_next_calibration_time_available());
+  EXPECT_FALSE(response.has_recommended_next_calibration_time());
+  EXPECT_EQ(::google::protobuf::Timestamp::default_instance(), response.recommended_next_calibration_time());
 }
 
 }  // namespace unit

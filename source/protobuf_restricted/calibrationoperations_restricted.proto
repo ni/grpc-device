@@ -19,22 +19,13 @@ message GetCalibrationInformationRequest {
 }
 
 message GetCalibrationInformationResponse {
-  bool supports_internal_calibration_available = 1;
-  bool supports_internal_calibration = 2;
-  bool number_of_internal_calibration_details_available = 3;
-  uint32 number_of_internal_calibration_details = 4;
-  bool internal_calibration_names_available = 5;
-  repeated string internal_calibration_names = 6;
-  bool internal_calibration_last_temperatures_available = 7;
-  repeated double internal_calibration_last_temperatures = 8;
-  bool internal_calibration_last_times_available = 9;
-  repeated google.protobuf.Timestamp internal_calibration_last_times = 10;
-  bool supports_external_calibration_available = 11;
-  bool supports_external_calibration = 12;
-  bool external_calibration_last_temperature_available = 13;
-  double external_calibration_last_temperature = 14;
-  bool external_calibration_last_time_available = 15;
-  google.protobuf.Timestamp external_calibration_last_time = 16;
-  bool recommended_next_calibration_time_available = 17;
-  google.protobuf.Timestamp recommended_next_calibration_time = 18;
+  optional bool supports_internal_calibration = 1;
+  optional uint32 number_of_internal_calibration_details = 2;
+  repeated string internal_calibration_names = 3;
+  repeated double internal_calibration_last_temperatures = 4;
+  repeated google.protobuf.Timestamp internal_calibration_last_times = 5;
+  optional bool supports_external_calibration = 6;
+  optional double external_calibration_last_temperature = 7;
+  optional google.protobuf.Timestamp external_calibration_last_time = 8;
+  optional google.protobuf.Timestamp recommended_next_calibration_time = 9;
 }
