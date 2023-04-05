@@ -30,7 +30,7 @@ jobs:
             os: ubuntu-20.04,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "",
-            glibc_version: "2_27",
+            glibc_version: "2_31",
             cmake_number_of_jobs: "-j 2"
           }
 
