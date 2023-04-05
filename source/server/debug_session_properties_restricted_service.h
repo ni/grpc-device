@@ -9,7 +9,7 @@
 #include "feature_toggles.h"
 #include "shared_library.h"
 #include "syscfg_library_interface.h"
-#include "syscfg_session_handler.h"
+#include "syscfg_resource_accessor.h"
 
 namespace nidevice_restricted_grpc {
 
@@ -28,7 +28,7 @@ struct DebugSessionPropertiesRestrictedFeatureToggles
 
 class DebugSessionPropertiesRestrictedService final :
   public DebugSessionPropertiesRestricted::Service,
-  public ::nidevice_grpc::SysCfgSessionHandler {
+  public ::nidevice_restricted_grpc::SysCfgResourceAccessor {
  public:
   DebugSessionPropertiesRestrictedService(::nidevice_grpc::SysCfgLibraryInterface* library);
 
@@ -54,10 +54,6 @@ class DebugSessionPropertiesRestrictedService final :
     SetDebugSessionServerOutOfProcessResponse* response) override;
 
  private:
-  ::grpc::Status access_syscfg_resource_by_device_id_filter(
-    ::grpc::ServerContext* context,
-    const nidevice_restricted_grpc::DeviceId& device_id,
-    std::function<NISysCfgStatus(nidevice_grpc::SysCfgLibraryInterface*, NISysCfgResourceHandle, bool*)> syscfg_resource_action_func);
   ::grpc::Status get_bool_property(
     ::grpc::ServerContext* context,
     NISysCfgResourceProperty property_id,
