@@ -153,7 +153,7 @@ try:
     print(f"Offset ch1 Lower Relative Power(dB)     {off_ch1_lower_relative_power}")
     print(f"Offset ch1 Upper Relative Power(dB)     {off_ch1_upper_relative_power}")
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")

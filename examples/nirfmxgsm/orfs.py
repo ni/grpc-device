@@ -311,7 +311,7 @@ try:
         print(f"Upper Absolute Power (dBm)          : {switch_upper_absolute_power[i]}")
         print(f"Upper Relative Power (dB)           : {switch_upper_relative_power[i]}")
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
