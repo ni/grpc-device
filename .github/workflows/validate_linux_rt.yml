@@ -58,7 +58,8 @@ jobs:
       id: getbranchname
       run: |
         raw=$(git branch -r --contains ${{ github.ref }})
-        echo ::set-output name=branch::$raw
+        branch_sans_origin=${raw/origin\/}
+        echo ::set-output name=branch::$branch_sans_origin
 
     - name: Create GitHub Issue
       if: ${{ env.SHOULD_UPDATE_LINUX_RT == 'True'}}
