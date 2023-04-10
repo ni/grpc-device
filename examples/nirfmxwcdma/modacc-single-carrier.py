@@ -287,7 +287,7 @@ try:
     print(f"Peak RCDE Spreading Factor              : {peak_rcde_spreading_factor}")
     print(f"Peak RCDE Branch                        : {'Q' if peak_rcde_branch else 'I'}")
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
