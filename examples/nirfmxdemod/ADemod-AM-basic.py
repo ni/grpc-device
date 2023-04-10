@@ -1,4 +1,4 @@
-r"""ADemod QAM example.
+r"""ADemod AM example.
 
 Steps:
 1. Open a new RFmxInstrMX session and create a Demod Signal
