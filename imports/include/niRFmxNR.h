@@ -41,6 +41,7 @@
 #define RFMXNR_ATTR_POWER_CLASS                                                            0x0090009c
 #define RFMXNR_ATTR_PIBY2BPSK_POWER_BOOST_ENABLED                                          0x0090009e
 #define RFMXNR_ATTR_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED                                  0x0090001f
+#define RFMXNR_ATTR_AUTO_CELL_ID_DETECTION_ENABLED                                         0x0090008c
 #define RFMXNR_ATTR_DOWNLINK_CHANNEL_CONFIGURATION_MODE                                    0x0090008e
 #define RFMXNR_ATTR_AUTO_INCREMENT_CELL_ID_ENABLED                                         0x0090009f
 #define RFMXNR_ATTR_DOWNLINK_TEST_MODEL_CELL_ID_MODE                                       0x0090011e
@@ -68,6 +69,7 @@
 #define RFMXNR_ATTR_REFERENCE_GRID_SUBCARRIER_SPACING                                      0x00900062
 #define RFMXNR_ATTR_REFERENCE_GRID_START                                                   0x00900063
 #define RFMXNR_ATTR_REFERENCE_GRID_SIZE                                                    0x00900119
+#define RFMXNR_ATTR_SUB_BAND_ALLOCATION                                                    0x0090003c
 #define RFMXNR_ATTR_NUMBER_OF_BANDWIDTH_PARTS                                              0x0090003d
 #define RFMXNR_ATTR_BANDWIDTH_PART_SUBCARRIER_SPACING                                      0x0090001b
 #define RFMXNR_ATTR_BANDWIDTH_PART_CYCLIC_PREFIX_MODE                                      0x0090001a
@@ -213,8 +215,12 @@
 #define RFMXNR_ATTR_MODACC_SHORT_FRAME_ENABLED                                             0x0090409d
 #define RFMXNR_ATTR_MODACC_SHORT_FRAME_LENGTH                                              0x0090409e
 #define RFMXNR_ATTR_MODACC_SHORT_FRAME_LENGTH_UNIT                                         0x0090409f
+#define RFMXNR_ATTR_MODACC_TRANSIENT_PERIOD_EVM_MODE                                       0x009040a3
+#define RFMXNR_ATTR_MODACC_TRANSIENT_PERIOD                                                0x009040a4
+#define RFMXNR_ATTR_MODACC_TRANSIENT_POWER_CHANGE_THRESHOLD                                0x009040a5
 #define RFMXNR_ATTR_MODACC_ALL_TRACES_ENABLED                                              0x00904013
 #define RFMXNR_ATTR_MODACC_NUMBER_OF_ANALYSIS_THREADS                                      0x00904014
+#define RFMXNR_ATTR_MODACC_RESULTS_DETECTED_CELL_ID                                        0x0090403a
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN                                  0x00904016
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM                              0x00904017
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPOSITE_PEAK_EVM_BWP_INDEX                            0x00904054
@@ -233,6 +239,9 @@
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_DMRS_PEAK_EVM_MAXIMUM                             0x00904024
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PTRS_RMS_EVM_MEAN                                 0x00904048
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PTRS_PEAK_EVM_MAXIMUM                             0x00904049
+#define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_DATA_TRANSIENT_RMS_EVM_MEAN                       0x009040a6
+#define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_MAXIMUM                         0x009040a7
+#define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_SLOT_INDEX                      0x009040a8
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN                                 0x00904055
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN                                0x00904056
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN                                0x00904057
@@ -391,6 +400,7 @@
 #define RFMXNR_ATTR_SEM_OFFSET_BANDWIDTH_INTEGRAL                                          0x0090800c
 #define RFMXNR_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK                                             0x0090800d
 #define RFMXNR_ATTR_SEM_OFFSET_ABSOLUTE_LIMIT_START                                        0x0090800e
+#define RFMXNR_ATTR_SEM_OFFSET_FREQUENCY_DEFINITION                                        0x00908042
 #define RFMXNR_ATTR_SEM_OFFSET_ABSOLUTE_LIMIT_STOP                                         0x0090800f
 #define RFMXNR_ATTR_SEM_OFFSET_RELATIVE_LIMIT_START                                        0x00908010
 #define RFMXNR_ATTR_SEM_OFFSET_RELATIVE_LIMIT_STOP                                         0x00908011
@@ -529,6 +539,10 @@
 // Values for RFMXNR_ATTR_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED
 #define RFMXNR_VAL_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED_FALSE                                    0
 #define RFMXNR_VAL_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED_TRUE                                     1
+
+// Values for RFMXNR_ATTR_AUTO_CELL_ID_DETECTION_ENABLED
+#define RFMXNR_VAL_AUTO_CELL_ID_DETECTION_ENABLED_FALSE                                           0
+#define RFMXNR_VAL_AUTO_CELL_ID_DETECTION_ENABLED_TRUE                                            1
 
 // Values for RFMXNR_ATTR_DOWNLINK_CHANNEL_CONFIGURATION_MODE
 #define RFMXNR_VAL_DOWNLINK_CHANNEL_CONFIGURATION_MODE_USER_DEFINED                               1
@@ -857,6 +871,11 @@
 #define RFMXNR_VAL_MODACC_SHORT_FRAME_LENGTH_UNIT_SUBFRAME                                        3
 #define RFMXNR_VAL_MODACC_SHORT_FRAME_LENGTH_UNIT_TIME                                            6
 
+// Values for RFMXNR_ATTR_MODACC_TRANSIENT_PERIOD_EVM_MODE
+#define RFMXNR_VAL_MODACC_TRANSIENT_PERIOD_EVM_MODE_DISABLED                                      0
+#define RFMXNR_VAL_MODACC_TRANSIENT_PERIOD_EVM_MODE_EXCLUDE                                       1
+#define RFMXNR_VAL_MODACC_TRANSIENT_PERIOD_EVM_MODE_INCLUDE                                       2
+
 // Values for RFMXNR_ATTR_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_PI_BY_2_BPSK                       0
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_QPSK                               1
@@ -1081,6 +1100,11 @@
 #define RFMXNR_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABS_OR_REL                                          1
 #define RFMXNR_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE                                            2
 #define RFMXNR_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_RELATIVE                                            3
+
+// Values for RFMXNR_ATTR_SEM_OFFSET_FREQUENCY_DEFINITION
+#define RFMXNR_VAL_SEM_OFFSET_FREQUENCY_DEFINITION_CARRIER_CENTER_TO_MEAS_BW_CENTER               0
+#define RFMXNR_VAL_SEM_OFFSET_FREQUENCY_DEFINITION_CARRIER_EDGE_TO_MEAS_BW_CENTER                 2
+#define RFMXNR_VAL_SEM_OFFSET_FREQUENCY_DEFINITION_SUBBLOCK_EDGE_TO_MEAS_BW_CENTER                6
 
 // Values for RFMXNR_ATTR_SEM_SWEEP_TIME_AUTO
 #define RFMXNR_VAL_SEM_SWEEP_TIME_AUTO_FALSE                                                      0
@@ -2383,6 +2407,17 @@ int32 __stdcall RFmxNR_ModAccFetchRMSEVMLowPerSymbolMeanTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxNR_ModAccFetchTransientPeriodLocationsTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 transientPeriodLocations[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxNR_ModAccFetchInBandEmissionTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2671,6 +2706,17 @@ int32 __stdcall RFmxNR_ModAccFetchPDSCHDataConstellationTraceSplit(
    float64 timeout,
    float32 I[],
    float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPUSCHPhaseOffsetTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 PUSCHPhaseOffset[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -3452,6 +3498,18 @@ int32 __stdcall RFmxNR_SetAutoResourceBlockDetectionEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxNR_GetAutoCellIDDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetAutoCellIDDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxNR_GetDownlinkChannelConfigurationMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3774,6 +3832,19 @@ int32 __stdcall RFmxNR_SetReferenceGridSize(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxNR_GetSubBandAllocation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxNR_SetSubBandAllocation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
 );
 
 int32 __stdcall RFmxNR_GetNumberOfBandwidthParts(
@@ -5610,6 +5681,42 @@ int32 __stdcall RFmxNR_ModAccSetShortFrameLengthUnit(
    int32 attrVal
 );
 
+int32 __stdcall RFmxNR_ModAccGetTransientPeriodEVMMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetTransientPeriodEVMMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetTransientPeriod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetTransientPeriod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetTransientPowerChangeThreshold(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetTransientPowerChangeThreshold(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxNR_ModAccGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5632,6 +5739,12 @@ int32 __stdcall RFmxNR_ModAccSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsDetectedCellID(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
 );
 
 int32 __stdcall RFmxNR_ModAccGetResultsCompositeRMSEVMMean(
@@ -5740,6 +5853,24 @@ int32 __stdcall RFmxNR_ModAccGetResultsPUSCHPTRSPeakEVMMaximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPUSCHDataTransientRMSEVMMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPUSCHPeakPhaseOffsetMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPUSCHPeakPhaseOffsetSlotIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
 );
 
 int32 __stdcall RFmxNR_ModAccGetResultsPDSCHQPSKRMSEVMMean(
@@ -7222,6 +7353,18 @@ int32 __stdcall RFmxNR_SEMSetOffsetAbsoluteLimitStart(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxNR_SEMGetOffsetFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SEMSetOffsetFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxNR_SEMGetOffsetAbsoluteLimitStop(

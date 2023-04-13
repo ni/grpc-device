@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from common_helpers import get_driver_readiness
+from common_helpers import get_driver_readiness, is_driver_restricted
 from template_helpers import load_metadata
 
 
@@ -17,7 +17,7 @@ def _generate_file(metadata_dir: Path, output_dir: Path) -> None:
     ]
     for data in driver_modules:
         config = data["config"]
-        if get_driver_readiness(config) == "Release":
+        if get_driver_readiness(config) == "Release" and not is_driver_restricted(config):
             service_name = f'{config["module_name"]}_grpc.{config["service_class_prefix"]}'
             service_instance_names.append(service_name)
     service_information_dict = {}

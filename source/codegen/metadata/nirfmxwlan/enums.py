@@ -1171,6 +1171,7 @@ enums = {
         ]
     },
     'OfdmPhaseRotationCoefficient1': {
+        'enum-value-prefix': 'OFDM_PHASE_ROTATION_COEFFICIENT_1',
         'values': [
             {
                 'name': 'PLUS_ONE',
@@ -1183,6 +1184,7 @@ enums = {
         ]
     },
     'OfdmPhaseRotationCoefficient2': {
+        'enum-value-prefix': 'OFDM_PHASE_ROTATION_COEFFICIENT_2',
         'values': [
             {
                 'name': 'PLUS_ONE',
@@ -1195,6 +1197,7 @@ enums = {
         ]
     },
     'OfdmPhaseRotationCoefficient3': {
+        'enum-value-prefix': 'OFDM_PHASE_ROTATION_COEFFICIENT_3',
         'values': [
             {
                 'name': 'PLUS_ONE',

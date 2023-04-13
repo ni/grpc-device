@@ -175,6 +175,7 @@ public:
   ::grpc::Status ModAccFetchPUSCHDataConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHDataConstellationTraceRequest* request, ModAccFetchPUSCHDataConstellationTraceResponse* response) override;
   ::grpc::Status ModAccFetchPUSCHDemodulatedBits(::grpc::ServerContext* context, const ModAccFetchPUSCHDemodulatedBitsRequest* request, ModAccFetchPUSCHDemodulatedBitsResponse* response) override;
   ::grpc::Status ModAccFetchPUSCHPTRSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHPTRSConstellationTraceRequest* request, ModAccFetchPUSCHPTRSConstellationTraceResponse* response) override;
+  ::grpc::Status ModAccFetchPUSCHPhaseOffsetTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHPhaseOffsetTraceRequest* request, ModAccFetchPUSCHPhaseOffsetTraceResponse* response) override;
   ::grpc::Status ModAccFetchPeakEVMPerSlotMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSlotMaximumTraceRequest* request, ModAccFetchPeakEVMPerSlotMaximumTraceResponse* response) override;
   ::grpc::Status ModAccFetchPeakEVMPerSubcarrierMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSubcarrierMaximumTraceRequest* request, ModAccFetchPeakEVMPerSubcarrierMaximumTraceResponse* response) override;
   ::grpc::Status ModAccFetchPeakEVMPerSymbolMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSymbolMaximumTraceRequest* request, ModAccFetchPeakEVMPerSymbolMaximumTraceResponse* response) override;
@@ -188,6 +189,7 @@ public:
   ::grpc::Status ModAccFetchSSSRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const ModAccFetchSSSRMSEVMPerSymbolMeanTraceRequest* request, ModAccFetchSSSRMSEVMPerSymbolMeanTraceResponse* response) override;
   ::grpc::Status ModAccFetchSpectralFlatnessTrace(::grpc::ServerContext* context, const ModAccFetchSpectralFlatnessTraceRequest* request, ModAccFetchSpectralFlatnessTraceResponse* response) override;
   ::grpc::Status ModAccFetchSubblockInBandEmissionTrace(::grpc::ServerContext* context, const ModAccFetchSubblockInBandEmissionTraceRequest* request, ModAccFetchSubblockInBandEmissionTraceResponse* response) override;
+  ::grpc::Status ModAccFetchTransientPeriodLocationsTrace(::grpc::ServerContext* context, const ModAccFetchTransientPeriodLocationsTraceRequest* request, ModAccFetchTransientPeriodLocationsTraceResponse* response) override;
   ::grpc::Status ModAccValidateCalibrationData(::grpc::ServerContext* context, const ModAccValidateCalibrationDataRequest* request, ModAccValidateCalibrationDataResponse* response) override;
   ::grpc::Status OBWCfgAveraging(::grpc::ServerContext* context, const OBWCfgAveragingRequest* request, OBWCfgAveragingResponse* response) override;
   ::grpc::Status OBWCfgRBWFilter(::grpc::ServerContext* context, const OBWCfgRBWFilterRequest* request, OBWCfgRBWFilterResponse* response) override;

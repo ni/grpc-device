@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.0.0f168
+# This file is generated from NI-SCOPE API metadata version 23.3.0d127
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -1634,7 +1634,7 @@ functions = {
                 'cppName': 'measWfmSize',
                 'direction': 'in',
                 'grpc_type': 'sint32',
-                'include_in_proto': False,
+                'is_optional': True,
                 'name': 'measWfmSize',
                 'type': 'ViInt32'
             },

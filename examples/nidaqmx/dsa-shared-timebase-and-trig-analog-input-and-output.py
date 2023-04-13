@@ -526,7 +526,7 @@ async def _main():
             check_for_warning(stop_task_response)
 
         except grpc.RpcError as rpc_error:
-            error_message = rpc_error.details()
+            error_message = str(rpc_error.details() or "")
             for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
                 if key == "ni-error":
                     details = value if isinstance(value, str) else value.decode("utf-8")

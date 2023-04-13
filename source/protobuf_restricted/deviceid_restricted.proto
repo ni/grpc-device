@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.devicerestricted";
+option java_outer_classname = "NiDeviceRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.DeviceRestricted";
+
+package nidevice_restricted_grpc;
+
+message DeviceId {
+  string name = 1;
+  string serial_number = 2;
+  uint32 product_id = 3;
+}

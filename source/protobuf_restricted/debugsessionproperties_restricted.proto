@@ -7,18 +7,14 @@ option csharp_namespace = "NationalInstruments.Grpc.DeviceRestricted";
 
 package nidevice_restricted_grpc;
 
+import "deviceid_restricted.proto";
+
 service DebugSessionPropertiesRestricted {
   rpc IsDebugSessionEnabled(IsDebugSessionEnabledRequest) returns (IsDebugSessionEnabledResponse);
   rpc IsDebugSessionServerOutOfProcess(IsDebugSessionServerOutOfProcessRequest) returns (IsDebugSessionServerOutOfProcessResponse);
   rpc IsDebugSessionSupported(IsDebugSessionSupportedRequest) returns (IsDebugSessionSupportedResponse);
   rpc SetDebugSessionEnabled(SetDebugSessionEnabledRequest) returns (SetDebugSessionEnabledResponse);
   rpc SetDebugSessionServerOutOfProcess(SetDebugSessionServerOutOfProcessRequest) returns (SetDebugSessionServerOutOfProcessResponse);
-}
-
-message DeviceId {
-  string name = 1;
-  string serial_number = 2;
-  uint32 product_id = 3;
 }
 
 message IsDebugSessionEnabledRequest {
@@ -32,7 +28,7 @@ message IsDebugSessionEnabledResponse {
 message IsDebugSessionServerOutOfProcessRequest {
   DeviceId device_id = 1;
 }
- 
+
 message IsDebugSessionServerOutOfProcessResponse {
   bool out_of_process = 1;
 }
@@ -40,7 +36,7 @@ message IsDebugSessionServerOutOfProcessResponse {
 message IsDebugSessionSupportedRequest {
   DeviceId device_id = 1;
 }
- 
+
 message IsDebugSessionSupportedResponse {
   bool supported = 1;
 }

@@ -1732,6 +1732,28 @@ create_ai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
   return response;
 }
 
+CreateAIPowerChanResponse
+create_ai_power_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& voltage_setpoint, const double& current_setpoint, const bool& output_enable)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateAIPowerChanRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_physical_channel(physical_channel);
+  request.set_name_to_assign_to_channel(name_to_assign_to_channel);
+  request.set_voltage_setpoint(voltage_setpoint);
+  request.set_current_setpoint(current_setpoint);
+  request.set_output_enable(output_enable);
+
+  auto response = CreateAIPowerChanResponse{};
+
+  raise_if_error(
+      stub->CreateAIPowerChan(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CreateAIPressureBridgePolynomialChanResponse
 create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const std::string& custom_scale_name)
 {
@@ -7851,6 +7873,80 @@ read_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const p
 
   raise_if_error(
       stub->ReadDigitalU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadPowerBinaryI16Response
+read_power_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadPowerBinaryI16Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = ReadPowerBinaryI16Response{};
+
+  raise_if_error(
+      stub->ReadPowerBinaryI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadPowerF64Response
+read_power_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadPowerF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = ReadPowerF64Response{};
+
+  raise_if_error(
+      stub->ReadPowerF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadPowerScalarF64Response
+read_power_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadPowerScalarF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = ReadPowerScalarF64Response{};
+
+  raise_if_error(
+      stub->ReadPowerScalarF64(&context, request, &response),
       context);
 
   return response;

@@ -388,6 +388,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_PERSONALITY_BT                                       (1 << 10)
 #define RFMXINSTR_VAL_PERSONALITY_WLAN                                     (1 << 9)
 #define RFMXINSTR_VAL_PERSONALITY_VNA                                      (1 << 12)
+#define RFMXINSTR_VAL_PERSONALITY_PULSE                                    (1 << 11)
 #define RFMXINSTR_VAL_PERSONALITY_ALL                                      0x7FFFFFFF
 
 /* -- Values for Overflow Error Reporting -- */

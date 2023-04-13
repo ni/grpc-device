@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-DAQMX API metadata version 20.0.0
+// This file is generated from NI-DAQMX API metadata version 23.0.0
 //---------------------------------------------------------------------
 // Proto file for the NI-DAQMX Metadata
 //---------------------------------------------------------------------
@@ -68,6 +68,7 @@ service NiDAQmx {
   rpc CreateAIPosEddyCurrProxProbeChan(CreateAIPosEddyCurrProxProbeChanRequest) returns (CreateAIPosEddyCurrProxProbeChanResponse);
   rpc CreateAIPosLVDTChan(CreateAIPosLVDTChanRequest) returns (CreateAIPosLVDTChanResponse);
   rpc CreateAIPosRVDTChan(CreateAIPosRVDTChanRequest) returns (CreateAIPosRVDTChanResponse);
+  rpc CreateAIPowerChan(CreateAIPowerChanRequest) returns (CreateAIPowerChanResponse);
   rpc CreateAIPressureBridgePolynomialChan(CreateAIPressureBridgePolynomialChanRequest) returns (CreateAIPressureBridgePolynomialChanResponse);
   rpc CreateAIPressureBridgeTableChan(CreateAIPressureBridgeTableChanRequest) returns (CreateAIPressureBridgeTableChanResponse);
   rpc CreateAIPressureBridgeTwoPointLinChan(CreateAIPressureBridgeTwoPointLinChanRequest) returns (CreateAIPressureBridgeTwoPointLinChanResponse);
@@ -279,6 +280,9 @@ service NiDAQmx {
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
   rpc ReadDigitalU32(ReadDigitalU32Request) returns (ReadDigitalU32Response);
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
+  rpc ReadPowerBinaryI16(ReadPowerBinaryI16Request) returns (ReadPowerBinaryI16Response);
+  rpc ReadPowerF64(ReadPowerF64Request) returns (ReadPowerF64Response);
+  rpc ReadPowerScalarF64(ReadPowerScalarF64Request) returns (ReadPowerScalarF64Response);
   rpc ReadRaw(ReadRawRequest) returns (ReadRawResponse);
   rpc RegisterDoneEvent(RegisterDoneEventRequest) returns (stream RegisterDoneEventResponse);
   rpc RegisterEveryNSamplesEvent(RegisterEveryNSamplesEventRequest) returns (stream RegisterEveryNSamplesEventResponse);
@@ -644,6 +648,9 @@ enum ChannelInt32Attribute {
   CHANNEL_ATTRIBUTE_AI_FILTER_RESPONSE = 12661;
   CHANNEL_ATTRIBUTE_CI_FILTER_RESPONSE = 12729;
   CHANNEL_ATTRIBUTE_CI_FILTER_DELAY_UNITS = 12732;
+  CHANNEL_ATTRIBUTE_PWR_OUTPUT_STATE = 12759;
+  CHANNEL_ATTRIBUTE_PWR_IDLE_OUTPUT_BEHAVIOR = 12760;
+  CHANNEL_ATTRIBUTE_PWR_REMOTE_SENSE = 12763;
 }
 
 enum ChannelDoubleAttribute {
@@ -824,6 +831,8 @@ enum ChannelDoubleAttribute {
   CHANNEL_ATTRIBUTE_CI_FILTER_DELAY = 12731;
   CHANNEL_ATTRIBUTE_AO_FUNC_GEN_START_PHASE = 12740;
   CHANNEL_ATTRIBUTE_AO_COMMON_MODE_OFFSET = 12748;
+  CHANNEL_ATTRIBUTE_PWR_VOLTAGE_SETPOINT = 12756;
+  CHANNEL_ATTRIBUTE_PWR_CURRENT_SETPOINT = 12757;
 }
 
 enum ChannelResetAttribute {
@@ -1381,6 +1390,11 @@ enum ChannelResetAttribute {
   CHANNEL_RESET_ATTRIBUTE_CI_FILTER_DELAY_UNITS = 12732;
   CHANNEL_RESET_ATTRIBUTE_AO_FUNC_GEN_START_PHASE = 12740;
   CHANNEL_RESET_ATTRIBUTE_AO_COMMON_MODE_OFFSET = 12748;
+  CHANNEL_RESET_ATTRIBUTE_PWR_VOLTAGE_SETPOINT = 12756;
+  CHANNEL_RESET_ATTRIBUTE_PWR_CURRENT_SETPOINT = 12757;
+  CHANNEL_RESET_ATTRIBUTE_PWR_OUTPUT_ENABLE = 12758;
+  CHANNEL_RESET_ATTRIBUTE_PWR_IDLE_OUTPUT_BEHAVIOR = 12760;
+  CHANNEL_RESET_ATTRIBUTE_PWR_REMOTE_SENSE = 12763;
 }
 
 enum ChannelBoolAttribute {
@@ -1481,6 +1495,7 @@ enum ChannelBoolAttribute {
   CHANNEL_ATTRIBUTE_AI_POWER_SUPPLY_FAULT_DETECT_ENABLE = 12689;
   CHANNEL_ATTRIBUTE_AI_OVERCURRENT_DETECT_ENABLE = 12692;
   CHANNEL_ATTRIBUTE_CI_FILTER_ENABLE = 12727;
+  CHANNEL_ATTRIBUTE_PWR_OUTPUT_ENABLE = 12758;
 }
 
 enum ChannelStringAttribute {
@@ -1610,6 +1625,8 @@ enum ChannelDoubleArrayAttribute {
   CHANNEL_ATTRIBUTE_AI_BRIDGE_POLY_FORWARD_COEFF = 12176;
   CHANNEL_ATTRIBUTE_AI_BRIDGE_POLY_REVERSE_COEFF = 12177;
   CHANNEL_ATTRIBUTE_AI_DIG_FLTR_COEFF = 12487;
+  CHANNEL_ATTRIBUTE_PWR_VOLTAGE_DEV_SCALING_COEFF = 12761;
+  CHANNEL_ATTRIBUTE_PWR_CURRENT_DEV_SCALING_COEFF = 12762;
 }
 
 enum DeviceStringAttribute {
@@ -2093,6 +2110,9 @@ enum ReadBoolAttribute {
   READ_ATTRIBUTE_SYNC_UNLOCKED_CHANS_EXIST = 12605;
   READ_ATTRIBUTE_INPUT_LIMITS_FAULT_CHANS_EXIST = 12687;
   READ_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS_EXIST = 12690;
+  READ_ATTRIBUTE_REMOTE_SENSE_ERROR_CHANS_EXIST = 12765;
+  READ_ATTRIBUTE_AUX_POWER_ERROR_CHANS_EXIST = 12767;
+  READ_ATTRIBUTE_REVERSE_VOLTAGE_ERROR_CHANS_EXIST = 12774;
 }
 
 enum ReadUInt64Attribute {
@@ -2131,6 +2151,9 @@ enum ReadStringAttribute {
   READ_ATTRIBUTE_SYNC_UNLOCKED_CHANS = 12606;
   READ_ATTRIBUTE_INPUT_LIMITS_FAULT_CHANS = 12688;
   READ_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS = 12691;
+  READ_ATTRIBUTE_REMOTE_SENSE_ERROR_CHANS = 12766;
+  READ_ATTRIBUTE_AUX_POWER_ERROR_CHANS = 12768;
+  READ_ATTRIBUTE_REVERSE_VOLTAGE_ERROR_CHANS = 12775;
 }
 
 enum ReadDoubleAttribute {
@@ -3473,6 +3496,7 @@ enum ChannelInt32AttributeValues {
   CHANNEL_INT32_AI_MEASUREMENT_TYPE_TORQUE_BRIDGE = 15905;
   CHANNEL_INT32_AI_MEASUREMENT_TYPE_TEDS_SENSOR = 12531;
   CHANNEL_INT32_AI_MEASUREMENT_TYPE_CHARGE = 16105;
+  CHANNEL_INT32_AI_MEASUREMENT_TYPE_POWER = 16201;
   CHANNEL_INT32_AO_IDLE_OUTPUT_BEHAVIOR_ZERO_VOLTS = 12526;
   CHANNEL_INT32_AO_IDLE_OUTPUT_BEHAVIOR_HIGH_IMPEDANCE = 12527;
   CHANNEL_INT32_AO_IDLE_OUTPUT_BEHAVIOR_MAINTAIN_EXISTING_VALUE = 12528;
@@ -3691,6 +3715,12 @@ enum ChannelInt32AttributeValues {
   CHANNEL_INT32_OUTPUT_TERM_CFG_RSE = 10083;
   CHANNEL_INT32_OUTPUT_TERM_CFG_DIFF = 10106;
   CHANNEL_INT32_OUTPUT_TERM_CFG_PSEUDO_DIFF = 12529;
+  CHANNEL_INT32_POWER_IDLE_OUTPUT_BEHAVIOR_OUTPUT_DISABLED = 15503;
+  CHANNEL_INT32_POWER_IDLE_OUTPUT_BEHAVIOR_MAINTAIN_EXISTING_VALUE = 12528;
+  CHANNEL_INT32_POWER_OUTPUT_STATE_CONSTANT_VOLTAGE = 15500;
+  CHANNEL_INT32_POWER_OUTPUT_STATE_CONSTANT_CURRENT = 15501;
+  CHANNEL_INT32_POWER_OUTPUT_STATE_OVERVOLTAGE = 15502;
+  CHANNEL_INT32_POWER_OUTPUT_STATE_OUTPUT_DISABLED = 15503;
   CHANNEL_INT32_PRESSURE_UNITS_PASCALS = 10081;
   CHANNEL_INT32_PRESSURE_UNITS_POUNDS_PER_SQUARE_INCH = 15879;
   CHANNEL_INT32_PRESSURE_UNITS_BAR = 15880;
@@ -3839,6 +3869,7 @@ enum DeviceInt32AttributeValues {
   DEVICE_INT32_AI_MEASUREMENT_TYPE_TORQUE_BRIDGE = 15905;
   DEVICE_INT32_AI_MEASUREMENT_TYPE_TEDS_SENSOR = 12531;
   DEVICE_INT32_AI_MEASUREMENT_TYPE_CHARGE = 16105;
+  DEVICE_INT32_AI_MEASUREMENT_TYPE_POWER = 16201;
   DEVICE_INT32_AO_OUTPUT_CHANNEL_TYPE_VOLTAGE = 10322;
   DEVICE_INT32_AO_OUTPUT_CHANNEL_TYPE_CURRENT = 10134;
   DEVICE_INT32_AO_OUTPUT_CHANNEL_TYPE_FUNC_GEN = 14750;
@@ -3852,9 +3883,9 @@ enum DeviceInt32AttributeValues {
   DEVICE_INT32_ANT_STATUS_ABSENT = 15994;
   DEVICE_INT32_ANT_STATUS_OVERCURRENT = 15995;
   DEVICE_INT32_BUS_TYPE_PCI = 12582;
-  DEVICE_INT32_BUS_TYPE_PC_IE = 13612;
+  DEVICE_INT32_BUS_TYPE_PCIE = 13612;
   DEVICE_INT32_BUS_TYPE_PXI = 12583;
-  DEVICE_INT32_BUS_TYPE_PX_IE = 14706;
+  DEVICE_INT32_BUS_TYPE_PXIE = 14706;
   DEVICE_INT32_BUS_TYPE_SCXI = 12584;
   DEVICE_INT32_BUS_TYPE_SCC = 14707;
   DEVICE_INT32_BUS_TYPE_PC_CARD = 12585;
@@ -3922,6 +3953,8 @@ enum DeviceInt32AttributeValues {
   DEVICE_INT32_PRODUCT_CATEGORY_NETWORK_DAQ = 14829;
   DEVICE_INT32_PRODUCT_CATEGORY_SC_EXPRESS = 15886;
   DEVICE_INT32_PRODUCT_CATEGORY_FIELD_DAQ = 16151;
+  DEVICE_INT32_PRODUCT_CATEGORY_TEST_SCALE_CHASSIS = 16180;
+  DEVICE_INT32_PRODUCT_CATEGORY_TEST_SCALE_MODULE = 16181;
   DEVICE_INT32_PRODUCT_CATEGORY_UNKNOWN = 12588;
   DEVICE_INT32_TRIGGER_USAGE_ADVANCE = 12488;
   DEVICE_INT32_TRIGGER_USAGE_PAUSE = 12489;
@@ -3987,12 +4020,13 @@ enum PhysicalChannelInt32AttributeValues {
   PHYSICALCHANNEL_INT32_AI_MEASUREMENT_TYPE_TORQUE_BRIDGE = 15905;
   PHYSICALCHANNEL_INT32_AI_MEASUREMENT_TYPE_TEDS_SENSOR = 12531;
   PHYSICALCHANNEL_INT32_AI_MEASUREMENT_TYPE_CHARGE = 16105;
+  PHYSICALCHANNEL_INT32_AI_MEASUREMENT_TYPE_POWER = 16201;
   PHYSICALCHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_VOLTAGE = 10322;
   PHYSICALCHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_CURRENT = 10134;
   PHYSICALCHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_FUNC_GEN = 14750;
-  PHYSICALCHANNEL_INT32_AO_POWER_UP_OUTPUT_BEHAVIOR_10322 = 10322;
-  PHYSICALCHANNEL_INT32_AO_POWER_UP_OUTPUT_BEHAVIOR_10134 = 10134;
-  PHYSICALCHANNEL_INT32_AO_POWER_UP_OUTPUT_BEHAVIOR_12527 = 12527;
+  PHYSICALCHANNEL_INT32_AO_POWER_UP_OUTPUT_BEHAVIOR_VOLTAGE = 10322;
+  PHYSICALCHANNEL_INT32_AO_POWER_UP_OUTPUT_BEHAVIOR_CURRENT = 10134;
+  PHYSICALCHANNEL_INT32_AO_POWER_UP_OUTPUT_BEHAVIOR_HIGH_IMPEDANCE = 12527;
   PHYSICALCHANNEL_INT32_ACQUISITION_TYPE_FINITE_SAMPS = 10178;
   PHYSICALCHANNEL_INT32_ACQUISITION_TYPE_CONT_SAMPS = 10123;
   PHYSICALCHANNEL_INT32_ACQUISITION_TYPE_HW_TIMED_SINGLE_POINT = 12522;
@@ -5190,6 +5224,19 @@ message CreateAIPosRVDTChanRequest {
 }
 
 message CreateAIPosRVDTChanResponse {
+  int32 status = 1;
+}
+
+message CreateAIPowerChanRequest {
+  nidevice_grpc.Session task = 1;
+  string physical_channel = 2;
+  string name_to_assign_to_channel = 3;
+  double voltage_setpoint = 4;
+  double current_setpoint = 5;
+  bool output_enable = 6;
+}
+
+message CreateAIPowerChanResponse {
   int32 status = 1;
 }
 
@@ -8576,6 +8623,53 @@ message ReadDigitalU8Response {
   int32 status = 1;
   bytes read_array = 2;
   int32 samps_per_chan_read = 3;
+}
+
+message ReadPowerBinaryI16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadPowerBinaryI16Response {
+  int32 status = 1;
+  repeated int32 read_array_voltage = 2;
+  repeated int32 read_array_current = 3;
+  int32 samps_per_chan_read = 4;
+}
+
+message ReadPowerF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message ReadPowerF64Response {
+  int32 status = 1;
+  repeated double read_array_voltage = 2;
+  repeated double read_array_current = 3;
+  int32 samps_per_chan_read = 4;
+}
+
+message ReadPowerScalarF64Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message ReadPowerScalarF64Response {
+  int32 status = 1;
+  double voltage = 2;
+  double current = 3;
 }
 
 message ReadRawRequest {

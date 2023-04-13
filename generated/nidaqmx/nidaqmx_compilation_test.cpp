@@ -262,6 +262,11 @@ int32 CreateAIPosRVDTChan(TaskHandle task, const char physicalChannel[], const c
   return DAQmxCreateAIPosRVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
 }
 
+int32 CreateAIPowerChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 voltageSetpoint, float64 currentSetpoint, bool32 outputEnable)
+{
+  return DAQmxCreateAIPowerChan(task, physicalChannel, nameToAssignToChannel, voltageSetpoint, currentSetpoint, outputEnable);
+}
+
 int32 CreateAIPressureBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
 {
   return DAQmxCreateAIPressureBridgePolynomialChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, forwardCoeffs, numForwardCoeffs, reverseCoeffs, numReverseCoeffs, electricalUnits, physicalUnits, customScaleName);
@@ -1315,6 +1320,21 @@ int32 ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, in
 int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
 {
   return DAQmxReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 ReadPowerBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  return DAQmxReadPowerBinaryI16(task, numSampsPerChan, timeout, fillMode, readArrayVoltage, readArrayCurrent, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 ReadPowerF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArrayVoltage[], float64 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  return DAQmxReadPowerF64(task, numSampsPerChan, timeout, fillMode, readArrayVoltage, readArrayCurrent, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 ReadPowerScalarF64(TaskHandle task, float64 timeout, float64* voltage, float64* current, bool32* reserved)
+{
+  return DAQmxReadPowerScalarF64(task, timeout, voltage, current, reserved);
 }
 
 int32 ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved)

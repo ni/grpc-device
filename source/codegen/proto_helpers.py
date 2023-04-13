@@ -136,12 +136,14 @@ def get_message_parameter_definitions(parameters):
                 parameter_type = f'repeated {parameter["enum"]}'
             grpc_field_number = generate_parameter_field_number(parameter, used_indexes)
             is_get_last_error_output = common_helpers.is_get_last_error_output_param(parameter)
+            is_optional = common_helpers.is_optional_param(parameter)
             parameter_definitions.append(
                 {
                     "name": parameter_name,
                     "type": parameter_type,
                     "grpc_field_number": grpc_field_number,
                     "is_get_last_error_output": is_get_last_error_output,
+                    "is_optional": is_optional,
                 }
             )
     return parameter_definitions

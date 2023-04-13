@@ -156,7 +156,7 @@ try:
     print(f"Maximum Power(dBm)         {maximum_power}")
     print(f"Minimum Power(dBm)         {minimum_power}")
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")

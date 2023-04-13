@@ -5199,6 +5199,41 @@ namespace nirfmxwlan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowers80211be(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211beRequest* request, OFDMModAccFetchPreambleAveragePowers80211beResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 rl_sig_average_power_mean {};
+      float64 u_sig_average_power_mean {};
+      float64 eht_sig_average_power_mean {};
+      float64 eht_stf_average_power_mean {};
+      float64 eht_ltf_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211be(instrument, selector_string, timeout, &rl_sig_average_power_mean, &u_sig_average_power_mean, &eht_sig_average_power_mean, &eht_stf_average_power_mean, &eht_ltf_average_power_mean);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_rl_sig_average_power_mean(rl_sig_average_power_mean);
+      response->set_u_sig_average_power_mean(u_sig_average_power_mean);
+      response->set_eht_sig_average_power_mean(eht_sig_average_power_mean);
+      response->set_eht_stf_average_power_mean(eht_stf_average_power_mean);
+      response->set_eht_ltf_average_power_mean(eht_ltf_average_power_mean);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowers80211n(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211nRequest* request, OFDMModAccFetchPreambleAveragePowers80211nResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5367,6 +5402,41 @@ namespace nirfmxwlan_grpc {
       response->set_he_sig_b_peak_power_maximum(he_sig_b_peak_power_maximum);
       response->set_he_stf_peak_power_maximum(he_stf_peak_power_maximum);
       response->set_he_ltf_peak_power_maximum(he_ltf_peak_power_maximum);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowers80211be(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowers80211beRequest* request, OFDMModAccFetchPreamblePeakPowers80211beResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 rl_sig_peak_power_maximum {};
+      float64 u_sig_peak_power_maximum {};
+      float64 eht_sig_peak_power_maximum {};
+      float64 eht_stf_peak_power_maximum {};
+      float64 eht_ltf_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211be(instrument, selector_string, timeout, &rl_sig_peak_power_maximum, &u_sig_peak_power_maximum, &eht_sig_peak_power_maximum, &eht_stf_peak_power_maximum, &eht_ltf_peak_power_maximum);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_rl_sig_peak_power_maximum(rl_sig_peak_power_maximum);
+      response->set_u_sig_peak_power_maximum(u_sig_peak_power_maximum);
+      response->set_eht_sig_peak_power_maximum(eht_sig_peak_power_maximum);
+      response->set_eht_stf_peak_power_maximum(eht_stf_peak_power_maximum);
+      response->set_eht_ltf_peak_power_maximum(eht_ltf_peak_power_maximum);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

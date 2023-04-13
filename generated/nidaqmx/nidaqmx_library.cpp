@@ -72,6 +72,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateAIPosEddyCurrProxProbeChan = reinterpret_cast<CreateAIPosEddyCurrProxProbeChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPosEddyCurrProxProbeChan"));
   function_pointers_.CreateAIPosLVDTChan = reinterpret_cast<CreateAIPosLVDTChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPosLVDTChan"));
   function_pointers_.CreateAIPosRVDTChan = reinterpret_cast<CreateAIPosRVDTChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPosRVDTChan"));
+  function_pointers_.CreateAIPowerChan = reinterpret_cast<CreateAIPowerChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPowerChan"));
   function_pointers_.CreateAIPressureBridgePolynomialChan = reinterpret_cast<CreateAIPressureBridgePolynomialChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgePolynomialChan"));
   function_pointers_.CreateAIPressureBridgeTableChan = reinterpret_cast<CreateAIPressureBridgeTableChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgeTableChan"));
   function_pointers_.CreateAIPressureBridgeTwoPointLinChan = reinterpret_cast<CreateAIPressureBridgeTwoPointLinChanPtr>(shared_library_.get_function_pointer("DAQmxCreateAIPressureBridgeTwoPointLinChan"));
@@ -284,6 +285,9 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadDigitalU16 = reinterpret_cast<ReadDigitalU16Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU16"));
   function_pointers_.ReadDigitalU32 = reinterpret_cast<ReadDigitalU32Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU32"));
   function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_.get_function_pointer("DAQmxReadDigitalU8"));
+  function_pointers_.ReadPowerBinaryI16 = reinterpret_cast<ReadPowerBinaryI16Ptr>(shared_library_.get_function_pointer("DAQmxReadPowerBinaryI16"));
+  function_pointers_.ReadPowerF64 = reinterpret_cast<ReadPowerF64Ptr>(shared_library_.get_function_pointer("DAQmxReadPowerF64"));
+  function_pointers_.ReadPowerScalarF64 = reinterpret_cast<ReadPowerScalarF64Ptr>(shared_library_.get_function_pointer("DAQmxReadPowerScalarF64"));
   function_pointers_.ReadRaw = reinterpret_cast<ReadRawPtr>(shared_library_.get_function_pointer("DAQmxReadRaw"));
   function_pointers_.RegisterDoneEvent = reinterpret_cast<RegisterDoneEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterDoneEvent"));
   function_pointers_.RegisterEveryNSamplesEvent = reinterpret_cast<RegisterEveryNSamplesEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterEveryNSamplesEvent"));
@@ -826,6 +830,14 @@ int32 NiDAQmxLibrary::CreateAIPosRVDTChan(TaskHandle task, const char physicalCh
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPosRVDTChan.");
   }
   return function_pointers_.CreateAIPosRVDTChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, sensitivity, sensitivityUnits, voltageExcitSource, voltageExcitVal, voltageExcitFreq, acExcitWireMode, customScaleName);
+}
+
+int32 NiDAQmxLibrary::CreateAIPowerChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 voltageSetpoint, float64 currentSetpoint, bool32 outputEnable)
+{
+  if (!function_pointers_.CreateAIPowerChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIPowerChan.");
+  }
+  return function_pointers_.CreateAIPowerChan(task, physicalChannel, nameToAssignToChannel, voltageSetpoint, currentSetpoint, outputEnable);
 }
 
 int32 NiDAQmxLibrary::CreateAIPressureBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[])
@@ -2522,6 +2534,30 @@ int32 NiDAQmxLibrary::ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, floa
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadDigitalU8.");
   }
   return function_pointers_.ReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 NiDAQmxLibrary::ReadPowerBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  if (!function_pointers_.ReadPowerBinaryI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadPowerBinaryI16.");
+  }
+  return function_pointers_.ReadPowerBinaryI16(task, numSampsPerChan, timeout, fillMode, readArrayVoltage, readArrayCurrent, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 NiDAQmxLibrary::ReadPowerF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArrayVoltage[], float64 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
+{
+  if (!function_pointers_.ReadPowerF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadPowerF64.");
+  }
+  return function_pointers_.ReadPowerF64(task, numSampsPerChan, timeout, fillMode, readArrayVoltage, readArrayCurrent, arraySizeInSamps, sampsPerChanRead, reserved);
+}
+
+int32 NiDAQmxLibrary::ReadPowerScalarF64(TaskHandle task, float64 timeout, float64* voltage, float64* current, bool32* reserved)
+{
+  if (!function_pointers_.ReadPowerScalarF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadPowerScalarF64.");
+  }
+  return function_pointers_.ReadPowerScalarF64(task, timeout, voltage, current, reserved);
 }
 
 int32 NiDAQmxLibrary::ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved)

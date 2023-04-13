@@ -5,7 +5,8 @@ config = {
             'service.cpp'
         ]
     },
-    "code_readiness": "RestrictedRelease",
+    "code_readiness": "Release",
+    "is_restricted": True,
     "api_version": "23.0.0",
     "c_header": "niScopeCal.h",
     "c_function_prefix": "niScope_",

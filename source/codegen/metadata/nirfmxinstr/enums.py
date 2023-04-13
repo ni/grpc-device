@@ -527,6 +527,10 @@ enums = {
                 'value': 256
             },
             {
+                'name': 'PULSE',
+                'value': 2048
+            },
+            {
                 'name': 'SPECAN',
                 'value': 1
             },

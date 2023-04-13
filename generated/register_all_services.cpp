@@ -23,6 +23,15 @@
 #include "nirfmxbluetooth/nirfmxbluetooth_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
+#include "nirfmxcdma2k/nirfmxcdma2k_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+#include "nirfmxdemod/nirfmxdemod_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+#include "nirfmxgsm/nirfmxgsm_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
 #include "nirfmxinstr/nirfmxinstr_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
@@ -39,6 +48,12 @@
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
 #include "nirfmxspecan_restricted/nirfmxspecan_restricted_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+#include "nirfmxtdscdma/nirfmxtdscdma_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+#include "nirfmxwcdma/nirfmxwcdma_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
 #include "nirfmxwlan/nirfmxwlan_service_registrar.h"
@@ -123,6 +138,30 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
   service_vector->push_back(
+    nirfmxcdma2k_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
+      vi_session_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nirfmxdemod_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
+      vi_session_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nirfmxgsm_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
+      vi_session_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
     nirfmxinstr_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
@@ -165,6 +204,22 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
     nirfmxspecan_restricted_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nirfmxtdscdma_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
+      vi_session_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nirfmxwcdma_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
+      vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)

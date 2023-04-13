@@ -3535,6 +3535,25 @@ mod_acc_fetch_maximum_evm_per_symbol_trace(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+ModAccFetchMaximumFrequencyErrorPerSlotTraceResponse
+mod_acc_fetch_maximum_frequency_error_per_slot_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchMaximumFrequencyErrorPerSlotTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchMaximumFrequencyErrorPerSlotTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchMaximumFrequencyErrorPerSlotTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchMaximumMagnitudeErrorPerSymbolTraceResponse
 mod_acc_fetch_maximum_magnitude_error_per_symbol_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

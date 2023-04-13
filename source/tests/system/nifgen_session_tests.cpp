@@ -32,13 +32,6 @@ class NiFgenSessionTest : public ::testing::Test {
 
   virtual ~NiFgenSessionTest() {}
 
-  void SetUp() override
-  {
-#ifndef WIN32
-    GTEST_SKIP() << "Fgen is not supported on Linux.";
-#endif
-  }
-
   std::unique_ptr<fgen::NiFgen::Stub>& GetStub()
   {
     return nifgen_stub_;

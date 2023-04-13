@@ -160,11 +160,13 @@ service NiRFmxWLAN {
   rpc OFDMModAccFetchPilotConstellationTrace(OFDMModAccFetchPilotConstellationTraceRequest) returns (OFDMModAccFetchPilotConstellationTraceResponse);
   rpc OFDMModAccFetchPreambleAveragePowers80211ac(OFDMModAccFetchPreambleAveragePowers80211acRequest) returns (OFDMModAccFetchPreambleAveragePowers80211acResponse);
   rpc OFDMModAccFetchPreambleAveragePowers80211ax(OFDMModAccFetchPreambleAveragePowers80211axRequest) returns (OFDMModAccFetchPreambleAveragePowers80211axResponse);
+  rpc OFDMModAccFetchPreambleAveragePowers80211be(OFDMModAccFetchPreambleAveragePowers80211beRequest) returns (OFDMModAccFetchPreambleAveragePowers80211beResponse);
   rpc OFDMModAccFetchPreambleAveragePowers80211n(OFDMModAccFetchPreambleAveragePowers80211nRequest) returns (OFDMModAccFetchPreambleAveragePowers80211nResponse);
   rpc OFDMModAccFetchPreambleAveragePowersCommon(OFDMModAccFetchPreambleAveragePowersCommonRequest) returns (OFDMModAccFetchPreambleAveragePowersCommonResponse);
   rpc OFDMModAccFetchPreambleFrequencyErrorTrace(OFDMModAccFetchPreambleFrequencyErrorTraceRequest) returns (OFDMModAccFetchPreambleFrequencyErrorTraceResponse);
   rpc OFDMModAccFetchPreamblePeakPowers80211ac(OFDMModAccFetchPreamblePeakPowers80211acRequest) returns (OFDMModAccFetchPreamblePeakPowers80211acResponse);
   rpc OFDMModAccFetchPreamblePeakPowers80211ax(OFDMModAccFetchPreamblePeakPowers80211axRequest) returns (OFDMModAccFetchPreamblePeakPowers80211axResponse);
+  rpc OFDMModAccFetchPreamblePeakPowers80211be(OFDMModAccFetchPreamblePeakPowers80211beRequest) returns (OFDMModAccFetchPreamblePeakPowers80211beResponse);
   rpc OFDMModAccFetchPreamblePeakPowers80211n(OFDMModAccFetchPreamblePeakPowers80211nRequest) returns (OFDMModAccFetchPreamblePeakPowers80211nResponse);
   rpc OFDMModAccFetchPreamblePeakPowersCommon(OFDMModAccFetchPreamblePeakPowersCommonRequest) returns (OFDMModAccFetchPreamblePeakPowersCommonResponse);
   rpc OFDMModAccFetchRUOffsetAndSize(OFDMModAccFetchRUOffsetAndSizeRequest) returns (OFDMModAccFetchRUOffsetAndSizeResponse);
@@ -546,6 +548,19 @@ enum NiRFmxWLANAttribute {
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_1 = 10502328;
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_2 = 10502329;
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_3 = 10502330;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_L_SIG_RMS_EVM_MEAN = 10502331;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SIG_RMS_EVM_MEAN = 10502332;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SIG_B_RMS_EVM_MEAN = 10502333;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_U_SIG_RMS_EVM_MEAN = 10502334;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_EHT_SIG_RMS_EVM_MEAN = 10502335;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_U_SIG_AVERAGE_POWER_MEAN = 10502336;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_U_SIG_PEAK_POWER_MAXIMUM = 10502337;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_EHT_SIG_AVERAGE_POWER_MEAN = 10502338;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_EHT_SIG_PEAK_POWER_MAXIMUM = 10502339;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_EHT_STF_AVERAGE_POWER_MEAN = 10502340;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_EHT_STF_PEAK_POWER_MAXIMUM = 10502341;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_EHT_LTF_AVERAGE_POWER_MEAN = 10502342;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_EHT_LTF_PEAK_POWER_MAXIMUM = 10502343;
   NIRFMXWLAN_ATTRIBUTE_SEM_MEASUREMENT_ENABLED = 10506240;
   NIRFMXWLAN_ATTRIBUTE_SEM_MASK_TYPE = 10506242;
   NIRFMXWLAN_ATTRIBUTE_SEM_CARRIER_INTEGRATION_BANDWIDTH = 10506245;
@@ -1050,12 +1065,12 @@ enum NiRFmxWLANInt32AttributeValues {
   NIRFMXWLAN_INT32_OFDMMODACC_VECTOR_AVERAGING_PHASE_ALIGNMENT_ENABLED_TRUE = 1;
   NIRFMXWLAN_INT32_OFDMMODACC_VECTOR_AVERAGING_TIME_ALIGNMENT_ENABLED_FALSE = 0;
   NIRFMXWLAN_INT32_OFDMMODACC_VECTOR_AVERAGING_TIME_ALIGNMENT_ENABLED_TRUE = 1;
-  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT1_PLUS_ONE = 0;
-  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT1_MINUS_ONE = 1;
-  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT2_PLUS_ONE = 0;
-  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT2_MINUS_ONE = 1;
-  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT3_PLUS_ONE = 0;
-  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT3_MINUS_ONE = 1;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT_1_PLUS_ONE = 0;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT_1_MINUS_ONE = 1;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT_2_PLUS_ONE = 0;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT_2_MINUS_ONE = 1;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT_3_PLUS_ONE = 0;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT_3_MINUS_ONE = 1;
   NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_NON_HT = 0;
   NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_MIXED = 1;
   NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_GREENFIELD = 2;
@@ -2868,6 +2883,21 @@ message OFDMModAccFetchPreambleAveragePowers80211axResponse {
   double he_ltf_average_power_mean = 6;
 }
 
+message OFDMModAccFetchPreambleAveragePowers80211beRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreambleAveragePowers80211beResponse {
+  int32 status = 1;
+  double rl_sig_average_power_mean = 2;
+  double u_sig_average_power_mean = 3;
+  double eht_sig_average_power_mean = 4;
+  double eht_stf_average_power_mean = 5;
+  double eht_ltf_average_power_mean = 6;
+}
+
 message OFDMModAccFetchPreambleAveragePowers80211nRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2936,6 +2966,21 @@ message OFDMModAccFetchPreamblePeakPowers80211axResponse {
   double he_sig_b_peak_power_maximum = 4;
   double he_stf_peak_power_maximum = 5;
   double he_ltf_peak_power_maximum = 6;
+}
+
+message OFDMModAccFetchPreamblePeakPowers80211beRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreamblePeakPowers80211beResponse {
+  int32 status = 1;
+  double rl_sig_peak_power_maximum = 2;
+  double u_sig_peak_power_maximum = 3;
+  double eht_sig_peak_power_maximum = 4;
+  double eht_stf_peak_power_maximum = 5;
+  double eht_ltf_peak_power_maximum = 6;
 }
 
 message OFDMModAccFetchPreamblePeakPowers80211nRequest {
