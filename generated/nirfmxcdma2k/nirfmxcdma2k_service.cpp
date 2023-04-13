@@ -6094,7 +6094,7 @@ namespace nirfmxcdma2k_grpc {
   NiRFmxCDMA2kFeatureToggles::NiRFmxCDMA2kFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxcdma2k", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxcdma2k", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxcdma2k_grpc
