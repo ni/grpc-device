@@ -150,6 +150,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   int32 ModAccFetchPUSCHDataConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle puschDataConstellation[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchPUSCHDemodulatedBits(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int8 bits[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchPUSCHPTRSConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle puschptrsConstellation[], int32 arraySize, int32* actualArraySize);
+  int32 ModAccFetchPUSCHPhaseOffsetTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 puschPhaseOffset[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchPeakEVMPerSlotMaximumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 peakEVMPerSlotMaximum[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchPeakEVMPerSubcarrierMaximumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 peakEVMPerSubcarrierMaximum[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchPeakEVMPerSymbolMaximumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 peakEVMPerSymbolMaximum[], int32 arraySize, int32* actualArraySize);
@@ -163,6 +164,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   int32 ModAccFetchSSSRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 sssrmsevmPerSymbolMean[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchSpectralFlatnessTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectralFlatness[], float32 spectralFlatnessLowerMask[], float32 spectralFlatnessUpperMask[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchSubblockInBandEmissionTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 subblockInBandEmission[], float64 subblockInBandEmissionMask[], float64 subblockInBandEmissionRBIndices[], int32 arraySize, int32* actualArraySize);
+  int32 ModAccFetchTransientPeriodLocationsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 transientPeriodLocations[], int32 arraySize, int32* actualArraySize);
   int32 ModAccValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid);
   int32 OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType);
   int32 OBWCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType);
@@ -370,6 +372,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   using ModAccFetchPUSCHDataConstellationTracePtr = decltype(&RFmxNR_ModAccFetchPUSCHDataConstellationTrace);
   using ModAccFetchPUSCHDemodulatedBitsPtr = decltype(&RFmxNR_ModAccFetchPUSCHDemodulatedBits);
   using ModAccFetchPUSCHPTRSConstellationTracePtr = decltype(&RFmxNR_ModAccFetchPUSCHPTRSConstellationTrace);
+  using ModAccFetchPUSCHPhaseOffsetTracePtr = decltype(&RFmxNR_ModAccFetchPUSCHPhaseOffsetTrace);
   using ModAccFetchPeakEVMPerSlotMaximumTracePtr = decltype(&RFmxNR_ModAccFetchPeakEVMPerSlotMaximumTrace);
   using ModAccFetchPeakEVMPerSubcarrierMaximumTracePtr = decltype(&RFmxNR_ModAccFetchPeakEVMPerSubcarrierMaximumTrace);
   using ModAccFetchPeakEVMPerSymbolMaximumTracePtr = decltype(&RFmxNR_ModAccFetchPeakEVMPerSymbolMaximumTrace);
@@ -383,6 +386,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   using ModAccFetchSSSRMSEVMPerSymbolMeanTracePtr = decltype(&RFmxNR_ModAccFetchSSSRMSEVMPerSymbolMeanTrace);
   using ModAccFetchSpectralFlatnessTracePtr = decltype(&RFmxNR_ModAccFetchSpectralFlatnessTrace);
   using ModAccFetchSubblockInBandEmissionTracePtr = decltype(&RFmxNR_ModAccFetchSubblockInBandEmissionTrace);
+  using ModAccFetchTransientPeriodLocationsTracePtr = decltype(&RFmxNR_ModAccFetchTransientPeriodLocationsTrace);
   using ModAccValidateCalibrationDataPtr = decltype(&RFmxNR_ModAccValidateCalibrationData);
   using OBWCfgAveragingPtr = decltype(&RFmxNR_OBWCfgAveraging);
   using OBWCfgRBWFilterPtr = decltype(&RFmxNR_OBWCfgRBWFilter);
@@ -590,6 +594,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     ModAccFetchPUSCHDataConstellationTracePtr ModAccFetchPUSCHDataConstellationTrace;
     ModAccFetchPUSCHDemodulatedBitsPtr ModAccFetchPUSCHDemodulatedBits;
     ModAccFetchPUSCHPTRSConstellationTracePtr ModAccFetchPUSCHPTRSConstellationTrace;
+    ModAccFetchPUSCHPhaseOffsetTracePtr ModAccFetchPUSCHPhaseOffsetTrace;
     ModAccFetchPeakEVMPerSlotMaximumTracePtr ModAccFetchPeakEVMPerSlotMaximumTrace;
     ModAccFetchPeakEVMPerSubcarrierMaximumTracePtr ModAccFetchPeakEVMPerSubcarrierMaximumTrace;
     ModAccFetchPeakEVMPerSymbolMaximumTracePtr ModAccFetchPeakEVMPerSymbolMaximumTrace;
@@ -603,6 +608,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     ModAccFetchSSSRMSEVMPerSymbolMeanTracePtr ModAccFetchSSSRMSEVMPerSymbolMeanTrace;
     ModAccFetchSpectralFlatnessTracePtr ModAccFetchSpectralFlatnessTrace;
     ModAccFetchSubblockInBandEmissionTracePtr ModAccFetchSubblockInBandEmissionTrace;
+    ModAccFetchTransientPeriodLocationsTracePtr ModAccFetchTransientPeriodLocationsTrace;
     ModAccValidateCalibrationDataPtr ModAccValidateCalibrationData;
     OBWCfgAveragingPtr OBWCfgAveraging;
     OBWCfgRBWFilterPtr OBWCfgRBWFilter;

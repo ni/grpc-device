@@ -69,6 +69,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 CreateAIPosEddyCurrProxProbeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, const char customScaleName[]);
   int32 CreateAIPosLVDTChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, float64 voltageExcitFreq, int32 acExcitWireMode, const char customScaleName[]);
   int32 CreateAIPosRVDTChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 voltageExcitSource, float64 voltageExcitVal, float64 voltageExcitFreq, int32 acExcitWireMode, const char customScaleName[]);
+  int32 CreateAIPowerChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 voltageSetpoint, float64 currentSetpoint, bool32 outputEnable);
   int32 CreateAIPressureBridgePolynomialChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 forwardCoeffs[], uInt32 numForwardCoeffs, const float64 reverseCoeffs[], uInt32 numReverseCoeffs, int32 electricalUnits, int32 physicalUnits, const char customScaleName[]);
   int32 CreateAIPressureBridgeTableChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const float64 electricalVals[], uInt32 numElectricalVals, int32 electricalUnits, const float64 physicalVals[], uInt32 numPhysicalVals, int32 physicalUnits, const char customScaleName[]);
   int32 CreateAIPressureBridgeTwoPointLinChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, float64 firstElectricalVal, float64 secondElectricalVal, int32 electricalUnits, float64 firstPhysicalVal, float64 secondPhysicalVal, int32 physicalUnits, const char customScaleName[]);
@@ -281,6 +282,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
   int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  int32 ReadPowerBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  int32 ReadPowerF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArrayVoltage[], float64 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
+  int32 ReadPowerScalarF64(TaskHandle task, float64 timeout, float64* voltage, float64* current, bool32* reserved);
   int32 ReadRaw(TaskHandle task, int32 numSampsPerChan, float64 timeout, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsRead, int32* numBytesPerSamp, bool32* reserved);
   int32 RegisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
   int32 RegisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData);
@@ -457,6 +461,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using CreateAIPosEddyCurrProxProbeChanPtr = decltype(&DAQmxCreateAIPosEddyCurrProxProbeChan);
   using CreateAIPosLVDTChanPtr = decltype(&DAQmxCreateAIPosLVDTChan);
   using CreateAIPosRVDTChanPtr = decltype(&DAQmxCreateAIPosRVDTChan);
+  using CreateAIPowerChanPtr = decltype(&DAQmxCreateAIPowerChan);
   using CreateAIPressureBridgePolynomialChanPtr = decltype(&DAQmxCreateAIPressureBridgePolynomialChan);
   using CreateAIPressureBridgeTableChanPtr = decltype(&DAQmxCreateAIPressureBridgeTableChan);
   using CreateAIPressureBridgeTwoPointLinChanPtr = decltype(&DAQmxCreateAIPressureBridgeTwoPointLinChan);
@@ -669,6 +674,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ReadDigitalU16Ptr = decltype(&DAQmxReadDigitalU16);
   using ReadDigitalU32Ptr = decltype(&DAQmxReadDigitalU32);
   using ReadDigitalU8Ptr = decltype(&DAQmxReadDigitalU8);
+  using ReadPowerBinaryI16Ptr = decltype(&DAQmxReadPowerBinaryI16);
+  using ReadPowerF64Ptr = decltype(&DAQmxReadPowerF64);
+  using ReadPowerScalarF64Ptr = decltype(&DAQmxReadPowerScalarF64);
   using ReadRawPtr = decltype(&DAQmxReadRaw);
   using RegisterDoneEventPtr = decltype(&DAQmxRegisterDoneEvent);
   using RegisterEveryNSamplesEventPtr = decltype(&DAQmxRegisterEveryNSamplesEvent);
@@ -845,6 +853,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     CreateAIPosEddyCurrProxProbeChanPtr CreateAIPosEddyCurrProxProbeChan;
     CreateAIPosLVDTChanPtr CreateAIPosLVDTChan;
     CreateAIPosRVDTChanPtr CreateAIPosRVDTChan;
+    CreateAIPowerChanPtr CreateAIPowerChan;
     CreateAIPressureBridgePolynomialChanPtr CreateAIPressureBridgePolynomialChan;
     CreateAIPressureBridgeTableChanPtr CreateAIPressureBridgeTableChan;
     CreateAIPressureBridgeTwoPointLinChanPtr CreateAIPressureBridgeTwoPointLinChan;
@@ -1057,6 +1066,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ReadDigitalU16Ptr ReadDigitalU16;
     ReadDigitalU32Ptr ReadDigitalU32;
     ReadDigitalU8Ptr ReadDigitalU8;
+    ReadPowerBinaryI16Ptr ReadPowerBinaryI16;
+    ReadPowerF64Ptr ReadPowerF64;
+    ReadPowerScalarF64Ptr ReadPowerScalarF64;
     ReadRawPtr ReadRaw;
     RegisterDoneEventPtr RegisterDoneEvent;
     RegisterEveryNSamplesEventPtr RegisterEveryNSamplesEvent;

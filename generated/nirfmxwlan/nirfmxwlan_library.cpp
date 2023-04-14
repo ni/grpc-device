@@ -164,11 +164,13 @@ NiRFmxWLANLibrary::NiRFmxWLANLibrary() : shared_library_(kLibraryName)
   function_pointers_.OFDMModAccFetchPilotConstellationTrace = reinterpret_cast<OFDMModAccFetchPilotConstellationTracePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPilotConstellationTrace"));
   function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ac = reinterpret_cast<OFDMModAccFetchPreambleAveragePowers80211acPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ac"));
   function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ax = reinterpret_cast<OFDMModAccFetchPreambleAveragePowers80211axPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ax"));
+  function_pointers_.OFDMModAccFetchPreambleAveragePowers80211be = reinterpret_cast<OFDMModAccFetchPreambleAveragePowers80211bePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11be"));
   function_pointers_.OFDMModAccFetchPreambleAveragePowers80211n = reinterpret_cast<OFDMModAccFetchPreambleAveragePowers80211nPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11n"));
   function_pointers_.OFDMModAccFetchPreambleAveragePowersCommon = reinterpret_cast<OFDMModAccFetchPreambleAveragePowersCommonPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreambleAveragePowersCommon"));
   function_pointers_.OFDMModAccFetchPreambleFrequencyErrorTrace = reinterpret_cast<OFDMModAccFetchPreambleFrequencyErrorTracePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreambleFrequencyErrorTrace"));
   function_pointers_.OFDMModAccFetchPreamblePeakPowers80211ac = reinterpret_cast<OFDMModAccFetchPreamblePeakPowers80211acPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ac"));
   function_pointers_.OFDMModAccFetchPreamblePeakPowers80211ax = reinterpret_cast<OFDMModAccFetchPreamblePeakPowers80211axPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ax"));
+  function_pointers_.OFDMModAccFetchPreamblePeakPowers80211be = reinterpret_cast<OFDMModAccFetchPreamblePeakPowers80211bePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11be"));
   function_pointers_.OFDMModAccFetchPreamblePeakPowers80211n = reinterpret_cast<OFDMModAccFetchPreamblePeakPowers80211nPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11n"));
   function_pointers_.OFDMModAccFetchPreamblePeakPowersCommon = reinterpret_cast<OFDMModAccFetchPreamblePeakPowersCommonPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreamblePeakPowersCommon"));
   function_pointers_.OFDMModAccFetchRUOffsetAndSize = reinterpret_cast<OFDMModAccFetchRUOffsetAndSizePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchRUOffsetAndSize"));
@@ -1409,6 +1411,14 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211ax(niRFmxInstr
   return function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ax(instrumentHandle, selectorString, timeout, rlsigAveragePowerMean, hesigaAveragePowerMean, hesigbAveragePowerMean, hestfAveragePowerMean, heltfAveragePowerMean);
 }
 
+int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211be(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigAveragePowerMean, float64* usigAveragePowerMean, float64* ehtsigAveragePowerMean, float64* ehtstfAveragePowerMean, float64* ehtltfAveragePowerMean)
+{
+  if (!function_pointers_.OFDMModAccFetchPreambleAveragePowers80211be) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11be.");
+  }
+  return function_pointers_.OFDMModAccFetchPreambleAveragePowers80211be(instrumentHandle, selectorString, timeout, rlsigAveragePowerMean, usigAveragePowerMean, ehtsigAveragePowerMean, ehtstfAveragePowerMean, ehtltfAveragePowerMean);
+}
+
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreambleAveragePowers80211n(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* htsigAveragePowerMean, float64* htstfAveragePowerMean, float64* htdltfAveragePowerMean, float64* hteltfAveragePowerMean)
 {
   if (!function_pointers_.OFDMModAccFetchPreambleAveragePowers80211n) {
@@ -1447,6 +1457,14 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211ax(niRFmxInstrHan
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ax.");
   }
   return function_pointers_.OFDMModAccFetchPreamblePeakPowers80211ax(instrumentHandle, selectorString, timeout, rlsigPeakPowerMaximum, hesigaPeakPowerMaximum, hesigbPeakPowerMaximum, hestfPeakPowerMaximum, heltfPeakPowerMaximum);
+}
+
+int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211be(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigPeakPowerMaximum, float64* usigPeakPowerMaximum, float64* ehtsigPeakPowerMaximum, float64* ehtstfPeakPowerMaximum, float64* ehtltfPeakPowerMaximum)
+{
+  if (!function_pointers_.OFDMModAccFetchPreamblePeakPowers80211be) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11be.");
+  }
+  return function_pointers_.OFDMModAccFetchPreamblePeakPowers80211be(instrumentHandle, selectorString, timeout, rlsigPeakPowerMaximum, usigPeakPowerMaximum, ehtsigPeakPowerMaximum, ehtstfPeakPowerMaximum, ehtltfPeakPowerMaximum);
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchPreamblePeakPowers80211n(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* htsigPeakPowerMaximum, float64* htstfPeakPowerMaximum, float64* htdltfPeakPowerMaximum, float64* hteltfPeakPowerMaximum)

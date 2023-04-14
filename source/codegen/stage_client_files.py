@@ -6,7 +6,7 @@ from shutil import copy2, copytree
 from tempfile import TemporaryDirectory
 from typing import Dict, Iterable, List
 
-from common_helpers import get_driver_readiness
+from common_helpers import get_driver_readiness, is_driver_restricted
 from template_helpers import load_metadata
 
 
@@ -14,6 +14,7 @@ class _ArtifactReadiness:
     """Class to determine whether a Path with a module-named artifact directory is release-ready."""
 
     _module_to_readiness = {}  # type: Dict[str, str]
+    _module_to_restricted = {}  # type: Dict[str, bool]
 
     def __init__(self, metadata_dir: Path, ignore_release_readiness: bool):
         modules = [
@@ -22,6 +23,10 @@ class _ArtifactReadiness:
 
         self._module_to_readiness = {
             d["config"]["module_name"]: get_driver_readiness(d["config"]) for d in modules
+        }
+
+        self._module_to_restricted = {
+            d["config"]["module_name"]: is_driver_restricted(d["config"]) for d in modules
         }
 
         self.ignore_release_readiness = ignore_release_readiness
@@ -46,7 +51,10 @@ class _ArtifactReadiness:
         if module_name not in self._module_to_readiness:
             raise KeyError(f"No module config.py metadata for module_name: {module_path}")
 
-        return self._module_to_readiness[module_name] == "Release"
+        return (
+            not self._module_to_restricted[module_name]
+            and self._module_to_readiness[module_name] == "Release"
+        )
 
     def get_release_ready_subdirs(self, directory: Path) -> Iterable[Path]:
         """Return all subdirectories of directory for which is_release_ready is True."""

@@ -22,6 +22,14 @@ def _get_test_changes(changed_files: Set[str]) -> Set[str]:
     return set(fnmatch.filter(changed_files, "source/tests/*"))
 
 
+def _get_import_changes(changed_files: Set[str]) -> Set[str]:
+    return set(fnmatch.filter(changed_files, "imports/*"))
+
+
+def _get_markdown_changes(changed_files: Set[str]) -> Set[str]:
+    return set(fnmatch.filter(changed_files, "*.md"))
+
+
 def _get_non_rt_driver_changes(driver_name: str, changed_files: Set[str]) -> Set[str]:
     files_affecting_linux_rt = [
         f"generated/{driver_name}/*",
@@ -39,14 +47,21 @@ def _need_linux_rt_feed_update(metadata_dir: str, changed_files: Set[str]) -> bo
     codegen_changes = _get_codegen_changes(changed_files)
     _print_changed_files("Codegen changes not affecting RT:", codegen_changes)
     remaining_changes = changed_files - codegen_changes
-    test_changes = _get_test_changes(changed_files)
+    test_changes = _get_test_changes(remaining_changes)
     _print_changed_files("Test related changes not affecting RT:", test_changes)
     remaining_changes -= test_changes
+    import_changes = _get_import_changes(remaining_changes)
+    _print_changed_files("Import related changes not affecting RT:", import_changes)
+    remaining_changes -= import_changes
+    markdown_changes = _get_markdown_changes(remaining_changes)
+    _print_changed_files("Markdown changes not affecting RT:", markdown_changes)
+    remaining_changes -= markdown_changes
 
     non_rt_drivers = [
         driver
         for driver in os.listdir(metadata_dir)
-        if not load_metadata(f"{metadata_dir}/{driver}/")["config"]["linux_rt_support"]
+        if os.path.isdir(os.path.join(metadata_dir, driver))
+        and not load_metadata(f"{metadata_dir}/{driver}/")["config"].get("linux_rt_support", False)
     ]
     non_rt_driver_changes = set()
     for non_rt_driver in non_rt_drivers:

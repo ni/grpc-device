@@ -41,6 +41,10 @@
 #define RFMXLTE_ATTR_MODACC_AVERAGING_COUNT                                                 0x0030400b
 #define RFMXLTE_ATTR_MODACC_ALL_TRACES_ENABLED                                              0x0030400d
 #define RFMXLTE_ATTR_MODACC_NUMBER_OF_ANALYSIS_THREADS                                      0x0030400e
+#define RFMXLTE_ATTR_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL                               0x0030407f
+#define RFMXLTE_ATTR_MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED                           0x00304080
+#define RFMXLTE_ATTR_MODACC_TIMING_TRACKING_ENABLED                                         0x00304081
+#define RFMXLTE_ATTR_MODACC_PHASE_TRACKING_ENABLED                                          0x00304082
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_RMS_COMPOSITE_EVM                                  0x0030400f
 #define RFMXLTE_ATTR_MODACC_RESULTS_MAXIMUM_PEAK_COMPOSITE_EVM                              0x00304010
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_RMS_COMPOSITE_MAGNITUDE_ERROR                      0x0030403a
@@ -62,7 +66,9 @@
 #define RFMXLTE_ATTR_MODACC_RESULTS_SPECTRAL_FLATNESS_RANGE1_MAXIMUM_TO_RANGE2_MINIMUM      0x0030402e
 #define RFMXLTE_ATTR_MODACC_RESULTS_SPECTRAL_FLATNESS_RANGE2_MAXIMUM_TO_RANGE1_MINIMUM      0x0030402f
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_FREQUENCY_ERROR                                    0x00304022
+#define RFMXLTE_ATTR_MODACC_RESULTS_MAXIMUM_PEAK_FREQUENCY_ERROR                            0x00304083
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_IQ_ORIGIN_OFFSET                                   0x00304023
+#define RFMXLTE_ATTR_MODACC_RESULTS_MAXIMUM_PEAK_IQ_ORIGIN_OFFSET                           0x00304030
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_IQ_GAIN_IMBALANCE                                  0x00304024
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_QUADRATURE_ERROR                                   0x00304025
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_IQ_TIMING_SKEW                                     0x00304026
@@ -538,6 +544,23 @@
 #define RFMXLTE_VAL_MODACC_AVERAGING_ENABLED_FALSE                                                 0
 #define RFMXLTE_VAL_MODACC_AVERAGING_ENABLED_TRUE                                                  1
 
+// Values for RFMXLTE_ATTR_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL
+#define RFMXLTE_VAL_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL_SLOT                                  0
+#define RFMXLTE_VAL_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL_SUBFRAME                              1
+#define RFMXLTE_VAL_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL_MEASUREMENT_LENGTH                    2
+
+// Values for RFMXLTE_ATTR_MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED
+#define RFMXLTE_VAL_MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED_FALSE                             0
+#define RFMXLTE_VAL_MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED_TRUE                              1
+
+// Values for RFMXLTE_ATTR_MODACC_TIMING_TRACKING_ENABLED
+#define RFMXLTE_VAL_MODACC_TIMING_TRACKING_ENABLED_FALSE                                           0
+#define RFMXLTE_VAL_MODACC_TIMING_TRACKING_ENABLED_TRUE                                            1
+
+// Values for RFMXLTE_ATTR_MODACC_PHASE_TRACKING_ENABLED
+#define RFMXLTE_VAL_MODACC_PHASE_TRACKING_ENABLED_FALSE                                            0
+#define RFMXLTE_VAL_MODACC_PHASE_TRACKING_ENABLED_TRUE                                             1
+
 // Values for RFMXLTE_ATTR_ACP_RBW_FILTER_AUTO_BANDWIDTH
 #define RFMXLTE_VAL_ACP_RBW_FILTER_AUTO_BANDWIDTH_FALSE                                            0
 #define RFMXLTE_VAL_ACP_RBW_FILTER_AUTO_BANDWIDTH_TRUE                                             1
@@ -873,8 +896,11 @@
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_CUSTOM                                                    5
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_GENERAL_CACLASSB                                          6
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_CANCNS01                                                  7
-#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS27                                                      8
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS27_OR_NS43                                              8
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS35                                                      9
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS28                                                      10
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_CANS09                                                    11
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_CANS10                                                    12
 
 // Values for RFMXLTE_ATTR_SEM_DOWNLINK_MASK_TYPE
 #define RFMXLTE_VAL_SEM_DOWNLINK_MASK_TYPE_ENODEB_CATEGORY_BASED                                   0
@@ -3006,6 +3032,17 @@ int32 __stdcall RFmxLTE_ModAccFetchSynchronizationSignalEVMArray(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxLTE_ModAccFetchMaximumFrequencyErrorPerSlotTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 maximumFrequencyErrorPerSlot[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxLTE_ModAccFetchSRSEVMArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3775,6 +3812,54 @@ int32 __stdcall RFmxLTE_ModAccSetNumberOfAnalysisThreads(
    int32 attrVal
 );
 
+int32 __stdcall RFmxLTE_ModAccGetPreFFTErrorEstimationInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccSetPreFFTErrorEstimationInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetSymbolClockErrorEstimationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccSetSymbolClockErrorEstimationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetTimingTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccSetTimingTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetPhaseTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccSetPhaseTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxLTE_ModAccGetResultsMeanRMSCompositeEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3901,7 +3986,19 @@ int32 __stdcall RFmxLTE_ModAccGetResultsMeanFrequencyError(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxLTE_ModAccGetResultsMaximumPeakFrequencyError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxLTE_ModAccGetResultsMeanIQOriginOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetResultsMaximumPeakIQOriginOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -7271,6 +7368,7 @@ int32 __stdcall RFmxLTE_SlotPowerSetAllTracesEnabled(
 
 // Values for RFMXLTE_ATTR_SEM_UPLINK_MASK_TYPE
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS03_OR_NS11_OR_NS20                                      1
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS27                                                      8
 
 // Values for RFMXLTE_ATTR_SUBBLOCK_FREQUENCY_DEFINITION
 #define RFMXLTE_VAL_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE                                         0

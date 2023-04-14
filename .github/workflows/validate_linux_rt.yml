@@ -54,6 +54,13 @@ jobs:
       run: |
         git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate_linux_rt.py source/codegen/metadata
 
+    - name: Get branch name
+      id: getbranchname
+      run: |
+        raw=$(git branch -r --contains ${{ github.ref }})
+        branch_sans_origin=${raw/origin\/}
+        echo ::set-output name=branch::$branch_sans_origin
+
     - name: Create GitHub Issue
       if: ${{ env.SHOULD_UPDATE_LINUX_RT == 'True'}}
       uses: JasonEtco/create-an-issue@v2
@@ -61,5 +68,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NEW_RELEASE: ${{ steps.latesttagwithoutv.outputs.tag }}
         GITHUB_SHA: ${{ github.sha}}
+        GITHUB_BRANCH: ${{ steps.getbranchname.outputs.branch }}
       with:
         filename: .github/update-linux-rt-template.md

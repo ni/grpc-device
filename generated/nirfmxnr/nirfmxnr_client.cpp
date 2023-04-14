@@ -2695,6 +2695,25 @@ mod_acc_fetch_puschptrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPUSCHPhaseOffsetTraceResponse
+mod_acc_fetch_pusch_phase_offset_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPUSCHPhaseOffsetTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPUSCHPhaseOffsetTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPUSCHPhaseOffsetTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPeakEVMPerSlotMaximumTraceResponse
 mod_acc_fetch_peak_evm_per_slot_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2937,6 +2956,25 @@ mod_acc_fetch_subblock_in_band_emission_trace(const StubPtr& stub, const nidevic
 
   raise_if_error(
       stub->ModAccFetchSubblockInBandEmissionTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchTransientPeriodLocationsTraceResponse
+mod_acc_fetch_transient_period_locations_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchTransientPeriodLocationsTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchTransientPeriodLocationsTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchTransientPeriodLocationsTrace(&context, request, &response),
       context);
 
   return response;

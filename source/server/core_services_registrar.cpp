@@ -1,5 +1,6 @@
 #include "core_services_registrar.h"
 
+#include "calibration_operations_restricted_service_registrar.h"
 #include "debug_session_properties_restricted_service_registrar.h"
 #include "server_reset_observer_registrar_interface.h"
 #include "session_utilities_service_registrar.h"
@@ -16,6 +17,10 @@ void register_core_services(
     server_builder,
     session_repository,
     &server_reset_observer_registrar));
+  service_vector->push_back(nidevice_restricted_grpc::register_calibration_operations_restricted_service(
+    server_builder,
+    feature_toggles,
+    *server_reset_observer_registrar));
   service_vector->push_back(nidevice_restricted_grpc::register_debug_session_properties_restricted_service(
     server_builder,
     feature_toggles,

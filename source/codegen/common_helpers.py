@@ -470,7 +470,7 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
     """Return function metadata only for functions to include for generating proto rpc methods."""
-    functions_for_proto = {"public", "CustomCode", "CustomCodeCustomProtoMessage"}
+    functions_for_proto = {"public", "CustomCode", "CustomCodeCustomProtoMessage", "grpc-only"}
     return [
         name
         for name, function in functions.items()
@@ -480,7 +480,7 @@ def filter_proto_rpc_functions(functions):
 
 def filter_proto_rpc_functions_for_message(functions):
     """Return function metadata only for functions to include for generating proto rpc messages."""
-    functions_for_proto = {"public", "CustomCode"}
+    functions_for_proto = {"public", "CustomCode", "grpc-only"}
     return [
         name
         for name, function in functions.items()
@@ -580,8 +580,8 @@ def _has_strlen_bug(parameter: dict) -> bool:
     return has_size_mechanism_tag(parameter, "strlen-bug")
 
 
-def is_optional(parameter: dict) -> bool:
-    """Whether the given parameter is marked as optional."""
+def has_optional_size_tag(parameter: dict) -> bool:
+    """Whether the given parameter has a size mechanism tag "optional"."""
     return has_size_mechanism_tag(parameter, "optional")
 
 
@@ -1100,6 +1100,11 @@ def get_driver_readiness(config: dict) -> str:
     return config.get("code_readiness", "Release")
 
 
+def is_driver_restricted(config: dict) -> str:
+    """Get the is_restricted config setting."""
+    return config.get("is_restricted", False)
+
+
 def get_grpc_field_name(param: dict) -> str:
     """Get the name of the protobuf field for the given param.
 
@@ -1147,8 +1152,13 @@ def is_return_value(parameter: dict) -> bool:
 
 
 def is_get_last_error_output_param(parameter: dict) -> bool:
-    """Return True if pararameter is a get_last_error parameter."""
+    """Return True if parameter is a get_last_error parameter."""
     return "get_last_error" in parameter
+
+
+def is_optional_param(parameter: dict) -> bool:
+    """Whether the parameter is marked is_optional."""
+    return parameter.get("is_optional", False)
 
 
 def get_driver_api_params(parameters: List[dict]) -> List[dict]:

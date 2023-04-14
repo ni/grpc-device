@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12.0)
 
 project(ni_grpc_device_server
   LANGUAGES C CXX
-  VERSION 2.1.0)
+  VERSION 2.2.0)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CreateVirtualEnvironment)
@@ -91,7 +91,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -223,7 +223,9 @@ set(nidriver_service_srcs
 get_filename_component(session_proto "imports/protobuf/session.proto" ABSOLUTE)
 get_filename_component(session_utilities_proto "source/protobuf/session_utilities.proto" ABSOLUTE)
 get_filename_component(nidevice_proto "imports/protobuf/nidevice.proto" ABSOLUTE)
+get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/deviceid_restricted.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
+get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -263,11 +265,18 @@ set(session_utilities_grpc_srcs "${proto_srcs_dir}/session_utilities.grpc.pb.cc"
 set(session_utilities_grpc_hdrs "${proto_srcs_dir}/session_utilities.grpc.pb.h")
 set(nidevice_proto_srcs "${proto_srcs_dir}/nidevice.pb.cc")
 set(nidevice_proto_hdrs "${proto_srcs_dir}/nidevice.pb.h")
+set(deviceid_restricted_proto_srcs "${proto_srcs_dir}/deviceid_restricted.pb.cc")
+set(deviceid_restricted_proto_hdrs "${proto_srcs_dir}/deviceid_restricted.pb.h")
+set(deviceid_restricted_grpc_srcs "${proto_srcs_dir}/deviceid_restricted.grpc.pb.cc")
+set(deviceid_restricted_grpc_hdrs "${proto_srcs_dir}/deviceid_restricted.grpc.pb.h")
 set(debugsessionproperties_restricted_proto_srcs "${proto_srcs_dir}/debugsessionproperties_restricted.pb.cc")
 set(debugsessionproperties_restricted_proto_hdrs "${proto_srcs_dir}/debugsessionproperties_restricted.pb.h")
 set(debugsessionproperties_restricted_grpc_srcs "${proto_srcs_dir}/debugsessionproperties_restricted.grpc.pb.cc")
 set(debugsessionproperties_restricted_grpc_hdrs "${proto_srcs_dir}/debugsessionproperties_restricted.grpc.pb.h")
-
+set(calibrationoperations_restricted_proto_srcs "${proto_srcs_dir}/calibrationoperations_restricted.pb.cc")
+set(calibrationoperations_restricted_proto_hdrs "${proto_srcs_dir}/calibrationoperations_restricted.pb.h")
+set(calibrationoperations_restricted_grpc_srcs "${proto_srcs_dir}/calibrationoperations_restricted.grpc.pb.cc")
+set(calibrationoperations_restricted_grpc_hdrs "${proto_srcs_dir}/calibrationoperations_restricted.grpc.pb.h")
 
 GenerateGrpcSources(
   PROTO
@@ -299,12 +308,32 @@ GenerateGrpcSources(
 
 GenerateGrpcSources(
   PROTO
+    ${deviceid_restricted_proto}
+  OUTPUT
+    "${deviceid_restricted_proto_srcs}"
+    "${deviceid_restricted_proto_hdrs}"
+    "${deviceid_restricted_grpc_srcs}"
+    "${deviceid_restricted_grpc_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
     ${debugsessionproperties_restricted_proto}
   OUTPUT
     "${debugsessionproperties_restricted_proto_srcs}"
     "${debugsessionproperties_restricted_proto_hdrs}"
     "${debugsessionproperties_restricted_grpc_srcs}"
     "${debugsessionproperties_restricted_grpc_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
+    ${calibrationoperations_restricted_proto}
+  OUTPUT
+    "${calibrationoperations_restricted_proto_srcs}"
+    "${calibrationoperations_restricted_proto_hdrs}"
+    "${calibrationoperations_restricted_grpc_srcs}"
+    "${calibrationoperations_restricted_grpc_hdrs}"
 )
 
 set(nidriver_service_library_hdrs
@@ -314,8 +343,12 @@ set(nidriver_service_library_hdrs
   "${session_utilities_proto_hdrs}"
   "${session_utilities_grpc_hdrs}"
   "${nidevice_proto_hdrs}"
+  "${deviceid_restricted_proto_hdrs}"
+  "${deviceid_restricted_grpc_hdrs}"
   "${debugsessionproperties_restricted_proto_hdrs}"
   "${debugsessionproperties_restricted_grpc_hdrs}"
+  "${calibrationoperations_restricted_proto_hdrs}"
+  "${calibrationoperations_restricted_grpc_hdrs}"
 )
 
 foreach(api ${nidrivers})
@@ -342,6 +375,8 @@ endforeach()
 
 add_executable(ni_grpc_device_server
    "imports/include/nierr_Status.cpp"
+   "source/server/calibration_operations_restricted_service_registrar.cpp"
+   "source/server/calibration_operations_restricted_service.cpp"
    "source/server/core_server.cpp"
    "source/server/core_services_registrar.cpp"
    "source/server/debug_session_properties_restricted_service_registrar.cpp"
@@ -358,14 +393,19 @@ add_executable(ni_grpc_device_server
    "source/server/shared_library.cpp"
    "source/server/software_enumerator.cpp"
    "source/server/syscfg_library.cpp"
+   "source/server/syscfg_resource_accessor.cpp"
    "source/server/syscfg_session_handler.cpp"
    ${nidevice_proto_srcs}
    ${session_proto_srcs}
    ${session_grpc_srcs}
    ${session_utilities_proto_srcs}
    ${session_utilities_grpc_srcs}
+   ${deviceid_restricted_proto_srcs}
+   ${deviceid_restricted_grpc_srcs}
    ${debugsessionproperties_restricted_proto_srcs}
    ${debugsessionproperties_restricted_grpc_srcs}
+   ${calibrationoperations_restricted_proto_srcs}
+   ${calibrationoperations_restricted_grpc_srcs}
    ${nidriver_service_srcs})
 
 if(WIN32)
@@ -451,8 +491,12 @@ add_executable(IntegrationTestsRunner
     ${session_grpc_srcs}
     ${session_utilities_proto_srcs}
     ${session_utilities_grpc_srcs}
+    ${deviceid_restricted_proto_srcs}
+    ${deviceid_restricted_grpc_srcs}
     ${debugsessionproperties_restricted_proto_srcs}
     ${debugsessionproperties_restricted_grpc_srcs}
+    ${calibrationoperations_restricted_proto_srcs}
+    ${calibrationoperations_restricted_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
@@ -488,6 +532,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/converters_tests.cpp"
     "source/tests/unit/session_resource_repository_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
+    "source/tests/unit/calibration_operations_tests.cpp"
     "source/tests/unit/debug_session_properties_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"
     "source/tests/unit/software_enumerator_tests.cpp"
@@ -498,8 +543,10 @@ add_executable(UnitTestsRunner
     "source/tests/unit/nimxlc_terminal_adaptor_converters_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
+    "source/tests/unit/syscfg_resource_accessor_tests.cpp"
     "source/tests/unit/xnet_converters_tests.cpp"
     "source/tests/unit/xnet_socket_converters_tests.cpp"
+    "source/server/calibration_operations_restricted_service.cpp"
     "source/server/debug_session_properties_restricted_service.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
@@ -510,14 +557,19 @@ add_executable(UnitTestsRunner
     "source/server/shared_library.cpp"
     "source/server/software_enumerator.cpp"
     "source/server/syscfg_library.cpp"
+    "source/server/syscfg_resource_accessor.cpp"
     "source/server/syscfg_session_handler.cpp"
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
     ${session_utilities_proto_srcs}
     ${session_utilities_grpc_srcs}
+    ${deviceid_restricted_proto_srcs}
+    ${deviceid_restricted_grpc_srcs}
     ${debugsessionproperties_restricted_proto_srcs}
     ${debugsessionproperties_restricted_grpc_srcs}
+    ${calibrationoperations_restricted_proto_srcs}
+    ${calibrationoperations_restricted_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_extension.pb.cc"
@@ -612,6 +664,8 @@ set(system_test_runner_sources
   "source/tests/system/nixnet_can_driver_api_tests.cpp"
   "source/tests/system/nixnet_ethernet_driver_api_tests.cpp"
   "source/tests/system/nixnetsocket_driver_api_tests.cpp"
+  "source/server/calibration_operations_restricted_service_registrar.cpp"
+  "source/server/calibration_operations_restricted_service.cpp"
   "source/server/debug_session_properties_restricted_service_registrar.cpp"
   "source/server/debug_session_properties_restricted_service.cpp"
   "source/server/device_enumerator.cpp"
@@ -623,14 +677,19 @@ set(system_test_runner_sources
   "source/server/shared_library.cpp"
   "source/server/software_enumerator.cpp"
   "source/server/syscfg_library.cpp"
+  "source/server/syscfg_resource_accessor.cpp"
   "source/server/syscfg_session_handler.cpp"
   ${nidevice_proto_srcs}
   ${session_proto_srcs}
   ${session_grpc_srcs}
   ${session_utilities_proto_srcs}
   ${session_utilities_grpc_srcs}
+  ${deviceid_restricted_proto_srcs}
+  ${deviceid_restricted_grpc_srcs}
   ${debugsessionproperties_restricted_proto_srcs}
   ${debugsessionproperties_restricted_grpc_srcs}
+  ${calibrationoperations_restricted_proto_srcs}
+  ${calibrationoperations_restricted_grpc_srcs}
   ${nidriver_service_srcs}
   ${nidriver_client_srcs}
 )
@@ -642,6 +701,10 @@ if(WIN32)
         "source/tests/system/nimxlcterminaladaptor_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxbluetooth_driver_api_tests.cpp"
         "source/tests/system/nirfmxbluetooth_session_tests.cpp"
+        "source/tests/system/nirfmxcdma2k_driver_api_tests.cpp"
+        "source/tests/system/nirfmxcdma2k_session_tests.cpp"
+        "source/tests/system/nirfmxgsm_driver_api_tests.cpp"
+        "source/tests/system/nirfmxgsm_session_tests.cpp"
         "source/tests/system/nirfmxinstr_driver_api_tests.cpp"
         "source/tests/system/nirfmxinstr_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxlte_driver_api_tests.cpp"
@@ -651,6 +714,12 @@ if(WIN32)
         "source/tests/system/nirfmxspecan_driver_api_tests.cpp"
         "source/tests/system/nirfmxspecan_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxspecan_session_tests.cpp"
+        "source/tests/system/nirfmxtdscdma_driver_api_tests.cpp"
+        "source/tests/system/nirfmxtdscdma_session_tests.cpp"
+        "source/tests/system/nirfmxwcdma_driver_api_tests.cpp"
+        "source/tests/system/nirfmxwcdma_session_tests.cpp"
+        "source/tests/system/nirfmxdemod_driver_api_tests.cpp"
+        "source/tests/system/nirfmxdemod_session_tests.cpp"
         "source/tests/system/nirfmxwlan_driver_api_tests.cpp"
         "source/tests/system/nirfmxwlan_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxwlan_session_tests.cpp"

@@ -2925,6 +2925,25 @@ ofdm_mod_acc_fetch_preamble_average_powers80211ax(const StubPtr& stub, const nid
   return response;
 }
 
+OFDMModAccFetchPreambleAveragePowers80211beResponse
+ofdm_mod_acc_fetch_preamble_average_powers80211be(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchPreambleAveragePowers80211beRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchPreambleAveragePowers80211beResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchPreambleAveragePowers80211be(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OFDMModAccFetchPreambleAveragePowers80211nResponse
 ofdm_mod_acc_fetch_preamble_average_powers80211n(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3015,6 +3034,25 @@ ofdm_mod_acc_fetch_preamble_peak_powers80211ax(const StubPtr& stub, const nidevi
 
   raise_if_error(
       stub->OFDMModAccFetchPreamblePeakPowers80211ax(&context, request, &response),
+      context);
+
+  return response;
+}
+
+OFDMModAccFetchPreamblePeakPowers80211beResponse
+ofdm_mod_acc_fetch_preamble_peak_powers80211be(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchPreamblePeakPowers80211beRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchPreamblePeakPowers80211beResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchPreamblePeakPowers80211be(&context, request, &response),
       context);
 
   return response;

@@ -46,6 +46,26 @@ class SysCfgMockLibrary : public nidevice_grpc::SysCfgLibraryInterface {
   MOCK_METHOD(NISysCfgStatus, NextComponentInfo, (NISysCfgEnumSoftwareComponentHandle component_enum_handle, char* id, char* version, char* title, NISysCfgComponentType* itemType, char** detailedDescription), (override));
 };
 
+// SysCfg GetResourceProperty and GetResourceIndexedProperty require assigning to a void* parameter.
+// The standard gmock action SetArgPointee fails due to mismatched types.  The following action
+// casts the void* to a pointer of the type of the value passed in prior to assignment.
+template <size_t N, typename A, typename = void>
+struct CastAndSetArgumentPointeeAction {
+  A value;
+
+  template <typename... Args>
+  void operator()(const Args&... args) const
+  {
+    *static_cast<A*>(::std::get<N>(std::tie(args...))) = value;
+  }
+};
+
+template <size_t N, typename T>
+CastAndSetArgumentPointeeAction<N, T> CastAndSetArgPointee(T value)
+{
+  return {std::move(value)};
+}
+
 }  // namespace utilities
 }  // namespace tests
 }  // namespace ni

@@ -84,6 +84,8 @@ message ${common_helpers.snake_to_pascal(function)}Request {
     ${oneof_parameter["type"]} ${oneof_parameter["name"]} = ${oneof_parameter["grpc_field_number"]};
 %     endfor
   }
+%   elif common_helpers.is_optional_param(parameter):
+  optional ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
 %   else:
   ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
 %   endif
@@ -100,8 +102,10 @@ message ${common_helpers.snake_to_pascal(function)}Request {
 %>\
 message ${common_helpers.snake_to_pascal(function)}Response {
 % for parameter in response_parameters:
-% if (parameter.get("is_get_last_error_output", False)):
+% if parameter.get("is_get_last_error_output", False):
   ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]} [deprecated = true];
+% elif common_helpers.is_optional_param(parameter):
+  optional ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
 % else:
   ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
 % endif

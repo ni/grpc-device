@@ -164,6 +164,33 @@ acp_cfg_carrier_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& in
   return response;
 }
 
+ACPCfgDetectorResponse
+acp_cfg_detector(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AcpDetectorType, pb::int32>& detector_type, const pb::int32& detector_points)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ACPCfgDetectorRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto detector_type_ptr = detector_type.get_if<AcpDetectorType>();
+  const auto detector_type_raw_ptr = detector_type.get_if<pb::int32>();
+  if (detector_type_ptr) {
+    request.set_detector_type(*detector_type_ptr);
+  }
+  else if (detector_type_raw_ptr) {
+    request.set_detector_type_raw(*detector_type_raw_ptr);
+  }
+  request.set_detector_points(detector_points);
+
+  auto response = ACPCfgDetectorResponse{};
+
+  raise_if_error(
+      stub->ACPCfgDetector(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ACPCfgFFTResponse
 acp_cfg_fft(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AcpFftWindow, pb::int32>& fft_window, const double& fft_padding)
 {
@@ -1866,6 +1893,33 @@ chp_cfg_carrier_offset(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->CHPCfgCarrierOffset(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CHPCfgDetectorResponse
+chp_cfg_detector(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ChpDetectorType, pb::int32>& detector_type, const pb::int32& detector_points)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CHPCfgDetectorRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto detector_type_ptr = detector_type.get_if<ChpDetectorType>();
+  const auto detector_type_raw_ptr = detector_type.get_if<pb::int32>();
+  if (detector_type_ptr) {
+    request.set_detector_type(*detector_type_ptr);
+  }
+  else if (detector_type_raw_ptr) {
+    request.set_detector_type_raw(*detector_type_raw_ptr);
+  }
+  request.set_detector_points(detector_points);
+
+  auto response = CHPCfgDetectorResponse{};
+
+  raise_if_error(
+      stub->CHPCfgDetector(&context, request, &response),
       context);
 
   return response;

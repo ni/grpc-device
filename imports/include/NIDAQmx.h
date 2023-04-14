@@ -1,7 +1,7 @@
 /*============================================================================*/
 /*                 National Instruments / Data Acquisition                    */
 /*----------------------------------------------------------------------------*/
-/*    Copyright (c) National Instruments 2003-2020.  All Rights Reserved.     */
+/*    Copyright (c) National Instruments 2003-2023.  All Rights Reserved.     */
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /* Title:       NIDAQmx.h                                                     */
@@ -353,6 +353,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_AO_FuncGen_Freq                                            0x2A19 // Specifies the frequency of the waveform to generate in hertz.
 #define DAQmx_AO_FuncGen_Amplitude                                       0x2A1A // Specifies the zero-to-peak amplitude of the waveform to generate in volts. Zero and negative values are valid.
 #define DAQmx_AO_FuncGen_Offset                                          0x2A1B // Specifies the voltage offset of the waveform to generate.
+#define DAQmx_AO_FuncGen_StartPhase                                      0x31C4 // Specifies the starting phase in degrees of the waveform to generate.
 #define DAQmx_AO_FuncGen_Square_DutyCycle                                0x2A1C // Specifies the square wave duty cycle of the waveform to generate.
 #define DAQmx_AO_FuncGen_ModulationType                                  0x2A22 // Specifies if the device generates a modulated version of the waveform using the original waveform as a carrier and input from an external terminal as the signal.
 #define DAQmx_AO_FuncGen_FMDeviation                                     0x2A23 // Specifies the FM deviation in hertz per volt when Type is DAQmx_Val_FM.
@@ -360,6 +361,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_AO_LoadImpedance                                           0x0121 // Specifies in ohms the load impedance connected to the analog output channel.
 #define DAQmx_AO_IdleOutputBehavior                                      0x2240 // Specifies the state of the channel when no generation is in progress.
 #define DAQmx_AO_TermCfg                                                 0x188E // Specifies the terminal configuration of the channel.
+#define DAQmx_AO_Common_Mode_Offset                                      0x31CC // Specifies the common-mode offset of the AO channel. Use the property only when Terminal Configuration is set to Differential.
 #define DAQmx_AO_ResolutionUnits                                         0x182B // Specifies the units of Resolution Value.
 #define DAQmx_AO_Resolution                                              0x182C // Indicates the resolution of the digital-to-analog converter of the channel. This value is in the units you specify with Resolution Units.
 #define DAQmx_AO_DAC_Rng_High                                            0x182E // Specifies the upper limit of the output range of the device. This value is in the native units of the device. On E Series devices, for example, the native units is volts.
@@ -704,6 +706,14 @@ typedef uInt32             CalHandle;
 #define DAQmx_CO_MemMapEnable                                            0x2ED3 // Specifies for NI-DAQmx to map hardware registers to the memory space of the application, if possible. Normally, NI-DAQmx maps hardware registers to memory accessible only to the kernel. Mapping the registers to the memory space of the application increases performance. However, if the application accesses the memory space mapped to the registers, it can adversely affect the operation of the device and possibly res...
 #define DAQmx_CO_Prescaler                                               0x226D // Specifies the divisor to apply to the signal you connect to the counter source terminal. Pulse generations defined by frequency or time take this setting into account, but pulse generations defined by ticks do not. You should use a prescaler only when you connect an external signal to the counter source terminal and when that signal has a higher frequency than the fastest onboard timebase.
 #define DAQmx_CO_RdyForNewVal                                            0x22FF // Indicates whether the counter is ready for new continuous pulse train values.
+#define DAQmx_Pwr_Voltage_Setpoint                                       0x31D4 // Specifies the constant output voltage, in volts. Can be set while a task is running. Can be read at any time during a task.
+#define DAQmx_Pwr_Voltage_DevScalingCoeff                                0x31D9 // Indicates the coefficients of the polynomial equation that NI-DAQmx uses to scale values from the native format of the device to volts. Can be read at any time during a task.
+#define DAQmx_Pwr_Current_Setpoint                                       0x31D5 // Specifies the output current, in amperes. If the load draws current greater than the specified value, the device will operate in Constant Current mode.
+#define DAQmx_Pwr_Current_DevScalingCoeff                                0x31DA // Indicates the coefficients of the polynomial equation that NI-DAQmx uses to scale values from the native format of the device to amperes. Can be read at any time during a task.
+#define DAQmx_Pwr_OutputEnable                                           0x31D6 // Specifies whether to enable or disable power module output. Can be set while a task is running. Can be read at any time during a task. When a task is running, the output is enabled immediately. Otherwise, the output is not enabled until the task enters the Committed state.
+#define DAQmx_Pwr_OutputState                                            0x31D7 // Indicates power channel operating state. Can be read at any time during a task.
+#define DAQmx_Pwr_IdleOutputBehavior                                     0x31D8 // Specifies whether to disable the output or maintain the existing value after the task is uncommitted.
+#define DAQmx_Pwr_RemoteSense                                            0x31DB // Specifies whether to use local or remote sense to sense the output voltage. DAQmx Read (Power) will return remote or local voltage based on the Remote Sense attribute value. Reading this property will return the user-defined value.
 #define DAQmx_ChanType                                                   0x187F // Indicates the type of the virtual channel.
 #define DAQmx_PhysicalChanName                                           0x18F5 // Specifies the name of the physical channel upon which this virtual channel is based.
 #define DAQmx_ChanDescr                                                  0x1926 // Specifies a user-defined description for the channel.
@@ -958,6 +968,12 @@ typedef uInt32             CalHandle;
 #define DAQmx_Read_Sync_UnlockedChans                                    0x313E // Indicates the channels from devices in an unlocked target.
 #define DAQmx_Read_AccessoryInsertionOrRemovalDetected                   0x2F70 // Indicates if any device(s) in the task detected the insertion or removal of an accessory since the task started. Reading this property clears the accessory change status for all channels in the task. You must read this property before you read Devices with Inserted or Removed Accessories. Otherwise, you will receive an error.
 #define DAQmx_Read_DevsWithInsertedOrRemovedAccessories                  0x2F71 // Indicates the names of any devices that detected the insertion or removal of an accessory since the task started. You must read Accessory Insertion or Removal Detected before you read this property. Otherwise, you will receive an error.
+#define DAQmx_RemoteSenseErrorChansExist                                 0x31DD // Indicates if the device(s) detected an error condition of the remote sense connection for any channel in the task. You must disable the output and resolve the hardware connection issue to clear the error condition. You must read this property before you read the Remote Sense Error Channels property. Otherwise, you will receive an error.
+#define DAQmx_RemoteSenseErrorChans                                      0x31DE // Indicates a list of names of any virtual channels in the task for which a remote sense connection error condition has been detected. You must read Remote Sense Error Channels Exist before you read this property. Otherwise, you will receive an error.
+#define DAQmx_AuxPowerErrorChansExist                                    0x31DF // Indicates if the device(s) detected an auxiliary power supply error condition for any channel in the task. Reading this property clears the error condition status for all channels in the task. You must read this property before you read the Aux Power Error Channels property. Otherwise, you will receive an error.
+#define DAQmx_AuxPowerErrorChans                                         0x31E0 // Indicates a list of names of any virtual channels in the task for which an auxiliary power supply error condition has been detected. You must read the Aux Power Error Channels Exist property before you read this property. Otherwise, you will receive an error.
+#define DAQmx_ReverseVoltageErrorChansExist                              0x31E6 // Indicates if the device(s) detected reverse voltage error for any of the channels in the task. Reverse voltage error occurs if the local voltage is equal to the negative saturated voltage. Reading this property clears the error condition status for all channels in the task. You must read this property before you read the Reverse Voltage Error Channels property. Otherwise, you will receive an error.
+#define DAQmx_ReverseVoltageErrorChans                                   0x31E7 // Indicates a list of names of all virtual channels in the task for which reverse voltage error condition has been detected. You must read the Reverse Voltage Error Channels Exist property before you read this property. Otherwise, you will receive an error.
 #define DAQmx_Read_ChangeDetect_HasOverflowed                            0x2194 // Indicates if samples were missed because change detection events occurred faster than the device could handle them. Some devices detect overflows differently than others.
 #define DAQmx_Read_RawDataWidth                                          0x217A // Indicates in bytes the size of a raw sample from the task.
 #define DAQmx_Read_NumChans                                              0x217B // Indicates the number of channels that an NI-DAQmx Read function reads from the task. This value is the number of channels in the task or the number of channels you specify with Channels to Read.
@@ -1415,6 +1431,11 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_Voltage                                                 10322 // Voltage
 #define DAQmx_Val_Charge                                                  16105 // Charge
 
+//*** Value set for the calibration type for the 15200 Calibration functions ***
+#define DAQmx_Val_PowerCalibrationType_RemoteVoltage                      15100 // Remote Voltage
+#define DAQmx_Val_PowerCalibrationType_LocalVoltage                       15101 // Local Voltage
+#define DAQmx_Val_PowerCalibrationType_Current                            15102 // Current
+
 //*** Value set for shunt resistor select for Strain and Bridge Shunt Calibration functions ***
 #define DAQmx_Val_A                                                       12513 // A
 #define DAQmx_Val_B                                                       12514 // B
@@ -1525,6 +1546,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_Torque_Bridge                                           15905 // Torque:Bridge
 #define DAQmx_Val_TEDS_Sensor                                             12531 // TEDS Sensor
 #define DAQmx_Val_Charge                                                  16105 // Charge
+#define DAQmx_Val_Power                                                   16201 // Power
 
 //*** Values for DAQmx_AO_IdleOutputBehavior ***
 //*** Value set AOIdleOutputBehavior ***
@@ -1540,6 +1562,11 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_Current                                                 10134 // Current
 #define DAQmx_Val_FuncGen                                                 14750 // Function Generation
 
+//*** Values for DAQmx_PhysicalChan_AO_SupportedPowerUpOutputTypes ***
+//*** Value set AOPowerUpOutputBehavior ***
+#define DAQmx_Val_Voltage                                                 10322 // Voltage
+#define DAQmx_Val_Current                                                 10134 // Current
+#define DAQmx_Val_HighImpedance                                           12527 // High-Impedance
 
 //*** Values for DAQmx_AI_Accel_Charge_SensitivityUnits ***
 //*** Value set AccelChargeSensitivityUnits ***
@@ -2132,6 +2159,18 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_ActiveHigh                                              10095 // Active High
 #define DAQmx_Val_ActiveLow                                               10096 // Active Low
 
+//*** Values for DAQmx_Pwr_IdleOutputBehavior ***
+//*** Value set PowerIdleOutputBehavior ***
+#define DAQmx_Val_OutputDisabled                                          15503 // Output Disabled
+#define DAQmx_Val_MaintainExistingValue                                   12528 // Maintain Existing Value
+
+//*** Values for DAQmx_Pwr_OutputState ***
+//*** Value set PowerOutputState ***
+#define DAQmx_Val_ConstantVoltage                                         15500 // Constant Voltage
+#define DAQmx_Val_ConstantCurrent                                         15501 // Constant Current
+#define DAQmx_Val_Overvoltage                                             15502 // Overvoltage
+#define DAQmx_Val_OutputDisabled                                          15503 // Output Disabled
+
 //*** Values for DAQmx_AI_Pressure_Units ***
 //*** Value set PressureUnits ***
 #define DAQmx_Val_Pascals                                                 10081 // Pascals
@@ -2163,6 +2202,8 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_NetworkDAQ                                              14829 // Network DAQ
 #define DAQmx_Val_SCExpress                                               15886 // SC Express
 #define DAQmx_Val_FieldDAQ                                                16151 // FieldDAQ
+#define DAQmx_Val_TestScaleChassis                                        16180 // TestScale Chassis
+#define DAQmx_Val_TestScaleModule                                         16181 // TestScale Module
 #define DAQmx_Val_Unknown                                                 12588 // Unknown
 
 //*** Values for DAQmx_AI_RTD_Type ***
@@ -2675,6 +2716,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_None                                                    10230 // None
 
 //*** Values for DAQmx_AI_Excit_Sense ***
+//*** Values for DAQmx_Pwr_RemoteSense ***
 //*** Value set Sense ***
 #define DAQmx_Val_Local                                                   16095 // Local
 #define DAQmx_Val_Remote                                                  16096 // Remote
@@ -2817,6 +2859,8 @@ int32 __CFUNC     DAQmxCreateCOPulseChanFreq     (TaskHandle taskHandle, const c
 int32 __CFUNC     DAQmxCreateCOPulseChanTime     (TaskHandle taskHandle, const char counter[], const char nameToAssignToChannel[], int32 units, int32 idleState, float64 initialDelay, float64 lowTime, float64 highTime);
 int32 __CFUNC     DAQmxCreateCOPulseChanTicks    (TaskHandle taskHandle, const char counter[], const char nameToAssignToChannel[], const char sourceTerminal[], int32 idleState, int32 initialDelay, int32 lowTicks, int32 highTicks);
 
+int32 __CFUNC     DAQmxCreateAIPowerChan       (TaskHandle taskHandle, const char physicalChannel[], const char nameToAssignToChannel[], float64 voltageSetpoint, float64 currentSetpoint, bool32 outputEnable);
+
 int32 __CFUNC     DAQmxGetAIChanCalCalDate       (TaskHandle taskHandle, const char channelName[], uInt32 *year, uInt32 *month, uInt32 *day, uInt32 *hour, uInt32 *minute);
 int32 __CFUNC     DAQmxSetAIChanCalCalDate       (TaskHandle taskHandle, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute);
 int32 __CFUNC     DAQmxGetAIChanCalExpDate       (TaskHandle taskHandle, const char channelName[], uInt32 *year, uInt32 *month, uInt32 *day, uInt32 *hour, uInt32 *minute);
@@ -2908,8 +2952,9 @@ int32 __CFUNC     DAQmxReadCounterF64Ex          (TaskHandle taskHandle, int32 n
 int32 __CFUNC     DAQmxReadCounterU32Ex          (TaskHandle taskHandle, int32 numSampsPerChan, float64 timeout, bool32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32 *sampsPerChanRead, bool32 *reserved);
 int32 __CFUNC     DAQmxReadCounterScalarF64      (TaskHandle taskHandle, float64 timeout, float64 *value, bool32 *reserved);
 int32 __CFUNC     DAQmxReadCounterScalarU32      (TaskHandle taskHandle, float64 timeout, uInt32 *value, bool32 *reserved);
-
-
+int32 __CFUNC     DAQmxReadPowerF64              (TaskHandle taskHandle, int32 numSampsPerChan, float64 timeout, bool32 fillMode, float64 readArrayVoltage[], float64 readArrayCurrent[], uInt32 arraySizeInSamps, int32 *sampsPerChanRead, bool32 *reserved);
+int32 __CFUNC     DAQmxReadPowerBinaryI16        (TaskHandle taskHandle, int32 numSampsPerChan, float64 timeout, bool32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32 *sampsPerChanRead, bool32 *reserved);
+int32 __CFUNC     DAQmxReadPowerScalarF64        (TaskHandle taskHandle, float64 timeout, float64 *voltage, float64 *current, bool32 *reserved);
 
 int32 __CFUNC     DAQmxReadCtrFreq               (TaskHandle taskHandle, int32 numSampsPerChan, float64 timeout, bool32 interleaved, float64 readArrayFrequency[], float64 readArrayDutyCycle[], uInt32 arraySizeInSamps, int32 *sampsPerChanRead, bool32 *reserved);
 int32 __CFUNC     DAQmxReadCtrTime               (TaskHandle taskHandle, int32 numSampsPerChan, float64 timeout, bool32 interleaved, float64 readArrayHighTime[], float64 readArrayLowTime[], uInt32 arraySizeInSamps, int32 *sampsPerChanRead, bool32 *reserved);
@@ -3127,6 +3172,7 @@ int32 __CFUNC     DAQmxSwitchDisconnectAll       (const char deviceName[], bool3
 #define DAQmx_Val_Switch_Topology_2531_1_Wire_8x64_Matrix         "2531/1-Wire 8x64 Matrix"           // 2531/1-Wire 8x64 Matrix
 #define DAQmx_Val_Switch_Topology_2531_1_Wire_Dual_4x64_Matrix    "2531/1-Wire Dual 4x64 Matrix"      // 2531/1-Wire Dual 4x64 Matrix
 #define DAQmx_Val_Switch_Topology_2531_1_Wire_Dual_8x32_Matrix    "2531/1-Wire Dual 8x32 Matrix"      // 2531/1-Wire Dual 8x32 Matrix
+#define DAQmx_Val_Switch_Topology_2531_1_Wire_Sixteen_2x16_Matrix "2531/1-Wire Sixteen 2x16 Matrix"   // 2531/1-Wire Sixteen 2x16 Matrix
 #define DAQmx_Val_Switch_Topology_2532_1_Wire_16x32_Matrix        "2532/1-Wire 16x32 Matrix"          // 2532/1-Wire 16x32 Matrix
 #define DAQmx_Val_Switch_Topology_2532_1_Wire_4x128_Matrix        "2532/1-Wire 4x128 Matrix"          // 2532/1-Wire 4x128 Matrix
 #define DAQmx_Val_Switch_Topology_2532_1_Wire_8x64_Matrix         "2532/1-Wire 8x64 Matrix"           // 2532/1-Wire 8x64 Matrix
@@ -3519,7 +3565,14 @@ int32 __CFUNC     DAQmxGet9638AOCalAdjustPoints(CalHandle calHandle, int32* adju
 int32 __CFUNC     DAQmxSetup9638AOCal(CalHandle calHandle, const char channelNames[], int32 value);
 int32 __CFUNC     DAQmxAdjust9638AOCal(CalHandle calHandle, const char channelNames[], float64 value);
 int32 __CFUNC     DAQmxGet9775CalAdjustPoints(CalHandle calHandle, uInt32 coupling, float64* adjustmentPoints, uInt32 bufferSize);
-int32 __CFUNC 		DAQmxAdjust9775Cal(CalHandle calHandle, const char channelNames[], float64 value, uInt32 coupling);
+int32 __CFUNC     DAQmxAdjust9775Cal(CalHandle calHandle, const char channelNames[], float64 value, uInt32 coupling);
+int32 __CFUNC     DAQmxGet15110CalAdjustPoints(CalHandle calHandle, int32* adjustmentPoints, uInt32 bufferSize);
+int32 __CFUNC     DAQmxSetup15110Cal(CalHandle calHandle, const char channelNames[], int32 value);
+int32 __CFUNC     DAQmxAdjust15110Cal(CalHandle calHandle, const char channelNames[], float64 value);
+int32 __CFUNC     DAQmxAdjust15100Cal(CalHandle calHandle, float64 value);
+int32 __CFUNC     DAQmxGet15200CalAdjustPoints(CalHandle calHandle, int32 powerCalibrationType, float64* adjustmentPoints, uInt32 bufferSize);
+int32 __CFUNC     DAQmxSetup15200Cal(CalHandle calHandle, const char channelNames[], float64 adjustmentPoint, int32 powerCalibrationType);
+int32 __CFUNC     DAQmxAdjust15200Cal(CalHandle calHandle, const char channelNames[], float64 referenceValue, int32 powerCalibrationType);
 
 int32 __CFUNC     DAQmxSetup1102Cal              (CalHandle calHandle, const char channelName[], float64 gain);
 int32 __CFUNC     DAQmxAdjust1102Cal             (CalHandle calHandle, float64 refVoltage, float64 measOutput);
@@ -4553,6 +4606,10 @@ int32 __CFUNC DAQmxResetAOFuncGenAmplitude(TaskHandle taskHandle, const char cha
 int32 __CFUNC DAQmxGetAOFuncGenOffset(TaskHandle taskHandle, const char channel[], float64 *data);
 int32 __CFUNC DAQmxSetAOFuncGenOffset(TaskHandle taskHandle, const char channel[], float64 data);
 int32 __CFUNC DAQmxResetAOFuncGenOffset(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AO_FuncGen_StartPhase ***
+int32 __CFUNC DAQmxGetAOFuncGenStartPhase(TaskHandle taskHandle, const char channel[], float64 *data);
+int32 __CFUNC DAQmxSetAOFuncGenStartPhase(TaskHandle taskHandle, const char channel[], float64 data);
+int32 __CFUNC DAQmxResetAOFuncGenStartPhase(TaskHandle taskHandle, const char channel[]);
 //*** Set/Get functions for DAQmx_AO_FuncGen_Square_DutyCycle ***
 int32 __CFUNC DAQmxGetAOFuncGenSquareDutyCycle(TaskHandle taskHandle, const char channel[], float64 *data);
 int32 __CFUNC DAQmxSetAOFuncGenSquareDutyCycle(TaskHandle taskHandle, const char channel[], float64 data);
@@ -4584,6 +4641,10 @@ int32 __CFUNC DAQmxResetAOIdleOutputBehavior(TaskHandle taskHandle, const char c
 int32 __CFUNC DAQmxGetAOTermCfg(TaskHandle taskHandle, const char channel[], int32 *data);
 int32 __CFUNC DAQmxSetAOTermCfg(TaskHandle taskHandle, const char channel[], int32 data);
 int32 __CFUNC DAQmxResetAOTermCfg(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AO_Common_Mode_Offset ***
+int32 __CFUNC DAQmxGetAOCommonModeOffset(TaskHandle taskHandle, const char channel[], float64 *data);
+int32 __CFUNC DAQmxSetAOCommonModeOffset(TaskHandle taskHandle, const char channel[], float64 data);
+int32 __CFUNC DAQmxResetAOCommonModeOffset(TaskHandle taskHandle, const char channel[]);
 //*** Set/Get functions for DAQmx_AO_ResolutionUnits ***
 // Uses value set ResolutionType1
 int32 __CFUNC DAQmxGetAOResolutionUnits(TaskHandle taskHandle, const char channel[], int32 *data);
@@ -6035,6 +6096,35 @@ int32 __CFUNC DAQmxSetCOPrescaler(TaskHandle taskHandle, const char channel[], u
 int32 __CFUNC DAQmxResetCOPrescaler(TaskHandle taskHandle, const char channel[]);
 //*** Set/Get functions for DAQmx_CO_RdyForNewVal ***
 int32 __CFUNC DAQmxGetCORdyForNewVal(TaskHandle taskHandle, const char channel[], bool32 *data);
+//*** Set/Get functions for DAQmx_Pwr_Voltage_Setpoint ***
+int32 __CFUNC DAQmxGetPwrVoltageSetpoint(TaskHandle taskHandle, const char channel[], float64 *data);
+int32 __CFUNC DAQmxSetPwrVoltageSetpoint(TaskHandle taskHandle, const char channel[], float64 data);
+int32 __CFUNC DAQmxResetPwrVoltageSetpoint(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_Pwr_Voltage_DevScalingCoeff ***
+int32 __CFUNC DAQmxGetPwrVoltageDevScalingCoeff(TaskHandle taskHandle, const char channel[], float64 *data, uInt32 arraySizeInElements);
+//*** Set/Get functions for DAQmx_Pwr_Current_Setpoint ***
+int32 __CFUNC DAQmxGetPwrCurrentSetpoint(TaskHandle taskHandle, const char channel[], float64 *data);
+int32 __CFUNC DAQmxSetPwrCurrentSetpoint(TaskHandle taskHandle, const char channel[], float64 data);
+int32 __CFUNC DAQmxResetPwrCurrentSetpoint(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_Pwr_Current_DevScalingCoeff ***
+int32 __CFUNC DAQmxGetPwrCurrentDevScalingCoeff(TaskHandle taskHandle, const char channel[], float64 *data, uInt32 arraySizeInElements);
+//*** Set/Get functions for DAQmx_Pwr_OutputEnable ***
+int32 __CFUNC DAQmxGetPwrOutputEnable(TaskHandle taskHandle, const char channel[], bool32 *data);
+int32 __CFUNC DAQmxSetPwrOutputEnable(TaskHandle taskHandle, const char channel[], bool32 data);
+int32 __CFUNC DAQmxResetPwrOutputEnable(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_Pwr_OutputState ***
+// Uses value set PowerOutputState
+int32 __CFUNC DAQmxGetPwrOutputState(TaskHandle taskHandle, const char channel[], int32 *data);
+//*** Set/Get functions for DAQmx_Pwr_IdleOutputBehavior ***
+// Uses value set PowerIdleOutputBehavior
+int32 __CFUNC DAQmxGetPwrIdleOutputBehavior(TaskHandle taskHandle, const char channel[], int32 *data);
+int32 __CFUNC DAQmxSetPwrIdleOutputBehavior(TaskHandle taskHandle, const char channel[], int32 data);
+int32 __CFUNC DAQmxResetPwrIdleOutputBehavior(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_Pwr_RemoteSense ***
+// Uses value set Sense
+int32 __CFUNC DAQmxGetPwrRemoteSense(TaskHandle taskHandle, const char channel[], int32 *data);
+int32 __CFUNC DAQmxSetPwrRemoteSense(TaskHandle taskHandle, const char channel[], int32 data);
+int32 __CFUNC DAQmxResetPwrRemoteSense(TaskHandle taskHandle, const char channel[]);
 //*** Set/Get functions for DAQmx_ChanType ***
 // Uses value set ChannelType
 int32 __CFUNC DAQmxGetChanType(TaskHandle taskHandle, const char channel[], int32 *data);
@@ -6724,6 +6814,18 @@ int32 __CFUNC DAQmxGetReadSyncUnlockedChans(TaskHandle taskHandle, char *data, u
 int32 __CFUNC DAQmxGetReadAccessoryInsertionOrRemovalDetected(TaskHandle taskHandle, bool32 *data);
 //*** Set/Get functions for DAQmx_Read_DevsWithInsertedOrRemovedAccessories ***
 int32 __CFUNC DAQmxGetReadDevsWithInsertedOrRemovedAccessories(TaskHandle taskHandle, char *data, uInt32 bufferSize);
+//*** Set/Get functions for DAQmx_RemoteSenseErrorChansExist ***
+int32 __CFUNC DAQmxGetRemoteSenseErrorChansExist(TaskHandle taskHandle, bool32 *data);
+//*** Set/Get functions for DAQmx_RemoteSenseErrorChans ***
+int32 __CFUNC DAQmxGetRemoteSenseErrorChans(TaskHandle taskHandle, char *data, uInt32 bufferSize);
+//*** Set/Get functions for DAQmx_AuxPowerErrorChansExist ***
+int32 __CFUNC DAQmxGetAuxPowerErrorChansExist(TaskHandle taskHandle, bool32 *data);
+//*** Set/Get functions for DAQmx_AuxPowerErrorChans ***
+int32 __CFUNC DAQmxGetAuxPowerErrorChans(TaskHandle taskHandle, char *data, uInt32 bufferSize);
+//*** Set/Get functions for DAQmx_ReverseVoltageErrorChansExist ***
+int32 __CFUNC DAQmxGetReverseVoltageErrorChansExist(TaskHandle taskHandle, bool32 *data);
+//*** Set/Get functions for DAQmx_ReverseVoltageErrorChans ***
+int32 __CFUNC DAQmxGetReverseVoltageErrorChans(TaskHandle taskHandle, char *data, uInt32 bufferSize);
 //*** Set/Get functions for DAQmx_Read_ChangeDetect_HasOverflowed ***
 int32 __CFUNC DAQmxGetReadChangeDetectHasOverflowed(TaskHandle taskHandle, bool32 *data);
 //*** Set/Get functions for DAQmx_Read_RawDataWidth ***
@@ -7968,6 +8070,8 @@ int32 __CFUNC DAQmxResetSampClkTimingResponseMode(TaskHandle taskHandle);
 #define DAQmxFailed(error)                            ((error)<0)
 
 // Error and Warning Codes
+#define DAQmxErrorRemoteSense                                                           (-209888)
+#define DAQmxErrorOverTemperatureProtectionActivated                                    (-209887)
 #define DAQmxErrorMultiTaskCfgSampRateNotSupportedWithPropSet                           (-209886)
 #define DAQmxErrorMultiTaskCfgSampRateConflictingProp                                   (-209885)
 #define DAQmxErrorNoCommonSampRateFoundNoRepeatSamps                                    (-209884)
