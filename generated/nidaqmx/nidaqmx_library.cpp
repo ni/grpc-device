@@ -1504,20 +1504,20 @@ int32 NiDAQmxLibrary::GetBufferAttributeUInt32(TaskHandle task, int32 attribute,
   return function_pointers_.GetBufferAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetCalInfoAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
   }
-  return function_pointers_.GetCalInfoAttributeBool(deviceName, attribute, value, size);
+  return function_pointers_.GetCalInfoAttributeBool(deviceName, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64* value)
 {
   if (!function_pointers_.GetCalInfoAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
   }
-  return function_pointers_.GetCalInfoAttributeDouble(deviceName, attribute, value, size);
+  return function_pointers_.GetCalInfoAttributeDouble(deviceName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetCalInfoAttributeString(const char deviceName[], int32 attribute, char value[], uInt32 size)
@@ -1528,28 +1528,28 @@ int32 NiDAQmxLibrary::GetCalInfoAttributeString(const char deviceName[], int32 a
   return function_pointers_.GetCalInfoAttributeString(deviceName, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetCalInfoAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
   }
-  return function_pointers_.GetCalInfoAttributeUInt32(deviceName, attribute, value, size);
+  return function_pointers_.GetCalInfoAttributeUInt32(deviceName, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetChanAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-  return function_pointers_.GetChanAttributeBool(task, channel, attribute, value, size);
+  return function_pointers_.GetChanAttributeBool(task, channel, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64* value)
 {
   if (!function_pointers_.GetChanAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-  return function_pointers_.GetChanAttributeDouble(task, channel, attribute, value, size);
+  return function_pointers_.GetChanAttributeDouble(task, channel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, float64 value[], uInt32 size)
@@ -1560,12 +1560,12 @@ int32 NiDAQmxLibrary::GetChanAttributeDoubleArray(TaskHandle task, const char ch
   return function_pointers_.GetChanAttributeDoubleArray(task, channel, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value)
 {
   if (!function_pointers_.GetChanAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-  return function_pointers_.GetChanAttributeInt32(task, channel, attribute, value, size);
+  return function_pointers_.GetChanAttributeInt32(task, channel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, char value[], uInt32 size)
@@ -1576,28 +1576,28 @@ int32 NiDAQmxLibrary::GetChanAttributeString(TaskHandle task, const char channel
   return function_pointers_.GetChanAttributeString(task, channel, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetChanAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
-  return function_pointers_.GetChanAttributeUInt32(task, channel, attribute, value, size);
+  return function_pointers_.GetChanAttributeUInt32(task, channel, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetDeviceAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-  return function_pointers_.GetDeviceAttributeBool(deviceName, attribute, value, size);
+  return function_pointers_.GetDeviceAttributeBool(deviceName, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value)
 {
   if (!function_pointers_.GetDeviceAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-  return function_pointers_.GetDeviceAttributeDouble(deviceName, attribute, value, size);
+  return function_pointers_.GetDeviceAttributeDouble(deviceName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, float64 value[], uInt32 size)
@@ -1608,12 +1608,12 @@ int32 NiDAQmxLibrary::GetDeviceAttributeDoubleArray(const char deviceName[], int
   return function_pointers_.GetDeviceAttributeDoubleArray(deviceName, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetDeviceAttributeInt32(const char deviceName[], int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetDeviceAttributeInt32(const char deviceName[], int32 attribute, int32* value)
 {
   if (!function_pointers_.GetDeviceAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-  return function_pointers_.GetDeviceAttributeInt32(deviceName, attribute, value, size);
+  return function_pointers_.GetDeviceAttributeInt32(deviceName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeInt32Array(const char deviceName[], int32 attribute, int32 value[], uInt32 size)
@@ -1632,12 +1632,12 @@ int32 NiDAQmxLibrary::GetDeviceAttributeString(const char deviceName[], int32 at
   return function_pointers_.GetDeviceAttributeString(deviceName, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetDeviceAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetDeviceAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetDeviceAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDeviceAttribute.");
   }
-  return function_pointers_.GetDeviceAttributeUInt32(deviceName, attribute, value, size);
+  return function_pointers_.GetDeviceAttributeUInt32(deviceName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeUInt32Array(const char deviceName[], int32 attribute, uInt32 value[], uInt32 size)
@@ -1688,28 +1688,28 @@ int32 NiDAQmxLibrary::GetErrorString(int32 errorCode, char errorString[], uInt32
   return function_pointers_.GetErrorString(errorCode, errorString, bufferSize);
 }
 
-int32 NiDAQmxLibrary::GetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetExportedSignalAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-  return function_pointers_.GetExportedSignalAttributeBool(task, attribute, value, size);
+  return function_pointers_.GetExportedSignalAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
   if (!function_pointers_.GetExportedSignalAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-  return function_pointers_.GetExportedSignalAttributeDouble(task, attribute, value, size);
+  return function_pointers_.GetExportedSignalAttributeDouble(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
   if (!function_pointers_.GetExportedSignalAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-  return function_pointers_.GetExportedSignalAttributeInt32(task, attribute, value, size);
+  return function_pointers_.GetExportedSignalAttributeInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -1720,12 +1720,12 @@ int32 NiDAQmxLibrary::GetExportedSignalAttributeString(TaskHandle task, int32 at
   return function_pointers_.GetExportedSignalAttributeString(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetExportedSignalAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
   }
-  return function_pointers_.GetExportedSignalAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.GetExportedSignalAttributeUInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetExtendedErrorInfo(char errorString[], uInt32 bufferSize)
@@ -1776,12 +1776,12 @@ int32 NiDAQmxLibrary::GetNthTaskReadChannel(TaskHandle task, uInt32 index, char 
   return function_pointers_.GetNthTaskReadChannel(task, index, buffer, bufferSize);
 }
 
-int32 NiDAQmxLibrary::GetPersistedChanAttributeBool(const char channel[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetPersistedChanAttributeBool(const char channel[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetPersistedChanAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedChanAttribute.");
   }
-  return function_pointers_.GetPersistedChanAttributeBool(channel, attribute, value, size);
+  return function_pointers_.GetPersistedChanAttributeBool(channel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetPersistedChanAttributeString(const char channel[], int32 attribute, char value[], uInt32 size)
@@ -1792,12 +1792,12 @@ int32 NiDAQmxLibrary::GetPersistedChanAttributeString(const char channel[], int3
   return function_pointers_.GetPersistedChanAttributeString(channel, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetPersistedScaleAttributeBool(const char scaleName[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetPersistedScaleAttributeBool(const char scaleName[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetPersistedScaleAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedScaleAttribute.");
   }
-  return function_pointers_.GetPersistedScaleAttributeBool(scaleName, attribute, value, size);
+  return function_pointers_.GetPersistedScaleAttributeBool(scaleName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetPersistedScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size)
@@ -1808,12 +1808,12 @@ int32 NiDAQmxLibrary::GetPersistedScaleAttributeString(const char scaleName[], i
   return function_pointers_.GetPersistedScaleAttributeString(scaleName, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetPersistedTaskAttributeBool(const char taskName[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetPersistedTaskAttributeBool(const char taskName[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetPersistedTaskAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedTaskAttribute.");
   }
-  return function_pointers_.GetPersistedTaskAttributeBool(taskName, attribute, value, size);
+  return function_pointers_.GetPersistedTaskAttributeBool(taskName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetPersistedTaskAttributeString(const char taskName[], int32 attribute, char value[], uInt32 size)
@@ -1824,12 +1824,12 @@ int32 NiDAQmxLibrary::GetPersistedTaskAttributeString(const char taskName[], int
   return function_pointers_.GetPersistedTaskAttributeString(taskName, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetPhysicalChanAttributeBool(const char physicalChannel[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeBool(const char physicalChannel[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetPhysicalChanAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-  return function_pointers_.GetPhysicalChanAttributeBool(physicalChannel, attribute, value, size);
+  return function_pointers_.GetPhysicalChanAttributeBool(physicalChannel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeBytes(const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size)
@@ -1840,12 +1840,12 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeBytes(const char physicalChannel[]
   return function_pointers_.GetPhysicalChanAttributeBytes(physicalChannel, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetPhysicalChanAttributeDouble(const char physicalChannel[], int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeDouble(const char physicalChannel[], int32 attribute, float64* value)
 {
   if (!function_pointers_.GetPhysicalChanAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-  return function_pointers_.GetPhysicalChanAttributeDouble(physicalChannel, attribute, value, size);
+  return function_pointers_.GetPhysicalChanAttributeDouble(physicalChannel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeDoubleArray(const char physicalChannel[], int32 attribute, float64 value[], uInt32 size)
@@ -1856,12 +1856,12 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeDoubleArray(const char physicalCha
   return function_pointers_.GetPhysicalChanAttributeDoubleArray(physicalChannel, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32(const char physicalChannel[], int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32(const char physicalChannel[], int32 attribute, int32* value)
 {
   if (!function_pointers_.GetPhysicalChanAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-  return function_pointers_.GetPhysicalChanAttributeInt32(physicalChannel, attribute, value, size);
+  return function_pointers_.GetPhysicalChanAttributeInt32(physicalChannel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32Array(const char physicalChannel[], int32 attribute, int32 value[], uInt32 size)
@@ -1880,12 +1880,12 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeString(const char physicalChannel[
   return function_pointers_.GetPhysicalChanAttributeString(physicalChannel, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32(const char physicalChannel[], int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32(const char physicalChannel[], int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetPhysicalChanAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
   }
-  return function_pointers_.GetPhysicalChanAttributeUInt32(physicalChannel, attribute, value, size);
+  return function_pointers_.GetPhysicalChanAttributeUInt32(physicalChannel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32Array(const char physicalChannel[], int32 attribute, uInt32 value[], uInt32 size)
@@ -1896,28 +1896,28 @@ int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32Array(const char physicalCha
   return function_pointers_.GetPhysicalChanAttributeUInt32Array(physicalChannel, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetReadAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetReadAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetReadAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-  return function_pointers_.GetReadAttributeBool(task, attribute, value, size);
+  return function_pointers_.GetReadAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetReadAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetReadAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
   if (!function_pointers_.GetReadAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-  return function_pointers_.GetReadAttributeDouble(task, attribute, value, size);
+  return function_pointers_.GetReadAttributeDouble(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetReadAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetReadAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
   if (!function_pointers_.GetReadAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-  return function_pointers_.GetReadAttributeInt32(task, attribute, value, size);
+  return function_pointers_.GetReadAttributeInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetReadAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -1928,44 +1928,44 @@ int32 NiDAQmxLibrary::GetReadAttributeString(TaskHandle task, int32 attribute, c
   return function_pointers_.GetReadAttributeString(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetReadAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-  return function_pointers_.GetReadAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.GetReadAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value)
 {
   if (!function_pointers_.GetReadAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetReadAttribute.");
   }
-  return function_pointers_.GetReadAttributeUInt64(task, attribute, value, size);
+  return function_pointers_.GetReadAttributeUInt64(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetRealTimeAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
   }
-  return function_pointers_.GetRealTimeAttributeBool(task, attribute, value, size);
+  return function_pointers_.GetRealTimeAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
   if (!function_pointers_.GetRealTimeAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
   }
-  return function_pointers_.GetRealTimeAttributeInt32(task, attribute, value, size);
+  return function_pointers_.GetRealTimeAttributeInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetRealTimeAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
   }
-  return function_pointers_.GetRealTimeAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.GetRealTimeAttributeUInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
@@ -1976,12 +1976,12 @@ int32 NiDAQmxLibrary::GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* d
   return function_pointers_.GetRefTrigTimestampVal(task, data);
 }
 
-int32 NiDAQmxLibrary::GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value)
 {
   if (!function_pointers_.GetScaleAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
   }
-  return function_pointers_.GetScaleAttributeDouble(scaleName, attribute, value, size);
+  return function_pointers_.GetScaleAttributeDouble(scaleName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, float64 value[], uInt32 size)
@@ -1992,12 +1992,12 @@ int32 NiDAQmxLibrary::GetScaleAttributeDoubleArray(const char scaleName[], int32
   return function_pointers_.GetScaleAttributeDoubleArray(scaleName, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value)
 {
   if (!function_pointers_.GetScaleAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetScaleAttribute.");
   }
-  return function_pointers_.GetScaleAttributeInt32(scaleName, attribute, value, size);
+  return function_pointers_.GetScaleAttributeInt32(scaleName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size)
@@ -2048,20 +2048,20 @@ int32 NiDAQmxLibrary::GetSystemInfoAttributeString(int32 attribute, char value[]
   return function_pointers_.GetSystemInfoAttributeString(attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetSystemInfoAttributeUInt32(int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetSystemInfoAttributeUInt32(int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetSystemInfoAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetSystemInfoAttribute.");
   }
-  return function_pointers_.GetSystemInfoAttributeUInt32(attribute, value, size);
+  return function_pointers_.GetSystemInfoAttributeUInt32(attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetTaskAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTaskAttribute.");
   }
-  return function_pointers_.GetTaskAttributeBool(task, attribute, value, size);
+  return function_pointers_.GetTaskAttributeBool(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetTaskAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -2072,52 +2072,52 @@ int32 NiDAQmxLibrary::GetTaskAttributeString(TaskHandle task, int32 attribute, c
   return function_pointers_.GetTaskAttributeString(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetTaskAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTaskAttribute.");
   }
-  return function_pointers_.GetTaskAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.GetTaskAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetTimingAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-  return function_pointers_.GetTimingAttributeBool(task, attribute, value, size);
+  return function_pointers_.GetTimingAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
   if (!function_pointers_.GetTimingAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-  return function_pointers_.GetTimingAttributeDouble(task, attribute, value, size);
+  return function_pointers_.GetTimingAttributeDouble(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetTimingAttributeExBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-  return function_pointers_.GetTimingAttributeExBool(task, deviceNames, attribute, value, size);
+  return function_pointers_.GetTimingAttributeExBool(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64* value)
 {
   if (!function_pointers_.GetTimingAttributeExDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-  return function_pointers_.GetTimingAttributeExDouble(task, deviceNames, attribute, value, size);
+  return function_pointers_.GetTimingAttributeExDouble(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32* value)
 {
   if (!function_pointers_.GetTimingAttributeExInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-  return function_pointers_.GetTimingAttributeExInt32(task, deviceNames, attribute, value, size);
+  return function_pointers_.GetTimingAttributeExInt32(task, deviceNames, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, char value[], uInt32 size)
@@ -2128,36 +2128,36 @@ int32 NiDAQmxLibrary::GetTimingAttributeExString(TaskHandle task, const char dev
   return function_pointers_.GetTimingAttributeExString(task, deviceNames, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime* value)
 {
   if (!function_pointers_.GetTimingAttributeExTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-  return function_pointers_.GetTimingAttributeExTimestamp(task, deviceNames, attribute, value, size);
+  return function_pointers_.GetTimingAttributeExTimestamp(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetTimingAttributeExUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-  return function_pointers_.GetTimingAttributeExUInt32(task, deviceNames, attribute, value, size);
+  return function_pointers_.GetTimingAttributeExUInt32(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64* value)
 {
   if (!function_pointers_.GetTimingAttributeExUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttributeEx.");
   }
-  return function_pointers_.GetTimingAttributeExUInt64(task, deviceNames, attribute, value, size);
+  return function_pointers_.GetTimingAttributeExUInt64(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
   if (!function_pointers_.GetTimingAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-  return function_pointers_.GetTimingAttributeInt32(task, attribute, value, size);
+  return function_pointers_.GetTimingAttributeInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetTimingAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -2168,44 +2168,44 @@ int32 NiDAQmxLibrary::GetTimingAttributeString(TaskHandle task, int32 attribute,
   return function_pointers_.GetTimingAttributeString(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value)
 {
   if (!function_pointers_.GetTimingAttributeTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-  return function_pointers_.GetTimingAttributeTimestamp(task, attribute, value, size);
+  return function_pointers_.GetTimingAttributeTimestamp(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetTimingAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-  return function_pointers_.GetTimingAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.GetTimingAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value)
 {
   if (!function_pointers_.GetTimingAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTimingAttribute.");
   }
-  return function_pointers_.GetTimingAttributeUInt64(task, attribute, value, size);
+  return function_pointers_.GetTimingAttributeUInt64(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTrigAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTrigAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetTrigAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-  return function_pointers_.GetTrigAttributeBool(task, attribute, value, size);
+  return function_pointers_.GetTrigAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTrigAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTrigAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
   if (!function_pointers_.GetTrigAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-  return function_pointers_.GetTrigAttributeDouble(task, attribute, value, size);
+  return function_pointers_.GetTrigAttributeDouble(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, float64 value[], uInt32 size)
@@ -2216,12 +2216,12 @@ int32 NiDAQmxLibrary::GetTrigAttributeDoubleArray(TaskHandle task, int32 attribu
   return function_pointers_.GetTrigAttributeDoubleArray(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetTrigAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTrigAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
   if (!function_pointers_.GetTrigAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-  return function_pointers_.GetTrigAttributeInt32(task, attribute, value, size);
+  return function_pointers_.GetTrigAttributeInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetTrigAttributeInt32Array(TaskHandle task, int32 attribute, int32 value[], uInt32 size)
@@ -2240,44 +2240,44 @@ int32 NiDAQmxLibrary::GetTrigAttributeString(TaskHandle task, int32 attribute, c
   return function_pointers_.GetTrigAttributeString(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value)
 {
   if (!function_pointers_.GetTrigAttributeTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-  return function_pointers_.GetTrigAttributeTimestamp(task, attribute, value, size);
+  return function_pointers_.GetTrigAttributeTimestamp(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetTrigAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetTrigAttribute.");
   }
-  return function_pointers_.GetTrigAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.GetTrigAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetWatchdogAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
   }
-  return function_pointers_.GetWatchdogAttributeBool(task, lines, attribute, value, size);
+  return function_pointers_.GetWatchdogAttributeBool(task, lines, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64* value)
 {
   if (!function_pointers_.GetWatchdogAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
   }
-  return function_pointers_.GetWatchdogAttributeDouble(task, lines, attribute, value, size);
+  return function_pointers_.GetWatchdogAttributeDouble(task, lines, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32* value)
 {
   if (!function_pointers_.GetWatchdogAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
   }
-  return function_pointers_.GetWatchdogAttributeInt32(task, lines, attribute, value, size);
+  return function_pointers_.GetWatchdogAttributeInt32(task, lines, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, char value[], uInt32 size)
@@ -2288,28 +2288,28 @@ int32 NiDAQmxLibrary::GetWatchdogAttributeString(TaskHandle task, const char lin
   return function_pointers_.GetWatchdogAttributeString(task, lines, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetWriteAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetWriteAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
   if (!function_pointers_.GetWriteAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-  return function_pointers_.GetWriteAttributeBool(task, attribute, value, size);
+  return function_pointers_.GetWriteAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetWriteAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetWriteAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
   if (!function_pointers_.GetWriteAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-  return function_pointers_.GetWriteAttributeDouble(task, attribute, value, size);
+  return function_pointers_.GetWriteAttributeDouble(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
   if (!function_pointers_.GetWriteAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-  return function_pointers_.GetWriteAttributeInt32(task, attribute, value, size);
+  return function_pointers_.GetWriteAttributeInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::GetWriteAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -2320,20 +2320,20 @@ int32 NiDAQmxLibrary::GetWriteAttributeString(TaskHandle task, int32 attribute, 
   return function_pointers_.GetWriteAttributeString(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::GetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 NiDAQmxLibrary::GetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
   if (!function_pointers_.GetWriteAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-  return function_pointers_.GetWriteAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.GetWriteAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
+int32 NiDAQmxLibrary::GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value)
 {
   if (!function_pointers_.GetWriteAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
-  return function_pointers_.GetWriteAttributeUInt64(task, attribute, value, size);
+  return function_pointers_.GetWriteAttributeUInt64(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::IsTaskDone(TaskHandle task, bool32* isTaskDone)
@@ -2784,52 +2784,52 @@ int32 NiDAQmxLibrary::SetBufferAttributeUInt32(TaskHandle task, int32 attribute,
   return function_pointers_.SetBufferAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetCalInfoAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
   }
-  return function_pointers_.SetCalInfoAttributeBool(deviceName, attribute, value, size);
+  return function_pointers_.SetCalInfoAttributeBool(deviceName, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64 value)
 {
   if (!function_pointers_.SetCalInfoAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
   }
-  return function_pointers_.SetCalInfoAttributeDouble(deviceName, attribute, value, size);
+  return function_pointers_.SetCalInfoAttributeDouble(deviceName, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetCalInfoAttributeString(const char deviceName[], int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetCalInfoAttributeString(const char deviceName[], int32 attribute, const char value[])
 {
   if (!function_pointers_.SetCalInfoAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
   }
-  return function_pointers_.SetCalInfoAttributeString(deviceName, attribute, value, size);
+  return function_pointers_.SetCalInfoAttributeString(deviceName, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetCalInfoAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
   }
-  return function_pointers_.SetCalInfoAttributeUInt32(deviceName, attribute, value, size);
+  return function_pointers_.SetCalInfoAttributeUInt32(deviceName, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetChanAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-  return function_pointers_.SetChanAttributeBool(task, channel, attribute, value, size);
+  return function_pointers_.SetChanAttributeBool(task, channel, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64 value)
 {
   if (!function_pointers_.SetChanAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-  return function_pointers_.SetChanAttributeDouble(task, channel, attribute, value, size);
+  return function_pointers_.SetChanAttributeDouble(task, channel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::SetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, const float64 value[], uInt32 size)
@@ -2840,28 +2840,28 @@ int32 NiDAQmxLibrary::SetChanAttributeDoubleArray(TaskHandle task, const char ch
   return function_pointers_.SetChanAttributeDoubleArray(task, channel, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::SetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32 value)
 {
   if (!function_pointers_.SetChanAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-  return function_pointers_.SetChanAttributeInt32(task, channel, attribute, value, size);
+  return function_pointers_.SetChanAttributeInt32(task, channel, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, const char value[])
 {
   if (!function_pointers_.SetChanAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-  return function_pointers_.SetChanAttributeString(task, channel, attribute, value, size);
+  return function_pointers_.SetChanAttributeString(task, channel, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetChanAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetChanAttribute.");
   }
-  return function_pointers_.SetChanAttributeUInt32(task, channel, attribute, value, size);
+  return function_pointers_.SetChanAttributeUInt32(task, channel, attribute, value);
 }
 
 int32 NiDAQmxLibrary::SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily)
@@ -2888,44 +2888,44 @@ int32 NiDAQmxLibrary::SetDigitalPullUpPullDownStates(const char deviceName[], co
   return function_pointers_.SetDigitalPullUpPullDownStates(deviceName, channelNames, state, channelNames0, state0, channelNames1, state1, channelNames2, state2, channelNames3, state3, channelNames4, state4, channelNames5, state5, channelNames6, state6, channelNames7, state7, channelNames8, state8, channelNames9, state9, channelNames10, state10, channelNames11, state11, channelNames12, state12, channelNames13, state13, channelNames14, state14, channelNames15, state15, channelNames16, state16, channelNames17, state17, channelNames18, state18, channelNames19, state19, channelNames20, state20, channelNames21, state21, channelNames22, state22, channelNames23, state23, channelNames24, state24, channelNames25, state25, channelNames26, state26, channelNames27, state27, channelNames28, state28, channelNames29, state29, channelNames30, state30, channelNames31, state31, channelNames32, state32, channelNames33, state33, channelNames34, state34, channelNames35, state35, channelNames36, state36, channelNames37, state37, channelNames38, state38, channelNames39, state39, channelNames40, state40, channelNames41, state41, channelNames42, state42, channelNames43, state43, channelNames44, state44, channelNames45, state45, channelNames46, state46, channelNames47, state47, channelNames48, state48, channelNames49, state49, channelNames50, state50, channelNames51, state51, channelNames52, state52, channelNames53, state53, channelNames54, state54, channelNames55, state55, channelNames56, state56, channelNames57, state57, channelNames58, state58, channelNames59, state59, channelNames60, state60, channelNames61, state61, channelNames62, state62, channelNames63, state63, channelNames64, state64, channelNames65, state65, channelNames66, state66, channelNames67, state67, channelNames68, state68, channelNames69, state69, channelNames70, state70, channelNames71, state71, channelNames72, state72, channelNames73, state73, channelNames74, state74, channelNames75, state75, channelNames76, state76, channelNames77, state77, channelNames78, state78, channelNames79, state79, channelNames80, state80, channelNames81, state81, channelNames82, state82, channelNames83, state83, channelNames84, state84, channelNames85, state85, channelNames86, state86, channelNames87, state87, channelNames88, state88, channelNames89, state89, channelNames90, state90, channelNames91, state91, channelNames92, state92, channelNames93, state93, channelNames94, state94, channelNames95, state95);
 }
 
-int32 NiDAQmxLibrary::SetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetExportedSignalAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-  return function_pointers_.SetExportedSignalAttributeBool(task, attribute, value, size);
+  return function_pointers_.SetExportedSignalAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
   if (!function_pointers_.SetExportedSignalAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-  return function_pointers_.SetExportedSignalAttributeDouble(task, attribute, value, size);
+  return function_pointers_.SetExportedSignalAttributeDouble(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
   if (!function_pointers_.SetExportedSignalAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-  return function_pointers_.SetExportedSignalAttributeInt32(task, attribute, value, size);
+  return function_pointers_.SetExportedSignalAttributeInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetExportedSignalAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetExportedSignalAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
   if (!function_pointers_.SetExportedSignalAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-  return function_pointers_.SetExportedSignalAttributeString(task, attribute, value, size);
+  return function_pointers_.SetExportedSignalAttributeString(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetExportedSignalAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
   }
-  return function_pointers_.SetExportedSignalAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.SetExportedSignalAttributeUInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data)
@@ -2936,84 +2936,84 @@ int32 NiDAQmxLibrary::SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data)
   return function_pointers_.SetFirstSampClkWhen(task, data);
 }
 
-int32 NiDAQmxLibrary::SetReadAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetReadAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetReadAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-  return function_pointers_.SetReadAttributeBool(task, attribute, value, size);
+  return function_pointers_.SetReadAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetReadAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetReadAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
   if (!function_pointers_.SetReadAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-  return function_pointers_.SetReadAttributeDouble(task, attribute, value, size);
+  return function_pointers_.SetReadAttributeDouble(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetReadAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetReadAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
   if (!function_pointers_.SetReadAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-  return function_pointers_.SetReadAttributeInt32(task, attribute, value, size);
+  return function_pointers_.SetReadAttributeInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetReadAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetReadAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
   if (!function_pointers_.SetReadAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-  return function_pointers_.SetReadAttributeString(task, attribute, value, size);
+  return function_pointers_.SetReadAttributeString(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetReadAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-  return function_pointers_.SetReadAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.SetReadAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value)
 {
   if (!function_pointers_.SetReadAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetReadAttribute.");
   }
-  return function_pointers_.SetReadAttributeUInt64(task, attribute, value, size);
+  return function_pointers_.SetReadAttributeUInt64(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetRealTimeAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
   }
-  return function_pointers_.SetRealTimeAttributeBool(task, attribute, value, size);
+  return function_pointers_.SetRealTimeAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
   if (!function_pointers_.SetRealTimeAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
   }
-  return function_pointers_.SetRealTimeAttributeInt32(task, attribute, value, size);
+  return function_pointers_.SetRealTimeAttributeInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetRealTimeAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
   }
-  return function_pointers_.SetRealTimeAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.SetRealTimeAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value)
 {
   if (!function_pointers_.SetScaleAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
-  return function_pointers_.SetScaleAttributeDouble(scaleName, attribute, value, size);
+  return function_pointers_.SetScaleAttributeDouble(scaleName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size)
@@ -3024,20 +3024,20 @@ int32 NiDAQmxLibrary::SetScaleAttributeDoubleArray(const char scaleName[], int32
   return function_pointers_.SetScaleAttributeDoubleArray(scaleName, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value)
 {
   if (!function_pointers_.SetScaleAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
-  return function_pointers_.SetScaleAttributeInt32(scaleName, attribute, value, size);
+  return function_pointers_.SetScaleAttributeInt32(scaleName, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[])
 {
   if (!function_pointers_.SetScaleAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetScaleAttribute.");
   }
-  return function_pointers_.SetScaleAttributeString(scaleName, attribute, value, size);
+  return function_pointers_.SetScaleAttributeString(scaleName, attribute, value);
 }
 
 int32 NiDAQmxLibrary::SetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data)
@@ -3056,132 +3056,132 @@ int32 NiDAQmxLibrary::SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data
   return function_pointers_.SetSyncPulseTimeWhen(task, data);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetTimingAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-  return function_pointers_.SetTimingAttributeBool(task, attribute, value, size);
+  return function_pointers_.SetTimingAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
   if (!function_pointers_.SetTimingAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-  return function_pointers_.SetTimingAttributeDouble(task, attribute, value, size);
+  return function_pointers_.SetTimingAttributeDouble(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetTimingAttributeExBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-  return function_pointers_.SetTimingAttributeExBool(task, deviceNames, attribute, value, size);
+  return function_pointers_.SetTimingAttributeExBool(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64 value)
 {
   if (!function_pointers_.SetTimingAttributeExDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-  return function_pointers_.SetTimingAttributeExDouble(task, deviceNames, attribute, value, size);
+  return function_pointers_.SetTimingAttributeExDouble(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32 value)
 {
   if (!function_pointers_.SetTimingAttributeExInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-  return function_pointers_.SetTimingAttributeExInt32(task, deviceNames, attribute, value, size);
+  return function_pointers_.SetTimingAttributeExInt32(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, const char value[])
 {
   if (!function_pointers_.SetTimingAttributeExString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-  return function_pointers_.SetTimingAttributeExString(task, deviceNames, attribute, value, size);
+  return function_pointers_.SetTimingAttributeExString(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime value)
 {
   if (!function_pointers_.SetTimingAttributeExTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-  return function_pointers_.SetTimingAttributeExTimestamp(task, deviceNames, attribute, value, size);
+  return function_pointers_.SetTimingAttributeExTimestamp(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetTimingAttributeExUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-  return function_pointers_.SetTimingAttributeExUInt32(task, deviceNames, attribute, value, size);
+  return function_pointers_.SetTimingAttributeExUInt32(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64 value)
 {
   if (!function_pointers_.SetTimingAttributeExUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttributeEx.");
   }
-  return function_pointers_.SetTimingAttributeExUInt64(task, deviceNames, attribute, value, size);
+  return function_pointers_.SetTimingAttributeExUInt64(task, deviceNames, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
   if (!function_pointers_.SetTimingAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-  return function_pointers_.SetTimingAttributeInt32(task, attribute, value, size);
+  return function_pointers_.SetTimingAttributeInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
   if (!function_pointers_.SetTimingAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-  return function_pointers_.SetTimingAttributeString(task, attribute, value, size);
+  return function_pointers_.SetTimingAttributeString(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value)
 {
   if (!function_pointers_.SetTimingAttributeTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-  return function_pointers_.SetTimingAttributeTimestamp(task, attribute, value, size);
+  return function_pointers_.SetTimingAttributeTimestamp(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetTimingAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-  return function_pointers_.SetTimingAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.SetTimingAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value)
 {
   if (!function_pointers_.SetTimingAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTimingAttribute.");
   }
-  return function_pointers_.SetTimingAttributeUInt64(task, attribute, value, size);
+  return function_pointers_.SetTimingAttributeUInt64(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTrigAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTrigAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetTrigAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-  return function_pointers_.SetTrigAttributeBool(task, attribute, value, size);
+  return function_pointers_.SetTrigAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTrigAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTrigAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
   if (!function_pointers_.SetTrigAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-  return function_pointers_.SetTrigAttributeDouble(task, attribute, value, size);
+  return function_pointers_.SetTrigAttributeDouble(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, const float64 value[], uInt32 size)
@@ -3192,12 +3192,12 @@ int32 NiDAQmxLibrary::SetTrigAttributeDoubleArray(TaskHandle task, int32 attribu
   return function_pointers_.SetTrigAttributeDoubleArray(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::SetTrigAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTrigAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
   if (!function_pointers_.SetTrigAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-  return function_pointers_.SetTrigAttributeInt32(task, attribute, value, size);
+  return function_pointers_.SetTrigAttributeInt32(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::SetTrigAttributeInt32Array(TaskHandle task, int32 attribute, const int32 value[], uInt32 size)
@@ -3208,108 +3208,108 @@ int32 NiDAQmxLibrary::SetTrigAttributeInt32Array(TaskHandle task, int32 attribut
   return function_pointers_.SetTrigAttributeInt32Array(task, attribute, value, size);
 }
 
-int32 NiDAQmxLibrary::SetTrigAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetTrigAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
   if (!function_pointers_.SetTrigAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-  return function_pointers_.SetTrigAttributeString(task, attribute, value, size);
+  return function_pointers_.SetTrigAttributeString(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size)
+int32 NiDAQmxLibrary::SetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value)
 {
   if (!function_pointers_.SetTrigAttributeTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-  return function_pointers_.SetTrigAttributeTimestamp(task, attribute, value, size);
+  return function_pointers_.SetTrigAttributeTimestamp(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetTrigAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetTrigAttribute.");
   }
-  return function_pointers_.SetTrigAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.SetTrigAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetWatchdogAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
   }
-  return function_pointers_.SetWatchdogAttributeBool(task, lines, attribute, value, size);
+  return function_pointers_.SetWatchdogAttributeBool(task, lines, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64 value)
 {
   if (!function_pointers_.SetWatchdogAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
   }
-  return function_pointers_.SetWatchdogAttributeDouble(task, lines, attribute, value, size);
+  return function_pointers_.SetWatchdogAttributeDouble(task, lines, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32 value)
 {
   if (!function_pointers_.SetWatchdogAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
   }
-  return function_pointers_.SetWatchdogAttributeInt32(task, lines, attribute, value, size);
+  return function_pointers_.SetWatchdogAttributeInt32(task, lines, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, const char value[])
 {
   if (!function_pointers_.SetWatchdogAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
   }
-  return function_pointers_.SetWatchdogAttributeString(task, lines, attribute, value, size);
+  return function_pointers_.SetWatchdogAttributeString(task, lines, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWriteAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetWriteAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
   if (!function_pointers_.SetWriteAttributeBool) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-  return function_pointers_.SetWriteAttributeBool(task, attribute, value, size);
+  return function_pointers_.SetWriteAttributeBool(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWriteAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetWriteAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
   if (!function_pointers_.SetWriteAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-  return function_pointers_.SetWriteAttributeDouble(task, attribute, value, size);
+  return function_pointers_.SetWriteAttributeDouble(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
   if (!function_pointers_.SetWriteAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-  return function_pointers_.SetWriteAttributeInt32(task, attribute, value, size);
+  return function_pointers_.SetWriteAttributeInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWriteAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 NiDAQmxLibrary::SetWriteAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
   if (!function_pointers_.SetWriteAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-  return function_pointers_.SetWriteAttributeString(task, attribute, value, size);
+  return function_pointers_.SetWriteAttributeString(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 NiDAQmxLibrary::SetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
   if (!function_pointers_.SetWriteAttributeUInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-  return function_pointers_.SetWriteAttributeUInt32(task, attribute, value, size);
+  return function_pointers_.SetWriteAttributeUInt32(task, attribute, value);
 }
 
-int32 NiDAQmxLibrary::SetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
+int32 NiDAQmxLibrary::SetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value)
 {
   if (!function_pointers_.SetWriteAttributeUInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWriteAttribute.");
   }
-  return function_pointers_.SetWriteAttributeUInt64(task, attribute, value, size);
+  return function_pointers_.SetWriteAttributeUInt64(task, attribute, value);
 }
 
 int32 NiDAQmxLibrary::StartNewFile(TaskHandle task, const char filePath[])

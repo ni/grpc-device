@@ -138,8 +138,15 @@ FUNCTION_SCHEMA = Schema(
                 "CustomCode",
                 "no",
                 "python-only",
-                "grpc-only",
                 "CustomCodeCustomProtoMessage",
+            ),
+        ),
+        Optional("python_codegen_method"): And(
+            str,
+            lambda s: s
+            in (
+                "CustomCode",
+                "no",
             ),
         ),
         Optional("init_method"): bool,
