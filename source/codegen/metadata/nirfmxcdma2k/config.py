@@ -27,7 +27,7 @@ config = {
         "NIComplexSingle": "nidevice_grpc.NIComplexNumberF32",
         "NIComplexDouble": "nidevice_grpc.NIComplexNumber",
     },
-    'code_readiness': 'NextRelease',
+    'code_readiness': 'Release',
     'feature_toggles': {},
     'driver_name': 'NI-rfmxcdma2k',
     'extra_errors_used': [

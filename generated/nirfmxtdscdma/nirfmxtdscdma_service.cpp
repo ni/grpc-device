@@ -6499,7 +6499,7 @@ namespace nirfmxtdscdma_grpc {
   NiRFmxTDSCDMAFeatureToggles::NiRFmxTDSCDMAFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxtdscdma", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxtdscdma", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxtdscdma_grpc
