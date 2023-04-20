@@ -7965,9 +7965,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetCalInfoAttributeBool(device_name, attribute, &value, size);
+      auto status = library_->GetCalInfoAttributeBool(device_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -8009,9 +8008,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetCalInfoAttributeDouble(device_name, attribute, &value, size);
+      auto status = library_->GetCalInfoAttributeDouble(device_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -8115,9 +8113,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetCalInfoAttributeUInt32(device_name, attribute, &value, size);
+      auto status = library_->GetCalInfoAttributeUInt32(device_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -8161,9 +8158,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetChanAttributeBool(task, channel, attribute, &value, size);
+      auto status = library_->GetChanAttributeBool(task, channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -8207,9 +8203,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetChanAttributeDouble(task, channel, attribute, &value, size);
+      auto status = library_->GetChanAttributeDouble(task, channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -8311,9 +8306,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetChanAttributeInt32(task, channel, attribute, &value, size);
+      auto status = library_->GetChanAttributeInt32(task, channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -8427,9 +8421,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetChanAttributeUInt32(task, channel, attribute, &value, size);
+      auto status = library_->GetChanAttributeUInt32(task, channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -8471,9 +8464,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetDeviceAttributeBool(device_name, attribute, &value, size);
+      auto status = library_->GetDeviceAttributeBool(device_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -8515,9 +8507,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetDeviceAttributeDouble(device_name, attribute, &value, size);
+      auto status = library_->GetDeviceAttributeDouble(device_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -8615,9 +8606,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetDeviceAttributeInt32(device_name, attribute, &value, size);
+      auto status = library_->GetDeviceAttributeInt32(device_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -8797,9 +8787,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetDeviceAttributeUInt32(device_name, attribute, &value, size);
+      auto status = library_->GetDeviceAttributeUInt32(device_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -9098,9 +9087,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetExportedSignalAttributeBool(task, attribute, &value, size);
+      auto status = library_->GetExportedSignalAttributeBool(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -9142,9 +9130,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetExportedSignalAttributeDouble(task, attribute, &value, size);
+      auto status = library_->GetExportedSignalAttributeDouble(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -9186,9 +9173,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetExportedSignalAttributeInt32(task, attribute, &value, size);
+      auto status = library_->GetExportedSignalAttributeInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -9298,9 +9284,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetExportedSignalAttributeUInt32(task, attribute, &value, size);
+      auto status = library_->GetExportedSignalAttributeUInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -9522,9 +9507,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetPersistedChanAttributeBool(channel, attribute, &value, size);
+      auto status = library_->GetPersistedChanAttributeBool(channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -9628,9 +9612,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetPersistedScaleAttributeBool(scale_name, attribute, &value, size);
+      auto status = library_->GetPersistedScaleAttributeBool(scale_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -9734,9 +9717,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetPersistedTaskAttributeBool(task_name, attribute, &value, size);
+      auto status = library_->GetPersistedTaskAttributeBool(task_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -9840,9 +9822,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetPhysicalChanAttributeBool(physical_channel, attribute, &value, size);
+      auto status = library_->GetPhysicalChanAttributeBool(physical_channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -9940,9 +9921,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetPhysicalChanAttributeDouble(physical_channel, attribute, &value, size);
+      auto status = library_->GetPhysicalChanAttributeDouble(physical_channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -10040,9 +10020,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetPhysicalChanAttributeInt32(physical_channel, attribute, &value, size);
+      auto status = library_->GetPhysicalChanAttributeInt32(physical_channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -10222,9 +10201,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetPhysicalChanAttributeUInt32(physical_channel, attribute, &value, size);
+      auto status = library_->GetPhysicalChanAttributeUInt32(physical_channel, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -10322,9 +10300,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetReadAttributeBool(task, attribute, &value, size);
+      auto status = library_->GetReadAttributeBool(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -10366,9 +10343,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetReadAttributeDouble(task, attribute, &value, size);
+      auto status = library_->GetReadAttributeDouble(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -10410,9 +10386,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetReadAttributeInt32(task, attribute, &value, size);
+      auto status = library_->GetReadAttributeInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -10522,9 +10497,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetReadAttributeUInt32(task, attribute, &value, size);
+      auto status = library_->GetReadAttributeUInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -10566,9 +10540,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt64 value {};
-      auto status = library_->GetReadAttributeUInt64(task, attribute, &value, size);
+      auto status = library_->GetReadAttributeUInt64(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -10610,9 +10583,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetRealTimeAttributeBool(task, attribute, &value, size);
+      auto status = library_->GetRealTimeAttributeBool(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -10654,9 +10626,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetRealTimeAttributeInt32(task, attribute, &value, size);
+      auto status = library_->GetRealTimeAttributeInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -10704,9 +10675,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetRealTimeAttributeUInt32(task, attribute, &value, size);
+      auto status = library_->GetRealTimeAttributeUInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -10772,9 +10742,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetScaleAttributeDouble(scale_name, attribute, &value, size);
+      auto status = library_->GetScaleAttributeDouble(scale_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -10872,9 +10841,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetScaleAttributeInt32(scale_name, attribute, &value, size);
+      auto status = library_->GetScaleAttributeInt32(scale_name, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -11146,9 +11114,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetSystemInfoAttributeUInt32(attribute, &value, size);
+      auto status = library_->GetSystemInfoAttributeUInt32(attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -11190,9 +11157,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetTaskAttributeBool(task, attribute, &value, size);
+      auto status = library_->GetTaskAttributeBool(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11296,9 +11262,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetTaskAttributeUInt32(task, attribute, &value, size);
+      auto status = library_->GetTaskAttributeUInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11340,9 +11305,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetTimingAttributeBool(task, attribute, &value, size);
+      auto status = library_->GetTimingAttributeBool(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11384,9 +11348,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetTimingAttributeDouble(task, attribute, &value, size);
+      auto status = library_->GetTimingAttributeDouble(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11430,9 +11393,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetTimingAttributeExBool(task, device_names, attribute, &value, size);
+      auto status = library_->GetTimingAttributeExBool(task, device_names, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11476,9 +11438,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetTimingAttributeExDouble(task, device_names, attribute, &value, size);
+      auto status = library_->GetTimingAttributeExDouble(task, device_names, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11522,9 +11483,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetTimingAttributeExInt32(task, device_names, attribute, &value, size);
+      auto status = library_->GetTimingAttributeExInt32(task, device_names, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11638,9 +11598,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       CVIAbsoluteTime value {};
-      auto status = library_->GetTimingAttributeExTimestamp(task, device_names, attribute, &value, size);
+      auto status = library_->GetTimingAttributeExTimestamp(task, device_names, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11684,9 +11643,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetTimingAttributeExUInt32(task, device_names, attribute, &value, size);
+      auto status = library_->GetTimingAttributeExUInt32(task, device_names, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11730,9 +11688,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt64 value {};
-      auto status = library_->GetTimingAttributeExUInt64(task, device_names, attribute, &value, size);
+      auto status = library_->GetTimingAttributeExUInt64(task, device_names, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11774,9 +11731,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetTimingAttributeInt32(task, attribute, &value, size);
+      auto status = library_->GetTimingAttributeInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11886,9 +11842,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       CVIAbsoluteTime value {};
-      auto status = library_->GetTimingAttributeTimestamp(task, attribute, &value, size);
+      auto status = library_->GetTimingAttributeTimestamp(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11930,9 +11885,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetTimingAttributeUInt32(task, attribute, &value, size);
+      auto status = library_->GetTimingAttributeUInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -11974,9 +11928,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt64 value {};
-      auto status = library_->GetTimingAttributeUInt64(task, attribute, &value, size);
+      auto status = library_->GetTimingAttributeUInt64(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12018,9 +11971,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetTrigAttributeBool(task, attribute, &value, size);
+      auto status = library_->GetTrigAttributeBool(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12062,9 +12014,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetTrigAttributeDouble(task, attribute, &value, size);
+      auto status = library_->GetTrigAttributeDouble(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12162,9 +12113,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetTrigAttributeInt32(task, attribute, &value, size);
+      auto status = library_->GetTrigAttributeInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12344,9 +12294,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       CVIAbsoluteTime value {};
-      auto status = library_->GetTrigAttributeTimestamp(task, attribute, &value, size);
+      auto status = library_->GetTrigAttributeTimestamp(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12388,9 +12337,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetTrigAttributeUInt32(task, attribute, &value, size);
+      auto status = library_->GetTrigAttributeUInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12434,9 +12382,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetWatchdogAttributeBool(task, lines, attribute, &value, size);
+      auto status = library_->GetWatchdogAttributeBool(task, lines, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12480,9 +12427,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetWatchdogAttributeDouble(task, lines, attribute, &value, size);
+      auto status = library_->GetWatchdogAttributeDouble(task, lines, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12526,9 +12472,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetWatchdogAttributeInt32(task, lines, attribute, &value, size);
+      auto status = library_->GetWatchdogAttributeInt32(task, lines, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12640,9 +12585,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       bool32 value {};
-      auto status = library_->GetWriteAttributeBool(task, attribute, &value, size);
+      auto status = library_->GetWriteAttributeBool(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12684,9 +12628,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       float64 value {};
-      auto status = library_->GetWriteAttributeDouble(task, attribute, &value, size);
+      auto status = library_->GetWriteAttributeDouble(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12728,9 +12671,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       int32 value {};
-      auto status = library_->GetWriteAttributeInt32(task, attribute, &value, size);
+      auto status = library_->GetWriteAttributeInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12840,9 +12782,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt32 value {};
-      auto status = library_->GetWriteAttributeUInt32(task, attribute, &value, size);
+      auto status = library_->GetWriteAttributeUInt32(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -12884,9 +12825,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
       uInt64 value {};
-      auto status = library_->GetWriteAttributeUInt64(task, attribute, &value, size);
+      auto status = library_->GetWriteAttributeUInt64(task, attribute, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15156,8 +15096,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetCalInfoAttributeBool(device_name, attribute, value, size);
+      auto status = library_->SetCalInfoAttributeBool(device_name, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -15199,8 +15138,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetCalInfoAttributeDouble(device_name, attribute, value, size);
+      auto status = library_->SetCalInfoAttributeDouble(device_name, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -15243,8 +15181,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetCalInfoAttributeString(device_name, attribute, value, size);
+      auto status = library_->SetCalInfoAttributeString(device_name, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -15286,8 +15223,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetCalInfoAttributeUInt32(device_name, attribute, value, size);
+      auto status = library_->SetCalInfoAttributeUInt32(device_name, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -15331,8 +15267,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetChanAttributeBool(task, channel, attribute, value, size);
+      auto status = library_->SetChanAttributeBool(task, channel, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15376,8 +15311,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetChanAttributeDouble(task, channel, attribute, value, size);
+      auto status = library_->SetChanAttributeDouble(task, channel, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15481,8 +15415,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetChanAttributeInt32(task, channel, attribute, value, size);
+      auto status = library_->SetChanAttributeInt32(task, channel, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15527,8 +15460,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetChanAttributeString(task, channel, attribute, value, size);
+      auto status = library_->SetChanAttributeString(task, channel, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15572,8 +15504,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetChanAttributeUInt32(task, channel, attribute, value, size);
+      auto status = library_->SetChanAttributeUInt32(task, channel, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15737,8 +15668,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetExportedSignalAttributeBool(task, attribute, value, size);
+      auto status = library_->SetExportedSignalAttributeBool(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15780,8 +15710,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetExportedSignalAttributeDouble(task, attribute, value, size);
+      auto status = library_->SetExportedSignalAttributeDouble(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15838,8 +15767,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetExportedSignalAttributeInt32(task, attribute, value, size);
+      auto status = library_->SetExportedSignalAttributeInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15882,8 +15810,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetExportedSignalAttributeString(task, attribute, value, size);
+      auto status = library_->SetExportedSignalAttributeString(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15925,8 +15852,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetExportedSignalAttributeUInt32(task, attribute, value, size);
+      auto status = library_->SetExportedSignalAttributeUInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -15991,8 +15917,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetReadAttributeBool(task, attribute, value, size);
+      auto status = library_->SetReadAttributeBool(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16034,8 +15959,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetReadAttributeDouble(task, attribute, value, size);
+      auto status = library_->SetReadAttributeDouble(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16092,8 +16016,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetReadAttributeInt32(task, attribute, value, size);
+      auto status = library_->SetReadAttributeInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16136,8 +16059,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetReadAttributeString(task, attribute, value, size);
+      auto status = library_->SetReadAttributeString(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16179,8 +16101,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetReadAttributeUInt32(task, attribute, value, size);
+      auto status = library_->SetReadAttributeUInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16222,8 +16143,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetReadAttributeUInt64(task, attribute, value, size);
+      auto status = library_->SetReadAttributeUInt64(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16265,8 +16185,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetRealTimeAttributeBool(task, attribute, value, size);
+      auto status = library_->SetRealTimeAttributeBool(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16323,8 +16242,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetRealTimeAttributeInt32(task, attribute, value, size);
+      auto status = library_->SetRealTimeAttributeInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16366,8 +16284,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetRealTimeAttributeUInt32(task, attribute, value, size);
+      auto status = library_->SetRealTimeAttributeUInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16409,8 +16326,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetScaleAttributeDouble(scale_name, attribute, value, size);
+      auto status = library_->SetScaleAttributeDouble(scale_name, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -16510,8 +16426,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetScaleAttributeInt32(scale_name, attribute, value, size);
+      auto status = library_->SetScaleAttributeInt32(scale_name, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -16554,8 +16469,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetScaleAttributeString(scale_name, attribute, value, size);
+      auto status = library_->SetScaleAttributeString(scale_name, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
@@ -16643,8 +16557,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeBool(task, attribute, value, size);
+      auto status = library_->SetTimingAttributeBool(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16686,8 +16599,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeDouble(task, attribute, value, size);
+      auto status = library_->SetTimingAttributeDouble(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16731,8 +16643,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeExBool(task, device_names, attribute, value, size);
+      auto status = library_->SetTimingAttributeExBool(task, device_names, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16776,8 +16687,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeExDouble(task, device_names, attribute, value, size);
+      auto status = library_->SetTimingAttributeExDouble(task, device_names, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16836,8 +16746,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeExInt32(task, device_names, attribute, value, size);
+      auto status = library_->SetTimingAttributeExInt32(task, device_names, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16882,8 +16791,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeExString(task, device_names, attribute, value, size);
+      auto status = library_->SetTimingAttributeExString(task, device_names, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16927,8 +16835,7 @@ namespace nidaqmx_grpc {
       }
 
       auto value = convert_from_grpc<CVIAbsoluteTime>(request->value());
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeExTimestamp(task, device_names, attribute, value, size);
+      auto status = library_->SetTimingAttributeExTimestamp(task, device_names, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -16972,8 +16879,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeExUInt32(task, device_names, attribute, value, size);
+      auto status = library_->SetTimingAttributeExUInt32(task, device_names, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17017,8 +16923,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeExUInt64(task, device_names, attribute, value, size);
+      auto status = library_->SetTimingAttributeExUInt64(task, device_names, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17075,8 +16980,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeInt32(task, attribute, value, size);
+      auto status = library_->SetTimingAttributeInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17119,8 +17023,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeString(task, attribute, value, size);
+      auto status = library_->SetTimingAttributeString(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17162,8 +17065,7 @@ namespace nidaqmx_grpc {
       }
 
       auto value = convert_from_grpc<CVIAbsoluteTime>(request->value());
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeTimestamp(task, attribute, value, size);
+      auto status = library_->SetTimingAttributeTimestamp(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17205,8 +17107,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeUInt32(task, attribute, value, size);
+      auto status = library_->SetTimingAttributeUInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17248,8 +17149,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTimingAttributeUInt64(task, attribute, value, size);
+      auto status = library_->SetTimingAttributeUInt64(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17291,8 +17191,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTrigAttributeBool(task, attribute, value, size);
+      auto status = library_->SetTrigAttributeBool(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17334,8 +17233,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTrigAttributeDouble(task, attribute, value, size);
+      auto status = library_->SetTrigAttributeDouble(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17435,8 +17333,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetTrigAttributeInt32(task, attribute, value, size);
+      auto status = library_->SetTrigAttributeInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17522,8 +17419,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetTrigAttributeString(task, attribute, value, size);
+      auto status = library_->SetTrigAttributeString(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17565,8 +17461,7 @@ namespace nidaqmx_grpc {
       }
 
       auto value = convert_from_grpc<CVIAbsoluteTime>(request->value());
-      auto size = 0U;
-      auto status = library_->SetTrigAttributeTimestamp(task, attribute, value, size);
+      auto status = library_->SetTrigAttributeTimestamp(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17608,8 +17503,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetTrigAttributeUInt32(task, attribute, value, size);
+      auto status = library_->SetTrigAttributeUInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17653,8 +17547,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetWatchdogAttributeBool(task, lines, attribute, value, size);
+      auto status = library_->SetWatchdogAttributeBool(task, lines, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17698,8 +17591,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetWatchdogAttributeDouble(task, lines, attribute, value, size);
+      auto status = library_->SetWatchdogAttributeDouble(task, lines, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17758,8 +17650,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetWatchdogAttributeInt32(task, lines, attribute, value, size);
+      auto status = library_->SetWatchdogAttributeInt32(task, lines, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17804,8 +17695,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetWatchdogAttributeString(task, lines, attribute, value, size);
+      auto status = library_->SetWatchdogAttributeString(task, lines, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17847,8 +17737,7 @@ namespace nidaqmx_grpc {
       }
 
       bool32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetWriteAttributeBool(task, attribute, value, size);
+      auto status = library_->SetWriteAttributeBool(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17890,8 +17779,7 @@ namespace nidaqmx_grpc {
       }
 
       float64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetWriteAttributeDouble(task, attribute, value, size);
+      auto status = library_->SetWriteAttributeDouble(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17948,8 +17836,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto size = 0U;
-      auto status = library_->SetWriteAttributeInt32(task, attribute, value, size);
+      auto status = library_->SetWriteAttributeInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -17992,8 +17879,7 @@ namespace nidaqmx_grpc {
 
       auto value_mbcs = convert_from_grpc<std::string>(request->value());
       auto value = value_mbcs.c_str();
-      auto size = 0U;
-      auto status = library_->SetWriteAttributeString(task, attribute, value, size);
+      auto status = library_->SetWriteAttributeString(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -18035,8 +17921,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt32 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetWriteAttributeUInt32(task, attribute, value, size);
+      auto status = library_->SetWriteAttributeUInt32(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -18078,8 +17963,7 @@ namespace nidaqmx_grpc {
       }
 
       uInt64 value = request->value();
-      auto size = 0U;
-      auto status = library_->SetWriteAttributeUInt64(task, attribute, value, size);
+      auto status = library_->SetWriteAttributeUInt64(task, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
