@@ -124,6 +124,10 @@ Below are the contents of a default configuration file accepting localhost conne
 
 The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
 
+### Licensing behaviour
+
+If you are using gRPC to control a licensed software, e.g. RFmx, the license checkout will happen on the machine running the gRPC server, not in the client side. As the license check-in happens, when the process which requested the license terminates, you need to close the gRPC server application to return the license. 
+
 ## Creating a gRPC Client
 
 Each supported driver API has a corresponding `.proto` file that defines the interface used by clients to interact with the NI devices connected to the server. Creating a client requires compiling the `.proto` into supporting files in the client's language of choice using the protocol buffer compiler `protoc`. For more detailed information refer to the [Creating a gRPC Client wiki page](https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client).
