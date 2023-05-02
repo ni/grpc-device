@@ -198,11 +198,6 @@ functions = {
     },
     'CalculateReversePolyCoeff': {
         'calling_convention': 'StdCall',
-        'handle_parameter': {
-            'ctypes_data_type': 'ctypes.c_char_p',
-            'cvi_name': 'name',
-            'python_accessor': 'self._name'
-        },
         'parameters': [
             {
                 'ctypes_data_type': 'numpy.float64',
@@ -281,6 +276,7 @@ functions = {
                 'python_type_annotation': 'List[float]',
                 'size': {
                     'mechanism': 'custom-code',
+                    'python_value': 'len(forward_coeffs) if reverse_poly_order < 0 else reverse_poly_order + 1',
                     'value': '(reversePolyOrder < 0) ? numForwardCoeffsIn : reversePolyOrder + 1'
                 },
                 'type': 'float64[]'
@@ -1466,43 +1462,43 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_optional_in_python': False,
                 'name': 'task',
                 'python_data_type': 'TaskHandle',
-                'python_description': '',
-                'python_type_annotation': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_optional_in_python': False,
                 'name': 'channelNames',
                 'python_data_type': 'str',
-                'python_description': '',
-                'python_type_annotation': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'numpy.float64',
                 'direction': 'in',
+                'is_list': True,
+                'is_optional_in_python': False,
                 'name': 'expirStateArray',
+                'python_data_type': 'float',
+                'python_type_annotation': 'List[float]',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'const float64[]',
-                'use_in_python_api': False
+                'type': 'const float64[]'
             },
             {
+                'ctypes_data_type': 'numpy.int32',
                 'direction': 'in',
                 'enum': 'WatchdogAOOutputType',
+                'is_list': True,
                 'name': 'outputTypeArray',
+                'python_data_type': 'WatchdogAOOutputType',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'const int32[]',
-                'use_in_python_api': False
+                'type': 'const int32[]'
             },
             {
                 'direction': 'in',
@@ -12285,6 +12281,7 @@ functions = {
                 'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
                 'name': 'initializationBehavior',
                 'proto_only': True,
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -12293,6 +12290,7 @@ functions = {
                 'grpc_type': 'bool',
                 'name': 'newSessionInitialized',
                 'proto_only': True,
+                'python_data_type': 'bool',
                 'type': 'bool'
             }
         ],
@@ -12348,6 +12346,7 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'expStates',
+                'proto_only': True,
                 'repeated_var_args': True
             },
             {
@@ -12427,6 +12426,7 @@ functions = {
                 'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
                 'name': 'initializationBehavior',
                 'proto_only': True,
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -12435,6 +12435,7 @@ functions = {
                 'grpc_type': 'bool',
                 'name': 'newSessionInitialized',
                 'proto_only': True,
+                'python_data_type': 'bool',
                 'type': 'bool'
             }
         ],
@@ -12470,12 +12471,15 @@ functions = {
         'calling_convention': 'StdCall',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'channelName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_class_name': 'PersistedChannel',
+        'python_codegen_method': 'CustomCode',
         'python_description': 'Deletes the specified global channel from MAX. This function does not remove the global channel from tasks that use it.',
         'returns': 'int32'
     },
@@ -12483,12 +12487,15 @@ functions = {
         'calling_convention': 'StdCall',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_class_name': 'PersistedScale',
+        'python_codegen_method': 'CustomCode',
         'python_description': 'Deletes the specified custom scale from MAX. This function does not remove the custom scale from virtual channels that use it.',
         'returns': 'int32'
     },
@@ -12496,12 +12503,15 @@ functions = {
         'calling_convention': 'StdCall',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'taskName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_class_name': 'PersistedTask',
+        'python_codegen_method': 'CustomCode',
         'python_description': 'Deletes the specified task from MAX. This function does not clear the copy of the task stored in memory. Use the DAQmx Clear Task function to clear that copy of the task.',
         'returns': 'int32'
     },
@@ -12728,35 +12738,41 @@ functions = {
         'calling_convention': 'Cdecl',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'deviceName',
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'python_data_type': 'str',
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'channelName',
+                'python_data_type': 'str',
                 'repeating_argument': True,
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_optional_in_python': False,
                 'name': 'state',
+                'python_data_type': 'float',
+                'python_type_annotation': 'float',
                 'repeating_argument': True,
-                'type': 'float64',
-                'use_in_python_api': False
+                'type': 'float64'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'enum': 'PowerUpChannelType',
                 'include_in_proto': False,
                 'name': 'channelType',
+                'python_data_type': 'PowerUpChannelType',
                 'repeating_argument': True,
-                'type': 'int32',
-                'use_in_python_api': False
+                'type': 'int32'
             },
             {
                 'direction': 'in',
@@ -12764,6 +12780,8 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'channels',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             },
             {
@@ -12771,6 +12789,8 @@ functions = {
                 'grpc_type': 'repeated double',
                 'max_length': 96,
                 'name': 'powerUpStates',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             }
         ],
@@ -12784,42 +12804,42 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_optional_in_python': False,
                 'name': 'channelNames',
                 'python_data_type': 'str',
-                'python_description': '',
-                'python_type_annotation': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
+                'is_list': True,
+                'is_optional_in_python': False,
                 'name': 'stateArray',
+                'python_data_type': 'float',
+                'python_type_annotation': 'List[float]',
                 'size': {
                     'mechanism': 'passed-in-by-ptr',
                     'value': 'arraySize'
                 },
-                'type': 'float64[]',
-                'use_in_python_api': False
+                'type': 'float64[]'
             },
             {
+                'ctypes_data_type': 'numpy.int32',
                 'direction': 'out',
                 'enum': 'PowerUpChannelType',
+                'is_list': True,
                 'name': 'channelTypeArray',
+                'python_data_type': 'PowerUpChannelType',
                 'size': {
                     'mechanism': 'passed-in-by-ptr',
                     'value': 'arraySize'
                 },
-                'type': 'int32[]',
-                'use_in_python_api': False
+                'type': 'int32[]'
             },
             {
-                'ctypes_data_type': 'ctypes.c_uint',
+                'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_optional_in_python': False,
                 'name': 'arraySize',
                 'python_data_type': 'int',
-                'python_description': 'Contains the physical channels and power up states. Each element of the list contains a physical channel and the power up state for that physical channel.',
-                'python_type_annotation': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -12903,23 +12923,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'BufferAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -12933,23 +12954,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'CalibrationInfoAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -12963,23 +12985,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'CalibrationInfoAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -12993,23 +13016,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'CalibrationInfoAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -13019,8 +13043,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13034,23 +13058,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'CalibrationInfoAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13069,30 +13094,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -13111,30 +13137,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -13153,23 +13180,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -13177,6 +13205,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'float',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -13186,8 +13215,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13206,30 +13235,32 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -13248,30 +13279,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -13281,8 +13313,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13301,30 +13333,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13343,23 +13376,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'DeviceAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -13378,23 +13412,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'DeviceAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -13413,16 +13448,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'DeviceAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -13430,6 +13466,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'float',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -13439,8 +13476,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13459,23 +13496,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'DeviceAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -13494,23 +13533,26 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'DeviceAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'numpy.int32',
                 'direction': 'out',
+                'is_grpc_enum': True,
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -13520,8 +13562,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13540,23 +13582,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'DeviceAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -13566,8 +13609,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13586,23 +13629,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'DeviceAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13621,16 +13665,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'DeviceAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -13638,6 +13683,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -13647,8 +13693,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13687,33 +13733,38 @@ functions = {
         'calling_convention': 'Cdecl',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'deviceName',
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'python_data_type': 'str',
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'channelName',
+                'python_data_type': 'str',
                 'repeating_argument': True,
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
                 'enum': 'PowerUpStates',
                 'include_in_proto': False,
                 'name': 'state',
+                'python_data_type': 'PowerUpStates',
                 'repeating_argument': True,
-                'type': 'int32',
-                'use_in_python_api': False
+                'type': 'int32'
             },
             {
                 'direction': 'in',
                 'grpc_type': 'repeated string',
                 'max_length': 96,
                 'name': 'channelName',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             },
             {
@@ -13721,6 +13772,8 @@ functions = {
                 'grpc_type': 'repeated PowerUpStates',
                 'max_length': 96,
                 'name': 'powerUpStates',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             }
         ],
@@ -13732,33 +13785,38 @@ functions = {
         'calling_convention': 'Cdecl',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'deviceName',
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'python_data_type': 'str',
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'channelName',
+                'python_data_type': 'str',
                 'repeating_argument': True,
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
                 'enum': 'ResistorState',
                 'include_in_proto': False,
                 'name': 'state',
+                'python_data_type': 'ResistorState',
                 'repeating_argument': True,
-                'type': 'int32',
-                'use_in_python_api': False
+                'type': 'int32'
             },
             {
                 'direction': 'in',
                 'grpc_type': 'repeated string',
                 'max_length': 96,
                 'name': 'channelName',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             },
             {
@@ -13766,6 +13824,8 @@ functions = {
                 'grpc_type': 'repeated ResistorState',
                 'max_length': 96,
                 'name': 'pullUpPullDownStates',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             }
         ],
@@ -13840,23 +13900,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -13875,23 +13936,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -13910,23 +13972,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -13945,23 +14009,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -13971,8 +14036,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -13991,23 +14056,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14223,23 +14289,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PersistedChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -14258,23 +14325,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PersistedChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14284,8 +14352,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14299,23 +14367,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PersistedScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -14329,23 +14398,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PersistedScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14355,8 +14425,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14370,23 +14440,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'taskName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PersistedTaskAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -14400,23 +14471,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'taskName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PersistedTaskAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14426,8 +14498,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14446,23 +14518,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -14481,23 +14554,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'numpy.generic',
+                'ctypes_data_type': 'numpy.uint8',
                 'direction': 'out',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14507,8 +14582,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14527,23 +14602,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -14562,16 +14638,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -14579,6 +14656,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'float',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14588,8 +14666,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14608,23 +14686,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -14643,23 +14723,26 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'numpy.int32',
                 'direction': 'out',
+                'is_grpc_enum': True,
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14669,8 +14752,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14689,23 +14772,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14715,8 +14799,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14735,23 +14819,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14770,16 +14855,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'physicalChannel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'PhysicalChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -14787,6 +14873,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14796,8 +14883,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14816,23 +14903,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -14851,23 +14939,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -14886,23 +14975,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -14921,23 +15012,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -14947,8 +15039,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -14967,23 +15059,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15002,23 +15095,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint64',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt64'
             }
         ],
@@ -15037,23 +15131,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'RealTimeAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -15072,23 +15167,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'RealTimeAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -15107,23 +15204,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'RealTimeAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15154,23 +15252,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -15184,16 +15283,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -15201,6 +15301,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'float',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -15210,8 +15311,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15225,23 +15326,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -15255,23 +15358,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -15281,8 +15385,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15385,15 +15489,16 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'SystemAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -15403,8 +15508,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15419,15 +15524,16 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'SystemAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15446,23 +15552,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TaskAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -15481,23 +15588,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TaskAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -15507,8 +15615,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15527,23 +15635,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TaskAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15562,23 +15671,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -15597,23 +15707,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -15632,30 +15743,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -15674,30 +15786,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -15716,30 +15829,32 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -15758,30 +15873,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -15791,8 +15907,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15811,30 +15927,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'object',
                 'type': 'CVIAbsoluteTime'
             }
         ],
@@ -15853,30 +15970,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -15895,30 +16013,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint64',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt64'
             }
         ],
@@ -15937,23 +16056,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -15972,23 +16093,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -15998,8 +16120,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16018,23 +16140,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'object',
                 'type': 'CVIAbsoluteTime'
             }
         ],
@@ -16053,23 +16176,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16088,23 +16212,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint64',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt64'
             }
         ],
@@ -16123,23 +16248,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -16158,23 +16284,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -16193,16 +16320,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -16210,6 +16338,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'float',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -16219,8 +16348,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16239,23 +16368,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -16274,23 +16405,26 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'numpy.int32',
                 'direction': 'out',
+                'is_grpc_enum': True,
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -16300,8 +16434,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16320,23 +16454,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -16346,8 +16481,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16366,23 +16501,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'object',
                 'type': 'CVIAbsoluteTime'
             }
         ],
@@ -16401,23 +16537,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16436,30 +16573,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'lines',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -16478,30 +16616,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'lines',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -16520,30 +16659,32 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'lines',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -16562,30 +16703,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'lines',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -16595,8 +16737,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16615,23 +16757,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -16650,23 +16793,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -16685,23 +16829,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'out',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -16720,23 +16866,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'out',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
@@ -16746,8 +16893,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16766,23 +16913,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -16801,23 +16949,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint64',
                 'direction': 'out',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt64'
             }
         ],
@@ -16894,6 +17043,7 @@ functions = {
                 'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
                 'name': 'initializationBehavior',
                 'proto_only': True,
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -16902,6 +17052,7 @@ functions = {
                 'grpc_type': 'bool',
                 'name': 'newSessionInitialized',
                 'proto_only': True,
+                'python_data_type': 'bool',
                 'type': 'bool'
             }
         ],
@@ -18333,16 +18484,22 @@ functions = {
                 'type': 'float64'
             },
             {
+                'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'highTime',
-                'type': 'float64',
-                'use_in_python_api': False
+                'python_data_type': 'float',
+                'python_type_annotation': 'float',
+                'type': 'float64'
             },
             {
+                'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'lowTime',
-                'type': 'float64',
-                'use_in_python_api': False
+                'python_data_type': 'float',
+                'python_type_annotation': 'float',
+                'type': 'float64'
             },
             {
                 'ctypes_data_type': 'c_bool32',
@@ -19108,12 +19265,14 @@ functions = {
             {
                 'callback_params': [
                     {
+                        'ctypes_data_type': 'lib_importer.task_handle',
                         'direction': 'out',
                         'include_in_proto': False,
                         'name': 'task',
                         'type': 'TaskHandle'
                     },
                     {
+                        'ctypes_data_type': 'ctypes.c_int',
                         'direction': 'out',
                         'name': 'status',
                         'type': 'int32'
@@ -19202,18 +19361,21 @@ functions = {
             {
                 'callback_params': [
                     {
+                        'ctypes_data_type': 'lib_importer.task_handle',
                         'direction': 'out',
                         'include_in_proto': False,
                         'name': 'task',
                         'type': 'TaskHandle'
                     },
                     {
+                        'ctypes_data_type': 'ctypes.c_int',
                         'direction': 'out',
                         'enum': 'EveryNSamplesEventType',
                         'name': 'everyNSamplesEventType',
                         'type': 'int32'
                     },
                     {
+                        'ctypes_data_type': 'ctypes.c_uint',
                         'direction': 'out',
                         'name': 'nSamples',
                         'type': 'uInt32'
@@ -19292,12 +19454,14 @@ functions = {
             {
                 'callback_params': [
                     {
+                        'ctypes_data_type': 'lib_importer.task_handle',
                         'direction': 'out',
                         'include_in_proto': False,
                         'name': 'task',
                         'type': 'TaskHandle'
                     },
                     {
+                        'ctypes_data_type': 'ctypes.c_int',
                         'direction': 'out',
                         'name': 'signalID',
                         'type': 'int32'
@@ -19388,43 +19552,65 @@ functions = {
     },
     'ResetBufferAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'BufferAttribute',
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetChanAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetDevice': {
@@ -19453,6 +19639,11 @@ functions = {
     },
     'ResetExportedSignalAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
@@ -19468,6 +19659,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
+                'is_grpc_enum': True,
                 'is_optional_in_python': False,
                 'name': 'attribute',
                 'python_data_type': 'int',
@@ -19476,11 +19668,16 @@ functions = {
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetReadAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
@@ -19496,6 +19693,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
+                'is_grpc_enum': True,
                 'is_optional_in_python': False,
                 'name': 'attribute',
                 'python_data_type': 'int',
@@ -19504,29 +19702,44 @@ functions = {
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetRealTimeAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'RealTimeAttribute',
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetTimingAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
@@ -19542,6 +19755,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
+                'is_grpc_enum': True,
                 'is_optional_in_python': False,
                 'name': 'attribute',
                 'python_data_type': 'int',
@@ -19550,11 +19764,16 @@ functions = {
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetTimingAttributeEx': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
@@ -19580,6 +19799,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
+                'is_grpc_enum': True,
                 'is_optional_in_python': False,
                 'name': 'attribute',
                 'python_data_type': 'int',
@@ -19588,11 +19808,16 @@ functions = {
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetTrigAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
@@ -19608,6 +19833,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
+                'is_grpc_enum': True,
                 'is_optional_in_python': False,
                 'name': 'attribute',
                 'python_data_type': 'int',
@@ -19616,11 +19842,16 @@ functions = {
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetWatchdogAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
@@ -19646,6 +19877,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
+                'is_grpc_enum': True,
                 'is_optional_in_python': False,
                 'name': 'attribute',
                 'python_data_type': 'int',
@@ -19654,11 +19886,16 @@ functions = {
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'ResetWriteAttribute': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
@@ -19674,6 +19911,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
+                'is_grpc_enum': True,
                 'is_optional_in_python': False,
                 'name': 'attribute',
                 'python_data_type': 'int',
@@ -19682,40 +19920,56 @@ functions = {
                 'type': 'int32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'SaveGlobalChan': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'channelName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'saveAs',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'author',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
                 'enum': 'SaveOptions',
                 'name': 'options',
+                'python_data_type': 'SaveOptions',
                 'type': 'uInt32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_class_name': 'Channel',
+        'python_codegen_method': 'CustomCode',
         'python_description': 'Saves the specified local or global channel to MAX as a global channel. You must specify both the local or global channel to save and a task that contains that channel.',
         'returns': 'int32'
     },
@@ -19723,57 +19977,80 @@ functions = {
         'calling_convention': 'StdCall',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'saveAs',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'author',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
                 'enum': 'SaveOptions',
                 'name': 'options',
+                'python_data_type': 'SaveOptions',
                 'type': 'uInt32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_class_name': 'Scale',
+        'python_codegen_method': 'CustomCode',
         'python_description': 'Saves the specified custom scale to MAX.',
         'returns': 'int32'
     },
     'SaveTask': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'saveAs',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'author',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
                 'enum': 'SaveOptions',
                 'name': 'options',
+                'python_data_type': 'SaveOptions',
                 'type': 'uInt32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_class_name': 'Task',
+        'python_codegen_method': 'CustomCode',
         'python_description': 'Saves the specified task and any  local channels it contains to MAX. This function does not save global channels. Use the DAQmx Save Global Channel function to save global channels.',
         'returns': 'int32'
     },
@@ -19901,35 +20178,41 @@ functions = {
         'calling_convention': 'Cdecl',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'deviceName',
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'python_data_type': 'str',
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'channelNames',
+                'python_data_type': 'str',
                 'repeating_argument': True,
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_optional_in_python': False,
                 'name': 'state',
+                'python_data_type': 'float',
+                'python_type_annotation': 'float',
                 'repeating_argument': True,
-                'type': 'float64',
-                'use_in_python_api': False
+                'type': 'float64'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'enum': 'PowerUpChannelType',
                 'include_in_proto': False,
                 'name': 'channelType',
+                'python_data_type': 'PowerUpChannelType',
                 'repeating_argument': True,
-                'type': 'int32',
-                'use_in_python_api': False
+                'type': 'int32'
             },
             {
                 'direction': 'in',
@@ -19937,6 +20220,8 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             }
         ],
@@ -19950,39 +20235,43 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_optional_in_python': False,
                 'name': 'channelNames',
                 'python_data_type': 'str',
-                'python_description': '',
-                'python_type_annotation': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'numpy.float64',
                 'direction': 'in',
+                'is_list': True,
+                'is_optional_in_python': False,
                 'name': 'stateArray',
+                'python_data_type': 'float',
+                'python_type_annotation': 'List[float]',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'const float64[]',
-                'use_in_python_api': False
+                'type': 'const float64[]'
             },
             {
+                'ctypes_data_type': 'numpy.int32',
                 'direction': 'in',
                 'enum': 'PowerUpChannelType',
+                'is_list': True,
                 'name': 'channelTypeArray',
+                'python_data_type': 'PowerUpChannelType',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'const int32[]',
-                'use_in_python_api': False
+                'type': 'const int32[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'uInt32',
-                'use_in_python_api': False
+                'python_data_type': 'int',
+                'type': 'uInt32'
             }
         ],
         'python_class_name': 'System',
@@ -20019,23 +20308,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'BufferAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -20049,23 +20339,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'CalibrationInfoAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -20079,23 +20370,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'CalibrationInfoAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -20109,23 +20401,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'CalibrationInfoAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -20139,23 +20432,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'CalibrationInfoAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -20174,30 +20468,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -20216,30 +20511,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -20258,23 +20554,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -20282,6 +20579,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'float',
                 'size': {
                     'mechanism': 'len',
                     'value': 'size'
@@ -20291,8 +20589,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -20311,30 +20609,32 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -20353,30 +20653,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -20395,30 +20696,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'channel',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ChannelAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -20458,27 +20760,30 @@ functions = {
         'calling_convention': 'Cdecl',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'deviceName',
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'python_data_type': 'str',
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'channelNames',
+                'python_data_type': 'str',
                 'repeating_argument': True,
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'enum': 'PowerUpStates',
                 'include_in_proto': False,
                 'name': 'state',
+                'python_data_type': 'PowerUpStates',
                 'repeating_argument': True,
-                'type': 'int32',
-                'use_in_python_api': False
+                'type': 'int32'
             },
             {
                 'direction': 'in',
@@ -20486,6 +20791,8 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             }
         ],
@@ -20497,27 +20804,30 @@ functions = {
         'calling_convention': 'Cdecl',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'name': 'deviceName',
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'python_data_type': 'str',
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
                 'include_in_proto': False,
                 'name': 'channelNames',
+                'python_data_type': 'str',
                 'repeating_argument': True,
-                'type': 'const char[]',
-                'use_in_python_api': False
+                'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'enum': 'ResistorState',
                 'include_in_proto': False,
                 'name': 'state',
+                'python_data_type': 'ResistorState',
                 'repeating_argument': True,
-                'type': 'int32',
-                'use_in_python_api': False
+                'type': 'int32'
             },
             {
                 'direction': 'in',
@@ -20525,6 +20835,8 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'pullUpPullDownStates',
+                'proto_only': True,
+                'python_data_type': 'object',
                 'repeated_var_args': True
             }
         ],
@@ -20544,23 +20856,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -20579,23 +20892,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -20614,23 +20928,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -20649,23 +20965,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -20684,23 +21001,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ExportSignalAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -20736,23 +21054,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -20771,23 +21090,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -20806,23 +21126,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -20841,23 +21163,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -20876,23 +21199,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -20911,23 +21235,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ReadAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint64',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt64'
             }
         ],
@@ -20946,23 +21271,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'RealTimeAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -20981,23 +21307,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'RealTimeAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -21016,23 +21344,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'RealTimeAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -21046,23 +21375,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -21076,16 +21406,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -21093,6 +21424,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'float',
                 'size': {
                     'mechanism': 'len',
                     'value': 'size'
@@ -21102,8 +21434,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -21117,23 +21449,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -21147,23 +21481,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'scaleName',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'ScaleAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -21216,23 +21551,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -21251,23 +21587,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -21286,30 +21623,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -21328,30 +21666,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -21370,30 +21709,32 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -21412,30 +21753,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -21454,30 +21796,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'object',
                 'type': 'CVIAbsoluteTime'
             }
         ],
@@ -21496,30 +21839,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -21538,30 +21882,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'deviceNames',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint64',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt64'
             }
         ],
@@ -21580,23 +21925,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -21615,23 +21962,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -21650,23 +21998,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'object',
                 'type': 'CVIAbsoluteTime'
             }
         ],
@@ -21685,23 +22034,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -21720,23 +22070,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TimingAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint64',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt64'
             }
         ],
@@ -21755,23 +22106,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -21790,23 +22142,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -21825,16 +22178,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -21842,6 +22196,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'float',
                 'size': {
                     'mechanism': 'len',
                     'value': 'size'
@@ -21851,8 +22206,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -21871,23 +22226,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -21906,16 +22263,17 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
@@ -21923,6 +22281,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'size': {
                     'mechanism': 'len',
                     'value': 'size'
@@ -21932,8 +22291,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'size',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -21952,23 +22311,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -21987,23 +22347,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'object',
                 'type': 'CVIAbsoluteTime'
             }
         ],
@@ -22022,23 +22383,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'TriggerAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -22057,30 +22419,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'lines',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -22099,30 +22462,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'lines',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -22141,30 +22505,32 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'lines',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -22183,30 +22549,31 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'lines',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WatchdogAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -22225,23 +22592,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
-                'ctypes_data_type': 'ctypes.c_bool32',
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -22260,23 +22628,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'float',
                 'type': 'float64'
             }
         ],
@@ -22295,23 +22664,25 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'int32'
             }
         ],
@@ -22330,23 +22701,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
-                'is_list': True,
                 'name': 'value',
+                'python_data_type': 'str',
                 'type': 'const char[]'
             }
         ],
@@ -22365,23 +22737,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -22400,23 +22773,24 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int32',
                 'direction': 'in',
                 'grpc_type': 'WriteAttribute',
-                'is_list': False,
+                'is_grpc_enum': True,
                 'name': 'attribute',
+                'python_data_type': 'int',
                 'type': 'int32'
             },
             {
                 'ctypes_data_type': 'ctypes.c_uint64',
                 'direction': 'in',
-                'is_list': False,
                 'name': 'value',
+                'python_data_type': 'int',
                 'type': 'uInt64'
             }
         ],
