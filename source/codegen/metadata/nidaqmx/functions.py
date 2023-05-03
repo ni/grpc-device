@@ -12346,7 +12346,6 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'expStates',
-                'proto_only': True,
                 'repeated_var_args': True
             },
             {
@@ -12780,7 +12779,6 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'channels',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             },
@@ -12789,7 +12787,6 @@ functions = {
                 'grpc_type': 'repeated double',
                 'max_length': 96,
                 'name': 'powerUpStates',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             }
@@ -13763,7 +13760,6 @@ functions = {
                 'grpc_type': 'repeated string',
                 'max_length': 96,
                 'name': 'channelName',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             },
@@ -13772,7 +13768,6 @@ functions = {
                 'grpc_type': 'repeated PowerUpStates',
                 'max_length': 96,
                 'name': 'powerUpStates',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             }
@@ -13815,7 +13810,6 @@ functions = {
                 'grpc_type': 'repeated string',
                 'max_length': 96,
                 'name': 'channelName',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             },
@@ -13824,7 +13818,6 @@ functions = {
                 'grpc_type': 'repeated ResistorState',
                 'max_length': 96,
                 'name': 'pullUpPullDownStates',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             }
@@ -20220,7 +20213,6 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             }
@@ -20791,7 +20783,6 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'powerUpStates',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             }
@@ -20835,7 +20826,6 @@ functions = {
                 'is_compound_type': True,
                 'max_length': 96,
                 'name': 'pullUpPullDownStates',
-                'proto_only': True,
                 'python_data_type': 'object',
                 'repeated_var_args': True
             }
