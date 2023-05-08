@@ -101,6 +101,10 @@ private:
   cpp_handle_type = resource_handle_type[0].upper() + resource_handle_type[1:]
 %>\
   ::grpc::Status ConvertApiErrorStatusFor${cpp_handle_type}(::grpc::ServerContext* context, int32_t status, ${resource_handle_type} ${config["session_handle_parameter_name"]});
+  % if config["c_function_prefix"] == "DAQmx":
+  ::grpc::Status ConvertApiErrorStatusWithReadParametersFor${cpp_handle_type}(::grpc::ServerContext* context, int32_t status, int32_t samps_per_chan_read, ${resource_handle_type} ${config["session_handle_parameter_name"]});
+  ::grpc::Status ConvertApiErrorStatusWithWriteParametersFor${cpp_handle_type}(::grpc::ServerContext* context, int32_t status, int32_t samps_per_chan_written, ${resource_handle_type} ${config["session_handle_parameter_name"]});
+  %endif
 % endfor
 % if common_helpers.has_viboolean_array_param(functions):
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);

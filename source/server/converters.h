@@ -410,6 +410,28 @@ inline ::grpc::Status ApiErrorAndDescriptionToStatus(TServerContext* context, in
 }
 
 template <typename TServerContext>
+inline ::grpc::Status ApiErrorAndDescriptionToStatusForReadMethod(TServerContext* context, int32_t status, int32_t samps_per_chan_read, std::string& description)
+{
+  context->AddTrailingMetadata("ni-error", std::to_string(status));
+  context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read))
+  converters::trim_trailing_nulls(description);
+  std::string description_utf8;
+  converters::convert_to_grpc(description, &description_utf8);
+  return ::grpc::Status(grpc::StatusCode::UNKNOWN, description_utf8);
+}
+
+template <typename TServerContext>
+inline ::grpc::Status ApiErrorAndDescriptionToStatusForWriteMethod(TServerContext* context, int32_t status, int32_t samps_per_chan_written, std::string& description)
+{
+  context->AddTrailingMetadata("ni-error", std::to_string(status));
+  context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written))
+  converters::trim_trailing_nulls(description);
+  std::string description_utf8;
+  converters::convert_to_grpc(description, &description_utf8);
+  return ::grpc::Status(grpc::StatusCode::UNKNOWN, description_utf8);
+}
+
+template <typename TServerContext>
 inline ::grpc::Status ApiErrorToStatus(TServerContext* context, int32_t status)
 {
   std::string description("Unknown");

@@ -22,6 +22,14 @@ SPECIAL_CASE_PASCAL_TOKENS = [
     PascalTokenSubstitution("Uint", "UInt")
 ]
 
+READ_ERROR_PARAMETERS = [
+    "samps_read", "samps_per_chan_read"
+]
+
+WRITE_ERROR_PARAMETERS = [
+    "samps_per_chan_written", "num_samps_per_chan", "num_samps_per_chan_written"
+]
+
 
 def is_output_parameter(parameter):
     """Whether the parameter is an output parameter."""
@@ -1186,3 +1194,13 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     * Outputs that are calculated/populated after the API call.
     """
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
+
+
+def get_parameter_for_error_generation(params, is_read_method):
+    for param in params:
+        if param["direction"] == "out":
+            if is_read_method and _camel_to_snake(param["name"]) in READ_ERROR_PARAMETERS:
+                return _camel_to_snake(param["name"])
+            elif not is_read_method and _camel_to_snake(param["name"]) in WRITE_ERROR_PARAMETERS:
+                return _camel_to_snake(param["name"])
+    return None

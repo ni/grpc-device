@@ -169,6 +169,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("adaptor_parameter"): dict,
         Optional("is_python_factory"): bool,
         Optional("python_description"): str,
+        Optional("python_codegen_method"): str,
     }
 )
 

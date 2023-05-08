@@ -435,6 +435,8 @@ private:
   NiDAQmxLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForTaskHandle(::grpc::ServerContext* context, int32_t status, TaskHandle task);
+  ::grpc::Status ConvertApiErrorStatusWithReadParametersForTaskHandle(::grpc::ServerContext* context, int32_t status, int32_t samps_per_chan_read, TaskHandle task);
+  ::grpc::Status ConvertApiErrorStatusWithWriteParametersForTaskHandle(::grpc::ServerContext* context, int32_t status, int32_t samps_per_chan_written, TaskHandle task);
 
   NiDAQmxFeatureToggles feature_toggles_;
 };
