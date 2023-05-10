@@ -12,13 +12,13 @@ namespace nidaqmx_grpc {
 
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusWithReadParametersForTaskHandle(::grpc::ServerContext* context, int32_t status, int32_t samps_per_chan_read , TaskHandle task)
 {
-  context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read))
+  context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
   return ConvertApiErrorStatusForTaskHandle(context, status, task);
 }
 
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusWithWriteParametersForTaskHandle(::grpc::ServerContext* context, int32_t status, int32_t samps_per_chan_written , TaskHandle task)
 {
-  context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written))
+  context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
   return ConvertApiErrorStatusForTaskHandle(context, status, task);
 }
 
