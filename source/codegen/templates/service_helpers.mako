@@ -756,7 +756,7 @@ ${set_response_values(normal_outputs, init_method)}\
   config = data['config']
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
   resource_handle_types = service_helpers.get_resource_handle_types(config)
-  method_type = function_data.get("python_codegen_method", None)
+  error_parameter = common_helpers.get_parameter_for_error_generation(parameters)
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
 <%
@@ -769,15 +769,14 @@ ${set_response_values(normal_outputs, init_method)}\
       break
   cpp_handle_type = handle_type[0].upper() + handle_type[1:]
   method_call = ""
-  if method_type == "CustomCode_Read":
-    method_call = f'return ConvertApiErrorStatusWithReadParametersFor{cpp_handle_type}(context, status, {common_helpers.get_parameter_for_error_generation(parameters, True)}, {session});'
-  elif method_type == "CustomCode_Write":
-    method_call = f'return ConvertApiErrorStatusWithWriteParametersFor{cpp_handle_type}(context, status, {common_helpers.get_parameter_for_error_generation(parameters, False)}, {session});'
-  elif function_data.get('exclude_from_get_last_error', False):
+  if function_data.get('exclude_from_get_last_error', False):
     method_call = f'return nidevice_grpc::ApiErrorToStatus(context, status);'
   else:
     method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(context, status, {session});'
 %>\
+      %if error_parameter is not None:
+      context->AddTrailingMetadata("${error_parameter.get("return_on_error_key")}", std::to_string(${error_parameter.get("name")}));
+      %endif
       if (!status_ok(status)) {
         ${method_call}
       }

@@ -1196,11 +1196,8 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
 
 
-def get_parameter_for_error_generation(params, is_read_method):
+def get_parameter_for_error_generation(params):
     for param in params:
-        if param["direction"] == "out":
-            if is_read_method and _camel_to_snake(param["name"]) in READ_ERROR_PARAMETERS:
-                return _camel_to_snake(param["name"])
-            elif not is_read_method and _camel_to_snake(param["name"]) in WRITE_ERROR_PARAMETERS:
-                return _camel_to_snake(param["name"])
+        if param["direction"] == "out" and "return_on_error_key" in param:
+            return param
     return None
