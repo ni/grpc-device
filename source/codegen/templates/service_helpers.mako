@@ -775,7 +775,7 @@ ${set_response_values(normal_outputs, init_method)}\
     method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(context, status, {session});'
 %>\
       %if error_parameter is not None:
-      context->AddTrailingMetadata("${error_parameter.get("return_on_error_key")}", std::to_string(${error_parameter.get("name")}));
+      context->AddTrailingMetadata("${error_parameter.get["return_on_error_key"]}", std::to_string(${common_helpers._camel_to_snake(error_parameter["name"])}));
       %endif
       if (!status_ok(status)) {
         ${method_call}
