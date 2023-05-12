@@ -22,6 +22,7 @@ SPECIAL_CASE_PASCAL_TOKENS = [
     PascalTokenSubstitution("Uint", "UInt")
 ]
 
+
 def is_output_parameter(parameter):
     """Whether the parameter is an output parameter."""
     return "out" in parameter["direction"]
