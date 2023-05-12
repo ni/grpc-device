@@ -12931,8 +12931,9 @@ namespace nidaqmx_grpc {
       float64* read_array = response->mutable_read_array()->mutable_data();
       int32 samps_per_chan_read {};
       auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13002,8 +13003,9 @@ namespace nidaqmx_grpc {
       std::vector<int16> read_array(array_size_in_samps);
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
         response->mutable_read_array()->Clear();
@@ -13057,8 +13059,9 @@ namespace nidaqmx_grpc {
       int32* read_array = reinterpret_cast<int32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13102,8 +13105,9 @@ namespace nidaqmx_grpc {
       std::vector<uInt16> read_array(array_size_in_samps);
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
         response->mutable_read_array()->Clear();
@@ -13157,8 +13161,9 @@ namespace nidaqmx_grpc {
       uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13187,8 +13192,9 @@ namespace nidaqmx_grpc {
       float64* read_array = response->mutable_read_array()->mutable_data();
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13233,8 +13239,9 @@ namespace nidaqmx_grpc {
       float64* read_array = response->mutable_read_array()->mutable_data();
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13315,8 +13322,9 @@ namespace nidaqmx_grpc {
       uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13361,8 +13369,9 @@ namespace nidaqmx_grpc {
       uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13409,8 +13418,9 @@ namespace nidaqmx_grpc {
       float64* read_array_duty_cycle = response->mutable_read_array_duty_cycle()->mutable_data();
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrFreq(task, num_samps_per_chan, timeout, interleaved, read_array_frequency, read_array_duty_cycle, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13485,8 +13495,9 @@ namespace nidaqmx_grpc {
       uInt32* read_array_low_ticks = reinterpret_cast<uInt32*>(response->mutable_read_array_low_ticks()->mutable_data());
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrTicks(task, num_samps_per_chan, timeout, interleaved, read_array_high_ticks, read_array_low_ticks, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13561,8 +13572,9 @@ namespace nidaqmx_grpc {
       float64* read_array_low_time = response->mutable_read_array_low_time()->mutable_data();
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrTime(task, num_samps_per_chan, timeout, interleaved, read_array_high_time, read_array_low_time, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13635,8 +13647,9 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       int32 num_bytes_per_samp {};
       auto status = library_->ReadDigitalLines(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_bytes, &samps_per_chan_read, &num_bytes_per_samp, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_read_array(read_array);
@@ -13708,8 +13721,9 @@ namespace nidaqmx_grpc {
       std::vector<uInt16> read_array(array_size_in_samps);
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
         response->mutable_read_array()->Clear();
@@ -13763,8 +13777,9 @@ namespace nidaqmx_grpc {
       uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13808,8 +13823,9 @@ namespace nidaqmx_grpc {
       std::string read_array(array_size_in_samps, '\0');
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU8(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_read_array(read_array);
@@ -13855,8 +13871,9 @@ namespace nidaqmx_grpc {
       std::vector<int16> read_array_current(array_size_in_samps);
       int32 samps_per_chan_read {};
       auto status = library_->ReadPowerBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array_voltage.data(), read_array_current.data(), array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
         response->mutable_read_array_voltage()->Clear();
@@ -13921,8 +13938,9 @@ namespace nidaqmx_grpc {
       float64* read_array_current = response->mutable_read_array_current()->mutable_data();
       int32 samps_per_chan_read {};
       auto status = library_->ReadPowerF64(task, num_samps_per_chan, timeout, fill_mode, read_array_voltage, read_array_current, array_size_in_samps, &samps_per_chan_read, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_per_chan_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13979,8 +13997,9 @@ namespace nidaqmx_grpc {
       int32 samps_read {};
       int32 num_bytes_per_samp {};
       auto status = library_->ReadRaw(task, num_samps_per_chan, timeout, (uInt8*)read_array.data(), array_size_in_bytes, &samps_read, &num_bytes_per_samp, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_read));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithReadParametersForTaskHandle(context, status, samps_read, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_read_array(read_array);
@@ -18247,8 +18266,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18335,8 +18355,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18380,8 +18401,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18442,8 +18464,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18487,8 +18510,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18533,8 +18557,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrFreq(task, num_samps_per_chan, auto_start, timeout, data_layout, frequency, duty_cycle, &num_samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(num_samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, num_samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_num_samps_per_chan_written(num_samps_per_chan_written);
@@ -18606,8 +18631,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(num_samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, num_samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_num_samps_per_chan_written(num_samps_per_chan_written);
@@ -18679,8 +18705,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrTime(task, num_samps_per_chan, auto_start, timeout, data_layout, high_time, low_time, &num_samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(num_samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, num_samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_num_samps_per_chan_written(num_samps_per_chan_written);
@@ -18751,8 +18778,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18839,8 +18867,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18884,8 +18913,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18929,8 +18959,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
@@ -18958,8 +18989,9 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, reserved);
+      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusWithWriteParametersForTaskHandle(context, status, samps_per_chan_written, task);
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);

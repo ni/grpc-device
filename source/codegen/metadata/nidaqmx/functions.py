@@ -19013,6 +19013,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'sampsPerChanRead',
+                'return_on_error_key': 'ni-samps-per-chan-read',
                 'type': 'int32'
             },
             {
@@ -19077,6 +19078,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'sampsPerChanRead',
+                'return_on_error_key': 'ni-samps-per-chan-read',
                 'type': 'int32'
             },
             {
