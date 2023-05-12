@@ -123,6 +123,7 @@ PARAM_SCHEMA = Schema(
         Optional("python_description"): str,
         Optional("python_default_value"): Or(str, bool, int, float, None),
         Optional("is_grpc_enum"): bool,
+        Optional("return_on_error_key"): str,
     }
 )
 
