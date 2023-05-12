@@ -22,15 +22,6 @@ SPECIAL_CASE_PASCAL_TOKENS = [
     PascalTokenSubstitution("Uint", "UInt")
 ]
 
-READ_ERROR_PARAMETERS = [
-    "samps_read", "samps_per_chan_read"
-]
-
-WRITE_ERROR_PARAMETERS = [
-    "samps_per_chan_written", "num_samps_per_chan", "num_samps_per_chan_written"
-]
-
-
 def is_output_parameter(parameter):
     """Whether the parameter is an output parameter."""
     return "out" in parameter["direction"]
