@@ -55,6 +55,7 @@ SIZE_SCHEMA = Schema(
         "value": Or(str, int),
         Optional("value_twist"): str,
         Optional("tags"): [str],
+        Optional("python_value"): str,
     },
 )
 
@@ -121,6 +122,7 @@ PARAM_SCHEMA = Schema(
         Optional("python_type_annotation"): str,
         Optional("python_description"): str,
         Optional("python_default_value"): Or(str, bool, int, float, None),
+        Optional("is_grpc_enum"): bool,
     }
 )
 
