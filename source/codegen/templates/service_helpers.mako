@@ -168,19 +168,20 @@ ${populate_response(function_data=function_data, parameters=parameters, indent_l
   request_type = service_helpers.get_request_type(function_name)
   response_type = service_helpers.get_response_type(function_name)
   driver_library_interface = common_helpers.get_library_interface_type_name(config)
+  service_class = config["service_class_prefix"] + "Service"
 %>\
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, ${service_helpers.create_param_type_list(callback_parameters)}>;
     class ${function_name}Reactor : public nidevice_grpc::ServerWriterReactor<${response_type}, nidevice_grpc::CallbackRegistration> {
     public:
-    ${function_name}Reactor(const ${request_type}& request, ${driver_library_interface}* library, const ResourceRepositorySharedPtr& session_repository)
+    ${function_name}Reactor(::grpc::CallbackServerContext* context, const ${request_type}* request, ${driver_library_interface}* library, ${service_class}* service)
     {
-      auto status = start(&request, library, session_repository);
+      auto status = start(context, request, library, service);
       if (!status.ok()) {
         this->Finish(status);
       }
     }
 
-    ::grpc::Status start(const ${request_type}* request, ${driver_library_interface}* library, const ResourceRepositorySharedPtr& session_repository_)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const ${request_type}* request, ${driver_library_interface}* library, ${service_class}* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(
@@ -194,6 +195,7 @@ ${set_response_values(output_parameters=response_parameters, init_method=False)}
             return 0;
         });
 
+        const auto& session_repository_ = service->session_repository_;
 <%block filter="common_helpers.indent(1)">\
 ${initialize_input_params(function_name, parameters)}\
 </%block>\
@@ -205,15 +207,10 @@ ${call_library_method(
   library_lval="library",
   indent_level=1)
 }\
+${populate_error_check(function_data, parameters, indent_level=1, service_deref="service->")}\
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
-
-        if (status) {
-          ${response_type} failed_to_register_response;
-          failed_to_register_response.set_status(status);
-          queue_write(failed_to_register_response);
-        }
 
         this->set_producer(std::move(handler));
       }
@@ -225,7 +222,7 @@ ${call_library_method(
     }
     };
 
-    return new ${function_name}Reactor(*request, library_, session_repository_);
+    return new ${function_name}Reactor(context, request, library_, this);
 </%def>
 
 ## Generate the core method body for a method with repeated varargs.
@@ -751,7 +748,7 @@ ${set_response_values(normal_outputs, init_method)}\
 </%def>
 
 ## Handles populating the response message after calling the driver API.
-<%def name="populate_error_check(function_data, parameters, indent_level=0)">\
+<%def name="populate_error_check(function_data, parameters, indent_level=0, service_deref='')">\
 <%
   config = data['config']
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
@@ -771,7 +768,7 @@ ${set_response_values(normal_outputs, init_method)}\
   if function_data.get('exclude_from_get_last_error', False):
     method_call = f'return nidevice_grpc::ApiErrorToStatus(context, status);'
   else:
-    method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(context, status, {session});'
+    method_call = f'return {service_deref}ConvertApiErrorStatusFor{cpp_handle_type}(context, status, {session});'
 %>\
       if (!status_ok(status)) {
         ${method_call}
