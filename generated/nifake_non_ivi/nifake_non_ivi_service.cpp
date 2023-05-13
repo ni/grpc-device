@@ -770,15 +770,15 @@ namespace nifake_non_ivi_grpc {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, myInt16>;
     class RegisterCallbackReactor : public nidevice_grpc::ServerWriterReactor<RegisterCallbackResponse, nidevice_grpc::CallbackRegistration> {
     public:
-    RegisterCallbackReactor(const RegisterCallbackRequest& request, NiFakeNonIviLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    RegisterCallbackReactor(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request, NiFakeNonIviLibraryInterface* library, NiFakeNonIviService* service)
     {
-      auto status = start(&request, library, session_repository);
+      auto status = start(context, request, library, service);
       if (!status.ok()) {
         this->Finish(status);
       }
     }
 
-    ::grpc::Status start(const RegisterCallbackRequest* request, NiFakeNonIviLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request, NiFakeNonIviLibraryInterface* library, NiFakeNonIviService* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(
@@ -790,18 +790,16 @@ namespace nifake_non_ivi_grpc {
             return 0;
         });
 
+        const auto& session_repository_ = service->session_repository_;
         myInt16 input_data = request->input_data();
 
         auto status = library->RegisterCallback(input_data, CallbackRouter::handle_callback, handler->token());
+        if (!status_ok(status)) {
+          return service->ConvertApiErrorStatusForFakeHandle(context, status, 0);
+        }
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
-
-        if (status) {
-          RegisterCallbackResponse failed_to_register_response;
-          failed_to_register_response.set_status(status);
-          queue_write(failed_to_register_response);
-        }
 
         this->set_producer(std::move(handler));
       }
@@ -813,7 +811,7 @@ namespace nifake_non_ivi_grpc {
     }
     };
 
-    return new RegisterCallbackReactor(*request, library_, session_repository_);
+    return new RegisterCallbackReactor(context, request, library_, this);
   }
 
   //---------------------------------------------------------------------
