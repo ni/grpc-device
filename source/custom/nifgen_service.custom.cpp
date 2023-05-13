@@ -38,7 +38,7 @@ namespace nifgen_grpc {
   }
 }
 
-::grpc::Status NiFgenService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi)
+::grpc::Status NiFgenService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi)
 {
   static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
   ViStatus error_code{};

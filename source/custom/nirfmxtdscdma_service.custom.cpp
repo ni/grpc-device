@@ -2,7 +2,7 @@
 
 namespace nirfmxtdscdma_grpc {
 
-::grpc::Status NiRFmxTDSCDMAService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxTDSCDMAService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle)
 {
   ViStatus error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

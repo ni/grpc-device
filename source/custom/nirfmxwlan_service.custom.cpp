@@ -2,7 +2,7 @@
 
 namespace nirfmxwlan_grpc {
 
-::grpc::Status NiRFmxWLANService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxWLANService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle)
 {
   int32 error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

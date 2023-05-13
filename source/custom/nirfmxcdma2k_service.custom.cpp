@@ -2,7 +2,7 @@
 
 namespace nirfmxcdma2k_grpc {
 
-::grpc::Status NiRFmxCDMA2kService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxCDMA2kService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle)
 {
   ViStatus error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

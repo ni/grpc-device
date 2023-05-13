@@ -6,7 +6,7 @@ namespace nitclk_grpc {
 const auto kErrorReadBufferTooSmall = -200229;
 const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
-::grpc::Status NiTClkService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession session_number)
+::grpc::Status NiTClkService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession session_number)
 {
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
   library_->GetExtendedErrorInfo(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
