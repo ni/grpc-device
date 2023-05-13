@@ -70,7 +70,7 @@ Running from command line:
 
 Server machine's IP address, port number, leader_device, and follower_device can be passed as
 separate command line arguments.
-  > python dsa-shared-timebase-and-trig-analog-input-and-output.py <server_address> <port_number> <leader_device> <follower_device>
+  > python dsa-shared-timebase-and-trig-analog-input-and-output-aio.py <server_address> <port_number> <leader_device> <follower_device>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "Dev1" as the leader device and "Dev2" as the follower device.
 """  # noqa: W505
