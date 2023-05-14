@@ -1325,26 +1325,52 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Su
 
 TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
 {
+  const auto FINITE_SAMPLE_COUNT = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
   auto reader = register_done_event(reader_context);
   reader->WaitForInitialMetadata();
 
-  const auto FINITE_SAMPLE_COUNT = 10UL;
   cfg_samp_clk_timing(
       create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   start_task();
   read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT);
-
   RegisterDoneEventResponse response;
-  EXPECT_TRUE(reader->Read(&response));
+  bool read_stream_success = reader->Read(&response);
+
+  EXPECT_TRUE(read_stream_success);
   EXPECT_EQ(DAQMX_SUCCESS, response.status());
+}
+
+TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunMultipleFiniteAcquisitions_DoneEventResponsesAreReceived)
+{
+  const auto ACQUISITION_COUNT = 3UL;
+  const auto FINITE_SAMPLE_COUNT = 10UL;
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  auto reader = register_done_event(reader_context);
+  reader->WaitForInitialMetadata();
+
+  std::vector<RegisterDoneEventResponse> responses;
+  bool read_stream_success = true;
+  for (auto acquisition = 0UL; acquisition < ACQUISITION_COUNT; ++acquisition) {
+    cfg_samp_clk_timing(
+        create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
+    start_task();
+    read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT);
+    read_stream_success = read_stream_success && read_stream(*reader, 1, &responses);
+    stop_task();
+  }
+
+  EXPECT_TRUE(read_stream_success);
+  EXPECT_THAT(responses, SizeIs(ACQUISITION_COUNT));
+  EXPECT_THAT(responses, Each(Property(&RegisterDoneEventResponse::status, Eq(DAQMX_SUCCESS))));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSamplesMultipleTimes_Succeeds)
 {
   const auto N_SAMPLES = 10UL;
-  const auto N_READS = 10;
+  const auto N_READS = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES);
@@ -1355,12 +1381,42 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSam
   start_task();
   std::vector<RegisterEveryNSamplesEventResponse> responses;
   bool read_stream_success = true;
-  for (auto i = 0; i < N_READS; ++i) {
+  for (auto i = 0UL; i < N_READS; ++i) {
     read_stream_success = read_stream_success && read_stream(*reader, 1, &responses);
     read_analog_f64(N_SAMPLES, N_SAMPLES);
   }
 
   EXPECT_TRUE(read_stream_success);
+  EXPECT_THAT(responses, SizeIs(N_READS));
+  EXPECT_THAT(responses, Each(Property(&RegisterEveryNSamplesEventResponse::n_samples, Eq(N_SAMPLES))));
+  EXPECT_THAT(responses, Each(Property(&RegisterEveryNSamplesEventResponse::status, Eq(DAQMX_SUCCESS))));
+}
+
+TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_RunMultipleFiniteAcquisitions_EveryNSamplesEventResponsesAreReceived)
+{
+  const auto ACQUISITION_COUNT = 3UL;
+  const auto N_SAMPLES = 10UL;
+  const auto N_READS = 10UL;
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  auto reader = register_every_n_samples_event(reader_context, N_SAMPLES);
+  reader->WaitForInitialMetadata();
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
+
+  std::vector<RegisterEveryNSamplesEventResponse> responses;
+  bool read_stream_success = true;
+  for (auto acquisition = 0UL; acquisition < ACQUISITION_COUNT; ++acquisition) {
+    start_task();
+    for (auto i = 0UL; i < N_READS; ++i) {
+      read_stream_success = read_stream_success && read_stream(*reader, 1, &responses);
+      read_analog_f64(N_SAMPLES, N_SAMPLES);
+    }
+    stop_task();
+  }
+
+  EXPECT_TRUE(read_stream_success);
+  EXPECT_THAT(responses, SizeIs(ACQUISITION_COUNT * N_READS));
   EXPECT_THAT(responses, Each(Property(&RegisterEveryNSamplesEventResponse::n_samples, Eq(N_SAMPLES))));
   EXPECT_THAT(responses, Each(Property(&RegisterEveryNSamplesEventResponse::status, Eq(DAQMX_SUCCESS))));
 }
