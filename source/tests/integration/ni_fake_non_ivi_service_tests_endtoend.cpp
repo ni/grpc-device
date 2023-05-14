@@ -1,3 +1,4 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <nifake_non_ivi/nifake_non_ivi_mock_library.h>
 #include <nifake_non_ivi/nifake_non_ivi_service.h>
@@ -65,6 +66,58 @@ class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
   {
     return stub_;
   }
+
+  auto start_read_stream(
+    ::grpc::ClientContext& context,
+    int32_t start,
+    int32_t stop)
+  {
+    ReadStreamRequest request;
+    request.set_start(start);
+    request.set_stop(stop);
+    return stub()->ReadStream(&context, request);
+  }
+
+  template <typename TResponse>
+  bool read_stream(
+    ::grpc::ClientReader<TResponse>& reader,
+    size_t count,
+    std::vector<TResponse>* responses = nullptr)
+  {
+    typename TResponse response;
+    for (size_t i = 0; i < count; ++i) {
+      if (!reader.Read(&response)) {
+        return false;
+      }
+      if (responses) {
+        responses->push_back(response);
+      }
+    }
+    return true;
+  }
+
+  size_t get_range_length(int32_t start, int32_t stop)
+  {
+    return static_cast<size_t>(stop - start + 1);
+  }
+
+  std::vector<int32_t> make_range(int32_t start, int32_t stop)
+  {
+    std::vector<int32_t> range;
+    range.reserve(get_range_length(start, stop));
+    for (int32_t i = start; i <= stop; ++i) {
+      range.push_back(i);
+    }
+    return range;
+  }
+
+  std::vector<int32_t> get_values(const std::vector<ReadStreamResponse>& responses) {
+    std::vector<int32_t> values;
+    for (auto& response : responses) {
+      values.push_back(response.value());
+    }
+    return values;
+  }
 };
 
 TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadStream_ReturnsExpectedSequence)
@@ -72,16 +125,14 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadStream_ReturnsExpectedSequence)
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 100;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
+  auto reader = start_read_stream(context, START, STOP);
+  auto expected_values = make_range(START, STOP);
 
-  ReadStreamResponse response;
-  for (auto i = START; i <= STOP; ++i) {
-    reader->Read(&response);
-    EXPECT_EQ(response.value(), i);
-  }
+  std::vector<ReadStreamResponse> responses;
+  bool read_success = read_stream(*reader, expected_values.size(), &responses);
+
+  EXPECT_TRUE(read_success);
+  EXPECT_THAT(get_values(responses), ContainerEq(expected_values));
 }
 
 TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadPartialStream_ReturnsExpectedSequence)
@@ -89,44 +140,37 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadPartialStream_ReturnsExpectedSeque
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 100;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
+  auto reader = start_read_stream(context, START, STOP);
+  auto expected_values = make_range(START, STOP / 2);
 
-  ReadStreamResponse response;
-  for (auto i = START; i <= STOP / 2; ++i) {
-    reader->Read(&response);
-    EXPECT_EQ(response.value(), i);
-  }
+  std::vector<ReadStreamResponse> responses;
+  bool read_success = read_stream(*reader, expected_values.size(), &responses);
+
+  EXPECT_TRUE(read_success);
+  EXPECT_THAT(get_values(responses), ContainerEq(expected_values));
 }
 
 TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadTwoStreamsConsecutively_ReturnsExpectedSequences)
 {
-  ::grpc::ClientContext context;
+  ::grpc::ClientContext context1, context2;
   const auto START = 0;
   const auto STOP = 100;
   const auto OFFSET = 100;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
-  request.set_start(START + OFFSET);
-  request.set_stop(STOP + OFFSET);
-  ::grpc::ClientContext second_context;
-  auto second_reader = stub()->ReadStream(&second_context, request);
-  reader->WaitForInitialMetadata();
+  auto reader1 = start_read_stream(context1, START, STOP);
+  auto reader2 = start_read_stream(context2, START + OFFSET, STOP + OFFSET);
+  reader1->WaitForInitialMetadata();
+  reader2->WaitForInitialMetadata();
+  auto expected_values1 = make_range(START, STOP);
+  auto expected_values2 = make_range(START + OFFSET, STOP + OFFSET);
 
-  ReadStreamResponse response;
-  for (auto i = START; i <= STOP; ++i) {
-    reader->Read(&response);
-    EXPECT_EQ(response.value(), i);
-  }
+  std::vector<ReadStreamResponse> responses1, responses2;
+  bool read_success1 = read_stream(*reader1, expected_values1.size(), &responses1);
+  bool read_success2 = read_stream(*reader2, expected_values2.size(), &responses2);
 
-  for (auto i = START; i <= STOP; ++i) {
-    second_reader->Read(&response);
-    EXPECT_EQ(response.value(), i + OFFSET);
-  }
+  EXPECT_TRUE(read_success1);
+  EXPECT_TRUE(read_success2);
+  EXPECT_THAT(get_values(responses1), ContainerEq(expected_values1));
+  EXPECT_THAT(get_values(responses2), ContainerEq(expected_values2));
 }
 
 TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadPartialStream_ShutdownServerBeforeCancel_CleanShutdown)
@@ -134,15 +178,8 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadPartialStream_ShutdownServerBefore
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 100;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
-  ReadStreamResponse response;
-  for (auto i = START; i <= STOP / 2; ++i) {
-    reader->Read(&response);
-    EXPECT_EQ(response.value(), i);
-  }
+  auto reader = start_read_stream(context, START, STOP);
+  ASSERT_TRUE(read_stream(*reader, get_range_length(START, STOP / 2)));
 
   shutdown();
 }
@@ -152,43 +189,36 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadStream_ShutdownServerBeforeCancel_
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 100;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
-
-  ReadStreamResponse response;
-  for (auto i = START; i <= STOP; ++i) {
-    reader->Read(&response);
-    EXPECT_EQ(response.value(), i);
-  }
+  auto reader = start_read_stream(context, START, STOP);
+  ASSERT_TRUE(read_stream(*reader, get_range_length(START, STOP)));
 
   shutdown();
 }
 
 TEST_F(NiFakeNonIviServiceTests_EndToEnd, ReadTwoStreamsInterleaved_ReturnsExpectedSequences)
 {
-  ::grpc::ClientContext context;
+  ::grpc::ClientContext context1, context2;
   const auto START = 0;
   const auto STOP = 100;
   const auto OFFSET = 100;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
-  request.set_start(START + OFFSET);
-  request.set_stop(STOP + OFFSET);
-  ::grpc::ClientContext second_context;
-  auto second_reader = stub()->ReadStream(&second_context, request);
-  reader->WaitForInitialMetadata();
+  auto reader1 = start_read_stream(context1, START, STOP);
+  auto reader2 = start_read_stream(context2, START + OFFSET, STOP + OFFSET);
+  reader1->WaitForInitialMetadata();
+  reader2->WaitForInitialMetadata();
+  auto expected_values1 = make_range(START, STOP);
+  auto expected_values2 = make_range(START + OFFSET, STOP + OFFSET);
 
-  ReadStreamResponse response;
+  std::vector<ReadStreamResponse> responses1, responses2;
+  bool read_success1 = true, read_success2 = true;
   for (auto i = START; i <= STOP; ++i) {
-    reader->Read(&response);
-    EXPECT_EQ(response.value(), i);
-    second_reader->Read(&response);
-    EXPECT_EQ(response.value(), i + OFFSET);
+    read_success1 = read_success1 && read_stream(*reader1, 1, &responses1);
+    read_success2 = read_success2 && read_stream(*reader2, 1, &responses2);
   }
+
+  EXPECT_TRUE(read_success1);
+  EXPECT_TRUE(read_success2);
+  EXPECT_THAT(get_values(responses1), ContainerEq(expected_values1));
+  EXPECT_THAT(get_values(responses2), ContainerEq(expected_values2));
 }
 
 TEST_F(NiFakeNonIviServiceTests_EndToEnd, StartReadStream_ShutdownBeforeRead_CleanShutdown)
@@ -196,10 +226,7 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, StartReadStream_ShutdownBeforeRead_Cle
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 10;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
+  auto reader = start_read_stream(context, START, STOP);
 
   reader.reset();
 }
@@ -209,10 +236,7 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, WaitForMetadata_Cancel_CleanShutdown)
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 10;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
+  auto reader = start_read_stream(context, START, STOP);
   reader->WaitForInitialMetadata();
 
   reader.reset();
@@ -223,15 +247,11 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, WaitForMetadata_ShutdownAndRead_CleanS
   ::grpc::ClientContext context;
   const auto START = 0;
   const auto STOP = 10;
-  ReadStreamRequest request;
-  request.set_start(START);
-  request.set_stop(STOP);
-  auto reader = stub()->ReadStream(&context, request);
+  auto reader = start_read_stream(context, START, STOP);
   reader->WaitForInitialMetadata();
 
   shutdown();
-  ReadStreamResponse response;
-  reader->Read(&response);
+  (void) read_stream(*reader, get_range_length(START, STOP));
 }
 
 const auto CALLBACK_DATA_OUT = 1234;
@@ -256,8 +276,9 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, RegisterCallbackAndImmediatelyCall_Rea
   reader->WaitForInitialMetadata();
 
   RegisterCallbackResponse response;
-  auto status = reader->Read(&response);
+  bool read_success = reader->Read(&response);
 
+  EXPECT_TRUE(read_success);
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_EQ(CALLBACK_DATA_OUT, response.data_out());
 }
