@@ -121,7 +121,9 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     CreateTaskRequest request;
-    return stub()->CreateTask(&context, request, &response);
+    auto status = stub()->CreateTask(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ClearTaskResponse clear_task()
@@ -151,7 +153,9 @@ class NiDAQmxDriverApiTests : public Test {
   ::grpc::Status create_ai_voltage_chan(const CreateAIVoltageChanRequest& request, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
   {
     ::grpc::ClientContext context;
-    return stub()->CreateAIVoltageChan(&context, request, &response);
+    auto status = stub()->CreateAIVoltageChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status create_ai_voltage_chan(double min_val, double max_val, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
@@ -177,7 +181,9 @@ class NiDAQmxDriverApiTests : public Test {
   ::grpc::Status create_ao_voltage_chan(const CreateAOVoltageChanRequest& request, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
   {
     ::grpc::ClientContext context;
-    return stub()->CreateAOVoltageChan(&context, request, &response);
+    auto status = stub()->CreateAOVoltageChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
@@ -194,7 +200,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_lines("gRPCSystemTestDAQ/port0/line0");
     request.set_name_to_assign_to_lines("di");
     request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
-    return stub()->CreateDIChan(&context, request, &response);
+    auto status = stub()->CreateDIChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   CreateDOChanResponse create_do_chan(CreateDOChanResponse& response = ThrowawayResponse<CreateDOChanResponse>::response())
@@ -216,7 +224,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_meas_method(CounterFrequencyMethod::COUNTER_FREQUENCY_METHOD_LOW_FREQ_1_CTR);
     request.set_meas_time(0.001);
     request.set_divisor(4);
-    return stub()->CreateCIFreqChan(&context, request, &response);
+    auto status = stub()->CreateCIFreqChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status get_error_string(int32 error_code, GetErrorStringResponse& response)
@@ -224,7 +234,9 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     GetErrorStringRequest request;
     request.set_error_code(error_code);
-    return stub()->GetErrorString(&context, request, &response);
+    auto status = stub()->GetErrorString(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status start_task(const ::nidevice_grpc::Session& session, StartTaskResponse& response)
@@ -232,7 +244,9 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     StartTaskRequest request;
     set_request_session_name(request, session);
-    return stub()->StartTask(&context, request, &response);
+    auto status = stub()->StartTask(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status start_task(StartTaskResponse& response = ThrowawayResponse<StartTaskResponse>::response())
@@ -245,7 +259,9 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     StopTaskRequest request;
     set_request_session_name(request);
-    return stub()->StopTask(&context, request, &response);
+    auto status = stub()->StopTask(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status read_analog_f64(
@@ -260,7 +276,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_array_size_in_samps(array_size_in_samps);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     request.set_timeout(1000.0);
-    return stub()->ReadAnalogF64(&context, request, &response);
+    auto status = stub()->ReadAnalogF64(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status write_analog_f64(
@@ -275,7 +293,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.mutable_write_array()->Add(data.cbegin(), data.cend());
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     auto status = stub()->WriteAnalogF64(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    client::raise_if_error(status, context);
     return status;
   }
 
@@ -290,7 +308,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.add_write_array(10000);
     request.add_write_array(1);
     request.add_write_array(0);
-    return stub()->WriteDigitalU32(&context, request, &response);
+    auto status = stub()->WriteDigitalU32(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status read_u32_digital_data(ReadDigitalU32Response& response)
@@ -301,7 +321,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_num_samps_per_chan(4);
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
-    return stub()->ReadDigitalU32(&context, request, &response);
+    auto status = stub()->ReadDigitalU32(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status write_u16_digital_data(WriteDigitalU16Response& response)
@@ -315,7 +337,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.add_write_array(10);
     request.add_write_array(1);
     request.add_write_array(0);
-    return stub()->WriteDigitalU16(&context, request, &response);
+    auto status = stub()->WriteDigitalU16(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status read_u16_digital_data(ReadDigitalU16Response& response)
@@ -326,7 +350,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_num_samps_per_chan(4);
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
-    return stub()->ReadDigitalU16(&context, request, &response);
+    auto status = stub()->ReadDigitalU16(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status write_u8_digital_data(WriteDigitalU8Response& response)
@@ -338,7 +364,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_num_samps_per_chan(4);
     uint8_t data[4] = {255, 10, 1, 0};
     request.set_write_array(data, sizeof(data));
-    return stub()->WriteDigitalU8(&context, request, &response);
+    auto status = stub()->WriteDigitalU8(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status read_u8_digital_data(ReadDigitalU8Response& response)
@@ -349,7 +377,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_num_samps_per_chan(4);
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
-    return stub()->ReadDigitalU8(&context, request, &response);
+    auto status = stub()->ReadDigitalU8(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status write_binary_i16(const std::vector<int16>& data, WriteBinaryI16Response& response)
@@ -360,7 +390,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_num_samps_per_chan(static_cast<uint32>(data.size()));
     request.mutable_write_array()->CopyFrom({data.cbegin(), data.cend()});
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
-    return stub()->WriteBinaryI16(&context, request, &response);
+    auto status = stub()->WriteBinaryI16(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status get_nth_task_device(uint32_t index, GetNthTaskDeviceResponse& response)
@@ -370,7 +402,9 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_name(request);
     request.set_index(index);
 
-    return stub()->GetNthTaskDevice(&context, request, &response);
+    auto status = stub()->GetNthTaskDevice(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   bool is_task_done()
@@ -380,7 +414,7 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_name(request);
     IsTaskDoneResponse response;
     auto status = stub()->IsTaskDone(&context, request, &response);
-    EXPECT_SUCCESS(status, response);
+    client::raise_if_error(status, context);
     return response.is_task_done();
   }
 
@@ -390,7 +424,9 @@ class NiDAQmxDriverApiTests : public Test {
     TaskControlRequest request;
     set_request_session_name(request);
     request.set_action(action);
-    return stub()->TaskControl(&context, request, &response);
+    auto status = stub()->TaskControl(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   auto register_done_event(::grpc::ClientContext& context)
@@ -455,7 +491,9 @@ class NiDAQmxDriverApiTests : public Test {
   ::grpc::Status cfg_samp_clk_timing(const CfgSampClkTimingRequest& request, CfgSampClkTimingResponse& response = ThrowawayResponse<CfgSampClkTimingResponse>::response())
   {
     ::grpc::ClientContext context;
-    return stub()->CfgSampClkTiming(&context, request, &response);
+    auto status = stub()->CfgSampClkTiming(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   CfgChangeDetectionTimingRequest create_cfg_change_detection_timing(const std::string& channel)
@@ -471,7 +509,9 @@ class NiDAQmxDriverApiTests : public Test {
   ::grpc::Status cfg_change_detection_timing(const CfgChangeDetectionTimingRequest& request, CfgChangeDetectionTimingResponse& response = ThrowawayResponse<CfgChangeDetectionTimingResponse>::response())
   {
     ::grpc::ClientContext context;
-    return stub()->CfgChangeDetectionTiming(&context, request, &response);
+    auto status = stub()->CfgChangeDetectionTiming(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status cfg_input_buffer(CfgInputBufferResponse& response)
@@ -480,7 +520,9 @@ class NiDAQmxDriverApiTests : public Test {
     CfgInputBufferRequest request;
     set_request_session_name(request);
     request.set_num_samps_per_chan(1024U);
-    return stub()->CfgInputBuffer(&context, request, &response);
+    auto status = stub()->CfgInputBuffer(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status cfg_output_buffer(CfgOutputBufferResponse& response)
@@ -489,7 +531,9 @@ class NiDAQmxDriverApiTests : public Test {
     CfgOutputBufferRequest request;
     set_request_session_name(request);
     request.set_num_samps_per_chan(1024U);
-    return stub()->CfgOutputBuffer(&context, request, &response);
+    auto status = stub()->CfgOutputBuffer(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status self_test_device(SelfTestDeviceResponse& response)
@@ -497,7 +541,9 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     SelfTestDeviceRequest request;
     request.set_device_name(DEVICE_NAME);
-    return stub()->SelfTestDevice(&context, request, &response);
+    auto status = stub()->SelfTestDevice(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status create_lin_scale(const std::string& name, double slope, CreateLinScaleResponse& response = ThrowawayResponse<CreateLinScaleResponse>::response())
@@ -507,7 +553,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_name(name);
     request.set_slope(slope);
     request.set_pre_scaled_units(UnitsPreScaled::UNITS_PRE_SCALED_VOLTS);
-    return stub()->CreateLinScale(&context, request, &response);
+    auto status = stub()->CreateLinScale(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status create_polynomial_scale(const std::string& name, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, CreatePolynomialScaleResponse& response = ThrowawayResponse<CreatePolynomialScaleResponse>::response())
@@ -521,7 +569,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.mutable_reverse_coeffs()->CopyFrom({reverse_coeffs.cbegin(), reverse_coeffs.cend()});
 
     request.set_pre_scaled_units(UnitsPreScaled::UNITS_PRE_SCALED_VOLTS);
-    return stub()->CreatePolynomialScale(&context, request, &response);
+    auto status = stub()->CreatePolynomialScale(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status create_ai_thrmcpl_chan(double min_val, double max_val, CreateAIThrmcplChanResponse& response)
@@ -536,7 +586,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_thermocouple_type(ThermocoupleType1::THERMOCOUPLE_TYPE1_J_TYPE_TC);
     request.set_cjc_source(CJCSource1::CJC_SOURCE1_CONST_VAL);
     request.set_cjc_val(25.0);
-    return stub()->CreateAIThrmcplChan(&context, request, &response);
+    auto status = stub()->CreateAIThrmcplChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   CalculateReversePolyCoeffRequest create_calculate_reverse_poly_coeff_request(
@@ -558,7 +610,9 @@ class NiDAQmxDriverApiTests : public Test {
   ::grpc::Status calculate_reverse_poly_coeff(const CalculateReversePolyCoeffRequest& request, CalculateReversePolyCoeffResponse& response)
   {
     ::grpc::ClientContext context;
-    return stub()->CalculateReversePolyCoeff(&context, request, &response);
+    auto status = stub()->CalculateReversePolyCoeff(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   template <typename TRaw>
@@ -570,7 +624,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_num_samps_per_chan(samples_to_read);
     request.set_array_size_in_bytes(samples_to_read * sizeof(TRaw));
     request.set_timeout(1000.0);
-    return stub()->ReadRaw(&context, request, &response);
+    auto status = stub()->ReadRaw(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   template <typename TRaw>
@@ -584,7 +640,9 @@ class NiDAQmxDriverApiTests : public Test {
     write_data->insert(write_data->cbegin(), byte_data, byte_data + data.size() * sizeof(TRaw));
     request.set_num_samps(static_cast<uint32>(data.size()));
     request.set_timeout(1000.0);
-    return stub()->WriteRaw(&context, request, &response);
+    auto status = stub()->WriteRaw(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status wait_for_valid_timestamp(WaitForValidTimestampResponse& response)
@@ -595,7 +653,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_timestamp_event(TimestampEvent::TIMESTAMP_EVENT_FIRST_SAMPLE_TIMESTAMP);
     request.set_timeout(1.000);
     auto status = stub()->WaitForValidTimestamp(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    client::raise_if_error(status, context);
     return status;
   }
 
@@ -611,7 +669,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.mutable_when()->CopyFrom(time);
     request.set_timescale(Timescale2::TIMESCALE2_IO_DEVICE_TIME);
     auto status = stub()->CfgTimeStartTrig(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    client::raise_if_error(status, context);
     return status;
   }
 
@@ -623,7 +681,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_author("grpc.tester@ni.com");
     request.set_options_raw(SaveOptions::SAVE_OPTIONS_OVERWRITE | SaveOptions::SAVE_OPTIONS_ALLOW_INTERACTIVE_DELETION);
     request.set_save_as("saved_task");
-    return stub()->SaveTask(&context, request, &response);
+    auto status = stub()->SaveTask(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status load_task(LoadTaskResponse& response)
@@ -636,6 +696,7 @@ class NiDAQmxDriverApiTests : public Test {
       EXPECT_NE(driver_session_->name(), response.task().name());
       driver_session_ = std::make_unique<nidevice_grpc::Session>(response.task());
     }
+    client::raise_if_error(status, context);
     return status;
   }
 
@@ -644,7 +705,9 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     SelfCalRequest request;
     request.set_device_name(DEVICE_NAME);
-    return stub()->SelfCal(&context, request, &response);
+    auto status = stub()->SelfCal(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status add_network_device(const std::string& ip_address, AddNetworkDeviceResponse& response)
@@ -653,7 +716,7 @@ class NiDAQmxDriverApiTests : public Test {
     AddNetworkDeviceRequest request;
     request.set_ip_address(ip_address);
     auto status = stub()->AddNetworkDevice(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    client::raise_if_error(status, context);
     return status;
   }
 
@@ -664,7 +727,7 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_name(request);
     request.set_timeout(10.0);
     auto status = stub()->WaitForNextSampleClock(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    client::raise_if_error(status, context);
     return status;
   }
 
@@ -676,7 +739,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_destination_terminal(destination);
     request.set_signal_modifiers(InvertPolarity::INVERT_POLARITY_DO_NOT_INVERT_POLARITY);
     auto status = stub()->ConnectTerms(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    client::raise_if_error(status, context);
     return status;
   }
 
@@ -687,7 +750,9 @@ class NiDAQmxDriverApiTests : public Test {
 
     request.set_device_name(DEVICE_NAME);
     request.set_timeout(timeout);
-    return stub()->CreateWatchdogTimerTaskEx(&context, request, &response);
+    auto status = stub()->CreateWatchdogTimerTaskEx(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status cfg_watchdog_do_expir_states(const nidevice_grpc::Session& watchdog_session, CfgWatchdogDOExpirStatesResponse& response)
@@ -701,7 +766,9 @@ class NiDAQmxDriverApiTests : public Test {
         DigitalLineState::DIGITAL_LINE_STATE_HIGH,
         DigitalLineState::DIGITAL_LINE_STATE_HIGH};
     request.mutable_expir_state_array()->CopyFrom({expir_states.cbegin(), expir_states.cend()});
-    return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
+    auto status = stub()->CfgWatchdogDOExpirStates(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -1261,11 +1328,9 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAc
 
   const auto FINITE_SAMPLE_COUNT = 10UL;
   cfg_samp_clk_timing(
-      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   start_task();
-  ReadAnalogF64Response read_response;
-  auto read_status = read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT, read_response);
-  EXPECT_SUCCESS(read_status, read_response);
+  read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT);
 
   RegisterDoneEventResponse response;
   EXPECT_TRUE(reader->Read(&response));
@@ -1281,7 +1346,7 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSam
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES);
   reader->WaitForInitialMetadata();
   cfg_samp_clk_timing(
-      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
 
   start_task();
   std::vector<RegisterEveryNSamplesEventResponse> responses;
@@ -1307,7 +1372,7 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFin
 
   const auto FINITE_SAMPLE_COUNT = 10UL;
   cfg_samp_clk_timing(
-      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   start_task();
   ReadAnalogF64Response read_response;
   auto read_status = read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT, read_response);
@@ -1464,7 +1529,6 @@ TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDe
 TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
 {
   create_ao_voltage_chan(0.0, 10.0);
-  create_ai_voltage_chan(0.0, 10.0);
   auto cfg_response = client::cfg_samp_clk_timing(
       stub(),
       task(),
