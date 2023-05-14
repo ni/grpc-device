@@ -417,6 +417,24 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->RegisterSignalEvent(&context, request);
   }
 
+  template <typename TResponse>
+  bool read_stream(
+    ::grpc::ClientReader<TResponse>& reader,
+    size_t count,
+    std::vector<TResponse>* responses)
+  {
+    typename TResponse response;
+    for (size_t i = 0; i < count; ++i) {
+      if (!reader.Read(&response)) {
+        return false;
+      }
+      if (responses) {
+        responses->push_back(response);
+      }
+    }
+    return true;
+  }
+
   CfgSampClkTimingRequest create_cfg_samp_clk_timing_request(double rate, Edge1 active_edge, AcquisitionType sample_mode, uInt64 samples_per_chan)
   {
     CfgSampClkTimingRequest request;
@@ -1250,7 +1268,7 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAc
   EXPECT_SUCCESS(read_status, read_response);
 
   RegisterDoneEventResponse response;
-  reader->Read(&response);
+  EXPECT_TRUE(reader->Read(&response));
   EXPECT_EQ(DAQMX_SUCCESS, response.status());
 }
 
@@ -1266,25 +1284,26 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSam
       create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_UNSPECIFIED, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
 
   start_task();
-  RegisterEveryNSamplesEventResponse response;
+  std::vector<RegisterEveryNSamplesEventResponse> responses;
+  bool read_stream_success = true;
   for (auto i = 0; i < N_READS; ++i) {
-    reader->Read(&response);
+    read_stream_success = read_stream_success && read_stream(*reader, 1, &responses);
     read_analog_f64(N_SAMPLES, N_SAMPLES);
-
-    EXPECT_EQ(N_SAMPLES, response.n_samples());
-    EXPECT_EQ(DAQMX_SUCCESS, response.status());
   }
+
+  EXPECT_TRUE(read_stream_success);
+  EXPECT_THAT(responses, Each(Property(&RegisterEveryNSamplesEventResponse::n_samples, Eq(N_SAMPLES))));
+  EXPECT_THAT(responses, Each(Property(&RegisterEveryNSamplesEventResponse::status, Eq(DAQMX_SUCCESS))));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
 {
   create_ai_voltage_chan(0.0, 1.0);
-  ::grpc::ClientContext reader_context;
-  auto reader = register_done_event(reader_context);
-  reader->WaitForInitialMetadata();
-  ::grpc::ClientContext second_reader_context;
-  auto second_reader = register_done_event(second_reader_context);
-  second_reader->WaitForInitialMetadata();
+  ::grpc::ClientContext reader_context1, reader_context2;
+  auto reader1 = register_done_event(reader_context1);
+  reader1->WaitForInitialMetadata();
+  auto reader2 = register_done_event(reader_context2);
+  reader2->WaitForInitialMetadata();
 
   const auto FINITE_SAMPLE_COUNT = 10UL;
   cfg_samp_clk_timing(
@@ -1295,9 +1314,9 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFin
   EXPECT_SUCCESS(read_status, read_response);
 
   RegisterDoneEventResponse response;
-  reader->Read(&response);
+  EXPECT_TRUE(reader1->Read(&response));
   EXPECT_EQ(DAQMX_SUCCESS, response.status());
-  second_reader->Read(&response);
+  EXPECT_TRUE(reader2->Read(&response));
   EXPECT_EQ(DONE_EVENT_ALREADY_REGISTERED_ERROR, response.status());
 }
 
