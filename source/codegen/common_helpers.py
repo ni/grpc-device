@@ -1186,10 +1186,3 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     * Outputs that are calculated/populated after the API call.
     """
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
-
-
-def get_parameter_for_error_generation(params):
-    for param in params:
-        if param["direction"] == "out" and "return_on_error_key" in param:
-            return param
-    return None
