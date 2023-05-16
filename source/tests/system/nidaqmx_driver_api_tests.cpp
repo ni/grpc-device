@@ -473,7 +473,7 @@ class NiDAQmxDriverApiTests : public Test {
     size_t count,
     std::vector<TResponse>& responses)
   {
-    typename TResponse response;
+    TResponse response;
     for (size_t i = 0; i < count; ++i) {
       read_stream(context, reader, response);
       responses.push_back(response);

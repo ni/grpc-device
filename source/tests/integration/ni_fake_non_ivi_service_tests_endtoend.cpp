@@ -84,7 +84,7 @@ class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
     size_t count,
     std::vector<TResponse>* responses = nullptr)
   {
-    typename TResponse response;
+    TResponse response;
     for (size_t i = 0; i < count; ++i) {
       if (!reader.Read(&response)) {
         return false;
