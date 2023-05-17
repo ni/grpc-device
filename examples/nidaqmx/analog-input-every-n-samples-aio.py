@@ -97,15 +97,21 @@ async def _main():
                 )
             )
 
-            # Wait for initial_metadata to ensure that the callback is registered before starting
-            # the task.
+            # Wait for initial_metadata and check for stream errors to ensure that the callback is
+            # registered before starting the task.
             await every_n_samples_stream.initial_metadata()
+            if every_n_samples_stream.done():
+                every_n_samples_response = await every_n_samples_stream.read()
+                check_for_warning(every_n_samples_response)
 
             done_event_stream = client.RegisterDoneEvent(
                 nidaqmx_types.RegisterDoneEventRequest(task=task)
             )
 
             await done_event_stream.initial_metadata()
+            if done_event_stream.done():
+                done_response = await done_event_stream.read()
+                check_for_warning(done_response)
 
             start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
             check_for_warning(start_task_response)
