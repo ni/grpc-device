@@ -1529,7 +1529,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Fin
   }, client::grpc_driver_error);
 }
 
-TEST_F(NiDAQmxDriverApiTests, DISABLED_EveryNSamplesEventRegisteredWithWrongEventType_Cancel_NoErrors)
+TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Cancel_NoErrors)
 {
   const auto N_SAMPLES = 10UL;
   create_ai_voltage_chan(0.0, 1.0);

@@ -330,7 +330,7 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, InvalidArgument_Finish_ReturnsInvalidA
   EXPECT_EQ(kStartOutOfRangeErrorMessage, status.error_message());
 }
 
-TEST_F(NiFakeNonIviServiceTests_EndToEnd, DISABLED_InvalidArgument_Cancel_CleanShutdown)
+TEST_F(NiFakeNonIviServiceTests_EndToEnd, InvalidArgument_Cancel_CleanShutdown)
 {
   ::grpc::ClientContext context;
   const auto START = -1;
@@ -374,7 +374,7 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, StartAndStopReversedAndWaitForMetadata
   EXPECT_EQ(kStartAndStopReversedErrorMessage, status.error_message());
 }
 
-TEST_F(NiFakeNonIviServiceTests_EndToEnd, DISABLED_StartAndStopReversedAndWaitForMetadata_Cancel_CleanShutdown)
+TEST_F(NiFakeNonIviServiceTests_EndToEnd, StartAndStopReversedAndWaitForMetadata_Cancel_CleanShutdown)
 {
   ::grpc::ClientContext context;
   const auto START = 10;
