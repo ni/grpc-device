@@ -756,6 +756,7 @@ ${set_response_values(normal_outputs, init_method)}\
   config = data['config']
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
   resource_handle_types = service_helpers.get_resource_handle_types(config)
+  error_parameters = [p for p in parameters if common_helpers.is_output_parameter(p) and "return_on_error_key" in p]
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
 <%
@@ -773,6 +774,9 @@ ${set_response_values(normal_outputs, init_method)}\
   else:
     method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(context, status, {session});'
 %>\
+      %for error_parameter in error_parameters:
+      context->AddTrailingMetadata("${error_parameter["return_on_error_key"]}", std::to_string(${common_helpers.pascal_to_snake(error_parameter["name"])}));
+      %endfor
       if (!status_ok(status)) {
         ${method_call}
       }
