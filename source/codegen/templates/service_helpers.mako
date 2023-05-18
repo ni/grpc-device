@@ -177,7 +177,7 @@ ${populate_response(function_data=function_data, parameters=parameters, indent_l
     {
       auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 

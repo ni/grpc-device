@@ -30,7 +30,7 @@ namespace nifake_non_ivi_grpc {
     {
       auto status = start(request);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 

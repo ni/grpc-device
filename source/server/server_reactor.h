@@ -38,9 +38,7 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
 
   void OnCancel() override
   {
-    LockGuard lock(mutex_);
-    done_ = true;
-    this->Finish(::grpc::Status::OK);
+    try_finish(::grpc::Status::OK);
   }
 
  protected:
@@ -54,6 +52,19 @@ class ServerWriterReactor : public grpc::ServerWriteReactor<TResponse> {
   void set_producer(std::unique_ptr<TProducer>&& producer)
   {
     producer_ = std::move(producer);
+  }
+
+  // Try to immediately finish the RPC. If called multiple times, the first call wins.
+  // This method does not wait until the pending send queue is empty.
+  bool try_finish(::grpc::Status status)
+  {
+    LockGuard lock(mutex_);
+    if (!done_) {
+      done_ = true;
+      this->Finish(std::move(status));
+      return true;
+    }
+    return false;
   }
 
  private:

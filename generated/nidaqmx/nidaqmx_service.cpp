@@ -14005,7 +14005,7 @@ namespace nidaqmx_grpc {
     {
       auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 
@@ -14059,7 +14059,7 @@ namespace nidaqmx_grpc {
     {
       auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 
@@ -14132,7 +14132,7 @@ namespace nidaqmx_grpc {
     {
       auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 
