@@ -1439,10 +1439,17 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFin
   read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT);
   RegisterDoneEventResponse response1, response2;
   read_stream(reader_context1, *reader1, response1);
-  read_stream(reader_context2, *reader2, response2);
 
   EXPECT_EQ(DAQMX_SUCCESS, response1.status());
-  EXPECT_EQ(DONE_EVENT_ALREADY_REGISTERED_ERROR, response2.status());
+  EXPECT_THROW({
+    try {
+      read_stream(reader_context2, *reader2, response2);
+    }
+    catch (const client::grpc_driver_error& ex) {
+      expect_driver_error(ex, DONE_EVENT_ALREADY_REGISTERED_ERROR);
+      throw;
+    }
+  }, client::grpc_driver_error);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ConfigureInputBuffer_Succeeds)
