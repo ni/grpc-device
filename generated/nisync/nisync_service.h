@@ -114,7 +114,7 @@ public:
 private:
   NiSyncLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
 
   NiSyncFeatureToggles feature_toggles_;
 };

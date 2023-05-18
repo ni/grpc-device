@@ -59,7 +59,7 @@ public:
 private:
   NiTClkLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession session_number);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession session_number);
 
   NiTClkFeatureToggles feature_toggles_;
 };

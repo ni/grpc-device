@@ -50,7 +50,7 @@ public:
 private:
   NimxlcTerminalAdaptorRestrictedLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNimxlc_Session(::grpc::ServerContext* context, int32_t status, nimxlc_Session session);
+  ::grpc::Status ConvertApiErrorStatusForNimxlc_Session(::grpc::ServerContextBase* context, int32_t status, nimxlc_Session session);
 
   NimxlcTerminalAdaptorRestrictedFeatureToggles feature_toggles_;
 };
