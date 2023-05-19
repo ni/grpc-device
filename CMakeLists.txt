@@ -68,6 +68,11 @@ include_directories(
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+if(MSVC)
+  # Set __cplusplus accurately so that gtest can print std::optional.
+  # See https://github.com/google/googletest/issues/4226 for more info.
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:__cplusplus")
+endif()
 
 #----------------------------------------------------------------------
 # Include generated *.pb.h files
