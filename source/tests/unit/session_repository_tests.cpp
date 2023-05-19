@@ -61,22 +61,20 @@ TEST(SessionRepositoryTests, NoSessions_AddSessionWithAttachToExistingBehavior_E
   std::string session_name = "session_name";
   nidevice_grpc::SessionRepository session_repository;
 
-  EXPECT_THROW(
-      {
-        try {
-          session_repository.add_session(
-              session_name,
-              []() { return 0; },
-              NULL,
-              nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING);
-        }
-        catch (const nidevice_grpc::NonDriverException& e) {
-          auto exception_status = e.GetStatus();
-          EXPECT_EQ(::grpc::StatusCode::FAILED_PRECONDITION, exception_status.error_code());
-          throw e;
-        }
-      },
-      nidevice_grpc::NonDriverException);
+  EXPECT_THROW({
+    try {
+      session_repository.add_session(
+          session_name,
+          []() { return 0; },
+          NULL,
+          nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING);
+    }
+    catch (const nidevice_grpc::NonDriverException& e) {
+      auto exception_status = e.GetStatus();
+      EXPECT_EQ(::grpc::StatusCode::FAILED_PRECONDITION, exception_status.error_code());
+      throw e;
+    }
+  }, nidevice_grpc::NonDriverException);
 }
 
 TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)

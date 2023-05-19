@@ -98,15 +98,10 @@ TEST_F(NiDigitalSessionTest, InitializedSession_CloseSession_ClosesDriverSession
 
 TEST_F(NiDigitalSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     digital::InitWithOptionsResponse init_response;
     auto status = call_init_with_options(kDigitalInvalidResourceName, "", "", &init_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kDigitalRsrcNotFound);
-    EXPECT_STREQ(kDigitalRsrcNotFoundMessage, ex.what());
-  }
+  }, kDigitalRsrcNotFound, kDigitalRsrcNotFoundMessage);
 }
 
 }  // namespace system

@@ -85,14 +85,10 @@ TEST_F(NiRFmxBluetoothSessionTest, InitializeSessionWithDeviceAndNoSessionName_C
 
 TEST_F(NiRFmxBluetoothSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     rfmxbluetooth::InitializeResponse response;
     auto status = call_initialize(kRFmxBTTestInvalidRsrc, "", "", &response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRsrc);
-  }
+  }, kInvalidRsrc);
 }
 
 TEST_F(NiRFmxBluetoothSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -153,15 +149,11 @@ TEST_F(NiRFmxBluetoothSessionTest, CallInitializeTwiceWithSameSessionNameOnSameD
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
     // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
     call_close(session_two, false, &close_response_two);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRFmxBTSession);
-  }
+  }, kInvalidRFmxBTSession);
 }
 
 TEST_F(NiRFmxBluetoothSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
@@ -169,14 +161,10 @@ TEST_F(NiRFmxBluetoothSessionTest, InvalidSession_CloseSession_ReturnsInvalidSes
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     rfmxbluetooth::CloseResponse response;
     call_close(session, false, &response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRFmxBTSession);
-  }
+  }, kInvalidRFmxBTSession);
 }
 
 }  // namespace
