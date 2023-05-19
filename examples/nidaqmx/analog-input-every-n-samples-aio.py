@@ -48,27 +48,23 @@ if len(sys.argv) >= 4:
 
 
 async def _main():
-    client = None
-    task = None
-
     async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
+        client = grpc_nidaqmx.NiDAQmxStub(channel)
+        task = None
+
+        def check_for_warning(response):
+            """Print to console if the status indicates a warning."""
+            if response.status > 0:
+                warning_message = client.GetErrorString(
+                    nidaqmx_types.GetErrorStringRequest(error_code=response.status)
+                )
+                sys.stderr.write(
+                    f"{warning_message.error_string}\nWarning status: {response.status}\n"
+                )
+
         try:
-            client = grpc_nidaqmx.NiDAQmxStub(channel)
-
-            def check_for_warning(response):
-                """Print to console if the status indicates a warning."""
-                if response.status > 0:
-                    warning_message = client.GetErrorString(
-                        nidaqmx_types.GetErrorStringRequest(error_code=response.status)
-                    )
-                    sys.stderr.write(
-                        f"{warning_message.error_string}\nWarning status: {response.status}\n"
-                    )
-
-            create_response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(
-                nidaqmx_types.CreateTaskRequest()
-            )
-            task = create_response.task
+            create_task_response = await client.CreateTask(nidaqmx_types.CreateTaskRequest())
+            task = create_task_response.task
 
             await client.CreateAIVoltageChan(
                 nidaqmx_types.CreateAIVoltageChanRequest(
@@ -114,28 +110,26 @@ async def _main():
             start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
             check_for_warning(start_task_response)
 
-            response = await client.GetTaskAttributeUInt32(
+            get_num_chans_response = await client.GetTaskAttributeUInt32(
                 nidaqmx_types.GetTaskAttributeUInt32Request(
                     task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
                 )
             )
 
-            number_of_channels = response.value
+            number_of_channels = get_num_chans_response.value
 
             async def read_data():
                 samps_per_chan_read = 0
 
                 try:
                     async for every_n_samples_response in every_n_samples_stream:
-                        read_response: nidaqmx_types.ReadAnalogF64Response = (
-                            await client.ReadAnalogF64(
-                                nidaqmx_types.ReadAnalogF64Request(
-                                    task=task,
-                                    num_samps_per_chan=samples_per_channel_per_read,
-                                    fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                    array_size_in_samps=number_of_channels
-                                    * samples_per_channel_per_read,
-                                )
+                        read_response = await client.ReadAnalogF64(
+                            nidaqmx_types.ReadAnalogF64Request(
+                                task=task,
+                                num_samps_per_chan=samples_per_channel_per_read,
+                                fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                                array_size_in_samps=number_of_channels
+                                * samples_per_channel_per_read,
                             )
                         )
                         check_for_warning(read_response)
@@ -170,7 +164,7 @@ async def _main():
 
         except grpc.RpcError as rpc_error:
             error_message = str(rpc_error.details() or "")
-            for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
+            for key, value in rpc_error.trailing_metadata() or []:
                 if key == "ni-error":
                     details = value if isinstance(value, str) else value.decode("utf-8")
                     error_message += f"\nError status: {details}"

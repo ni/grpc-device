@@ -61,8 +61,10 @@ def check_for_warning(response):
 
 
 try:
-    response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
-    task = response.task
+    create_task_response = client.CreateTask(
+        nidaqmx_types.CreateTaskRequest(session_name="my task")
+    )
+    task = create_task_response.task
 
     client.CreateAIVoltageChan(
         nidaqmx_types.CreateAIVoltageChanRequest(
@@ -90,14 +92,14 @@ try:
 
     # Get the number of channels. This may be greater than 1 if the physical_channel
     # parameter is a list or range of channels.
-    response = client.GetTaskAttributeUInt32(
+    get_num_chans_response = client.GetTaskAttributeUInt32(
         nidaqmx_types.GetTaskAttributeUInt32Request(
             task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
         )
     )
-    number_of_channels = response.value
+    number_of_channels = get_num_chans_response.value
 
-    response = client.ReadAnalogF64(
+    read_response = client.ReadAnalogF64(
         nidaqmx_types.ReadAnalogF64Request(
             task=task,
             num_samps_per_chan=1000,
@@ -110,15 +112,15 @@ try:
     stop_task_response = client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
     check_for_warning(stop_task_response)
     print(
-        f"Acquired {len(response.read_array)} samples",
-        f"({response.samps_per_chan_read} samples per channel)",
+        f"Acquired {len(read_response.read_array)} samples",
+        f"({read_response.samps_per_chan_read} samples per channel)",
     )
 except grpc.RpcError as rpc_error:
     error_message = str(rpc_error.details() or "")
-    for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
-        if key == "ni-error":
-            details = value if isinstance(value, str) else value.decode("utf-8")
-            error_message += f"\nError status: {details}"
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
