@@ -4,8 +4,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <optional>
-
 #include "client_helpers.h"
 
 #define EXPECT_THROW_DRIVER_ERROR(statement_, expected_error_)                 \
@@ -34,8 +32,7 @@
   do {                                                               \
     EXPECT_EQ(::grpc::StatusCode::UNKNOWN, exception_.StatusCode()); \
     EXPECT_LT(expected_error_, 0);                                   \
-    auto driver_error = get_driver_error(exception_);                \
-    EXPECT_THAT(driver_error, ::testing::Optional(expected_error_)); \
+    EXPECT_EQ(expected_error_, get_driver_error(exception_));        \
   } while(false)
 
 #define EXPECT_DRIVER_ERROR_WITH_SUBSTR(exception_, expected_error_, message_substring_) \
@@ -44,17 +41,18 @@
     EXPECT_THAT(exception_.what(), ::testing::HasSubstr(message_substring_));            \
   } while(false)
 
-inline std::optional<int> get_driver_error(const std::multimap<std::string, std::string>& metadata)
+inline int get_driver_error(const std::multimap<std::string, std::string>& metadata)
 {
   auto iterator = metadata.find("ni-error");
   if (iterator != metadata.end())
   {
     return std::stoi(iterator->second);
   }
-  return std::nullopt;
+  ADD_FAILURE() << "ni-error key not found in metadata.";
+  return 0;
 }
 
-inline std::optional<int> get_driver_error(const std::multimap<grpc::string_ref, grpc::string_ref>& metadata)
+inline int get_driver_error(const std::multimap<grpc::string_ref, grpc::string_ref>& metadata)
 {
   auto iterator = metadata.find("ni-error");
   if (iterator != metadata.end())
@@ -63,10 +61,11 @@ inline std::optional<int> get_driver_error(const std::multimap<grpc::string_ref,
     std::string value(iterator->second.begin(), iterator->second.end());
     return std::stoi(value);
   }
-  return std::nullopt;
+  ADD_FAILURE() << "ni-error key not found in metadata.";
+  return 0;
 }
 
-inline std::optional<int> get_driver_error(const nidevice_grpc::experimental::client::grpc_driver_error& ex)
+inline int get_driver_error(const nidevice_grpc::experimental::client::grpc_driver_error& ex)
 {
   return get_driver_error(ex.Trailers());
 }
