@@ -26,7 +26,7 @@ command line arguments.
 To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "Dev1/ai0" as the physical channel name.
-"""
+"""  # noqa: W505 - doc line too long
 
 import asyncio
 import sys
