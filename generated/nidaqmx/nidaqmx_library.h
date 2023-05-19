@@ -384,6 +384,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 StopTask(TaskHandle task);
   int32 TaskControl(TaskHandle task, int32 action);
   int32 TristateOutputTerm(const char outputTerminal[]);
+  int32 UnregisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData);
+  int32 UnregisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData);
+  int32 UnregisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData);
   int32 UnreserveNetworkDevice(const char deviceName[]);
   int32 WaitForNextSampleClock(TaskHandle task, float64 timeout, bool32* isLate);
   int32 WaitForValidTimestamp(TaskHandle task, int32 timestampEvent, float64 timeout, CVIAbsoluteTime* timestamp);
@@ -776,6 +779,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using StopTaskPtr = decltype(&DAQmxStopTask);
   using TaskControlPtr = decltype(&DAQmxTaskControl);
   using TristateOutputTermPtr = decltype(&DAQmxTristateOutputTerm);
+  using UnregisterDoneEventPtr = decltype(&DAQmxRegisterDoneEvent);
+  using UnregisterEveryNSamplesEventPtr = decltype(&DAQmxRegisterEveryNSamplesEvent);
+  using UnregisterSignalEventPtr = decltype(&DAQmxRegisterSignalEvent);
   using UnreserveNetworkDevicePtr = decltype(&DAQmxUnreserveNetworkDevice);
   using WaitForNextSampleClockPtr = decltype(&DAQmxWaitForNextSampleClock);
   using WaitForValidTimestampPtr = decltype(&DAQmxWaitForValidTimestamp);
@@ -1168,6 +1174,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     StopTaskPtr StopTask;
     TaskControlPtr TaskControl;
     TristateOutputTermPtr TristateOutputTerm;
+    UnregisterDoneEventPtr UnregisterDoneEvent;
+    UnregisterEveryNSamplesEventPtr UnregisterEveryNSamplesEvent;
+    UnregisterSignalEventPtr UnregisterSignalEvent;
     UnreserveNetworkDevicePtr UnreserveNetworkDevice;
     WaitForNextSampleClockPtr WaitForNextSampleClock;
     WaitForValidTimestampPtr WaitForValidTimestamp;

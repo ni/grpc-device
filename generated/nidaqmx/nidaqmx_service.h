@@ -407,6 +407,9 @@ public:
   ::grpc::Status StopTask(::grpc::ServerContext* context, const StopTaskRequest* request, StopTaskResponse* response) override;
   ::grpc::Status TaskControl(::grpc::ServerContext* context, const TaskControlRequest* request, TaskControlResponse* response) override;
   ::grpc::Status TristateOutputTerm(::grpc::ServerContext* context, const TristateOutputTermRequest* request, TristateOutputTermResponse* response) override;
+  ::grpc::Status UnregisterDoneEvent(::grpc::ServerContext* context, const UnregisterDoneEventRequest* request, UnregisterDoneEventResponse* response) override;
+  ::grpc::Status UnregisterEveryNSamplesEvent(::grpc::ServerContext* context, const UnregisterEveryNSamplesEventRequest* request, UnregisterEveryNSamplesEventResponse* response) override;
+  ::grpc::Status UnregisterSignalEvent(::grpc::ServerContext* context, const UnregisterSignalEventRequest* request, UnregisterSignalEventResponse* response) override;
   ::grpc::Status UnreserveNetworkDevice(::grpc::ServerContext* context, const UnreserveNetworkDeviceRequest* request, UnreserveNetworkDeviceResponse* response) override;
   ::grpc::Status WaitForNextSampleClock(::grpc::ServerContext* context, const WaitForNextSampleClockRequest* request, WaitForNextSampleClockResponse* response) override;
   ::grpc::Status WaitForValidTimestamp(::grpc::ServerContext* context, const WaitForValidTimestampRequest* request, WaitForValidTimestampResponse* response) override;

@@ -18118,6 +18118,114 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::UnregisterDoneEvent(::grpc::ServerContext* context, const UnregisterDoneEventRequest* request, UnregisterDoneEventResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      auto options = 0U;
+      auto callback_function = nullptr;
+      auto callback_data = nullptr;
+      auto status = library_->UnregisterDoneEvent(task, options, callback_function, callback_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::UnregisterEveryNSamplesEvent(::grpc::ServerContext* context, const UnregisterEveryNSamplesEventRequest* request, UnregisterEveryNSamplesEventResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      int32 every_n_samples_event_type;
+      switch (request->every_n_samples_event_type_enum_case()) {
+        case nidaqmx_grpc::UnregisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::kEveryNSamplesEventType: {
+          every_n_samples_event_type = static_cast<int32>(request->every_n_samples_event_type());
+          break;
+        }
+        case nidaqmx_grpc::UnregisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::kEveryNSamplesEventTypeRaw: {
+          every_n_samples_event_type = static_cast<int32>(request->every_n_samples_event_type_raw());
+          break;
+        }
+        case nidaqmx_grpc::UnregisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::EVERY_N_SAMPLES_EVENT_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for every_n_samples_event_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto n_samples = 0U;
+      auto options = 0U;
+      auto callback_function = nullptr;
+      auto callback_data = nullptr;
+      auto status = library_->UnregisterEveryNSamplesEvent(task, every_n_samples_event_type, n_samples, options, callback_function, callback_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::UnregisterSignalEvent(::grpc::ServerContext* context, const UnregisterSignalEventRequest* request, UnregisterSignalEventResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      int32 signal_id;
+      switch (request->signal_id_enum_case()) {
+        case nidaqmx_grpc::UnregisterSignalEventRequest::SignalIdEnumCase::kSignalId: {
+          signal_id = static_cast<int32>(request->signal_id());
+          break;
+        }
+        case nidaqmx_grpc::UnregisterSignalEventRequest::SignalIdEnumCase::kSignalIdRaw: {
+          signal_id = static_cast<int32>(request->signal_id_raw());
+          break;
+        }
+        case nidaqmx_grpc::UnregisterSignalEventRequest::SignalIdEnumCase::SIGNAL_ID_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_id was not specified or out of range");
+          break;
+        }
+      }
+
+      auto options = 0U;
+      auto callback_function = nullptr;
+      auto callback_data = nullptr;
+      auto status = library_->UnregisterSignalEvent(task, signal_id, options, callback_function, callback_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::UnreserveNetworkDevice(::grpc::ServerContext* context, const UnreserveNetworkDeviceRequest* request, UnreserveNetworkDeviceResponse* response)
   {
     if (context->IsCancelled()) {
