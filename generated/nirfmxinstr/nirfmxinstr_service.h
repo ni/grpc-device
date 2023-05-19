@@ -140,7 +140,7 @@ private:
   NiRFmxInstrLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"},{5, "RefIn2"},{6, "PXI_ClkMaster"}, };
   std::map<std::string, std::int32_t> frequencyreferencesource_output_map_ { {"OnboardClock", 1},{"RefIn", 2},{"PXI_Clk", 3},{"ClkIn", 4},{"RefIn2", 5},{"PXI_ClkMaster", 6}, };
   std::map<std::int32_t, std::string> nirfmxinstrstringattributevaluesmapped_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"},{14, ""},{15, "RefOut"},{16, "RefOut2"},{17, "ClkOut"},{18, ""},{19, "OnboardClock"},{20, "RefIn"},{21, "PXI_Clk"},{22, "ClkIn"},{23, "RefIn2"},{24, "PXI_ClkMaster"},{25, "Automatic_SG_SA_Shared"},{26, "LO_In"},{27, "None"},{28, "Onboard"},{29, "Secondary"},{30, "SG_SA_Shared"},{31, "PFI0"},{32, "PFI1"},{33, "PXI_Trig0"},{34, "PXI_Trig1"},{35, "PXI_Trig2"},{36, "PXI_Trig3"},{37, "PXI_Trig4"},{38, "PXI_Trig5"},{39, "PXI_Trig6"},{40, "PXI_Trig7"},{41, "PXI_STAR"},{42, "PXIe_DStarC"},{43, "PXIe_DStarB"},{44, "TimerEvent"}, };

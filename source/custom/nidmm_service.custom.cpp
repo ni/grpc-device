@@ -2,7 +2,7 @@
 
 namespace nidmm_grpc {
 
-::grpc::Status NiDmmService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi)
+::grpc::Status NiDmmService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi)
 {
   ViStatus error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

@@ -131,7 +131,7 @@ public:
 private:
   NiDmmLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   std::map<std::int32_t, double> nidmmreal64attributevaluesmapped_input_map_ { {1, 1e-06f},{2, 1e-05f},{3, 0.0001f},{4, 0.001f},{5, 1000000},{6, 10000000},{7, 10000000000.0f}, };
   std::map<double, std::int32_t> nidmmreal64attributevaluesmapped_output_map_ { {1e-06f, 1},{1e-05f, 2},{0.0001f, 3},{0.001f, 4},{1000000, 5},{10000000, 6},{10000000000.0f, 7}, };
 

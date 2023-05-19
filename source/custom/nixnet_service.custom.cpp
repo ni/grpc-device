@@ -1198,7 +1198,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   }
 }
 
-::grpc::Status NiXnetService::ConvertApiErrorStatusForNxSessionRef_t(::grpc::ServerContext* context, int32_t status, nxSessionRef_t session)
+::grpc::Status NiXnetService::ConvertApiErrorStatusForNxSessionRef_t(::grpc::ServerContextBase* context, int32_t status, nxSessionRef_t session)
 {
   static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
@@ -1206,7 +1206,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
-::grpc::Status NiXnetService::ConvertApiErrorStatusForNxDatabaseRef_t(::grpc::ServerContext* context, int32_t status, nxDatabaseRef_t session)
+::grpc::Status NiXnetService::ConvertApiErrorStatusForNxDatabaseRef_t(::grpc::ServerContextBase* context, int32_t status, nxDatabaseRef_t session)
 {
   static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

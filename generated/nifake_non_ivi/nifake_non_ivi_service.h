@@ -86,8 +86,8 @@ private:
   ResourceRepositorySharedPtr session_repository_;
   SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository_;
   FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForFakeHandle(::grpc::ServerContext* context, int32_t status, FakeHandle handle);
-  ::grpc::Status ConvertApiErrorStatusForSecondarySessionHandle(::grpc::ServerContext* context, int32_t status, SecondarySessionHandle handle);
+  ::grpc::Status ConvertApiErrorStatusForFakeHandle(::grpc::ServerContextBase* context, int32_t status, FakeHandle handle);
+  ::grpc::Status ConvertApiErrorStatusForSecondarySessionHandle(::grpc::ServerContextBase* context, int32_t status, SecondarySessionHandle handle);
   std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
   std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
 

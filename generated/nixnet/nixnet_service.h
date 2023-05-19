@@ -105,8 +105,8 @@ private:
   NiXnetLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNxSessionRef_t(::grpc::ServerContext* context, int32_t status, nxSessionRef_t session);
-  ::grpc::Status ConvertApiErrorStatusForNxDatabaseRef_t(::grpc::ServerContext* context, int32_t status, nxDatabaseRef_t session);
+  ::grpc::Status ConvertApiErrorStatusForNxSessionRef_t(::grpc::ServerContextBase* context, int32_t status, nxSessionRef_t session);
+  ::grpc::Status ConvertApiErrorStatusForNxDatabaseRef_t(::grpc::ServerContextBase* context, int32_t status, nxDatabaseRef_t session);
   std::map<std::int32_t, std::int32_t> dbpropertyvalue_input_map_ { {0, 0},{1, 0},{2, 1},{3, 2},{4, 4294967294},{5, 0},{6, 1},{7, 2},{8, 3},{9, 0},{10, 1},{11, 1},{12, 2},{13, 3},{14, 4},{15, 0},{16, 1},{17, 2},{18, 0},{19, 1},{20, 0},{21, 1},{22, 2},{23, 3},{24, 2},{25, 3},{26, 4},{27, 5},{28, 6},{29, 0},{30, 1},{31, 2},{32, 0},{33, 1},{34, 2},{35, 3}, };
   std::map<std::int32_t, std::int32_t> dbpropertyvalue_output_map_ { {0, 0},{0, 1},{1, 2},{2, 3},{4294967294, 4},{0, 5},{1, 6},{2, 7},{3, 8},{0, 9},{1, 10},{1, 11},{2, 12},{3, 13},{4, 14},{0, 15},{1, 16},{2, 17},{0, 18},{1, 19},{0, 20},{1, 21},{2, 22},{3, 23},{2, 24},{3, 25},{4, 26},{5, 27},{6, 28},{0, 29},{1, 30},{2, 31},{0, 32},{1, 33},{2, 34},{3, 35}, };
   std::map<std::int32_t, std::int32_t> enetflags_input_map_ { {0, 0},{1, 2147483648},{2, 1073741824},{3, 8388608},{4, 65536}, };

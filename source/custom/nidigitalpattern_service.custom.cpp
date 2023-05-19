@@ -12,7 +12,7 @@ inline bool status_ok(int32 status)
   return status >= 0;
 }
 
-::grpc::Status NiDigitalService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi)
+::grpc::Status NiDigitalService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi)
 {
   static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
   ViStatus error_code{};
