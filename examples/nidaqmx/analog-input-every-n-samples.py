@@ -28,8 +28,8 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "Dev1/ai0" as the physical channel name.
 """
 
-import concurrent.futures
 import sys
+from concurrent.futures import ThreadPoolExecutor
 
 import grpc
 import nidaqmx_pb2 as nidaqmx_types
@@ -51,10 +51,9 @@ def _main():
     client = None
     task = None
 
-    with (
-        grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel,
-        concurrent.futures.ThreadPoolExecutor() as executor,
-    ):
+    with grpc.insecure_channel(
+        f"{SERVER_ADDRESS}:{SERVER_PORT}"
+    ) as channel, ThreadPoolExecutor() as executor:
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
@@ -130,15 +129,13 @@ def _main():
 
                 try:
                     for every_n_samples_response in every_n_samples_stream:
-                        read_response: nidaqmx_types.ReadAnalogF64Response = (
-                            client.ReadAnalogF64(
-                                nidaqmx_types.ReadAnalogF64Request(
-                                    task=task,
-                                    num_samps_per_chan=samples_per_channel_per_read,
-                                    fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                    array_size_in_samps=number_of_channels
-                                    * samples_per_channel_per_read,
-                                )
+                        read_response: nidaqmx_types.ReadAnalogF64Response = client.ReadAnalogF64(
+                            nidaqmx_types.ReadAnalogF64Request(
+                                task=task,
+                                num_samps_per_chan=samples_per_channel_per_read,
+                                fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                                array_size_in_samps=number_of_channels
+                                * samples_per_channel_per_read,
                             )
                         )
                         check_for_warning(read_response)
