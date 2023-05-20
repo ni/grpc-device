@@ -1364,12 +1364,12 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAc
 {
   const auto FINITE_SAMPLE_COUNT = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(
+    create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   ::grpc::ClientContext reader_context;
   auto reader = register_done_event(reader_context);
   reader->WaitForInitialMetadata();
 
-  cfg_samp_clk_timing(
-      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   start_task();
   read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT);
   RegisterDoneEventResponse response;
@@ -1383,14 +1383,14 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunMultipleFiniteAc
   const auto ACQUISITION_COUNT = 3UL;
   const auto FINITE_SAMPLE_COUNT = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(
+    create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   ::grpc::ClientContext reader_context;
   auto reader = register_done_event(reader_context);
   reader->WaitForInitialMetadata();
 
   std::vector<RegisterDoneEventResponse> responses;
   for (auto acquisition = 0UL; acquisition < ACQUISITION_COUNT; ++acquisition) {
-    cfg_samp_clk_timing(
-        create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
     start_task();
     read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT);
     read_stream(reader_context, *reader, 1, responses);
@@ -1403,14 +1403,15 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunMultipleFiniteAc
 
 TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSamplesMultipleTimes_EveryNSamplesEventResponsesAreReceived)
 {
+  const auto FINITE_SAMPLE_COUNT = 100UL;
   const auto N_SAMPLES = 10UL;
   const auto N_READS = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES);
   reader->WaitForInitialMetadata();
-  cfg_samp_clk_timing(
-      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
 
   start_task();
   std::vector<RegisterEveryNSamplesEventResponse> responses;
@@ -1427,14 +1428,15 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSam
 TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_RunMultipleFiniteAcquisitions_EveryNSamplesEventResponsesAreReceived)
 {
   const auto ACQUISITION_COUNT = 3UL;
+  const auto FINITE_SAMPLE_COUNT = 100UL;
   const auto N_SAMPLES = 10UL;
   const auto N_READS = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES);
   reader->WaitForInitialMetadata();
-  cfg_samp_clk_timing(
-      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
 
   std::vector<RegisterEveryNSamplesEventResponse> responses;
   for (auto acquisition = 0UL; acquisition < ACQUISITION_COUNT; ++acquisition) {
@@ -1453,16 +1455,16 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_RunMultipl
 
 TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFiniteAcquisition_DoneEventResponseAndAlreadyRegisteredErrorReceived)
 {
+  const auto FINITE_SAMPLE_COUNT = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   ::grpc::ClientContext reader_context1, reader_context2;
   auto reader1 = register_done_event(reader_context1);
   reader1->WaitForInitialMetadata();
   auto reader2 = register_done_event(reader_context2);
   reader2->WaitForInitialMetadata();
 
-  const auto FINITE_SAMPLE_COUNT = 10UL;
-  cfg_samp_clk_timing(
-      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   start_task();
   read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT);
   RegisterDoneEventResponse response1, response2;
@@ -1478,6 +1480,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Rea
 {
   const auto N_SAMPLES = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(); // Every N Samples requires a buffered task (validated in start_task)
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
 
@@ -1491,6 +1494,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Fin
 {
   const auto N_SAMPLES = 10UL;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(); // Every N Samples requires a buffered task (validated in start_task)
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
 
@@ -1512,6 +1516,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Can
 
 TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegistered_OnEventReadAnalogF64_EventAndReadResponsesAreReceived)
 {
+  const auto FINITE_SAMPLE_COUNT = 100UL;
   const auto N_SAMPLES = 10UL;
   const auto N_READS = 10UL;
   const auto EVENT_START_CALL_TAG = (void*)1;
@@ -1519,6 +1524,8 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegistered_OnEventReadAnalo
   const auto EVENT_READ_TAG = (void*)3;
   const auto READ_ANALOG_F64_TAG = (void*)4;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
   ::grpc::ClientContext event_context;
   ::grpc::CompletionQueue completion_queue;
   auto shut_down_on_exit = make_scope_exit([&]{ shut_down_completion_queue(completion_queue); });
@@ -1526,8 +1533,6 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegistered_OnEventReadAnalo
   event_reader->ReadInitialMetadata(EVENT_READ_INITIAL_METADATA_TAG);
   ASSERT_EQ(Completion(EVENT_START_CALL_TAG, true), get_next_completion(completion_queue));
   ASSERT_EQ(Completion(EVENT_READ_INITIAL_METADATA_TAG, true), get_next_completion(completion_queue));
-  cfg_samp_clk_timing(
-      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
 
   start_task();
   RegisterEveryNSamplesEventResponse event_response;
@@ -1591,6 +1596,7 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegisteredWithWrongEventTyp
   const auto READ_TAG = (void*)3;
   const auto FINISH_TAG = (void*)4;
   create_ai_voltage_chan(0.0, 1.0);
+  cfg_samp_clk_timing(); // Every N Samples requires a buffered task (validated in start_task)
   ::grpc::ClientContext reader_context;
   ::grpc::CompletionQueue completion_queue;
   auto shut_down_on_exit = make_scope_exit([&]{ shut_down_completion_queue(completion_queue); });
