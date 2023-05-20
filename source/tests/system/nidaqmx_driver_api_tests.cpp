@@ -520,6 +520,20 @@ class NiDAQmxDriverApiTests : public Test {
     }
   }
 
+  template <typename TResponse>
+  void async_wait_for_initial_metadata(
+    ::grpc::ClientContext& context,
+    ::grpc::ClientAsyncReader<TResponse>& reader,
+    ::grpc::CompletionQueue& completion_queue,
+    void* start_call_tag,
+    void* read_initial_metadata_tag)
+  {
+    // Assume start_call_tag was initiated by async_register_x_event().
+    reader.ReadInitialMetadata(read_initial_metadata_tag);
+    ASSERT_EQ(Completion(start_call_tag, true), get_next_completion(completion_queue));
+    ASSERT_EQ(Completion(read_initial_metadata_tag, true), get_next_completion(completion_queue));
+  }
+
   CfgSampClkTimingRequest create_cfg_samp_clk_timing_request(double rate, Edge1 active_edge, AcquisitionType sample_mode, uInt64 samples_per_chan)
   {
     CfgSampClkTimingRequest request;
@@ -1530,9 +1544,7 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegistered_OnEventReadAnalo
   ::grpc::CompletionQueue completion_queue;
   auto shut_down_on_exit = make_scope_exit([&]{ shut_down_completion_queue(completion_queue); });
   auto event_reader = async_register_every_n_samples_event(event_context, completion_queue, EVENT_START_CALL_TAG, N_SAMPLES);
-  event_reader->ReadInitialMetadata(EVENT_READ_INITIAL_METADATA_TAG);
-  ASSERT_EQ(Completion(EVENT_START_CALL_TAG, true), get_next_completion(completion_queue));
-  ASSERT_EQ(Completion(EVENT_READ_INITIAL_METADATA_TAG, true), get_next_completion(completion_queue));
+  async_wait_for_initial_metadata(event_context, *event_reader, completion_queue, EVENT_START_CALL_TAG, EVENT_READ_INITIAL_METADATA_TAG);
 
   start_task();
   RegisterEveryNSamplesEventResponse event_response;
@@ -1603,9 +1615,7 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegisteredWithWrongEventTyp
   auto reader = async_register_every_n_samples_event(
     reader_context, completion_queue, START_CALL_TAG, N_SAMPLES,
     EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
-  reader->ReadInitialMetadata(READ_INITIAL_METADATA_TAG);
-  ASSERT_EQ(Completion(START_CALL_TAG, true), get_next_completion(completion_queue));
-  ASSERT_EQ(Completion(READ_INITIAL_METADATA_TAG, true), get_next_completion(completion_queue));
+  async_wait_for_initial_metadata(reader_context, *reader, completion_queue, START_CALL_TAG, READ_INITIAL_METADATA_TAG);
 
   RegisterEveryNSamplesEventResponse response;
   reader->Read(&response, READ_TAG);
