@@ -1474,15 +1474,9 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFin
   read_stream(reader_context1, *reader1, response1);
 
   EXPECT_EQ(DAQMX_SUCCESS, response1.status());
-  EXPECT_THROW({
-    try {
-      read_stream(reader_context2, *reader2, response2);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, DONE_EVENT_ALREADY_REGISTERED_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    read_stream(reader_context2, *reader2, response2);
+  }, DONE_EVENT_ALREADY_REGISTERED_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_ReadStream_NotSupportedByDeviceErrorReceived)
@@ -1493,15 +1487,9 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Rea
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
 
   RegisterEveryNSamplesEventResponse response;
-  EXPECT_THROW({
-    try {
-      read_stream(reader_context, *reader, response);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    read_stream(reader_context, *reader, response);
+  }, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Finish_NotSupportedByDeviceErrorReceived)
@@ -1511,16 +1499,10 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Fin
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
 
-  EXPECT_THROW({
-    try {
-      auto status = reader->Finish();
-      client::raise_if_error(status, reader_context);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto status = reader->Finish();
+    client::raise_if_error(status, reader_context);
+  }, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Cancel_NoErrors)
@@ -1637,15 +1619,9 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegisteredWithWrongEventTyp
   bool finish_completed = try_get_next_completion_without_blocking(completion_queue, finish_completion);
   EXPECT_TRUE(finish_completed);
   ASSERT_EQ(Completion(FINISH_TAG, true), finish_completion);
-  EXPECT_THROW({
-    try {
-      client::raise_if_error(status, reader_context);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    client::raise_if_error(status, reader_context);
+  }, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ConfigureInputBuffer_Succeeds)
