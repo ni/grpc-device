@@ -501,6 +501,7 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
     }
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", ex, session);
+      throw;
     }
   }, nidevice_grpc::experimental::client::grpc_driver_error);
 }

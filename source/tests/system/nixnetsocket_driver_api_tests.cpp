@@ -294,6 +294,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsE
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       EXPECT_DRIVER_ERROR_WITH_SUBSTR(ex, GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_MESSAGE);
       EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+      throw;
     }
   }, nidevice_grpc::experimental::client::grpc_driver_error);
 }
@@ -313,6 +314,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsEx
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       EXPECT_DRIVER_ERROR_WITH_SUBSTR(ex, GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_MESSAGE);
       EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+      throw;
     }
   }, nidevice_grpc::experimental::client::grpc_driver_error);
 }
@@ -354,6 +356,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedE
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       EXPECT_DRIVER_ERROR_WITH_SUBSTR(ex, GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_MESSAGE);
       EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+      throw;
     }
   }, nidevice_grpc::experimental::client::grpc_driver_error);
 }

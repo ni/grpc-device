@@ -111,6 +111,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReinitSuccessfully_Error
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
       EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, ex.what());
+      throw;
     }
   }, nidevice_grpc::experimental::client::grpc_driver_error);
 
