@@ -44,4 +44,20 @@ inline bool is_completion_ok(const Completion& completion)
   return std::get<1>(completion);
 }
 
+// Shut down the completion queue and wait for it to drain. Use this to ensure that the test
+// function does not return while pending async operations have references to stack variables.
+// If you do not shut down the completion queue, pending async operations may have dangling
+// references to stack variables and canceling them may corrupt the stack.
+inline void shut_down_completion_queue(::grpc::CompletionQueue& completion_queue)
+{
+  completion_queue.Shutdown();
+
+  // Wait until Next() returns false, which indicates that the completion queue has been shut
+  // down and fully drained.
+  Completion completion;
+  while (completion_queue.Next(&std::get<0>(completion), &std::get<1>(completion))) {
+    // Discard the completion.
+  }
+}
+
 #endif

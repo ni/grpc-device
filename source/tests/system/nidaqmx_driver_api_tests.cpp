@@ -12,6 +12,7 @@
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
 #include "tests/utilities/async_helpers.h"
+#include "tests/utilities/scope_exit.h"
 #include "tests/utilities/test_helpers.h"
 
 using namespace ::testing;
@@ -1550,6 +1551,7 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegistered_OnEventReadAnalo
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext event_context;
   ::grpc::CompletionQueue completion_queue;
+  auto shut_down_on_exit = make_scope_exit([&]{ shut_down_completion_queue(completion_queue); });
   auto event_reader = async_register_every_n_samples_event(event_context, completion_queue, EVENT_START_CALL_TAG, N_SAMPLES);
   event_reader->ReadInitialMetadata(EVENT_READ_INITIAL_METADATA_TAG);
   ASSERT_EQ(Completion(EVENT_START_CALL_TAG, true), get_next_completion(completion_queue));
@@ -1621,6 +1623,7 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegisteredWithWrongEventTyp
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
   ::grpc::CompletionQueue completion_queue;
+  auto shut_down_on_exit = make_scope_exit([&]{ shut_down_completion_queue(completion_queue); });
   auto reader = async_register_every_n_samples_event(
     reader_context, completion_queue, START_CALL_TAG, N_SAMPLES,
     EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
