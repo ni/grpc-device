@@ -72,7 +72,7 @@ TEST(SessionRepositoryTests, NoSessions_AddSessionWithAttachToExistingBehavior_E
     catch (const nidevice_grpc::NonDriverException& e) {
       auto exception_status = e.GetStatus();
       EXPECT_EQ(::grpc::StatusCode::FAILED_PRECONDITION, exception_status.error_code());
-      throw e;
+      throw;
     }
   }, nidevice_grpc::NonDriverException);
 }
@@ -157,25 +157,23 @@ TEST(SessionRepositoryTests, NamedSessionAdded_AddSessionWithSameNameWithInitial
       NULL);
 
   bool init_called = false;
-  EXPECT_THROW(
-      {
-        try {
-          session_repository.add_session(
-              session_name,
-              [init_called]() mutable {
-                init_called = true;
-                return 0;
-              },
-              NULL,
-              nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
-        }
-        catch (const nidevice_grpc::NonDriverException& e) {
-          auto exception_status = e.GetStatus();
-          EXPECT_EQ(::grpc::StatusCode::ALREADY_EXISTS, exception_status.error_code());
-          throw e;
-        }
-      },
-      nidevice_grpc::NonDriverException);
+  EXPECT_THROW({
+    try {
+      session_repository.add_session(
+          session_name,
+          [init_called]() mutable {
+            init_called = true;
+            return 0;
+          },
+          NULL,
+          nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
+    }
+    catch (const nidevice_grpc::NonDriverException& e) {
+      auto exception_status = e.GetStatus();
+      EXPECT_EQ(::grpc::StatusCode::ALREADY_EXISTS, exception_status.error_code());
+      throw;
+    }
+  }, nidevice_grpc::NonDriverException);
 }
 
 TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
