@@ -489,7 +489,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     RegisterSignalEventRequest request;
     set_request_session_name(request);
-    request.set_signal_id(Signal2::SIGNAL2_SAMPLE_CLOCK);
+    request.set_signal_id(signal_id);
     return stub()->RegisterSignalEvent(&context, request);
   }
 
