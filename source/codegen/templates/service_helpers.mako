@@ -293,13 +293,13 @@ ${initialize_bitfield_as_enum_array_param(function_name, parameter)}
 ${initialize_enum_array_input_param(function_name, parameter)}
 % elif common_helpers.is_enum(parameter):
 ${initialize_enum_input_param(function_name, parameter)}
+% elif 'hardcoded_value' in parameter:
+${initialize_hardcoded_parameter(parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter, parameters)}
 % elif common_helpers.is_two_dimension_array_param(parameter):
 ${initialize_two_dimension_input_param(function_name, parameter, parameters)}
-% elif 'hardcoded_value' in parameter:
-${initialize_hardcoded_parameter(parameter)}
 % elif service_helpers.is_size_param_passed_by_ptr(parameter):
 ${initialize_pointer_input_parameter(parameter)}
 % else:

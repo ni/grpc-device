@@ -22973,6 +22973,21 @@ functions = {
                 'type': 'uInt32'
             },
             {
+                'callback_params': [
+                    {
+                        'ctypes_data_type': 'lib_importer.task_handle',
+                        'direction': 'out',
+                        'include_in_proto': False,
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'ctypes_data_type': 'ctypes.c_int',
+                        'direction': 'out',
+                        'name': 'status',
+                        'type': 'int32'
+                    }
+                ],
                 'ctypes_data_type': None,
                 'direction': 'in',
                 'hardcoded_value': 'nullptr',
@@ -22985,6 +23000,7 @@ functions = {
                 'type': 'DAQmxDoneEventCallbackPtr'
             },
             {
+                'callback_token': True,
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'in',
                 'hardcoded_value': 'nullptr',
@@ -23057,6 +23073,28 @@ functions = {
                 'type': 'uInt32'
             },
             {
+                'callback_params': [
+                    {
+                        'ctypes_data_type': 'lib_importer.task_handle',
+                        'direction': 'out',
+                        'include_in_proto': False,
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'ctypes_data_type': 'ctypes.c_int',
+                        'direction': 'out',
+                        'enum': 'EveryNSamplesEventType',
+                        'name': 'everyNSamplesEventType',
+                        'type': 'int32'
+                    },
+                    {
+                        'ctypes_data_type': 'ctypes.c_uint',
+                        'direction': 'out',
+                        'name': 'nSamples',
+                        'type': 'uInt32'
+                    }
+                ],
                 'ctypes_data_type': None,
                 'direction': 'in',
                 'hardcoded_value': 'nullptr',
@@ -23069,6 +23107,7 @@ functions = {
                 'type': 'DAQmxEveryNSamplesEventCallbackPtr'
             },
             {
+                'callback_token': True,
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'in',
                 'hardcoded_value': 'nullptr',
@@ -23129,6 +23168,21 @@ functions = {
                 'type': 'uInt32'
             },
             {
+                'callback_params': [
+                    {
+                        'ctypes_data_type': 'lib_importer.task_handle',
+                        'direction': 'out',
+                        'include_in_proto': False,
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'ctypes_data_type': 'ctypes.c_int',
+                        'direction': 'out',
+                        'name': 'signalID',
+                        'type': 'int32'
+                    }
+                ],
                 'ctypes_data_type': None,
                 'direction': 'in',
                 'hardcoded_value': 'nullptr',
@@ -23141,6 +23195,7 @@ functions = {
                 'type': 'DAQmxSignalEventCallbackPtr'
             },
             {
+                'callback_token': True,
                 'ctypes_data_type': 'ctypes.c_void_p',
                 'direction': 'in',
                 'hardcoded_value': 'nullptr',

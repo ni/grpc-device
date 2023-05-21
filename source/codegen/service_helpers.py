@@ -97,15 +97,16 @@ def _create_standard_arg(parameter):
     parameter_name = common_helpers.get_cpp_local_name(parameter)
     is_array = common_helpers.is_array(parameter["type"])
     is_output = common_helpers.is_output_parameter(parameter)
+    is_hardcoded = "hardcoded_value" in parameter
     if is_output and common_helpers.is_string_arg(parameter):
         type_without_brackets = common_helpers.get_underlying_type_name(parameter["type"])
         return f"({type_without_brackets}*){parameter_name}.data(), "
     elif _is_array_that_requires_conversion(parameter):
         # Converted arrays are allocated into a std::vector. Access the C array via data().
         return f"{parameter_name}.data(), "
-    elif "callback_params" in parameter:
+    elif "callback_params" in parameter and not is_hardcoded:
         return f"CallbackRouter::handle_callback, "
-    elif "callback_token" in parameter:
+    elif "callback_token" in parameter and not is_hardcoded:
         return f"handler->token(), "
     elif is_size_param_passed_by_ptr(parameter):
         return f"&{parameter_name}_copy, "
