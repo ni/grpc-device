@@ -196,6 +196,8 @@ foreach(api ${nidrivers})
     ${gen_command}
     COMMENT "Generating proto file and service for ${api}"
     DEPENDS ${proto_dependencies})
+  add_custom_target(generate_proto_and_service_target_for_${api}
+    DEPENDS ${output_files})
 endforeach()
 
 add_custom_command(
