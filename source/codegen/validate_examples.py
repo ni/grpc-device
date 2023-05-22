@@ -1,10 +1,11 @@
 """Script for validating the examples."""
 
+import re
 from argparse import ArgumentParser
 from contextlib import contextmanager
-from os import getcwd, chdir, system as _system_core
+from os import chdir, getcwd, system as _system_core
 from pathlib import Path
-from shutil import rmtree, copytree
+from shutil import copytree, rmtree
 from sys import exit
 from typing import List, NamedTuple, Optional
 
@@ -47,7 +48,7 @@ def _stage_client_files(artifact_location: Optional[str], staging_dir: Path) -> 
 
 def _validate_examples(
     driver_glob_expression: str,
-    driver_exclusions: List[str],
+    exclude: str,
     ip_address: str,
     device_name: str,
     artifact_location: Optional[str],
@@ -76,19 +77,29 @@ def _validate_examples(
             rf"poetry run python -m grpc_tools.protoc -I{proto_dir} --python_out=. --grpc_python_out=. --mypy_out=. --mypy_grpc_out=. {proto_files_str}"
         )
         for dir in examples_dir.glob(driver_glob_expression):
-            if dir.name in driver_exclusions:
+            if exclude and re.search(exclude, dir.as_posix()):
+                print(f"-- Skipping: {dir.name}")
                 continue
             print()
             print(f"-- Validating: {dir.name}")
 
+            # Use '=' to allow a leading dash, e.g. "-aio\.py$".
+            extend_exclude_option = f' --extend-exclude="{exclude}"' if exclude else ""
+            exclude_option = f' --exclude="{exclude}"' if exclude else ""
+
             print(f" -> Running black line-length 100")
-            _system(f"poetry run black --check --line-length 100 {dir}")
+            _system(f"poetry run black --check --line-length 100 {dir}{extend_exclude_option}")
 
             print(f" -> Running mypy")
-            _system(f"poetry run mypy {dir} --check-untyped-defs --ignore-missing-imports")
+            _system(
+                f"poetry run mypy {dir} --check-untyped-defs --ignore-missing-imports{exclude_option}"
+            )
 
             if ip_address:
                 for file in dir.glob("*.py"):
+                    if exclude and re.search(exclude, file.as_posix()):
+                        print(f" -> Skipping example: {file.name}")
+                        continue
                     print(f" -> Running example: {file.name}")
                     port = 31763
                     _system(rf"poetry run python {file} {ip_address} {port} {device_name}")
@@ -99,17 +110,17 @@ if __name__ == "__main__":
     parser.add_argument(
         "-p",
         "--pattern",
-        help="Glob expression for scrapigen driver names to validate (i.e., *rfmx*).",
+        help='Glob expression for scrapigen driver names to validate (e.g., "*rfmx*").',
         default="*",
     )
 
     parser.add_argument(
         "-e",
-        "--exclusions",
-        help='Space delimited list of driver names to exclude from validation (e.g., "nidaqmx nidcpower").',
+        "--exclude",
+        help="Regular expression matching files and directories to exclude from validation "
+        '(e.g. --exclude="-aio\.py$"). Use forward slash as a directory separator.',
         default="",
     )
-
     parser.add_argument(
         "-s",
         "--server",
@@ -132,8 +143,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    exclusions = args.exclusions.split(" ")
-    _validate_examples(args.pattern, exclusions, args.server, args.device, args.artifacts)
+    _validate_examples(args.pattern, args.exclude, args.server, args.device, args.artifacts)
 
     if any(_FAILED_COMMANDS):
         for code, command in _FAILED_COMMANDS:
