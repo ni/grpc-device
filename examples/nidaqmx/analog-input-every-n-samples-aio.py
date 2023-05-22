@@ -62,6 +62,11 @@ async def _main():
                     f"{warning_message.error_string}\nWarning status: {response.status}\n"
                 )
 
+        async def check_for_stream_error(stream: grpc.aio.UnaryStreamCall) -> None:
+            """Raise an exception if the stream was closed with an error."""
+            if stream.done() and await stream.code() != grpc.StatusCode.OK:
+                _ = await stream.read()
+
         try:
             create_task_response = await client.CreateTask(nidaqmx_types.CreateTaskRequest())
             task = create_task_response.task
@@ -98,20 +103,16 @@ async def _main():
             )
 
             # Wait for initial_metadata and check for stream errors to ensure that the callback is
-            # registered before starting the task.
+            # registered successfully before starting the task.
             await every_n_samples_stream.initial_metadata()
-            if every_n_samples_stream.done():
-                every_n_samples_response = await every_n_samples_stream.read()
-                check_for_warning(every_n_samples_response)
+            await check_for_stream_error(every_n_samples_stream)
 
             done_event_stream = client.RegisterDoneEvent(
                 nidaqmx_types.RegisterDoneEventRequest(task=task)
             )
 
             await done_event_stream.initial_metadata()
-            if done_event_stream.done():
-                done_response = await done_event_stream.read()
-                check_for_warning(done_response)
+            await check_for_stream_error(done_event_stream)
 
             start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
             check_for_warning(start_task_response)
