@@ -64,7 +64,7 @@ def _main():
                     f"{warning_message.error_string}\nWarning status: {response.status}\n"
                 )
 
-        def check_for_stream_error(stream: grpc.Future) -> None:
+        def check_for_stream_error(stream):
             """Raise an exception if the stream was closed with an error."""
             if stream.done() and stream.exception() is not None:
                 raise stream.exception()

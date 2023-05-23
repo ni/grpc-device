@@ -62,7 +62,7 @@ async def _main():
                     f"{warning_message.error_string}\nWarning status: {response.status}\n"
                 )
 
-        async def check_for_stream_error(stream: grpc.aio.UnaryStreamCall) -> None:
+        async def check_for_stream_error(stream):
             """Raise an exception if the stream was closed with an error."""
             if stream.done() and await stream.code() != grpc.StatusCode.OK:
                 _ = await stream.read()
