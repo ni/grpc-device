@@ -29,6 +29,6 @@ jobs:
       with:
         poetry-version: 1.2.2
 
-    - name: Validate examples (except DAQmx)
+    - name: Validate examples (except aio)
       run: |
-        python source/codegen/validate_examples.py -e "nidaqmx"
+        python source/codegen/validate_examples.py --exclude="-aio\.py$"

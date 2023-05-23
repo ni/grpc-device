@@ -1,4 +1,4 @@
-r"""Acquire analog data using futures and RegisterEveryNSamplesEvent.
+r"""Acquire analog data using the grpc asyncio API and RegisterEveryNSamplesEvent.
 
 The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
   C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
@@ -22,14 +22,14 @@ Running from command line:
 
 Server machine's IP address, port number, and physical channel name can be passed as separate
 command line arguments.
-  > python analog-input-every-n-samples.py <server_address> <port_number> <physical_channel_name>
+  > python analog-input-every-n-samples-aio.py <server_address> <port_number> <physical_channel_name>
 To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "Dev1/ai0" as the physical channel name.
-"""
+"""  # noqa: W505 - doc line too long
 
+import asyncio
 import sys
-from concurrent.futures import ThreadPoolExecutor
 
 import grpc
 import nidaqmx_pb2 as nidaqmx_types
@@ -47,10 +47,8 @@ if len(sys.argv) >= 4:
     PHYSICAL_CHANNEL = sys.argv[3]
 
 
-def _main():
-    with grpc.insecure_channel(
-        f"{SERVER_ADDRESS}:{SERVER_PORT}"
-    ) as channel, ThreadPoolExecutor() as executor:
+async def _main():
+    async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
         client = grpc_nidaqmx.NiDAQmxStub(channel)
         task = None
 
@@ -65,10 +63,10 @@ def _main():
                 )
 
         try:
-            create_task_response = client.CreateTask(nidaqmx_types.CreateTaskRequest())
+            create_task_response = await client.CreateTask(nidaqmx_types.CreateTaskRequest())
             task = create_task_response.task
 
-            client.CreateAIVoltageChan(
+            await client.CreateAIVoltageChan(
                 nidaqmx_types.CreateAIVoltageChanRequest(
                     task=task,
                     physical_channel=PHYSICAL_CHANNEL,
@@ -81,7 +79,7 @@ def _main():
 
             total_samples_per_channel = 1000
             samples_per_channel_per_read = 100
-            client.CfgSampClkTiming(
+            await client.CfgSampClkTiming(
                 nidaqmx_types.CfgSampClkTimingRequest(
                     task=task,
                     sample_mode=nidaqmx_types.AcquisitionType.ACQUISITION_TYPE_FINITE_SAMPS,
@@ -101,18 +99,18 @@ def _main():
 
             # Wait for initial_metadata to ensure that the callback is registered before starting
             # the task.
-            every_n_samples_stream.initial_metadata()
+            await every_n_samples_stream.initial_metadata()
 
             done_event_stream = client.RegisterDoneEvent(
                 nidaqmx_types.RegisterDoneEventRequest(task=task)
             )
 
-            done_event_stream.initial_metadata()
+            await done_event_stream.initial_metadata()
 
-            start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
             check_for_warning(start_task_response)
 
-            get_num_chans_response = client.GetTaskAttributeUInt32(
+            get_num_chans_response = await client.GetTaskAttributeUInt32(
                 nidaqmx_types.GetTaskAttributeUInt32Request(
                     task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
                 )
@@ -120,12 +118,12 @@ def _main():
 
             number_of_channels = get_num_chans_response.value
 
-            def read_data():
+            async def read_data():
                 samps_per_chan_read = 0
 
                 try:
-                    for every_n_samples_response in every_n_samples_stream:
-                        read_response = client.ReadAnalogF64(
+                    async for every_n_samples_response in every_n_samples_stream:
+                        read_response = await client.ReadAnalogF64(
                             nidaqmx_types.ReadAnalogF64Request(
                                 task=task,
                                 num_samps_per_chan=samples_per_channel_per_read,
@@ -146,41 +144,30 @@ def _main():
                         samps_per_chan_read += read_response.samps_per_chan_read
                         if samps_per_chan_read >= total_samples_per_channel:
                             every_n_samples_stream.cancel()
-                except grpc.RpcError as rpc_error:
-                    if rpc_error.code() == grpc.StatusCode.CANCELLED:
-                        return
-                    raise
+                except asyncio.CancelledError:
+                    pass
 
-            def wait_for_done():
+            async def wait_for_done():
                 try:
-                    for done_response in done_event_stream:
+                    async for done_response in done_event_stream:
                         done_event_stream.cancel()
                         # Cancel the acquisition if there's an error, otherwise let it continue
                         # until all samples are read.
                         if done_response.status:
                             every_n_samples_stream.cancel()
-                except grpc.RpcError as rpc_error:
-                    if rpc_error.code() == grpc.StatusCode.CANCELLED:
-                        return
-                    raise
+                except asyncio.CancelledError:
+                    pass
 
-            read_data_future = executor.submit(read_data)
-            wait_for_done_future = executor.submit(wait_for_done)
-
-            read_data_future.result()
-            wait_for_done_future.result()
-
-            stop_task_response = client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
+            await asyncio.gather(read_data(), wait_for_done())
+            stop_task_response = await client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
             check_for_warning(stop_task_response)
 
         except grpc.RpcError as rpc_error:
             error_message = str(rpc_error.details() or "")
-            for entry in rpc_error.trailing_metadata() or []:
-                if entry.key == "ni-error":
-                    value = (
-                        entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
-                    )
-                    error_message += f"\nError status: {value}"
+            for key, value in rpc_error.trailing_metadata() or []:
+                if key == "ni-error":
+                    details = value if isinstance(value, str) else value.decode("utf-8")
+                    error_message += f"\nError status: {details}"
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
             elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -190,8 +177,10 @@ def _main():
             print(f"{error_message}")
         finally:
             if client and task:
-                client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+                await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
 
 
-if __name__ == "__main__":
-    _main()
+## Run main
+futures = [_main()]
+loop = asyncio.get_event_loop()
+loop.run_until_complete(asyncio.wait(futures))
