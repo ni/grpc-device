@@ -928,7 +928,7 @@ def _transform_attributes(attribute_groups):
     for attribute_group in attribute_groups:
         for id,data in attribute_group.attributes.items():
             if "bitfield_enum" in data:
-                data["type"] = BITFIELD_ENUM_RETURN_TYPES.get(data["type"])
+                data["type"] = BITFIELD_ENUM_RETURN_TYPES.get(data["type"], data["type"])
     return attribute_groups
 
 BITFIELD_ENUM_RETURN_TYPES={
