@@ -915,12 +915,25 @@ def get_attribute_groups(data):
     # If the attributes are already in string categories: those are the groups. Return as-is.
     first_key = next(iter(attributes), None)
     if isinstance(first_key, str):
-        return [AttributeGroup(name, attributes, config) for name, attributes in attributes.items()]
+        attribute_groups = [AttributeGroup(name, attributes, config) for name, attributes in attributes.items()]
+        return _transform_attributes(attribute_groups)
 
     # If there's just one level of attributes: use the service_class_prefix as the group.
     service_class_prefix = config["service_class_prefix"]
     return [AttributeGroup(service_class_prefix, attributes, config)]
 
+def _transform_attributes(attribute_groups):
+    # This is handles the specific attributes that uses bitfield enum.
+    # Currently this affects only NI-DAQmx generation.
+    for attribute_group in attribute_groups:
+        for id,data in attribute_group.attributes.items():
+            if "bitfield_enum" in data:
+                data["type"] = BITFIELD_ENUM_RETURN_TYPES.get(data["type"])
+    return attribute_groups
+
+BITFIELD_ENUM_RETURN_TYPES={
+    "int32[]": "int32",
+}
 
 def strip_prefix(s: str, prefix: str) -> str:
     """Strip the given prefix, if present, and return the resulting string."""
