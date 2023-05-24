@@ -25,7 +25,7 @@ See [GitHub's official documentation](https://help.github.com/articles/using-pul
 
 ### Prerequisites
 To prepare for cmake + Microsoft Visual C++ compiler build
-- Install Visual Studio 2015, 2017, or 2019 (Visual C++ compiler will be used).
+- Install Visual Studio 2017, or 2019 (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
 - Install [CMake](https://cmake.org/download/) 3.12.0 or newer and add it to the PATH.
 - Install [Python](https://www.python.org/downloads/) and add it to the PATH.
