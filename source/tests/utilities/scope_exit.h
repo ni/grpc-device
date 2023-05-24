@@ -39,9 +39,9 @@ private:
 };
 
 template <typename Fn>
-auto make_scope_exit(Fn&& fn) noexcept -> scope_exit<decltype(fn)>
+scope_exit<Fn> make_scope_exit(Fn&& fn) noexcept
 {
-  return scope_exit<decltype(fn)>(std::move(fn));
+  return scope_exit<Fn>(std::move(fn));
 }
 
 #endif
