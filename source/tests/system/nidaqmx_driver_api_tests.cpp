@@ -11,6 +11,7 @@
 #include "device_server.h"
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
+#include "tests/utilities/scope_exit.h"
 #include "tests/utilities/test_helpers.h"
 
 using namespace ::testing;
@@ -126,9 +127,14 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
+  ClearTaskResponse clear_task(const nidevice_grpc::Session& task)
+  {
+    return client::clear_task(stub(), task);
+  }
+
   ClearTaskResponse clear_task()
   {
-    return client::clear_task(stub(), task());
+    return clear_task(task());
   }
 
   CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
@@ -1549,7 +1555,7 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   EXPECT_SUCCESS(status, save_response);
   clear_task();
   auto load_response = LoadTaskResponse{};
-  status = load_task(load_response);
+  status = load_task(load_response); // cleaned up by test fixture
   EXPECT_SUCCESS(status, load_response);
 
   auto read_response = ReadAnalogF64Response{};
@@ -1635,9 +1641,11 @@ TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
   create_do_chan();
   auto create_watchdog_response = CreateWatchdogTimerTaskExResponse{};
   auto create_status = create_watchdog_timer_task_ex(.001, create_watchdog_response);
+  auto watchdog_task = create_watchdog_response.task();
+  auto clear_watchdog_task_on_exit = make_scope_exit([&]{ clear_task(watchdog_task); });
   auto cfg_watchdog_response = CfgWatchdogDOExpirStatesResponse{};
   auto cfg_status = cfg_watchdog_do_expir_states(
-      create_watchdog_response.task(),
+      watchdog_task,
       cfg_watchdog_response);
   EXPECT_SUCCESS(create_status, create_watchdog_response);
   EXPECT_SUCCESS(cfg_status, cfg_watchdog_response);
@@ -1645,7 +1653,7 @@ TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
   start_task();
   auto start_watchdog_response = StartTaskResponse{};
   auto start_watchdog_status = start_task(
-      create_watchdog_response.task(),
+      watchdog_task,
       start_watchdog_response);
 
   EXPECT_SUCCESS(start_watchdog_status, start_watchdog_response);
