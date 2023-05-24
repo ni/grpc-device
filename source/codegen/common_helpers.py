@@ -881,14 +881,14 @@ class AttributeGroup:  # noqa: D101
         self.attributes = attributes
         self._config = config
 
-    def get_attributes_split_by_sub_group(self, additional_metadata = None):
+    def get_attributes_split_by_sub_group(self, additional_metadata=None):
         """Split attributes by type, with an added "Reset" sub-group for resettable attributes."""
         if not get_split_attributes_by_type(self._config):
             return {"": self.attributes}
 
         categorized_attributes = defaultdict(dict)
         for id, data in self.attributes.items():
-            data_type= data["type"]
+            data_type = data["type"]
             if "bitfield_enum" in data:
                 assert data_type == "int32[]"
                 data_type = "int32"
