@@ -921,6 +921,9 @@ def get_attribute_groups(data):
     service_class_prefix = config["service_class_prefix"]
     return [AttributeGroup(service_class_prefix, attributes, config)]
 
+def is_read_method(function_name):
+    """Returns true if the functions is a read method."""
+    return "Read_" in pascal_to_snake(function_name)
 
 def strip_prefix(s: str, prefix: str) -> str:
     """Strip the given prefix, if present, and return the resulting string."""
