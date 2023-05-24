@@ -5,6 +5,7 @@ import proto_helpers
 config = data["config"]
 enums = data["enums"]
 functions = data["functions"]
+additional_attributes = data.get("additional_attributes", None)
 
 service_class_prefix = config["service_class_prefix"]
 function_enums = common_helpers.get_function_enums(functions, enums)
@@ -45,7 +46,7 @@ service ${service_class_prefix} {
 }
 
 % for group in common_helpers.get_attribute_groups(data):
-%   for define_attribute_enum, attributes in group.get_attributes_split_by_sub_group().items():
+%   for define_attribute_enum, attributes in group.get_attributes_split_by_sub_group(additional_attributes).items():
 ${mako_helper.define_attribute_enum(group.name, define_attribute_enum, attributes, config)}\
 %   endfor
 % endfor

@@ -881,17 +881,24 @@ class AttributeGroup:  # noqa: D101
         self.attributes = attributes
         self._config = config
 
-    def get_attributes_split_by_sub_group(self):
+    def get_attributes_split_by_sub_group(self, additional_metadata = None):
         """Split attributes by type, with an added "Reset" sub-group for resettable attributes."""
         if not get_split_attributes_by_type(self._config):
             return {"": self.attributes}
 
         categorized_attributes = defaultdict(dict)
         for id, data in self.attributes.items():
-            data_type = get_grpc_type_name_for_identifier(data["type"], self._config)
+            data_type= data["type"]
+            if "bitfield_enum" in data:
+                assert data_type == "int32[]"
+                data_type = "int32"
+            data_type = get_grpc_type_name_for_identifier(data_type, self._config)
             categorized_attributes[data_type][id] = data
             if data.get("resettable", False):
                 categorized_attributes["Reset"][id] = data
+        if self.name in additional_metadata:
+            for id, data in additional_metadata[self.name].items():
+                categorized_attributes[data["type"]][id] = data
         return categorized_attributes
 
 
@@ -915,25 +922,12 @@ def get_attribute_groups(data):
     # If the attributes are already in string categories: those are the groups. Return as-is.
     first_key = next(iter(attributes), None)
     if isinstance(first_key, str):
-        attribute_groups = [AttributeGroup(name, attributes, config) for name, attributes in attributes.items()]
-        return _transform_attributes(attribute_groups)
+        return [AttributeGroup(name, attributes, config) for name, attributes in attributes.items()]
 
     # If there's just one level of attributes: use the service_class_prefix as the group.
     service_class_prefix = config["service_class_prefix"]
     return [AttributeGroup(service_class_prefix, attributes, config)]
 
-def _transform_attributes(attribute_groups):
-    # This is handles the specific attributes that uses bitfield enum.
-    # Currently this affects only NI-DAQmx generation.
-    for attribute_group in attribute_groups:
-        for id,data in attribute_group.attributes.items():
-            if "bitfield_enum" in data:
-                data["type"] = BITFIELD_ENUM_RETURN_TYPES.get(data["type"], data["type"])
-    return attribute_groups
-
-BITFIELD_ENUM_RETURN_TYPES={
-    "int32[]": "int32",
-}
 
 def strip_prefix(s: str, prefix: str) -> str:
     """Strip the given prefix, if present, and return the resulting string."""
