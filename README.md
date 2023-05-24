@@ -35,7 +35,7 @@ Indicates the most recent driver version used to test builds of the current sour
 ## Downloading a Release
 
 ### Download the Server
-1. (Windows Only) Download and install the latest [Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0).
+1. (Windows Only) Download and install the latest [Microsoft Visual C++ Redistributable for Visual Studio 2017 and 2019](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0).
 2. Navigate to the [Releases](https://github.com/ni/grpc-device/releases) page.
 3. Download the latest Server Release `.tar.gz` or `.zip` for the desired platform.
 4. Extract the contents of the `.tar.gz` or `.zip` to a directory with read and write permissions.
