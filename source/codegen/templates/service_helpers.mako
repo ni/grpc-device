@@ -778,7 +778,7 @@ ${set_response_values(normal_outputs, init_method)}\
       %for error_parameter in error_parameters:
       context->AddTrailingMetadata("${error_parameter["return_on_error_key"]}", std::to_string(${common_helpers.pascal_to_snake(error_parameter["name"])}));
       %endfor
-      %if error_parameter is not None and len(error_parameter)>0 and is_read_function:
+      %if len(error_parameters)>0 and is_read_function:
       if (!status_ok(status) && status != DAQmxErrorSamplesNotYetAvailable) {
       %else:
       if (!status_ok(status)) {
