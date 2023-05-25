@@ -50,9 +50,10 @@ TEST_F(NiDAQmxSessionTests, CreateTask_ClearTask_Succeeds)
 {
   CreateTaskResponse create_response;
   auto create_status = create_task("", create_response);
+  auto task_name = create_response.task().name();
 
   ClearTaskResponse clear_response;
-  auto clear_status = clear_task("", clear_response);
+  auto clear_status = clear_task(task_name, clear_response);
 
   EXPECT_TRUE(create_status.ok());
   EXPECT_TRUE(clear_status.ok());
