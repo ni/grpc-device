@@ -44,7 +44,7 @@ ${call_library_method(
       std::string grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->${add_session_snippet};
-${populate_response(function_name=function_name, function_data=function_data, parameters=parameters, init_method=True)}\
+${populate_response(function_data=function_data, parameters=parameters, init_method=True)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -93,7 +93,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args_for_ivi_dance(parameters),
   indent_level=1)
 }\
-${populate_error_check(function_name, function_data, parameters, indent_level=1)}\
+${populate_error_check(function_data, parameters, indent_level=1)}\
         ${size_param['type']} ${common_helpers.get_cpp_local_name(size_param)} = status;
 
 <%block filter="common_helpers.indent(1)">\
@@ -112,7 +112,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-${populate_response(function_name=function_name, function_data=function_data, parameters=parameters, indent_level=1)}\
+${populate_response(function_data=function_data, parameters=parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -135,7 +135,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args_for_ivi_dance_with_a_twist(parameters),
   indent_level=1)
 }\
-${populate_error_check(function_name, function_data, parameters, indent_level=1)}\
+${populate_error_check(function_data, parameters, indent_level=1)}\
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(array_output_parameters)}\
 </%block>\
@@ -155,7 +155,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-${populate_response(function_name=function_name, function_data=function_data, parameters=parameters, indent_level=1)}\
+${populate_response(function_data=function_data, parameters=parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -244,7 +244,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args(parameters),
   library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
 }\
-${populate_response(function_name=function_name, function_data=function_data, parameters=parameters)}\
+${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -268,7 +268,7 @@ ${call_library_method(
   function_data=function_data,
   arg_string=service_helpers.create_args(parameters))
 }\
-${populate_response(function_name=function_name, function_data=function_data, parameters=parameters)}\
+${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -735,14 +735,14 @@ ${initialize_hardcoded_parameter(parameter)}
 
 
 ## Handles populating the response message after calling the driver API.
-<%def name="populate_response(function_name, function_data, parameters, indent_level=0, init_method=False)">\
+<%def name="populate_response(function_data, parameters, indent_level=0, init_method=False)">\
 <%
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   get_last_error_outputs = service_helpers.get_last_error_output_params(output_parameters)
   normal_outputs = [p for p in output_parameters if not p in get_last_error_outputs]
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
-${populate_error_check(function_name, function_data, parameters)}\
+${populate_error_check(function_data, parameters)}\
       response->set_status(status);
 %if output_parameters:
 ${set_response_values(normal_outputs, init_method)}\
@@ -751,13 +751,12 @@ ${set_response_values(normal_outputs, init_method)}\
 </%def>
 
 ## Handles populating the response message after calling the driver API.
-<%def name="populate_error_check(function_name, function_data, parameters, indent_level=0)">\
+<%def name="populate_error_check(function_data, parameters, indent_level=0)">\
 <%
   config = data['config']
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
   resource_handle_types = service_helpers.get_resource_handle_types(config)
   error_parameters = [p for p in parameters if common_helpers.is_output_parameter(p) and "return_on_error_key" in p]
-  is_read_function = common_helpers.is_read_method(function_name)
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
 <%
@@ -778,8 +777,8 @@ ${set_response_values(normal_outputs, init_method)}\
       %for error_parameter in error_parameters:
       context->AddTrailingMetadata("${error_parameter["return_on_error_key"]}", std::to_string(${common_helpers.pascal_to_snake(error_parameter["name"])}));
       %endfor
-      %if len(error_parameters)>0 and is_read_function:
-      if (!status_ok(status) && status != DAQmxErrorSamplesNotYetAvailable) {
+      %if "timeout_error" in function_data:
+      if (!status_ok(status) && status != ${function_data["timeout_error"]}) {
       %else:
       if (!status_ok(status)) {
       %endif
