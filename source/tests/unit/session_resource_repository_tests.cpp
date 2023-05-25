@@ -253,21 +253,19 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
   const int32_t kErrorCode = 9999;
   using MockInitDelegate = ::testing::MockFunction<std::tuple<int32_t, int32_t>(void)>;
   MockInitDelegate mock_init;
-  EXPECT_THROW(
-      {
-        try {
-          result = other_resource_repository.add_session(
-              kTestResource,
-              mock_init.AsStdFunction(),
-              [](int32_t handle) { FAIL() << "Unexpected Cleanup"; });
-        }
-        catch (const nidevice_grpc::SessionException& ex) {
-          const std::string expected_message("The session name \"" + kTestResource + "\" is being used by a different driver.");
-          EXPECT_STREQ(expected_message.c_str(), ex.what());
-          throw;
-        }
-      },
-      nidevice_grpc::SessionException);
+  EXPECT_THROW({
+    try {
+      result = other_resource_repository.add_session(
+          kTestResource,
+          mock_init.AsStdFunction(),
+          [](int32_t handle) { FAIL() << "Unexpected Cleanup"; });
+    }
+    catch (const nidevice_grpc::SessionException& ex) {
+      const std::string expected_message("The session name \"" + kTestResource + "\" is being used by a different driver.");
+      EXPECT_STREQ(expected_message.c_str(), ex.what());
+      throw;
+    }
+  }, nidevice_grpc::SessionException);
 }
 
 template <typename TResource>

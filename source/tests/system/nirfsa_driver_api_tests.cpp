@@ -84,8 +84,7 @@ class NiRFSADriverApiTests : public Test {
 
   void EXPECT_RFSA_ERROR(int32_t expected_error, const std::string& message_substring, const nidevice_grpc::experimental::client::grpc_driver_error& ex, const nidevice_grpc::Session& session)
   {
-    expect_driver_error(ex, expected_error);
-    EXPECT_THAT(ex.what(), HasSubstr(message_substring));
+    EXPECT_DRIVER_ERROR_WITH_SUBSTR(ex, expected_error, message_substring);
     clear_error(session);
   }
 
@@ -121,14 +120,9 @@ TEST_F(NiRFSADriverApiTests, Init_Close_Succeeds)
 
 TEST_F(NiRFSADriverApiTests, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     client::init_with_options(stub(), "", false, false, "");
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, -200220);
-    EXPECT_STREQ("Device identifier is invalid.", ex.what());
-  }
+  }, -200220, "Device identifier is invalid.");
 }
 
 MATCHER(IsNonDefaultComplexArray, "")
@@ -496,18 +490,20 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
   const auto LIST_NAME = "MyList";
   auto session = init_session(stub(), PXI_5663E);
 
-  try {
-    client::create_configuration_list(
-        stub(),
-        session,
-        LIST_NAME,
-        {NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttribute::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
-        true);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", ex, session);
-  }
+  EXPECT_THROW({
+    try {
+      client::create_configuration_list(
+          stub(),
+          session,
+          LIST_NAME,
+          {NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttribute::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
+          true);
+    }
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+      EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", ex, session);
+      throw;
+    }
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
 }
 
 TEST_F(NiRFSADriverApiTests, GetScalingCoefficients_ReturnsCoefficients)

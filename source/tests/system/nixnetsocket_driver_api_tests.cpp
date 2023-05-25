@@ -287,15 +287,16 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsE
   SocketResponse invalid_socket;
   invalid_socket.mutable_socket()->set_name("");
 
-  try {
-    client::close(stub(), invalid_socket.socket());
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, GENERIC_NXSOCKET_ERROR);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
-    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
-  }
+  EXPECT_THROW({
+    try {
+      client::close(stub(), invalid_socket.socket());
+    }
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+      EXPECT_DRIVER_ERROR_WITH_SUBSTR(ex, GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_MESSAGE);
+      EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+      throw;
+    }
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedErrors)
@@ -306,15 +307,16 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsEx
   sock_addr.mutable_ipv4()->mutable_addr()->set_addr(0x7F000001);
   sock_addr.mutable_ipv4()->set_port(31764);
 
-  try {
-    client::bind(stub(), invalid_socket.socket(), sock_addr);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, GENERIC_NXSOCKET_ERROR);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
-    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
-  }
+  EXPECT_THROW({
+    try {
+      client::bind(stub(), invalid_socket.socket(), sock_addr);
+    }
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+      EXPECT_DRIVER_ERROR_WITH_SUBSTR(ex, GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_MESSAGE);
+      EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+      throw;
+    }
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
@@ -347,15 +349,16 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedE
   duration.set_seconds(1);
   duration.set_nanos(500000);
 
-  try {
-    client::select(stub(), {invalid_socket.socket()}, {invalid_socket.socket()}, {}, duration);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, GENERIC_NXSOCKET_ERROR);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
-    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
-  }
+  EXPECT_THROW({
+    try {
+      client::select(stub(), {invalid_socket.socket()}, {invalid_socket.socket()}, {}, duration);
+    }
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+      EXPECT_DRIVER_ERROR_WITH_SUBSTR(ex, GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_MESSAGE);
+      EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+      throw;
+    }
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_ReturnsInvalidInterfaceNameError)
@@ -363,13 +366,9 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_Returns
   constexpr auto TEST_CONFIG = "{}";
   constexpr auto JSON_OBJECT_MISSING_VALUE = -13017;
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     client::ip_stack_create(stub(), "", "{}");
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, JSON_OBJECT_MISSING_VALUE);
-  }
+  }, JSON_OBJECT_MISSING_VALUE);
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreate_ReturnsInvalidInterfaceNameError)
@@ -377,13 +376,9 @@ TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreat
   const auto TEST_CONFIG = create_simple_config("ENET6");
   constexpr auto INVALID_INTERFACE_NAME = -1074384758;
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     client::ip_stack_create(stub(), "", TEST_CONFIG);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, INVALID_INTERFACE_NAME);
-  }
+  }, INVALID_INTERFACE_NAME);
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrR_ReturnsExpectedMessage)
@@ -400,14 +395,9 @@ TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffe
 {
   constexpr auto STACK_ALREADY_EXISTS = static_cast<int32_t>(0xFFFFCD24);
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     client::str_err_r(stub(), STACK_ALREADY_EXISTS, 0);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, GENERIC_NXSOCKET_ERROR);
-    EXPECT_STREQ("Unknown", ex.what());
-  }
+  }, GENERIC_NXSOCKET_ERROR, "Unknown");
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToNRoundtrip_ReturnsCorrectAddr)
