@@ -129,9 +129,14 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
+  ClearTaskResponse clear_task(const nidevice_grpc::Session& task)
+  {
+    return client::clear_task(stub(), task);
+  }
+
   ClearTaskResponse clear_task()
   {
-    return client::clear_task(stub(), task());
+    return clear_task(task());
   }
 
   CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
@@ -1469,15 +1474,9 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFin
   read_stream(reader_context1, *reader1, response1);
 
   EXPECT_EQ(DAQMX_SUCCESS, response1.status());
-  EXPECT_THROW({
-    try {
-      read_stream(reader_context2, *reader2, response2);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, DONE_EVENT_ALREADY_REGISTERED_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    read_stream(reader_context2, *reader2, response2);
+  }, DONE_EVENT_ALREADY_REGISTERED_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_ReadStream_NotSupportedByDeviceErrorReceived)
@@ -1488,15 +1487,9 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Rea
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
 
   RegisterEveryNSamplesEventResponse response;
-  EXPECT_THROW({
-    try {
-      read_stream(reader_context, *reader, response);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    read_stream(reader_context, *reader, response);
+  }, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Finish_NotSupportedByDeviceErrorReceived)
@@ -1506,16 +1499,10 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Fin
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
 
-  EXPECT_THROW({
-    try {
-      auto status = reader->Finish();
-      client::raise_if_error(status, reader_context);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto status = reader->Finish();
+    client::raise_if_error(status, reader_context);
+  }, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Cancel_NoErrors)
@@ -1632,15 +1619,9 @@ TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegisteredWithWrongEventTyp
   bool finish_completed = try_get_next_completion_without_blocking(completion_queue, finish_completion);
   EXPECT_TRUE(finish_completed);
   ASSERT_EQ(Completion(FINISH_TAG, true), finish_completion);
-  EXPECT_THROW({
-    try {
-      client::raise_if_error(status, reader_context);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    client::raise_if_error(status, reader_context);
+  }, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ConfigureInputBuffer_Succeeds)
@@ -1735,7 +1716,7 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   EXPECT_SUCCESS(status, save_response);
   clear_task();
   auto load_response = LoadTaskResponse{};
-  status = load_task(load_response);
+  status = load_task(load_response); // cleaned up by test fixture
   EXPECT_SUCCESS(status, load_response);
 
   auto read_response = ReadAnalogF64Response{};
@@ -1803,9 +1784,11 @@ TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
   create_do_chan();
   auto create_watchdog_response = CreateWatchdogTimerTaskExResponse{};
   auto create_status = create_watchdog_timer_task_ex(.001, create_watchdog_response);
+  auto watchdog_task = create_watchdog_response.task();
+  auto clear_watchdog_task_on_exit = make_scope_exit([&]{ clear_task(watchdog_task); });
   auto cfg_watchdog_response = CfgWatchdogDOExpirStatesResponse{};
   auto cfg_status = cfg_watchdog_do_expir_states(
-      create_watchdog_response.task(),
+      watchdog_task,
       cfg_watchdog_response);
   EXPECT_SUCCESS(create_status, create_watchdog_response);
   EXPECT_SUCCESS(cfg_status, cfg_watchdog_response);
@@ -1813,7 +1796,7 @@ TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
   start_task();
   auto start_watchdog_response = StartTaskResponse{};
   auto start_watchdog_status = start_task(
-      create_watchdog_response.task(),
+      watchdog_task,
       start_watchdog_response);
 
   EXPECT_SUCCESS(start_watchdog_status, start_watchdog_response);
