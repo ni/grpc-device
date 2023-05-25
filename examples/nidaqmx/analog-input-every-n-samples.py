@@ -64,6 +64,11 @@ def _main():
                     f"{warning_message.error_string}\nWarning status: {response.status}\n"
                 )
 
+        def check_for_stream_error(stream):
+            """Raise an exception if the stream was closed with an error."""
+            if stream.done() and stream.exception() is not None:
+                raise stream.exception()
+
         try:
             create_task_response = client.CreateTask(nidaqmx_types.CreateTaskRequest())
             task = create_task_response.task
@@ -99,15 +104,17 @@ def _main():
                 )
             )
 
-            # Wait for initial_metadata to ensure that the callback is registered before starting
-            # the task.
+            # Wait for initial_metadata and check for stream errors to ensure that the callback is
+            # registered successfully before starting the task.
             every_n_samples_stream.initial_metadata()
+            check_for_stream_error(every_n_samples_stream)
 
             done_event_stream = client.RegisterDoneEvent(
                 nidaqmx_types.RegisterDoneEventRequest(task=task)
             )
 
             done_event_stream.initial_metadata()
+            check_for_stream_error(done_event_stream)
 
             start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
             check_for_warning(start_task_response)
