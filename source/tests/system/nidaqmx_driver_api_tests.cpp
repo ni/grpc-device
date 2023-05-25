@@ -11,6 +11,8 @@
 #include "device_server.h"
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
+#include "tests/utilities/async_helpers.h"
+#include "tests/utilities/scope_exit.h"
 #include "tests/utilities/test_helpers.h"
 
 using namespace ::testing;
@@ -40,6 +42,7 @@ constexpr auto RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR = -201401;
 constexpr auto TEDS_SENSOR_NOT_DETECTED_ERROR = -200709;
 constexpr auto INVALID_TERM_ROUTING_ERROR = -89129;
 constexpr auto DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR = -201450;
+constexpr auto EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR = -200980;
 
 // Creates a static TResponse instance that can be used as a default/in-line value (because it's not a temporary).
 template <typename TResponse>
@@ -281,6 +284,26 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
+  auto async_read_analog_f64(
+    ::grpc::ClientContext& context,
+    ::grpc::CompletionQueue& completion_queue,
+    void* tag,
+    int32 samps_per_chan,
+    uint32 array_size_in_samps,
+    ReadAnalogF64Response& response,
+    ::grpc::Status& status)
+  {
+    ReadAnalogF64Request request;
+    set_request_session_name(request);
+    request.set_num_samps_per_chan(samps_per_chan);
+    request.set_array_size_in_samps(array_size_in_samps);
+    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
+    request.set_timeout(1000.0);
+    auto reader = stub()->AsyncReadAnalogF64(&context, request, &completion_queue);
+    reader->Finish(&response, &status, tag);
+    return reader;
+  }
+
   ::grpc::Status write_analog_f64(
       const std::vector<double>& data,
       WriteAnalogF64Response& response)
@@ -436,13 +459,30 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->RegisterDoneEvent(&context, request);
   }
 
-  auto register_every_n_samples_event(::grpc::ClientContext& context, uint32 n_samples)
+  auto register_every_n_samples_event(
+    ::grpc::ClientContext& context,
+    uint32 n_samples,
+    EveryNSamplesEventType every_n_samples_event_type = EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER)
   {
     RegisterEveryNSamplesEventRequest request;
     set_request_session_name(request);
     request.set_n_samples(n_samples);
-    request.set_every_n_samples_event_type(EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER);
+    request.set_every_n_samples_event_type(every_n_samples_event_type);
     return stub()->RegisterEveryNSamplesEvent(&context, request);
+  }
+
+  auto async_register_every_n_samples_event(
+    ::grpc::ClientContext& context,
+    ::grpc::CompletionQueue& completion_queue,
+    void* tag,
+    uint32 n_samples,
+    EveryNSamplesEventType every_n_samples_event_type = EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER)
+  {
+    RegisterEveryNSamplesEventRequest request;
+    set_request_session_name(request);
+    request.set_n_samples(n_samples);
+    request.set_every_n_samples_event_type(every_n_samples_event_type);
+    return stub()->AsyncRegisterEveryNSamplesEvent(&context, request, &completion_queue, tag);
   }
 
   auto register_signal_event(::grpc::ClientContext& context, Signal2 signal_id)
@@ -1373,7 +1413,7 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunMultipleFiniteAc
   EXPECT_THAT(responses, Each(Property(&RegisterDoneEventResponse::status, Eq(DAQMX_SUCCESS))));
 }
 
-TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSamplesMultipleTimes_Succeeds)
+TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSamplesMultipleTimes_EveryNSamplesEventResponsesAreReceived)
 {
   const auto N_SAMPLES = 10UL;
   const auto N_READS = 10UL;
@@ -1423,7 +1463,7 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_RunMultipl
   EXPECT_THAT(responses, Each(Property(&RegisterEveryNSamplesEventResponse::status, Eq(DAQMX_SUCCESS))));
 }
 
-TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
+TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFiniteAcquisition_DoneEventResponseAndAlreadyRegisteredErrorReceived)
 {
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context1, reader_context2;
@@ -1439,10 +1479,180 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFin
   read_analog_f64(FINITE_SAMPLE_COUNT, FINITE_SAMPLE_COUNT);
   RegisterDoneEventResponse response1, response2;
   read_stream(reader_context1, *reader1, response1);
-  read_stream(reader_context2, *reader2, response2);
 
   EXPECT_EQ(DAQMX_SUCCESS, response1.status());
-  EXPECT_EQ(DONE_EVENT_ALREADY_REGISTERED_ERROR, response2.status());
+  EXPECT_THROW({
+    try {
+      read_stream(reader_context2, *reader2, response2);
+    }
+    catch (const client::grpc_driver_error& ex) {
+      expect_driver_error(ex, DONE_EVENT_ALREADY_REGISTERED_ERROR);
+      throw;
+    }
+  }, client::grpc_driver_error);
+}
+
+TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_ReadStream_NotSupportedByDeviceErrorReceived)
+{
+  const auto N_SAMPLES = 10UL;
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
+
+  RegisterEveryNSamplesEventResponse response;
+  EXPECT_THROW({
+    try {
+      read_stream(reader_context, *reader, response);
+    }
+    catch (const client::grpc_driver_error& ex) {
+      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
+      throw;
+    }
+  }, client::grpc_driver_error);
+}
+
+TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Finish_NotSupportedByDeviceErrorReceived)
+{
+  const auto N_SAMPLES = 10UL;
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
+
+  EXPECT_THROW({
+    try {
+      auto status = reader->Finish();
+      client::raise_if_error(status, reader_context);
+    }
+    catch (const client::grpc_driver_error& ex) {
+      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
+      throw;
+    }
+  }, client::grpc_driver_error);
+}
+
+TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Cancel_NoErrors)
+{
+  const auto N_SAMPLES = 10UL;
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
+
+  reader_context.TryCancel();
+}
+
+TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegistered_OnEventReadAnalogF64_EventAndReadResponsesAreReceived)
+{
+  const auto N_SAMPLES = 10UL;
+  const auto N_READS = 10UL;
+  const auto EVENT_START_CALL_TAG = (void*)1;
+  const auto EVENT_READ_INITIAL_METADATA_TAG = (void*)2;
+  const auto EVENT_READ_TAG = (void*)3;
+  const auto READ_ANALOG_F64_TAG = (void*)4;
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext event_context;
+  ::grpc::CompletionQueue completion_queue;
+  auto shut_down_on_exit = make_scope_exit([&]{ shut_down_completion_queue(completion_queue); });
+  auto event_reader = async_register_every_n_samples_event(event_context, completion_queue, EVENT_START_CALL_TAG, N_SAMPLES);
+  event_reader->ReadInitialMetadata(EVENT_READ_INITIAL_METADATA_TAG);
+  ASSERT_EQ(Completion(EVENT_START_CALL_TAG, true), get_next_completion(completion_queue));
+  ASSERT_EQ(Completion(EVENT_READ_INITIAL_METADATA_TAG, true), get_next_completion(completion_queue));
+  cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 0UL));
+
+  start_task();
+  RegisterEveryNSamplesEventResponse event_response;
+  event_reader->Read(&event_response, EVENT_READ_TAG);
+  std::vector<RegisterEveryNSamplesEventResponse> event_responses;
+  std::vector<ReadAnalogF64Response> read_responses;
+  std::unique_ptr<::grpc::ClientContext> read_context;
+  std::unique_ptr<::grpc::ClientAsyncResponseReader<ReadAnalogF64Response>> read_reader;
+  ReadAnalogF64Response read_response;
+  ::grpc::Status read_status;
+  while (read_responses.size() < N_READS) {
+    auto completion = get_next_completion(completion_queue);
+    if (get_completion_tag(completion) == EVENT_READ_TAG) {
+      ASSERT_TRUE(is_completion_ok(completion));
+      event_responses.push_back(event_response);
+      if (event_responses.size() < N_READS) {
+        event_reader->Read(&event_response, EVENT_READ_TAG);
+      }
+      // Start a new read, unless the previous read hasn't completed yet.
+      if (read_responses.size() < N_READS && !read_context) {
+        read_context = std::make_unique<::grpc::ClientContext>();
+        read_reader = async_read_analog_f64(
+          *read_context, completion_queue, READ_ANALOG_F64_TAG, N_SAMPLES, N_SAMPLES,
+          read_response, read_status);
+      }
+    }
+    else if (get_completion_tag(completion) == READ_ANALOG_F64_TAG) {
+      ASSERT_TRUE(is_completion_ok(completion));
+      client::raise_if_error(read_status, *read_context);
+      read_responses.push_back(read_response);
+      read_reader.reset();
+      read_context.reset();
+      // If reads can't keep up with events, do back-to-back reads.
+      if (read_responses.size() < N_READS && read_responses.size() < event_responses.size()) {
+        read_context = std::make_unique<::grpc::ClientContext>();
+        read_reader = async_read_analog_f64(
+          *read_context, completion_queue, READ_ANALOG_F64_TAG, N_SAMPLES, N_SAMPLES,
+          read_response, read_status);
+      }
+    }
+    else {
+      FAIL() << "Unexpected completion: " << PrintToString(completion);
+    }
+  }
+
+  EXPECT_THAT(event_responses, SizeIs(N_READS));
+  EXPECT_THAT(event_responses, Each(Property(&RegisterEveryNSamplesEventResponse::n_samples, Eq(N_SAMPLES))));
+  EXPECT_THAT(event_responses, Each(Property(&RegisterEveryNSamplesEventResponse::status, Eq(DAQMX_SUCCESS))));
+  EXPECT_THAT(read_responses, SizeIs(N_READS));
+  EXPECT_THAT(read_responses, Each(Property(&ReadAnalogF64Response::read_array, SizeIs(N_SAMPLES))));
+  EXPECT_THAT(read_responses, Each(Property(&ReadAnalogF64Response::samps_per_chan_read, Eq(N_SAMPLES))));
+  EXPECT_THAT(read_responses, Each(Property(&ReadAnalogF64Response::status, Eq(DAQMX_SUCCESS))));
+}
+
+// This test uses the async API in order to check whether the event stream is closed without blocking.
+TEST_F(NiDAQmxDriverApiTests, AsyncEveryNSamplesEventRegisteredWithWrongEventTypeAndWaitForMetadata_ReadStreamWithoutBlocking_ReadCompletesImmediatelyWithError)
+{
+  const auto N_SAMPLES = 10UL;
+  const auto START_CALL_TAG = (void*)1;
+  const auto READ_INITIAL_METADATA_TAG = (void*)2;
+  const auto READ_TAG = (void*)3;
+  const auto FINISH_TAG = (void*)4;
+  create_ai_voltage_chan(0.0, 1.0);
+  ::grpc::ClientContext reader_context;
+  ::grpc::CompletionQueue completion_queue;
+  auto shut_down_on_exit = make_scope_exit([&]{ shut_down_completion_queue(completion_queue); });
+  auto reader = async_register_every_n_samples_event(
+    reader_context, completion_queue, START_CALL_TAG, N_SAMPLES,
+    EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
+  reader->ReadInitialMetadata(READ_INITIAL_METADATA_TAG);
+  ASSERT_EQ(Completion(START_CALL_TAG, true), get_next_completion(completion_queue));
+  ASSERT_EQ(Completion(READ_INITIAL_METADATA_TAG, true), get_next_completion(completion_queue));
+
+  RegisterEveryNSamplesEventResponse response;
+  reader->Read(&response, READ_TAG);
+  Completion read_completion;
+  bool read_completed = try_get_next_completion_without_blocking(completion_queue, read_completion);
+
+  EXPECT_TRUE(read_completed);
+  EXPECT_EQ(Completion(READ_TAG, false), read_completion);  // read_completion should NOT be OK
+  ::grpc::Status status;
+  reader->Finish(&status, FINISH_TAG);
+  Completion finish_completion;
+  bool finish_completed = try_get_next_completion_without_blocking(completion_queue, finish_completion);
+  EXPECT_TRUE(finish_completed);
+  ASSERT_EQ(Completion(FINISH_TAG, true), finish_completion);
+  EXPECT_THROW({
+    try {
+      client::raise_if_error(status, reader_context);
+    }
+    catch (const client::grpc_driver_error& ex) {
+      expect_driver_error(ex, EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR);
+      throw;
+    }
+  }, client::grpc_driver_error);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ConfigureInputBuffer_Succeeds)

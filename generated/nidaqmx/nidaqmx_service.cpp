@@ -14020,15 +14020,15 @@ namespace nidaqmx_grpc {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32>;
     class RegisterDoneEventReactor : public nidevice_grpc::ServerWriterReactor<RegisterDoneEventResponse, nidevice_grpc::CallbackRegistration> {
     public:
-    RegisterDoneEventReactor(const RegisterDoneEventRequest& request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    RegisterDoneEventReactor(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request, NiDAQmxLibraryInterface* library, NiDAQmxService* service)
     {
-      auto status = start(&request, library, session_repository);
+      auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 
-    ::grpc::Status start(const RegisterDoneEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const RegisterDoneEventRequest* request, NiDAQmxLibraryInterface* library, NiDAQmxService* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(
@@ -14040,20 +14040,18 @@ namespace nidaqmx_grpc {
             return 0;
         });
 
+        const auto& session_repository_ = service->session_repository_;
         auto task_grpc_session = request->task();
         TaskHandle task = session_repository_->access_session(task_grpc_session.name());
         auto options = 0U;
 
         auto status = library->RegisterDoneEvent(task, options, CallbackRouter::handle_callback, handler->token());
+        if (!status_ok(status)) {
+          return service->ConvertApiErrorStatusForTaskHandle(context, status, task);
+        }
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
-
-        if (status) {
-          RegisterDoneEventResponse failed_to_register_response;
-          failed_to_register_response.set_status(status);
-          queue_write(failed_to_register_response);
-        }
 
         this->set_producer(std::move(handler));
       }
@@ -14065,7 +14063,7 @@ namespace nidaqmx_grpc {
     }
     };
 
-    return new RegisterDoneEventReactor(*request, library_, session_repository_);
+    return new RegisterDoneEventReactor(context, request, library_, this);
   }
 
   //---------------------------------------------------------------------
@@ -14076,15 +14074,15 @@ namespace nidaqmx_grpc {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32, uInt32>;
     class RegisterEveryNSamplesEventReactor : public nidevice_grpc::ServerWriterReactor<RegisterEveryNSamplesEventResponse, nidevice_grpc::CallbackRegistration> {
     public:
-    RegisterEveryNSamplesEventReactor(const RegisterEveryNSamplesEventRequest& request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    RegisterEveryNSamplesEventReactor(::grpc::CallbackServerContext* context, const RegisterEveryNSamplesEventRequest* request, NiDAQmxLibraryInterface* library, NiDAQmxService* service)
     {
-      auto status = start(&request, library, session_repository);
+      auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 
-    ::grpc::Status start(const RegisterEveryNSamplesEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const RegisterEveryNSamplesEventRequest* request, NiDAQmxLibraryInterface* library, NiDAQmxService* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(
@@ -14098,6 +14096,7 @@ namespace nidaqmx_grpc {
             return 0;
         });
 
+        const auto& session_repository_ = service->session_repository_;
         auto task_grpc_session = request->task();
         TaskHandle task = session_repository_->access_session(task_grpc_session.name());
         int32 every_n_samples_event_type;
@@ -14120,15 +14119,12 @@ namespace nidaqmx_grpc {
         auto options = 0U;
 
         auto status = library->RegisterEveryNSamplesEvent(task, every_n_samples_event_type, n_samples, options, CallbackRouter::handle_callback, handler->token());
+        if (!status_ok(status)) {
+          return service->ConvertApiErrorStatusForTaskHandle(context, status, task);
+        }
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
-
-        if (status) {
-          RegisterEveryNSamplesEventResponse failed_to_register_response;
-          failed_to_register_response.set_status(status);
-          queue_write(failed_to_register_response);
-        }
 
         this->set_producer(std::move(handler));
       }
@@ -14140,7 +14136,7 @@ namespace nidaqmx_grpc {
     }
     };
 
-    return new RegisterEveryNSamplesEventReactor(*request, library_, session_repository_);
+    return new RegisterEveryNSamplesEventReactor(context, request, library_, this);
   }
 
   //---------------------------------------------------------------------
@@ -14151,15 +14147,15 @@ namespace nidaqmx_grpc {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, TaskHandle, int32>;
     class RegisterSignalEventReactor : public nidevice_grpc::ServerWriterReactor<RegisterSignalEventResponse, nidevice_grpc::CallbackRegistration> {
     public:
-    RegisterSignalEventReactor(const RegisterSignalEventRequest& request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    RegisterSignalEventReactor(::grpc::CallbackServerContext* context, const RegisterSignalEventRequest* request, NiDAQmxLibraryInterface* library, NiDAQmxService* service)
     {
-      auto status = start(&request, library, session_repository);
+      auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 
-    ::grpc::Status start(const RegisterSignalEventRequest* request, NiDAQmxLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const RegisterSignalEventRequest* request, NiDAQmxLibraryInterface* library, NiDAQmxService* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(
@@ -14171,6 +14167,7 @@ namespace nidaqmx_grpc {
             return 0;
         });
 
+        const auto& session_repository_ = service->session_repository_;
         auto task_grpc_session = request->task();
         TaskHandle task = session_repository_->access_session(task_grpc_session.name());
         int32 signal_id;
@@ -14192,15 +14189,12 @@ namespace nidaqmx_grpc {
         auto options = 0U;
 
         auto status = library->RegisterSignalEvent(task, signal_id, options, CallbackRouter::handle_callback, handler->token());
+        if (!status_ok(status)) {
+          return service->ConvertApiErrorStatusForTaskHandle(context, status, task);
+        }
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
-
-        if (status) {
-          RegisterSignalEventResponse failed_to_register_response;
-          failed_to_register_response.set_status(status);
-          queue_write(failed_to_register_response);
-        }
 
         this->set_producer(std::move(handler));
       }
@@ -14212,7 +14206,7 @@ namespace nidaqmx_grpc {
     }
     };
 
-    return new RegisterSignalEventReactor(*request, library_, session_repository_);
+    return new RegisterSignalEventReactor(context, request, library_, this);
   }
 
   //---------------------------------------------------------------------
