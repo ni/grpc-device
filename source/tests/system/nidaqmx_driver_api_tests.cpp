@@ -1127,18 +1127,12 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
       ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS);
 
-  EXPECT_THROW({
-    try {
-      client::get_scale_attribute_double(
-          stub(),
-          SCALE_NAME,
-          (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    client::get_scale_attribute_double(
+      stub(),
+      SCALE_NAME,
+      (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
+  }, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
@@ -1208,18 +1202,12 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_Re
   create_ao_voltage_chan(AO_MIN, AO_MAX);
 
   start_task();
-  EXPECT_THROW({
-    try {
-      auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
-      write_data[80] += AO_MAX;
-      WriteAnalogF64Response write_response;
-      write_analog_f64(write_data, write_response);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, INVALID_AO_DATA_WRITE_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
+    write_data[80] += AO_MAX;
+    WriteAnalogF64Response write_response;
+    write_analog_f64(write_data, write_response);
+  }, INVALID_AO_DATA_WRITE_ERROR);
   stop_task();
 }
 
@@ -1720,32 +1708,20 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsErro
 {
   create_ai_voltage_chan(0.0, 1.0);
 
-  EXPECT_THROW({
-    try {
-      auto response = WaitForValidTimestampResponse{};
-      auto status = wait_for_valid_timestamp(response);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto response = WaitForValidTimestampResponse{};
+    auto status = wait_for_valid_timestamp(response);
+  }, WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError)
 {
   create_ai_voltage_chan(0.0, 1.0);
 
-  EXPECT_THROW({
-    try {
-      auto response = CfgTimeStartTrigResponse{};
-      cfg_time_start_trig(response);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, INVALID_ATTRIBUTE_VALUE_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto response = CfgTimeStartTrigResponse{};
+    cfg_time_start_trig(response);
+  }, INVALID_ATTRIBUTE_VALUE_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpectedRange)
@@ -1779,29 +1755,17 @@ TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetworkDeviceProperties)
 {
-  EXPECT_THROW({
-    try {
-      auto response = AddNetworkDeviceResponse{};
-      add_network_device("0.0.0.0", response);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto response = AddNetworkDeviceResponse{};
+    add_network_device("0.0.0.0", response);
+  }, RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected)
 {
-  EXPECT_THROW({
-    try {
-      client::configure_teds(stub(), AI_CHANNEL, "");
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, TEDS_SENSOR_NOT_DETECTED_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    client::configure_teds(stub(), AI_CHANNEL, "");
+  }, TEDS_SENSOR_NOT_DETECTED_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
@@ -1826,16 +1790,10 @@ TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, ConnectBogusTerms_FailsWithInvalidRoutingError)
 {
-  EXPECT_THROW({
-    try {
-      auto response = ConnectTermsResponse{};
-      connect_terms("ABC", "123", response);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, INVALID_TERM_ROUTING_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto response = ConnectTermsResponse{};
+    connect_terms("ABC", "123", response);
+  }, INVALID_TERM_ROUTING_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
@@ -1863,15 +1821,9 @@ TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupportedError)
 {
-  EXPECT_THROW({
-    try {
-      client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
+  }, DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBufferSize)
@@ -2088,28 +2040,16 @@ TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureSampQuantSampsPerChan_Updates
 
 TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
 {
-  EXPECT_THROW({
-    try {
-      client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
+  }, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
 {
-  EXPECT_THROW({
-    try {
-      client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
-    }
-    catch (const client::grpc_driver_error& ex) {
-      expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
-      throw;
-    }
-  }, client::grpc_driver_error);
+  EXPECT_THROW_DRIVER_ERROR({
+    client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
+  }, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
 }
 
 }  // namespace

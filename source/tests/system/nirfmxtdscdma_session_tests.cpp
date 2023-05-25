@@ -85,14 +85,10 @@ TEST_F(NiRFmxTDSCDMASessionTest, InitializeSessionWithDeviceAndNoSessionName_Cre
 
 TEST_F(NiRFmxTDSCDMASessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     rfmxtdscdma::InitializeResponse response;
     call_initialize(kRFmxTDSCDMATestInvalidRsrc, "", "", &response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRsrc);
-  }
+  }, kInvalidRsrc);
 }
 
 TEST_F(NiRFmxTDSCDMASessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -153,15 +149,11 @@ TEST_F(NiRFmxTDSCDMASessionTest, CallInitializeTwiceWithSameSessionNameOnSameDev
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
     // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
     call_close(session_two, false, &close_response_two);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRFmxTDSCDMASession);
-  }
+  }, kInvalidRFmxTDSCDMASession);
 }
 
 TEST_F(NiRFmxTDSCDMASessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
@@ -169,14 +161,10 @@ TEST_F(NiRFmxTDSCDMASessionTest, InvalidSession_CloseSession_ReturnsInvalidSessi
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     rfmxtdscdma::CloseResponse response;
     call_close(session, false, &response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRFmxTDSCDMASession);
-  }
+  }, kInvalidRFmxTDSCDMASession);
 }
 
 }  // namespace
