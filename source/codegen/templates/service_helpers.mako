@@ -37,7 +37,7 @@ ${call_library_method(
   function_data=function_data,
   arg_string=service_helpers.create_args(parameters),
   indent_level=1,
-  library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
+  library_ptr=service_helpers.get_library_ptr_for_potentially_unmockable_function(config, parameters))
 }\
         return std::make_tuple(status, ${session_output_var_name});
       };
@@ -204,7 +204,7 @@ ${call_library_method(
   function_name=function_name,
   function_data=function_data,
   arg_string=service_helpers.create_args(parameters),
-  library_lval="library",
+  library_ptr="library",
   indent_level=1)
 }\
 ${populate_error_check(function_data, parameters, indent_level=1, service_deref="service->")}\
@@ -239,7 +239,7 @@ ${call_library_method(
   function_name=function_name,
   function_data=function_data,
   arg_string=service_helpers.create_args(parameters),
-  library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
+  library_ptr=service_helpers.get_library_ptr_for_potentially_unmockable_function(config, parameters))
 }\
 ${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
@@ -943,14 +943,14 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 ## function_data: function metadata.
 ## arg_string: comma separated argument list to pass to the function (see service_helpers.create_args),
 ## indent_level: (Optional) levels of additional indentation for the call snippet.
-## library_lval: (Optional) variable or expression to use as the left-hand-side for the library pointer (default: this->library_).
+## library_ptr: (Optional) variable or expression for the library pointer (default: this->library_).
 ## declare_outputs: (Optional) If this is true, variables will be declared as "auto". If false, variables will just be assigned (default: False).
 <%def name="call_library_method(
   function_name,
   function_data,
   arg_string,
   indent_level=0,
-  library_lval='library_',
+  library_ptr='library_',
   declare_outputs=True)">\
 <%
   return_type = service_helpers.get_function_return_type(function_data)
@@ -959,9 +959,9 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
 % if return_type != "void":
-      ${auto_decl}${return_value_name} = ${library_lval}->${function_name}(${arg_string});
+      ${auto_decl}${return_value_name} = ${library_ptr}->${function_name}(${arg_string});
 % else:
-      ${library_lval}->${function_name}(${arg_string});
+      ${library_ptr}->${function_name}(${arg_string});
 % endif
 % if service_helpers.has_status_expression(function_data):
       ${auto_decl}status = ${service_helpers.get_status_expression(function_data)};

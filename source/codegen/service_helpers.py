@@ -650,8 +650,8 @@ def get_status_expression(function_data: dict) -> str:
     return function_data["status_expression"]
 
 
-def get_library_lval_for_potentially_umockable_function(config: dict, parameters: List[dict]):
-    """Get the variable or expression to use as the left-hand-side for the library pointer.
+def get_library_ptr_for_potentially_unmockable_function(config: dict, parameters: List[dict]):
+    """Get the variable or expression for the library pointer.
 
     Returns library_ if parameters can be mocked and called through the shared interface,
     otherwise typecasts library to the concrete type.
