@@ -25,7 +25,7 @@ namespace nirfmxgsm_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxGSMService::NiRFmxGSMService(
-      NiRFmxGSMLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxGSMFeatureToggles& feature_toggles)

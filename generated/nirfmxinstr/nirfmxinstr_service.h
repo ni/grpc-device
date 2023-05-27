@@ -33,16 +33,17 @@ struct NiRFmxInstrFeatureToggles
 
 class NiRFmxInstrService final : public NiRFmxInstr::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxInstrLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
   using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxInstrService(
-    NiRFmxInstrLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxInstrFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxInstrService();
-  
+
   ::grpc::Status BuildCalibrationPlaneString(::grpc::ServerContext* context, const BuildCalibrationPlaneStringRequest* request, BuildCalibrationPlaneStringResponse* response) override;
   ::grpc::Status BuildInstrumentString(::grpc::ServerContext* context, const BuildInstrumentStringRequest* request, BuildInstrumentStringResponse* response) override;
   ::grpc::Status BuildLOString(::grpc::ServerContext* context, const BuildLOStringRequest* request, BuildLOStringResponse* response) override;
@@ -137,7 +138,7 @@ public:
   ::grpc::Status ValuesFromTimestamp(::grpc::ServerContext* context, const ValuesFromTimestampRequest* request, ValuesFromTimestampResponse* response) override;
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
 private:
-  NiRFmxInstrLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
   ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);

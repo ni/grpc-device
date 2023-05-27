@@ -26,7 +26,7 @@ namespace nidcpower_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiDCPowerService::NiDCPowerService(
-      NiDCPowerLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiDCPowerFeatureToggles& feature_toggles)
       : library_(library),

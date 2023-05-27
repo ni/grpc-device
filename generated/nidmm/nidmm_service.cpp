@@ -26,7 +26,7 @@ namespace nidmm_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiDmmService::NiDmmService(
-      NiDmmLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiDmmFeatureToggles& feature_toggles)
       : library_(library),

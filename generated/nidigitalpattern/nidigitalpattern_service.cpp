@@ -26,7 +26,7 @@ namespace nidigitalpattern_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiDigitalService::NiDigitalService(
-      NiDigitalLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiDigitalFeatureToggles& feature_toggles)
       : library_(library),

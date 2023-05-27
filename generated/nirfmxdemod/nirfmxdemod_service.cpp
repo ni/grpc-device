@@ -25,7 +25,7 @@ namespace nirfmxdemod_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxDemodService::NiRFmxDemodService(
-      NiRFmxDemodLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxDemodFeatureToggles& feature_toggles)

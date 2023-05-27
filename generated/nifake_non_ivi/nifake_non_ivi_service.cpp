@@ -28,7 +28,7 @@ namespace nifake_non_ivi_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiFakeNonIviService::NiFakeNonIviService(
-      NiFakeNonIviLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
       FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
@@ -770,7 +770,7 @@ namespace nifake_non_ivi_grpc {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, myInt16>;
     class RegisterCallbackReactor : public nidevice_grpc::ServerWriterReactor<RegisterCallbackResponse, nidevice_grpc::CallbackRegistration> {
     public:
-    RegisterCallbackReactor(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request, NiFakeNonIviLibraryInterface* library, NiFakeNonIviService* service)
+    RegisterCallbackReactor(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request, LibrarySharedPtr library, NiFakeNonIviService* service)
     {
       auto status = start(context, request, library, service);
       if (!status.ok()) {
@@ -778,7 +778,7 @@ namespace nifake_non_ivi_grpc {
       }
     }
 
-    ::grpc::Status start(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request, NiFakeNonIviLibraryInterface* library, NiFakeNonIviService* service)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request, LibrarySharedPtr library, NiFakeNonIviService* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(

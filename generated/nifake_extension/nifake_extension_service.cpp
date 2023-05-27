@@ -22,7 +22,7 @@ namespace nifake_extension_grpc {
   using nidevice_grpc::converters::MatchState;
 
   NiFakeExtensionService::NiFakeExtensionService(
-      NiFakeExtensionLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiFakeExtensionFeatureToggles& feature_toggles)
       : library_(library),

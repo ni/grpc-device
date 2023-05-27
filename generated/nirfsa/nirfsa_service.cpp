@@ -27,7 +27,7 @@ namespace nirfsa_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFSAService::NiRFSAService(
-      NiRFSALibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiRFSAFeatureToggles& feature_toggles)
       : library_(library),

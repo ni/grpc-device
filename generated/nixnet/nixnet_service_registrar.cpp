@@ -18,21 +18,21 @@ struct LibraryAndService {
   LibraryAndService(
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>& resource_repository,
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>& nx_database_ref_t_resource_repository,
-    const NiXnetFeatureToggles& feature_toggles) 
-      : library(), 
-      service(
-        &library, 
+    const NiXnetFeatureToggles& feature_toggles)
+      : library(std::make_shared<NiXnetLibrary>()),
+      service(std::make_shared<NiXnetService>(
+        library,
         resource_repository,
         nx_database_ref_t_resource_repository,
-        feature_toggles) {
+        feature_toggles)) {
   }
-  NiXnetLibrary library;
-  NiXnetService service;
+  std::shared_ptr<NiXnetLibrary> library;
+  std::shared_ptr<NiXnetService> service;
 };
 }
 
 std::shared_ptr<void> register_service(
-  grpc::ServerBuilder& builder, 
+  grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>& resource_repository,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>& nx_database_ref_t_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
@@ -46,7 +46,7 @@ std::shared_ptr<void> register_service(
       nx_database_ref_t_resource_repository,
       toggles);
     auto& service = library_and_service_ptr->service;
-    builder.RegisterService(&service);
+    builder.RegisterService(service.get());
     return library_and_service_ptr;
   }
 

@@ -23,7 +23,7 @@ namespace nixnet_grpc {
   using nidevice_grpc::converters::MatchState;
 
   NiXnetService::NiXnetService(
-      NiXnetLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository,
       const NiXnetFeatureToggles& feature_toggles)

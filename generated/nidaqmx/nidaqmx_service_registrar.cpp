@@ -17,20 +17,20 @@ namespace {
 struct LibraryAndService {
   LibraryAndService(
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<TaskHandle>>& resource_repository,
-    const NiDAQmxFeatureToggles& feature_toggles) 
-      : library(), 
-      service(
-        &library, 
+    const NiDAQmxFeatureToggles& feature_toggles)
+      : library(std::make_shared<NiDAQmxLibrary>()),
+      service(std::make_shared<NiDAQmxService>(
+        library,
         resource_repository,
-        feature_toggles) {
+        feature_toggles)) {
   }
-  NiDAQmxLibrary library;
-  NiDAQmxService service;
+  std::shared_ptr<NiDAQmxLibrary> library;
+  std::shared_ptr<NiDAQmxService> service;
 };
 }
 
 std::shared_ptr<void> register_service(
-  grpc::ServerBuilder& builder, 
+  grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<TaskHandle>>& resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
@@ -42,7 +42,7 @@ std::shared_ptr<void> register_service(
       resource_repository,
       toggles);
     auto& service = library_and_service_ptr->service;
-    builder.RegisterService(&service);
+    builder.RegisterService(service.get());
     return library_and_service_ptr;
   }
 
