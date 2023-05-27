@@ -30,7 +30,7 @@ class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
   std::shared_ptr<nidevice_grpc::SessionRepository> secondary_session_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
   std::shared_ptr<SecondaryResourceRepository> secondary_resource_repository_;
-  ni::tests::unit::NiFakeNonIviMockLibrary library_;
+  std::shared_ptr<ni::tests::unit::NiFakeNonIviMockLibrary> library_;
   NiFakeNonIviService service_;
   std::unique_ptr<::grpc::Server> server_;
   std::unique_ptr<NiFakeNonIvi::Stub> stub_;
@@ -41,8 +41,8 @@ class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
         resource_repository_(std::make_shared<FakeResourceRepository>(session_repository_)),
         secondary_session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
         secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(secondary_session_repository_)),
-        library_(),
-        service_(&library_, resource_repository_, std::make_shared<FakeCrossDriverResourceRepository>(session_repository_), std::make_shared<FakeCrossDriverResourceRepository>(secondary_session_repository_)),
+        library_(std::make_shared<ni::tests::unit::NiFakeNonIviMockLibrary>()),
+        service_(library_, resource_repository_, std::make_shared<FakeCrossDriverResourceRepository>(session_repository_), std::make_shared<FakeCrossDriverResourceRepository>(secondary_session_repository_)),
         server_(start_server()),
         stub_(NiFakeNonIvi::NewStub(server_->InProcessChannel(::grpc::ChannelArguments())))
   {
@@ -287,7 +287,7 @@ TEST_F(NiFakeNonIviServiceTests_EndToEnd, RegisterCallbackAndImmediatelyCall_Rea
   ::grpc::ClientContext context;
   RegisterCallbackRequest request;
   request.set_input_data(TEST_VALUE);
-  EXPECT_CALL(library_, RegisterCallback(TEST_VALUE, _, _))
+  EXPECT_CALL(*library_, RegisterCallback(TEST_VALUE, _, _))
       .WillOnce(DoAll(
           ImmediatelyCallCallback(),
           Return(kDriverSuccess)));
