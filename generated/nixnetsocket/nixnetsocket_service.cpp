@@ -66,7 +66,9 @@ namespace nixnetsocket_grpc {
         return std::make_tuple(status, socket_out);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nxSOCKET id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nxSOCKET id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
@@ -559,7 +561,9 @@ namespace nixnetsocket_grpc {
         return std::make_tuple(status, stack_ref);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nxIpStackRef_t id) { library->IpStackClear(id); };
       int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, 0);
@@ -657,7 +661,9 @@ namespace nixnetsocket_grpc {
         return std::make_tuple(status, stack_ref);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nxIpStackRef_t id) { library->IpStackClear(id); };
       int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, 0);
@@ -1020,7 +1026,9 @@ namespace nixnetsocket_grpc {
         return std::make_tuple(status, socket);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nxSOCKET id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nxSOCKET id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);

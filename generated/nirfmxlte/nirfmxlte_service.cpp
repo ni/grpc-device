@@ -4633,7 +4633,9 @@ namespace nirfmxlte_grpc {
         return std::make_tuple(status, instrument);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXLTE_VAL_FALSE); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXLTE_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
@@ -4668,7 +4670,9 @@ namespace nirfmxlte_grpc {
         return std::make_tuple(status, instrument);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXLTE_VAL_FALSE); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXLTE_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);

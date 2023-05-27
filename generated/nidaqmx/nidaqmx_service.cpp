@@ -7317,7 +7317,9 @@ namespace nidaqmx_grpc {
         return std::make_tuple(status, task);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (TaskHandle id) { library->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
@@ -7374,7 +7376,9 @@ namespace nidaqmx_grpc {
         return std::make_tuple(status, task);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (TaskHandle id) { library->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
@@ -7411,7 +7415,9 @@ namespace nidaqmx_grpc {
         return std::make_tuple(status, task);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (TaskHandle id) { library->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
@@ -12882,7 +12888,9 @@ namespace nidaqmx_grpc {
         return std::make_tuple(status, task);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (TaskHandle id) { library->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);

@@ -408,7 +408,9 @@ namespace nixnet_grpc {
         return std::make_tuple(status, session);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->Clear(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nxSessionRef_t id) { library->Clear(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
@@ -466,7 +468,9 @@ namespace nixnet_grpc {
         return std::make_tuple(status, session);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->Clear(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nxSessionRef_t id) { library->Clear(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
@@ -843,7 +847,9 @@ namespace nixnet_grpc {
         return std::make_tuple(status, database);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nxDatabaseRef_t id) { library_->DbCloseDatabase(id, false); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nxDatabaseRef_t id) { library->DbCloseDatabase(id, false); };
       int status = nx_database_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
@@ -1492,7 +1498,9 @@ namespace nixnet_grpc {
         return std::make_tuple(status, system);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->SystemClose(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nxSessionRef_t id) { library->SystemClose(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
