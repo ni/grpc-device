@@ -42,7 +42,9 @@ ${call_library_method(
         return std::make_tuple(status, ${session_output_var_name});
       };
       std::string grpc_device_session_name = request->${session_field_name}();
-      auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (${resource_handle_type} id) { library->${close_function_call}; };
       int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->${add_session_snippet};
 ${populate_response(function_data=function_data, parameters=parameters, init_method=True)}\
       return ::grpc::Status::OK;\
