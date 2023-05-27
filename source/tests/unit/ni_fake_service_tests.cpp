@@ -145,9 +145,9 @@ std::string create_session(
 // Init and Close function tests
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresSession)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* option_string = "Simulate = 1";
@@ -169,16 +169,16 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresS
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
   EXPECT_TRUE(response.new_session_initialized());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsWithAttachBehavior_DoesNotCallIntoDriverAndReturnsFailedPreconditionError)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* option_string = "Simulate = 1";
@@ -206,9 +206,9 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsWithAttachBehavior_DoesNot
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsWithInitializeBehavior_CreatesAndStoresSession)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* option_string = "Simulate = 1";
@@ -231,16 +231,16 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsWithInitializeBehavior_Cre
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
   EXPECT_TRUE(response.new_session_initialized());
 }
 
 TEST(NiFakeServiceTests, NiFakeServiceWithSession_InitWithOptionsWithInitializeBehavior_ReturnsAlreadyExistsError)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* default_session_name = "sessionName";
   auto session_name = create_session(library, service, default_session_name);
@@ -269,9 +269,9 @@ TEST(NiFakeServiceTests, NiFakeServiceWithSession_InitWithOptionsWithInitializeB
 
 TEST(NiFakeServiceTests, NiFakeServiceWithSession_InitWithOptionsWithAttachBehavior_ReturnsAlreadyInitializedSession)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* default_session_name = "sessionName";
   auto session_name = create_session(library, service, default_session_name);
@@ -296,16 +296,16 @@ TEST(NiFakeServiceTests, NiFakeServiceWithSession_InitWithOptionsWithAttachBehav
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
   EXPECT_FALSE(response.new_session_initialized());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* message = "Exception!";
   EXPECT_CALL(library, InitWithOptions)
@@ -319,14 +319,14 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
   EXPECT_EQ(message, status.error_message());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_EQ("", session_repository.access_session(session.name()));
+  EXPECT_EQ("", session_repository->access_session(session.name()));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsAndResetServer_SessionIsClosed)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* session_name = "sessionName";
   EXPECT_CALL(library, InitWithOptions)
@@ -341,19 +341,19 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsAndResetServer_SessionIsCl
   ::grpc::Status init_status = service.InitWithOptions(&context, &request, &response);
   EXPECT_TRUE(init_status.ok());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
-  bool reset_status = session_repository.reset_server();
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
+  bool reset_status = session_repository->reset_server();
 
   EXPECT_TRUE(reset_status);
-  EXPECT_EQ("", session_repository.access_session(session.name()));
+  EXPECT_EQ("", session_repository->access_session(session.name()));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitExtCalAndResetServer_SessionIsClosed)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* session_name = "sessionName";
   EXPECT_CALL(library, InitExtCal)
@@ -368,20 +368,20 @@ TEST(NiFakeServiceTests, NiFakeService_InitExtCalAndResetServer_SessionIsClosed)
   ::grpc::Status init_status = service.InitExtCal(&context, &request, &response);
   EXPECT_TRUE(init_status.ok());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
-  bool reset_status = session_repository.reset_server();
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
+  bool reset_status = session_repository->reset_server();
 
   EXPECT_TRUE(reset_status);
-  EXPECT_EQ("", session_repository.access_session(session.name()));
-  EXPECT_EQ("", session_repository.access_session(session_name));
+  EXPECT_EQ("", session_repository->access_session(session.name()));
+  EXPECT_EQ("", session_repository->access_session(session_name));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   std::string session_name = "sessionName";
   EXPECT_CALL(library, InitWithOptions)
@@ -396,8 +396,8 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
   ::grpc::Status init_status = service.InitWithOptions(&context, &init_request, &init_response);
   EXPECT_TRUE(init_status.ok());
   nidevice_grpc::Session session = init_response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
   nifake_grpc::CloseRequest close_request;
   close_request.mutable_vi()->set_name(session.name());
   nifake_grpc::CloseResponse close_response;
@@ -405,14 +405,14 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsThenClose_SessionIsClosed)
 
   EXPECT_TRUE(close_status.ok());
   EXPECT_EQ(kDriverSuccess, close_response.status());
-  EXPECT_EQ("", session_repository.access_session(session.name()));
+  EXPECT_EQ("", session_repository->access_session(session.name()));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenCloseExtCal_SessionIsClosed)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   std::string session_name = "sessionName";
   ViInt32 action = 1;
@@ -428,8 +428,8 @@ TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenCloseExtCal_SessionIsClosed
   ::grpc::Status init_status = service.InitExtCal(&context, &init_request, &init_response);
   EXPECT_TRUE(init_status.ok());
   nidevice_grpc::Session session = init_response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
   nifake_grpc::CloseExtCalRequest close_request;
   close_request.mutable_vi()->set_name(session.name());
   close_request.set_action(action);
@@ -438,15 +438,15 @@ TEST(NiFakeServiceTests, NiFakeService_InitExtCalThenCloseExtCal_SessionIsClosed
 
   EXPECT_TRUE(close_status.ok());
   EXPECT_EQ(kDriverSuccess, close_response.status());
-  EXPECT_EQ("", session_repository.access_session(session.name()));
-  EXPECT_EQ("", session_repository.access_session(session_name));
+  EXPECT_EQ("", session_repository->access_session(session.name()));
+  EXPECT_EQ("", session_repository->access_session(session_name));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithOneArgument_SucceedsAndCreatesAndStoresSession)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
@@ -467,15 +467,15 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithOneArgument_SucceedsAn
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithThreeArguments_SucceedsAndCreatesAndStoresSession)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
@@ -502,15 +502,15 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithThreeArguments_Succeed
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_NE("", session_repository.access_session(session.name()));
-  EXPECT_NE("", session_repository.access_session(session_name));
+  EXPECT_NE("", session_repository->access_session(session.name()));
+  EXPECT_NE("", session_repository->access_session(session_name));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithNoArguments_FailsAndDoesNotStoreSession)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
@@ -527,14 +527,14 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithNoArguments_FailsAndDo
 
   EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_EQ("", session_repository.access_session(session.name()));
+  EXPECT_EQ("", session_repository->access_session(session.name()));
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithFourArguments_FailsAndDoesNotStoreSession)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
@@ -554,15 +554,15 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithFourArguments_FailsAnd
 
   EXPECT_EQ(grpc::StatusCode::INVALID_ARGUMENT, status.error_code());
   nidevice_grpc::Session session = response.vi();
-  EXPECT_EQ("", session_repository.access_session(session.name()));
+  EXPECT_EQ("", session_repository->access_session(session.name()));
 }
 
 // Error logic tests using GetABoolean
 TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const char* message = "Exception!";
@@ -581,9 +581,9 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionNotFound_DoesNotCallFunction)
 
 TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseValuesNotSet)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   bool a_boolean = true;
@@ -604,9 +604,9 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseValuesNotSet)
 
 TEST(NiFakeServiceTests, NiFakeService_FunctionCallReturnsWarning_ResponseValueSet)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   bool a_boolean = true;
@@ -626,9 +626,9 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallReturnsWarning_ResponseValueS
 
 TEST(NiFakeServiceTests, NiFakeService_GetABoolean_CallsGetABoolean)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   bool a_boolean = true;
@@ -649,9 +649,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetABoolean_CallsGetABoolean)
 // Simple Input and Output Type Function Tests
 TEST(NiFakeServiceTests, NiFakeService_Abort_CallsAbort)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   EXPECT_CALL(library, Abort(kTestViSession))
@@ -669,9 +669,9 @@ TEST(NiFakeServiceTests, NiFakeService_Abort_CallsAbort)
 
 TEST(NiFakeServiceTests, NiFakeService_GetANumber_CallsGetANumber)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   std::int16_t a_number = 15;
@@ -691,9 +691,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetANumber_CallsGetANumber)
 
 TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForCustomCode_CallsGetArraySizeForCustomCode)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   std::int32_t array_size = 1000;
@@ -713,9 +713,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetArraySizeForCustomCode_CallsGetArraySi
 
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeViBoolean)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_BOOL;
@@ -738,9 +738,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeVi
 
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt32_CallsGetAttributeViInt32)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_INTEGER;
@@ -763,9 +763,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt32_CallsGetAttributeViIn
 
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt64_CallsGetAttributeViInt64)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_INT64;
@@ -788,9 +788,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt64_CallsGetAttributeViIn
 
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViReal64)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
@@ -813,9 +813,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
 
 TEST(NiFakeServiceTests, NiFakeService_GetCalDateAndTime_CallsGetCalDateAndTime)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   std::int32_t cal_type = 0;
@@ -847,9 +847,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalDateAndTime_CallsGetCalDateAndTime)
 
 TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
@@ -870,9 +870,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
 
 TEST(NiFakeServiceTests, NiFakeService_GetEnumValue_CallsGetEnumValue)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   std::int32_t a_quantity = 123;
@@ -895,9 +895,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetEnumValue_CallsGetEnumValue)
 
 TEST(NiFakeServiceTests, NiFakeService_GetEnumValueNotInEnum_CallsGetEnumValue)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   std::int32_t a_quantity = 123;
@@ -921,9 +921,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetEnumValueNotInEnum_CallsGetEnumValue)
 // Array input and output tests
 TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAcceptListOfDurationsInSeconds)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const double delays[] = {1, 2, 3, 4, 5};
@@ -947,9 +947,9 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptListOfDurationsInSeconds_CallsAccep
 
 TEST(NiFakeServiceTests, NiFakeService_BoolArrayOutputFunction_CallsBoolArrayOutputFunction)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 number_of_elements = 3;
@@ -975,9 +975,9 @@ TEST(NiFakeServiceTests, NiFakeService_BoolArrayOutputFunction_CallsBoolArrayOut
 
 TEST(NiFakeServiceTests, NiFakeService_BoolArrayInputFunction_CallsBoolArrayInputFunction)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 number_of_elements = 3;
@@ -1002,9 +1002,9 @@ TEST(NiFakeServiceTests, NiFakeService_BoolArrayInputFunction_CallsBoolArrayInpu
 
 TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const double numbers[] = {1, 2, 3, 4, 5};
@@ -1028,9 +1028,9 @@ TEST(NiFakeServiceTests, NiFakeService_DoubleAllTheNums_CallsDoubleAllTheNums)
 
 TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStringOfFixedMaximumSize)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   char output_string[256] = "Hello World!";
@@ -1052,9 +1052,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAStringOfFixedMaximumSize_CallsGetAStr
 
 TEST(NiFakeServiceTests, NiFakeService_GetCustomTypeArray_CallsGetCustomTypeArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 number_of_elements = 3;
@@ -1076,9 +1076,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetCustomTypeArray_CallsGetCustomTypeArra
 
 TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsImportAttributeConfigurationBuffer)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const std::int8_t char_array[] = {'a', 'b', 'c'};
@@ -1119,9 +1119,9 @@ TRequest create_linked_array_request(
 
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArraysSameSize)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const std::vector<double> doubles = {0.2, -2.3, 4.5};
@@ -1145,9 +1145,9 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
 
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_OneArrayDifferentSizeFails)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const std::vector<double> doubles = {0.2, -2.3, 4.5};
@@ -1164,9 +1164,9 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_OneArrayDifferentS
 
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_OneArrayWithZeroSizeFails)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const std::vector<double> doubles = {0.2, -2.3, 4.5};
@@ -1191,9 +1191,9 @@ FakeCustomStruct create_custom_struct(pb::int32 struct_int, double struct_double
 
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_OneArrayWithZeroSizePassesNull)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const auto doubles = std::vector<double>{0.2, -2.3, 4.5};
@@ -1222,9 +1222,9 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_OneAr
 
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_TwoZeroSizeArraysPassesNull)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const std::vector<double> doubles = {0.2, -2.3, 4.5};
@@ -1246,9 +1246,9 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_TwoZe
 
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_DifferentNonZeroSizesFails)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const std::vector<double> doubles = {1.2, 2.3, 4.5, 6};
@@ -1266,9 +1266,9 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_Diffe
 
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_AllEmptyArraysPassesEmpty)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const std::vector<double> empty_doubles = {};
@@ -1292,9 +1292,9 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_AllEm
 
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParametersAreMultipleTypes)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   bool a_boolean = true;
@@ -1338,9 +1338,9 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
 
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_CallsParametersAreMultipleTypes)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   bool a_boolean = true;
@@ -1383,9 +1383,9 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_C
 
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValuesNotInEnum_CallsParametersAreMultipleTypes)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   bool a_boolean = true;
@@ -1428,9 +1428,9 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValuesNo
 
 TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumberAndAString)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   std::int16_t a_number = 42;
@@ -1455,9 +1455,9 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnANumberAndAString_CallsReturnANumbe
 
 TEST(NiFakeServiceTests, NiFakeService_ReturnListOfDurationsInSeconds_CallsReturnListOfDurationsInSeconds)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 number_of_elements = 3;
@@ -1483,9 +1483,9 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnListOfDurationsInSeconds_CallsRetur
 
 TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTypes)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 array_size = 3;
@@ -1537,9 +1537,9 @@ TEST(NiFakeServiceTests, NiFakeService_ReturnMultipleTypes_CallsReturnMultipleTy
 
 TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViReal64 waveforms[] = {53.4, 42, -120.3};
@@ -1563,9 +1563,9 @@ TEST(NiFakeServiceTests, NiFakeService_WriteWaveform_CallsWriteWaveform)
 
 TEST(NiFakeServiceTests, NiFakeService_FetchWaveform_CallsFetchWaveform)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 request_number_of_samples = 4;
@@ -1595,9 +1595,9 @@ TEST(NiFakeServiceTests, NiFakeService_FetchWaveform_CallsFetchWaveform)
 // Non-int enum Tests
 TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaultsWithInvalidEnumInput_ReturnsInvalidArgument)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::MobileOSNames a_mobile_o_s_name = nifake_grpc::MOBILE_OS_NAMES_UNSPECIFIED;
@@ -1617,9 +1617,9 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
 
 TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaultsWithValidEnumInput_CallsStringValuedEnumInputFunctionWithDefaults)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::MobileOSNames a_mobile_o_s_name = nifake_grpc::MOBILE_OS_NAMES_ANDROID;
@@ -1641,9 +1641,9 @@ TEST(NiFakeServiceTests, NiFakeService_StringValuedEnumInputFunctionWithDefaults
 // Array methods using ivi-dance mechanism
 TEST(NiFakeServiceTests, NiFakeService_ExportAttributeConfigurationBuffer_CallsExportAttributeConfigurationBuffer)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt8 config_buffer[] = {'A', 'B', 'C'};
@@ -1670,9 +1670,9 @@ TEST(NiFakeServiceTests, NiFakeService_ExportAttributeConfigurationBuffer_CallsE
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceString_CallsGetAnIviDanceString)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViChar char_array[] = {'H', 'E', 'L', 'L', 'O', '\0'};
@@ -1700,9 +1700,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceString_CallsGetAnIviDanceStr
 
 TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDance_CallsGetArrayUsingIviDance)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViReal64 doubles[] = {53.4, 42, -120.3};
@@ -1729,9 +1729,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDance_CallsGetArrayUsingI
 
 TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingSizesByReturnValue_CallsGetArrayUsingIviDance)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViReal64 doubles[] = {53.4, 42, -120.3};
@@ -1765,9 +1765,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingSizesByR
 
 TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingSizesByError_CallsGetArrayUsingIviDance)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViReal64 doubles[] = {53.4, 42, -120.3};
@@ -1802,9 +1802,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDanceWithChangingSizesByE
 
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViString)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::NiFakeAttribute attributeId = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
@@ -1835,9 +1835,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViS
 
 TEST(NiFakeServiceTests, NiFakeService_GetViUInt8_CallsGetViUInt8)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViUInt8 a_ViUInt8_number = 0xFF;
@@ -1857,9 +1857,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetViUInt8_CallsGetViUInt8)
 
 TEST(NiFakeServiceTests, NiFakeService_ViUInt8ArrayInputFunction_CallsViUInt8ArrayInputFunction)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 number_of_elements = 3;
@@ -1886,9 +1886,9 @@ TEST(NiFakeServiceTests, NiFakeService_ViUInt8ArrayInputFunction_CallsViUInt8Arr
 
 TEST(NiFakeServiceTests, NiFakeService_ViUInt8ArrayOutputFunction_CallsViUInt8ArrayOutputFunction)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 number_of_elements = 3;
@@ -1913,9 +1913,9 @@ TEST(NiFakeServiceTests, NiFakeService_ViUInt8ArrayOutputFunction_CallsViUInt8Ar
 
 TEST(NiFakeServiceTests, NiFakeService_AcceptViUInt32Array_CallsAcceptViUInt32Array)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   std::uint32_t uint32_array[] = {0, 1, 0xFFFFFFFD, 0xFFFFFFFE, 0xFFFFFFFF};
@@ -1937,9 +1937,9 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViUInt32Array_CallsAcceptViUInt32Ar
 
 TEST(NiFakeServiceTests, NiFakeService_GetViInt32Array_CallsGetViInt32Array)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   int array_len = 4;
@@ -1961,9 +1961,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetViInt32Array_CallsGetViInt32Array)
 
 TEST(NiFakeServiceTests, NiFakeService_GetViUInt32Array_CallsGetViUInt32Array)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   int array_len = 4;
@@ -1985,9 +1985,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetViUInt32Array_CallsGetViUInt32Array)
 
 TEST(NiFakeServiceTests, NiFakeService_AcceptViSessionArray_CallsAcceptViSessionArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   std::array<std::uint32_t, 3> vi_session_array{12345671, 12345672, 12345673};
   auto session_name1 = create_session(library, service, vi_session_array[0]);
@@ -2025,9 +2025,9 @@ MATCHER_P2(MatchesArray, array, array_size, "")
 // Test for two-dimension mechanism to ensure we validate size correctly
 TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithCorrectSize_CallsUseATwoDimensionParameter)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 array[] = {1, 2, 2, 3, 3, 3};
@@ -2057,9 +2057,9 @@ TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithCorrectSize_CallsUseAT
 // Test for two-dimension mechanism failure when the sum of array sizes of the two dimensional array don't match the actual size
 TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithIncorrectSize_FailsUseATwoDimensionParameter)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 array[] = {1, 2, 2, 3, 3, 3};
@@ -2088,9 +2088,9 @@ TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithIncorrectSize_FailsUse
 // Test for ivi-dance-with-a-twist mechanism
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIviDanceWithATwistArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const char* a_string = "abc";
@@ -2123,9 +2123,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIv
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithWarning_CallsGetAnIviDanceWithATwistArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const char* a_string = "abc";
@@ -2161,9 +2161,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithWarning_C
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithInputArray_PassesArrayInputOnFirstPass_CallsGetAnIviDanceWithATwistArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const auto data_in = std::array<ViInt32, 4>{0, -1, 100, 5};
   ViInt32 input_size = 2;
@@ -2196,9 +2196,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithInputArra
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithBiggerSizes_CallsGetAnIviDanceWithATwistArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const char* a_string = "abc";
@@ -2241,9 +2241,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithBiggerSiz
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithSmallerSizes_CallsGetAnIviDanceWithATwistArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const char* a_string = "abc";
@@ -2277,9 +2277,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithSmallerSi
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistByteArrayWithSmallerSizes_CallsGetAnIviDanceWithATwistByteArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const auto DATA = std::vector<char>{'a', 'b'};
@@ -2312,9 +2312,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistByteArrayWithSmall
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStringWithSmallerSizes_CallsGetAnIviDanceWithATwistString)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const auto DATA = std::string("ab");
@@ -2347,9 +2347,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStringWithSmallerS
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStrlenBug_ReturnsCorrectString)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const auto DATA = std::string("abcdef");
   // Oops forgot the +1!
@@ -2377,9 +2377,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStrlenBug_ReturnsC
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStrlenBugIsFixed_ReturnsCorrectString)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const auto DATA = std::string("abcdef");
   // Someone fixed the bug to add the null terminator!
@@ -2407,9 +2407,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStrlenBugIsFixed_R
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithChangingSizesAndWarning_CallsGetAnIviDanceWithATwistArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const char* a_string = "abc";
@@ -2453,9 +2453,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithChangingS
 // Test for ivi-dance-with-a-twist mechanism
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomType_CallsGetAnIviDanceWithATwistArrayOfCustomType)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   CustomStruct array_out[] = {{-1, -2.0}, {0, 0.5}, {70000, 32768.0}};
@@ -2486,9 +2486,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomType_
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomTypeWithBiggerSizes_CallsGetAnIviDanceWithATwistArrayOfCustomType)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   CustomStruct array_out[] = {{-1, -2.0}, {0, 0.5}, {70000, 32768.0}};
@@ -2529,9 +2529,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomTypeW
 
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomTypeWithSmallerSizes_CallsGetAnIviDanceWithATwistArrayOfCustomType)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   CustomStruct array_out[] = {{-1, -2.0}, {0, 0.5}};
@@ -2563,9 +2563,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomTypeW
 
 TEST(NiFakeServiceTests, NiFakeService_AcceptViInt16Array_CallsAcceptViInt16Array)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   std::int16_t int16_array[] = {0, 1, -0x8000, 0x7FFF};
@@ -2587,9 +2587,9 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViInt16Array_CallsAcceptViInt16Arra
 
 TEST(NiFakeServiceTests, NiFakeService_SetCustomTypeArray_CallsSetCustomTypeArray)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   ViInt32 number_of_elements = 2;
@@ -2615,9 +2615,9 @@ TEST(NiFakeServiceTests, NiFakeService_SetCustomTypeArray_CallsSetCustomTypeArra
 
 TEST(NiFakeServiceTests, NiFakeService_GetArrayViUInt8WithEnum_CallsGetArrayViUInt8WithEnum)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   int array_len = 3;
@@ -2652,9 +2652,9 @@ TEST(NiFakeServiceTests, NiFakeService_GetArrayViUInt8WithEnum_CallsGetArrayViUI
 
 TEST(NiFakeServiceTests, NiFakeService_GetAttributeViSession_ReturnsSessionId)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_STRING;
@@ -2679,10 +2679,10 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViSession_ReturnsSessionId)
 
 TEST(NiFakeServiceTests, NiFakeExtensionService_CallMethodWithSesionStartedByNIFakeService_PassesThroughSession)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
   NiFakeExtensionMockLibrary extension_library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   nifake_extension_grpc::NiFakeExtensionService extension_service(&extension_library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
@@ -2705,9 +2705,9 @@ TEST(NiFakeServiceTests, NiFakeExtensionService_CallMethodWithSesionStartedByNIF
 
 TEST(NiFakeServiceTests, NiFakeService_CallMethodWithReservedPassNullParam_PassesNull)
 {
-  nidevice_grpc::SessionRepository session_repository;
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   NiFakeMockLibrary library;
-  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   EXPECT_CALL(library, CommandWithReservedParam(kTestViSession, nullptr))
@@ -2727,13 +2727,13 @@ TEST(NiFakeServiceTests, NiFakeService_CallMethodWithReservedPassNullParam_Passe
 
 struct FakeServiceHolder {
   FakeServiceHolder()
-      : session_repository(),
+      : session_repository(std::make_shared<nidevice_grpc::SessionRepository>()),
         library(),
-        resource_repository(std::make_shared<FakeResourceRepository>(&session_repository)),
+        resource_repository(std::make_shared<FakeResourceRepository>(session_repository)),
         service(&library, resource_repository)
   {
   }
-  nidevice_grpc::SessionRepository session_repository;
+  std::shared_ptr<nidevice_grpc::SessionRepository> session_repository;
   NiFakeMockLibrary library;
   std::shared_ptr<FakeResourceRepository> resource_repository;
   nifake_grpc::NiFakeService service;

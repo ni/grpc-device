@@ -26,8 +26,8 @@ class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
   using SecondaryResourceRepository = nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>;
   using FakeCrossDriverResourceRepository = nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>;
-  nidevice_grpc::SessionRepository session_repository_;
-  nidevice_grpc::SessionRepository secondary_session_repository_;
+  std::shared_ptr<nidevice_grpc::SessionRepository> session_repository_;
+  std::shared_ptr<nidevice_grpc::SessionRepository> secondary_session_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
   std::shared_ptr<SecondaryResourceRepository> secondary_resource_repository_;
   ni::tests::unit::NiFakeNonIviMockLibrary library_;
@@ -37,12 +37,12 @@ class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
   std::atomic<bool> shutdown_{false};
 
   NiFakeNonIviServiceTests_EndToEnd()
-      : session_repository_(),
-        resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
-        secondary_session_repository_(),
-        secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(&secondary_session_repository_)),
+      : session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        resource_repository_(std::make_shared<FakeResourceRepository>(session_repository_)),
+        secondary_session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(secondary_session_repository_)),
         library_(),
-        service_(&library_, resource_repository_, std::make_shared<FakeCrossDriverResourceRepository>(&session_repository_), std::make_shared<FakeCrossDriverResourceRepository>(&secondary_session_repository_)),
+        service_(&library_, resource_repository_, std::make_shared<FakeCrossDriverResourceRepository>(session_repository_), std::make_shared<FakeCrossDriverResourceRepository>(secondary_session_repository_)),
         server_(start_server()),
         stub_(NiFakeNonIvi::NewStub(server_->InProcessChannel(::grpc::ChannelArguments())))
   {
