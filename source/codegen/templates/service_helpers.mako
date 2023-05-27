@@ -173,7 +173,7 @@ ${populate_response(function_data=function_data, parameters=parameters, indent_l
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, ${service_helpers.create_param_type_list(callback_parameters)}>;
     class ${function_name}Reactor : public nidevice_grpc::ServerWriterReactor<${response_type}, nidevice_grpc::CallbackRegistration> {
     public:
-    ${function_name}Reactor(::grpc::CallbackServerContext* context, const ${request_type}* request, ${driver_library_interface}* library, ${service_class}* service)
+    ${function_name}Reactor(::grpc::CallbackServerContext* context, const ${request_type}* request, LibrarySharedPtr library, ${service_class}* service)
     {
       auto status = start(context, request, library, service);
       if (!status.ok()) {
@@ -181,7 +181,7 @@ ${populate_response(function_data=function_data, parameters=parameters, indent_l
       }
     }
 
-    ::grpc::Status start(::grpc::CallbackServerContext* context, const ${request_type}* request, ${driver_library_interface}* library, ${service_class}* service)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const ${request_type}* request, LibrarySharedPtr library, ${service_class}* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(

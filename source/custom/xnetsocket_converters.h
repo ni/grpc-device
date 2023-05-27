@@ -286,6 +286,10 @@ struct VirtualInterfaceOutputConverter {
   {
   }
 
+  VirtualInterfaceOutputConverter(const std::shared_ptr<NiXnetSocketLibraryInterface>& library) : VirtualInterfaceOutputConverter(library.get())
+  {
+  }
+
   nxVirtualInterface_t** operator&()
   {
     return &virtual_interface_ptr;
@@ -489,6 +493,10 @@ struct SockOptDataOutputConverter {
   {
   }
 
+  SockOptDataOutputConverter(const std::shared_ptr<NiXnetSocketLibraryInterface>& library, int32_t opt_name) : SockOptDataOutputConverter(library.get(), opt_name)
+  {
+  }
+
   void* data()
   {
     switch (opt_name) {
@@ -651,6 +659,10 @@ struct AddrInfoOutputConverter {
   {
   }
 
+  AddrInfoOutputConverter(const std::shared_ptr<NiXnetSocketLibraryInterface>& library) : AddrInfoOutputConverter(library.get())
+  {
+  }
+
   nxaddrinfo** operator&()
   {
     return &addr_info_ptr;
@@ -689,6 +701,10 @@ inline void convert_to_grpc(AddrInfoOutputConverter& storage, pb_::RepeatedPtrFi
 // Trivial converter implementation for strings that calls IpStackFreeAllStacksInfoStr after to_grpc.
 struct IpStackInfoStringOutputConverter {
   IpStackInfoStringOutputConverter(NiXnetSocketLibraryInterface* library) : library(library)
+  {
+  }
+
+  IpStackInfoStringOutputConverter(const std::shared_ptr<NiXnetSocketLibraryInterface>& library) : IpStackInfoStringOutputConverter(library.get())
   {
   }
 
