@@ -38,7 +38,7 @@ enum ${common_helpers.get_attribute_enum_name(group_name, sub_group, config)} {
 ## Define a bitfield enum used in the attributes metadata.
 <%def name="define_bitfield_enum(name, enum_data)">\
 enum ${name}Attribute {
-%   for enum_value in enum_data["Values"]:
+%   for enum_value in enum_data["values"]:
   ${name}_${enum_value["name"]} = ${enum_value["value"]};
 %   endfor
 }

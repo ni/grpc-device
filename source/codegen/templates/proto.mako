@@ -49,7 +49,7 @@ service ${service_class_prefix} {
 ${mako_helper.define_attribute_enum(group.name, define_attribute_enum, attributes, config)}\
 %   endfor
 % endfor
-% for name, bitfield_enum in common_helpers.get_bitfield_enum_groups(data):
+% for name, bitfield_enum in common_helpers.get_bitfield_enum_groups(data).items():
 ${mako_helper.define_bitfield_enum(name, bitfield_enum)}\
 %endfor
 ${mako_helper.define_function_enums(function_enums)}\
