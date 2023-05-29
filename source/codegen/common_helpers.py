@@ -881,7 +881,7 @@ class AttributeGroup:  # noqa: D101
         self.attributes = attributes
         self._config = config
 
-    def get_attributes_split_by_sub_group(self, additional_metadata=None):
+    def get_attributes_split_by_sub_group(self):
         """Split attributes by type, with an added "Reset" sub-group for resettable attributes."""
         if not get_split_attributes_by_type(self._config):
             return {"": self.attributes}
@@ -896,10 +896,19 @@ class AttributeGroup:  # noqa: D101
             categorized_attributes[data_type][id] = data
             if data.get("resettable", False):
                 categorized_attributes["Reset"][id] = data
-        if self.name in additional_metadata:
-            for id, data in additional_metadata[self.name].items():
-                categorized_attributes[data["type"]][id] = data
         return categorized_attributes
+
+def get_bitfield_enum_groups(data):
+    """Gets the bitfield enum groups to be added to the protofile."""
+    attributes = data["attributes"]
+    enums = data["enums"]
+    bit_field_enum_groups=[]
+    for id, attribute in attributes.items():
+        if "bitfield_enum" in attribute:
+            enum_name = attribute["bitfield_enum"].replace('_', '')
+            if enum_name in enums:
+                bit_field_enum_groups[enum_name] = enums[enum_name]
+    return bit_field_enum_groups
 
 
 def get_attribute_enum_suffix(config: dict) -> str:

@@ -5,7 +5,6 @@ import proto_helpers
 config = data["config"]
 enums = data["enums"]
 functions = data["functions"]
-additional_attributes = data.get("additional_attributes", None)
 
 service_class_prefix = config["service_class_prefix"]
 function_enums = common_helpers.get_function_enums(functions, enums)
@@ -46,10 +45,13 @@ service ${service_class_prefix} {
 }
 
 % for group in common_helpers.get_attribute_groups(data):
-%   for define_attribute_enum, attributes in group.get_attributes_split_by_sub_group(additional_attributes).items():
+%   for define_attribute_enum, attributes in group.get_attributes_split_by_sub_group().items():
 ${mako_helper.define_attribute_enum(group.name, define_attribute_enum, attributes, config)}\
 %   endfor
 % endfor
+% for name, bitfield_enum in common_helpers.get_bitfield_enum_groups(data):
+${mako_helper.define_bitfield_enum(name, bitfield_enum)}\
+%endfor
 ${mako_helper.define_function_enums(function_enums)}\
 ${mako_helper.insert_custom_template_if_found()}\
 % for custom_type in common_helpers.get_custom_types(config):
