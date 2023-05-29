@@ -902,12 +902,13 @@ def get_bitfield_enum_groups(data):
     """Gets the bitfield enum groups to be added to the protofile."""
     attributes = data["attributes"]
     enums = data["enums"]
-    bit_field_enum_groups=[]
-    for id, attribute in attributes.items():
-        if "bitfield_enum" in attribute:
-            enum_name = attribute["bitfield_enum"].replace('_', '')
-            if enum_name in enums:
-                bit_field_enum_groups[enum_name] = enums[enum_name]
+    bit_field_enum_groups={}
+    for group_name, attribute_data in attributes.items():
+        for id, attribute in attribute_data.items():
+            if "bitfield_enum" in attribute:
+                enum_name = attribute["bitfield_enum"].replace('_', '')
+                if enum_name in enums:
+                    bit_field_enum_groups[enum_name] = enums[enum_name]
     return bit_field_enum_groups
 
 
