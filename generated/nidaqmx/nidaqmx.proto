@@ -1712,12 +1712,6 @@ enum DeviceInt32Attribute {
   DEVICE_ATTRIBUTE_NAV_ALT_REF = 12329;
   DEVICE_ATTRIBUTE_NAV_ANT_STATUS = 12334;
   DEVICE_ATTRIBUTE_NAV_CURRENT_UTC_OFFSET = 12336;
-  DEVICE_ATTRIBUTE_TRIGGER_USAGE_HANDSHAKE = 10389;
-  DEVICE_ATTRIBUTE_TRIGGER_USAGE_ADVANCE = 12488;
-  DEVICE_ATTRIBUTE_TRIGGER_USAGE_PAUSE = 12489;
-  DEVICE_ATTRIBUTE_TRIGGER_USAGE_REFERENCE = 12490;
-  DEVICE_ATTRIBUTE_TRIGGER_USAGE_START = 12491;
-  DEVICE_ATTRIBUTE_TRIGGER_USAGE_ARM_START = 14641;
 }
 
 enum DeviceDoubleAttribute {
@@ -2839,6 +2833,31 @@ enum WriteStringAttribute {
   WRITE_ATTRIBUTE_OVERLOADED_CHANS = 12421;
   WRITE_ATTRIBUTE_EXTERNAL_OVERVOLTAGE_CHANS = 12476;
   WRITE_ATTRIBUTE_SYNC_UNLOCKED_CHANS = 12608;
+}
+
+enum TriggerUsageTypesAttribute {
+  TriggerUsageTypes_ADVANCE = 1;
+  TriggerUsageTypes_PAUSE = 2;
+  TriggerUsageTypes_REFERENCE = 4;
+  TriggerUsageTypes_START = 8;
+  TriggerUsageTypes_HANDSHAKE = 16;
+  TriggerUsageTypes_ARM_START = 32;
+}
+
+enum CouplingTypesAttribute {
+  CouplingTypes_AC = 1;
+  CouplingTypes_DC = 2;
+  CouplingTypes_GROUND = 4;
+  CouplingTypes_HF_REJECT = 8;
+  CouplingTypes_LF_REJECT = 16;
+  CouplingTypes_NOISE_REJECT = 32;
+}
+
+enum TermCfgAttribute {
+  TermCfg_RSE = 1;
+  TermCfg_NRSE = 2;
+  TermCfg_DIFF = 4;
+  TermCfg_PSEUDO_DIFF = 8;
 }
 
 enum ACExcitWireMode {
