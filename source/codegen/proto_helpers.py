@@ -238,9 +238,9 @@ def get_parameters(function):
     default_status_param = {"name": "status", "type": "int32", "grpc_type": "int32"}
     output_parameters = [default_status_param]
 
-    callback_parameters = _get_callback_output_params(function)
+    if common_helpers.has_async_streaming_response(function):
+        callback_parameters = _get_callback_output_params(function)
 
-    if callback_parameters:
         if any((p for p in callback_parameters if p["name"] == "status")):
             # if the callback provides a status, it can override default_status_param.
             output_parameters = callback_parameters

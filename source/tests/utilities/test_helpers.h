@@ -28,6 +28,17 @@
     }                                                                                          \
   }, nidevice_grpc::experimental::client::grpc_driver_error)
 
+#define EXPECT_THROW_GRPC_CANCELLED(statement_)                                \
+  EXPECT_THROW({                                                               \
+    try {                                                                      \
+      statement_;                                                              \
+    }                                                                          \
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) { \
+      EXPECT_EQ(::grpc::CANCELLED, ex.StatusCode());                           \
+      throw;                                                                   \
+    }                                                                          \
+  }, nidevice_grpc::experimental::client::grpc_driver_error)
+
 #define EXPECT_DRIVER_ERROR(exception_, expected_error_)             \
   do {                                                               \
     EXPECT_EQ(::grpc::StatusCode::UNKNOWN, exception_.StatusCode()); \
