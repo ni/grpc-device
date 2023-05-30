@@ -13,24 +13,6 @@
 
 namespace nirfmxwcdma_grpc {
 
-namespace {
-struct LibraryAndService {
-  LibraryAndService(
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>& resource_repository,
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& vi_session_resource_repository,
-    const NiRFmxWCDMAFeatureToggles& feature_toggles)
-      : library(std::make_shared<NiRFmxWCDMALibrary>()),
-      service(std::make_shared<NiRFmxWCDMAService>(
-        library,
-        resource_repository,
-        vi_session_resource_repository,
-        feature_toggles)) {
-  }
-  std::shared_ptr<NiRFmxWCDMALibrary> library;
-  std::shared_ptr<NiRFmxWCDMAService> service;
-};
-}
-
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>& resource_repository,
@@ -41,13 +23,14 @@ std::shared_ptr<void> register_service(
 
   if (toggles.is_enabled)
   {
-    auto library_and_service_ptr = std::make_shared<LibraryAndService>(
+    auto library = std::make_shared<NiRFmxWCDMALibrary>();
+    auto service = std::make_shared<NiRFmxWCDMAService>(
+      library,
       resource_repository,
       vi_session_resource_repository,
       toggles);
-    auto& service = library_and_service_ptr->service;
     builder.RegisterService(service.get());
-    return library_and_service_ptr;
+    return service;
   }
 
   return {};

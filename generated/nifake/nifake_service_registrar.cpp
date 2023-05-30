@@ -13,22 +13,6 @@
 
 namespace nifake_grpc {
 
-namespace {
-struct LibraryAndService {
-  LibraryAndService(
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
-    const NiFakeFeatureToggles& feature_toggles)
-      : library(std::make_shared<NiFakeLibrary>()),
-      service(std::make_shared<NiFakeService>(
-        library,
-        resource_repository,
-        feature_toggles)) {
-  }
-  std::shared_ptr<NiFakeLibrary> library;
-  std::shared_ptr<NiFakeService> service;
-};
-}
-
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
@@ -38,12 +22,13 @@ std::shared_ptr<void> register_service(
 
   if (toggles.is_enabled)
   {
-    auto library_and_service_ptr = std::make_shared<LibraryAndService>(
+    auto library = std::make_shared<NiFakeLibrary>();
+    auto service = std::make_shared<NiFakeService>(
+      library,
       resource_repository,
       toggles);
-    auto& service = library_and_service_ptr->service;
     builder.RegisterService(service.get());
-    return library_and_service_ptr;
+    return service;
   }
 
   return {};
