@@ -501,6 +501,10 @@ def get_attribute_enums_by_type(attributes):
         if "enum" in attribute:
             attribute_type = get_underlying_type(attribute)
             enum_name = attribute["enum"]
+            if "bitfield_enum" in attribute:
+                enum_name = attribute["bitfield_enum"]
+                if enum_name.startswith("_"):  # nidaqmx-python uses a leading underscore
+                    enum_name = enum_name[1:]
             attribute_enums_by_type[attribute_type].add(enum_name)
     return attribute_enums_by_type
 
@@ -897,20 +901,6 @@ class AttributeGroup:  # noqa: D101
             if data.get("resettable", False):
                 categorized_attributes["Reset"][id] = data
         return categorized_attributes
-
-
-def get_bitfield_enum_groups(data):
-    """Get the bitfield enum groups to be added to the protofile."""
-    attributes = data["attributes"]
-    enums = data["enums"]
-    bit_field_enum_groups = {}
-    for group_name, attribute_data in attributes.items():
-        for id, attribute in attribute_data.items():
-            if "bitfield_enum" in attribute:
-                enum_name = attribute["bitfield_enum"].replace("_", "")
-                if enum_name in enums:
-                    bit_field_enum_groups[enum_name] = enums[enum_name]
-    return bit_field_enum_groups
 
 
 def get_attribute_enum_suffix(config: dict) -> str:

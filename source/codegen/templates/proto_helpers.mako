@@ -34,17 +34,6 @@ enum ${common_helpers.get_attribute_enum_name(group_name, sub_group, config)} {
 % endif
 </%def>
 
-
-## Define a bitfield enum used in the attributes metadata.
-<%def name="define_bitfield_enum(name, enum_data)">\
-enum ${name}Attribute {
-%   for enum_value in enum_data["values"]:
-  ${name}_${enum_value["name"]} = ${enum_value["value"]};
-%   endfor
-}
-
-</%def>
-
 ## Define enums in the proto for each metadata enum referenced in a proto message.
 <%def name="define_function_enums(function_enums)">\
 <%
