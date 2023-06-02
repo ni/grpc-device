@@ -1527,7 +1527,7 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireDataWit
   wait_until_done();
   stop_task();
   ReadAnalogF64Response read_response;
-  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);;
+  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
 
   EXPECT_EQ(EXPECTED_ERROR_STATUS, read_status.status());
 }
