@@ -1651,6 +1651,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithNonBufferedTask_St
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES);
+  reader->WaitForInitialMetadata();
 
   EXPECT_THROW_DRIVER_ERROR({
     start_task();
@@ -1664,6 +1665,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Rea
   cfg_samp_clk_timing(); // Every N Samples requires a buffered task (validated in start_task)
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
+  reader->WaitForInitialMetadata();
 
   RegisterEveryNSamplesEventResponse response;
   EXPECT_THROW_DRIVER_ERROR({
@@ -1678,6 +1680,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Fin
   cfg_samp_clk_timing(); // Every N Samples requires a buffered task (validated in start_task)
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
+  reader->WaitForInitialMetadata();
 
   EXPECT_THROW_DRIVER_ERROR({
     auto status = reader->Finish();
@@ -1691,6 +1694,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredWithWrongEventType_Can
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES, EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_TRANSFERRED_FROM_BUFFER);
+  reader->WaitForInitialMetadata();
 
   reader_context.TryCancel();
 }
@@ -1875,6 +1879,7 @@ TEST_F(NiDAQmxDriverApiTests, DoneEventRegisteredAndTaskRunning_UnregisterDoneEv
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
   auto reader = register_done_event(reader_context);
+  reader->WaitForInitialMetadata();
   start_task();
 
   EXPECT_THROW_DRIVER_ERROR({
@@ -1889,6 +1894,7 @@ TEST_F(NiDAQmxDriverApiTests, EveryNSamplesEventRegisteredAndTaskRunning_Unregis
   cfg_samp_clk_timing(); // Every N Samples requires a buffered task (validated in start_task)
   ::grpc::ClientContext reader_context;
   auto reader = register_every_n_samples_event(reader_context, N_SAMPLES);
+  reader->WaitForInitialMetadata();
   start_task();
 
   EXPECT_THROW_DRIVER_ERROR({
@@ -1901,6 +1907,7 @@ TEST_F(NiDAQmxDriverApiTests, SignalEventRegisteredAndTaskRunning_UnregisterSign
   create_ai_voltage_chan(0.0, 1.0);
   ::grpc::ClientContext reader_context;
   auto reader = register_signal_event(reader_context, Signal2::SIGNAL2_SAMPLE_COMPLETE_EVENT);
+  reader->WaitForInitialMetadata();
   start_task();
 
   EXPECT_THROW_DRIVER_ERROR({
