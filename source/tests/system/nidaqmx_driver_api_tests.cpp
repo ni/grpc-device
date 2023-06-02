@@ -1511,14 +1511,14 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Su
   EXPECT_EQ(NUM_SAMPS, read_response.samps_per_chan_read());
 }
 
-TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireDataWithMinimumTimeout_SampleNotAvailableErrorIsRaised)
+TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireDataWithMinimumTimeout_SampleNotAvailableStatusIsReturned)
 {
   create_ai_voltage_chan(0.0, 1.0);
   const auto TIMEOUT = 100.0;
   const auto SAMPLE_RATE = 1000.0;
   const auto SAMPLES_PER_CHAN = 60000UL;
   const auto NUM_SAMPS = 60000;
-  const auto EXPECTED_ERROR_STATUS = -200284
+  const auto EXPECTED_ERROR_STATUS = -200284;
 
   CfgSampClkTimingResponse response;
   auto config_status = cfg_samp_clk_tifing(
