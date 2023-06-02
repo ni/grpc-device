@@ -104,15 +104,10 @@ TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
 TEST_F(NiRFSGSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     rfsg::InitWithOptionsResponse init_response;
     call_init_with_options(kRFSGTestInvalidRsrc, "", "", &init_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRsrc);
-    EXPECT_STREQ(kRFSGErrorResourceNotFoundMessage, ex.what());
-  }
+  }, kInvalidRsrc, kRFSGErrorResourceNotFoundMessage);
 }
 
 TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
@@ -120,18 +115,14 @@ TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     ::grpc::ClientContext context;
     rfsg::CloseRequest request;
     request.mutable_vi()->set_name(session.name());
     rfsg::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRFSGSession);
-  }
+  }, kInvalidRFSGSession);
 }
 
 }  // namespace system

@@ -118,15 +118,10 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     dcpower::InitializeWithChannelsResponse response;
     call_initialize_with_channels(kTestInvalidRsrc, "", "", &response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRsrc);
-    EXPECT_STRNE("", ex.what());
-  }
+  }, kInvalidRsrc);
 }
 
 TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -152,32 +147,22 @@ TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     ::grpc::ClientContext context;
     dcpower::CloseRequest request;
     request.mutable_vi()->set_name(session.name());
     dcpower::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidDCPowerSession);
-    EXPECT_THAT(ex.what(), HasSubstr(kInvalidDCPowerSessionMessage));
-  }
+  }, kInvalidDCPowerSession, kInvalidDCPowerSessionMessage);
 }
 
 TEST_F(NiDCPowerSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     dcpower::InitializeWithChannelsResponse initialize_response;
     call_initialize_with_channels(kTestInvalidRsrc, "", "", &initialize_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRsrc);
-    EXPECT_STREQ(kViErrorResourceNotFoundMessage, ex.what());
-  }
+  }, kInvalidRsrc, kViErrorResourceNotFoundMessage);
 }
 
 }  // namespace system

@@ -95,28 +95,25 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSess
 // afterwards will fail to get the error_message if the request is handled on a different thread.
 TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     rfmxspecan::InitializeResponse init_response;
     call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &init_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRsrc);
-    EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, ex.what());
-  }
+  }, kInvalidRsrc, kRFmxSpecAnErrorResourceNotFoundMessage);
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReinitSuccessfully_ErrorMessageIsEmpty)
 {
-  try {
-    rfmxspecan::InitializeResponse failed_init_response;
-    call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, ex.what());
-  }
+  EXPECT_THROW({
+    try {
+      rfmxspecan::InitializeResponse failed_init_response;
+      call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
+    }
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+      EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+      EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, ex.what());
+      throw;
+    }
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
 
   rfmxspecan::InitializeResponse successful_init_response;
   auto status_two = call_initialize(kRFmxSpecAnTestRsrc, kRFmxSpecAnOptionsString, kRFmxSpecAnTestSession, &successful_init_response);
@@ -131,7 +128,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessio
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     ::grpc::ClientContext context;
     rfmxspecan::CloseRequest request;
     request.mutable_instrument()->set_name(session.name());
@@ -139,11 +136,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessio
     rfmxspecan::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidRFmxSpecAnSession);
-  }
+  }, kInvalidRFmxSpecAnSession);
 }
 
 }  // namespace system

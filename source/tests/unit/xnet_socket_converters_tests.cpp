@@ -126,15 +126,15 @@ TEST(XnetSocketConvertersTests, UnsetGrpcSockAddr_ConvertFromGrpc_CreatesEmptySo
 using ResourceRepositorySharedPtr = ResourceRepositorySharedPtr_;
 struct ResourceRepositoryHolder {
   ResourceRepositoryHolder()
-      : session_repository(std::make_unique<nidevice_grpc::SessionRepository>()),
-        resource_repository(std::make_shared<nidevice_grpc::SessionResourceRepository<nxSOCKET>>(session_repository.get()))
+      : session_repository(std::make_shared<nidevice_grpc::SessionRepository>()),
+        resource_repository(std::make_shared<nidevice_grpc::SessionResourceRepository<nxSOCKET>>(session_repository))
   {
   }
   operator ResourceRepositorySharedPtr()
   {
     return resource_repository;
   }
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository;
+  std::shared_ptr<nidevice_grpc::SessionRepository> session_repository;
   ResourceRepositorySharedPtr resource_repository;
 };
 

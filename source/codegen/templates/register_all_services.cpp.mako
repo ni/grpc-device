@@ -41,7 +41,7 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
 
 % for type_name, config in repository_type_to_config.items():
 <%block filter="common_helpers.os_conditional_compile_block(config)">\
-  auto ${config["local_name"]} = std::make_shared<nidevice_grpc::SessionResourceRepository<${type_name}>>(session_repository.get());
+  auto ${config["local_name"]} = std::make_shared<nidevice_grpc::SessionResourceRepository<${type_name}>>(session_repository);
 </%block>\
 % endfor
 

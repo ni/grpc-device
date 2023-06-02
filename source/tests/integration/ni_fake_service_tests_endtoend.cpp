@@ -20,7 +20,7 @@ const auto kDriverSuccess = 0U;
 class NiFakeServiceTests_EndToEnd : public ::testing::Test {
  public:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<ViSession>;
-  nidevice_grpc::SessionRepository session_repository_;
+  std::shared_ptr<nidevice_grpc::SessionRepository> session_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
   ni::tests::unit::NiFakeMockLibrary library_;
   NiFakeService service_;
@@ -29,8 +29,8 @@ class NiFakeServiceTests_EndToEnd : public ::testing::Test {
   std::atomic<bool> shutdown_{false};
 
   NiFakeServiceTests_EndToEnd()
-      : session_repository_(),
-        resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
+      : session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        resource_repository_(std::make_shared<FakeResourceRepository>(session_repository_)),
         library_(),
         service_(&library_, resource_repository_),
         server_(start_server()),

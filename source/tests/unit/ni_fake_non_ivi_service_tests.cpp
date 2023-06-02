@@ -164,8 +164,8 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
   using SecondaryResourceRepository = nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>;
   using FakeCrossDriverResourceRepository = nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>;
-  nidevice_grpc::SessionRepository session_repository_;
-  nidevice_grpc::SessionRepository secondary_session_repository_;
+  std::shared_ptr<nidevice_grpc::SessionRepository> session_repository_;
+  std::shared_ptr<nidevice_grpc::SessionRepository> secondary_session_repository_;
   std::shared_ptr<FakeCrossDriverResourceRepository> cross_driver_resource_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
   std::shared_ptr<SecondaryResourceRepository> secondary_resource_repository_;
@@ -173,11 +173,11 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
   NiFakeNonIviService service_;
 
   NiFakeNonIviServiceTests(const nidevice_grpc::FeatureToggles& feature_toggles = {})
-      : session_repository_(),
-        secondary_session_repository_(),
-        cross_driver_resource_repository_(std::make_shared<FakeCrossDriverResourceRepository>(&session_repository_)),
-        resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
-        secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(&secondary_session_repository_)),
+      : session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        secondary_session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        cross_driver_resource_repository_(std::make_shared<FakeCrossDriverResourceRepository>(session_repository_)),
+        resource_repository_(std::make_shared<FakeResourceRepository>(session_repository_)),
+        secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(secondary_session_repository_)),
         library_(),
         service_(
             &library_,
@@ -1640,7 +1640,7 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_ResetServer_RemovesBothSe
   request.set_session_name(CROSS_DRIVER_SESSION_NAME);
   service_.GetCrossDriverSession(&context, &request, &response);
 
-  session_repository_.reset_server();
+  session_repository_->reset_server();
 
   EXPECT_EQ(cross_driver_resource_repository_->access_session(CROSS_DRIVER_SESSION_NAME), 0);
   EXPECT_EQ(resource_repository_->access_session(INITIATING_SESSION_NAME), 0);

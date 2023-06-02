@@ -42,14 +42,7 @@
   })((session_), (response_))
 
 #define EXPECT_ERROR(expected_error_, message_substring_, session_, response_call_) \
-  try {                                                                             \
-    response_call_;                                                                 \
-    FAIL() << "We shouldn't get here.";                                             \
-  }                                                                                 \
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {        \
-    expect_driver_error(ex, expected_error_);                                       \
-    EXPECT_THAT(ex.what(), HasSubstr(message_substring_));                          \
-  }
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR(response_call_, expected_error_, message_substring_)
 
 #define EXPECT_WARNING(expected_warning_, message_substring_, session_, response_)               \
   ([this](auto expected_warning, const auto& message_substring, auto& session, auto& response) { \

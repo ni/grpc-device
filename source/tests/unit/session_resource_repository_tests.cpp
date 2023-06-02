@@ -29,9 +29,8 @@ std::string add_session_resource(
 
 TEST(SessionResourceRepositoryTests, AddSessionResource_ResourceIsAdded)
 {
-  SessionRepository repository;
-  SessionResourceRepository<uint64_t> resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<uint64_t> resource_repository(repository);
 
   const uint64_t kResourceHandle = 0x1111222233334444;
   std::string session_name("session");
@@ -50,14 +49,13 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_ResourceIsAdded)
       resource_repository.access_session(session_name));
   EXPECT_EQ(
       session_name,
-      repository.access_session(session_name));
+      repository->access_session(session_name));
 }
 
 TEST(SessionResourceRepositoryTests, AddTwoSessionsWithSameResourceHandle_RemoveOneSession_ResourceStillAccessible)
 {
-  SessionRepository repository;
-  SessionResourceRepository<uint64_t> resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<uint64_t> resource_repository(repository);
   const uint64_t kResourceHandle = 0x1234;
   auto session_name_one = add_session_resource(resource_repository, kResourceHandle);
   auto session_name_two = add_session_resource(resource_repository, kResourceHandle);
@@ -81,37 +79,35 @@ TEST(SessionResourceRepositoryTests, AddTwoSessionsWithSameResourceHandle_Remove
 
 TEST(SessionResourceRepositoryTests, SessionResource_RemoveSession_ResourceIsRemoved)
 {
-  SessionRepository repository;
-  SessionResourceRepository<uint16_t> resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<uint16_t> resource_repository(repository);
   const uint16_t kResourceHandle = 0x1234;
   auto session_name = add_session_resource(resource_repository, kResourceHandle);
 
-  repository.remove_session(session_name);
+  repository->remove_session(session_name);
 
   EXPECT_EQ(
       kNoSession,
       resource_repository.access_session(session_name));
   EXPECT_EQ(
       kNoSessionName,
-      repository.access_session(session_name));
+      repository->access_session(session_name));
 }
 
 TEST(SessionResourceRepositoryTests, SessionResource_RemoveFromResourceRepository_ResourceIsRemoved)
 {
-  SessionRepository repository;
-  SessionResourceRepository<int64_t> resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<int64_t> resource_repository(repository);
   const int64_t kResourceHandle = 68686868;
   auto session_name = add_session_resource(resource_repository, kResourceHandle);
 
   // Remove from the SessionResourceRepository and ensure that it removes from the
-  // SessionRepository and SessionResourceRepository.
+  // SessionRepository and SessionResourceRepository->
   resource_repository.remove_session(session_name);
 
   EXPECT_EQ(
       kNoSessionName,
-      repository.access_session(session_name));
+      repository->access_session(session_name));
   EXPECT_EQ(
       0,
       resource_repository.access_session(session_name));
@@ -122,13 +118,12 @@ TEST(SessionResourceRepositoryTests, SessionResource_RemoveFromResourceRepositor
 
 TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_ResourceIsRemoved)
 {
-  SessionRepository repository;
-  SessionResourceRepository<int64_t> resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<int64_t> resource_repository(repository);
   const int64_t kResourceHandle = -9847465247263584;
   auto session_name = add_session_resource(resource_repository, kResourceHandle);
 
-  repository.reset_server();
+  repository->reset_server();
 
   EXPECT_EQ(
       kNoSession,
@@ -137,9 +132,8 @@ TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_ResourceIsRemov
 
 TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_CleanupIsCalled)
 {
-  SessionRepository repository;
-  SessionResourceRepository<int64_t> resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<int64_t> resource_repository(repository);
   bool cleanup_called = false;
   std::string session_name;
   resource_repository.add_session(
@@ -148,16 +142,15 @@ TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_CleanupIsCalled
       [&](int64_t) { cleanup_called = true; });
   EXPECT_FALSE(cleanup_called);
 
-  repository.reset_server();
+  repository->reset_server();
 
   EXPECT_TRUE(cleanup_called);
 }
 
 TEST(SessionResourceRepositoryTests, AddSessionResourceWithErrrOnInit_ResourceIsNotAdded)
 {
-  SessionRepository repository;
-  SessionResourceRepository<int32_t> resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<int32_t> resource_repository(repository);
 
   const int32_t kErrorCode = 9999;
   std::string session_name;
@@ -172,11 +165,9 @@ TEST(SessionResourceRepositoryTests, AddSessionResourceWithErrrOnInit_ResourceIs
 
 TEST(SessionResourceRepositoryTests, MultipleResourceRepositories_AddResourceToEach_ResourcesAreAded)
 {
-  SessionRepository repository;
-  SessionResourceRepository<int32_t> int_resource_repository(
-      &repository);
-  SessionResourceRepository<std::string> string_resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<int32_t> int_resource_repository(repository);
+  SessionResourceRepository<std::string> string_resource_repository(repository);
 
   const int32_t kIntResourceHandle = -123456;
   auto int_session_name = add_session_resource(
@@ -197,9 +188,8 @@ TEST(SessionResourceRepositoryTests, MultipleResourceRepositories_AddResourceToE
 
 TEST(SessionResourceRepositoryTests, AddMultipleResources_ResourcesAreAdded)
 {
-  SessionRepository repository;
-  SessionResourceRepository<int32_t> resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<int32_t> resource_repository(repository);
 
   const int32_t kResourceHandle1 = -123456;
   auto session_name_1 = add_session_resource(
@@ -220,11 +210,9 @@ TEST(SessionResourceRepositoryTests, AddMultipleResources_ResourcesAreAdded)
 
 TEST(SessionResourceRepositoryTests, AddSessionResource_AccessFromDifferentRepository_DoesNotReturnSession)
 {
-  SessionRepository repository;
-  SessionResourceRepository<int32_t> resource_repository(
-      &repository);
-  SessionResourceRepository<int32_t> other_resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<int32_t> resource_repository(repository);
+  SessionResourceRepository<int32_t> other_resource_repository(repository);
   const int32_t kResourceHandle1 = -123456;
   auto session_name = add_session_resource(
       resource_repository,
@@ -238,11 +226,9 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AccessFromDifferentRepos
 
 TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFromDifferentRepository_ThrowsSessionException)
 {
-  SessionRepository repository;
-  SessionResourceRepository<int32_t> resource_repository(
-      &repository);
-  SessionResourceRepository<int32_t> other_resource_repository(
-      &repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<int32_t> resource_repository(repository);
+  SessionResourceRepository<int32_t> other_resource_repository(repository);
   const int32_t kResourceHandle1 = -123456;
   std::string kTestResource("test_resource");
   auto result = resource_repository.add_session(
@@ -253,21 +239,19 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
   const int32_t kErrorCode = 9999;
   using MockInitDelegate = ::testing::MockFunction<std::tuple<int32_t, int32_t>(void)>;
   MockInitDelegate mock_init;
-  EXPECT_THROW(
-      {
-        try {
-          result = other_resource_repository.add_session(
-              kTestResource,
-              mock_init.AsStdFunction(),
-              [](int32_t handle) { FAIL() << "Unexpected Cleanup"; });
-        }
-        catch (const nidevice_grpc::SessionException& ex) {
-          const std::string expected_message("The session name \"" + kTestResource + "\" is being used by a different driver.");
-          EXPECT_STREQ(expected_message.c_str(), ex.what());
-          throw;
-        }
-      },
-      nidevice_grpc::SessionException);
+  EXPECT_THROW({
+    try {
+      result = other_resource_repository.add_session(
+          kTestResource,
+          mock_init.AsStdFunction(),
+          [](int32_t handle) { FAIL() << "Unexpected Cleanup"; });
+    }
+    catch (const nidevice_grpc::SessionException& ex) {
+      const std::string expected_message("The session name \"" + kTestResource + "\" is being used by a different driver.");
+      EXPECT_STREQ(expected_message.c_str(), ex.what());
+      throw;
+    }
+  }, nidevice_grpc::SessionException);
 }
 
 template <typename TResource>
@@ -305,8 +289,8 @@ TEST(SessionResourceRepositoryTests, SessionAlreadyInResourceRepository_AddDepen
 {
   constexpr auto DUPE_SESSION_HANDLE = 1234U;
   constexpr auto INITIATING_SESSION_HANDLE = 5678U;
-  SessionRepository repository;
-  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<uint32_t> resource_repository(repository);
   const auto initiating_session_name = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto primary_with_dupe_session_name = simple_add_session(resource_repository, "primary_session_with_dupe_handle", DUPE_SESSION_HANDLE);
 
@@ -323,8 +307,8 @@ TEST(SessionResourceRepositoryTests, AddDependentSession_DependentSessionIsNotRe
 {
   constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
   constexpr auto INITIATING_SESSION_HANDLE = 5678U;
-  SessionRepository repository;
-  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<uint32_t> resource_repository(repository);
   const auto initiating_session_name = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto dupe_dependent_session_name = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_name, DEPENDENT_SESSION_HANDLE);
 
@@ -335,8 +319,8 @@ TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveDependentSession_
 {
   constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
   constexpr auto INITIATING_SESSION_HANDLE = 5678U;
-  SessionRepository repository;
-  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<uint32_t> resource_repository(repository);
   const auto initiating_session_name = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto dependent_session_name = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_name, DEPENDENT_SESSION_HANDLE);
 
@@ -349,8 +333,8 @@ TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveInitiatingSession
 {
   constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
   constexpr auto INITIATING_SESSION_HANDLE = 5678U;
-  SessionRepository repository;
-  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  auto repository = std::make_shared<SessionRepository>();
+  SessionResourceRepository<uint32_t> resource_repository(repository);
   const auto initiating_session_name = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto dependent_session_name = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_name, DEPENDENT_SESSION_HANDLE);
 

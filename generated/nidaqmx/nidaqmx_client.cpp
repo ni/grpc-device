@@ -10420,6 +10420,73 @@ tristate_output_term(const StubPtr& stub, const std::string& output_terminal)
   return response;
 }
 
+UnregisterDoneEventResponse
+unregister_done_event(const StubPtr& stub, const nidevice_grpc::Session& task)
+{
+  ::grpc::ClientContext context;
+
+  auto request = UnregisterDoneEventRequest{};
+  request.mutable_task()->CopyFrom(task);
+
+  auto response = UnregisterDoneEventResponse{};
+
+  raise_if_error(
+      stub->UnregisterDoneEvent(&context, request, &response),
+      context);
+
+  return response;
+}
+
+UnregisterEveryNSamplesEventResponse
+unregister_every_n_samples_event(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<EveryNSamplesEventType, pb::int32>& every_n_samples_event_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = UnregisterEveryNSamplesEventRequest{};
+  request.mutable_task()->CopyFrom(task);
+  const auto every_n_samples_event_type_ptr = every_n_samples_event_type.get_if<EveryNSamplesEventType>();
+  const auto every_n_samples_event_type_raw_ptr = every_n_samples_event_type.get_if<pb::int32>();
+  if (every_n_samples_event_type_ptr) {
+    request.set_every_n_samples_event_type(*every_n_samples_event_type_ptr);
+  }
+  else if (every_n_samples_event_type_raw_ptr) {
+    request.set_every_n_samples_event_type_raw(*every_n_samples_event_type_raw_ptr);
+  }
+
+  auto response = UnregisterEveryNSamplesEventResponse{};
+
+  raise_if_error(
+      stub->UnregisterEveryNSamplesEvent(&context, request, &response),
+      context);
+
+  return response;
+}
+
+UnregisterSignalEventResponse
+unregister_signal_event(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<Signal2, pb::int32>& signal_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = UnregisterSignalEventRequest{};
+  request.mutable_task()->CopyFrom(task);
+  const auto signal_id_ptr = signal_id.get_if<Signal2>();
+  const auto signal_id_raw_ptr = signal_id.get_if<pb::int32>();
+  if (signal_id_ptr) {
+    request.set_signal_id(*signal_id_ptr);
+  }
+  else if (signal_id_raw_ptr) {
+    request.set_signal_id_raw(*signal_id_raw_ptr);
+  }
+
+  auto response = UnregisterSignalEventResponse{};
+
+  raise_if_error(
+      stub->UnregisterSignalEvent(&context, request, &response),
+      context);
+
+  return response;
+}
+
 UnreserveNetworkDeviceResponse
 unreserve_network_device(const StubPtr& stub, const std::string& device_name)
 {

@@ -374,6 +374,9 @@ class NiDAQmxLibraryInterface {
   virtual int32 StopTask(TaskHandle task) = 0;
   virtual int32 TaskControl(TaskHandle task, int32 action) = 0;
   virtual int32 TristateOutputTerm(const char outputTerminal[]) = 0;
+  virtual int32 UnregisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData) = 0;
+  virtual int32 UnregisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData) = 0;
+  virtual int32 UnregisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData) = 0;
   virtual int32 UnreserveNetworkDevice(const char deviceName[]) = 0;
   virtual int32 WaitForNextSampleClock(TaskHandle task, float64 timeout, bool32* isLate) = 0;
   virtual int32 WaitForValidTimestamp(TaskHandle task, int32 timestampEvent, float64 timeout, CVIAbsoluteTime* timestamp) = 0;
