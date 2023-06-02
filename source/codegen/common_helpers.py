@@ -921,6 +921,7 @@ def get_attribute_groups(data):
     service_class_prefix = config["service_class_prefix"]
     return [AttributeGroup(service_class_prefix, attributes, config)]
 
+
 def strip_prefix(s: str, prefix: str) -> str:
     """Strip the given prefix, if present, and return the resulting string."""
     return s[len(prefix) :] if s.startswith(prefix) else s
