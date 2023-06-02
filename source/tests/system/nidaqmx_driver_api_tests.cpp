@@ -269,6 +269,11 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
+  ::grpc::Status wait_until_done(WaitUntilTaskDoneResponse& response = ThrowawayResponse<WaitUntilTaskDoneResponse>::response())
+  {
+    return wait_until_done(*driver_session_, response);
+  }
+
   ::grpc::Status start_task(StartTaskResponse& response = ThrowawayResponse<StartTaskResponse>::response())
   {
     return start_task(*driver_session_, response);
@@ -1521,15 +1526,15 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireDataWit
   const auto EXPECTED_ERROR_STATUS = -200284;
 
   CfgSampClkTimingResponse response;
-  auto config_status = cfg_samp_clk_tifing(
-      create_cfg_samp_clk_timing_request(SAMPLE_RATE, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS , SAMPLES_PER_CHAN));
+  auto config_status = cfg_samp_clk_timing(
+      create_cfg_samp_clk_timing_request(SAMPLE_RATE, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS , SAMPLES_PER_CHAN));
   start_task();
   wait_until_done();
   stop_task();
   ReadAnalogF64Response read_response;
   auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
 
-  EXPECT_EQ(EXPECTED_ERROR_STATUS, read_status.status());
+  EXPECT_EQ(EXPECTED_ERROR_STATUS, read_response.status());
 }
 
 TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
@@ -1666,6 +1671,7 @@ TEST_F(NiDAQmxDriverApiTests, Channel_RunMultipleFiniteAcquisitionsWithVaryingEv
 TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFiniteAcquisition_DoneEventResponseAndAlreadyRegisteredErrorReceived)
 {
   const auto FINITE_SAMPLE_COUNT = 10UL;
+  const auto TIMEOUT = 1000.0;
   create_ai_voltage_chan(0.0, 1.0);
   cfg_samp_clk_timing(
       create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLE_COUNT));
