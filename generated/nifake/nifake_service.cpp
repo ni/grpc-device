@@ -26,7 +26,7 @@ namespace nifake_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiFakeService::NiFakeService(
-      NiFakeLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiFakeFeatureToggles& feature_toggles)
       : library_(library),

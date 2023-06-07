@@ -26,7 +26,7 @@ namespace niswitch_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiSwitchService::NiSwitchService(
-      NiSwitchLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiSwitchFeatureToggles& feature_toggles)
       : library_(library),

@@ -25,7 +25,7 @@ namespace nirfmxtdscdma_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxTDSCDMAService::NiRFmxTDSCDMAService(
-      NiRFmxTDSCDMALibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxTDSCDMAFeatureToggles& feature_toggles)

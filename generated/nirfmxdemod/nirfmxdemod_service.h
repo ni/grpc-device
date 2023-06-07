@@ -33,16 +33,17 @@ struct NiRFmxDemodFeatureToggles
 
 class NiRFmxDemodService final : public NiRFmxDemod::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxDemodLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
   using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxDemodService(
-    NiRFmxDemodLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxDemodFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxDemodService();
-  
+
   ::grpc::Status ADemodCfgAMCarrierSuppressed(::grpc::ServerContext* context, const ADemodCfgAMCarrierSuppressedRequest* request, ADemodCfgAMCarrierSuppressedResponse* response) override;
   ::grpc::Status ADemodCfgAudioFilter(::grpc::ServerContext* context, const ADemodCfgAudioFilterRequest* request, ADemodCfgAudioFilterResponse* response) override;
   ::grpc::Status ADemodCfgAveraging(::grpc::ServerContext* context, const ADemodCfgAveragingRequest* request, ADemodCfgAveragingResponse* response) override;
@@ -187,7 +188,7 @@ public:
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
   ::grpc::Status WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response) override;
 private:
-  NiRFmxDemodLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
   ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);

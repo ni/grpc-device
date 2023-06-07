@@ -35,16 +35,17 @@ enum TypeIdentifier { boolean_, db_ref_, db_ref_array_, dev_ref_, dev_ref_array_
 
 class NiXnetService final : public NiXnet::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiXnetLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>;
   using nxDatabaseRef_tResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>;
 
   NiXnetService(
-    NiXnetLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository,
     const NiXnetFeatureToggles& feature_toggles = {});
   virtual ~NiXnetService();
-  
+
   ::grpc::Status Blink(::grpc::ServerContext* context, const BlinkRequest* request, BlinkResponse* response) override;
   ::grpc::Status Clear(::grpc::ServerContext* context, const ClearRequest* request, ClearResponse* response) override;
   ::grpc::Status ConnectTerminals(::grpc::ServerContext* context, const ConnectTerminalsRequest* request, ConnectTerminalsResponse* response) override;
@@ -102,7 +103,7 @@ public:
   ::grpc::Status WriteSignalXY(::grpc::ServerContext* context, const WriteSignalXYRequest* request, WriteSignalXYResponse* response) override;
   ::grpc::Status WriteState(::grpc::ServerContext* context, const WriteStateRequest* request, WriteStateResponse* response) override;
 private:
-  NiXnetLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository_;
   ::grpc::Status ConvertApiErrorStatusForNxSessionRef_t(::grpc::ServerContextBase* context, int32_t status, nxSessionRef_t session);

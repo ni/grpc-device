@@ -25,7 +25,7 @@ namespace nisync_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiSyncService::NiSyncService(
-      NiSyncLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiSyncFeatureToggles& feature_toggles)
       : library_(library),

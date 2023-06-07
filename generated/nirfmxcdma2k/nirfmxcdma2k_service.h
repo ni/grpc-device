@@ -33,16 +33,17 @@ struct NiRFmxCDMA2kFeatureToggles
 
 class NiRFmxCDMA2kService final : public NiRFmxCDMA2k::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxCDMA2kLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
   using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxCDMA2kService(
-    NiRFmxCDMA2kLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxCDMA2kFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxCDMA2kService();
-  
+
   ::grpc::Status ACPCfgAveraging(::grpc::ServerContext* context, const ACPCfgAveragingRequest* request, ACPCfgAveragingResponse* response) override;
   ::grpc::Status ACPCfgMeasurementMethod(::grpc::ServerContext* context, const ACPCfgMeasurementMethodRequest* request, ACPCfgMeasurementMethodResponse* response) override;
   ::grpc::Status ACPCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const ACPCfgNoiseCompensationEnabledRequest* request, ACPCfgNoiseCompensationEnabledResponse* response) override;
@@ -205,7 +206,7 @@ public:
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
   ::grpc::Status WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response) override;
 private:
-  NiRFmxCDMA2kLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
   ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);

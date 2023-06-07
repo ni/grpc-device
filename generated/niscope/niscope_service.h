@@ -33,14 +33,15 @@ struct NiScopeFeatureToggles
 
 class NiScopeService final : public NiScope::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiScopeLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiScopeService(
-    NiScopeLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiScopeFeatureToggles& feature_toggles = {});
   virtual ~NiScopeService();
-  
+
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcquisitionStatus(::grpc::ServerContext* context, const AcquisitionStatusRequest* request, AcquisitionStatusResponse* response) override;
   ::grpc::Status ActualMeasWfmSize(::grpc::ServerContext* context, const ActualMeasWfmSizeRequest* request, ActualMeasWfmSizeResponse* response) override;
@@ -132,7 +133,7 @@ public:
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
 private:
-  NiScopeLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   std::map<std::int32_t, std::string> clockingterminalvalues_input_map_ { {1, "VAL_NO_SOURCE"},{2, "VAL_RTSI_CLOCK"},{3, "VAL_EXTERNAL"},{4, "VAL_PFI_0"},{5, "VAL_PFI_1"},{6, "VAL_PFI_2"},{7, "VAL_CLK_IN"},{8, "VAL_CLK_OUT"},{9, "VAL_INTERNAL10MHZ_OSC"},{10, "VAL_PXI_CLK"},{11, "VAL_PXI_CLK10"},{12, "VAL_PXI_CLK100"},{13, "VAL_PXIE_DSTAR_A"},{14, "VAL_AUX_0_CLK_IN"},{15, "VAL_AUX_0_CLK_OUT"},{16, "VAL_ONBOARD_CONFIGURABLE_RATE_CLK"}, };

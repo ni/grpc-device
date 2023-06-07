@@ -33,16 +33,17 @@ struct NiRFmxSpecAnFeatureToggles
 
 class NiRFmxSpecAnService final : public NiRFmxSpecAn::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxSpecAnLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
   using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxSpecAnService(
-    NiRFmxSpecAnLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxSpecAnFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxSpecAnService();
-  
+
   ::grpc::Status ACPCfgAveraging(::grpc::ServerContext* context, const ACPCfgAveragingRequest* request, ACPCfgAveragingResponse* response) override;
   ::grpc::Status ACPCfgCarrierAndOffsets(::grpc::ServerContext* context, const ACPCfgCarrierAndOffsetsRequest* request, ACPCfgCarrierAndOffsetsResponse* response) override;
   ::grpc::Status ACPCfgCarrierFrequency(::grpc::ServerContext* context, const ACPCfgCarrierFrequencyRequest* request, ACPCfgCarrierFrequencyResponse* response) override;
@@ -459,7 +460,7 @@ public:
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
   ::grpc::Status WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response) override;
 private:
-  NiRFmxSpecAnLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
   ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);

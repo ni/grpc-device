@@ -33,17 +33,18 @@ struct NiFakeExtensionFeatureToggles
 
 class NiFakeExtensionService final : public NiFakeExtension::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiFakeExtensionLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiFakeExtensionService(
-    NiFakeExtensionLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiFakeExtensionFeatureToggles& feature_toggles = {});
   virtual ~NiFakeExtensionService();
-  
+
   ::grpc::Status AddCoolFunctionality(::grpc::ServerContext* context, const AddCoolFunctionalityRequest* request, AddCoolFunctionalityResponse* response) override;
 private:
-  NiFakeExtensionLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
 

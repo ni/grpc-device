@@ -60,24 +60,25 @@ struct ${service_class_prefix}FeatureToggles
 % endfor
 };
 
-% if type_from_enum != "":  
+% if type_from_enum != "":
 enum TypeIdentifier { ${type_from_enum} };
 
 % endif
 class ${service_class_prefix}Service final : public ${base_class_name} {
 public:
+  using LibrarySharedPtr = std::shared_ptr<${service_class_prefix}LibraryInterface>;
 % for resource_handle_type in resource_repository_deps:
   using ${resource_repository_deps[resource_handle_type].resource_repository_alias} = ${resource_repository_deps[resource_handle_type].resource_repository_type};
 % endfor
 
   ${service_class_prefix}Service(
-    ${service_class_prefix}LibraryInterface* library,
+    LibrarySharedPtr library,
 % for resource_handle_type in resource_repository_deps:
     ${resource_repository_deps[resource_handle_type].resource_repository_alias} ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
     const ${service_class_prefix}FeatureToggles& feature_toggles = {});
   virtual ~${service_class_prefix}Service();
-  
+
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   f = functions[function]
@@ -92,7 +93,7 @@ public:
 % endif
 % endfor
 private:
-  ${driver_library_interface}* library_;
+  LibrarySharedPtr library_;
 % for resource_handle_type in resource_repository_deps:
   ${resource_repository_deps[resource_handle_type].resource_repository_alias} ${resource_repository_deps[resource_handle_type].field_name};
 % endfor

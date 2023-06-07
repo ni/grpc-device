@@ -23,7 +23,7 @@ namespace niscope_restricted_grpc {
   using nidevice_grpc::converters::MatchState;
 
   NiScopeRestrictedService::NiScopeRestrictedService(
-      NiScopeRestrictedLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiScopeRestrictedFeatureToggles& feature_toggles)
       : library_(library),

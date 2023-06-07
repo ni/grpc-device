@@ -34,18 +34,19 @@ struct NiFakeNonIviFeatureToggles
 
 class NiFakeNonIviService final : public NiFakeNonIvi::WithCallbackMethod_ReadStream<NiFakeNonIvi::WithCallbackMethod_RegisterCallback<NiFakeNonIvi::Service>> {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiFakeNonIviLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>;
   using SecondarySessionHandleResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>>;
   using FakeCrossDriverHandleResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>>;
 
   NiFakeNonIviService(
-    NiFakeNonIviLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
     FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
     const NiFakeNonIviFeatureToggles& feature_toggles = {});
   virtual ~NiFakeNonIviService();
-  
+
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CloseSecondarySession(::grpc::ServerContext* context, const CloseSecondarySessionRequest* request, CloseSecondarySessionResponse* response) override;
   ::grpc::Status GetCrossDriverSession(::grpc::ServerContext* context, const GetCrossDriverSessionRequest* request, GetCrossDriverSessionResponse* response) override;
@@ -82,7 +83,7 @@ public:
   ::grpc::Status InputStringValuedEnum(::grpc::ServerContext* context, const InputStringValuedEnumRequest* request, InputStringValuedEnumResponse* response) override;
   ::grpc::Status WriteBooleanArray(::grpc::ServerContext* context, const WriteBooleanArrayRequest* request, WriteBooleanArrayResponse* response) override;
 private:
-  NiFakeNonIviLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository_;
   FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository_;

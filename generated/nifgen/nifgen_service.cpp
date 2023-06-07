@@ -26,7 +26,7 @@ namespace nifgen_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiFgenService::NiFgenService(
-      NiFgenLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiFgenFeatureToggles& feature_toggles)
       : library_(library),

@@ -17,20 +17,20 @@ namespace {
 struct LibraryAndService {
   LibraryAndService(
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
-    const NiDCPowerFeatureToggles& feature_toggles) 
-      : library(), 
-      service(
-        &library, 
+    const NiDCPowerFeatureToggles& feature_toggles)
+      : library(std::make_shared<NiDCPowerLibrary>()),
+      service(std::make_shared<NiDCPowerService>(
+        library,
         resource_repository,
-        feature_toggles) {
+        feature_toggles)) {
   }
-  NiDCPowerLibrary library;
-  NiDCPowerService service;
+  std::shared_ptr<NiDCPowerLibrary> library;
+  std::shared_ptr<NiDCPowerService> service;
 };
 }
 
 std::shared_ptr<void> register_service(
-  grpc::ServerBuilder& builder, 
+  grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
@@ -42,7 +42,7 @@ std::shared_ptr<void> register_service(
       resource_repository,
       toggles);
     auto& service = library_and_service_ptr->service;
-    builder.RegisterService(&service);
+    builder.RegisterService(service.get());
     return library_and_service_ptr;
   }
 

@@ -23,7 +23,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
   using nidevice_grpc::converters::MatchState;
 
   NimxlcTerminalAdaptorRestrictedService::NimxlcTerminalAdaptorRestrictedService(
-      NimxlcTerminalAdaptorRestrictedLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NimxlcTerminalAdaptorRestrictedFeatureToggles& feature_toggles)
       : library_(library),

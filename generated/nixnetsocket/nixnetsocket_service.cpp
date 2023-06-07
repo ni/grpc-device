@@ -24,7 +24,7 @@ namespace nixnetsocket_grpc {
   using nidevice_grpc::converters::MatchState;
 
   NiXnetSocketService::NiXnetSocketService(
-      NiXnetSocketLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       nxIpStackRef_tResourceRepositorySharedPtr nx_ip_stack_ref_t_resource_repository,
       const NiXnetSocketFeatureToggles& feature_toggles)

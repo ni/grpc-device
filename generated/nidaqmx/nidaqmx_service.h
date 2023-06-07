@@ -34,14 +34,15 @@ struct NiDAQmxFeatureToggles
 
 class NiDAQmxService final : public NiDAQmx::WithCallbackMethod_RegisterSignalEvent<NiDAQmx::WithCallbackMethod_RegisterEveryNSamplesEvent<NiDAQmx::WithCallbackMethod_RegisterDoneEvent<NiDAQmx::Service>>> {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiDAQmxLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<TaskHandle>>;
 
   NiDAQmxService(
-    NiDAQmxLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiDAQmxFeatureToggles& feature_toggles = {});
   virtual ~NiDAQmxService();
-  
+
   ::grpc::Status AddCDAQSyncConnection(::grpc::ServerContext* context, const AddCDAQSyncConnectionRequest* request, AddCDAQSyncConnectionResponse* response) override;
   ::grpc::Status AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response) override;
   ::grpc::Status AddNetworkDevice(::grpc::ServerContext* context, const AddNetworkDeviceRequest* request, AddNetworkDeviceResponse* response) override;
@@ -435,7 +436,7 @@ public:
   ::grpc::Status WriteToTEDSFromArray(::grpc::ServerContext* context, const WriteToTEDSFromArrayRequest* request, WriteToTEDSFromArrayResponse* response) override;
   ::grpc::Status WriteToTEDSFromFile(::grpc::ServerContext* context, const WriteToTEDSFromFileRequest* request, WriteToTEDSFromFileResponse* response) override;
 private:
-  NiDAQmxLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task);
 
