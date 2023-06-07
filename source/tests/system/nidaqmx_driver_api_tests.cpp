@@ -1135,12 +1135,13 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadAIData_ReturnsDataInExpectedR
   const auto AI_MIN = 1.0;
   const auto AI_MAX = 10.0;
   const auto NUM_SAMPS = 100;
+  const auto TIMEOUT = 10.0;
   create_ai_voltage_chan(AI_MIN, AI_MAX);
 
   StartTaskResponse start_response;
   auto start_status = start_task(start_response);
   ReadAnalogF64Response read_response;
-  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
+  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
   StopTaskResponse stop_response;
   auto stop_status = stop_task(stop_response);
 
@@ -1156,13 +1157,14 @@ TEST_F(NiDAQmxDriverApiTests, AIDeviceTempChan_ReadAIData_ReturnsData)
   const auto NUM_SAMPS = 100;
   const auto MIN_TEMPERATURE = 0.0;
   const auto MAX_TEMPERATURE = 100.0;
+  const auto TIMEOUT = 10.0;
   CreateAIThrmcplChanResponse create_response;
   auto create_status = create_ai_thrmcpl_chan(MIN_TEMPERATURE, MAX_TEMPERATURE, create_response);
   EXPECT_SUCCESS(create_status, create_response);
 
   start_task();
   ReadAnalogF64Response read_response;
-  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
+  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
@@ -1176,6 +1178,7 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannelWithLinearScale_ReadAIData_Returns
   const auto AI_MIN = 1.0;
   const auto AI_MAX = 2.0;
   const auto NUM_SAMPS = 1000;
+  const auto TIMEOUT = 10.0;
   CreateLinScaleResponse scale_response;
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5, scale_response);
   EXPECT_SUCCESS(scale_status, scale_response);
@@ -1186,7 +1189,7 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannelWithLinearScale_ReadAIData_Returns
 
   start_task();
   ReadAnalogF64Response read_response;
-  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
+  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
@@ -1484,13 +1487,14 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteRaw_Succeeds)
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Succeeds)
 {
   create_ai_voltage_chan(0.0, 1.0);
+  const auto TIMEOUT = 10.0;
 
   CfgSampClkTimingResponse response;
   auto config_status = cfg_samp_clk_timing(response);
   start_task();
   ReadAnalogF64Response read_response;
   const auto NUM_SAMPS = 10;
-  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
+  auto read_status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
   stop_task();
 
   EXPECT_SUCCESS(config_status, response);
@@ -1498,17 +1502,16 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireData_Su
   EXPECT_EQ(NUM_SAMPS, read_response.samps_per_chan_read());
 }
 
-TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgSampClkTimingAndAcquireDataWithMinimumTimeout_SampleNotAvailableStatusIsReturned)
+TEST_F(NiDAQmxDriverApiTests, AIFiniteAcquisition_ReadWithTimeoutTooSmall_SamplesNotYetAvailableStatusReturned)
 {
   create_ai_voltage_chan(0.0, 1.0);
   const auto TIMEOUT = 100e-3;
   const auto SAMPLE_RATE = 1000.0;
   const auto SAMPLES_PER_CHAN = 60000UL;
   const auto NUM_SAMPS = 60000;
-
-  CfgSampClkTimingResponse response;
   cfg_samp_clk_timing(
       create_cfg_samp_clk_timing_request(SAMPLE_RATE, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS , SAMPLES_PER_CHAN));
+  
   start_task();
   ReadAnalogF64Response read_response;
   read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
@@ -2045,6 +2048,7 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   const auto AI_MIN = 0.0;
   const auto AI_MAX = 1.0;
   const auto NUM_SAMPS = 10;
+  const auto TIMEOUT = 10.0;
   create_ai_voltage_chan(AI_MIN, AI_MAX);
   auto save_response = SaveTaskResponse{};
   auto status = save_task(save_response);
@@ -2055,7 +2059,7 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   EXPECT_SUCCESS(status, load_response);
 
   auto read_response = ReadAnalogF64Response{};
-  status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, read_response);
+  status = read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
 
   EXPECT_SUCCESS(status, read_response);
   EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
