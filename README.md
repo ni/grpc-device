@@ -57,7 +57,7 @@ If you're looking to build the grpc-device repo locally, look at the [Getting St
 
 ## Running the gRPC Server
 
-The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support). The location of the server binary is not important as long as the user has proper permissions in the chosen directory.
+The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) bound to localhost is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support). For more information on address binding refer to the [Bind Address Support section](#bind-address-support). The location of the server binary is not important as long as the user has proper permissions in the chosen directory.
 
 There are two ways to start the server:
 
