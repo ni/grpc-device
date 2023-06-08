@@ -1517,8 +1517,8 @@ TEST_F(NiDAQmxDriverApiTests, AIFiniteAcquisition_ReadWithTimeoutTooSmall_Sample
   read_analog_f64(NUM_SAMPS, NUM_SAMPS, TIMEOUT, read_response);
 
   EXPECT_EQ(SAMPLES_NOT_YET_AVAILABLE_ERROR, read_response.status());
-  EXPECT_GE(80, read_response.samps_per_chan_read());
-  EXPECT_LE(1000, read_response.samps_per_chan_read());
+  EXPECT_GE(1000, read_response.samps_per_chan_read());
+  EXPECT_LE(80, read_response.samps_per_chan_read());
 }
 
 TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAcquisition_DoneEventResponseIsReceived)
