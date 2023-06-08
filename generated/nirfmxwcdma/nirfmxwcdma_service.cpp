@@ -25,7 +25,7 @@ namespace nirfmxwcdma_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxWCDMAService::NiRFmxWCDMAService(
-      NiRFmxWCDMALibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxWCDMAFeatureToggles& feature_toggles)

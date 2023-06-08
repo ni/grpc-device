@@ -33,14 +33,15 @@ struct NiRFmxInstrRestrictedFeatureToggles
 
 class NiRFmxInstrRestrictedService final : public NiRFmxInstrRestricted::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxInstrRestrictedLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
 
   NiRFmxInstrRestrictedService(
-    NiRFmxInstrRestrictedLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiRFmxInstrRestrictedFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxInstrRestrictedService();
-  
+
   ::grpc::Status ConvertForPowerUnitsUtility(::grpc::ServerContext* context, const ConvertForPowerUnitsUtilityRequest* request, ConvertForPowerUnitsUtilityResponse* response) override;
   ::grpc::Status DeleteSnapshot(::grpc::ServerContext* context, const DeleteSnapshotRequest* request, DeleteSnapshotResponse* response) override;
   ::grpc::Status GetActiveResultName(::grpc::ServerContext* context, const GetActiveResultNameRequest* request, GetActiveResultNameResponse* response) override;
@@ -76,7 +77,7 @@ public:
   ::grpc::Status SetIOTraceStatus(::grpc::ServerContext* context, const SetIOTraceStatusRequest* request, SetIOTraceStatusResponse* response) override;
   ::grpc::Status UnregisterSpecialClientSnapshotInterest(::grpc::ServerContext* context, const UnregisterSpecialClientSnapshotInterestRequest* request, UnregisterSpecialClientSnapshotInterestResponse* response) override;
 private:
-  NiRFmxInstrRestrictedLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrument);
 

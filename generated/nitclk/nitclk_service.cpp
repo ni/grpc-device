@@ -25,7 +25,7 @@ namespace nitclk_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiTClkService::NiTClkService(
-      NiTClkLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiTClkFeatureToggles& feature_toggles)
       : library_(library),

@@ -17,20 +17,20 @@ namespace {
 struct LibraryAndService {
   LibraryAndService(
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>& resource_repository,
-    const NiRFmxInstrRestrictedFeatureToggles& feature_toggles) 
-      : library(), 
-      service(
-        &library, 
+    const NiRFmxInstrRestrictedFeatureToggles& feature_toggles)
+      : library(std::make_shared<NiRFmxInstrRestrictedLibrary>()),
+      service(std::make_shared<NiRFmxInstrRestrictedService>(
+        library,
         resource_repository,
-        feature_toggles) {
+        feature_toggles)) {
   }
-  NiRFmxInstrRestrictedLibrary library;
-  NiRFmxInstrRestrictedService service;
+  std::shared_ptr<NiRFmxInstrRestrictedLibrary> library;
+  std::shared_ptr<NiRFmxInstrRestrictedService> service;
 };
 }
 
 std::shared_ptr<void> register_service(
-  grpc::ServerBuilder& builder, 
+  grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>& resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
@@ -42,7 +42,7 @@ std::shared_ptr<void> register_service(
       resource_repository,
       toggles);
     auto& service = library_and_service_ptr->service;
-    builder.RegisterService(&service);
+    builder.RegisterService(service.get());
     return library_and_service_ptr;
   }
 

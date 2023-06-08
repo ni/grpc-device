@@ -30,22 +30,22 @@ struct LibraryAndService {
 % for resource_handle_type in resource_repository_deps:
     const ${resource_repository_deps[resource_handle_type].resource_repository_type}& ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
-    const ${service_class_prefix}FeatureToggles& feature_toggles) 
-      : library(), 
-      service(
-        &library, 
+    const ${service_class_prefix}FeatureToggles& feature_toggles)
+      : library(std::make_shared<${service_class_prefix}Library>()),
+      service(std::make_shared<${service_class_prefix}Service>(
+        library,
 % for resource_handle_type in resource_repository_deps:
         ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
-        feature_toggles) {
+        feature_toggles)) {
   }
-  ${service_class_prefix}Library library;
-  ${service_class_prefix}Service service;
+  std::shared_ptr<${service_class_prefix}Library> library;
+  std::shared_ptr<${service_class_prefix}Service> service;
 };
 }
 
 std::shared_ptr<void> register_service(
-  grpc::ServerBuilder& builder, 
+  grpc::ServerBuilder& builder,
 % for resource_handle_type in resource_repository_deps:
   const ${resource_repository_deps[resource_handle_type].resource_repository_type}& ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
@@ -61,7 +61,7 @@ std::shared_ptr<void> register_service(
 % endfor
       toggles);
     auto& service = library_and_service_ptr->service;
-    builder.RegisterService(&service);
+    builder.RegisterService(service.get());
     return library_and_service_ptr;
   }
 

@@ -26,7 +26,7 @@ namespace nirfsg_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFSGService::NiRFSGService(
-      NiRFSGLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiRFSGFeatureToggles& feature_toggles)
       : library_(library),

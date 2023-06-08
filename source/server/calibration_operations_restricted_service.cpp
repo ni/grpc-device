@@ -8,7 +8,7 @@ namespace nidevice_restricted_grpc {
 CalibrationOperationsRestrictedFeatureToggles::CalibrationOperationsRestrictedFeatureToggles(
   const nidevice_grpc::FeatureToggles& feature_toggles)
   : is_enabled(
-      feature_toggles.is_feature_enabled("calibrationoperations_restricted", CodeReadiness::kNextRelease))
+      feature_toggles.is_feature_enabled("calibrationoperations_restricted", CodeReadiness::kRelease))
 {
 }
 

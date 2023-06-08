@@ -17,20 +17,20 @@ namespace {
 struct LibraryAndService {
   LibraryAndService(
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nimxlc_Session>>& resource_repository,
-    const NimxlcTerminalAdaptorRestrictedFeatureToggles& feature_toggles) 
-      : library(), 
-      service(
-        &library, 
+    const NimxlcTerminalAdaptorRestrictedFeatureToggles& feature_toggles)
+      : library(std::make_shared<NimxlcTerminalAdaptorRestrictedLibrary>()),
+      service(std::make_shared<NimxlcTerminalAdaptorRestrictedService>(
+        library,
         resource_repository,
-        feature_toggles) {
+        feature_toggles)) {
   }
-  NimxlcTerminalAdaptorRestrictedLibrary library;
-  NimxlcTerminalAdaptorRestrictedService service;
+  std::shared_ptr<NimxlcTerminalAdaptorRestrictedLibrary> library;
+  std::shared_ptr<NimxlcTerminalAdaptorRestrictedService> service;
 };
 }
 
 std::shared_ptr<void> register_service(
-  grpc::ServerBuilder& builder, 
+  grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nimxlc_Session>>& resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
@@ -42,7 +42,7 @@ std::shared_ptr<void> register_service(
       resource_repository,
       toggles);
     auto& service = library_and_service_ptr->service;
-    builder.RegisterService(&service);
+    builder.RegisterService(service.get());
     return library_and_service_ptr;
   }
 

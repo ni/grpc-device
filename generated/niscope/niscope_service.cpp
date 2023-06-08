@@ -26,7 +26,7 @@ namespace niscope_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiScopeService::NiScopeService(
-      NiScopeLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiScopeFeatureToggles& feature_toggles)
       : library_(library),

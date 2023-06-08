@@ -26,7 +26,7 @@ namespace nirfmxinstr_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxInstrService::NiRFmxInstrService(
-      NiRFmxInstrLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxInstrFeatureToggles& feature_toggles)
