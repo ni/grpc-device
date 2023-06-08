@@ -360,7 +360,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -391,7 +393,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -428,7 +432,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -457,7 +463,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, secondary_session_handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (SecondarySessionHandle id) { library->CloseSecondarySession(id); };
       int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -488,7 +496,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->handle_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -519,7 +529,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->handle_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);

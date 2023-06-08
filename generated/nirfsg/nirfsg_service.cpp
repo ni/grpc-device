@@ -2499,7 +2499,9 @@ namespace nirfsg_grpc {
         return std::make_tuple(status, new_vi);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (ViSession id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
@@ -2537,7 +2539,9 @@ namespace nirfsg_grpc {
         return std::make_tuple(status, vi);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (ViSession id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
