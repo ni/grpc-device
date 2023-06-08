@@ -2,6 +2,7 @@
 
 #include "device_server.h"
 #include "nifgen/nifgen_client.h"
+#include "tests/utilities/test_helpers.h"
 #include "waveform_helpers.h"
 
 namespace ni {
@@ -66,9 +67,10 @@ class NiFgenDriverApiTest : public ::testing::Test {
     fgen::InitializeWithChannelsResponse response;
 
     ::grpc::Status status = GetStub()->InitializeWithChannels(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
-    ASSERT_TRUE(status.ok());
+    EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
   }
 
