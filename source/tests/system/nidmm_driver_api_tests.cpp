@@ -3,6 +3,7 @@
 #include "device_server.h"
 #include "nidmm/nidmm_client.h"
 #include "nidmm/nidmm_library.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -60,6 +61,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
     dmm::InitWithOptionsResponse response;
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
     EXPECT_TRUE(status.ok());

@@ -3,6 +3,7 @@
 #include "device_server.h"
 #include "enumerate_devices.h"
 #include "nisync/nisync_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -512,8 +513,8 @@ class NiSyncDriverApiTest : public ::testing::Test {
         timeNanoseconds,
         timeFractionalNanoseconds,
         &viStatus);
-    ASSERT_TRUE(grpcStatus.ok());
-    ASSERT_EQ(VI_SUCCESS, viStatus);
+    EXPECT_TRUE(grpcStatus.ok());
+    EXPECT_EQ(VI_SUCCESS, viStatus);
   }
 
   ::grpc::Status call_ClearFutureTimeEvents(
@@ -610,8 +611,8 @@ class NiSyncDriverApiTest : public ::testing::Test {
   {
     int32 viStatus;
     auto grpcStatus = call_EnableTimeStampTrigger(terminal, activeEdge, &viStatus);
-    ASSERT_TRUE(grpcStatus.ok());
-    ASSERT_EQ(VI_SUCCESS, viStatus);
+    EXPECT_TRUE(grpcStatus.ok());
+    EXPECT_EQ(VI_SUCCESS, viStatus);
   }
 
   ::grpc::Status call_ReadTriggerTimeStamp(
