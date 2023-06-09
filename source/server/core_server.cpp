@@ -13,6 +13,9 @@
   #include "linux/daemonize.h"
   #include "linux/syslog_logging.h"
 #endif
+#if defined(_WIN32)
+  #include "windows/console_ctrl_handler.h"
+#endif
 
 using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
 
@@ -117,6 +120,8 @@ static void RunServer(const ServerConfiguration& config)
   while (!services->empty()) {
     services->pop_back();
   }
+
+  nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, "Server stopped.");
 }
 
 struct Options {
@@ -207,6 +212,9 @@ int main(int argc, char** argv)
   if (options.daemonize) {
     nidevice_grpc::daemonize(&StopServer, options.identity);
   }
+#endif
+#if defined(_WIN32)
+  nidevice_grpc::set_console_ctrl_handler(&StopServer);
 #endif
 
   RunServer(config);
