@@ -13,26 +13,6 @@
 
 namespace nifake_non_ivi_grpc {
 
-namespace {
-struct LibraryAndService {
-  LibraryAndService(
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>& resource_repository,
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>>& secondary_session_handle_resource_repository,
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>>& fake_cross_driver_handle_resource_repository,
-    const NiFakeNonIviFeatureToggles& feature_toggles)
-      : library(std::make_shared<NiFakeNonIviLibrary>()),
-      service(std::make_shared<NiFakeNonIviService>(
-        library,
-        resource_repository,
-        secondary_session_handle_resource_repository,
-        fake_cross_driver_handle_resource_repository,
-        feature_toggles)) {
-  }
-  std::shared_ptr<NiFakeNonIviLibrary> library;
-  std::shared_ptr<NiFakeNonIviService> service;
-};
-}
-
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>& resource_repository,
@@ -44,14 +24,15 @@ std::shared_ptr<void> register_service(
 
   if (toggles.is_enabled)
   {
-    auto library_and_service_ptr = std::make_shared<LibraryAndService>(
+    auto library = std::make_shared<NiFakeNonIviLibrary>();
+    auto service = std::make_shared<NiFakeNonIviService>(
+      library,
       resource_repository,
       secondary_session_handle_resource_repository,
       fake_cross_driver_handle_resource_repository,
       toggles);
-    auto& service = library_and_service_ptr->service;
     builder.RegisterService(service.get());
-    return library_and_service_ptr;
+    return service;
   }
 
   return {};

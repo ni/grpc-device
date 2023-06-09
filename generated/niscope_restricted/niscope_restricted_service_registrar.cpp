@@ -13,22 +13,6 @@
 
 namespace niscope_restricted_grpc {
 
-namespace {
-struct LibraryAndService {
-  LibraryAndService(
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
-    const NiScopeRestrictedFeatureToggles& feature_toggles)
-      : library(std::make_shared<NiScopeRestrictedLibrary>()),
-      service(std::make_shared<NiScopeRestrictedService>(
-        library,
-        resource_repository,
-        feature_toggles)) {
-  }
-  std::shared_ptr<NiScopeRestrictedLibrary> library;
-  std::shared_ptr<NiScopeRestrictedService> service;
-};
-}
-
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
@@ -38,12 +22,13 @@ std::shared_ptr<void> register_service(
 
   if (toggles.is_enabled)
   {
-    auto library_and_service_ptr = std::make_shared<LibraryAndService>(
+    auto library = std::make_shared<NiScopeRestrictedLibrary>();
+    auto service = std::make_shared<NiScopeRestrictedService>(
+      library,
       resource_repository,
       toggles);
-    auto& service = library_and_service_ptr->service;
     builder.RegisterService(service.get());
-    return library_and_service_ptr;
+    return service;
   }
 
   return {};
