@@ -776,7 +776,11 @@ ${set_response_values(normal_outputs, init_method)}\
       %for error_parameter in error_parameters:
       context->AddTrailingMetadata("${error_parameter["return_on_error_key"]}", std::to_string(${common_helpers.pascal_to_snake(error_parameter["name"])}));
       %endfor
+      %if "timeout_error" in function_data:
+      if (!status_ok(status) && status != ${function_data["timeout_error"]}) {
+      %else:
       if (!status_ok(status)) {
+      %endif
         ${method_call}
       }
 </%block>\

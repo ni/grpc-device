@@ -17146,7 +17146,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadAnalogScalarF64': {
         'calling_convention': 'StdCall',
@@ -17291,7 +17292,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadBinaryI32': {
         'calling_convention': 'StdCall',
@@ -17385,7 +17387,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadBinaryU16': {
         'calling_convention': 'StdCall',
@@ -17480,7 +17483,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadBinaryU32': {
         'calling_convention': 'StdCall',
@@ -17574,7 +17578,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCounterF64': {
         'calling_convention': 'StdCall',
@@ -17657,7 +17662,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCounterF64Ex': {
         'calling_convention': 'StdCall',
@@ -17751,7 +17757,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCounterScalarF64': {
         'calling_convention': 'StdCall',
@@ -17934,7 +17941,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCounterU32Ex': {
         'calling_convention': 'StdCall',
@@ -18028,7 +18036,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrFreq': {
         'calling_convention': 'StdCall',
@@ -18134,7 +18143,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrFreqScalar': {
         'calling_convention': 'StdCall',
@@ -18298,7 +18308,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrTicksScalar': {
         'calling_convention': 'StdCall',
@@ -18464,7 +18475,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrTimeScalar': {
         'calling_convention': 'StdCall',
@@ -18626,7 +18638,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadDigitalScalarU32': {
         'calling_convention': 'StdCall',
@@ -18771,7 +18784,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadDigitalU32': {
         'calling_convention': 'StdCall',
@@ -18865,7 +18879,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadDigitalU8': {
         'calling_convention': 'StdCall',
@@ -18959,7 +18974,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerBinaryI16': {
         'calling_convention': 'StdCall',
@@ -19026,7 +19042,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'no',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerF64': {
         'calling_convention': 'StdCall',
@@ -19091,7 +19108,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'no',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerScalarF64': {
         'calling_convention': 'StdCall',
@@ -19243,7 +19261,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'no',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'RegisterDoneEvent': {
         'calling_convention': 'StdCall',
