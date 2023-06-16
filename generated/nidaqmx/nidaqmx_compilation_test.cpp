@@ -1832,6 +1832,21 @@ int32 TristateOutputTerm(const char outputTerminal[])
   return DAQmxTristateOutputTerm(outputTerminal);
 }
 
+int32 UnregisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData)
+{
+  return DAQmxRegisterDoneEvent(task, options, callbackFunction, callbackData);
+}
+
+int32 UnregisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData)
+{
+  return DAQmxRegisterEveryNSamplesEvent(task, everyNSamplesEventType, nSamples, options, callbackFunction, callbackData);
+}
+
+int32 UnregisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData)
+{
+  return DAQmxRegisterSignalEvent(task, signalID, options, callbackFunction, callbackData);
+}
+
 int32 UnreserveNetworkDevice(const char deviceName[])
 {
   return DAQmxUnreserveNetworkDevice(deviceName);

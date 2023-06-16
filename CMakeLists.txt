@@ -430,6 +430,10 @@ if(CMAKE_SYSTEM_NAME STREQUAL Linux)
     PRIVATE "source/server/linux/syslog_logging.cpp"
     PRIVATE "source/server/linux/daemonize.cpp")
 endif()
+if(CMAKE_SYSTEM_NAME STREQUAL Windows)
+  target_sources(ni_grpc_device_server
+    PRIVATE "source/server/windows/console_ctrl_handler.cpp")
+endif()
 
 target_link_libraries(ni_grpc_device_server
    ${_REFLECTION}

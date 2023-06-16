@@ -123,32 +123,22 @@ TEST_F(NiDmmSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     ::grpc::ClientContext context;
     dmm::CloseRequest request;
     request.mutable_vi()->set_name(session.name());
     dmm::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidDmmSession);
-    EXPECT_THAT(ex.what(), HasSubstr(kInvalidDmmSessionMessage));
-  }
+  }, kInvalidDmmSession, kInvalidDmmSessionMessage);
 }
 
 TEST_F(NiDmmSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     dmm::InitWithOptionsResponse init_response;
     call_init_with_options(kInvalidRsrc, "", "", &init_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kViErrorDmmRsrcNFound);
-    EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, ex.what());
-  }
+  }, kViErrorDmmRsrcNFound, kViErrorDmmRsrcNFoundMessage);
 }
 
 }  // namespace system

@@ -113,32 +113,22 @@ TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionErr
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     ::grpc::ClientContext context;
     scope::CloseRequest request;
     request.mutable_vi()->set_name(session.name());
     scope::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidScopeSession);
-    EXPECT_STREQ(kInvalidScopeSessionMessage, ex.what());
-  }
+  }, kInvalidScopeSession, kInvalidScopeSessionMessage);
 }
 
 TEST_F(NiScopeSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     scope::InitWithOptionsResponse init_response;
     call_init_with_options(kInvalidResourceName, "", "", &init_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kViErrorRsrcNFound);
-    EXPECT_STREQ(kViErrorRsrcNFoundMessage, ex.what());
-  }
+  }, kViErrorRsrcNFound, kViErrorRsrcNFoundMessage);
 }
 
 }  // namespace system

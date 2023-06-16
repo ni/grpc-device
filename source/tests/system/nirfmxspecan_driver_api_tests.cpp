@@ -647,13 +647,9 @@ TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeResource_Ini
   const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
   EXPECT_VALID_DRIVER_SESSION(session1);
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR({
     init(stub(), PXI_5663, std::get<1>(GetParam()));
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, DEVICE_IN_USE_ERROR);
-  }
+  }, DEVICE_IN_USE_ERROR);
 }
 
 TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeAndCloseResource_InitializeResourceThatWouldHaveConflicted_Succeeds)

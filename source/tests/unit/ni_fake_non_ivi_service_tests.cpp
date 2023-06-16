@@ -164,23 +164,23 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
   using SecondaryResourceRepository = nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>;
   using FakeCrossDriverResourceRepository = nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>;
-  nidevice_grpc::SessionRepository session_repository_;
-  nidevice_grpc::SessionRepository secondary_session_repository_;
+  std::shared_ptr<nidevice_grpc::SessionRepository> session_repository_;
+  std::shared_ptr<nidevice_grpc::SessionRepository> secondary_session_repository_;
   std::shared_ptr<FakeCrossDriverResourceRepository> cross_driver_resource_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
   std::shared_ptr<SecondaryResourceRepository> secondary_resource_repository_;
-  NiFakeNonIviMockLibrary library_;
+  std::shared_ptr<NiFakeNonIviMockLibrary> library_;
   NiFakeNonIviService service_;
 
   NiFakeNonIviServiceTests(const nidevice_grpc::FeatureToggles& feature_toggles = {})
-      : session_repository_(),
-        secondary_session_repository_(),
-        cross_driver_resource_repository_(std::make_shared<FakeCrossDriverResourceRepository>(&session_repository_)),
-        resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
-        secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(&secondary_session_repository_)),
-        library_(),
+      : session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        secondary_session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        cross_driver_resource_repository_(std::make_shared<FakeCrossDriverResourceRepository>(session_repository_)),
+        resource_repository_(std::make_shared<FakeResourceRepository>(session_repository_)),
+        secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(secondary_session_repository_)),
+        library_(std::make_shared<NiFakeNonIviMockLibrary>()),
         service_(
-            &library_,
+            library_,
             resource_repository_,
             secondary_resource_repository_,
             cross_driver_resource_repository_,
@@ -192,7 +192,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   std::string init(const std::string& session_name, FakeHandle handle)
   {
-    EXPECT_CALL(library_, Init(StrEq(session_name.c_str()), _))
+    EXPECT_CALL(*library_, Init(StrEq(session_name.c_str()), _))
         .WillOnce(DoAll(SetArgPointee<1>(handle), Return(kDriverSuccess)));
 
     ::grpc::ServerContext context;
@@ -207,7 +207,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   std::string init_secondary_session(const std::string& session_name, SecondarySessionHandle handle)
   {
-    EXPECT_CALL(library_, InitSecondarySession(_))
+    EXPECT_CALL(*library_, InitSecondarySession(_))
         .WillOnce(DoAll(SetArgPointee<0>(handle), Return(kDriverSuccess)));
 
     ::grpc::ServerContext context;
@@ -222,7 +222,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   std::string init_with_handle_name_as_session_name(const std::string& handle_name, FakeHandle handle)
   {
-    EXPECT_CALL(library_, InitWithHandleNameAsSessionName(StrEq(handle_name.c_str()), _))
+    EXPECT_CALL(*library_, InitWithHandleNameAsSessionName(StrEq(handle_name.c_str()), _))
         .WillOnce(DoAll(SetArgPointee<1>(handle), Return(kDriverSuccess)));
 
     ::grpc::ServerContext context;
@@ -237,7 +237,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   int32 close_secondary_session_with_expected_handle(std::string session_name, SecondarySessionHandle expected_closed_handle)
   {
-    EXPECT_CALL(library_, CloseSecondarySession(expected_closed_handle))
+    EXPECT_CALL(*library_, CloseSecondarySession(expected_closed_handle))
         .WillOnce(Return(kDriverSuccess));
     ::grpc::ServerContext context;
     CloseSecondarySessionRequest request;
@@ -250,7 +250,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   int32 close_with_expected_handle(std::string session_name, FakeHandle expected_closed_handle)
   {
-    EXPECT_CALL(library_, Close(expected_closed_handle))
+    EXPECT_CALL(*library_, Close(expected_closed_handle))
         .WillOnce(Return(kDriverSuccess));
     ::grpc::ServerContext context;
     CloseRequest request;
@@ -268,7 +268,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
       std::iota(data, data + out_size, 0);
     };
 
-    EXPECT_CALL(library_, IotaWithCustomSize(_, _, _))
+    EXPECT_CALL(*library_, IotaWithCustomSize(_, _, _))
         .WillOnce(DoAll(
             Invoke(set_iota_data),
             Return(kDriverSuccess)));
@@ -325,7 +325,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithHandleNameAsSessionName_CloseSession_Cl
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataGetsCoerced)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .With(CustomU16Data())
       .Times(1);
   ::grpc::ServerContext context;
@@ -343,7 +343,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataGetsCo
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataOutOfRange_ReturnsError)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   InputArraysWithNarrowIntegerTypesRequest request;
@@ -358,7 +358,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_U16DataOutOfR
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataGetsCoerced)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .With(CustomI16Data())
       .Times(1);
   ::grpc::ServerContext context;
@@ -376,7 +376,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataGetsCo
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataOutOfRangeTooHigh_ReturnsError)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .Times(0);
 
   ::grpc::ServerContext context;
@@ -391,7 +391,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataOutOfR
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataOutOfRangeTooLow_ReturnsError)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .Times(0);
 
   ::grpc::ServerContext context;
@@ -406,7 +406,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I16DataOutOfR
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataGetsCoerced)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .With(CustomI8Data())
       .Times(1);
   ::grpc::ServerContext context;
@@ -424,7 +424,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataGetsCoe
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRangeTooHigh_ReturnsError)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   InputArraysWithNarrowIntegerTypesRequest request;
@@ -439,7 +439,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRa
 
 TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRangeTooLow_ReturnsError)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   InputArraysWithNarrowIntegerTypesRequest request;
@@ -454,7 +454,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRa
 
 TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_I8DataOutOfRangeTooLow_ReturnsError)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   ScalarsWithNarrowIntegerTypesRequest request;
@@ -468,7 +468,7 @@ TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_I8DataOutOfRangeT
 
 TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_I16DataOutOfRangeTooHigh_ReturnsError)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   ScalarsWithNarrowIntegerTypesRequest request;
@@ -482,7 +482,7 @@ TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_I16DataOutOfRange
 
 TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_U16DataOutOfRangeTooHigh_ReturnsError)
 {
-  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+  EXPECT_CALL(*library_, InputArraysWithNarrowIntegerTypes(_, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   ScalarsWithNarrowIntegerTypesRequest request;
@@ -499,7 +499,7 @@ TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_AllFieldsInRange_
   constexpr myUInt16 u16_val = UINT16_MAX;
   constexpr myInt16 i16_val = INT16_MAX;
   constexpr myInt8 i8_val = INT8_MAX;
-  EXPECT_CALL(library_, ScalarsWithNarrowIntegerTypes(u16_val, i16_val, i8_val))
+  EXPECT_CALL(*library_, ScalarsWithNarrowIntegerTypes(u16_val, i16_val, i8_val))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   ScalarsWithNarrowIntegerTypesRequest request;
@@ -518,7 +518,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_U16)
   OutputArraysWithNarrowIntegerTypesRequest request;
   request.set_number_of_u16_samples(3);
   OutputArraysWithNarrowIntegerTypesResponse response;
-  EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+  EXPECT_CALL(*library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
       .WillOnce(DoAll(
           Invoke(SetU16Data),
           Return(kDriverSuccess)));
@@ -539,7 +539,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I16)
   OutputArraysWithNarrowIntegerTypesRequest request;
   request.set_number_of_i16_samples(3);
   OutputArraysWithNarrowIntegerTypesResponse response;
-  EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+  EXPECT_CALL(*library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
       .WillOnce(DoAll(
           Invoke(SetI16Data),
           Return(kDriverSuccess)));
@@ -560,7 +560,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I8)
   OutputArraysWithNarrowIntegerTypesRequest request;
   request.set_number_of_i8_samples(3);
   OutputArraysWithNarrowIntegerTypesResponse response;
-  EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+  EXPECT_CALL(*library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
       .WillOnce(DoAll(
           Invoke(SetI8Data),
           Return(kDriverSuccess)));
@@ -577,7 +577,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_I8)
 
 TEST_F(NiFakeNonIviServiceTests, InputArrayOfBytes)
 {
-  EXPECT_CALL(library_, InputArrayOfBytes(_))
+  EXPECT_CALL(*library_, InputArrayOfBytes(_))
       .With(CustomU8Data())
       .Times(1);
   ::grpc::ServerContext context;
@@ -595,7 +595,7 @@ TEST_F(NiFakeNonIviServiceTests, InputArrayOfBytes)
 
 TEST_F(NiFakeNonIviServiceTests, OutputArrayOfBytes)
 {
-  EXPECT_CALL(library_, OutputArrayOfBytes(_, _))
+  EXPECT_CALL(*library_, OutputArrayOfBytes(_, _))
       .WillOnce(DoAll(
           Invoke(SetU8Data),
           Return(kDriverSuccess)));
@@ -647,7 +647,7 @@ TEST_F(NiFakeNonIviServiceTests, IotaWithCustomSizeUsingSecondSizeOption_Returns
 
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_OneArgumentPair)
 {
-  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel"), BEAUTIFUL_COLOR_PINK, 1.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
+  EXPECT_CALL(*library_, InputVarArgs(StrEq("inputName"), StrEq("channel"), BEAUTIFUL_COLOR_PINK, 1.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -665,7 +665,7 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_OneArgumentPair)
 
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_TwoArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, 1.0, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, 2.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
+  EXPECT_CALL(*library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, 1.0, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, 2.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -687,7 +687,7 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_TwoArgumentPairs)
 
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_ThreeArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, 1.0, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, 2.0, StrEq("channel2"), BEAUTIFUL_COLOR_GREEN, 3.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
+  EXPECT_CALL(*library_, InputVarArgs(StrEq("inputName"), StrEq("channel0"), BEAUTIFUL_COLOR_PINK, 1.0, StrEq("channel1"), BEAUTIFUL_COLOR_AQUA, 2.0, StrEq("channel2"), BEAUTIFUL_COLOR_GREEN, 3.0, nullptr, BEAUTIFUL_COLOR_UNSPECIFIED, 0.0))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -713,7 +713,7 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_ThreeArgumentPairs)
 
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_NoArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _, _, _))
+  EXPECT_CALL(*library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -727,7 +727,7 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_NoArgumentPairs)
 
 TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FourArgumentPairs)
 {
-  EXPECT_CALL(library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _, _, _))
+  EXPECT_CALL(*library_, InputVarArgs(_, _, _, _, _, _, _, _, _, _, _, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   InputVarArgsRequest request;
@@ -744,7 +744,7 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_FourArgumentPairs)
 
 TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_OneArgumentPair)
 {
-  EXPECT_CALL(library_, OutputVarArgs(StrEq("inputName"), StrEq("channel"), _, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr))
+  EXPECT_CALL(*library_, OutputVarArgs(StrEq("inputName"), StrEq("channel"), _, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr))
       .WillOnce(DoAll(
           SetArgPointee<2>(BEAUTIFUL_COLOR_PINK),
           Return(kDriverSuccess)));
@@ -763,7 +763,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_OneArgumentPair)
 
 TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_TwoArgumentPairs)
 {
-  EXPECT_CALL(library_, OutputVarArgs(StrEq("inputName"), StrEq("channel1"), _, StrEq("channel2"), _, nullptr, nullptr, nullptr, nullptr))
+  EXPECT_CALL(*library_, OutputVarArgs(StrEq("inputName"), StrEq("channel1"), _, StrEq("channel2"), _, nullptr, nullptr, nullptr, nullptr))
       .WillOnce(DoAll(
           SetArgPointee<2>(BEAUTIFUL_COLOR_PINK),
           SetArgPointee<4>(BEAUTIFUL_COLOR_AQUA),
@@ -785,7 +785,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_TwoArgumentPairs)
 
 TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_ThreeArgumentPairs)
 {
-  EXPECT_CALL(library_, OutputVarArgs(StrEq("inputName"), StrEq("channel1"), _, StrEq("channel2"), _, StrEq("channel3"), _, nullptr, nullptr))
+  EXPECT_CALL(*library_, OutputVarArgs(StrEq("inputName"), StrEq("channel1"), _, StrEq("channel2"), _, StrEq("channel3"), _, nullptr, nullptr))
       .WillOnce(DoAll(
           SetArgPointee<2>(BEAUTIFUL_COLOR_PINK),
           SetArgPointee<4>(BEAUTIFUL_COLOR_AQUA),
@@ -810,7 +810,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_ThreeArgumentPairs)
 
 TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_NoArgumentPairs)
 {
-  EXPECT_CALL(library_, OutputVarArgs(_, _, _, _, _, _, _, _, _))
+  EXPECT_CALL(*library_, OutputVarArgs(_, _, _, _, _, _, _, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   OutputVarArgsRequest request;
@@ -824,7 +824,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_NoArgumentPairs)
 
 TEST_F(NiFakeNonIviServiceTests, OutputVarArgs_FourArgumentPairs)
 {
-  EXPECT_CALL(library_, OutputVarArgs(_, _, _, _, _, _, _, _, _))
+  EXPECT_CALL(*library_, OutputVarArgs(_, _, _, _, _, _, _, _, _))
       .Times(0);
   ::grpc::ServerContext context;
   OutputVarArgsRequest request;
@@ -845,7 +845,7 @@ TEST_F(NiFakeNonIviServiceTests, InputTimestamp_UnixEpoch)
   CVIAbsoluteTime timestamp;
   timestamp.cviTime.msb = SecondsFromCVI1904EpochTo1970Epoch;
   timestamp.cviTime.lsb = 0;
-  EXPECT_CALL(library_, InputTimestamp(CVIAbsoluteTimeEq(timestamp)))
+  EXPECT_CALL(*library_, InputTimestamp(CVIAbsoluteTimeEq(timestamp)))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputTimestampRequest request;
@@ -864,7 +864,7 @@ TEST_F(NiFakeNonIviServiceTests, InputTimestamp_UnixEpochWithFractionalSeconds)
   CVIAbsoluteTime timestamp;
   timestamp.cviTime.msb = SecondsFromCVI1904EpochTo1970Epoch;
   timestamp.cviTime.lsb = 0x8000000000000000LL;
-  EXPECT_CALL(library_, InputTimestamp(CVIAbsoluteTimeEq(timestamp)))
+  EXPECT_CALL(*library_, InputTimestamp(CVIAbsoluteTimeEq(timestamp)))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputTimestampRequest request;
@@ -887,7 +887,7 @@ const std::string cviKnownTimestampString = "2021-07-23T15:24:54.00Z";
 
 TEST_F(NiFakeNonIviServiceTests, InputTimestamp_KnownValue)
 {
-  EXPECT_CALL(library_, InputTimestamp(CVIAbsoluteTimeEq(cviKnownTimestamp)))
+  EXPECT_CALL(*library_, InputTimestamp(CVIAbsoluteTimeEq(cviKnownTimestamp)))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   InputTimestampRequest request;
@@ -904,7 +904,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_UnixEpoch)
   CVIAbsoluteTime timestamp;
   timestamp.cviTime.msb = SecondsFromCVI1904EpochTo1970Epoch;
   timestamp.cviTime.lsb = 0;
-  EXPECT_CALL(library_, OutputTimestamp(_))
+  EXPECT_CALL(*library_, OutputTimestamp(_))
       .WillOnce(DoAll(SetArgPointee<0>(timestamp), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
   OutputTimestampRequest request;
@@ -922,7 +922,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_UnixEpochWithFractionalSeconds)
   CVIAbsoluteTime timestamp;
   timestamp.cviTime.msb = SecondsFromCVI1904EpochTo1970Epoch;
   timestamp.cviTime.lsb = 0x8000000000000000LL;
-  EXPECT_CALL(library_, OutputTimestamp(_))
+  EXPECT_CALL(*library_, OutputTimestamp(_))
       .WillOnce(DoAll(SetArgPointee<0>(timestamp), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
   OutputTimestampRequest request;
@@ -937,7 +937,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_UnixEpochWithFractionalSeconds)
 
 TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_KnownValue)
 {
-  EXPECT_CALL(library_, OutputTimestamp(_))
+  EXPECT_CALL(*library_, OutputTimestamp(_))
       .WillOnce(DoAll(SetArgPointee<0>(cviKnownTimestamp), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
   OutputTimestampRequest request;
@@ -955,7 +955,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeDouble_Succeeds)
 {
   const auto ATTRIBUTE = MarbleDoubleAttribute::MARBLE_ATTRIBUTE_WEIGHT;
   const auto VALUE = 1.2345;
-  EXPECT_CALL(library_, SetMarbleAttributeDouble(_, ATTRIBUTE, VALUE))
+  EXPECT_CALL(*library_, SetMarbleAttributeDouble(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   SetMarbleAttributeDoubleRequest request;
@@ -971,7 +971,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32_Succeeds)
 {
   const auto ATTRIBUTE = MarbleInt32Attribute::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_GREEN;
-  EXPECT_CALL(library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
+  EXPECT_CALL(*library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   SetMarbleAttributeInt32Request request;
@@ -987,7 +987,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32Raw_Succeeds)
 {
   const auto ATTRIBUTE = MarbleInt32Attribute::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = 9999;
-  EXPECT_CALL(library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
+  EXPECT_CALL(*library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   SetMarbleAttributeInt32Request request;
@@ -1003,7 +1003,7 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32Enum_ReturnsValueAndValu
 {
   const auto ATTRIBUTE = MarbleInt32Attribute::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_AQUA;
-  EXPECT_CALL(library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
+  EXPECT_CALL(*library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
       .WillOnce(DoAll(SetArgPointee<2>(VALUE), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
   GetMarbleAttributeInt32Request request;
@@ -1047,7 +1047,7 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayNonEnum_ReturnsValu
 {
   const auto ATTRIBUTE = MarbleInt32ArrayAttribute::MARBLE_ATTRIBUTE_TEN_RANDOM_NUMBERS;
   int VALUE[] = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
-  EXPECT_CALL(library_, GetMarbleAttributeInt32Array(_, ATTRIBUTE, _))
+  EXPECT_CALL(*library_, GetMarbleAttributeInt32Array(_, ATTRIBUTE, _))
       .WillOnce(DoAll(SetArrayArgument<2>(VALUE, VALUE + 10), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
   GetMarbleAttributeInt32ArrayRequest request;
@@ -1068,7 +1068,7 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32NonEnum_ReturnsValueRawA
 {
   const auto ATTRIBUTE = MarbleInt32Attribute::MARBLE_ATTRIBUTE_NUMBER_OF_FAILED_ATTEMPTS;
   const auto VALUE = 1000;
-  EXPECT_CALL(library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
+  EXPECT_CALL(*library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
       .WillOnce(DoAll(SetArgPointee<2>(VALUE), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
   GetMarbleAttributeInt32Request request;
@@ -1096,7 +1096,7 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayEnum_ReturnsValueAn
       MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
       MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_PINK,
   };
-  EXPECT_CALL(library_, GetMarbleAttributeInt32Array(_, ATTRIBUTE, _))
+  EXPECT_CALL(*library_, GetMarbleAttributeInt32Array(_, ATTRIBUTE, _))
       .WillOnce(DoAll(SetArrayArgument<2>(VALUE, VALUE + 10), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
   GetMarbleAttributeInt32ArrayRequest request;
@@ -1116,7 +1116,7 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayEnum_ReturnsValueAn
 TEST_F(NiFakeNonIviServiceTests, ResetMarbleAttribute_Succeeds)
 {
   const auto ATTRIBUTE = MarbleResetAttribute::MARBLE_RESET_ATTRIBUTE_WEIGHT;
-  EXPECT_CALL(library_, ResetMarbleAttribute(_, ATTRIBUTE))
+  EXPECT_CALL(*library_, ResetMarbleAttribute(_, ATTRIBUTE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   ResetMarbleAttributeRequest request;
@@ -1131,7 +1131,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeRaw_PassesAttributeAndValueTo
 {
   const auto RAW_ATTRIBUTE = static_cast<int32>(MarbleDoubleAttribute::MARBLE_ATTRIBUTE_WEIGHT);
   const auto DOUBLE_VALUE = 1.234;
-  EXPECT_CALL(library_, SetMarbleAttributeDouble(_, RAW_ATTRIBUTE, DOUBLE_VALUE))
+  EXPECT_CALL(*library_, SetMarbleAttributeDouble(_, RAW_ATTRIBUTE, DOUBLE_VALUE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   SetMarbleAttributeDoubleRequest request;
@@ -1147,7 +1147,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeRawWithInvalidAttribute_Passe
 {
   const auto RAW_ATTRIBUTE = 9999;
   const auto DOUBLE_VALUE = 1.234;
-  EXPECT_CALL(library_, SetMarbleAttributeDouble(_, 0, DOUBLE_VALUE))
+  EXPECT_CALL(*library_, SetMarbleAttributeDouble(_, 0, DOUBLE_VALUE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   SetMarbleAttributeDoubleRequest request;
@@ -1171,7 +1171,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, SetMarbleAttributeRawWi
 {
   const auto RAW_ATTRIBUTE = 9999;
   const auto DOUBLE_VALUE = 1.234;
-  EXPECT_CALL(library_, SetMarbleAttributeDouble(_, RAW_ATTRIBUTE, DOUBLE_VALUE))
+  EXPECT_CALL(*library_, SetMarbleAttributeDouble(_, RAW_ATTRIBUTE, DOUBLE_VALUE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   SetMarbleAttributeDoubleRequest request;
@@ -1187,7 +1187,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, SetMarbleAttributeWithT
 {
   const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleDoubleAttribute>(9999);
   const auto DOUBLE_VALUE = 1.234;
-  EXPECT_CALL(library_, SetMarbleAttributeDouble(_, 0, DOUBLE_VALUE))
+  EXPECT_CALL(*library_, SetMarbleAttributeDouble(_, 0, DOUBLE_VALUE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   SetMarbleAttributeDoubleRequest request;
@@ -1202,7 +1202,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, SetMarbleAttributeWithT
 TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, GetMarbleAttributeRawWithInvalidAttribute_PassesRawAttributeToLibrary)
 {
   const auto RAW_ATTRIBUTE = 9999;
-  EXPECT_CALL(library_, GetMarbleAttributeDouble(_, RAW_ATTRIBUTE, _))
+  EXPECT_CALL(*library_, GetMarbleAttributeDouble(_, RAW_ATTRIBUTE, _))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   GetMarbleAttributeDoubleRequest request;
@@ -1216,7 +1216,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, GetMarbleAttributeRawWi
 TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, GetMarbleAttributeWithTypeCastedInvalidAttribute_PassesZeroAttributeToLibrary)
 {
   const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleDoubleAttribute>(9999);
-  EXPECT_CALL(library_, GetMarbleAttributeDouble(_, 0, _))
+  EXPECT_CALL(*library_, GetMarbleAttributeDouble(_, 0, _))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   GetMarbleAttributeDoubleRequest request;
@@ -1230,7 +1230,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, GetMarbleAttributeWithT
 TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ResetMarbleAttributeRawWithInvalidAttribute_PassesRawAttributeToLibrary)
 {
   const auto RAW_ATTRIBUTE = 9999;
-  EXPECT_CALL(library_, ResetMarbleAttribute(_, RAW_ATTRIBUTE))
+  EXPECT_CALL(*library_, ResetMarbleAttribute(_, RAW_ATTRIBUTE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   ResetMarbleAttributeRequest request;
@@ -1244,7 +1244,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ResetMarbleAttributeRaw
 TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ResetMarbleAttributeWithTypeCastedInvalidAttribute_PassesZeroAttributeToLibrary)
 {
   const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleResetAttribute>(9999);
-  EXPECT_CALL(library_, ResetMarbleAttribute(_, 0))
+  EXPECT_CALL(*library_, ResetMarbleAttribute(_, 0))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
   ResetMarbleAttributeRequest request;
@@ -1261,7 +1261,7 @@ TEST_F(NiFakeNonIviServiceTests, SetColors_PassesColorsArrayToLibrary)
       BeautifulColor::BEAUTIFUL_COLOR_AQUA,
       BeautifulColor::BEAUTIFUL_COLOR_GREEN,
       BeautifulColor::BEAUTIFUL_COLOR_PINK};
-  EXPECT_CALL(library_, SetColors(_, _))
+  EXPECT_CALL(*library_, SetColors(_, _))
       .With(Args<0, 1>(ElementsAreArray(COLORS.data(), COLORS.size())))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
@@ -1296,7 +1296,7 @@ TEST_F(NiFakeNonIviServiceTests, GetStructsWithCoercion_ReturnsInRangeData)
   GetStructsWithCoercionRequest request;
   request.set_number_of_structs(3);
   GetStructsWithCoercionResponse response;
-  EXPECT_CALL(library_, GetStructsWithCoercion(_, _))
+  EXPECT_CALL(*library_, GetStructsWithCoercion(_, _))
       .WillOnce(DoAll(
           Invoke(SetStructWithCoercionData),
           Return(kDriverSuccess)));
@@ -1320,7 +1320,7 @@ TEST_F(NiFakeNonIviServiceTests, GetStructsWithCoercion_ReturnsInRangeData)
 
 TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_DataGetsCoerced)
 {
-  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+  EXPECT_CALL(*library_, SetStructsWithCoercion(_))
       .With(CustomStructWithCoercionData())
       .Times(1);
   ::grpc::ServerContext context;
@@ -1338,7 +1338,7 @@ TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_DataGetsCoerced)
 
 TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeInt16_Error)
 {
-  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+  EXPECT_CALL(*library_, SetStructsWithCoercion(_))
       .Times(0);
   ::grpc::ServerContext context;
   SetStructsWithCoercionRequest request;
@@ -1356,7 +1356,7 @@ TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeInt16_Error)
 
 TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt16_Error)
 {
-  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+  EXPECT_CALL(*library_, SetStructsWithCoercion(_))
       .Times(0);
   ::grpc::ServerContext context;
   SetStructsWithCoercionRequest request;
@@ -1374,7 +1374,7 @@ TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt16_Error)
 
 TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeUInt16_Error)
 {
-  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+  EXPECT_CALL(*library_, SetStructsWithCoercion(_))
       .Times(0);
   ::grpc::ServerContext context;
   SetStructsWithCoercionRequest request;
@@ -1392,7 +1392,7 @@ TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeUInt16_Error)
 
 TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeInt8_Error)
 {
-  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+  EXPECT_CALL(*library_, SetStructsWithCoercion(_))
       .Times(0);
   ::grpc::ServerContext context;
   SetStructsWithCoercionRequest request;
@@ -1410,7 +1410,7 @@ TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeInt8_Error)
 
 TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt8_Error)
 {
-  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+  EXPECT_CALL(*library_, SetStructsWithCoercion(_))
       .Times(0);
   ::grpc::ServerContext context;
   SetStructsWithCoercionRequest request;
@@ -1443,7 +1443,7 @@ void ExpectOutputArraysWithPassedInByPtrMechanismResponseData(const OutputArrays
 
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeMatches_ArraysReturnedAreThatSize)
 {
-  EXPECT_CALL(library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(3)))
+  EXPECT_CALL(*library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(3)))
       .WillOnce(DoAll(
           Invoke(SetArraysByPtrData),
           Return(kDriverSuccess)));
@@ -1459,7 +1459,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeMatc
 
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTooBig_ArraysReturnedAreShrunkToCorrectSize)
 {
-  EXPECT_CALL(library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(5)))
+  EXPECT_CALL(*library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(5)))
       .WillOnce(DoAll(
           Invoke(SetArraysByPtrData),
           Return(kDriverSuccess)));
@@ -1476,7 +1476,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTo
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTooSmall_ReturnsError)
 {
   const int32 SOME_ERROR = 10;
-  EXPECT_CALL(library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(5)))
+  EXPECT_CALL(*library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(5)))
       .WillOnce(
           Return(SOME_ERROR));
   ::grpc::ServerContext context;
@@ -1491,7 +1491,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTo
 
 TEST_F(NiFakeNonIviServiceTests, InputStringValuedEnum_PassMappedEnum_CorrectStringPassedToFunction)
 {
-  EXPECT_CALL(library_, InputStringValuedEnum(StrEq("iOS")))
+  EXPECT_CALL(*library_, InputStringValuedEnum(StrEq("iOS")))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -1506,7 +1506,7 @@ TEST_F(NiFakeNonIviServiceTests, InputStringValuedEnum_PassMappedEnum_CorrectStr
 
 TEST_F(NiFakeNonIviServiceTests, InputStringValuedEnum_PassNonMappedValue_CorrectStringPassedToFunction)
 {
-  EXPECT_CALL(library_, InputStringValuedEnum(StrEq("Windows Phone")))
+  EXPECT_CALL(*library_, InputStringValuedEnum(StrEq("Windows Phone")))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -1523,7 +1523,7 @@ TEST_F(NiFakeNonIviServiceTests, WriteBooleanArray_PassesBooleansAsInt32s)
 {
   const auto BOOLS = std::vector<bool>{true, false, true, true, false, false, true, true, true, false, false, false};
   const auto BOOLS_AS_INT32S = std::vector<int32>{1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0};
-  EXPECT_CALL(library_, WriteBooleanArray(_, _))
+  EXPECT_CALL(*library_, WriteBooleanArray(_, _))
       .With(Args<0, 1>(ElementsAreArray(BOOLS_AS_INT32S.data(), BOOLS_AS_INT32S.size())))
       .WillOnce(Return(kDriverSuccess));
 
@@ -1553,7 +1553,7 @@ TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSession_PassesSessionResourc
   constexpr auto CROSS_DRIVER_SESSION_NAME = "cross_driver_session";
   constexpr auto DRIVER_SESSION = 9876;
   add_session(cross_driver_resource_repository_, CROSS_DRIVER_HANDLE, CROSS_DRIVER_SESSION_NAME);
-  EXPECT_CALL(library_, InitFromCrossDriverSession(CROSS_DRIVER_HANDLE, _))
+  EXPECT_CALL(*library_, InitFromCrossDriverSession(CROSS_DRIVER_HANDLE, _))
       .WillOnce(DoAll(
           SetArgPointee<1, FakeHandle>(DRIVER_SESSION), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
@@ -1586,7 +1586,7 @@ TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSessionArray_PassesSessionRe
   constexpr auto DRIVER_SESSION = 9876;
   add_session(cross_driver_resource_repository_, CROSS_DRIVER_HANDLES[0], CROSS_DRIVER_SESSION_NAMES[0]);
   add_session(cross_driver_resource_repository_, CROSS_DRIVER_HANDLES[1], CROSS_DRIVER_SESSION_NAMES[1]);
-  EXPECT_CALL(library_, InitFromCrossDriverSessionArray(_, _, _))
+  EXPECT_CALL(*library_, InitFromCrossDriverSessionArray(_, _, _))
       .With(Args<0, 1>(ElementsAreArray(CROSS_DRIVER_HANDLES.data(), CROSS_DRIVER_HANDLES.size())))
       .WillOnce(DoAll(
           SetArgPointee<2, FakeHandle>(DRIVER_SESSION), Return(kDriverSuccess)));
@@ -1606,7 +1606,7 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_CloseInitiatingSession_Re
   constexpr auto INITIATING_SESSION_NAME = "initiating_session";
   constexpr auto CROSS_DRIVER_SESSION_NAME = "cross_driver_session";
   const auto initiating_session_name = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
-  EXPECT_CALL(library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
+  EXPECT_CALL(*library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
       .WillOnce(DoAll(
           SetArgPointee<1, FakeCrossDriverHandle>(CROSS_DRIVER_HANDLE), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
@@ -1630,7 +1630,7 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_ResetServer_RemovesBothSe
   constexpr auto INITIATING_SESSION_NAME = "initiating_session";
   constexpr auto CROSS_DRIVER_SESSION_NAME = "cross_driver_session";
   const auto initiating_session_name = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
-  EXPECT_CALL(library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
+  EXPECT_CALL(*library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
       .WillOnce(DoAll(
           SetArgPointee<1, FakeCrossDriverHandle>(CROSS_DRIVER_HANDLE), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
@@ -1640,7 +1640,7 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_ResetServer_RemovesBothSe
   request.set_session_name(CROSS_DRIVER_SESSION_NAME);
   service_.GetCrossDriverSession(&context, &request, &response);
 
-  session_repository_.reset_server();
+  session_repository_->reset_server();
 
   EXPECT_EQ(cross_driver_resource_repository_->access_session(CROSS_DRIVER_SESSION_NAME), 0);
   EXPECT_EQ(resource_repository_->access_session(INITIATING_SESSION_NAME), 0);
@@ -1661,7 +1661,7 @@ TEST_F(NiFakeNonIviServiceTests, SessionAlreadyInCrossDriverSessionRepository_Ge
       [](FakeCrossDriverHandle handle) {});
 
   const auto initiating_session_name = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
-  EXPECT_CALL(library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
+  EXPECT_CALL(*library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
       .WillOnce(DoAll(
           SetArgPointee<1, FakeCrossDriverHandle>(CROSS_DRIVER_HANDLE), Return(kDriverSuccess)));
   ::grpc::ServerContext context;
@@ -1678,7 +1678,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSession_AccessSession_ReturnsIn
 {
   constexpr auto SESSION_NAME = "session";
   constexpr auto SESSION_HANDLE = 0x1234UL;
-  EXPECT_CALL(library_, InitWithReturnedSession(StrEq(SESSION_NAME)))
+  EXPECT_CALL(*library_, InitWithReturnedSession(StrEq(SESSION_NAME)))
       .WillOnce(Return(SESSION_HANDLE));
   ::grpc::ServerContext context;
   InitWithReturnedSessionRequest request;
@@ -1697,7 +1697,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSessionFailsInit_AccessSession_
   constexpr auto SESSION_NAME = "session";
   constexpr auto BAD_SESSION_HANDLE = 0xDEADBEEF;  // Fake non-ivi uses 0xDEADBEEF as failed/null session (See functions.py).
   constexpr auto FAILED_INIT = -1;
-  EXPECT_CALL(library_, InitWithReturnedSession(StrEq(SESSION_NAME)))
+  EXPECT_CALL(*library_, InitWithReturnedSession(StrEq(SESSION_NAME)))
       .WillOnce(Return(BAD_SESSION_HANDLE));
   ::grpc::ServerContext context;
   InitWithReturnedSessionRequest request;
@@ -1716,7 +1716,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSessionFailsInit_AccessSession_
 TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValue_ReturnsString)
 {
   constexpr auto STRING_VAL = "Hello Returned World!";
-  EXPECT_CALL(library_, GetStringAsReturnedValue(_))
+  EXPECT_CALL(*library_, GetStringAsReturnedValue(_))
       .WillOnce(Return(STRING_VAL));
   ::grpc::ServerContext context;
   GetStringAsReturnedValueRequest request;
@@ -1730,7 +1730,7 @@ TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValue_ReturnsString)
 TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValueReturnsNull_ReturnsError)
 {
   constexpr auto FAILED_GET = -1;
-  EXPECT_CALL(library_, GetStringAsReturnedValue(_))
+  EXPECT_CALL(*library_, GetStringAsReturnedValue(_))
       .WillOnce(Return(nullptr));
   ::grpc::ServerContext context;
   GetStringAsReturnedValueRequest request;
@@ -1747,9 +1747,9 @@ TEST_F(NiFakeNonIviServiceTests, InitWithError_CallsGetLatestErrorAndReturnsMess
   constexpr auto SOME_ERROR = -1;
   const auto ERROR_MESSAGE = std::string("Some error occurred!");
   const auto ERROR_MESSAGE_BUFFER_SIZE = static_cast<int32>(ERROR_MESSAGE.size() + 1);
-  EXPECT_CALL(library_, Init(_, _))
+  EXPECT_CALL(*library_, Init(_, _))
       .WillOnce(Return(SOME_ERROR));
-  EXPECT_CALL(library_, GetLatestErrorMessage(_, 2048))
+  EXPECT_CALL(*library_, GetLatestErrorMessage(_, 2048))
       .WillOnce(
           DoAll(
               SetArrayArgument<0>(ERROR_MESSAGE.c_str(), ERROR_MESSAGE.c_str() + ERROR_MESSAGE_BUFFER_SIZE),
@@ -1767,9 +1767,9 @@ TEST_F(NiFakeNonIviServiceTests, InitWithError_CallsGetLatestErrorAndReturnsMess
 
 TEST_F(NiFakeNonIviServiceTests, InitWithNoError_DoesNotCallGetLatestError)
 {
-  EXPECT_CALL(library_, Init(_, _))
+  EXPECT_CALL(*library_, Init(_, _))
       .WillOnce(Return(kDriverSuccess));
-  EXPECT_CALL(library_, GetLatestErrorMessage(_, _))
+  EXPECT_CALL(*library_, GetLatestErrorMessage(_, _))
       .Times(0);
   ::grpc::ServerContext context;
   InitRequest request;

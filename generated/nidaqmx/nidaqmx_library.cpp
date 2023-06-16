@@ -387,6 +387,9 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.StopTask = reinterpret_cast<StopTaskPtr>(shared_library_.get_function_pointer("DAQmxStopTask"));
   function_pointers_.TaskControl = reinterpret_cast<TaskControlPtr>(shared_library_.get_function_pointer("DAQmxTaskControl"));
   function_pointers_.TristateOutputTerm = reinterpret_cast<TristateOutputTermPtr>(shared_library_.get_function_pointer("DAQmxTristateOutputTerm"));
+  function_pointers_.UnregisterDoneEvent = reinterpret_cast<UnregisterDoneEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterDoneEvent"));
+  function_pointers_.UnregisterEveryNSamplesEvent = reinterpret_cast<UnregisterEveryNSamplesEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterEveryNSamplesEvent"));
+  function_pointers_.UnregisterSignalEvent = reinterpret_cast<UnregisterSignalEventPtr>(shared_library_.get_function_pointer("DAQmxRegisterSignalEvent"));
   function_pointers_.UnreserveNetworkDevice = reinterpret_cast<UnreserveNetworkDevicePtr>(shared_library_.get_function_pointer("DAQmxUnreserveNetworkDevice"));
   function_pointers_.WaitForNextSampleClock = reinterpret_cast<WaitForNextSampleClockPtr>(shared_library_.get_function_pointer("DAQmxWaitForNextSampleClock"));
   function_pointers_.WaitForValidTimestamp = reinterpret_cast<WaitForValidTimestampPtr>(shared_library_.get_function_pointer("DAQmxWaitForValidTimestamp"));
@@ -3350,6 +3353,30 @@ int32 NiDAQmxLibrary::TristateOutputTerm(const char outputTerminal[])
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxTristateOutputTerm.");
   }
   return function_pointers_.TristateOutputTerm(outputTerminal);
+}
+
+int32 NiDAQmxLibrary::UnregisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData)
+{
+  if (!function_pointers_.UnregisterDoneEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterDoneEvent.");
+  }
+  return function_pointers_.UnregisterDoneEvent(task, options, callbackFunction, callbackData);
+}
+
+int32 NiDAQmxLibrary::UnregisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData)
+{
+  if (!function_pointers_.UnregisterEveryNSamplesEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterEveryNSamplesEvent.");
+  }
+  return function_pointers_.UnregisterEveryNSamplesEvent(task, everyNSamplesEventType, nSamples, options, callbackFunction, callbackData);
+}
+
+int32 NiDAQmxLibrary::UnregisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData)
+{
+  if (!function_pointers_.UnregisterSignalEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRegisterSignalEvent.");
+  }
+  return function_pointers_.UnregisterSignalEvent(task, signalID, options, callbackFunction, callbackData);
 }
 
 int32 NiDAQmxLibrary::UnreserveNetworkDevice(const char deviceName[])

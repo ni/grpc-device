@@ -2,6 +2,7 @@
 
 #include "device_server.h"
 #include "niswitch/niswitch_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -85,10 +86,11 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     niswitch::InitWithTopologyResponse response;
 
     ::grpc::Status status = GetStub()->InitWithTopology(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
-    ASSERT_TRUE(status.ok());
-    ASSERT_EQ(kSwitchDriverApiSuccess, response.status());
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kSwitchDriverApiSuccess, response.status());
   }
 
   void close_driver_session()

@@ -376,6 +376,9 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, StopTask, (TaskHandle task), (override));
   MOCK_METHOD(int32, TaskControl, (TaskHandle task, int32 action), (override));
   MOCK_METHOD(int32, TristateOutputTerm, (const char outputTerminal[]), (override));
+  MOCK_METHOD(int32, UnregisterDoneEvent, (TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData), (override));
+  MOCK_METHOD(int32, UnregisterEveryNSamplesEvent, (TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData), (override));
+  MOCK_METHOD(int32, UnregisterSignalEvent, (TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData), (override));
   MOCK_METHOD(int32, UnreserveNetworkDevice, (const char deviceName[]), (override));
   MOCK_METHOD(int32, WaitForNextSampleClock, (TaskHandle task, float64 timeout, bool32* isLate), (override));
   MOCK_METHOD(int32, WaitForValidTimestamp, (TaskHandle task, int32 timestampEvent, float64 timeout, CVIAbsoluteTime* timestamp), (override));

@@ -17146,7 +17146,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadAnalogScalarF64': {
         'calling_convention': 'StdCall',
@@ -17291,7 +17292,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadBinaryI32': {
         'calling_convention': 'StdCall',
@@ -17385,7 +17387,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadBinaryU16': {
         'calling_convention': 'StdCall',
@@ -17480,7 +17483,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadBinaryU32': {
         'calling_convention': 'StdCall',
@@ -17574,7 +17578,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCounterF64': {
         'calling_convention': 'StdCall',
@@ -17657,7 +17662,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCounterF64Ex': {
         'calling_convention': 'StdCall',
@@ -17751,7 +17757,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCounterScalarF64': {
         'calling_convention': 'StdCall',
@@ -17934,7 +17941,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCounterU32Ex': {
         'calling_convention': 'StdCall',
@@ -18028,7 +18036,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrFreq': {
         'calling_convention': 'StdCall',
@@ -18134,7 +18143,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrFreqScalar': {
         'calling_convention': 'StdCall',
@@ -18298,7 +18308,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrTicksScalar': {
         'calling_convention': 'StdCall',
@@ -18464,7 +18475,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrTimeScalar': {
         'calling_convention': 'StdCall',
@@ -18626,7 +18638,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadDigitalScalarU32': {
         'calling_convention': 'StdCall',
@@ -18771,7 +18784,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadDigitalU32': {
         'calling_convention': 'StdCall',
@@ -18865,7 +18879,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadDigitalU8': {
         'calling_convention': 'StdCall',
@@ -18959,7 +18974,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerBinaryI16': {
         'calling_convention': 'StdCall',
@@ -19026,7 +19042,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'no',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerF64': {
         'calling_convention': 'StdCall',
@@ -19091,7 +19108,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'no',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerScalarF64': {
         'calling_convention': 'StdCall',
@@ -19243,7 +19261,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'no',
-        'returns': 'int32'
+        'returns': 'int32',
+        'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'RegisterDoneEvent': {
         'calling_convention': 'StdCall',
@@ -22939,6 +22958,278 @@ functions = {
         ],
         'python_class_name': 'System',
         'python_description': 'Sets a terminal to high-impedance state. If you connect an external signal to a terminal on the I/O connector, the terminal must be in high-impedance state. Otherwise, the device could double-drive the terminal and damage the hardware. If you use this function on a terminal in an active route, the function fails and returns an error.',
+        'returns': 'int32'
+    },
+    'UnregisterDoneEvent': {
+        'calling_convention': 'StdCall',
+        'cname': 'DAQmxRegisterDoneEvent',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
+        'parameters': [
+            {
+                'ctypes_data_type': 'ctypes.TaskHandle',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'task',
+                'python_data_type': 'TaskHandle',
+                'python_description': '',
+                'python_type_annotation': 'TaskHandle',
+                'type': 'TaskHandle'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_uint',
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'options',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
+                'type': 'uInt32'
+            },
+            {
+                'callback_params': [
+                    {
+                        'ctypes_data_type': 'lib_importer.task_handle',
+                        'direction': 'out',
+                        'include_in_proto': False,
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'ctypes_data_type': 'ctypes.c_int',
+                        'direction': 'out',
+                        'name': 'status',
+                        'type': 'int32'
+                    }
+                ],
+                'ctypes_data_type': None,
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'callbackFunction',
+                'python_data_type': 'DAQmxDoneEventCallbackPtr',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.DAQmxDoneEventCallbackPtr',
+                'type': 'DAQmxDoneEventCallbackPtr'
+            },
+            {
+                'callback_token': True,
+                'ctypes_data_type': 'ctypes.c_void_p',
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'callbackData',
+                'pointer': True,
+                'python_data_type': 'dynamic',
+                'python_description': '',
+                'python_type_annotation': 'dynamic',
+                'type': 'void'
+            }
+        ],
+        'python_class_name': 'Task',
+        'python_codegen_method': 'CustomCode',
+        'returns': 'int32'
+    },
+    'UnregisterEveryNSamplesEvent': {
+        'calling_convention': 'StdCall',
+        'cname': 'DAQmxRegisterEveryNSamplesEvent',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
+        'parameters': [
+            {
+                'ctypes_data_type': 'ctypes.TaskHandle',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'task',
+                'python_data_type': 'TaskHandle',
+                'python_description': '',
+                'python_type_annotation': 'TaskHandle',
+                'type': 'TaskHandle'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'EveryNSamplesEventType',
+                'is_optional_in_python': False,
+                'name': 'everyNSamplesEventType',
+                'python_data_type': 'EveryNSamplesEventType',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.EveryNSamplesEventType',
+                'type': 'int32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_uint',
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'nSamples',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
+                'type': 'uInt32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_uint',
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'options',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
+                'type': 'uInt32'
+            },
+            {
+                'callback_params': [
+                    {
+                        'ctypes_data_type': 'lib_importer.task_handle',
+                        'direction': 'out',
+                        'include_in_proto': False,
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'ctypes_data_type': 'ctypes.c_int',
+                        'direction': 'out',
+                        'enum': 'EveryNSamplesEventType',
+                        'name': 'everyNSamplesEventType',
+                        'type': 'int32'
+                    },
+                    {
+                        'ctypes_data_type': 'ctypes.c_uint',
+                        'direction': 'out',
+                        'name': 'nSamples',
+                        'type': 'uInt32'
+                    }
+                ],
+                'ctypes_data_type': None,
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'callbackFunction',
+                'python_data_type': 'DAQmxEveryNSamplesEventCallbackPtr',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.DAQmxEveryNSamplesEventCallbackPtr',
+                'type': 'DAQmxEveryNSamplesEventCallbackPtr'
+            },
+            {
+                'callback_token': True,
+                'ctypes_data_type': 'ctypes.c_void_p',
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'callbackData',
+                'pointer': True,
+                'python_data_type': 'dynamic',
+                'python_description': '',
+                'python_type_annotation': 'dynamic',
+                'type': 'void'
+            }
+        ],
+        'python_class_name': 'Task',
+        'python_codegen_method': 'CustomCode',
+        'returns': 'int32'
+    },
+    'UnregisterSignalEvent': {
+        'calling_convention': 'StdCall',
+        'cname': 'DAQmxRegisterSignalEvent',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
+        'parameters': [
+            {
+                'ctypes_data_type': 'ctypes.TaskHandle',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'task',
+                'python_data_type': 'TaskHandle',
+                'python_description': '',
+                'python_type_annotation': 'TaskHandle',
+                'type': 'TaskHandle'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'Signal2',
+                'is_optional_in_python': False,
+                'name': 'signalID',
+                'python_data_type': 'Signal',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.Signal',
+                'type': 'int32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_uint',
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'options',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
+                'type': 'uInt32'
+            },
+            {
+                'callback_params': [
+                    {
+                        'ctypes_data_type': 'lib_importer.task_handle',
+                        'direction': 'out',
+                        'include_in_proto': False,
+                        'name': 'task',
+                        'type': 'TaskHandle'
+                    },
+                    {
+                        'ctypes_data_type': 'ctypes.c_int',
+                        'direction': 'out',
+                        'name': 'signalID',
+                        'type': 'int32'
+                    }
+                ],
+                'ctypes_data_type': None,
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'callbackFunction',
+                'python_data_type': 'DAQmxSignalEventCallbackPtr',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.DAQmxSignalEventCallbackPtr',
+                'type': 'DAQmxSignalEventCallbackPtr'
+            },
+            {
+                'callback_token': True,
+                'ctypes_data_type': 'ctypes.c_void_p',
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'is_optional_in_python': False,
+                'name': 'callbackData',
+                'pointer': True,
+                'python_data_type': 'dynamic',
+                'python_description': '',
+                'python_type_annotation': 'dynamic',
+                'type': 'void'
+            }
+        ],
+        'python_class_name': 'Task',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'UnreserveNetworkDevice': {

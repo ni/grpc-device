@@ -28,7 +28,7 @@ namespace nifake_non_ivi_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiFakeNonIviService::NiFakeNonIviService(
-      NiFakeNonIviLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
       FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
@@ -360,7 +360,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -391,7 +393,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -428,7 +432,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -457,7 +463,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, secondary_session_handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (SecondarySessionHandle id) { library->CloseSecondarySession(id); };
       int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -488,7 +496,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->handle_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -519,7 +529,9 @@ namespace nifake_non_ivi_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->handle_name();
-      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (FakeHandle id) { library->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
@@ -770,15 +782,15 @@ namespace nifake_non_ivi_grpc {
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, myInt16>;
     class RegisterCallbackReactor : public nidevice_grpc::ServerWriterReactor<RegisterCallbackResponse, nidevice_grpc::CallbackRegistration> {
     public:
-    RegisterCallbackReactor(const RegisterCallbackRequest& request, NiFakeNonIviLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
+    RegisterCallbackReactor(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request, LibrarySharedPtr library, NiFakeNonIviService* service)
     {
-      auto status = start(&request, library, session_repository);
+      auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 
-    ::grpc::Status start(const RegisterCallbackRequest* request, NiFakeNonIviLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository_)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request, LibrarySharedPtr library, NiFakeNonIviService* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(
@@ -790,18 +802,16 @@ namespace nifake_non_ivi_grpc {
             return 0;
         });
 
+        const auto& session_repository_ = service->session_repository_;
         myInt16 input_data = request->input_data();
 
         auto status = library->RegisterCallback(input_data, CallbackRouter::handle_callback, handler->token());
+        if (!status_ok(status)) {
+          return service->ConvertApiErrorStatusForFakeHandle(context, status, 0);
+        }
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
-
-        if (status) {
-          RegisterCallbackResponse failed_to_register_response;
-          failed_to_register_response.set_status(status);
-          queue_write(failed_to_register_response);
-        }
 
         this->set_producer(std::move(handler));
       }
@@ -813,7 +823,7 @@ namespace nifake_non_ivi_grpc {
     }
     };
 
-    return new RegisterCallbackReactor(*request, library_, session_repository_);
+    return new RegisterCallbackReactor(context, request, library_, this);
   }
 
   //---------------------------------------------------------------------
