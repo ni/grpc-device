@@ -120,7 +120,9 @@ service NiRFmxDemod {
   rpc GetAttributeI64Array(GetAttributeI64ArrayRequest) returns (GetAttributeI64ArrayResponse);
   rpc GetAttributeI8(GetAttributeI8Request) returns (GetAttributeI8Response);
   rpc GetAttributeI8Array(GetAttributeI8ArrayRequest) returns (GetAttributeI8ArrayResponse);
+  rpc GetAttributeNIComplexDouble(GetAttributeNIComplexDoubleRequest) returns (GetAttributeNIComplexDoubleResponse);
   rpc GetAttributeNIComplexDoubleArray(GetAttributeNIComplexDoubleArrayRequest) returns (GetAttributeNIComplexDoubleArrayResponse);
+  rpc GetAttributeNIComplexSingle(GetAttributeNIComplexSingleRequest) returns (GetAttributeNIComplexSingleResponse);
   rpc GetAttributeNIComplexSingleArray(GetAttributeNIComplexSingleArrayRequest) returns (GetAttributeNIComplexSingleArrayResponse);
   rpc GetAttributeString(GetAttributeStringRequest) returns (GetAttributeStringResponse);
   rpc GetAttributeU16(GetAttributeU16Request) returns (GetAttributeU16Response);
@@ -149,7 +151,9 @@ service NiRFmxDemod {
   rpc SetAttributeI64Array(SetAttributeI64ArrayRequest) returns (SetAttributeI64ArrayResponse);
   rpc SetAttributeI8(SetAttributeI8Request) returns (SetAttributeI8Response);
   rpc SetAttributeI8Array(SetAttributeI8ArrayRequest) returns (SetAttributeI8ArrayResponse);
+  rpc SetAttributeNIComplexDouble(SetAttributeNIComplexDoubleRequest) returns (SetAttributeNIComplexDoubleResponse);
   rpc SetAttributeNIComplexDoubleArray(SetAttributeNIComplexDoubleArrayRequest) returns (SetAttributeNIComplexDoubleArrayResponse);
+  rpc SetAttributeNIComplexSingle(SetAttributeNIComplexSingleRequest) returns (SetAttributeNIComplexSingleResponse);
   rpc SetAttributeNIComplexSingleArray(SetAttributeNIComplexSingleArrayRequest) returns (SetAttributeNIComplexSingleArrayResponse);
   rpc SetAttributeString(SetAttributeStringRequest) returns (SetAttributeStringResponse);
   rpc SetAttributeU16(SetAttributeU16Request) returns (SetAttributeU16Response);
@@ -1934,6 +1938,17 @@ message GetAttributeI8ArrayResponse {
   int32 actual_array_size = 3;
 }
 
+message GetAttributeNIComplexDoubleRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 attribute_id = 3;
+}
+
+message GetAttributeNIComplexDoubleResponse {
+  int32 status = 1;
+  nidevice_grpc.NIComplexNumber attr_val = 2;
+}
+
 message GetAttributeNIComplexDoubleArrayRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1944,6 +1959,17 @@ message GetAttributeNIComplexDoubleArrayResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumber attr_val = 2;
   int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexSingleRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 attribute_id = 3;
+}
+
+message GetAttributeNIComplexSingleResponse {
+  int32 status = 1;
+  nidevice_grpc.NIComplexNumberF32 attr_val = 2;
 }
 
 message GetAttributeNIComplexSingleArrayRequest {
@@ -2259,6 +2285,17 @@ message SetAttributeI8ArrayResponse {
   int32 status = 1;
 }
 
+message SetAttributeNIComplexDoubleRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 attribute_id = 3;
+  nidevice_grpc.NIComplexNumber attr_val = 4;
+}
+
+message SetAttributeNIComplexDoubleResponse {
+  int32 status = 1;
+}
+
 message SetAttributeNIComplexDoubleArrayRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2267,6 +2304,17 @@ message SetAttributeNIComplexDoubleArrayRequest {
 }
 
 message SetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexSingleRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 attribute_id = 3;
+  nidevice_grpc.NIComplexNumberF32 attr_val = 4;
+}
+
+message SetAttributeNIComplexSingleResponse {
   int32 status = 1;
 }
 
