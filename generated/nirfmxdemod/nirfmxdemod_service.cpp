@@ -3810,6 +3810,33 @@ namespace nirfmxdemod_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::GetAttributeNIComplexDouble(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleRequest* request, GetAttributeNIComplexDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      NIComplexDouble attr_val {};
+      auto status = library_->GetAttributeNIComplexDouble(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      convert_to_grpc(attr_val, response->mutable_attr_val());
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxDemodService::GetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleArrayRequest* request, GetAttributeNIComplexDoubleArrayResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3849,6 +3876,33 @@ namespace nirfmxdemod_grpc {
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::GetAttributeNIComplexSingle(::grpc::ServerContext* context, const GetAttributeNIComplexSingleRequest* request, GetAttributeNIComplexSingleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      NIComplexSingle attr_val {};
+      auto status = library_->GetAttributeNIComplexSingle(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      convert_to_grpc(attr_val, response->mutable_attr_val());
+      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
@@ -4794,6 +4848,32 @@ namespace nirfmxdemod_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::SetAttributeNIComplexDouble(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleRequest* request, SetAttributeNIComplexDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
+      auto status = library_->SetAttributeNIComplexDouble(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxDemodService::SetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleArrayRequest* request, SetAttributeNIComplexDoubleArrayResponse* response)
   {
     if (context->IsCancelled()) {
@@ -4808,6 +4888,32 @@ namespace nirfmxdemod_grpc {
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::SetAttributeNIComplexSingle(::grpc::ServerContext* context, const SetAttributeNIComplexSingleRequest* request, SetAttributeNIComplexSingleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
+      auto status = library_->SetAttributeNIComplexSingle(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -5113,7 +5219,7 @@ namespace nirfmxdemod_grpc {
   NiRFmxDemodFeatureToggles::NiRFmxDemodFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxdemod", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxdemod", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxdemod_grpc

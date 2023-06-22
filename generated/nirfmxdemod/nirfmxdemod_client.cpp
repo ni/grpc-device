@@ -2224,6 +2224,25 @@ get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
   return response;
 }
 
+GetAttributeNIComplexDoubleResponse
+get_attribute_ni_complex_double(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeNIComplexDoubleRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeNIComplexDoubleResponse{};
+
+  raise_if_error(
+      stub->GetAttributeNIComplexDouble(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetAttributeNIComplexDoubleArrayResponse
 get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxDemodAttribute& attribute_id)
 {
@@ -2238,6 +2257,25 @@ get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->GetAttributeNIComplexDoubleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeNIComplexSingleResponse
+get_attribute_ni_complex_single(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeNIComplexSingleRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeNIComplexSingleResponse{};
+
+  raise_if_error(
+      stub->GetAttributeNIComplexSingle(&context, request, &response),
       context);
 
   return response;
@@ -2787,6 +2825,26 @@ set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
   return response;
 }
 
+SetAttributeNIComplexDoubleResponse
+set_attribute_ni_complex_double(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& attribute_id, const nidevice_grpc::NIComplexNumber& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeNIComplexDoubleRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.mutable_attr_val()->CopyFrom(attr_val);
+
+  auto response = SetAttributeNIComplexDoubleResponse{};
+
+  raise_if_error(
+      stub->SetAttributeNIComplexDouble(&context, request, &response),
+      context);
+
+  return response;
+}
+
 SetAttributeNIComplexDoubleArrayResponse
 set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxDemodAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
 {
@@ -2802,6 +2860,26 @@ set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->SetAttributeNIComplexDoubleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeNIComplexSingleResponse
+set_attribute_ni_complex_single(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& attribute_id, const nidevice_grpc::NIComplexNumberF32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeNIComplexSingleRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.mutable_attr_val()->CopyFrom(attr_val);
+
+  auto response = SetAttributeNIComplexSingleResponse{};
+
+  raise_if_error(
+      stub->SetAttributeNIComplexSingle(&context, request, &response),
       context);
 
   return response;

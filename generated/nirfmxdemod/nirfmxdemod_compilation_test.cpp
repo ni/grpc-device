@@ -522,9 +522,19 @@ int32 GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorStrin
   return RFmxDemod_GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
+int32 GetAttributeNIComplexDouble(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble* attrVal)
+{
+  return RFmxDemod_GetAttributeNIComplexDouble(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
 int32 GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxDemod_GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeNIComplexSingle(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle* attrVal)
+{
+  return RFmxDemod_GetAttributeNIComplexSingle(instrumentHandle, selectorString, attributeID, attrVal);
 }
 
 int32 GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
@@ -667,9 +677,19 @@ int32 SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorStrin
   return RFmxDemod_SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
 }
 
+int32 SetAttributeNIComplexDouble(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal)
+{
+  return RFmxDemod_SetAttributeNIComplexDouble(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
 int32 SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
 {
   return RFmxDemod_SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeNIComplexSingle(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal)
+{
+  return RFmxDemod_SetAttributeNIComplexSingle(instrumentHandle, selectorString, attributeID, attrVal);
 }
 
 int32 SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)

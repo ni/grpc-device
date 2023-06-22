@@ -124,7 +124,9 @@ NiRFmxDemodLibrary::NiRFmxDemodLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI64Array"));
   function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI8"));
   function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDouble = reinterpret_cast<GetAttributeNIComplexDoublePtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeNIComplexDouble"));
   function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingle = reinterpret_cast<GetAttributeNIComplexSinglePtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeNIComplexSingle"));
   function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeNIComplexSingleArray"));
   function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeString"));
   function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeU16"));
@@ -153,7 +155,9 @@ NiRFmxDemodLibrary::NiRFmxDemodLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI64Array"));
   function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI8"));
   function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDouble = reinterpret_cast<SetAttributeNIComplexDoublePtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeNIComplexDouble"));
   function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingle = reinterpret_cast<SetAttributeNIComplexSinglePtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeNIComplexSingle"));
   function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeNIComplexSingleArray"));
   function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeString"));
   function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeU16"));
@@ -1001,12 +1005,28 @@ int32 NiRFmxDemodLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle
   return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
+int32 NiRFmxDemodLibrary::GetAttributeNIComplexDouble(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble* attrVal)
+{
+  if (!function_pointers_.GetAttributeNIComplexDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_GetAttributeNIComplexDouble.");
+  }
+  return function_pointers_.GetAttributeNIComplexDouble(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
 int32 NiRFmxDemodLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_GetAttributeNIComplexDoubleArray.");
   }
   return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxDemodLibrary::GetAttributeNIComplexSingle(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle* attrVal)
+{
+  if (!function_pointers_.GetAttributeNIComplexSingle) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_GetAttributeNIComplexSingle.");
+  }
+  return function_pointers_.GetAttributeNIComplexSingle(instrumentHandle, selectorString, attributeID, attrVal);
 }
 
 int32 NiRFmxDemodLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1233,12 +1253,28 @@ int32 NiRFmxDemodLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle
   return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
 }
 
+int32 NiRFmxDemodLibrary::SetAttributeNIComplexDouble(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal)
+{
+  if (!function_pointers_.SetAttributeNIComplexDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_SetAttributeNIComplexDouble.");
+  }
+  return function_pointers_.SetAttributeNIComplexDouble(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
 int32 NiRFmxDemodLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_SetAttributeNIComplexDoubleArray.");
   }
   return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxDemodLibrary::SetAttributeNIComplexSingle(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal)
+{
+  if (!function_pointers_.SetAttributeNIComplexSingle) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_SetAttributeNIComplexSingle.");
+  }
+  return function_pointers_.SetAttributeNIComplexSingle(instrumentHandle, selectorString, attributeID, attrVal);
 }
 
 int32 NiRFmxDemodLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)

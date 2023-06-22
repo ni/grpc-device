@@ -3475,6 +3475,32 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetAttributeNIComplexDouble': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'NIComplexDouble'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetAttributeNIComplexDoubleArray': {
         'parameters': [
             {
@@ -3513,6 +3539,32 @@ functions = {
                 'direction': 'out',
                 'name': 'actualArraySize',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeNIComplexSingle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'NIComplexSingle'
             }
         ],
         'returns': 'int32'
@@ -4394,6 +4446,32 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetAttributeNIComplexDouble': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'NIComplexDouble'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetAttributeNIComplexDoubleArray': {
         'parameters': [
             {
@@ -4426,6 +4504,32 @@ functions = {
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeNIComplexSingle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'NIComplexSingle'
             }
         ],
         'returns': 'int32'
