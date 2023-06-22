@@ -5219,7 +5219,7 @@ namespace nirfmxdemod_grpc {
   NiRFmxDemodFeatureToggles::NiRFmxDemodFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxdemod", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxdemod", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxdemod_grpc
