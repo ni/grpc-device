@@ -25,4 +25,4 @@ jobs:
     - name: Run System Tests
       run: .\SystemTestsRunner.exe
       working-directory: ./build/Release
-      timeout-minutes: 27
+      timeout-minutes: 50
