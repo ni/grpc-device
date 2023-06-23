@@ -139,7 +139,7 @@ try:
     input("Press any key to stop generation")
     raise_if_error(client.Abort(nirfsg_types.AbortRequest(vi=vi)))
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
