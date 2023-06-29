@@ -27,6 +27,7 @@ NiRFmxWLANLibrary::NiRFmxWLANLibrary() : shared_library_(kLibraryName)
   function_pointers_.AnalyzeNWaveformsSpectrum = reinterpret_cast<AnalyzeNWaveformsSpectrumPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeNWaveformsSpectrum"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoDetectSignal = reinterpret_cast<AutoDetectSignalPtr>(shared_library_.get_function_pointer("RFmxWLAN_AutoDetectSignal"));
+  function_pointers_.AutoDetectSignalAnalysisOnly = reinterpret_cast<AutoDetectSignalAnalysisOnlyPtr>(shared_library_.get_function_pointer("RFmxWLAN_AutoDetectSignalAnalysisOnly"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxWLAN_AutoLevel"));
   function_pointers_.BuildChainString = reinterpret_cast<BuildChainStringPtr>(shared_library_.get_function_pointer("RFmxWLAN_BuildChainString"));
   function_pointers_.BuildGateString = reinterpret_cast<BuildGateStringPtr>(shared_library_.get_function_pointer("RFmxWLAN_BuildGateString"));
@@ -313,6 +314,14 @@ int32 NiRFmxWLANLibrary::AutoDetectSignal(niRFmxInstrHandle instrumentHandle, ch
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AutoDetectSignal.");
   }
   return function_pointers_.AutoDetectSignal(instrumentHandle, selectorString, timeout);
+}
+
+int32 NiRFmxWLANLibrary::AutoDetectSignalAnalysisOnly(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize)
+{
+  if (!function_pointers_.AutoDetectSignalAnalysisOnly) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AutoDetectSignalAnalysisOnly.");
+  }
+  return function_pointers_.AutoDetectSignalAnalysisOnly(instrumentHandle, selectorString, x0, dx, iq, arraySize);
 }
 
 int32 NiRFmxWLANLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)

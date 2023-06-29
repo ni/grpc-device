@@ -696,6 +696,19 @@ enums = {
             }
         ]
     },
+    'OfdmModAccCombinedSignalDemodulationEnabled': {
+        'enum-value-prefix': 'OFDMMODACC_COMBINED_SIGNAL_DEMODULATION_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'OfdmModAccCommonClockSourceEnabled': {
         'enum-value-prefix': 'OFDMMODACC_COMMON_CLOCK_SOURCE_ENABLED',
         'values': [
