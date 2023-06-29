@@ -3038,6 +3038,32 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'LoadFromGenerationConfigurationFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'configurationIndex',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccAutoLevel': {
         'parameters': [
             {

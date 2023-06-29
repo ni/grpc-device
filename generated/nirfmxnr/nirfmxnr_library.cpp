@@ -119,6 +119,7 @@ NiRFmxNRLibrary::NiRFmxNRLibrary() : shared_library_(kLibraryName)
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxNR_Initialize"));
   function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxNR_InitializeFromNIRFSASession"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("RFmxNR_Initiate"));
+  function_pointers_.LoadFromGenerationConfigurationFile = reinterpret_cast<LoadFromGenerationConfigurationFilePtr>(shared_library_.get_function_pointer("RFmxNR_LoadFromGenerationConfigurationFile"));
   function_pointers_.ModAccAutoLevel = reinterpret_cast<ModAccAutoLevelPtr>(shared_library_.get_function_pointer("RFmxNR_ModAccAutoLevel"));
   function_pointers_.ModAccCfgMeasurementMode = reinterpret_cast<ModAccCfgMeasurementModePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccCfgMeasurementMode"));
   function_pointers_.ModAccCfgNoiseCompensationEnabled = reinterpret_cast<ModAccCfgNoiseCompensationEnabledPtr>(shared_library_.get_function_pointer("RFmxNR_ModAccCfgNoiseCompensationEnabled"));
@@ -1036,6 +1037,14 @@ int32 NiRFmxNRLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selecto
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_Initiate.");
   }
   return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
+}
+
+int32 NiRFmxNRLibrary::LoadFromGenerationConfigurationFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], int32 configurationIndex)
+{
+  if (!function_pointers_.LoadFromGenerationConfigurationFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_LoadFromGenerationConfigurationFile.");
+  }
+  return function_pointers_.LoadFromGenerationConfigurationFile(instrumentHandle, selectorString, filePath, configurationIndex);
 }
 
 int32 NiRFmxNRLibrary::ModAccAutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)

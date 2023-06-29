@@ -3669,6 +3669,33 @@ namespace nirfmxnr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxNRService::LoadFromGenerationConfigurationFile(::grpc::ServerContext* context, const LoadFromGenerationConfigurationFileRequest* request, LoadFromGenerationConfigurationFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
+      int32 configuration_index = request->configuration_index();
+      auto status = library_->LoadFromGenerationConfigurationFile(instrument, selector_string, file_path, configuration_index);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxNRService::ModAccAutoLevel(::grpc::ServerContext* context, const ModAccAutoLevelRequest* request, ModAccAutoLevelResponse* response)
   {
     if (context->IsCancelled()) {
