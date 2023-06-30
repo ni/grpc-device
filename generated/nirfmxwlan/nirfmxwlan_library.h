@@ -24,6 +24,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   int32 AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset);
   int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved);
   int32 AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout);
+  int32 AutoDetectSignalAnalysisOnly(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize);
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval);
   int32 BuildChainString(char selectorString[], int32 chainNumber, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 BuildGateString(char selectorString[], int32 gateNumber, int32 selectorStringOutLength, char selectorStringOut[]);
@@ -259,6 +260,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   using AnalyzeNWaveformsSpectrumPtr = decltype(&RFmxWLAN_AnalyzeNWaveformsSpectrum);
   using AnalyzeSpectrum1WaveformPtr = decltype(&RFmxWLAN_AnalyzeSpectrum1Waveform);
   using AutoDetectSignalPtr = decltype(&RFmxWLAN_AutoDetectSignal);
+  using AutoDetectSignalAnalysisOnlyPtr = decltype(&RFmxWLAN_AutoDetectSignalAnalysisOnly);
   using AutoLevelPtr = decltype(&RFmxWLAN_AutoLevel);
   using BuildChainStringPtr = decltype(&RFmxWLAN_BuildChainString);
   using BuildGateStringPtr = decltype(&RFmxWLAN_BuildGateString);
@@ -494,6 +496,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
     AnalyzeNWaveformsSpectrumPtr AnalyzeNWaveformsSpectrum;
     AnalyzeSpectrum1WaveformPtr AnalyzeSpectrum1Waveform;
     AutoDetectSignalPtr AutoDetectSignal;
+    AutoDetectSignalAnalysisOnlyPtr AutoDetectSignalAnalysisOnly;
     AutoLevelPtr AutoLevel;
     BuildChainStringPtr BuildChainString;
     BuildGateStringPtr BuildGateString;

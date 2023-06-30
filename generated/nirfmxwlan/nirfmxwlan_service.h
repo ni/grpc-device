@@ -50,6 +50,7 @@ public:
   ::grpc::Status AnalyzeNWaveformsSpectrum(::grpc::ServerContext* context, const AnalyzeNWaveformsSpectrumRequest* request, AnalyzeNWaveformsSpectrumResponse* response) override;
   ::grpc::Status AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response) override;
   ::grpc::Status AutoDetectSignal(::grpc::ServerContext* context, const AutoDetectSignalRequest* request, AutoDetectSignalResponse* response) override;
+  ::grpc::Status AutoDetectSignalAnalysisOnly(::grpc::ServerContext* context, const AutoDetectSignalAnalysisOnlyRequest* request, AutoDetectSignalAnalysisOnlyResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildChainString(::grpc::ServerContext* context, const BuildChainStringRequest* request, BuildChainStringResponse* response) override;
   ::grpc::Status BuildGateString(::grpc::ServerContext* context, const BuildGateStringRequest* request, BuildGateStringResponse* response) override;

@@ -300,6 +300,11 @@ attributes = {
         'name': 'OFDM_AUTO_PHASE_ROTATION_DETECTION_ENABLED',
         'type': 'int32'
     },
+    10485821: {
+        'access': 'read-write',
+        'name': 'OFDM_SCRAMBLER_SEED',
+        'type': 'int32'
+    },
     10489852: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',
@@ -1625,6 +1630,32 @@ attributes = {
     10502343: {
         'access': 'read-write',
         'name': 'OFDMMODACC_RESULTS_POWER_EHT_LTF_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
+    10502344: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_SCRAMBLER_SEED',
+        'type': 'int32'
+    },
+    10502345: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_AGGREGATION',
+        'type': 'int32'
+    },
+    10502346: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccCombinedSignalDemodulationEnabled',
+        'name': 'OFDMMODACC_COMBINED_SIGNAL_DEMODULATION_ENABLED',
+        'type': 'int32'
+    },
+    10502347: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_REFERENCE_DATA_CONSTELLATION_IDENTIFIER',
+        'type': 'char[]'
+    },
+    10502348: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_STREAM_POWER_MEAN',
         'type': 'float64'
     },
     10506240: {
