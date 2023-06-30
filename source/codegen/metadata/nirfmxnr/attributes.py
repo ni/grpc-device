@@ -1865,6 +1865,36 @@ attributes = {
         'name': 'MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_SLOT_INDEX',
         'type': 'int32'
     },
+    9453737: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PUSCH_DATA_RE_POWER_MEAN',
+        'type': 'float64'
+    },
+    9453738: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PUSCH_DMRS_RE_POWER_MEAN',
+        'type': 'float64'
+    },
+    9453739: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PUSCH_PTRS_RE_POWER_MEAN',
+        'type': 'float64'
+    },
+    9453740: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PDSCH_DATA_RE_POWER_MEAN',
+        'type': 'float64'
+    },
+    9453741: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PDSCH_DMRS_RE_POWER_MEAN',
+        'type': 'float64'
+    },
+    9453742: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PDSCH_PTRS_RE_POWER_MEAN',
+        'type': 'float64'
+    },
     9461760: {
         'access': 'read-write',
         'name': 'OBW_MEASUREMENT_ENABLED',

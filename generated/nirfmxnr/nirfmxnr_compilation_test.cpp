@@ -497,6 +497,11 @@ int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char r
   return RFmxNR_Initiate(instrumentHandle, selectorString, resultName);
 }
 
+int32 LoadFromGenerationConfigurationFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], int32 configurationIndex)
+{
+  return RFmxNR_LoadFromGenerationConfigurationFile(instrumentHandle, selectorString, filePath, configurationIndex);
+}
+
 int32 ModAccAutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
 {
   return RFmxNR_ModAccAutoLevel(instrumentHandle, selectorString, timeout);

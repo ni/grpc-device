@@ -142,6 +142,7 @@ public:
   ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
+  ::grpc::Status LoadFromGenerationConfigurationFile(::grpc::ServerContext* context, const LoadFromGenerationConfigurationFileRequest* request, LoadFromGenerationConfigurationFileResponse* response) override;
   ::grpc::Status ModAccAutoLevel(::grpc::ServerContext* context, const ModAccAutoLevelRequest* request, ModAccAutoLevelResponse* response) override;
   ::grpc::Status ModAccCfgMeasurementMode(::grpc::ServerContext* context, const ModAccCfgMeasurementModeRequest* request, ModAccCfgMeasurementModeResponse* response) override;
   ::grpc::Status ModAccCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const ModAccCfgNoiseCompensationEnabledRequest* request, ModAccCfgNoiseCompensationEnabledResponse* response) override;

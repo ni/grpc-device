@@ -115,6 +115,7 @@ class NiRFmxNRMockLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   MOCK_METHOD(int32, Initialize, (char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession), (override));
   MOCK_METHOD(int32, InitializeFromNIRFSASession, (uInt32 nirfsaSession, niRFmxInstrHandle* handleOut), (override));
   MOCK_METHOD(int32, Initiate, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]), (override));
+  MOCK_METHOD(int32, LoadFromGenerationConfigurationFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], int32 configurationIndex), (override));
   MOCK_METHOD(int32, ModAccAutoLevel, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout), (override));
   MOCK_METHOD(int32, ModAccCfgMeasurementMode, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMode), (override));
   MOCK_METHOD(int32, ModAccCfgNoiseCompensationEnabled, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled), (override));
