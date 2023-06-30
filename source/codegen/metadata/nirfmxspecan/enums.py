@@ -1970,6 +1970,94 @@ enums = {
             }
         ]
     },
+    'IdpdAveragingEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'IdpdEqualizerMode': {
+        'values': [
+            {
+                'name': 'OFF',
+                'value': 0
+            },
+            {
+                'name': 'TRAIN',
+                'value': 1
+            },
+            {
+                'name': 'HOLD',
+                'value': 2
+            }
+        ]
+    },
+    'IdpdEvmEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'IdpdEvmUnit': {
+        'values': [
+            {
+                'name': 'PERCENTAGE',
+                'value': 0
+            },
+            {
+                'name': 'DB',
+                'value': 1
+            }
+        ]
+    },
+    'IdpdMeasurementSampleRateMode': {
+        'values': [
+            {
+                'name': 'USER',
+                'value': 0
+            },
+            {
+                'name': 'REFERENCE_WAVEFORM',
+                'value': 1
+            }
+        ]
+    },
+    'IdpdReferenceWaveformIdleDurationPresent': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'IdpdSignalType': {
+        'values': [
+            {
+                'name': 'MODULATED',
+                'value': 0
+            },
+            {
+                'name': 'TONES',
+                'value': 1
+            }
+        ]
+    },
     'LimitedConfigurationChange': {
         'values': [
             {
@@ -2163,6 +2251,10 @@ enums = {
             {
                 'name': 'PAVT',
                 'value': 65536
+            },
+            {
+                'name': 'IDPD',
+                'value': 131072
             }
         ]
     },
