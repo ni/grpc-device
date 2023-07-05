@@ -240,6 +240,14 @@ public:
   ::grpc::Status HarmFetchHarmonicPowerTrace(::grpc::ServerContext* context, const HarmFetchHarmonicPowerTraceRequest* request, HarmFetchHarmonicPowerTraceResponse* response) override;
   ::grpc::Status HarmFetchTHD(::grpc::ServerContext* context, const HarmFetchTHDRequest* request, HarmFetchTHDResponse* response) override;
   ::grpc::Status HarmRead(::grpc::ServerContext* context, const HarmReadRequest* request, HarmReadResponse* response) override;
+  ::grpc::Status IDPDCfgEqualizerCoefficients(::grpc::ServerContext* context, const IDPDCfgEqualizerCoefficientsRequest* request, IDPDCfgEqualizerCoefficientsResponse* response) override;
+  ::grpc::Status IDPDCfgPredistortedWaveform(::grpc::ServerContext* context, const IDPDCfgPredistortedWaveformRequest* request, IDPDCfgPredistortedWaveformResponse* response) override;
+  ::grpc::Status IDPDCfgReferenceWaveform(::grpc::ServerContext* context, const IDPDCfgReferenceWaveformRequest* request, IDPDCfgReferenceWaveformResponse* response) override;
+  ::grpc::Status IDPDFetchEqualizerCoefficients(::grpc::ServerContext* context, const IDPDFetchEqualizerCoefficientsRequest* request, IDPDFetchEqualizerCoefficientsResponse* response) override;
+  ::grpc::Status IDPDFetchPredistortedWaveform(::grpc::ServerContext* context, const IDPDFetchPredistortedWaveformRequest* request, IDPDFetchPredistortedWaveformResponse* response) override;
+  ::grpc::Status IDPDFetchProcessedMeanAcquiredWaveform(::grpc::ServerContext* context, const IDPDFetchProcessedMeanAcquiredWaveformRequest* request, IDPDFetchProcessedMeanAcquiredWaveformResponse* response) override;
+  ::grpc::Status IDPDFetchProcessedReferenceWaveform(::grpc::ServerContext* context, const IDPDFetchProcessedReferenceWaveformRequest* request, IDPDFetchProcessedReferenceWaveformResponse* response) override;
+  ::grpc::Status IDPDGetEqualizerReferenceWaveform(::grpc::ServerContext* context, const IDPDGetEqualizerReferenceWaveformRequest* request, IDPDGetEqualizerReferenceWaveformResponse* response) override;
   ::grpc::Status IMCfgAutoIntermodsSetup(::grpc::ServerContext* context, const IMCfgAutoIntermodsSetupRequest* request, IMCfgAutoIntermodsSetupResponse* response) override;
   ::grpc::Status IMCfgAveraging(::grpc::ServerContext* context, const IMCfgAveragingRequest* request, IMCfgAveragingResponse* response) override;
   ::grpc::Status IMCfgFFT(::grpc::ServerContext* context, const IMCfgFFTRequest* request, IMCfgFFTResponse* response) override;

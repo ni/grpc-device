@@ -3556,5 +3556,127 @@ attributes = {
         'access': 'read-write',
         'name': 'PHASENOISE_CANCELLATION_REFERENCE_PHASE_NOISE',
         'type': 'float32[]'
+    },
+    1310720: {
+        'access': 'read-write',
+        'name': 'IDPD_MEASUREMENT_ENABLED',
+        'type': 'int32'
+    },
+    1310722: {
+        'access': 'read-write',
+        'enum': 'IdpdEqualizerMode',
+        'name': 'IDPD_EQUALIZER_MODE',
+        'type': 'int32'
+    },
+    1310723: {
+        'access': 'read-write',
+        'name': 'IDPD_EQUALIZER_FILTER_LENGTH',
+        'type': 'int32'
+    },
+    1310724: {
+        'access': 'read-write',
+        'enum': 'IdpdMeasurementSampleRateMode',
+        'name': 'IDPD_MEASUREMENT_SAMPLE_RATE_MODE',
+        'type': 'int32'
+    },
+    1310725: {
+        'access': 'read-write',
+        'name': 'IDPD_MEASUREMENT_SAMPLE_RATE',
+        'type': 'float64'
+    },
+    1310726: {
+        'access': 'read-write',
+        'enum': 'IdpdSignalType',
+        'name': 'IDPD_SIGNAL_TYPE',
+        'type': 'int32'
+    },
+    1310731: {
+        'access': 'read-write',
+        'enum': 'IdpdReferenceWaveformIdleDurationPresent',
+        'name': 'IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT',
+        'type': 'int32'
+    },
+    1310732: {
+        'access': 'read-write',
+        'name': 'IDPD_DUT_AVERAGE_INPUT_POWER',
+        'type': 'float64'
+    },
+    1310735: {
+        'access': 'read-write',
+        'enum': 'IdpdAveragingEnabled',
+        'name': 'IDPD_AVERAGING_ENABLED',
+        'type': 'int32'
+    },
+    1310736: {
+        'access': 'read-write',
+        'name': 'IDPD_AVERAGING_COUNT',
+        'type': 'int32'
+    },
+    1310739: {
+        'access': 'read-write',
+        'enum': 'IdpdEvmEnabled',
+        'name': 'IDPD_EVM_ENABLED',
+        'type': 'int32'
+    },
+    1310740: {
+        'access': 'read-write',
+        'enum': 'IdpdEvmUnit',
+        'name': 'IDPD_EVM_UNIT',
+        'type': 'int32'
+    },
+    1310741: {
+        'access': 'read-write',
+        'name': 'IDPD_IMPAIRMENT_ESTIMATION_START',
+        'type': 'float64'
+    },
+    1310742: {
+        'access': 'read-write',
+        'name': 'IDPD_IMPAIRMENT_ESTIMATION_STOP',
+        'type': 'float64'
+    },
+    1310743: {
+        'access': 'read-write',
+        'name': 'IDPD_SYNCHRONIZATION_ESTIMATION_START',
+        'type': 'float64'
+    },
+    1310744: {
+        'access': 'read-write',
+        'name': 'IDPD_SYNCHRONIZATION_ESTIMATION_STOP',
+        'type': 'float64'
+    },
+    1310745: {
+        'access': 'read-write',
+        'name': 'IDPD_GAIN_EXPANSION',
+        'type': 'float64'
+    },
+    1310747: {
+        'access': 'read-write',
+        'name': 'IDPD_POWER_LINEARITY_TRADEOFF',
+        'type': 'float64'
+    },
+    1310749: {
+        'access': 'read-write',
+        'name': 'IDPD_RESULTS_GAIN',
+        'type': 'float64'
+    },
+    1310750: {
+        'access': 'read-write',
+        'name': 'IDPD_RESULTS_MEAN_RMS_EVM',
+        'type': 'float64'
+    },
+    1310751: {
+        'access': 'read-write',
+        'name': 'IDPD_ALL_TRACES_ENABLED',
+        'type': 'int32'
+    },
+    1310753: {
+        'access': 'read-write',
+        'name': 'IDPD_NUMBER_OF_ANALYSIS_THREADS',
+        'type': 'int32'
+    },
+    1310759: {
+        'access': 'read-write',
+        'name': 'IDPD_TARGET_GAIN',
+        'type': 'float64'
     }
 }
