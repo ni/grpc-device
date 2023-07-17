@@ -58,6 +58,7 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(k
   function_pointers_.SetForceAllTracesEnabled = reinterpret_cast<SetForceAllTracesEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_SetForceAllTracesEnabled"));
   function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_.get_function_pointer("RFmxInstr_SetIOTraceStatus"));
   function_pointers_.UnregisterSpecialClientSnapshotInterest = reinterpret_cast<UnregisterSpecialClientSnapshotInterestPtr>(shared_library_.get_function_pointer("RFmxInstr_UnregisterSpecialClientSnapshotInterest"));
+  function_pointers_.GetSFPSessionAcccessEnabled = reinterpret_cast<GetSFPSessionAcccessEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSFPSessionAcccessEnabled"));
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -365,6 +366,14 @@ int32 NiRFmxInstrRestrictedLibrary::UnregisterSpecialClientSnapshotInterest(char
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_UnregisterSpecialClientSnapshotInterest.");
   }
   return function_pointers_.UnregisterSpecialClientSnapshotInterest(resourceName);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAcccessEnabled(char selectorString[], int32* isSFPSessionAcccessEnabled)
+{
+  if (!function_pointers_.GetSFPSessionAcccessEnabled) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAcccessEnabled.");
+  }
+  return function_pointers_.GetSFPSessionAcccessEnabled(selectorString, isSFPSessionAcccessEnabled);
 }
 
 }  // namespace nirfmxinstr_restricted_grpc

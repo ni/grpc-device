@@ -1068,6 +1068,30 @@ namespace nirfmxinstr_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::GetSFPSessionAcccessEnabled(::grpc::ServerContext* context, const GetSFPSessionAcccessEnabledRequest* request, GetSFPSessionAcccessEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 is_sfp_session_acccess_enabled {};
+      auto status = library_->GetSFPSessionAcccessEnabled(selector_string, &is_sfp_session_acccess_enabled);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->set_is_sfp_session_acccess_enabled(is_sfp_session_acccess_enabled);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiRFmxInstrRestrictedFeatureToggles::NiRFmxInstrRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

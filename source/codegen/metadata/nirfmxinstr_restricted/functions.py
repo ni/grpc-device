@@ -1197,5 +1197,22 @@ functions = {
             }
         ],
         'returns': 'int32'
-    }
+    },
+	'GetSFPSessionAcccessEnabled':{
+		'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'isSFPSessionAcccessEnabled',
+                'type': 'int32'
+            }
+		],
+			'returns': 'int32'
+	}
+	
+	
 }

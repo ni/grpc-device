@@ -50,6 +50,7 @@ service NiRFmxInstrRestricted {
   rpc SetForceAllTracesEnabled(SetForceAllTracesEnabledRequest) returns (SetForceAllTracesEnabledResponse);
   rpc SetIOTraceStatus(SetIOTraceStatusRequest) returns (SetIOTraceStatusResponse);
   rpc UnregisterSpecialClientSnapshotInterest(UnregisterSpecialClientSnapshotInterestRequest) returns (UnregisterSpecialClientSnapshotInterestResponse);
+  rpc GetSFPSessionAcccessEnabled(GetSFPSessionAcccessEnabledRequest) returns (GetSFPSessionAcccessEnabledResponse);
 }
 
 message ConvertForPowerUnitsUtilityRequest {
@@ -413,5 +414,14 @@ message UnregisterSpecialClientSnapshotInterestRequest {
 
 message UnregisterSpecialClientSnapshotInterestResponse {
   int32 status = 1;
+}
+
+message GetSFPSessionAcccessEnabledRequest {
+  string selector_string = 1;
+}
+
+message GetSFPSessionAcccessEnabledResponse {
+  int32 status = 1;
+  int32 is_sfp_session_acccess_enabled = 2;
 }
 
