@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXBLUETOOTH Metadata
 //---------------------------------------------------------------------
 #include "nirfmxbluetooth_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxBT.dll";

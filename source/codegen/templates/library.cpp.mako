@@ -21,6 +21,7 @@ windows_library_name = windows_library_info['name']
 // Service implementation for the ${config["driver_name"]} Metadata
 //---------------------------------------------------------------------
 #include "${module_name}_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "${windows_library_name}";
@@ -44,6 +45,10 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : shared_librar
 %>\
   function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_name}"));
 % endfor
+% if 'SetRuntimeEnvironment' in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
+
+  this->SetRuntimeEnvironment(nidevice_grpc::NIDEVICE_GRPC_ORIGINALFILENAME.c_str(), nidevice_grpc::NIDEVICE_GRPC_PRODUCTVERSION.c_str(), "", "");
+% endif
 }
 
 ${service_class_prefix}Library::~${service_class_prefix}Library()

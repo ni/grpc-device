@@ -4,6 +4,7 @@
 // Service implementation for the NI-rfmxcdma2k Metadata
 //---------------------------------------------------------------------
 #include "nirfmxcdma2k_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxCDMA2k.dll";

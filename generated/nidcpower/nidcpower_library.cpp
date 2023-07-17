@@ -4,6 +4,7 @@
 // Service implementation for the NI-DCPower Metadata
 //---------------------------------------------------------------------
 #include "nidcpower_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nidcpower_64.dll";
@@ -170,6 +171,8 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.WaitForEvent = reinterpret_cast<WaitForEventPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEvent"));
   function_pointers_.WaitForEventWithChannels = reinterpret_cast<WaitForEventWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEventWithChannels"));
   function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDCPower_SetRuntimeEnvironment"));
+
+  this->SetRuntimeEnvironment(nidevice_grpc::NIDEVICE_GRPC_ORIGINALFILENAME.c_str(), nidevice_grpc::NIDEVICE_GRPC_PRODUCTVERSION.c_str(), "", "");
 }
 
 NiDCPowerLibrary::~NiDCPowerLibrary()

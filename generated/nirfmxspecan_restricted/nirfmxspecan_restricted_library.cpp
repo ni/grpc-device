@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXSPECAN-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "nirfmxspecan_restricted_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxSpecAn.dll";

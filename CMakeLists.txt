@@ -425,6 +425,17 @@ if(WIN32)
   )
 endif()
 
+# Generate version header file
+configure_file(
+  source/server/version.h.in
+  ${service_output_dir}/version.h
+  @ONLY)
+
+target_sources(ni_grpc_device_server
+  PUBLIC "${service_output_dir}/version.h"
+)
+
+
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
   target_sources(ni_grpc_device_server
     PRIVATE "source/server/linux/syslog_logging.cpp"

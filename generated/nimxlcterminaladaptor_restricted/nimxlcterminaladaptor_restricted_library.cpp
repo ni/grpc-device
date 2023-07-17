@@ -4,6 +4,7 @@
 // Service implementation for the NI-MXLCTERMINALADAPTOR-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "nimxlcterminaladaptor_restricted_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nimxlcTerminalAdaptor.dll";

@@ -4,6 +4,7 @@
 // Service implementation for the NI-SWITCH Metadata
 //---------------------------------------------------------------------
 #include "niswitch_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niswitch_64.dll";

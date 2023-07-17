@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXNR Metadata
 //---------------------------------------------------------------------
 #include "nirfmxnr_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxNR.dll";

@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXWLAN Metadata
 //---------------------------------------------------------------------
 #include "nirfmxwlan_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxWLAN.dll";

@@ -4,6 +4,7 @@
 // Service implementation for the NI-SCOPE-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "niscope_restricted_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niScope_64.dll";

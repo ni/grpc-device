@@ -4,6 +4,7 @@
 // Service implementation for the NI-rfmxwcdma Metadata
 //---------------------------------------------------------------------
 #include "nirfmxwcdma_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxWCDMA.dll";

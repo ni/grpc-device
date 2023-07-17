@@ -4,6 +4,7 @@
 // Service implementation for the NI-FAKE-NON-IVI Metadata
 //---------------------------------------------------------------------
 #include "nifake_non_ivi_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nifakenonivi_64.dll";

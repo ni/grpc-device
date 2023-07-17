@@ -4,6 +4,7 @@
 // Service implementation for the NI-XNET Metadata
 //---------------------------------------------------------------------
 #include "nixnet_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nixnet.dll";
