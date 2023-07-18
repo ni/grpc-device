@@ -150,6 +150,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath);
   ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]);
   ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
  private:
   using AbortPtr = decltype(&niDigital_Abort);
@@ -284,6 +285,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using WriteSourceWaveformDataFromFileTDMSPtr = decltype(&niDigital_WriteSourceWaveformDataFromFileTDMS);
   using WriteSourceWaveformSiteUniqueU32Ptr = decltype(&niDigital_WriteSourceWaveformSiteUniqueU32);
   using WriteStaticPtr = decltype(&niDigital_WriteStatic);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -418,6 +420,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     WriteSourceWaveformDataFromFileTDMSPtr WriteSourceWaveformDataFromFileTDMS;
     WriteSourceWaveformSiteUniqueU32Ptr WriteSourceWaveformSiteUniqueU32;
     WriteStaticPtr WriteStatic;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

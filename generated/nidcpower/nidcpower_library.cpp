@@ -169,6 +169,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDCPower_UnlockSession"));
   function_pointers_.WaitForEvent = reinterpret_cast<WaitForEventPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEvent"));
   function_pointers_.WaitForEventWithChannels = reinterpret_cast<WaitForEventWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEventWithChannels"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDCPower_SetRuntimeEnvironment"));
 }
 
 NiDCPowerLibrary::~NiDCPowerLibrary()
@@ -1364,6 +1365,14 @@ ViStatus NiDCPowerLibrary::WaitForEventWithChannels(ViSession vi, ViConstString 
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_WaitForEventWithChannels.");
   }
   return function_pointers_.WaitForEventWithChannels(vi, channelName, eventId, timeout);
+}
+
+ViStatus NiDCPowerLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
 }  // namespace nidcpower_grpc

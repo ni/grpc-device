@@ -77,6 +77,7 @@ class NiSwitchLibraryInterface {
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs) = 0;
   virtual ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs) = 0;
+  virtual ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) = 0;
 };
 
 }  // namespace niswitch_grpc

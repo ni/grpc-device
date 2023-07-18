@@ -165,6 +165,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, WaitForEvent, (ViSession vi, ViInt32 eventId, ViReal64 timeout), (override));
   MOCK_METHOD(ViStatus, WaitForEventWithChannels, (ViSession vi, ViConstString channelName, ViInt32 eventId, ViReal64 timeout), (override));
+  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
 };
 
 }  // namespace unit

@@ -113,6 +113,7 @@ NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niScope_SetAttributeViSession"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niScope_SetAttributeViString"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niScope_UnlockSession"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niScope_SetRuntimeEnvironment"));
 }
 
 NiScopeLibrary::~NiScopeLibrary()
@@ -860,6 +861,14 @@ ViStatus NiScopeLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
     throw nidevice_grpc::LibraryLoadException("Could not find niScope_UnlockSession.");
   }
   return function_pointers_.UnlockSession(vi, callerHasLock);
+}
+
+ViStatus NiScopeLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niScope_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
 }  // namespace niscope_grpc

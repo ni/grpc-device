@@ -150,6 +150,7 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, WriteScript, (ViSession vi, ViConstString channelName, ViConstString script), (override));
   MOCK_METHOD(ViStatus, WriteWaveform, (ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]), (override));
   MOCK_METHOD(ViStatus, WriteWaveformComplexF64, (ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle), (override));
+  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
 };
 
 }  // namespace unit

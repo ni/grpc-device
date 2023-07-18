@@ -148,6 +148,7 @@ class NiFgenLibraryInterface {
   virtual ViStatus WriteScript(ViSession vi, ViConstString channelName, ViConstString script) = 0;
   virtual ViStatus WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]) = 0;
   virtual ViStatus WriteWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle) = 0;
+  virtual ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) = 0;
 };
 
 }  // namespace nifgen_grpc

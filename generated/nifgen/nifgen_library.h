@@ -151,6 +151,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus WriteScript(ViSession vi, ViConstString channelName, ViConstString script);
   ViStatus WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]);
   ViStatus WriteWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
  private:
   using AbortGenerationPtr = decltype(&niFgen_AbortGeneration);
@@ -286,6 +287,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using WriteScriptPtr = decltype(&niFgen_WriteScript);
   using WriteWaveformPtr = decltype(&niFgen_WriteWaveform);
   using WriteWaveformComplexF64Ptr = decltype(&niFgen_WriteWaveformComplexF64);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortGenerationPtr AbortGeneration;
@@ -421,6 +423,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     WriteScriptPtr WriteScript;
     WriteWaveformPtr WriteWaveform;
     WriteWaveformComplexF64Ptr WriteWaveformComplexF64;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

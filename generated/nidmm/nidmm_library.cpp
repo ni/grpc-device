@@ -110,6 +110,7 @@ NiDmmLibrary::NiDmmLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDMM_SetAttributeViSession"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niDMM_SetAttributeViString"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDMM_UnlockSession"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDMM_SetRuntimeEnvironment"));
 }
 
 NiDmmLibrary::~NiDmmLibrary()
@@ -833,6 +834,14 @@ ViStatus NiDmmLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_UnlockSession.");
   }
   return function_pointers_.UnlockSession(vi, callerHasLock);
+}
+
+ViStatus NiDmmLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
 }  // namespace nidmm_grpc

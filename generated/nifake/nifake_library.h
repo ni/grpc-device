@@ -111,6 +111,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus ViUInt8ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]);
   ViStatus ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]);
   ViStatus WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[]);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
  private:
   using AbortPtr = decltype(&niFake_Abort);
@@ -206,6 +207,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using ViUInt8ArrayInputFunctionPtr = decltype(&niFake_ViUInt8ArrayInputFunction);
   using ViUInt8ArrayOutputFunctionPtr = decltype(&niFake_ViUInt8ArrayOutputFunction);
   using WriteWaveformPtr = decltype(&niFake_WriteWaveform);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -301,6 +303,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     ViUInt8ArrayInputFunctionPtr ViUInt8ArrayInputFunction;
     ViUInt8ArrayOutputFunctionPtr ViUInt8ArrayOutputFunction;
     WriteWaveformPtr WriteWaveform;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;
