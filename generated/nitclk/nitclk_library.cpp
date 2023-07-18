@@ -4,7 +4,6 @@
 // Service implementation for the NI-TClk Metadata
 //---------------------------------------------------------------------
 #include "nitclk_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niTClk_64.dll";

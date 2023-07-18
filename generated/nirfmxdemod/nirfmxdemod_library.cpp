@@ -4,7 +4,6 @@
 // Service implementation for the NI-rfmxdemod Metadata
 //---------------------------------------------------------------------
 #include "nirfmxdemod_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxDemod.dll";

@@ -4,7 +4,6 @@
 // Service implementation for the NI-XNETSOCKET Metadata
 //---------------------------------------------------------------------
 #include "nixnetsocket_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nixntipstack.dll";

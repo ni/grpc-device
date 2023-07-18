@@ -4,7 +4,6 @@
 // Service implementation for the NI-DMM Metadata
 //---------------------------------------------------------------------
 #include "nidmm_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nidmm_64.dll";

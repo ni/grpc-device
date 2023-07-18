@@ -4,7 +4,6 @@
 // Service implementation for the NI-DAQMX Metadata
 //---------------------------------------------------------------------
 #include "nidaqmx_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nicaiu.dll";

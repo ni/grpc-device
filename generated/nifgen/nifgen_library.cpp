@@ -4,7 +4,6 @@
 // Service implementation for the NI-FGEN Metadata
 //---------------------------------------------------------------------
 #include "nifgen_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niFgen_64.dll";

@@ -4,7 +4,6 @@
 // Service implementation for the NI-RFSG Metadata
 //---------------------------------------------------------------------
 #include "nirfsg_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFSG_64.dll";

@@ -4,7 +4,6 @@
 // Service implementation for the NI-FAKE-EXTENSION Metadata
 //---------------------------------------------------------------------
 #include "nifake_extension_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nifake_64.dll";

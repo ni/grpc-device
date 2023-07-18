@@ -21,7 +21,9 @@ windows_library_name = windows_library_info['name']
 // Service implementation for the ${config["driver_name"]} Metadata
 //---------------------------------------------------------------------
 #include "${module_name}_library.h"
+% if 'SetRuntimeEnvironment' in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
 #include "version.h"
+% endif
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "${windows_library_name}";

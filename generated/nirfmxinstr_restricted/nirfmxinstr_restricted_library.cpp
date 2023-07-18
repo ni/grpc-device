@@ -4,7 +4,6 @@
 // Service implementation for the NI-RFMXINSTR-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "nirfmxinstr_restricted_library.h"
-#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxInstr.dll";
