@@ -3,8 +3,8 @@
 
 namespace nidevice_grpc {
 
-constexpr const char* kNiDeviceGrpcFileVersion = "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@.0";
-constexpr const char* kNiDeviceGrpcOriginalFileName = "ni_grpc_device_server.exe";
+static constexpr const char* kNiDeviceGrpcFileVersion = "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@.0";
+static constexpr const char* kNiDeviceGrpcOriginalFileName = "ni_grpc_device_server.exe";
 
 }
 
