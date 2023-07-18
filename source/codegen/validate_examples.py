@@ -62,9 +62,7 @@ def _validate_examples(
         _system("poetry new .")
         _system("poetry add grpcio")
         _system("poetry add --dev grpcio-tools mypy mypy-protobuf types-protobuf grpc-stubs")
-        # black requires python >=3.6.2, so only ask it to be installed for python >=3.6.2, or else
-        # poetry can give a SolverProblemError and fail the "install" step
-        _system('poetry add --dev --python ">=3.6.2" black')
+        _system("poetry add --dev black")
         _system("poetry install")
 
         _stage_client_files(artifact_location, staging_dir)
