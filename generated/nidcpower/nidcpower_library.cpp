@@ -172,7 +172,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.WaitForEventWithChannels = reinterpret_cast<WaitForEventWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEventWithChannels"));
   function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDCPower_SetRuntimeEnvironment"));
 
-  this->SetRuntimeEnvironment(nidevice_grpc::NIDEVICE_GRPC_ORIGINALFILENAME.c_str(), nidevice_grpc::NIDEVICE_GRPC_FILEVERSION.c_str(), "", "");
+  this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcFileVersion, nidevice_grpc::kNiDeviceGrpcOriginalFileName, "", "");
 }
 
 NiDCPowerLibrary::~NiDCPowerLibrary()

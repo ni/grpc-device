@@ -426,6 +426,7 @@ if(WIN32)
 endif()
 
 # Generate version header file
+# This file requires product name and version info that mako does not know, but CMake does
 configure_file(
   source/server/version.h.in
   ${service_output_dir}/version.h
