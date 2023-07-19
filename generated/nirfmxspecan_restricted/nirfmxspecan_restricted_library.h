@@ -18,10 +18,10 @@ class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFm
   virtual ~NiRFmxSpecAnRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  int32 CacheResult(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 selectorStringOutSize, char selectorStringOut[]);
-  int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
-  int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
-  int32 IQFetchDataOverrideBehavior(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize);
+  int32 CacheResult(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 selectorStringOutSize, char selectorStringOut[]) override;
+  int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
+  int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
+  int32 IQFetchDataOverrideBehavior(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize) override;
 
  private:
   using CacheResultPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 selectorStringOutSize, char selectorStringOut[]);

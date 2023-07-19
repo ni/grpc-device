@@ -18,21 +18,21 @@ class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
   virtual ~NiTClkLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  ViStatus ConfigureForHomogeneousTriggers(ViUInt32 sessionCount, ViSession sessions[]);
-  ViStatus FinishSyncPulseSenderSynchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime);
-  ViStatus GetAttributeViReal64(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64* value);
-  ViStatus GetAttributeViSession(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession* value);
-  ViStatus GetAttributeViString(ViSession session, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]);
-  ViStatus GetExtendedErrorInfo(ViChar errorString[], ViUInt32 errorStringSize);
-  ViStatus Initiate(ViUInt32 sessionCount, ViSession sessions[]);
-  ViStatus IsDone(ViUInt32 sessionCount, ViSession sessions[], ViBoolean* done);
-  ViStatus SetAttributeViReal64(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64 value);
-  ViStatus SetAttributeViSession(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession value);
-  ViStatus SetAttributeViString(ViSession session, ViConstString channelName, ViAttr attributeId, ViConstString value);
-  ViStatus SetupForSyncPulseSenderSynchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime);
-  ViStatus Synchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTclkPeriod);
-  ViStatus SynchronizeToSyncPulseSender(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime);
-  ViStatus WaitUntilDone(ViUInt32 sessionCount, ViSession sessions[], ViReal64 timeout);
+  ViStatus ConfigureForHomogeneousTriggers(ViUInt32 sessionCount, ViSession sessions[]) override;
+  ViStatus FinishSyncPulseSenderSynchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime) override;
+  ViStatus GetAttributeViReal64(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64* value) override;
+  ViStatus GetAttributeViSession(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession* value) override;
+  ViStatus GetAttributeViString(ViSession session, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]) override;
+  ViStatus GetExtendedErrorInfo(ViChar errorString[], ViUInt32 errorStringSize) override;
+  ViStatus Initiate(ViUInt32 sessionCount, ViSession sessions[]) override;
+  ViStatus IsDone(ViUInt32 sessionCount, ViSession sessions[], ViBoolean* done) override;
+  ViStatus SetAttributeViReal64(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64 value) override;
+  ViStatus SetAttributeViSession(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession value) override;
+  ViStatus SetAttributeViString(ViSession session, ViConstString channelName, ViAttr attributeId, ViConstString value) override;
+  ViStatus SetupForSyncPulseSenderSynchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime) override;
+  ViStatus Synchronize(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTclkPeriod) override;
+  ViStatus SynchronizeToSyncPulseSender(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime) override;
+  ViStatus WaitUntilDone(ViUInt32 sessionCount, ViSession sessions[], ViReal64 timeout) override;
 
  private:
   using ConfigureForHomogeneousTriggersPtr = decltype(&niTClk_ConfigureForHomogeneousTriggers);

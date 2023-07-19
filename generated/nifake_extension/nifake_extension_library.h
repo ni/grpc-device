@@ -18,7 +18,7 @@ class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibr
   virtual ~NiFakeExtensionLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  ViStatus AddCoolFunctionality(ViSession vi, ViInt32 param);
+  ViStatus AddCoolFunctionality(ViSession vi, ViInt32 param) override;
 
  private:
   using AddCoolFunctionalityPtr = decltype(&niFakeExtension_AddCoolFunctionality);

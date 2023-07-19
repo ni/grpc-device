@@ -18,25 +18,25 @@ class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_rest
   virtual ~NimxlcTerminalAdaptorRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  nimxlc_Session createSession(const char hostname[], nierr_Status* c_status);
-  void destroySession(nimxlc_Session session);
-  void refreshTerminalCache(nimxlc_Session session, nierr_Status* c_status);
-  bool hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* c_status);
-  uint32_t getSystemChangeNumber(nimxlc_Session session, nierr_Status* c_status);
-  nimxlc_DeviceContainer getDeviceContainer(nimxlc_Session session, nierr_Status* c_status);
-  nimxlc_DeviceIterator DeviceContainer_begin(nimxlc_DeviceContainer container);
-  void DeviceIterator_next(nimxlc_DeviceIterator* iterator);
-  nimxlc_TerminalContainer DeviceIterator_getTerminalContainer(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
-  const char* DeviceIterator_getDeviceName(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
-  bool DeviceIterator_supportsOnBoardClock(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
-  bool DeviceIterator_isEnd(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator);
-  void DeviceContainer_destroy(nimxlc_DeviceContainer container);
-  nimxlc_TerminalIterator TerminalContainer_begin(nimxlc_TerminalContainer container);
-  void TerminalIterator_next(nimxlc_TerminalIterator* iterator);
-  bool TerminalIterator_isEnd(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator);
-  void TerminalContainer_destroy(nimxlc_TerminalContainer container);
-  const char* TerminalIterator_getTerminalName(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus);
-  const char* TerminalIterator_getVisibility(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus);
+  nimxlc_Session createSession(const char hostname[], nierr_Status* c_status) override;
+  void destroySession(nimxlc_Session session) override;
+  void refreshTerminalCache(nimxlc_Session session, nierr_Status* c_status) override;
+  bool hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* c_status) override;
+  uint32_t getSystemChangeNumber(nimxlc_Session session, nierr_Status* c_status) override;
+  nimxlc_DeviceContainer getDeviceContainer(nimxlc_Session session, nierr_Status* c_status) override;
+  nimxlc_DeviceIterator DeviceContainer_begin(nimxlc_DeviceContainer container) override;
+  void DeviceIterator_next(nimxlc_DeviceIterator* iterator) override;
+  nimxlc_TerminalContainer DeviceIterator_getTerminalContainer(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus) override;
+  const char* DeviceIterator_getDeviceName(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus) override;
+  bool DeviceIterator_supportsOnBoardClock(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus) override;
+  bool DeviceIterator_isEnd(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator) override;
+  void DeviceContainer_destroy(nimxlc_DeviceContainer container) override;
+  nimxlc_TerminalIterator TerminalContainer_begin(nimxlc_TerminalContainer container) override;
+  void TerminalIterator_next(nimxlc_TerminalIterator* iterator) override;
+  bool TerminalIterator_isEnd(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator) override;
+  void TerminalContainer_destroy(nimxlc_TerminalContainer container) override;
+  const char* TerminalIterator_getTerminalName(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus) override;
+  const char* TerminalIterator_getVisibility(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus) override;
 
  private:
   using createSessionPtr = nimxlc_Session (*)(const char hostname[], nierr_Status* c_status);
