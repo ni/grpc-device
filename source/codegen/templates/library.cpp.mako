@@ -50,7 +50,7 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : shared_librar
 % if 'SetRuntimeEnvironment' in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
 
   if (function_pointers_.SetRuntimeEnvironment) {
-    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcFileVersion, nidevice_grpc::kNiDeviceGrpcOriginalFileName, "", "");
+    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
   }
 % endif
 }

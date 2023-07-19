@@ -173,7 +173,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDCPower_SetRuntimeEnvironment"));
 
   if (function_pointers_.SetRuntimeEnvironment) {
-    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcFileVersion, nidevice_grpc::kNiDeviceGrpcOriginalFileName, "", "");
+    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
   }
 }
 
