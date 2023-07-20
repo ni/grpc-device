@@ -151,6 +151,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]);
   ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool get_runtime_environment_set(); // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortPtr = decltype(&niDigital_Abort);
@@ -425,6 +426,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
 
   nidevice_grpc::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nidigitalpattern_grpc

@@ -14,7 +14,7 @@ static const char* kLibraryName = "libnidcpower.so";
 
 namespace nidcpower_grpc {
 
-NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
+NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName), runtime_environment_set(false)
 {
   shared_library_.load();
   bool loaded = shared_library_.is_loaded();
@@ -1379,5 +1379,7 @@ ViStatus NiDCPowerLibrary::SetRuntimeEnvironment(ViConstString environment, ViCo
   }
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
+
+bool NiDCPowerLibrary::get_runtime_environment_set(){ return this->runtime_environment_set; }
 
 }  // namespace nidcpower_grpc

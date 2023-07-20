@@ -14,7 +14,7 @@ static const char* kLibraryName = "libnifake.so";
 
 namespace nifake_grpc {
 
-NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
+NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName), runtime_environment_set(false)
 {
   shared_library_.load();
   bool loaded = shared_library_.is_loaded();
@@ -884,5 +884,7 @@ ViStatus NiFakeLibrary::SetRuntimeEnvironment(ViConstString environment, ViConst
   }
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
+
+bool NiFakeLibrary::get_runtime_environment_set(){ return this->runtime_environment_set; }
 
 }  // namespace nifake_grpc

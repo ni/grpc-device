@@ -167,6 +167,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout);
   ViStatus WaitForEventWithChannels(ViSession vi, ViConstString channelName, ViInt32 eventId, ViReal64 timeout);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool get_runtime_environment_set(); // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortPtr = decltype(&niDCPower_Abort);
@@ -473,6 +474,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
 
   nidevice_grpc::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nidcpower_grpc

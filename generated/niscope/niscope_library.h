@@ -111,6 +111,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool get_runtime_environment_set(); // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortPtr = decltype(&niScope_Abort);
@@ -305,6 +306,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
 
   nidevice_grpc::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace niscope_grpc

@@ -14,7 +14,7 @@ static const char* kLibraryName = "libniscope.so";
 
 namespace niscope_grpc {
 
-NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName)
+NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName), runtime_environment_set(false)
 {
   shared_library_.load();
   bool loaded = shared_library_.is_loaded();
@@ -875,5 +875,7 @@ ViStatus NiScopeLibrary::SetRuntimeEnvironment(ViConstString environment, ViCons
   }
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
+
+bool NiScopeLibrary::get_runtime_environment_set(){ return this->runtime_environment_set; }
 
 }  // namespace niscope_grpc

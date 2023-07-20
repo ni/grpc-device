@@ -81,6 +81,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs);
   ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool get_runtime_environment_set(); // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortScanPtr = decltype(&niSwitch_AbortScan);
@@ -215,6 +216,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
 
   nidevice_grpc::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace niswitch_grpc

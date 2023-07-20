@@ -14,7 +14,7 @@ static const char* kLibraryName = "libnifgen.so";
 
 namespace nifgen_grpc {
 
-NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
+NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName), runtime_environment_set(false)
 {
   shared_library_.load();
   bool loaded = shared_library_.is_loaded();
@@ -1244,5 +1244,7 @@ ViStatus NiFgenLibrary::SetRuntimeEnvironment(ViConstString environment, ViConst
   }
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
+
+bool NiFgenLibrary::get_runtime_environment_set(){ return this->runtime_environment_set; }
 
 }  // namespace nifgen_grpc
