@@ -1198,7 +1198,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-	'GetSFPSessionAccessEnabled':{
+	'GetSFPSessionAccessEnabled': {
 		'parameters': [
             {
                 'direction': 'in',
@@ -1211,8 +1211,6 @@ functions = {
                 'type': 'int32'
             }
 		],
-			'returns': 'int32'
+		'returns': 'int32'
 	}
-	
-	
 }
