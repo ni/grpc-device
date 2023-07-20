@@ -639,18 +639,18 @@ unregister_special_client_snapshot_interest(const StubPtr& stub, const std::stri
   return response;
 }
 
-GetSFPSessionAcccessEnabledResponse
-get_sfp_session_acccess_enabled(const StubPtr& stub, const std::string& selector_string)
+GetSFPSessionAccessEnabledResponse
+get_sfp_session_access_enabled(const StubPtr& stub, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetSFPSessionAcccessEnabledRequest{};
+  auto request = GetSFPSessionAccessEnabledRequest{};
   request.set_selector_string(selector_string);
 
-  auto response = GetSFPSessionAcccessEnabledResponse{};
+  auto response = GetSFPSessionAccessEnabledResponse{};
 
   raise_if_error(
-      stub->GetSFPSessionAcccessEnabled(&context, request, &response),
+      stub->GetSFPSessionAccessEnabled(&context, request, &response),
       context);
 
   return response;

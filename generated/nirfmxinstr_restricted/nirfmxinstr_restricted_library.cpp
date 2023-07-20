@@ -58,7 +58,7 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(k
   function_pointers_.SetForceAllTracesEnabled = reinterpret_cast<SetForceAllTracesEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_SetForceAllTracesEnabled"));
   function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_.get_function_pointer("RFmxInstr_SetIOTraceStatus"));
   function_pointers_.UnregisterSpecialClientSnapshotInterest = reinterpret_cast<UnregisterSpecialClientSnapshotInterestPtr>(shared_library_.get_function_pointer("RFmxInstr_UnregisterSpecialClientSnapshotInterest"));
-  function_pointers_.GetSFPSessionAcccessEnabled = reinterpret_cast<GetSFPSessionAcccessEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSFPSessionAcccessEnabled"));
+  function_pointers_.GetSFPSessionAccessEnabled = reinterpret_cast<GetSFPSessionAccessEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSFPSessionAccessEnabled"));
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -368,12 +368,12 @@ int32 NiRFmxInstrRestrictedLibrary::UnregisterSpecialClientSnapshotInterest(char
   return function_pointers_.UnregisterSpecialClientSnapshotInterest(resourceName);
 }
 
-int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAcccessEnabled(char selectorString[], int32* isSFPSessionAcccessEnabled)
+int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAccessEnabled(char selectorString[], int32* isSFPSessionAccessEnabled)
 {
-  if (!function_pointers_.GetSFPSessionAcccessEnabled) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAcccessEnabled.");
+  if (!function_pointers_.GetSFPSessionAccessEnabled) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAccessEnabled.");
   }
-  return function_pointers_.GetSFPSessionAcccessEnabled(selectorString, isSFPSessionAcccessEnabled);
+  return function_pointers_.GetSFPSessionAccessEnabled(selectorString, isSFPSessionAccessEnabled);
 }
 
 }  // namespace nirfmxinstr_restricted_grpc

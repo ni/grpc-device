@@ -1070,7 +1070,7 @@ namespace nirfmxinstr_restricted_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrRestrictedService::GetSFPSessionAcccessEnabled(::grpc::ServerContext* context, const GetSFPSessionAcccessEnabledRequest* request, GetSFPSessionAcccessEnabledResponse* response)
+  ::grpc::Status NiRFmxInstrRestrictedService::GetSFPSessionAccessEnabled(::grpc::ServerContext* context, const GetSFPSessionAccessEnabledRequest* request, GetSFPSessionAccessEnabledResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1078,13 +1078,13 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      int32 is_sfp_session_acccess_enabled {};
-      auto status = library_->GetSFPSessionAcccessEnabled(selector_string, &is_sfp_session_acccess_enabled);
+      int32 is_sfp_session_access_enabled {};
+      auto status = library_->GetSFPSessionAccessEnabled(selector_string, &is_sfp_session_access_enabled);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
-      response->set_is_sfp_session_acccess_enabled(is_sfp_session_acccess_enabled);
+      response->set_is_sfp_session_access_enabled(is_sfp_session_access_enabled);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
