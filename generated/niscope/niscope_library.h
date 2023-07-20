@@ -110,6 +110,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attributeId, ViSession value);
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
  private:
   using AbortPtr = decltype(&niScope_Abort);
@@ -204,6 +205,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   using SetAttributeViSessionPtr = decltype(&niScope_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niScope_SetAttributeViString);
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -298,6 +300,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
     SetAttributeViSessionPtr SetAttributeViSession;
     SetAttributeViStringPtr SetAttributeViString;
     UnlockSessionPtr UnlockSession;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

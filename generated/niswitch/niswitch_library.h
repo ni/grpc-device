@@ -80,6 +80,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs);
   ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
  private:
   using AbortScanPtr = decltype(&niSwitch_AbortScan);
@@ -144,6 +145,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitForDebouncePtr = decltype(&niSwitch_WaitForDebounce);
   using WaitForScanCompletePtr = decltype(&niSwitch_WaitForScanComplete);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortScanPtr AbortScan;
@@ -208,6 +210,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
     UnlockSessionPtr UnlockSession;
     WaitForDebouncePtr WaitForDebounce;
     WaitForScanCompletePtr WaitForScanComplete;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

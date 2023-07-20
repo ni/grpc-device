@@ -114,6 +114,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.ViUInt8ArrayInputFunction = reinterpret_cast<ViUInt8ArrayInputFunctionPtr>(shared_library_.get_function_pointer("niFake_ViUInt8ArrayInputFunction"));
   function_pointers_.ViUInt8ArrayOutputFunction = reinterpret_cast<ViUInt8ArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_ViUInt8ArrayOutputFunction"));
   function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_.get_function_pointer("niFake_WriteWaveform"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niFake_SetRuntimeEnvironment"));
 }
 
 NiFakeLibrary::~NiFakeLibrary()
@@ -869,6 +870,14 @@ ViStatus NiFakeLibrary::WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViR
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_WriteWaveform.");
   }
   return function_pointers_.WriteWaveform(vi, numberOfSamples, waveform);
+}
+
+ViStatus NiFakeLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
 }  // namespace nifake_grpc

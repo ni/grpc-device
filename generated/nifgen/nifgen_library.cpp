@@ -154,6 +154,7 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_.get_function_pointer("niFgen_WriteScript"));
   function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteWaveform"));
   function_pointers_.WriteWaveformComplexF64 = reinterpret_cast<WriteWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteWaveformComplexF64"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niFgen_SetRuntimeEnvironment"));
 }
 
 NiFgenLibrary::~NiFgenLibrary()
@@ -1229,6 +1230,14 @@ ViStatus NiFgenLibrary::WriteWaveformComplexF64(ViSession vi, ViConstString chan
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteWaveformComplexF64.");
   }
   return function_pointers_.WriteWaveformComplexF64(vi, channelName, numberOfSamples, data, waveformHandle);
+}
+
+ViStatus NiFgenLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
 }  // namespace nifgen_grpc

@@ -153,6 +153,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteSourceWaveformDataFromFileTDMS = reinterpret_cast<WriteSourceWaveformDataFromFileTDMSPtr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformDataFromFileTDMS"));
   function_pointers_.WriteSourceWaveformSiteUniqueU32 = reinterpret_cast<WriteSourceWaveformSiteUniqueU32Ptr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformSiteUniqueU32"));
   function_pointers_.WriteStatic = reinterpret_cast<WriteStaticPtr>(shared_library_.get_function_pointer("niDigital_WriteStatic"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDigital_SetRuntimeEnvironment"));
 }
 
 NiDigitalLibrary::~NiDigitalLibrary()
@@ -1220,6 +1221,14 @@ ViStatus NiDigitalLibrary::WriteStatic(ViSession vi, ViConstString channelList, 
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_WriteStatic.");
   }
   return function_pointers_.WriteStatic(vi, channelList, state);
+}
+
+ViStatus NiDigitalLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
 }  // namespace nidigitalpattern_grpc

@@ -166,6 +166,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout);
   ViStatus WaitForEventWithChannels(ViSession vi, ViConstString channelName, ViInt32 eventId, ViReal64 timeout);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
  private:
   using AbortPtr = decltype(&niDCPower_Abort);
@@ -316,6 +317,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitForEventPtr = decltype(&niDCPower_WaitForEvent);
   using WaitForEventWithChannelsPtr = decltype(&niDCPower_WaitForEventWithChannels);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -466,6 +468,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     UnlockSessionPtr UnlockSession;
     WaitForEventPtr WaitForEvent;
     WaitForEventWithChannelsPtr WaitForEventWithChannels;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

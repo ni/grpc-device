@@ -107,6 +107,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
  private:
   using AbortPtr = decltype(&niDMM_Abort);
@@ -198,6 +199,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using SetAttributeViSessionPtr = decltype(&niDMM_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niDMM_SetAttributeViString);
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -289,6 +291,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     SetAttributeViSessionPtr SetAttributeViSession;
     SetAttributeViStringPtr SetAttributeViString;
     UnlockSessionPtr UnlockSession;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

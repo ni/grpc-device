@@ -83,6 +83,7 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niSwitch_UnlockSession"));
   function_pointers_.WaitForDebounce = reinterpret_cast<WaitForDebouncePtr>(shared_library_.get_function_pointer("niSwitch_WaitForDebounce"));
   function_pointers_.WaitForScanComplete = reinterpret_cast<WaitForScanCompletePtr>(shared_library_.get_function_pointer("niSwitch_WaitForScanComplete"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niSwitch_SetRuntimeEnvironment"));
 }
 
 NiSwitchLibrary::~NiSwitchLibrary()
@@ -590,6 +591,14 @@ ViStatus NiSwitchLibrary::WaitForScanComplete(ViSession vi, ViInt32 maximumTimeM
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_WaitForScanComplete.");
   }
   return function_pointers_.WaitForScanComplete(vi, maximumTimeMs);
+}
+
+ViStatus NiSwitchLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
 }  // namespace niswitch_grpc
