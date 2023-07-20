@@ -4,6 +4,7 @@
 // Service implementation for the NI-DMM Metadata
 //---------------------------------------------------------------------
 #include "nidmm_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nidmm_64.dll";
@@ -111,6 +112,10 @@ NiDmmLibrary::NiDmmLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niDMM_SetAttributeViString"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDMM_UnlockSession"));
   function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDMM_SetRuntimeEnvironment"));
+
+  if (function_pointers_.SetRuntimeEnvironment) {
+    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+  }
 }
 
 NiDmmLibrary::~NiDmmLibrary()

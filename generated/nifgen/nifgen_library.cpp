@@ -4,6 +4,7 @@
 // Service implementation for the NI-FGEN Metadata
 //---------------------------------------------------------------------
 #include "nifgen_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niFgen_64.dll";
@@ -155,6 +156,10 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteWaveform"));
   function_pointers_.WriteWaveformComplexF64 = reinterpret_cast<WriteWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteWaveformComplexF64"));
   function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niFgen_SetRuntimeEnvironment"));
+
+  if (function_pointers_.SetRuntimeEnvironment) {
+    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+  }
 }
 
 NiFgenLibrary::~NiFgenLibrary()
