@@ -11,7 +11,7 @@ namespace unit {
 
 void FunctionToPointAt() {}
 
-class FakeSharedLibraryAllFunctionsPresent : nidevice_grpc::SharedLibrary {
+class FakeSharedLibraryAllFunctionsPresent : public nidevice_grpc::SharedLibrary {
  public:
   bool is_loaded() const override { return true; }
   void load() override {}
@@ -22,7 +22,7 @@ class FakeSharedLibraryAllFunctionsPresent : nidevice_grpc::SharedLibrary {
   std::string get_library_name() const override { return ""; }
 };
 
-class FakeSharedLibraryNoFunctionsPresent : nidevice_grpc::SharedLibrary {
+class FakeSharedLibraryNoFunctionsPresent : public nidevice_grpc::SharedLibrary {
  public:
   bool is_loaded() const override { return true; }
   void load() override {}
