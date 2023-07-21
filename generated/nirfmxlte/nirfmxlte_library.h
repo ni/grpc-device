@@ -12,6 +12,7 @@
 
 namespace nirfmxlte_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
  public:
   NiRFmxLTELibrary();
@@ -882,7 +883,7 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

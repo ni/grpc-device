@@ -12,6 +12,7 @@
 
 namespace nirfmxtdscdma_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInterface {
  public:
   NiRFmxTDSCDMALibrary();
@@ -537,7 +538,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

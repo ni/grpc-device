@@ -12,6 +12,7 @@
 
 namespace nirfmxinstr_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface {
  public:
   NiRFmxInstrLibrary();
@@ -303,7 +304,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

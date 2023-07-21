@@ -12,6 +12,7 @@
 
 namespace nirfmxinstr_restricted_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxInstrRestrictedLibraryInterface {
  public:
   NiRFmxInstrRestrictedLibrary();
@@ -135,7 +136,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     UnregisterSpecialClientSnapshotInterestPtr UnregisterSpecialClientSnapshotInterest;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

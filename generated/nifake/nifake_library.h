@@ -12,6 +12,7 @@
 
 namespace nifake_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
  public:
   NiFakeLibrary();
@@ -307,7 +308,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

@@ -12,6 +12,7 @@
 
 namespace niscope_restricted_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiScopeRestrictedLibrary : public niscope_restricted_grpc::NiScopeRestrictedLibraryInterface {
  public:
   NiScopeRestrictedLibrary();
@@ -33,7 +34,7 @@ class NiScopeRestrictedLibrary : public niscope_restricted_grpc::NiScopeRestrict
     GetStartTimestampInformationPtr GetStartTimestampInformation;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

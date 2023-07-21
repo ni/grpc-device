@@ -12,6 +12,7 @@
 
 namespace nifake_extension_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibraryInterface {
  public:
   NiFakeExtensionLibrary();
@@ -27,7 +28,7 @@ class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibr
     AddCoolFunctionalityPtr AddCoolFunctionality;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

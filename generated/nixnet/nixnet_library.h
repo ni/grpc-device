@@ -12,6 +12,7 @@
 
 namespace nixnet_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
  public:
   NiXnetLibrary();
@@ -192,7 +193,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     WriteStatePtr WriteState;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

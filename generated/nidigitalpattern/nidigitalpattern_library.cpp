@@ -158,6 +158,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName), runtime_en
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+    this->runtime_environment_set = true;
   }
 }
 

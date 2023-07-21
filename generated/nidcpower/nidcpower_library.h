@@ -12,6 +12,7 @@
 
 namespace nidcpower_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
  public:
   NiDCPowerLibrary();
@@ -472,7 +473,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

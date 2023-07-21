@@ -12,6 +12,7 @@
 
 namespace nitclk_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
  public:
   NiTClkLibrary();
@@ -69,7 +70,7 @@ class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
     WaitUntilDonePtr WaitUntilDone;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

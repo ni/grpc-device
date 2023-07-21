@@ -12,6 +12,7 @@
 
 namespace nimxlcterminaladaptor_restricted_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_restricted_grpc::NimxlcTerminalAdaptorRestrictedLibraryInterface {
  public:
   NimxlcTerminalAdaptorRestrictedLibrary();
@@ -81,7 +82,7 @@ class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_rest
     TerminalIterator_getVisibilityPtr TerminalIterator_getVisibility;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

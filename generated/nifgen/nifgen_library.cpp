@@ -159,6 +159,7 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName), runtime_environm
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+    this->runtime_environment_set = true;
   }
 }
 

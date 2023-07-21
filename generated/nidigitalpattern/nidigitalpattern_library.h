@@ -12,6 +12,7 @@
 
 namespace nidigitalpattern_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface {
  public:
   NiDigitalLibrary();
@@ -424,7 +425,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

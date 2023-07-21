@@ -12,6 +12,7 @@
 
 namespace nifake_non_ivi_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInterface {
  public:
   NiFakeNonIviLibrary();
@@ -129,7 +130,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     WriteBooleanArrayPtr WriteBooleanArray;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

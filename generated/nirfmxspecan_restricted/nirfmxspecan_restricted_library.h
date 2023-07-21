@@ -12,6 +12,7 @@
 
 namespace nirfmxspecan_restricted_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFmxSpecAnRestrictedLibraryInterface {
  public:
   NiRFmxSpecAnRestrictedLibrary();
@@ -36,7 +37,7 @@ class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFm
     IQFetchDataOverrideBehaviorPtr IQFetchDataOverrideBehavior;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

@@ -12,6 +12,7 @@
 
 namespace nirfmxbluetooth_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibraryInterface {
  public:
   NiRFmxBluetoothLibrary();
@@ -417,7 +418,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

@@ -12,6 +12,7 @@
 
 namespace nirfmxcdma2k_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterface {
  public:
   NiRFmxCDMA2kLibrary();
@@ -507,7 +508,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

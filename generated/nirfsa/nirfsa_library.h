@@ -12,6 +12,7 @@
 
 namespace nirfsa_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
  public:
   NiRFSALibrary();
@@ -339,7 +340,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     UnlockSessionPtr UnlockSession;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

@@ -12,6 +12,7 @@
 
 namespace nixnetsocket_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterface {
  public:
   NiXnetSocketLibrary();
@@ -132,7 +133,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     StrErrRPtr StrErrR;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

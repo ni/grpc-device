@@ -12,6 +12,7 @@
 
 namespace niscope_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
  public:
   NiScopeLibrary();
@@ -304,7 +305,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

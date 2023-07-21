@@ -118,6 +118,7 @@ NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName), runtime_enviro
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+    this->runtime_environment_set = true;
   }
 }
 

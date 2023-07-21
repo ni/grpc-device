@@ -12,6 +12,7 @@
 
 namespace nisync_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
  public:
   NiSyncLibrary();
@@ -234,7 +235,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
     CalAdjustDDSInitialPhasePtr CalAdjustDDSInitialPhase;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 

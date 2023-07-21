@@ -12,6 +12,7 @@
 
 namespace nirfmxwlan_restricted_grpc {
 
+template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLANRestrictedLibraryInterface {
  public:
   NiRFmxWLANRestrictedLibrary();
@@ -39,7 +40,7 @@ class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLA
     OFDMModAccNoiseCalibratePtr OFDMModAccNoiseCalibrate;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  SharedLibraryT shared_library_;
   FunctionPointers function_pointers_;
 };
 
