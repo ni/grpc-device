@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nitclk_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
  public:
   NiTClkLibrary();
+  NiTClkLibrary::NiTClkLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiTClkLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -70,7 +72,7 @@ class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
     WaitUntilDonePtr WaitUntilDone;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

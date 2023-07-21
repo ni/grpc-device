@@ -5,6 +5,8 @@
 //---------------------------------------------------------------------
 #include "nirfmxspecan_restricted_library.h"
 
+#include <memory>
+
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxSpecAn.dll";
 #else
@@ -13,18 +15,21 @@ static const char* kLibraryName = "libnirfmxspecan.so.1";
 
 namespace nirfmxspecan_restricted_grpc {
 
-NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary() : shared_library_(kLibraryName)
+NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary() : NiRFmxSpecAnRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  p_shared_library_->set_library_name(kLibraryName);
+  p_shared_library_->load();
+  bool loaded = p_shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.CacheResult = reinterpret_cast<CacheResultPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CacheResult"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxSpecAn_GetError"));
-  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxSpecAn_GetErrorString"));
-  function_pointers_.IQFetchDataOverrideBehavior = reinterpret_cast<IQFetchDataOverrideBehaviorPtr>(shared_library_.get_function_pointer("RFmxSpecAn_IQFetchDataOverrideBehavior"));
+  function_pointers_.CacheResult = reinterpret_cast<CacheResultPtr>(p_shared_library_->get_function_pointer("RFmxSpecAn_CacheResult"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(p_shared_library_->get_function_pointer("RFmxSpecAn_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(p_shared_library_->get_function_pointer("RFmxSpecAn_GetErrorString"));
+  function_pointers_.IQFetchDataOverrideBehavior = reinterpret_cast<IQFetchDataOverrideBehaviorPtr>(p_shared_library_->get_function_pointer("RFmxSpecAn_IQFetchDataOverrideBehavior"));
 }
 
 NiRFmxSpecAnRestrictedLibrary::~NiRFmxSpecAnRestrictedLibrary()
@@ -33,7 +38,7 @@ NiRFmxSpecAnRestrictedLibrary::~NiRFmxSpecAnRestrictedLibrary()
 
 ::grpc::Status NiRFmxSpecAnRestrictedLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return p_shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

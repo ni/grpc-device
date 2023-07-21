@@ -5,6 +5,8 @@
 //---------------------------------------------------------------------
 #include "nimxlcterminaladaptor_restricted_library.h"
 
+#include <memory>
+
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nimxlcTerminalAdaptor.dll";
 #else
@@ -13,33 +15,36 @@ static const char* kLibraryName = "liblibnimxlcTerminalAdaptor.so.1";
 
 namespace nimxlcterminaladaptor_restricted_grpc {
 
-NimxlcTerminalAdaptorRestrictedLibrary::NimxlcTerminalAdaptorRestrictedLibrary() : shared_library_(kLibraryName)
+NimxlcTerminalAdaptorRestrictedLibrary::NimxlcTerminalAdaptorRestrictedLibrary() : NimxlcTerminalAdaptorRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NimxlcTerminalAdaptorRestrictedLibrary::NimxlcTerminalAdaptorRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  p_shared_library_->set_library_name(kLibraryName);
+  p_shared_library_->load();
+  bool loaded = p_shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.createSession = reinterpret_cast<createSessionPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_createSession"));
-  function_pointers_.destroySession = reinterpret_cast<destroySessionPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_destroySession"));
-  function_pointers_.refreshTerminalCache = reinterpret_cast<refreshTerminalCachePtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_refreshTerminalCache"));
-  function_pointers_.hasTerminalInformationChanged = reinterpret_cast<hasTerminalInformationChangedPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_hasTerminalInformationChanged"));
-  function_pointers_.getSystemChangeNumber = reinterpret_cast<getSystemChangeNumberPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_getSystemChangeNumber"));
-  function_pointers_.getDeviceContainer = reinterpret_cast<getDeviceContainerPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_getDeviceContainer"));
-  function_pointers_.DeviceContainer_begin = reinterpret_cast<DeviceContainer_beginPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_DeviceContainer_begin"));
-  function_pointers_.DeviceIterator_next = reinterpret_cast<DeviceIterator_nextPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_next"));
-  function_pointers_.DeviceIterator_getTerminalContainer = reinterpret_cast<DeviceIterator_getTerminalContainerPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_getTerminalContainer"));
-  function_pointers_.DeviceIterator_getDeviceName = reinterpret_cast<DeviceIterator_getDeviceNamePtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_getDeviceName"));
-  function_pointers_.DeviceIterator_supportsOnBoardClock = reinterpret_cast<DeviceIterator_supportsOnBoardClockPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_supportsOnBoardClock"));
-  function_pointers_.DeviceIterator_isEnd = reinterpret_cast<DeviceIterator_isEndPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_isEnd"));
-  function_pointers_.DeviceContainer_destroy = reinterpret_cast<DeviceContainer_destroyPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_DeviceContainer_destroy"));
-  function_pointers_.TerminalContainer_begin = reinterpret_cast<TerminalContainer_beginPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_TerminalContainer_begin"));
-  function_pointers_.TerminalIterator_next = reinterpret_cast<TerminalIterator_nextPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_TerminalIterator_next"));
-  function_pointers_.TerminalIterator_isEnd = reinterpret_cast<TerminalIterator_isEndPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_TerminalIterator_isEnd"));
-  function_pointers_.TerminalContainer_destroy = reinterpret_cast<TerminalContainer_destroyPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_TerminalContainer_destroy"));
-  function_pointers_.TerminalIterator_getTerminalName = reinterpret_cast<TerminalIterator_getTerminalNamePtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_TerminalIterator_getTerminalName"));
-  function_pointers_.TerminalIterator_getVisibility = reinterpret_cast<TerminalIterator_getVisibilityPtr>(shared_library_.get_function_pointer("nimxlc_ta_nimxlc_TerminalIterator_getVisibility"));
+  function_pointers_.createSession = reinterpret_cast<createSessionPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_createSession"));
+  function_pointers_.destroySession = reinterpret_cast<destroySessionPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_destroySession"));
+  function_pointers_.refreshTerminalCache = reinterpret_cast<refreshTerminalCachePtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_refreshTerminalCache"));
+  function_pointers_.hasTerminalInformationChanged = reinterpret_cast<hasTerminalInformationChangedPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_hasTerminalInformationChanged"));
+  function_pointers_.getSystemChangeNumber = reinterpret_cast<getSystemChangeNumberPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_getSystemChangeNumber"));
+  function_pointers_.getDeviceContainer = reinterpret_cast<getDeviceContainerPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_getDeviceContainer"));
+  function_pointers_.DeviceContainer_begin = reinterpret_cast<DeviceContainer_beginPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_DeviceContainer_begin"));
+  function_pointers_.DeviceIterator_next = reinterpret_cast<DeviceIterator_nextPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_next"));
+  function_pointers_.DeviceIterator_getTerminalContainer = reinterpret_cast<DeviceIterator_getTerminalContainerPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_getTerminalContainer"));
+  function_pointers_.DeviceIterator_getDeviceName = reinterpret_cast<DeviceIterator_getDeviceNamePtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_getDeviceName"));
+  function_pointers_.DeviceIterator_supportsOnBoardClock = reinterpret_cast<DeviceIterator_supportsOnBoardClockPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_supportsOnBoardClock"));
+  function_pointers_.DeviceIterator_isEnd = reinterpret_cast<DeviceIterator_isEndPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_DeviceIterator_isEnd"));
+  function_pointers_.DeviceContainer_destroy = reinterpret_cast<DeviceContainer_destroyPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_DeviceContainer_destroy"));
+  function_pointers_.TerminalContainer_begin = reinterpret_cast<TerminalContainer_beginPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_TerminalContainer_begin"));
+  function_pointers_.TerminalIterator_next = reinterpret_cast<TerminalIterator_nextPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_TerminalIterator_next"));
+  function_pointers_.TerminalIterator_isEnd = reinterpret_cast<TerminalIterator_isEndPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_TerminalIterator_isEnd"));
+  function_pointers_.TerminalContainer_destroy = reinterpret_cast<TerminalContainer_destroyPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_TerminalContainer_destroy"));
+  function_pointers_.TerminalIterator_getTerminalName = reinterpret_cast<TerminalIterator_getTerminalNamePtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_TerminalIterator_getTerminalName"));
+  function_pointers_.TerminalIterator_getVisibility = reinterpret_cast<TerminalIterator_getVisibilityPtr>(p_shared_library_->get_function_pointer("nimxlc_ta_nimxlc_TerminalIterator_getVisibility"));
 }
 
 NimxlcTerminalAdaptorRestrictedLibrary::~NimxlcTerminalAdaptorRestrictedLibrary()
@@ -48,7 +53,7 @@ NimxlcTerminalAdaptorRestrictedLibrary::~NimxlcTerminalAdaptorRestrictedLibrary(
 
 ::grpc::Status NimxlcTerminalAdaptorRestrictedLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return p_shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

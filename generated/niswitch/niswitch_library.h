@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace niswitch_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
  public:
   NiSwitchLibrary();
+  NiSwitchLibrary::NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiSwitchLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -215,7 +217,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

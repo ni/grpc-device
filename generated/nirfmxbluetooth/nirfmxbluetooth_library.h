@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nirfmxbluetooth_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibraryInterface {
  public:
   NiRFmxBluetoothLibrary();
+  NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiRFmxBluetoothLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -418,7 +420,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

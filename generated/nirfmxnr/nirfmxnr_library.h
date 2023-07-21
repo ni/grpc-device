@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nirfmxnr_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
  public:
   NiRFmxNRLibrary();
+  NiRFmxNRLibrary::NiRFmxNRLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiRFmxNRLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -688,7 +690,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

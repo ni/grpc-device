@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nifgen_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
  public:
   NiFgenLibrary();
+  NiFgenLibrary::NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiFgenLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -428,7 +430,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

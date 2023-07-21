@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nifake_non_ivi_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInterface {
  public:
   NiFakeNonIviLibrary();
+  NiFakeNonIviLibrary::NiFakeNonIviLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiFakeNonIviLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -130,7 +132,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     WriteBooleanArrayPtr WriteBooleanArray;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

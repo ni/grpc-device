@@ -5,6 +5,8 @@
 //---------------------------------------------------------------------
 #include "nifake_non_ivi_library.h"
 
+#include <memory>
+
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nifakenonivi_64.dll";
 #else
@@ -13,49 +15,52 @@ static const char* kLibraryName = "libnifakenonivi.so";
 
 namespace nifake_non_ivi_grpc {
 
-NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
+NiFakeNonIviLibrary::NiFakeNonIviLibrary() : NiFakeNonIviLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiFakeNonIviLibrary::NiFakeNonIviLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  p_shared_library_->set_library_name(kLibraryName);
+  p_shared_library_->load();
+  bool loaded = p_shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niFakeNonIvi_Close"));
-  function_pointers_.CloseSecondarySession = reinterpret_cast<CloseSecondarySessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_CloseSecondarySession"));
-  function_pointers_.GetCrossDriverSession = reinterpret_cast<GetCrossDriverSessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetCrossDriverSession"));
-  function_pointers_.GetLatestErrorMessage = reinterpret_cast<GetLatestErrorMessagePtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetLatestErrorMessage"));
-  function_pointers_.GetStringAsReturnedValue = reinterpret_cast<GetStringAsReturnedValuePtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetStringAsReturnedValue"));
-  function_pointers_.GetMarbleAttributeDouble = reinterpret_cast<GetMarbleAttributeDoublePtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetMarbleAttributeDouble"));
-  function_pointers_.GetMarbleAttributeInt32 = reinterpret_cast<GetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_GetMarbleAttributeInt32"));
-  function_pointers_.GetMarbleAttributeInt32Array = reinterpret_cast<GetMarbleAttributeInt32ArrayPtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetMarbleAttributeInt32Array"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFakeNonIvi_Init"));
-  function_pointers_.InitFromCrossDriverSession = reinterpret_cast<InitFromCrossDriverSessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitFromCrossDriverSession"));
-  function_pointers_.InitFromCrossDriverSessionArray = reinterpret_cast<InitFromCrossDriverSessionArrayPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitFromCrossDriverSessionArray"));
-  function_pointers_.InitSecondarySession = reinterpret_cast<InitSecondarySessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitSecondarySession"));
-  function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
-  function_pointers_.InitWithReturnedSession = reinterpret_cast<InitWithReturnedSessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithReturnedSession"));
-  function_pointers_.InputArraysWithNarrowIntegerTypes = reinterpret_cast<InputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArraysWithNarrowIntegerTypes"));
-  function_pointers_.IotaWithCustomSize = reinterpret_cast<IotaWithCustomSizePtr>(shared_library_.get_function_pointer("niFakeNonIvi_IotaWithCustomSize"));
-  function_pointers_.OutputArraysWithNarrowIntegerTypes = reinterpret_cast<OutputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArraysWithNarrowIntegerTypes"));
-  function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
-  function_pointers_.OutputArrayOfBytes = reinterpret_cast<OutputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArrayOfBytes"));
-  function_pointers_.OutputArraysWithPassedInByPtrMechanism = reinterpret_cast<OutputArraysWithPassedInByPtrMechanismPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArraysWithPassedInByPtrMechanism"));
-  function_pointers_.RegisterCallback = reinterpret_cast<RegisterCallbackPtr>(shared_library_.get_function_pointer("niFakeNonIvi_RegisterCallback"));
-  function_pointers_.ReadStream = reinterpret_cast<ReadStreamPtr>(shared_library_.get_function_pointer("niFakeNonIvi_ReadStream"));
-  function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputTimestamp"));
-  function_pointers_.OutputTimestamp = reinterpret_cast<OutputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputTimestamp"));
-  function_pointers_.InputVarArgs = reinterpret_cast<InputVarArgsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputVarArgs"));
-  function_pointers_.OutputVarArgs = reinterpret_cast<OutputVarArgsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputVarArgs"));
-  function_pointers_.ResetMarbleAttribute = reinterpret_cast<ResetMarbleAttributePtr>(shared_library_.get_function_pointer("niFakeNonIvi_ResetMarbleAttribute"));
-  function_pointers_.ScalarsWithNarrowIntegerTypes = reinterpret_cast<ScalarsWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_ScalarsWithNarrowIntegerTypes"));
-  function_pointers_.SetMarbleAttributeDouble = reinterpret_cast<SetMarbleAttributeDoublePtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeDouble"));
-  function_pointers_.SetMarbleAttributeInt32 = reinterpret_cast<SetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeInt32"));
-  function_pointers_.SetColors = reinterpret_cast<SetColorsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetColors"));
-  function_pointers_.GetStructsWithCoercion = reinterpret_cast<GetStructsWithCoercionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetStructsWithCoercion"));
-  function_pointers_.SetStructsWithCoercion = reinterpret_cast<SetStructsWithCoercionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetStructsWithCoercion"));
-  function_pointers_.InputStringValuedEnum = reinterpret_cast<InputStringValuedEnumPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputStringValuedEnum"));
-  function_pointers_.WriteBooleanArray = reinterpret_cast<WriteBooleanArrayPtr>(shared_library_.get_function_pointer("niFakeNonIvi_WriteBooleanArray"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_Close"));
+  function_pointers_.CloseSecondarySession = reinterpret_cast<CloseSecondarySessionPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_CloseSecondarySession"));
+  function_pointers_.GetCrossDriverSession = reinterpret_cast<GetCrossDriverSessionPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_GetCrossDriverSession"));
+  function_pointers_.GetLatestErrorMessage = reinterpret_cast<GetLatestErrorMessagePtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_GetLatestErrorMessage"));
+  function_pointers_.GetStringAsReturnedValue = reinterpret_cast<GetStringAsReturnedValuePtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_GetStringAsReturnedValue"));
+  function_pointers_.GetMarbleAttributeDouble = reinterpret_cast<GetMarbleAttributeDoublePtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_GetMarbleAttributeDouble"));
+  function_pointers_.GetMarbleAttributeInt32 = reinterpret_cast<GetMarbleAttributeInt32Ptr>(p_shared_library_->get_function_pointer("niFakeNonIvi_GetMarbleAttributeInt32"));
+  function_pointers_.GetMarbleAttributeInt32Array = reinterpret_cast<GetMarbleAttributeInt32ArrayPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_GetMarbleAttributeInt32Array"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_Init"));
+  function_pointers_.InitFromCrossDriverSession = reinterpret_cast<InitFromCrossDriverSessionPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InitFromCrossDriverSession"));
+  function_pointers_.InitFromCrossDriverSessionArray = reinterpret_cast<InitFromCrossDriverSessionArrayPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InitFromCrossDriverSessionArray"));
+  function_pointers_.InitSecondarySession = reinterpret_cast<InitSecondarySessionPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InitSecondarySession"));
+  function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
+  function_pointers_.InitWithReturnedSession = reinterpret_cast<InitWithReturnedSessionPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InitWithReturnedSession"));
+  function_pointers_.InputArraysWithNarrowIntegerTypes = reinterpret_cast<InputArraysWithNarrowIntegerTypesPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InputArraysWithNarrowIntegerTypes"));
+  function_pointers_.IotaWithCustomSize = reinterpret_cast<IotaWithCustomSizePtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_IotaWithCustomSize"));
+  function_pointers_.OutputArraysWithNarrowIntegerTypes = reinterpret_cast<OutputArraysWithNarrowIntegerTypesPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_OutputArraysWithNarrowIntegerTypes"));
+  function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
+  function_pointers_.OutputArrayOfBytes = reinterpret_cast<OutputArrayOfBytesPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_OutputArrayOfBytes"));
+  function_pointers_.OutputArraysWithPassedInByPtrMechanism = reinterpret_cast<OutputArraysWithPassedInByPtrMechanismPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_OutputArraysWithPassedInByPtrMechanism"));
+  function_pointers_.RegisterCallback = reinterpret_cast<RegisterCallbackPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_RegisterCallback"));
+  function_pointers_.ReadStream = reinterpret_cast<ReadStreamPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_ReadStream"));
+  function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InputTimestamp"));
+  function_pointers_.OutputTimestamp = reinterpret_cast<OutputTimestampPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_OutputTimestamp"));
+  function_pointers_.InputVarArgs = reinterpret_cast<InputVarArgsPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InputVarArgs"));
+  function_pointers_.OutputVarArgs = reinterpret_cast<OutputVarArgsPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_OutputVarArgs"));
+  function_pointers_.ResetMarbleAttribute = reinterpret_cast<ResetMarbleAttributePtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_ResetMarbleAttribute"));
+  function_pointers_.ScalarsWithNarrowIntegerTypes = reinterpret_cast<ScalarsWithNarrowIntegerTypesPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_ScalarsWithNarrowIntegerTypes"));
+  function_pointers_.SetMarbleAttributeDouble = reinterpret_cast<SetMarbleAttributeDoublePtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_SetMarbleAttributeDouble"));
+  function_pointers_.SetMarbleAttributeInt32 = reinterpret_cast<SetMarbleAttributeInt32Ptr>(p_shared_library_->get_function_pointer("niFakeNonIvi_SetMarbleAttributeInt32"));
+  function_pointers_.SetColors = reinterpret_cast<SetColorsPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_SetColors"));
+  function_pointers_.GetStructsWithCoercion = reinterpret_cast<GetStructsWithCoercionPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_GetStructsWithCoercion"));
+  function_pointers_.SetStructsWithCoercion = reinterpret_cast<SetStructsWithCoercionPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_SetStructsWithCoercion"));
+  function_pointers_.InputStringValuedEnum = reinterpret_cast<InputStringValuedEnumPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_InputStringValuedEnum"));
+  function_pointers_.WriteBooleanArray = reinterpret_cast<WriteBooleanArrayPtr>(p_shared_library_->get_function_pointer("niFakeNonIvi_WriteBooleanArray"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -64,7 +69,7 @@ NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
 
 ::grpc::Status NiFakeNonIviLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return p_shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nidaqmx_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  public:
   NiDAQmxLibrary();
+  NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiDAQmxLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -1204,7 +1206,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     WriteToTEDSFromFilePtr WriteToTEDSFromFile;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

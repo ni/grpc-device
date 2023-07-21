@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nirfmxinstr_restricted_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxInstrRestrictedLibraryInterface {
  public:
   NiRFmxInstrRestrictedLibrary();
+  NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiRFmxInstrRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -136,7 +138,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     UnregisterSpecialClientSnapshotInterestPtr UnregisterSpecialClientSnapshotInterest;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

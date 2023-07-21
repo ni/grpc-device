@@ -15,7 +15,9 @@ linux_so_version_suffix = f'.{linux_abi_version}' if linux_abi_version else ''
 windows_library_info = config['library_info']['Windows']['64bit']
 windows_library_name = windows_library_info['name']
 
-intialization_list = "shared_library_(kLibraryName)"
+class_name = f"{service_class_prefix}Library"
+
+intialization_list = "p_shared_library_(pSharedLibrary)"
 set_runtime_environment_supported = 'SetRuntimeEnvironment' in service_helpers.filter_api_functions(functions, only_mockable_functions=False)
 if set_runtime_environment_supported:
   intialization_list += ", runtime_environment_set(false)"
@@ -30,6 +32,8 @@ if set_runtime_environment_supported:
 #include "version.h"
 % endif
 
+#include <memory>
+
 #if defined(_MSC_VER)
 static const char* kLibraryName = "${windows_library_name}";
 #else
@@ -38,10 +42,13 @@ static const char* kLibraryName = "lib${linux_library_name}.so${linux_so_version
 
 namespace ${config["namespace_component"]}_grpc {
 
-${service_class_prefix}Library::${service_class_prefix}Library() : ${intialization_list}
+${class_name}::${class_name}() : ${class_name}(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : ${intialization_list}
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  p_shared_library_->set_library_name(kLibraryName);
+  p_shared_library_->load();
+  bool loaded = p_shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
@@ -50,7 +57,7 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : ${intializati
 <%
   c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
-  function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_.get_function_pointer("${c_name}"));
+  function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(p_shared_library_->get_function_pointer("${c_name}"));
 % endfor
 % if set_runtime_environment_supported:
 
@@ -61,13 +68,13 @@ ${service_class_prefix}Library::${service_class_prefix}Library() : ${intializati
 % endif
 }
 
-${service_class_prefix}Library::~${service_class_prefix}Library()
+${class_name}::~${class_name}()
 {
 }
 
-::grpc::Status ${service_class_prefix}Library::check_function_exists(std::string functionName)
+::grpc::Status ${class_name}::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return p_shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
@@ -81,7 +88,7 @@ ${service_class_prefix}Library::~${service_class_prefix}Library()
   argument_list = ', '.join(p['cppName'] for p in service_helpers.expand_varargs_parameters(parameters) if not p.get("proto_only", False))
   c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
-${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
+${return_type} ${class_name}::${method_name}(${parameter_list})
 {
   if (!function_pointers_.${method_name}) {
     throw nidevice_grpc::LibraryLoadException("Could not find ${c_name}.");
@@ -91,7 +98,7 @@ ${return_type} ${service_class_prefix}Library::${method_name}(${parameter_list})
 
 % endfor
 % if set_runtime_environment_supported:
-bool ${service_class_prefix}Library::get_runtime_environment_set(){ return this->runtime_environment_set; }
+bool ${class_name}::get_runtime_environment_set(){ return this->runtime_environment_set; }
 
 % endif
 }  // namespace ${config["namespace_component"]}_grpc

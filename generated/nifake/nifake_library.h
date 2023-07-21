@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nifake_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
  public:
   NiFakeLibrary();
+  NiFakeLibrary::NiFakeLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiFakeLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -308,7 +310,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

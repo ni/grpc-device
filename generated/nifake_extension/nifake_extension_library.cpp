@@ -5,6 +5,8 @@
 //---------------------------------------------------------------------
 #include "nifake_extension_library.h"
 
+#include <memory>
+
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nifake_64.dll";
 #else
@@ -13,15 +15,18 @@ static const char* kLibraryName = "libnifake.so";
 
 namespace nifake_extension_grpc {
 
-NiFakeExtensionLibrary::NiFakeExtensionLibrary() : shared_library_(kLibraryName)
+NiFakeExtensionLibrary::NiFakeExtensionLibrary() : NiFakeExtensionLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiFakeExtensionLibrary::NiFakeExtensionLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  p_shared_library_->set_library_name(kLibraryName);
+  p_shared_library_->load();
+  bool loaded = p_shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.AddCoolFunctionality = reinterpret_cast<AddCoolFunctionalityPtr>(shared_library_.get_function_pointer("niFakeExtension_AddCoolFunctionality"));
+  function_pointers_.AddCoolFunctionality = reinterpret_cast<AddCoolFunctionalityPtr>(p_shared_library_->get_function_pointer("niFakeExtension_AddCoolFunctionality"));
 }
 
 NiFakeExtensionLibrary::~NiFakeExtensionLibrary()
@@ -30,7 +35,7 @@ NiFakeExtensionLibrary::~NiFakeExtensionLibrary()
 
 ::grpc::Status NiFakeExtensionLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return p_shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

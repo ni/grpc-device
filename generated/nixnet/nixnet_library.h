@@ -10,12 +10,14 @@
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace nixnet_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
  public:
   NiXnetLibrary();
+  NiXnetLibrary::NiXnetLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
   virtual ~NiXnetLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -193,7 +195,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     WriteStatePtr WriteState;
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

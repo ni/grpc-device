@@ -5,6 +5,8 @@
 //---------------------------------------------------------------------
 #include "nixnet_library.h"
 
+#include <memory>
+
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nixnet.dll";
 #else
@@ -13,70 +15,73 @@ static const char* kLibraryName = "libnixnet.so";
 
 namespace nixnet_grpc {
 
-NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
+NiXnetLibrary::NiXnetLibrary() : NiXnetLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiXnetLibrary::NiXnetLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  p_shared_library_->set_library_name(kLibraryName);
+  p_shared_library_->load();
+  bool loaded = p_shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Blink = reinterpret_cast<BlinkPtr>(shared_library_.get_function_pointer("nxBlink"));
-  function_pointers_.Clear = reinterpret_cast<ClearPtr>(shared_library_.get_function_pointer("nxClear"));
-  function_pointers_.ConnectTerminals = reinterpret_cast<ConnectTerminalsPtr>(shared_library_.get_function_pointer("nxConnectTerminals"));
-  function_pointers_.ConvertByteArrayToFramesSinglePoint = reinterpret_cast<ConvertByteArrayToFramesSinglePointPtr>(shared_library_.get_function_pointer("nxConvertByteArrayToFramesSinglePoint"));
-  function_pointers_.ConvertFramesToByteArraySinglePoint = reinterpret_cast<ConvertFramesToByteArraySinglePointPtr>(shared_library_.get_function_pointer("nxConvertFramesToByteArraySinglePoint"));
-  function_pointers_.ConvertFramesToSignalsSinglePoint = reinterpret_cast<ConvertFramesToSignalsSinglePointPtr>(shared_library_.get_function_pointer("nxConvertFramesToSignalsSinglePoint"));
-  function_pointers_.ConvertSignalsToFramesSinglePoint = reinterpret_cast<ConvertSignalsToFramesSinglePointPtr>(shared_library_.get_function_pointer("nxConvertSignalsToFramesSinglePoint"));
-  function_pointers_.ConvertTimestamp100nsTo1ns = reinterpret_cast<ConvertTimestamp100nsTo1nsPtr>(shared_library_.get_function_pointer("nxConvertTimestamp100nsTo1ns"));
-  function_pointers_.ConvertTimestamp1nsTo100ns = reinterpret_cast<ConvertTimestamp1nsTo100nsPtr>(shared_library_.get_function_pointer("nxConvertTimestamp1nsTo100ns"));
-  function_pointers_.CreateSession = reinterpret_cast<CreateSessionPtr>(shared_library_.get_function_pointer("nxCreateSession"));
-  function_pointers_.CreateSessionByRef = reinterpret_cast<CreateSessionByRefPtr>(shared_library_.get_function_pointer("nxCreateSessionByRef"));
-  function_pointers_.DbAddAlias = reinterpret_cast<DbAddAliasPtr>(shared_library_.get_function_pointer("nxdbAddAlias"));
-  function_pointers_.DbAddAlias64 = reinterpret_cast<DbAddAlias64Ptr>(shared_library_.get_function_pointer("nxdbAddAlias64"));
-  function_pointers_.DbCloseDatabase = reinterpret_cast<DbCloseDatabasePtr>(shared_library_.get_function_pointer("nxdbCloseDatabase"));
-  function_pointers_.DbCreateObject = reinterpret_cast<DbCreateObjectPtr>(shared_library_.get_function_pointer("nxdbCreateObject"));
-  function_pointers_.DbDeleteObject = reinterpret_cast<DbDeleteObjectPtr>(shared_library_.get_function_pointer("nxdbDeleteObject"));
-  function_pointers_.DbDeploy = reinterpret_cast<DbDeployPtr>(shared_library_.get_function_pointer("nxdbDeploy"));
-  function_pointers_.DbFindObject = reinterpret_cast<DbFindObjectPtr>(shared_library_.get_function_pointer("nxdbFindObject"));
-  function_pointers_.DbGetDBCAttribute = reinterpret_cast<DbGetDBCAttributePtr>(shared_library_.get_function_pointer("nxdbGetDBCAttribute"));
-  function_pointers_.DbGetDBCAttributeSize = reinterpret_cast<DbGetDBCAttributeSizePtr>(shared_library_.get_function_pointer("nxdbGetDBCAttributeSize"));
-  function_pointers_.DbGetDatabaseList = reinterpret_cast<DbGetDatabaseListPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseList"));
-  function_pointers_.DbGetDatabaseListSizes = reinterpret_cast<DbGetDatabaseListSizesPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseListSizes"));
-  function_pointers_.DbGetProperty = reinterpret_cast<DbGetPropertyPtr>(shared_library_.get_function_pointer("nxdbGetProperty"));
-  function_pointers_.DbGetPropertySize = reinterpret_cast<DbGetPropertySizePtr>(shared_library_.get_function_pointer("nxdbGetPropertySize"));
-  function_pointers_.DbMerge = reinterpret_cast<DbMergePtr>(shared_library_.get_function_pointer("nxdbMerge"));
-  function_pointers_.DbOpenDatabase = reinterpret_cast<DbOpenDatabasePtr>(shared_library_.get_function_pointer("nxdbOpenDatabase"));
-  function_pointers_.DbRemoveAlias = reinterpret_cast<DbRemoveAliasPtr>(shared_library_.get_function_pointer("nxdbRemoveAlias"));
-  function_pointers_.DbSaveDatabase = reinterpret_cast<DbSaveDatabasePtr>(shared_library_.get_function_pointer("nxdbSaveDatabase"));
-  function_pointers_.DbSetProperty = reinterpret_cast<DbSetPropertyPtr>(shared_library_.get_function_pointer("nxdbSetProperty"));
-  function_pointers_.DbUndeploy = reinterpret_cast<DbUndeployPtr>(shared_library_.get_function_pointer("nxdbUndeploy"));
-  function_pointers_.DisconnectTerminals = reinterpret_cast<DisconnectTerminalsPtr>(shared_library_.get_function_pointer("nxDisconnectTerminals"));
-  function_pointers_.Flush = reinterpret_cast<FlushPtr>(shared_library_.get_function_pointer("nxFlush"));
-  function_pointers_.FutureTimeTrigger = reinterpret_cast<FutureTimeTriggerPtr>(shared_library_.get_function_pointer("nxFutureTimeTrigger"));
-  function_pointers_.GetProperty = reinterpret_cast<GetPropertyPtr>(shared_library_.get_function_pointer("nxGetProperty"));
-  function_pointers_.GetPropertySize = reinterpret_cast<GetPropertySizePtr>(shared_library_.get_function_pointer("nxGetPropertySize"));
-  function_pointers_.GetSubProperty = reinterpret_cast<GetSubPropertyPtr>(shared_library_.get_function_pointer("nxGetSubProperty"));
-  function_pointers_.GetSubPropertySize = reinterpret_cast<GetSubPropertySizePtr>(shared_library_.get_function_pointer("nxGetSubPropertySize"));
-  function_pointers_.ReadFrame = reinterpret_cast<ReadFramePtr>(shared_library_.get_function_pointer("nxReadFrame"));
-  function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
-  function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(shared_library_.get_function_pointer("nxReadSignalWaveform"));
-  function_pointers_.ReadSignalXY = reinterpret_cast<ReadSignalXYPtr>(shared_library_.get_function_pointer("nxReadSignalXY"));
-  function_pointers_.ReadState = reinterpret_cast<ReadStatePtr>(shared_library_.get_function_pointer("nxReadState"));
-  function_pointers_.ReadStateTimeTrigger = reinterpret_cast<ReadStateTimeTriggerPtr>(shared_library_.get_function_pointer("nxReadStateTimeTrigger"));
-  function_pointers_.SetProperty = reinterpret_cast<SetPropertyPtr>(shared_library_.get_function_pointer("nxSetProperty"));
-  function_pointers_.SetSubProperty = reinterpret_cast<SetSubPropertyPtr>(shared_library_.get_function_pointer("nxSetSubProperty"));
-  function_pointers_.Start = reinterpret_cast<StartPtr>(shared_library_.get_function_pointer("nxStart"));
-  function_pointers_.StatusToString = reinterpret_cast<StatusToStringPtr>(shared_library_.get_function_pointer("nxStatusToString"));
-  function_pointers_.Stop = reinterpret_cast<StopPtr>(shared_library_.get_function_pointer("nxStop"));
-  function_pointers_.SystemClose = reinterpret_cast<SystemClosePtr>(shared_library_.get_function_pointer("nxSystemClose"));
-  function_pointers_.SystemOpen = reinterpret_cast<SystemOpenPtr>(shared_library_.get_function_pointer("nxSystemOpen"));
-  function_pointers_.Wait = reinterpret_cast<WaitPtr>(shared_library_.get_function_pointer("nxWait"));
-  function_pointers_.WriteFrame = reinterpret_cast<WriteFramePtr>(shared_library_.get_function_pointer("nxWriteFrame"));
-  function_pointers_.WriteSignalSinglePoint = reinterpret_cast<WriteSignalSinglePointPtr>(shared_library_.get_function_pointer("nxWriteSignalSinglePoint"));
-  function_pointers_.WriteSignalWaveform = reinterpret_cast<WriteSignalWaveformPtr>(shared_library_.get_function_pointer("nxWriteSignalWaveform"));
-  function_pointers_.WriteSignalXY = reinterpret_cast<WriteSignalXYPtr>(shared_library_.get_function_pointer("nxWriteSignalXY"));
-  function_pointers_.WriteState = reinterpret_cast<WriteStatePtr>(shared_library_.get_function_pointer("nxWriteState"));
+  function_pointers_.Blink = reinterpret_cast<BlinkPtr>(p_shared_library_->get_function_pointer("nxBlink"));
+  function_pointers_.Clear = reinterpret_cast<ClearPtr>(p_shared_library_->get_function_pointer("nxClear"));
+  function_pointers_.ConnectTerminals = reinterpret_cast<ConnectTerminalsPtr>(p_shared_library_->get_function_pointer("nxConnectTerminals"));
+  function_pointers_.ConvertByteArrayToFramesSinglePoint = reinterpret_cast<ConvertByteArrayToFramesSinglePointPtr>(p_shared_library_->get_function_pointer("nxConvertByteArrayToFramesSinglePoint"));
+  function_pointers_.ConvertFramesToByteArraySinglePoint = reinterpret_cast<ConvertFramesToByteArraySinglePointPtr>(p_shared_library_->get_function_pointer("nxConvertFramesToByteArraySinglePoint"));
+  function_pointers_.ConvertFramesToSignalsSinglePoint = reinterpret_cast<ConvertFramesToSignalsSinglePointPtr>(p_shared_library_->get_function_pointer("nxConvertFramesToSignalsSinglePoint"));
+  function_pointers_.ConvertSignalsToFramesSinglePoint = reinterpret_cast<ConvertSignalsToFramesSinglePointPtr>(p_shared_library_->get_function_pointer("nxConvertSignalsToFramesSinglePoint"));
+  function_pointers_.ConvertTimestamp100nsTo1ns = reinterpret_cast<ConvertTimestamp100nsTo1nsPtr>(p_shared_library_->get_function_pointer("nxConvertTimestamp100nsTo1ns"));
+  function_pointers_.ConvertTimestamp1nsTo100ns = reinterpret_cast<ConvertTimestamp1nsTo100nsPtr>(p_shared_library_->get_function_pointer("nxConvertTimestamp1nsTo100ns"));
+  function_pointers_.CreateSession = reinterpret_cast<CreateSessionPtr>(p_shared_library_->get_function_pointer("nxCreateSession"));
+  function_pointers_.CreateSessionByRef = reinterpret_cast<CreateSessionByRefPtr>(p_shared_library_->get_function_pointer("nxCreateSessionByRef"));
+  function_pointers_.DbAddAlias = reinterpret_cast<DbAddAliasPtr>(p_shared_library_->get_function_pointer("nxdbAddAlias"));
+  function_pointers_.DbAddAlias64 = reinterpret_cast<DbAddAlias64Ptr>(p_shared_library_->get_function_pointer("nxdbAddAlias64"));
+  function_pointers_.DbCloseDatabase = reinterpret_cast<DbCloseDatabasePtr>(p_shared_library_->get_function_pointer("nxdbCloseDatabase"));
+  function_pointers_.DbCreateObject = reinterpret_cast<DbCreateObjectPtr>(p_shared_library_->get_function_pointer("nxdbCreateObject"));
+  function_pointers_.DbDeleteObject = reinterpret_cast<DbDeleteObjectPtr>(p_shared_library_->get_function_pointer("nxdbDeleteObject"));
+  function_pointers_.DbDeploy = reinterpret_cast<DbDeployPtr>(p_shared_library_->get_function_pointer("nxdbDeploy"));
+  function_pointers_.DbFindObject = reinterpret_cast<DbFindObjectPtr>(p_shared_library_->get_function_pointer("nxdbFindObject"));
+  function_pointers_.DbGetDBCAttribute = reinterpret_cast<DbGetDBCAttributePtr>(p_shared_library_->get_function_pointer("nxdbGetDBCAttribute"));
+  function_pointers_.DbGetDBCAttributeSize = reinterpret_cast<DbGetDBCAttributeSizePtr>(p_shared_library_->get_function_pointer("nxdbGetDBCAttributeSize"));
+  function_pointers_.DbGetDatabaseList = reinterpret_cast<DbGetDatabaseListPtr>(p_shared_library_->get_function_pointer("nxdbGetDatabaseList"));
+  function_pointers_.DbGetDatabaseListSizes = reinterpret_cast<DbGetDatabaseListSizesPtr>(p_shared_library_->get_function_pointer("nxdbGetDatabaseListSizes"));
+  function_pointers_.DbGetProperty = reinterpret_cast<DbGetPropertyPtr>(p_shared_library_->get_function_pointer("nxdbGetProperty"));
+  function_pointers_.DbGetPropertySize = reinterpret_cast<DbGetPropertySizePtr>(p_shared_library_->get_function_pointer("nxdbGetPropertySize"));
+  function_pointers_.DbMerge = reinterpret_cast<DbMergePtr>(p_shared_library_->get_function_pointer("nxdbMerge"));
+  function_pointers_.DbOpenDatabase = reinterpret_cast<DbOpenDatabasePtr>(p_shared_library_->get_function_pointer("nxdbOpenDatabase"));
+  function_pointers_.DbRemoveAlias = reinterpret_cast<DbRemoveAliasPtr>(p_shared_library_->get_function_pointer("nxdbRemoveAlias"));
+  function_pointers_.DbSaveDatabase = reinterpret_cast<DbSaveDatabasePtr>(p_shared_library_->get_function_pointer("nxdbSaveDatabase"));
+  function_pointers_.DbSetProperty = reinterpret_cast<DbSetPropertyPtr>(p_shared_library_->get_function_pointer("nxdbSetProperty"));
+  function_pointers_.DbUndeploy = reinterpret_cast<DbUndeployPtr>(p_shared_library_->get_function_pointer("nxdbUndeploy"));
+  function_pointers_.DisconnectTerminals = reinterpret_cast<DisconnectTerminalsPtr>(p_shared_library_->get_function_pointer("nxDisconnectTerminals"));
+  function_pointers_.Flush = reinterpret_cast<FlushPtr>(p_shared_library_->get_function_pointer("nxFlush"));
+  function_pointers_.FutureTimeTrigger = reinterpret_cast<FutureTimeTriggerPtr>(p_shared_library_->get_function_pointer("nxFutureTimeTrigger"));
+  function_pointers_.GetProperty = reinterpret_cast<GetPropertyPtr>(p_shared_library_->get_function_pointer("nxGetProperty"));
+  function_pointers_.GetPropertySize = reinterpret_cast<GetPropertySizePtr>(p_shared_library_->get_function_pointer("nxGetPropertySize"));
+  function_pointers_.GetSubProperty = reinterpret_cast<GetSubPropertyPtr>(p_shared_library_->get_function_pointer("nxGetSubProperty"));
+  function_pointers_.GetSubPropertySize = reinterpret_cast<GetSubPropertySizePtr>(p_shared_library_->get_function_pointer("nxGetSubPropertySize"));
+  function_pointers_.ReadFrame = reinterpret_cast<ReadFramePtr>(p_shared_library_->get_function_pointer("nxReadFrame"));
+  function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(p_shared_library_->get_function_pointer("nxReadSignalSinglePoint"));
+  function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(p_shared_library_->get_function_pointer("nxReadSignalWaveform"));
+  function_pointers_.ReadSignalXY = reinterpret_cast<ReadSignalXYPtr>(p_shared_library_->get_function_pointer("nxReadSignalXY"));
+  function_pointers_.ReadState = reinterpret_cast<ReadStatePtr>(p_shared_library_->get_function_pointer("nxReadState"));
+  function_pointers_.ReadStateTimeTrigger = reinterpret_cast<ReadStateTimeTriggerPtr>(p_shared_library_->get_function_pointer("nxReadStateTimeTrigger"));
+  function_pointers_.SetProperty = reinterpret_cast<SetPropertyPtr>(p_shared_library_->get_function_pointer("nxSetProperty"));
+  function_pointers_.SetSubProperty = reinterpret_cast<SetSubPropertyPtr>(p_shared_library_->get_function_pointer("nxSetSubProperty"));
+  function_pointers_.Start = reinterpret_cast<StartPtr>(p_shared_library_->get_function_pointer("nxStart"));
+  function_pointers_.StatusToString = reinterpret_cast<StatusToStringPtr>(p_shared_library_->get_function_pointer("nxStatusToString"));
+  function_pointers_.Stop = reinterpret_cast<StopPtr>(p_shared_library_->get_function_pointer("nxStop"));
+  function_pointers_.SystemClose = reinterpret_cast<SystemClosePtr>(p_shared_library_->get_function_pointer("nxSystemClose"));
+  function_pointers_.SystemOpen = reinterpret_cast<SystemOpenPtr>(p_shared_library_->get_function_pointer("nxSystemOpen"));
+  function_pointers_.Wait = reinterpret_cast<WaitPtr>(p_shared_library_->get_function_pointer("nxWait"));
+  function_pointers_.WriteFrame = reinterpret_cast<WriteFramePtr>(p_shared_library_->get_function_pointer("nxWriteFrame"));
+  function_pointers_.WriteSignalSinglePoint = reinterpret_cast<WriteSignalSinglePointPtr>(p_shared_library_->get_function_pointer("nxWriteSignalSinglePoint"));
+  function_pointers_.WriteSignalWaveform = reinterpret_cast<WriteSignalWaveformPtr>(p_shared_library_->get_function_pointer("nxWriteSignalWaveform"));
+  function_pointers_.WriteSignalXY = reinterpret_cast<WriteSignalXYPtr>(p_shared_library_->get_function_pointer("nxWriteSignalXY"));
+  function_pointers_.WriteState = reinterpret_cast<WriteStatePtr>(p_shared_library_->get_function_pointer("nxWriteState"));
 }
 
 NiXnetLibrary::~NiXnetLibrary()
@@ -85,7 +90,7 @@ NiXnetLibrary::~NiXnetLibrary()
 
 ::grpc::Status NiXnetLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return p_shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

@@ -6,6 +6,8 @@
 #include "niscope_library.h"
 #include "version.h"
 
+#include <memory>
+
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niScope_64.dll";
 #else
@@ -14,107 +16,110 @@ static const char* kLibraryName = "libniscope.so";
 
 namespace niscope_grpc {
 
-NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName), runtime_environment_set(false)
+NiScopeLibrary::NiScopeLibrary() : NiScopeLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiScopeLibrary::NiScopeLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set(false)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  p_shared_library_->set_library_name(kLibraryName);
+  p_shared_library_->load();
+  bool loaded = p_shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niScope_Abort"));
-  function_pointers_.AcquisitionStatus = reinterpret_cast<AcquisitionStatusPtr>(shared_library_.get_function_pointer("niScope_AcquisitionStatus"));
-  function_pointers_.ActualMeasWfmSize = reinterpret_cast<ActualMeasWfmSizePtr>(shared_library_.get_function_pointer("niScope_ActualMeasWfmSize"));
-  function_pointers_.ActualNumWfms = reinterpret_cast<ActualNumWfmsPtr>(shared_library_.get_function_pointer("niScope_ActualNumWfms"));
-  function_pointers_.ActualRecordLength = reinterpret_cast<ActualRecordLengthPtr>(shared_library_.get_function_pointer("niScope_ActualRecordLength"));
-  function_pointers_.AddWaveformProcessing = reinterpret_cast<AddWaveformProcessingPtr>(shared_library_.get_function_pointer("niScope_AddWaveformProcessing"));
-  function_pointers_.AdjustSampleClockRelativeDelay = reinterpret_cast<AdjustSampleClockRelativeDelayPtr>(shared_library_.get_function_pointer("niScope_AdjustSampleClockRelativeDelay"));
-  function_pointers_.AutoSetup = reinterpret_cast<AutoSetupPtr>(shared_library_.get_function_pointer("niScope_AutoSetup"));
-  function_pointers_.CableSenseSignalStart = reinterpret_cast<CableSenseSignalStartPtr>(shared_library_.get_function_pointer("niScope_CableSenseSignalStart"));
-  function_pointers_.CableSenseSignalStop = reinterpret_cast<CableSenseSignalStopPtr>(shared_library_.get_function_pointer("niScope_CableSenseSignalStop"));
-  function_pointers_.CalFetchDate = reinterpret_cast<CalFetchDatePtr>(shared_library_.get_function_pointer("niScope_CalFetchDate"));
-  function_pointers_.CalFetchTemperature = reinterpret_cast<CalFetchTemperaturePtr>(shared_library_.get_function_pointer("niScope_CalFetchTemperature"));
-  function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(shared_library_.get_function_pointer("niScope_CalSelfCalibrate"));
-  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niScope_CheckAttributeViBoolean"));
-  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niScope_CheckAttributeViInt32"));
-  function_pointers_.CheckAttributeViInt64 = reinterpret_cast<CheckAttributeViInt64Ptr>(shared_library_.get_function_pointer("niScope_CheckAttributeViInt64"));
-  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_.get_function_pointer("niScope_CheckAttributeViReal64"));
-  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_.get_function_pointer("niScope_CheckAttributeViSession"));
-  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niScope_CheckAttributeViString"));
-  function_pointers_.ClearWaveformMeasurementStats = reinterpret_cast<ClearWaveformMeasurementStatsPtr>(shared_library_.get_function_pointer("niScope_ClearWaveformMeasurementStats"));
-  function_pointers_.ClearWaveformProcessing = reinterpret_cast<ClearWaveformProcessingPtr>(shared_library_.get_function_pointer("niScope_ClearWaveformProcessing"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niScope_close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niScope_Commit"));
-  function_pointers_.ConfigureAcquisition = reinterpret_cast<ConfigureAcquisitionPtr>(shared_library_.get_function_pointer("niScope_ConfigureAcquisition"));
-  function_pointers_.ConfigureChanCharacteristics = reinterpret_cast<ConfigureChanCharacteristicsPtr>(shared_library_.get_function_pointer("niScope_ConfigureChanCharacteristics"));
-  function_pointers_.ConfigureClock = reinterpret_cast<ConfigureClockPtr>(shared_library_.get_function_pointer("niScope_ConfigureClock"));
-  function_pointers_.ConfigureEqualizationFilterCoefficients = reinterpret_cast<ConfigureEqualizationFilterCoefficientsPtr>(shared_library_.get_function_pointer("niScope_ConfigureEqualizationFilterCoefficients"));
-  function_pointers_.ConfigureHorizontalTiming = reinterpret_cast<ConfigureHorizontalTimingPtr>(shared_library_.get_function_pointer("niScope_ConfigureHorizontalTiming"));
-  function_pointers_.ConfigureTriggerDigital = reinterpret_cast<ConfigureTriggerDigitalPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerDigital"));
-  function_pointers_.ConfigureTriggerEdge = reinterpret_cast<ConfigureTriggerEdgePtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerEdge"));
-  function_pointers_.ConfigureTriggerGlitch = reinterpret_cast<ConfigureTriggerGlitchPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerGlitch"));
-  function_pointers_.ConfigureTriggerHysteresis = reinterpret_cast<ConfigureTriggerHysteresisPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerHysteresis"));
-  function_pointers_.ConfigureTriggerImmediate = reinterpret_cast<ConfigureTriggerImmediatePtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerImmediate"));
-  function_pointers_.ConfigureTriggerRunt = reinterpret_cast<ConfigureTriggerRuntPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerRunt"));
-  function_pointers_.ConfigureTriggerSoftware = reinterpret_cast<ConfigureTriggerSoftwarePtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerSoftware"));
-  function_pointers_.ConfigureTriggerVideo = reinterpret_cast<ConfigureTriggerVideoPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerVideo"));
-  function_pointers_.ConfigureTriggerWidth = reinterpret_cast<ConfigureTriggerWidthPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerWidth"));
-  function_pointers_.ConfigureTriggerWindow = reinterpret_cast<ConfigureTriggerWindowPtr>(shared_library_.get_function_pointer("niScope_ConfigureTriggerWindow"));
-  function_pointers_.ConfigureVertical = reinterpret_cast<ConfigureVerticalPtr>(shared_library_.get_function_pointer("niScope_ConfigureVertical"));
-  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niScope_Disable"));
-  function_pointers_.ErrorHandler = reinterpret_cast<ErrorHandlerPtr>(shared_library_.get_function_pointer("niScope_errorHandler"));
-  function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niScope_ExportAttributeConfigurationBuffer"));
-  function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niScope_ExportAttributeConfigurationFile"));
-  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niScope_ExportSignal"));
-  function_pointers_.Fetch = reinterpret_cast<FetchPtr>(shared_library_.get_function_pointer("niScope_Fetch"));
-  function_pointers_.FetchArrayMeasurement = reinterpret_cast<FetchArrayMeasurementPtr>(shared_library_.get_function_pointer("niScope_FetchArrayMeasurement"));
-  function_pointers_.FetchBinary16 = reinterpret_cast<FetchBinary16Ptr>(shared_library_.get_function_pointer("niScope_FetchBinary16"));
-  function_pointers_.FetchBinary32 = reinterpret_cast<FetchBinary32Ptr>(shared_library_.get_function_pointer("niScope_FetchBinary32"));
-  function_pointers_.FetchBinary8 = reinterpret_cast<FetchBinary8Ptr>(shared_library_.get_function_pointer("niScope_FetchBinary8"));
-  function_pointers_.FetchComplex = reinterpret_cast<FetchComplexPtr>(shared_library_.get_function_pointer("niScope_FetchComplex"));
-  function_pointers_.FetchComplexBinary16 = reinterpret_cast<FetchComplexBinary16Ptr>(shared_library_.get_function_pointer("niScope_FetchComplexBinary16"));
-  function_pointers_.FetchMeasurement = reinterpret_cast<FetchMeasurementPtr>(shared_library_.get_function_pointer("niScope_FetchMeasurement"));
-  function_pointers_.FetchMeasurementStats = reinterpret_cast<FetchMeasurementStatsPtr>(shared_library_.get_function_pointer("niScope_FetchMeasurementStats"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niScope_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niScope_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niScope_GetAttributeViInt64"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niScope_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niScope_GetAttributeViSession"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niScope_GetAttributeViString"));
-  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niScope_GetChannelName"));
-  function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_.get_function_pointer("niScope_GetChannelNameFromString"));
-  function_pointers_.GetEqualizationFilterCoefficients = reinterpret_cast<GetEqualizationFilterCoefficientsPtr>(shared_library_.get_function_pointer("niScope_GetEqualizationFilterCoefficients"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niScope_GetError"));
-  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_.get_function_pointer("niScope_GetErrorMessage"));
-  function_pointers_.GetFrequencyResponse = reinterpret_cast<GetFrequencyResponsePtr>(shared_library_.get_function_pointer("niScope_GetFrequencyResponse"));
-  function_pointers_.GetNormalizationCoefficients = reinterpret_cast<GetNormalizationCoefficientsPtr>(shared_library_.get_function_pointer("niScope_GetNormalizationCoefficients"));
-  function_pointers_.GetScalingCoefficients = reinterpret_cast<GetScalingCoefficientsPtr>(shared_library_.get_function_pointer("niScope_GetScalingCoefficients"));
-  function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_.get_function_pointer("niScope_GetStreamEndpointHandle"));
-  function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niScope_ImportAttributeConfigurationBuffer"));
-  function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niScope_ImportAttributeConfigurationFile"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niScope_init"));
-  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niScope_InitWithOptions"));
-  function_pointers_.InitiateAcquisition = reinterpret_cast<InitiateAcquisitionPtr>(shared_library_.get_function_pointer("niScope_InitiateAcquisition"));
-  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niScope_LockSession"));
-  function_pointers_.ProbeCompensationSignalStart = reinterpret_cast<ProbeCompensationSignalStartPtr>(shared_library_.get_function_pointer("niScope_ProbeCompensationSignalStart"));
-  function_pointers_.ProbeCompensationSignalStop = reinterpret_cast<ProbeCompensationSignalStopPtr>(shared_library_.get_function_pointer("niScope_ProbeCompensationSignalStop"));
-  function_pointers_.Read = reinterpret_cast<ReadPtr>(shared_library_.get_function_pointer("niScope_Read"));
-  function_pointers_.ReadMeasurement = reinterpret_cast<ReadMeasurementPtr>(shared_library_.get_function_pointer("niScope_ReadMeasurement"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niScope_reset"));
-  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niScope_ResetDevice"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niScope_revision_query"));
-  function_pointers_.SampleMode = reinterpret_cast<SampleModePtr>(shared_library_.get_function_pointer("niScope_SampleMode"));
-  function_pointers_.SampleRate = reinterpret_cast<SampleRatePtr>(shared_library_.get_function_pointer("niScope_SampleRate"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niScope_self_test"));
-  function_pointers_.SendSoftwareTriggerEdge = reinterpret_cast<SendSoftwareTriggerEdgePtr>(shared_library_.get_function_pointer("niScope_SendSoftwareTriggerEdge"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niScope_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niScope_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niScope_SetAttributeViInt64"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niScope_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niScope_SetAttributeViSession"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niScope_SetAttributeViString"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niScope_UnlockSession"));
-  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niScope_SetRuntimeEnvironment"));
+  function_pointers_.Abort = reinterpret_cast<AbortPtr>(p_shared_library_->get_function_pointer("niScope_Abort"));
+  function_pointers_.AcquisitionStatus = reinterpret_cast<AcquisitionStatusPtr>(p_shared_library_->get_function_pointer("niScope_AcquisitionStatus"));
+  function_pointers_.ActualMeasWfmSize = reinterpret_cast<ActualMeasWfmSizePtr>(p_shared_library_->get_function_pointer("niScope_ActualMeasWfmSize"));
+  function_pointers_.ActualNumWfms = reinterpret_cast<ActualNumWfmsPtr>(p_shared_library_->get_function_pointer("niScope_ActualNumWfms"));
+  function_pointers_.ActualRecordLength = reinterpret_cast<ActualRecordLengthPtr>(p_shared_library_->get_function_pointer("niScope_ActualRecordLength"));
+  function_pointers_.AddWaveformProcessing = reinterpret_cast<AddWaveformProcessingPtr>(p_shared_library_->get_function_pointer("niScope_AddWaveformProcessing"));
+  function_pointers_.AdjustSampleClockRelativeDelay = reinterpret_cast<AdjustSampleClockRelativeDelayPtr>(p_shared_library_->get_function_pointer("niScope_AdjustSampleClockRelativeDelay"));
+  function_pointers_.AutoSetup = reinterpret_cast<AutoSetupPtr>(p_shared_library_->get_function_pointer("niScope_AutoSetup"));
+  function_pointers_.CableSenseSignalStart = reinterpret_cast<CableSenseSignalStartPtr>(p_shared_library_->get_function_pointer("niScope_CableSenseSignalStart"));
+  function_pointers_.CableSenseSignalStop = reinterpret_cast<CableSenseSignalStopPtr>(p_shared_library_->get_function_pointer("niScope_CableSenseSignalStop"));
+  function_pointers_.CalFetchDate = reinterpret_cast<CalFetchDatePtr>(p_shared_library_->get_function_pointer("niScope_CalFetchDate"));
+  function_pointers_.CalFetchTemperature = reinterpret_cast<CalFetchTemperaturePtr>(p_shared_library_->get_function_pointer("niScope_CalFetchTemperature"));
+  function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(p_shared_library_->get_function_pointer("niScope_CalSelfCalibrate"));
+  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(p_shared_library_->get_function_pointer("niScope_CheckAttributeViBoolean"));
+  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(p_shared_library_->get_function_pointer("niScope_CheckAttributeViInt32"));
+  function_pointers_.CheckAttributeViInt64 = reinterpret_cast<CheckAttributeViInt64Ptr>(p_shared_library_->get_function_pointer("niScope_CheckAttributeViInt64"));
+  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(p_shared_library_->get_function_pointer("niScope_CheckAttributeViReal64"));
+  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(p_shared_library_->get_function_pointer("niScope_CheckAttributeViSession"));
+  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(p_shared_library_->get_function_pointer("niScope_CheckAttributeViString"));
+  function_pointers_.ClearWaveformMeasurementStats = reinterpret_cast<ClearWaveformMeasurementStatsPtr>(p_shared_library_->get_function_pointer("niScope_ClearWaveformMeasurementStats"));
+  function_pointers_.ClearWaveformProcessing = reinterpret_cast<ClearWaveformProcessingPtr>(p_shared_library_->get_function_pointer("niScope_ClearWaveformProcessing"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(p_shared_library_->get_function_pointer("niScope_close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(p_shared_library_->get_function_pointer("niScope_Commit"));
+  function_pointers_.ConfigureAcquisition = reinterpret_cast<ConfigureAcquisitionPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureAcquisition"));
+  function_pointers_.ConfigureChanCharacteristics = reinterpret_cast<ConfigureChanCharacteristicsPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureChanCharacteristics"));
+  function_pointers_.ConfigureClock = reinterpret_cast<ConfigureClockPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureClock"));
+  function_pointers_.ConfigureEqualizationFilterCoefficients = reinterpret_cast<ConfigureEqualizationFilterCoefficientsPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureEqualizationFilterCoefficients"));
+  function_pointers_.ConfigureHorizontalTiming = reinterpret_cast<ConfigureHorizontalTimingPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureHorizontalTiming"));
+  function_pointers_.ConfigureTriggerDigital = reinterpret_cast<ConfigureTriggerDigitalPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerDigital"));
+  function_pointers_.ConfigureTriggerEdge = reinterpret_cast<ConfigureTriggerEdgePtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerEdge"));
+  function_pointers_.ConfigureTriggerGlitch = reinterpret_cast<ConfigureTriggerGlitchPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerGlitch"));
+  function_pointers_.ConfigureTriggerHysteresis = reinterpret_cast<ConfigureTriggerHysteresisPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerHysteresis"));
+  function_pointers_.ConfigureTriggerImmediate = reinterpret_cast<ConfigureTriggerImmediatePtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerImmediate"));
+  function_pointers_.ConfigureTriggerRunt = reinterpret_cast<ConfigureTriggerRuntPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerRunt"));
+  function_pointers_.ConfigureTriggerSoftware = reinterpret_cast<ConfigureTriggerSoftwarePtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerSoftware"));
+  function_pointers_.ConfigureTriggerVideo = reinterpret_cast<ConfigureTriggerVideoPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerVideo"));
+  function_pointers_.ConfigureTriggerWidth = reinterpret_cast<ConfigureTriggerWidthPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerWidth"));
+  function_pointers_.ConfigureTriggerWindow = reinterpret_cast<ConfigureTriggerWindowPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureTriggerWindow"));
+  function_pointers_.ConfigureVertical = reinterpret_cast<ConfigureVerticalPtr>(p_shared_library_->get_function_pointer("niScope_ConfigureVertical"));
+  function_pointers_.Disable = reinterpret_cast<DisablePtr>(p_shared_library_->get_function_pointer("niScope_Disable"));
+  function_pointers_.ErrorHandler = reinterpret_cast<ErrorHandlerPtr>(p_shared_library_->get_function_pointer("niScope_errorHandler"));
+  function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(p_shared_library_->get_function_pointer("niScope_ExportAttributeConfigurationBuffer"));
+  function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(p_shared_library_->get_function_pointer("niScope_ExportAttributeConfigurationFile"));
+  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(p_shared_library_->get_function_pointer("niScope_ExportSignal"));
+  function_pointers_.Fetch = reinterpret_cast<FetchPtr>(p_shared_library_->get_function_pointer("niScope_Fetch"));
+  function_pointers_.FetchArrayMeasurement = reinterpret_cast<FetchArrayMeasurementPtr>(p_shared_library_->get_function_pointer("niScope_FetchArrayMeasurement"));
+  function_pointers_.FetchBinary16 = reinterpret_cast<FetchBinary16Ptr>(p_shared_library_->get_function_pointer("niScope_FetchBinary16"));
+  function_pointers_.FetchBinary32 = reinterpret_cast<FetchBinary32Ptr>(p_shared_library_->get_function_pointer("niScope_FetchBinary32"));
+  function_pointers_.FetchBinary8 = reinterpret_cast<FetchBinary8Ptr>(p_shared_library_->get_function_pointer("niScope_FetchBinary8"));
+  function_pointers_.FetchComplex = reinterpret_cast<FetchComplexPtr>(p_shared_library_->get_function_pointer("niScope_FetchComplex"));
+  function_pointers_.FetchComplexBinary16 = reinterpret_cast<FetchComplexBinary16Ptr>(p_shared_library_->get_function_pointer("niScope_FetchComplexBinary16"));
+  function_pointers_.FetchMeasurement = reinterpret_cast<FetchMeasurementPtr>(p_shared_library_->get_function_pointer("niScope_FetchMeasurement"));
+  function_pointers_.FetchMeasurementStats = reinterpret_cast<FetchMeasurementStatsPtr>(p_shared_library_->get_function_pointer("niScope_FetchMeasurementStats"));
+  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(p_shared_library_->get_function_pointer("niScope_GetAttributeViBoolean"));
+  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(p_shared_library_->get_function_pointer("niScope_GetAttributeViInt32"));
+  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(p_shared_library_->get_function_pointer("niScope_GetAttributeViInt64"));
+  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(p_shared_library_->get_function_pointer("niScope_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(p_shared_library_->get_function_pointer("niScope_GetAttributeViSession"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(p_shared_library_->get_function_pointer("niScope_GetAttributeViString"));
+  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(p_shared_library_->get_function_pointer("niScope_GetChannelName"));
+  function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(p_shared_library_->get_function_pointer("niScope_GetChannelNameFromString"));
+  function_pointers_.GetEqualizationFilterCoefficients = reinterpret_cast<GetEqualizationFilterCoefficientsPtr>(p_shared_library_->get_function_pointer("niScope_GetEqualizationFilterCoefficients"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(p_shared_library_->get_function_pointer("niScope_GetError"));
+  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(p_shared_library_->get_function_pointer("niScope_GetErrorMessage"));
+  function_pointers_.GetFrequencyResponse = reinterpret_cast<GetFrequencyResponsePtr>(p_shared_library_->get_function_pointer("niScope_GetFrequencyResponse"));
+  function_pointers_.GetNormalizationCoefficients = reinterpret_cast<GetNormalizationCoefficientsPtr>(p_shared_library_->get_function_pointer("niScope_GetNormalizationCoefficients"));
+  function_pointers_.GetScalingCoefficients = reinterpret_cast<GetScalingCoefficientsPtr>(p_shared_library_->get_function_pointer("niScope_GetScalingCoefficients"));
+  function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(p_shared_library_->get_function_pointer("niScope_GetStreamEndpointHandle"));
+  function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(p_shared_library_->get_function_pointer("niScope_ImportAttributeConfigurationBuffer"));
+  function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(p_shared_library_->get_function_pointer("niScope_ImportAttributeConfigurationFile"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(p_shared_library_->get_function_pointer("niScope_init"));
+  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(p_shared_library_->get_function_pointer("niScope_InitWithOptions"));
+  function_pointers_.InitiateAcquisition = reinterpret_cast<InitiateAcquisitionPtr>(p_shared_library_->get_function_pointer("niScope_InitiateAcquisition"));
+  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(p_shared_library_->get_function_pointer("niScope_LockSession"));
+  function_pointers_.ProbeCompensationSignalStart = reinterpret_cast<ProbeCompensationSignalStartPtr>(p_shared_library_->get_function_pointer("niScope_ProbeCompensationSignalStart"));
+  function_pointers_.ProbeCompensationSignalStop = reinterpret_cast<ProbeCompensationSignalStopPtr>(p_shared_library_->get_function_pointer("niScope_ProbeCompensationSignalStop"));
+  function_pointers_.Read = reinterpret_cast<ReadPtr>(p_shared_library_->get_function_pointer("niScope_Read"));
+  function_pointers_.ReadMeasurement = reinterpret_cast<ReadMeasurementPtr>(p_shared_library_->get_function_pointer("niScope_ReadMeasurement"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(p_shared_library_->get_function_pointer("niScope_reset"));
+  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(p_shared_library_->get_function_pointer("niScope_ResetDevice"));
+  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(p_shared_library_->get_function_pointer("niScope_revision_query"));
+  function_pointers_.SampleMode = reinterpret_cast<SampleModePtr>(p_shared_library_->get_function_pointer("niScope_SampleMode"));
+  function_pointers_.SampleRate = reinterpret_cast<SampleRatePtr>(p_shared_library_->get_function_pointer("niScope_SampleRate"));
+  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(p_shared_library_->get_function_pointer("niScope_self_test"));
+  function_pointers_.SendSoftwareTriggerEdge = reinterpret_cast<SendSoftwareTriggerEdgePtr>(p_shared_library_->get_function_pointer("niScope_SendSoftwareTriggerEdge"));
+  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(p_shared_library_->get_function_pointer("niScope_SetAttributeViBoolean"));
+  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(p_shared_library_->get_function_pointer("niScope_SetAttributeViInt32"));
+  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(p_shared_library_->get_function_pointer("niScope_SetAttributeViInt64"));
+  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(p_shared_library_->get_function_pointer("niScope_SetAttributeViReal64"));
+  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(p_shared_library_->get_function_pointer("niScope_SetAttributeViSession"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(p_shared_library_->get_function_pointer("niScope_SetAttributeViString"));
+  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(p_shared_library_->get_function_pointer("niScope_UnlockSession"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(p_shared_library_->get_function_pointer("niScope_SetRuntimeEnvironment"));
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
@@ -128,7 +133,7 @@ NiScopeLibrary::~NiScopeLibrary()
 
 ::grpc::Status NiScopeLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return p_shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

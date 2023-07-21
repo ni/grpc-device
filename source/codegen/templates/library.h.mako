@@ -8,6 +8,9 @@ service_class_prefix = config["service_class_prefix"]
 namespace_prefix = config["namespace_component"] + "_grpc"
 include_guard_name = service_helpers.get_include_guard_name(config, "_LIBRARY_H")
 c_function_prefix = config["c_function_prefix"]
+
+class_name = f"{service_class_prefix}Library"
+
 set_runtime_environment_supported = 'SetRuntimeEnvironment' in service_helpers.filter_api_functions(functions, only_mockable_functions=False)
 %>\
 //---------------------------------------------------------------------
@@ -22,12 +25,15 @@ set_runtime_environment_supported = 'SetRuntimeEnvironment' in service_helpers.f
 
 #include <server/shared_library.h>
 
+#include <memory>
+
 namespace ${config["namespace_component"]}_grpc {
 
-class ${service_class_prefix}Library : public ${namespace_prefix}::${service_class_prefix}LibraryInterface {
+class ${class_name} : public ${namespace_prefix}::${class_name}Interface {
  public:
-  ${service_class_prefix}Library();
-  virtual ~${service_class_prefix}Library();
+  ${class_name}();
+  ${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  virtual ~${class_name}();
 
   ::grpc::Status check_function_exists(std::string functionName);
 % for method_name in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
@@ -64,7 +70,7 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
 % endfor
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
   FunctionPointers function_pointers_;
 % if set_runtime_environment_supported:
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
