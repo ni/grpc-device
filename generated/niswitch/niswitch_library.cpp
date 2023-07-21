@@ -4,6 +4,7 @@
 // Service implementation for the NI-SWITCH Metadata
 //---------------------------------------------------------------------
 #include "niswitch_library.h"
+#include "version.h"
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niswitch_64.dll";
@@ -84,6 +85,10 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.WaitForDebounce = reinterpret_cast<WaitForDebouncePtr>(shared_library_.get_function_pointer("niSwitch_WaitForDebounce"));
   function_pointers_.WaitForScanComplete = reinterpret_cast<WaitForScanCompletePtr>(shared_library_.get_function_pointer("niSwitch_WaitForScanComplete"));
   function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niSwitch_SetRuntimeEnvironment"));
+
+  if (function_pointers_.SetRuntimeEnvironment) {
+    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+  }
 }
 
 NiSwitchLibrary::~NiSwitchLibrary()
