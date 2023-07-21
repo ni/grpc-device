@@ -24,7 +24,6 @@ set_runtime_environment_supported = 'SetRuntimeEnvironment' in service_helpers.f
 
 namespace ${config["namespace_component"]}_grpc {
 
-template<class SharedLibraryT = nidevice_grpc::SharedLibrary>
 class ${service_class_prefix}Library : public ${namespace_prefix}::${service_class_prefix}LibraryInterface {
  public:
   ${service_class_prefix}Library();
@@ -65,7 +64,7 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
 % endfor
   } FunctionLoadStatus;
 
-  SharedLibraryT shared_library_;
+  nidevice_grpc::SharedLibrary shared_library_;
   FunctionPointers function_pointers_;
 % if set_runtime_environment_supported:
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
