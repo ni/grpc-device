@@ -1198,8 +1198,8 @@ functions = {
         ],
         'returns': 'int32'
     },
-	'GetSFPSessionAccessEnabled': {
-		'parameters': [
+    'GetSFPSessionAccessEnabled': {
+	'parameters': [
             {
                 'direction': 'in',
                 'name': 'selectorString',
@@ -1210,7 +1210,7 @@ functions = {
                 'name': 'isSFPSessionAccessEnabled',
                 'type': 'int32'
             }
-		],
-		'returns': 'int32'
-	}
+	],
+	'returns': 'int32'
+    }
 }
