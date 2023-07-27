@@ -16,7 +16,7 @@ typedef void* LibraryHandle;
 
 class SharedLibraryInterface {
  public:
-  virtual ~SharedLibraryInterface();
+  virtual ~SharedLibraryInterface() = default;
 
   // not included because we have to templatize the class in order to make this virtual
   // and then can't specify a pointer to SharedLibraryInterface for our Library classes (because we would need a template specifier)

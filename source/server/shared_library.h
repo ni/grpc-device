@@ -38,7 +38,7 @@ class SharedLibrary : public SharedLibraryInterface {
   SharedLibrary();
   SharedLibrary(const char* library_name);
   SharedLibrary(const SharedLibrary& other);
-  virtual ~SharedLibrary() override;
+  virtual ~SharedLibrary();
 
   void swap(SharedLibrary& other);
   bool is_loaded() const override;
