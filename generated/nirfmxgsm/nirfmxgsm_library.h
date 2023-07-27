@@ -8,7 +8,7 @@
 
 #include "nirfmxgsm_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxgsm_grpc {
 class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
  public:
   NiRFmxGSMLibrary();
-  NiRFmxGSMLibrary::NiRFmxGSMLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxGSMLibrary::NiRFmxGSMLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxGSMLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -378,7 +378,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

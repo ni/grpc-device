@@ -8,7 +8,7 @@
 
 #include "nirfmxinstr_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxinstr_grpc {
 class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface {
  public:
   NiRFmxInstrLibrary();
-  NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxInstrLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -306,7 +306,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

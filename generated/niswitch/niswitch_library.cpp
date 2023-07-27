@@ -4,6 +4,7 @@
 // Service implementation for the NI-SWITCH Metadata
 //---------------------------------------------------------------------
 #include "niswitch_library.h"
+#include <server/shared_library.h>
 #include "version.h"
 
 #include <memory>
@@ -18,7 +19,7 @@ namespace niswitch_grpc {
 
 NiSwitchLibrary::NiSwitchLibrary() : NiSwitchLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiSwitchLibrary::NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set(false)
+NiSwitchLibrary::NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set(false)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

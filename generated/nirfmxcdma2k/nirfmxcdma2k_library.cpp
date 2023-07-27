@@ -4,6 +4,7 @@
 // Service implementation for the NI-rfmxcdma2k Metadata
 //---------------------------------------------------------------------
 #include "nirfmxcdma2k_library.h"
+#include <server/shared_library.h>
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace nirfmxcdma2k_grpc {
 
 NiRFmxCDMA2kLibrary::NiRFmxCDMA2kLibrary() : NiRFmxCDMA2kLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiRFmxCDMA2kLibrary::NiRFmxCDMA2kLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiRFmxCDMA2kLibrary::NiRFmxCDMA2kLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

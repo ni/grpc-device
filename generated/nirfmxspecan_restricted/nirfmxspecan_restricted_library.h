@@ -8,7 +8,7 @@
 
 #include "nirfmxspecan_restricted_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxspecan_restricted_grpc {
 class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFmxSpecAnRestrictedLibraryInterface {
  public:
   NiRFmxSpecAnRestrictedLibrary();
-  NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxSpecAnRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -39,7 +39,7 @@ class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFm
     IQFetchDataOverrideBehaviorPtr IQFetchDataOverrideBehavior;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

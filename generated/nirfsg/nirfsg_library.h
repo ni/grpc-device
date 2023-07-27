@@ -8,7 +8,7 @@
 
 #include "nirfsg_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfsg_grpc {
 class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
  public:
   NiRFSGLibrary();
-  NiRFSGLibrary::NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFSGLibrary::NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFSGLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -360,7 +360,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     WriteScriptPtr WriteScript;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

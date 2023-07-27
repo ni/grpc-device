@@ -8,7 +8,7 @@
 
 #include "nidigitalpattern_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nidigitalpattern_grpc {
 class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface {
  public:
   NiDigitalLibrary();
-  NiDigitalLibrary::NiDigitalLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiDigitalLibrary::NiDigitalLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiDigitalLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -427,7 +427,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

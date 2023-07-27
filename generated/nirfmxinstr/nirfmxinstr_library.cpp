@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXINSTR Metadata
 //---------------------------------------------------------------------
 #include "nirfmxinstr_library.h"
+#include <server/shared_library.h>
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace nirfmxinstr_grpc {
 
 NiRFmxInstrLibrary::NiRFmxInstrLibrary() : NiRFmxInstrLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

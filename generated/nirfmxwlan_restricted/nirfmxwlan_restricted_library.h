@@ -8,7 +8,7 @@
 
 #include "nirfmxwlan_restricted_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxwlan_restricted_grpc {
 class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLANRestrictedLibraryInterface {
  public:
   NiRFmxWLANRestrictedLibrary();
-  NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxWLANRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -42,7 +42,7 @@ class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLA
     OFDMModAccNoiseCalibratePtr OFDMModAccNoiseCalibrate;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

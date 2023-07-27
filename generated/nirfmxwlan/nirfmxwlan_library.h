@@ -8,7 +8,7 @@
 
 #include "nirfmxwlan_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxwlan_grpc {
 class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
  public:
   NiRFmxWLANLibrary();
-  NiRFmxWLANLibrary::NiRFmxWLANLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxWLANLibrary::NiRFmxWLANLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxWLANLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -729,7 +729,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

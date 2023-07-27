@@ -8,7 +8,7 @@
 
 #include "nirfmxlte_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxlte_grpc {
 class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
  public:
   NiRFmxLTELibrary();
-  NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxLTELibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -885,7 +885,7 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

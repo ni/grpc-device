@@ -8,7 +8,7 @@
 
 #include "nirfmxcdma2k_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxcdma2k_grpc {
 class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterface {
  public:
   NiRFmxCDMA2kLibrary();
-  NiRFmxCDMA2kLibrary::NiRFmxCDMA2kLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxCDMA2kLibrary::NiRFmxCDMA2kLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxCDMA2kLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -510,7 +510,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

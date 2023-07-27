@@ -8,7 +8,7 @@
 
 #include "nidcpower_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nidcpower_grpc {
 class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
  public:
   NiDCPowerLibrary();
-  NiDCPowerLibrary::NiDCPowerLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiDCPowerLibrary::NiDCPowerLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiDCPowerLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -475,7 +475,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXSPECAN-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "nirfmxspecan_restricted_library.h"
+#include <server/shared_library.h>
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace nirfmxspecan_restricted_grpc {
 
 NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary() : NiRFmxSpecAnRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

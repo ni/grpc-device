@@ -23,7 +23,7 @@ set_runtime_environment_supported = 'SetRuntimeEnvironment' in service_helpers.f
 
 #include "${config["module_name"]}_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -32,7 +32,7 @@ namespace ${config["namespace_component"]}_grpc {
 class ${class_name} : public ${namespace_prefix}::${class_name}Interface {
  public:
   ${class_name}();
-  ${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  ${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~${class_name}();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -70,7 +70,7 @@ class ${class_name} : public ${namespace_prefix}::${class_name}Interface {
 % endfor
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 % if set_runtime_environment_supported:
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment

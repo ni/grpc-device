@@ -8,7 +8,7 @@
 
 #include "nidmm_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nidmm_grpc {
 class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
  public:
   NiDmmLibrary();
-  NiDmmLibrary::NiDmmLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiDmmLibrary::NiDmmLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiDmmLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -298,7 +298,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
 };

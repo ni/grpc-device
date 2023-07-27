@@ -8,7 +8,7 @@
 
 #include "nirfsa_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfsa_grpc {
 class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
  public:
   NiRFSALibrary();
-  NiRFSALibrary::NiRFSALibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFSALibrary::NiRFSALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFSALibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -342,7 +342,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     UnlockSessionPtr UnlockSession;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

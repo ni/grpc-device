@@ -4,6 +4,7 @@
 // Service implementation for the NI-Digital Pattern Driver Metadata
 //---------------------------------------------------------------------
 #include "nidigitalpattern_library.h"
+#include <server/shared_library.h>
 #include "version.h"
 
 #include <memory>
@@ -18,7 +19,7 @@ namespace nidigitalpattern_grpc {
 
 NiDigitalLibrary::NiDigitalLibrary() : NiDigitalLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiDigitalLibrary::NiDigitalLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set(false)
+NiDigitalLibrary::NiDigitalLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set(false)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXLTE Metadata
 //---------------------------------------------------------------------
 #include "nirfmxlte_library.h"
+#include <server/shared_library.h>
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace nirfmxlte_grpc {
 
 NiRFmxLTELibrary::NiRFmxLTELibrary() : NiRFmxLTELibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

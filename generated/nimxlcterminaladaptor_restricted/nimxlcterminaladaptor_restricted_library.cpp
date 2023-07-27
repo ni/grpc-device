@@ -4,6 +4,7 @@
 // Service implementation for the NI-MXLCTERMINALADAPTOR-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "nimxlcterminaladaptor_restricted_library.h"
+#include <server/shared_library.h>
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
 
 NimxlcTerminalAdaptorRestrictedLibrary::NimxlcTerminalAdaptorRestrictedLibrary() : NimxlcTerminalAdaptorRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NimxlcTerminalAdaptorRestrictedLibrary::NimxlcTerminalAdaptorRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NimxlcTerminalAdaptorRestrictedLibrary::NimxlcTerminalAdaptorRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

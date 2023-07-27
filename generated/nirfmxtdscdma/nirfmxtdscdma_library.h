@@ -8,7 +8,7 @@
 
 #include "nirfmxtdscdma_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxtdscdma_grpc {
 class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInterface {
  public:
   NiRFmxTDSCDMALibrary();
-  NiRFmxTDSCDMALibrary::NiRFmxTDSCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxTDSCDMALibrary::NiRFmxTDSCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxTDSCDMALibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -540,7 +540,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 

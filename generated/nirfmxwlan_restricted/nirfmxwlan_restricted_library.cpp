@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXWLAN-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "nirfmxwlan_restricted_library.h"
+#include <server/shared_library.h>
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace nirfmxwlan_restricted_grpc {
 
 NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary() : NiRFmxWLANRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

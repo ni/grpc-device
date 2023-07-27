@@ -28,6 +28,7 @@ if set_runtime_environment_supported:
 // Service implementation for the ${config["driver_name"]} Metadata
 //---------------------------------------------------------------------
 #include "${module_name}_library.h"
+#include <server/shared_library.h>
 % if set_runtime_environment_supported:
 #include "version.h"
 % endif
@@ -44,7 +45,7 @@ namespace ${config["namespace_component"]}_grpc {
 
 ${class_name}::${class_name}() : ${class_name}(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : ${intialization_list}
+${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : ${intialization_list}
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

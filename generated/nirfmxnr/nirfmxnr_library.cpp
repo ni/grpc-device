@@ -4,6 +4,7 @@
 // Service implementation for the NI-RFMXNR Metadata
 //---------------------------------------------------------------------
 #include "nirfmxnr_library.h"
+#include <server/shared_library.h>
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace nirfmxnr_grpc {
 
 NiRFmxNRLibrary::NiRFmxNRLibrary() : NiRFmxNRLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiRFmxNRLibrary::NiRFmxNRLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiRFmxNRLibrary::NiRFmxNRLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();

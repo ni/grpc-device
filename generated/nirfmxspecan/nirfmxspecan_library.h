@@ -8,7 +8,7 @@
 
 #include "nirfmxspecan_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
 
 #include <memory>
 
@@ -17,7 +17,7 @@ namespace nirfmxspecan_grpc {
 class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterface {
  public:
   NiRFmxSpecAnLibrary();
-  NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLibrary>);
+  NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxSpecAnLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -1296,7 +1296,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibrary> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 };
 
