@@ -4,14 +4,10 @@
 // Service implementation for the NI-SWITCH Metadata
 //---------------------------------------------------------------------
 #include "niswitch_library.h"
-<<<<<<< HEAD
 #include <server/shared_library.h>
 #include "version.h"
 
 #include <memory>
-=======
-#include "version.h"
->>>>>>> b1b7fba232c3aaeeeffa0e301c774b3540adb863
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niswitch_64.dll";
@@ -32,7 +28,6 @@ NiSwitchLibrary::NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInt
   if (!loaded) {
     return;
   }
-<<<<<<< HEAD
   function_pointers_.AbortScan = reinterpret_cast<AbortScanPtr>(p_shared_library_->get_function_pointer("niSwitch_AbortScan"));
   function_pointers_.CanConnect = reinterpret_cast<CanConnectPtr>(p_shared_library_->get_function_pointer("niSwitch_CanConnect"));
   function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(p_shared_library_->get_function_pointer("niSwitch_CheckAttributeViBoolean"));
@@ -100,74 +95,6 @@ NiSwitchLibrary::NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInt
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
     this->runtime_environment_set = true;
-=======
-  function_pointers_.AbortScan = reinterpret_cast<AbortScanPtr>(shared_library_.get_function_pointer("niSwitch_AbortScan"));
-  function_pointers_.CanConnect = reinterpret_cast<CanConnectPtr>(shared_library_.get_function_pointer("niSwitch_CanConnect"));
-  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViBoolean"));
-  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViInt32"));
-  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViReal64"));
-  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViSession"));
-  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViString"));
-  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niSwitch_ClearError"));
-  function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niSwitch_ClearInterchangeWarnings"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niSwitch_close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niSwitch_Commit"));
-  function_pointers_.ConfigureScanList = reinterpret_cast<ConfigureScanListPtr>(shared_library_.get_function_pointer("niSwitch_ConfigureScanList"));
-  function_pointers_.ConfigureScanTrigger = reinterpret_cast<ConfigureScanTriggerPtr>(shared_library_.get_function_pointer("niSwitch_ConfigureScanTrigger"));
-  function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_.get_function_pointer("niSwitch_Connect"));
-  function_pointers_.ConnectMultiple = reinterpret_cast<ConnectMultiplePtr>(shared_library_.get_function_pointer("niSwitch_ConnectMultiple"));
-  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niSwitch_Disable"));
-  function_pointers_.Disconnect = reinterpret_cast<DisconnectPtr>(shared_library_.get_function_pointer("niSwitch_Disconnect"));
-  function_pointers_.DisconnectAll = reinterpret_cast<DisconnectAllPtr>(shared_library_.get_function_pointer("niSwitch_DisconnectAll"));
-  function_pointers_.DisconnectMultiple = reinterpret_cast<DisconnectMultiplePtr>(shared_library_.get_function_pointer("niSwitch_DisconnectMultiple"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niSwitch_error_message"));
-  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_.get_function_pointer("niSwitch_error_query"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViSession"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViString"));
-  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niSwitch_GetChannelName"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niSwitch_GetError"));
-  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_.get_function_pointer("niSwitch_GetNextCoercionRecord"));
-  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_.get_function_pointer("niSwitch_GetNextInterchangeWarning"));
-  function_pointers_.GetPath = reinterpret_cast<GetPathPtr>(shared_library_.get_function_pointer("niSwitch_GetPath"));
-  function_pointers_.GetRelayCount = reinterpret_cast<GetRelayCountPtr>(shared_library_.get_function_pointer("niSwitch_GetRelayCount"));
-  function_pointers_.GetRelayName = reinterpret_cast<GetRelayNamePtr>(shared_library_.get_function_pointer("niSwitch_GetRelayName"));
-  function_pointers_.GetRelayPosition = reinterpret_cast<GetRelayPositionPtr>(shared_library_.get_function_pointer("niSwitch_GetRelayPosition"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niSwitch_init"));
-  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niSwitch_InitWithOptions"));
-  function_pointers_.InitWithTopology = reinterpret_cast<InitWithTopologyPtr>(shared_library_.get_function_pointer("niSwitch_InitWithTopology"));
-  function_pointers_.InitiateScan = reinterpret_cast<InitiateScanPtr>(shared_library_.get_function_pointer("niSwitch_InitiateScan"));
-  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niSwitch_InvalidateAllAttributes"));
-  function_pointers_.IsDebounced = reinterpret_cast<IsDebouncedPtr>(shared_library_.get_function_pointer("niSwitch_IsDebounced"));
-  function_pointers_.IsScanning = reinterpret_cast<IsScanningPtr>(shared_library_.get_function_pointer("niSwitch_IsScanning"));
-  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niSwitch_LockSession"));
-  function_pointers_.RelayControl = reinterpret_cast<RelayControlPtr>(shared_library_.get_function_pointer("niSwitch_RelayControl"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niSwitch_reset"));
-  function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_.get_function_pointer("niSwitch_ResetInterchangeCheck"));
-  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niSwitch_ResetWithDefaults"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niSwitch_revision_query"));
-  function_pointers_.RouteScanAdvancedOutput = reinterpret_cast<RouteScanAdvancedOutputPtr>(shared_library_.get_function_pointer("niSwitch_RouteScanAdvancedOutput"));
-  function_pointers_.RouteTriggerInput = reinterpret_cast<RouteTriggerInputPtr>(shared_library_.get_function_pointer("niSwitch_RouteTriggerInput"));
-  function_pointers_.Scan = reinterpret_cast<ScanPtr>(shared_library_.get_function_pointer("niSwitch_Scan"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niSwitch_self_test"));
-  function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(shared_library_.get_function_pointer("niSwitch_SendSoftwareTrigger"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViSession"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViString"));
-  function_pointers_.SetContinuousScan = reinterpret_cast<SetContinuousScanPtr>(shared_library_.get_function_pointer("niSwitch_SetContinuousScan"));
-  function_pointers_.SetPath = reinterpret_cast<SetPathPtr>(shared_library_.get_function_pointer("niSwitch_SetPath"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niSwitch_UnlockSession"));
-  function_pointers_.WaitForDebounce = reinterpret_cast<WaitForDebouncePtr>(shared_library_.get_function_pointer("niSwitch_WaitForDebounce"));
-  function_pointers_.WaitForScanComplete = reinterpret_cast<WaitForScanCompletePtr>(shared_library_.get_function_pointer("niSwitch_WaitForScanComplete"));
-  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niSwitch_SetRuntimeEnvironment"));
-
-  if (function_pointers_.SetRuntimeEnvironment) {
-    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
->>>>>>> b1b7fba232c3aaeeeffa0e301c774b3540adb863
   }
 }
 

@@ -4,14 +4,10 @@
 // Service implementation for the NI-DCPower Metadata
 //---------------------------------------------------------------------
 #include "nidcpower_library.h"
-<<<<<<< HEAD
 #include <server/shared_library.h>
 #include "version.h"
 
 #include <memory>
-=======
-#include "version.h"
->>>>>>> b1b7fba232c3aaeeeffa0e301c774b3540adb863
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nidcpower_64.dll";
@@ -32,7 +28,6 @@ NiDCPowerLibrary::NiDCPowerLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   if (!loaded) {
     return;
   }
-<<<<<<< HEAD
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(p_shared_library_->get_function_pointer("niDCPower_Abort"));
   function_pointers_.AbortWithChannels = reinterpret_cast<AbortWithChannelsPtr>(p_shared_library_->get_function_pointer("niDCPower_AbortWithChannels"));
   function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(p_shared_library_->get_function_pointer("niDCPower_CalSelfCalibrate"));
@@ -186,160 +181,6 @@ NiDCPowerLibrary::NiDCPowerLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
     this->runtime_environment_set = true;
-=======
-  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niDCPower_Abort"));
-  function_pointers_.AbortWithChannels = reinterpret_cast<AbortWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_AbortWithChannels"));
-  function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(shared_library_.get_function_pointer("niDCPower_CalSelfCalibrate"));
-  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niDCPower_ClearError"));
-  function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niDCPower_ClearInterchangeWarnings"));
-  function_pointers_.ClearLatchedOutputCutoffState = reinterpret_cast<ClearLatchedOutputCutoffStatePtr>(shared_library_.get_function_pointer("niDCPower_ClearLatchedOutputCutoffState"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niDCPower_close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niDCPower_Commit"));
-  function_pointers_.CommitWithChannels = reinterpret_cast<CommitWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CommitWithChannels"));
-  function_pointers_.ConfigureApertureTime = reinterpret_cast<ConfigureApertureTimePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureApertureTime"));
-  function_pointers_.ConfigureAutoZero = reinterpret_cast<ConfigureAutoZeroPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureAutoZero"));
-  function_pointers_.ConfigureCurrentLevel = reinterpret_cast<ConfigureCurrentLevelPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureCurrentLevel"));
-  function_pointers_.ConfigureCurrentLevelRange = reinterpret_cast<ConfigureCurrentLevelRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureCurrentLevelRange"));
-  function_pointers_.ConfigureCurrentLimit = reinterpret_cast<ConfigureCurrentLimitPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureCurrentLimit"));
-  function_pointers_.ConfigureCurrentLimitRange = reinterpret_cast<ConfigureCurrentLimitRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureCurrentLimitRange"));
-  function_pointers_.ConfigureDigitalEdgeMeasureTrigger = reinterpret_cast<ConfigureDigitalEdgeMeasureTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeMeasureTrigger"));
-  function_pointers_.ConfigureDigitalEdgeMeasureTriggerWithChannels = reinterpret_cast<ConfigureDigitalEdgeMeasureTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeMeasureTriggerWithChannels"));
-  function_pointers_.ConfigureDigitalEdgePulseTrigger = reinterpret_cast<ConfigureDigitalEdgePulseTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgePulseTrigger"));
-  function_pointers_.ConfigureDigitalEdgePulseTriggerWithChannels = reinterpret_cast<ConfigureDigitalEdgePulseTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgePulseTriggerWithChannels"));
-  function_pointers_.ConfigureDigitalEdgeSequenceAdvanceTrigger = reinterpret_cast<ConfigureDigitalEdgeSequenceAdvanceTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeSequenceAdvanceTrigger"));
-  function_pointers_.ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels = reinterpret_cast<ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels"));
-  function_pointers_.ConfigureDigitalEdgeShutdownTriggerWithChannels = reinterpret_cast<ConfigureDigitalEdgeShutdownTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeShutdownTriggerWithChannels"));
-  function_pointers_.ConfigureDigitalEdgeSourceTrigger = reinterpret_cast<ConfigureDigitalEdgeSourceTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeSourceTrigger"));
-  function_pointers_.ConfigureDigitalEdgeSourceTriggerWithChannels = reinterpret_cast<ConfigureDigitalEdgeSourceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeSourceTriggerWithChannels"));
-  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeStartTrigger"));
-  function_pointers_.ConfigureDigitalEdgeStartTriggerWithChannels = reinterpret_cast<ConfigureDigitalEdgeStartTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureDigitalEdgeStartTriggerWithChannels"));
-  function_pointers_.ConfigureLCRCustomCableCompensation = reinterpret_cast<ConfigureLCRCustomCableCompensationPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureLCRCustomCableCompensation"));
-  function_pointers_.ConfigureOutputEnabled = reinterpret_cast<ConfigureOutputEnabledPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputEnabled"));
-  function_pointers_.ConfigureOutputFunction = reinterpret_cast<ConfigureOutputFunctionPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputFunction"));
-  function_pointers_.ConfigureOutputResistance = reinterpret_cast<ConfigureOutputResistancePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputResistance"));
-  function_pointers_.ConfigureOvp = reinterpret_cast<ConfigureOvpPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOVP"));
-  function_pointers_.ConfigurePowerLineFrequency = reinterpret_cast<ConfigurePowerLineFrequencyPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePowerLineFrequency"));
-  function_pointers_.ConfigurePulseBiasCurrentLevel = reinterpret_cast<ConfigurePulseBiasCurrentLevelPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseBiasCurrentLevel"));
-  function_pointers_.ConfigurePulseBiasCurrentLimit = reinterpret_cast<ConfigurePulseBiasCurrentLimitPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseBiasCurrentLimit"));
-  function_pointers_.ConfigurePulseBiasVoltageLevel = reinterpret_cast<ConfigurePulseBiasVoltageLevelPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseBiasVoltageLevel"));
-  function_pointers_.ConfigurePulseBiasVoltageLimit = reinterpret_cast<ConfigurePulseBiasVoltageLimitPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseBiasVoltageLimit"));
-  function_pointers_.ConfigurePulseCurrentLevel = reinterpret_cast<ConfigurePulseCurrentLevelPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseCurrentLevel"));
-  function_pointers_.ConfigurePulseCurrentLevelRange = reinterpret_cast<ConfigurePulseCurrentLevelRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseCurrentLevelRange"));
-  function_pointers_.ConfigurePulseCurrentLimit = reinterpret_cast<ConfigurePulseCurrentLimitPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseCurrentLimit"));
-  function_pointers_.ConfigurePulseCurrentLimitRange = reinterpret_cast<ConfigurePulseCurrentLimitRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseCurrentLimitRange"));
-  function_pointers_.ConfigurePulseVoltageLevel = reinterpret_cast<ConfigurePulseVoltageLevelPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseVoltageLevel"));
-  function_pointers_.ConfigurePulseVoltageLevelRange = reinterpret_cast<ConfigurePulseVoltageLevelRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseVoltageLevelRange"));
-  function_pointers_.ConfigurePulseVoltageLimit = reinterpret_cast<ConfigurePulseVoltageLimitPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseVoltageLimit"));
-  function_pointers_.ConfigurePulseVoltageLimitRange = reinterpret_cast<ConfigurePulseVoltageLimitRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseVoltageLimitRange"));
-  function_pointers_.ConfigureSense = reinterpret_cast<ConfigureSensePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSense"));
-  function_pointers_.ConfigureSoftwareEdgeMeasureTrigger = reinterpret_cast<ConfigureSoftwareEdgeMeasureTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeMeasureTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeMeasureTriggerWithChannels = reinterpret_cast<ConfigureSoftwareEdgeMeasureTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeMeasureTriggerWithChannels"));
-  function_pointers_.ConfigureSoftwareEdgePulseTrigger = reinterpret_cast<ConfigureSoftwareEdgePulseTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgePulseTrigger"));
-  function_pointers_.ConfigureSoftwareEdgePulseTriggerWithChannels = reinterpret_cast<ConfigureSoftwareEdgePulseTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgePulseTriggerWithChannels"));
-  function_pointers_.ConfigureSoftwareEdgeSequenceAdvanceTrigger = reinterpret_cast<ConfigureSoftwareEdgeSequenceAdvanceTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeSequenceAdvanceTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels = reinterpret_cast<ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels"));
-  function_pointers_.ConfigureSoftwareEdgeShutdownTriggerWithChannels = reinterpret_cast<ConfigureSoftwareEdgeShutdownTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeShutdownTriggerWithChannels"));
-  function_pointers_.ConfigureSoftwareEdgeSourceTrigger = reinterpret_cast<ConfigureSoftwareEdgeSourceTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeSourceTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeSourceTriggerWithChannels = reinterpret_cast<ConfigureSoftwareEdgeSourceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeSourceTriggerWithChannels"));
-  function_pointers_.ConfigureSoftwareEdgeStartTrigger = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeStartTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeStartTriggerWithChannels = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSoftwareEdgeStartTriggerWithChannels"));
-  function_pointers_.ConfigureSourceMode = reinterpret_cast<ConfigureSourceModePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSourceMode"));
-  function_pointers_.ConfigureSourceModeWithChannels = reinterpret_cast<ConfigureSourceModeWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureSourceModeWithChannels"));
-  function_pointers_.ConfigureVoltageLevel = reinterpret_cast<ConfigureVoltageLevelPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureVoltageLevel"));
-  function_pointers_.ConfigureVoltageLevelRange = reinterpret_cast<ConfigureVoltageLevelRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureVoltageLevelRange"));
-  function_pointers_.ConfigureVoltageLimit = reinterpret_cast<ConfigureVoltageLimitPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureVoltageLimit"));
-  function_pointers_.ConfigureVoltageLimitRange = reinterpret_cast<ConfigureVoltageLimitRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureVoltageLimitRange"));
-  function_pointers_.CreateAdvancedSequence = reinterpret_cast<CreateAdvancedSequencePtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequence"));
-  function_pointers_.CreateAdvancedSequenceCommitStepWithChannels = reinterpret_cast<CreateAdvancedSequenceCommitStepWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceCommitStepWithChannels"));
-  function_pointers_.CreateAdvancedSequenceStep = reinterpret_cast<CreateAdvancedSequenceStepPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceStep"));
-  function_pointers_.CreateAdvancedSequenceStepWithChannels = reinterpret_cast<CreateAdvancedSequenceStepWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceStepWithChannels"));
-  function_pointers_.CreateAdvancedSequenceWithChannels = reinterpret_cast<CreateAdvancedSequenceWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceWithChannels"));
-  function_pointers_.DeleteAdvancedSequence = reinterpret_cast<DeleteAdvancedSequencePtr>(shared_library_.get_function_pointer("niDCPower_DeleteAdvancedSequence"));
-  function_pointers_.DeleteAdvancedSequenceWithChannels = reinterpret_cast<DeleteAdvancedSequenceWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DeleteAdvancedSequenceWithChannels"));
-  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niDCPower_Disable"));
-  function_pointers_.DisablePulseTrigger = reinterpret_cast<DisablePulseTriggerPtr>(shared_library_.get_function_pointer("niDCPower_DisablePulseTrigger"));
-  function_pointers_.DisablePulseTriggerWithChannels = reinterpret_cast<DisablePulseTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisablePulseTriggerWithChannels"));
-  function_pointers_.DisableSequenceAdvanceTrigger = reinterpret_cast<DisableSequenceAdvanceTriggerPtr>(shared_library_.get_function_pointer("niDCPower_DisableSequenceAdvanceTrigger"));
-  function_pointers_.DisableSequenceAdvanceTriggerWithChannels = reinterpret_cast<DisableSequenceAdvanceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisableSequenceAdvanceTriggerWithChannels"));
-  function_pointers_.DisableShutdownTriggerWithChannels = reinterpret_cast<DisableShutdownTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisableShutdownTriggerWithChannels"));
-  function_pointers_.DisableSourceTrigger = reinterpret_cast<DisableSourceTriggerPtr>(shared_library_.get_function_pointer("niDCPower_DisableSourceTrigger"));
-  function_pointers_.DisableSourceTriggerWithChannels = reinterpret_cast<DisableSourceTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisableSourceTriggerWithChannels"));
-  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_.get_function_pointer("niDCPower_DisableStartTrigger"));
-  function_pointers_.DisableStartTriggerWithChannels = reinterpret_cast<DisableStartTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisableStartTriggerWithChannels"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niDCPower_error_message"));
-  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_.get_function_pointer("niDCPower_error_query"));
-  function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDCPower_ExportAttributeConfigurationBuffer"));
-  function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDCPower_ExportAttributeConfigurationFile"));
-  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niDCPower_ExportSignal"));
-  function_pointers_.ExportSignalWithChannels = reinterpret_cast<ExportSignalWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ExportSignalWithChannels"));
-  function_pointers_.FetchMultiple = reinterpret_cast<FetchMultiplePtr>(shared_library_.get_function_pointer("niDCPower_FetchMultiple"));
-  function_pointers_.FetchMultipleLCR = reinterpret_cast<FetchMultipleLCRPtr>(shared_library_.get_function_pointer("niDCPower_FetchMultipleLCR"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViInt64"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViSession"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViString"));
-  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niDCPower_GetChannelName"));
-  function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_.get_function_pointer("niDCPower_GetChannelNameFromString"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niDCPower_GetError"));
-  function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niDCPower_GetExtCalLastDateAndTime"));
-  function_pointers_.GetExtCalLastTemp = reinterpret_cast<GetExtCalLastTempPtr>(shared_library_.get_function_pointer("niDCPower_GetExtCalLastTemp"));
-  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_.get_function_pointer("niDCPower_GetExtCalRecommendedInterval"));
-  function_pointers_.GetLCRCompensationLastDateAndTime = reinterpret_cast<GetLCRCompensationLastDateAndTimePtr>(shared_library_.get_function_pointer("niDCPower_GetLCRCompensationLastDateAndTime"));
-  function_pointers_.GetLCRCustomCableCompensationData = reinterpret_cast<GetLCRCustomCableCompensationDataPtr>(shared_library_.get_function_pointer("niDCPower_GetLCRCustomCableCompensationData"));
-  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_.get_function_pointer("niDCPower_GetNextCoercionRecord"));
-  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_.get_function_pointer("niDCPower_GetNextInterchangeWarning"));
-  function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niDCPower_GetSelfCalLastDateAndTime"));
-  function_pointers_.GetSelfCalLastTemp = reinterpret_cast<GetSelfCalLastTempPtr>(shared_library_.get_function_pointer("niDCPower_GetSelfCalLastTemp"));
-  function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDCPower_ImportAttributeConfigurationBuffer"));
-  function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDCPower_ImportAttributeConfigurationFile"));
-  function_pointers_.InitializeWithChannels = reinterpret_cast<InitializeWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_InitializeWithChannels"));
-  function_pointers_.InitializeWithIndependentChannels = reinterpret_cast<InitializeWithIndependentChannelsPtr>(shared_library_.get_function_pointer("niDCPower_InitializeWithIndependentChannels"));
-  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niDCPower_Initiate"));
-  function_pointers_.InitiateWithChannels = reinterpret_cast<InitiateWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_InitiateWithChannels"));
-  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niDCPower_InvalidateAllAttributes"));
-  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niDCPower_LockSession"));
-  function_pointers_.Measure = reinterpret_cast<MeasurePtr>(shared_library_.get_function_pointer("niDCPower_Measure"));
-  function_pointers_.MeasureMultiple = reinterpret_cast<MeasureMultiplePtr>(shared_library_.get_function_pointer("niDCPower_MeasureMultiple"));
-  function_pointers_.MeasureMultipleLCR = reinterpret_cast<MeasureMultipleLCRPtr>(shared_library_.get_function_pointer("niDCPower_MeasureMultipleLCR"));
-  function_pointers_.ParseChannelCount = reinterpret_cast<ParseChannelCountPtr>(shared_library_.get_function_pointer("niDCPower_ParseChannelCount"));
-  function_pointers_.PerformLCRLoadCompensation = reinterpret_cast<PerformLCRLoadCompensationPtr>(shared_library_.get_function_pointer("niDCPower_PerformLCRLoadCompensation"));
-  function_pointers_.PerformLCROpenCompensation = reinterpret_cast<PerformLCROpenCompensationPtr>(shared_library_.get_function_pointer("niDCPower_PerformLCROpenCompensation"));
-  function_pointers_.PerformLCROpenCustomCableCompensation = reinterpret_cast<PerformLCROpenCustomCableCompensationPtr>(shared_library_.get_function_pointer("niDCPower_PerformLCROpenCustomCableCompensation"));
-  function_pointers_.PerformLCRShortCompensation = reinterpret_cast<PerformLCRShortCompensationPtr>(shared_library_.get_function_pointer("niDCPower_PerformLCRShortCompensation"));
-  function_pointers_.PerformLCRShortCustomCableCompensation = reinterpret_cast<PerformLCRShortCustomCableCompensationPtr>(shared_library_.get_function_pointer("niDCPower_PerformLCRShortCustomCableCompensation"));
-  function_pointers_.QueryInCompliance = reinterpret_cast<QueryInCompliancePtr>(shared_library_.get_function_pointer("niDCPower_QueryInCompliance"));
-  function_pointers_.QueryLatchedOutputCutoffState = reinterpret_cast<QueryLatchedOutputCutoffStatePtr>(shared_library_.get_function_pointer("niDCPower_QueryLatchedOutputCutoffState"));
-  function_pointers_.QueryMaxCurrentLimit = reinterpret_cast<QueryMaxCurrentLimitPtr>(shared_library_.get_function_pointer("niDCPower_QueryMaxCurrentLimit"));
-  function_pointers_.QueryMaxVoltageLevel = reinterpret_cast<QueryMaxVoltageLevelPtr>(shared_library_.get_function_pointer("niDCPower_QueryMaxVoltageLevel"));
-  function_pointers_.QueryMinCurrentLimit = reinterpret_cast<QueryMinCurrentLimitPtr>(shared_library_.get_function_pointer("niDCPower_QueryMinCurrentLimit"));
-  function_pointers_.QueryOutputState = reinterpret_cast<QueryOutputStatePtr>(shared_library_.get_function_pointer("niDCPower_QueryOutputState"));
-  function_pointers_.ReadCurrentTemperature = reinterpret_cast<ReadCurrentTemperaturePtr>(shared_library_.get_function_pointer("niDCPower_ReadCurrentTemperature"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niDCPower_reset"));
-  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niDCPower_ResetDevice"));
-  function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_.get_function_pointer("niDCPower_ResetInterchangeCheck"));
-  function_pointers_.ResetWithChannels = reinterpret_cast<ResetWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_ResetWithChannels"));
-  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niDCPower_ResetWithDefaults"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niDCPower_revision_query"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niDCPower_self_test"));
-  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("niDCPower_SendSoftwareEdgeTrigger"));
-  function_pointers_.SendSoftwareEdgeTriggerWithChannels = reinterpret_cast<SendSoftwareEdgeTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_SendSoftwareEdgeTriggerWithChannels"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViInt64"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViSession"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViString"));
-  function_pointers_.SetSequence = reinterpret_cast<SetSequencePtr>(shared_library_.get_function_pointer("niDCPower_SetSequence"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDCPower_UnlockSession"));
-  function_pointers_.WaitForEvent = reinterpret_cast<WaitForEventPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEvent"));
-  function_pointers_.WaitForEventWithChannels = reinterpret_cast<WaitForEventWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEventWithChannels"));
-  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDCPower_SetRuntimeEnvironment"));
-
-  if (function_pointers_.SetRuntimeEnvironment) {
-    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
->>>>>>> b1b7fba232c3aaeeeffa0e301c774b3540adb863
   }
 }
 
