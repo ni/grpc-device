@@ -33,14 +33,14 @@ class SessionException : public NonDriverException {
   SessionException(const SessionException& other) : NonDriverException(other) {}
 };
 
-class SharedLibrary : public SharedLibraryInterface <SharedLibrary> {
+class SharedLibrary : public SharedLibraryInterface {
  public:
   SharedLibrary();
   SharedLibrary(const char* library_name);
   SharedLibrary(const SharedLibrary& other);
   virtual ~SharedLibrary() override;
 
-  void swap(SharedLibrary& other) override;
+  void swap(SharedLibrary& other);
   bool is_loaded() const override;
   LibraryHandle get_handle() const override;
   void load() override;

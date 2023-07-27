@@ -14,12 +14,13 @@ typedef HMODULE LibraryHandle;
 typedef void* LibraryHandle;
 #endif
 
-template <class SharedLibraryT>
 class SharedLibraryInterface {
  public:
   virtual ~SharedLibraryInterface();
 
-  virtual void swap(SharedLibraryT& other) = 0;
+  // not included because we have to templatize the class in order to make this virtual
+  // and then can't specify a pointer to SharedLibraryInterface for our Library classes (because we would need a template specifier)
+  // virtual void swap(SharedLibraryT& other) = 0;
   virtual bool is_loaded() const = 0;
   virtual LibraryHandle get_handle() const = 0;
   virtual void load() = 0;
