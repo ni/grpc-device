@@ -28,7 +28,7 @@ TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentFound_Calls
     .WillRepeatedly(Return(nullptr));
   // We must return an address for SetRuntimeEnvironment or we won't call it.
   EXPECT_CALL(*p_shared_library, get_function_pointer(func_name))
-    .WillOnce(Return(&FunctionToPointAt));
+    .WillOnce(Return(const_cast<const void*>(reinterpret_cast<void*>(&FunctionToPointAt))));
 
   auto library = std::make_shared<niswitch_grpc::NiSwitchLibrary>(p_shared_library);
   EXPECT_TRUE(library->is_runtime_environment_set());
