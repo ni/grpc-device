@@ -73,7 +73,7 @@ class ${class_name} : public ${namespace_prefix}::${class_name}Interface {
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
 % if set_runtime_environment_supported:
-  bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 % endif
 };
 
