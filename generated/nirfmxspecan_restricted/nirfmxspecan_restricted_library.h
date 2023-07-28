@@ -17,7 +17,7 @@ namespace nirfmxspecan_restricted_grpc {
 class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFmxSpecAnRestrictedLibraryInterface {
  public:
   NiRFmxSpecAnRestrictedLibrary();
-  NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxSpecAnRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

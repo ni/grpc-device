@@ -17,7 +17,7 @@ namespace nirfmxspecan_grpc {
 class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterface {
  public:
   NiRFmxSpecAnLibrary();
-  NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxSpecAnLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

@@ -17,7 +17,7 @@ namespace nirfmxtdscdma_grpc {
 class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInterface {
  public:
   NiRFmxTDSCDMALibrary();
-  NiRFmxTDSCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxTDSCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxTDSCDMALibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

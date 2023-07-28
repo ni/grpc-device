@@ -17,7 +17,7 @@ namespace nirfmxinstr_grpc {
 class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface {
  public:
   NiRFmxInstrLibrary();
-  NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxInstrLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

@@ -17,7 +17,7 @@ namespace nirfmxcdma2k_grpc {
 class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterface {
  public:
   NiRFmxCDMA2kLibrary();
-  NiRFmxCDMA2kLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxCDMA2kLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxCDMA2kLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

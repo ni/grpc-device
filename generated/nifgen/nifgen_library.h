@@ -17,7 +17,7 @@ namespace nifgen_grpc {
 class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
  public:
   NiFgenLibrary();
-  NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiFgenLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

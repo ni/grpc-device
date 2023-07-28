@@ -17,7 +17,7 @@ namespace nirfmxwcdma_grpc {
 class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface {
  public:
   NiRFmxWCDMALibrary();
-  NiRFmxWCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxWCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxWCDMALibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

@@ -17,7 +17,7 @@ namespace nirfmxwlan_restricted_grpc {
 class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLANRestrictedLibraryInterface {
  public:
   NiRFmxWLANRestrictedLibrary();
-  NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxWLANRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

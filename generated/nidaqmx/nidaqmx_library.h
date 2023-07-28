@@ -17,7 +17,7 @@ namespace nidaqmx_grpc {
 class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  public:
   NiDAQmxLibrary();
-  NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiDAQmxLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

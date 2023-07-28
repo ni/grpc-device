@@ -17,7 +17,7 @@ namespace nirfmxwlan_grpc {
 class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
  public:
   NiRFmxWLANLibrary();
-  NiRFmxWLANLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxWLANLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxWLANLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

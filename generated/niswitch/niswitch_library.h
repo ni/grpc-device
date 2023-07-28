@@ -17,7 +17,7 @@ namespace niswitch_grpc {
 class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
  public:
   NiSwitchLibrary();
-  NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiSwitchLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

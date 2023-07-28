@@ -17,7 +17,7 @@ namespace nirfmxlte_grpc {
 class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
  public:
   NiRFmxLTELibrary();
-  NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  explicit NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxLTELibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
