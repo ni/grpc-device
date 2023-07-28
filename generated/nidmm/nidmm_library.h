@@ -298,7 +298,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
   bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };

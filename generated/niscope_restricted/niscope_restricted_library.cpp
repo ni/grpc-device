@@ -18,18 +18,18 @@ namespace niscope_restricted_grpc {
 
 NiScopeRestrictedLibrary::NiScopeRestrictedLibrary() : NiScopeRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiScopeRestrictedLibrary::NiScopeRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiScopeRestrictedLibrary::NiScopeRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  p_shared_library_->set_library_name(kLibraryName);
-  p_shared_library_->load();
-  bool loaded = p_shared_library_->is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(p_shared_library_->get_function_pointer("niScope_GetError"));
-  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(p_shared_library_->get_function_pointer("niScope_GetErrorMessage"));
-  function_pointers_.GetStartTimestampInformation = reinterpret_cast<GetStartTimestampInformationPtr>(p_shared_library_->get_function_pointer("niScope_GetStartTimestampInformation"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niScope_GetError"));
+  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_->get_function_pointer("niScope_GetErrorMessage"));
+  function_pointers_.GetStartTimestampInformation = reinterpret_cast<GetStartTimestampInformationPtr>(shared_library_->get_function_pointer("niScope_GetStartTimestampInformation"));
 }
 
 NiScopeRestrictedLibrary::~NiScopeRestrictedLibrary()
@@ -38,7 +38,7 @@ NiScopeRestrictedLibrary::~NiScopeRestrictedLibrary()
 
 ::grpc::Status NiScopeRestrictedLibrary::check_function_exists(std::string functionName)
 {
-  return p_shared_library_->function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

@@ -18,85 +18,85 @@ namespace nisync_grpc {
 
 NiSyncLibrary::NiSyncLibrary() : NiSyncLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiSyncLibrary::NiSyncLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiSyncLibrary::NiSyncLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  p_shared_library_->set_library_name(kLibraryName);
-  p_shared_library_->load();
-  bool loaded = p_shared_library_->is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Init = reinterpret_cast<InitPtr>(p_shared_library_->get_function_pointer("niSync_init"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(p_shared_library_->get_function_pointer("niSync_close"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(p_shared_library_->get_function_pointer("niSync_error_message"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(p_shared_library_->get_function_pointer("niSync_reset"));
-  function_pointers_.PersistConfig = reinterpret_cast<PersistConfigPtr>(p_shared_library_->get_function_pointer("niSync_PersistConfig"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(p_shared_library_->get_function_pointer("niSync_self_test"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(p_shared_library_->get_function_pointer("niSync_revision_query"));
-  function_pointers_.ConnectTrigTerminals = reinterpret_cast<ConnectTrigTerminalsPtr>(p_shared_library_->get_function_pointer("niSync_ConnectTrigTerminals"));
-  function_pointers_.DisconnectTrigTerminals = reinterpret_cast<DisconnectTrigTerminalsPtr>(p_shared_library_->get_function_pointer("niSync_DisconnectTrigTerminals"));
-  function_pointers_.ConnectSWTrigToTerminal = reinterpret_cast<ConnectSWTrigToTerminalPtr>(p_shared_library_->get_function_pointer("niSync_ConnectSWTrigToTerminal"));
-  function_pointers_.DisconnectSWTrigFromTerminal = reinterpret_cast<DisconnectSWTrigFromTerminalPtr>(p_shared_library_->get_function_pointer("niSync_DisconnectSWTrigFromTerminal"));
-  function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(p_shared_library_->get_function_pointer("niSync_SendSoftwareTrigger"));
-  function_pointers_.ConnectClkTerminals = reinterpret_cast<ConnectClkTerminalsPtr>(p_shared_library_->get_function_pointer("niSync_ConnectClkTerminals"));
-  function_pointers_.DisconnectClkTerminals = reinterpret_cast<DisconnectClkTerminalsPtr>(p_shared_library_->get_function_pointer("niSync_DisconnectClkTerminals"));
-  function_pointers_.MeasureFrequency = reinterpret_cast<MeasureFrequencyPtr>(p_shared_library_->get_function_pointer("niSync_MeasureFrequency"));
-  function_pointers_.MeasureFrequencyEx = reinterpret_cast<MeasureFrequencyExPtr>(p_shared_library_->get_function_pointer("niSync_MeasureFrequencyEx"));
-  function_pointers_.Start1588 = reinterpret_cast<Start1588Ptr>(p_shared_library_->get_function_pointer("niSync_Start1588"));
-  function_pointers_.Stop1588 = reinterpret_cast<Stop1588Ptr>(p_shared_library_->get_function_pointer("niSync_Stop1588"));
-  function_pointers_.Start8021AS = reinterpret_cast<Start8021ASPtr>(p_shared_library_->get_function_pointer("niSync_Start8021AS"));
-  function_pointers_.Stop8021AS = reinterpret_cast<Stop8021ASPtr>(p_shared_library_->get_function_pointer("niSync_Stop8021AS"));
-  function_pointers_.SetTime = reinterpret_cast<SetTimePtr>(p_shared_library_->get_function_pointer("niSync_SetTime"));
-  function_pointers_.GetTime = reinterpret_cast<GetTimePtr>(p_shared_library_->get_function_pointer("niSync_GetTime"));
-  function_pointers_.ResetFrequency = reinterpret_cast<ResetFrequencyPtr>(p_shared_library_->get_function_pointer("niSync_ResetFrequency"));
-  function_pointers_.CreateFutureTimeEvent = reinterpret_cast<CreateFutureTimeEventPtr>(p_shared_library_->get_function_pointer("niSync_CreateFutureTimeEvent"));
-  function_pointers_.ClearFutureTimeEvents = reinterpret_cast<ClearFutureTimeEventsPtr>(p_shared_library_->get_function_pointer("niSync_ClearFutureTimeEvents"));
-  function_pointers_.EnableTimeStampTrigger = reinterpret_cast<EnableTimeStampTriggerPtr>(p_shared_library_->get_function_pointer("niSync_EnableTimeStampTrigger"));
-  function_pointers_.EnableTimeStampTriggerWithDecimation = reinterpret_cast<EnableTimeStampTriggerWithDecimationPtr>(p_shared_library_->get_function_pointer("niSync_EnableTimeStampTriggerWithDecimation"));
-  function_pointers_.ReadTriggerTimeStamp = reinterpret_cast<ReadTriggerTimeStampPtr>(p_shared_library_->get_function_pointer("niSync_ReadTriggerTimeStamp"));
-  function_pointers_.ReadMultipleTriggerTimeStamp = reinterpret_cast<ReadMultipleTriggerTimeStampPtr>(p_shared_library_->get_function_pointer("niSync_ReadMultipleTriggerTimeStamp"));
-  function_pointers_.DisableTimeStampTrigger = reinterpret_cast<DisableTimeStampTriggerPtr>(p_shared_library_->get_function_pointer("niSync_DisableTimeStampTrigger"));
-  function_pointers_.CreateClock = reinterpret_cast<CreateClockPtr>(p_shared_library_->get_function_pointer("niSync_CreateClock"));
-  function_pointers_.ClearClock = reinterpret_cast<ClearClockPtr>(p_shared_library_->get_function_pointer("niSync_ClearClock"));
-  function_pointers_.SetTimeReferenceFreeRunning = reinterpret_cast<SetTimeReferenceFreeRunningPtr>(p_shared_library_->get_function_pointer("niSync_SetTimeReferenceFreeRunning"));
-  function_pointers_.SetTimeReferenceGPS = reinterpret_cast<SetTimeReferenceGPSPtr>(p_shared_library_->get_function_pointer("niSync_SetTimeReferenceGPS"));
-  function_pointers_.SetTimeReferenceIRIG = reinterpret_cast<SetTimeReferenceIRIGPtr>(p_shared_library_->get_function_pointer("niSync_SetTimeReferenceIRIG"));
-  function_pointers_.SetTimeReferencePPS = reinterpret_cast<SetTimeReferencePPSPtr>(p_shared_library_->get_function_pointer("niSync_SetTimeReferencePPS"));
-  function_pointers_.SetTimeReference1588OrdinaryClock = reinterpret_cast<SetTimeReference1588OrdinaryClockPtr>(p_shared_library_->get_function_pointer("niSync_SetTimeReference1588OrdinaryClock"));
-  function_pointers_.SetTimeReference8021AS = reinterpret_cast<SetTimeReference8021ASPtr>(p_shared_library_->get_function_pointer("niSync_SetTimeReference8021AS"));
-  function_pointers_.EnableGPSTimestamping = reinterpret_cast<EnableGPSTimestampingPtr>(p_shared_library_->get_function_pointer("niSync_EnableGPSTimestamping"));
-  function_pointers_.EnableIRIGTimestamping = reinterpret_cast<EnableIRIGTimestampingPtr>(p_shared_library_->get_function_pointer("niSync_EnableIRIGTimestamping"));
-  function_pointers_.ReadLastGPSTimestamp = reinterpret_cast<ReadLastGPSTimestampPtr>(p_shared_library_->get_function_pointer("niSync_ReadLastGPSTimestamp"));
-  function_pointers_.ReadLastIRIGTimestamp = reinterpret_cast<ReadLastIRIGTimestampPtr>(p_shared_library_->get_function_pointer("niSync_ReadLastIRIGTimestamp"));
-  function_pointers_.DisableGPSTimestamping = reinterpret_cast<DisableGPSTimestampingPtr>(p_shared_library_->get_function_pointer("niSync_DisableGPSTimestamping"));
-  function_pointers_.DisableIRIGTimestamping = reinterpret_cast<DisableIRIGTimestampingPtr>(p_shared_library_->get_function_pointer("niSync_DisableIRIGTimestamping"));
-  function_pointers_.GetVelocity = reinterpret_cast<GetVelocityPtr>(p_shared_library_->get_function_pointer("niSync_GetVelocity"));
-  function_pointers_.GetLocation = reinterpret_cast<GetLocationPtr>(p_shared_library_->get_function_pointer("niSync_GetLocation"));
-  function_pointers_.GetTimeReferenceNames = reinterpret_cast<GetTimeReferenceNamesPtr>(p_shared_library_->get_function_pointer("niSync_GetTimeReferenceNames"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(p_shared_library_->get_function_pointer("niSync_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(p_shared_library_->get_function_pointer("niSync_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(p_shared_library_->get_function_pointer("niSync_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(p_shared_library_->get_function_pointer("niSync_GetAttributeViString"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(p_shared_library_->get_function_pointer("niSync_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(p_shared_library_->get_function_pointer("niSync_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(p_shared_library_->get_function_pointer("niSync_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(p_shared_library_->get_function_pointer("niSync_SetAttributeViString"));
-  function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(p_shared_library_->get_function_pointer("niSync_GetExtCalLastDateAndTime"));
-  function_pointers_.GetExtCalLastTemp = reinterpret_cast<GetExtCalLastTempPtr>(p_shared_library_->get_function_pointer("niSync_GetExtCalLastTemp"));
-  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(p_shared_library_->get_function_pointer("niSync_GetExtCalRecommendedInterval"));
-  function_pointers_.ChangeExtCalPassword = reinterpret_cast<ChangeExtCalPasswordPtr>(p_shared_library_->get_function_pointer("niSync_ChangeExtCalPassword"));
-  function_pointers_.ReadCurrentTemperature = reinterpret_cast<ReadCurrentTemperaturePtr>(p_shared_library_->get_function_pointer("niSync_ReadCurrentTemperature"));
-  function_pointers_.CalGetOscillatorVoltage = reinterpret_cast<CalGetOscillatorVoltagePtr>(p_shared_library_->get_function_pointer("niSync_CalGetOscillatorVoltage"));
-  function_pointers_.CalGetClk10PhaseVoltage = reinterpret_cast<CalGetClk10PhaseVoltagePtr>(p_shared_library_->get_function_pointer("niSync_CalGetClk10PhaseVoltage"));
-  function_pointers_.CalGetDDSStartPulsePhaseVoltage = reinterpret_cast<CalGetDDSStartPulsePhaseVoltagePtr>(p_shared_library_->get_function_pointer("niSync_CalGetDDSStartPulsePhaseVoltage"));
-  function_pointers_.CalGetDDSInitialPhase = reinterpret_cast<CalGetDDSInitialPhasePtr>(p_shared_library_->get_function_pointer("niSync_CalGetDDSInitialPhase"));
-  function_pointers_.InitExtCal = reinterpret_cast<InitExtCalPtr>(p_shared_library_->get_function_pointer("niSync_InitExtCal"));
-  function_pointers_.CloseExtCal = reinterpret_cast<CloseExtCalPtr>(p_shared_library_->get_function_pointer("niSync_CloseExtCal"));
-  function_pointers_.CalAdjustOscillatorVoltage = reinterpret_cast<CalAdjustOscillatorVoltagePtr>(p_shared_library_->get_function_pointer("niSync_CalAdjustOscillatorVoltage"));
-  function_pointers_.CalAdjustClk10PhaseVoltage = reinterpret_cast<CalAdjustClk10PhaseVoltagePtr>(p_shared_library_->get_function_pointer("niSync_CalAdjustClk10PhaseVoltage"));
-  function_pointers_.CalAdjustDDSStartPulsePhaseVoltage = reinterpret_cast<CalAdjustDDSStartPulsePhaseVoltagePtr>(p_shared_library_->get_function_pointer("niSync_CalAdjustDDSStartPulsePhaseVoltage"));
-  function_pointers_.CalAdjustDDSInitialPhase = reinterpret_cast<CalAdjustDDSInitialPhasePtr>(p_shared_library_->get_function_pointer("niSync_CalAdjustDDSInitialPhase"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_->get_function_pointer("niSync_init"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("niSync_close"));
+  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_->get_function_pointer("niSync_error_message"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("niSync_reset"));
+  function_pointers_.PersistConfig = reinterpret_cast<PersistConfigPtr>(shared_library_->get_function_pointer("niSync_PersistConfig"));
+  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_->get_function_pointer("niSync_self_test"));
+  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_->get_function_pointer("niSync_revision_query"));
+  function_pointers_.ConnectTrigTerminals = reinterpret_cast<ConnectTrigTerminalsPtr>(shared_library_->get_function_pointer("niSync_ConnectTrigTerminals"));
+  function_pointers_.DisconnectTrigTerminals = reinterpret_cast<DisconnectTrigTerminalsPtr>(shared_library_->get_function_pointer("niSync_DisconnectTrigTerminals"));
+  function_pointers_.ConnectSWTrigToTerminal = reinterpret_cast<ConnectSWTrigToTerminalPtr>(shared_library_->get_function_pointer("niSync_ConnectSWTrigToTerminal"));
+  function_pointers_.DisconnectSWTrigFromTerminal = reinterpret_cast<DisconnectSWTrigFromTerminalPtr>(shared_library_->get_function_pointer("niSync_DisconnectSWTrigFromTerminal"));
+  function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(shared_library_->get_function_pointer("niSync_SendSoftwareTrigger"));
+  function_pointers_.ConnectClkTerminals = reinterpret_cast<ConnectClkTerminalsPtr>(shared_library_->get_function_pointer("niSync_ConnectClkTerminals"));
+  function_pointers_.DisconnectClkTerminals = reinterpret_cast<DisconnectClkTerminalsPtr>(shared_library_->get_function_pointer("niSync_DisconnectClkTerminals"));
+  function_pointers_.MeasureFrequency = reinterpret_cast<MeasureFrequencyPtr>(shared_library_->get_function_pointer("niSync_MeasureFrequency"));
+  function_pointers_.MeasureFrequencyEx = reinterpret_cast<MeasureFrequencyExPtr>(shared_library_->get_function_pointer("niSync_MeasureFrequencyEx"));
+  function_pointers_.Start1588 = reinterpret_cast<Start1588Ptr>(shared_library_->get_function_pointer("niSync_Start1588"));
+  function_pointers_.Stop1588 = reinterpret_cast<Stop1588Ptr>(shared_library_->get_function_pointer("niSync_Stop1588"));
+  function_pointers_.Start8021AS = reinterpret_cast<Start8021ASPtr>(shared_library_->get_function_pointer("niSync_Start8021AS"));
+  function_pointers_.Stop8021AS = reinterpret_cast<Stop8021ASPtr>(shared_library_->get_function_pointer("niSync_Stop8021AS"));
+  function_pointers_.SetTime = reinterpret_cast<SetTimePtr>(shared_library_->get_function_pointer("niSync_SetTime"));
+  function_pointers_.GetTime = reinterpret_cast<GetTimePtr>(shared_library_->get_function_pointer("niSync_GetTime"));
+  function_pointers_.ResetFrequency = reinterpret_cast<ResetFrequencyPtr>(shared_library_->get_function_pointer("niSync_ResetFrequency"));
+  function_pointers_.CreateFutureTimeEvent = reinterpret_cast<CreateFutureTimeEventPtr>(shared_library_->get_function_pointer("niSync_CreateFutureTimeEvent"));
+  function_pointers_.ClearFutureTimeEvents = reinterpret_cast<ClearFutureTimeEventsPtr>(shared_library_->get_function_pointer("niSync_ClearFutureTimeEvents"));
+  function_pointers_.EnableTimeStampTrigger = reinterpret_cast<EnableTimeStampTriggerPtr>(shared_library_->get_function_pointer("niSync_EnableTimeStampTrigger"));
+  function_pointers_.EnableTimeStampTriggerWithDecimation = reinterpret_cast<EnableTimeStampTriggerWithDecimationPtr>(shared_library_->get_function_pointer("niSync_EnableTimeStampTriggerWithDecimation"));
+  function_pointers_.ReadTriggerTimeStamp = reinterpret_cast<ReadTriggerTimeStampPtr>(shared_library_->get_function_pointer("niSync_ReadTriggerTimeStamp"));
+  function_pointers_.ReadMultipleTriggerTimeStamp = reinterpret_cast<ReadMultipleTriggerTimeStampPtr>(shared_library_->get_function_pointer("niSync_ReadMultipleTriggerTimeStamp"));
+  function_pointers_.DisableTimeStampTrigger = reinterpret_cast<DisableTimeStampTriggerPtr>(shared_library_->get_function_pointer("niSync_DisableTimeStampTrigger"));
+  function_pointers_.CreateClock = reinterpret_cast<CreateClockPtr>(shared_library_->get_function_pointer("niSync_CreateClock"));
+  function_pointers_.ClearClock = reinterpret_cast<ClearClockPtr>(shared_library_->get_function_pointer("niSync_ClearClock"));
+  function_pointers_.SetTimeReferenceFreeRunning = reinterpret_cast<SetTimeReferenceFreeRunningPtr>(shared_library_->get_function_pointer("niSync_SetTimeReferenceFreeRunning"));
+  function_pointers_.SetTimeReferenceGPS = reinterpret_cast<SetTimeReferenceGPSPtr>(shared_library_->get_function_pointer("niSync_SetTimeReferenceGPS"));
+  function_pointers_.SetTimeReferenceIRIG = reinterpret_cast<SetTimeReferenceIRIGPtr>(shared_library_->get_function_pointer("niSync_SetTimeReferenceIRIG"));
+  function_pointers_.SetTimeReferencePPS = reinterpret_cast<SetTimeReferencePPSPtr>(shared_library_->get_function_pointer("niSync_SetTimeReferencePPS"));
+  function_pointers_.SetTimeReference1588OrdinaryClock = reinterpret_cast<SetTimeReference1588OrdinaryClockPtr>(shared_library_->get_function_pointer("niSync_SetTimeReference1588OrdinaryClock"));
+  function_pointers_.SetTimeReference8021AS = reinterpret_cast<SetTimeReference8021ASPtr>(shared_library_->get_function_pointer("niSync_SetTimeReference8021AS"));
+  function_pointers_.EnableGPSTimestamping = reinterpret_cast<EnableGPSTimestampingPtr>(shared_library_->get_function_pointer("niSync_EnableGPSTimestamping"));
+  function_pointers_.EnableIRIGTimestamping = reinterpret_cast<EnableIRIGTimestampingPtr>(shared_library_->get_function_pointer("niSync_EnableIRIGTimestamping"));
+  function_pointers_.ReadLastGPSTimestamp = reinterpret_cast<ReadLastGPSTimestampPtr>(shared_library_->get_function_pointer("niSync_ReadLastGPSTimestamp"));
+  function_pointers_.ReadLastIRIGTimestamp = reinterpret_cast<ReadLastIRIGTimestampPtr>(shared_library_->get_function_pointer("niSync_ReadLastIRIGTimestamp"));
+  function_pointers_.DisableGPSTimestamping = reinterpret_cast<DisableGPSTimestampingPtr>(shared_library_->get_function_pointer("niSync_DisableGPSTimestamping"));
+  function_pointers_.DisableIRIGTimestamping = reinterpret_cast<DisableIRIGTimestampingPtr>(shared_library_->get_function_pointer("niSync_DisableIRIGTimestamping"));
+  function_pointers_.GetVelocity = reinterpret_cast<GetVelocityPtr>(shared_library_->get_function_pointer("niSync_GetVelocity"));
+  function_pointers_.GetLocation = reinterpret_cast<GetLocationPtr>(shared_library_->get_function_pointer("niSync_GetLocation"));
+  function_pointers_.GetTimeReferenceNames = reinterpret_cast<GetTimeReferenceNamesPtr>(shared_library_->get_function_pointer("niSync_GetTimeReferenceNames"));
+  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niSync_GetAttributeViInt32"));
+  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niSync_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niSync_GetAttributeViBoolean"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_->get_function_pointer("niSync_GetAttributeViString"));
+  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niSync_SetAttributeViInt32"));
+  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niSync_SetAttributeViReal64"));
+  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niSync_SetAttributeViBoolean"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_->get_function_pointer("niSync_SetAttributeViString"));
+  function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_->get_function_pointer("niSync_GetExtCalLastDateAndTime"));
+  function_pointers_.GetExtCalLastTemp = reinterpret_cast<GetExtCalLastTempPtr>(shared_library_->get_function_pointer("niSync_GetExtCalLastTemp"));
+  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_->get_function_pointer("niSync_GetExtCalRecommendedInterval"));
+  function_pointers_.ChangeExtCalPassword = reinterpret_cast<ChangeExtCalPasswordPtr>(shared_library_->get_function_pointer("niSync_ChangeExtCalPassword"));
+  function_pointers_.ReadCurrentTemperature = reinterpret_cast<ReadCurrentTemperaturePtr>(shared_library_->get_function_pointer("niSync_ReadCurrentTemperature"));
+  function_pointers_.CalGetOscillatorVoltage = reinterpret_cast<CalGetOscillatorVoltagePtr>(shared_library_->get_function_pointer("niSync_CalGetOscillatorVoltage"));
+  function_pointers_.CalGetClk10PhaseVoltage = reinterpret_cast<CalGetClk10PhaseVoltagePtr>(shared_library_->get_function_pointer("niSync_CalGetClk10PhaseVoltage"));
+  function_pointers_.CalGetDDSStartPulsePhaseVoltage = reinterpret_cast<CalGetDDSStartPulsePhaseVoltagePtr>(shared_library_->get_function_pointer("niSync_CalGetDDSStartPulsePhaseVoltage"));
+  function_pointers_.CalGetDDSInitialPhase = reinterpret_cast<CalGetDDSInitialPhasePtr>(shared_library_->get_function_pointer("niSync_CalGetDDSInitialPhase"));
+  function_pointers_.InitExtCal = reinterpret_cast<InitExtCalPtr>(shared_library_->get_function_pointer("niSync_InitExtCal"));
+  function_pointers_.CloseExtCal = reinterpret_cast<CloseExtCalPtr>(shared_library_->get_function_pointer("niSync_CloseExtCal"));
+  function_pointers_.CalAdjustOscillatorVoltage = reinterpret_cast<CalAdjustOscillatorVoltagePtr>(shared_library_->get_function_pointer("niSync_CalAdjustOscillatorVoltage"));
+  function_pointers_.CalAdjustClk10PhaseVoltage = reinterpret_cast<CalAdjustClk10PhaseVoltagePtr>(shared_library_->get_function_pointer("niSync_CalAdjustClk10PhaseVoltage"));
+  function_pointers_.CalAdjustDDSStartPulsePhaseVoltage = reinterpret_cast<CalAdjustDDSStartPulsePhaseVoltagePtr>(shared_library_->get_function_pointer("niSync_CalAdjustDDSStartPulsePhaseVoltage"));
+  function_pointers_.CalAdjustDDSInitialPhase = reinterpret_cast<CalAdjustDDSInitialPhasePtr>(shared_library_->get_function_pointer("niSync_CalAdjustDDSInitialPhase"));
 }
 
 NiSyncLibrary::~NiSyncLibrary()
@@ -105,7 +105,7 @@ NiSyncLibrary::~NiSyncLibrary()
 
 ::grpc::Status NiSyncLibrary::check_function_exists(std::string functionName)
 {
-  return p_shared_library_->function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

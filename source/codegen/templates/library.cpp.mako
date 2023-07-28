@@ -17,7 +17,7 @@ windows_library_name = windows_library_info['name']
 
 class_name = f"{service_class_prefix}Library"
 
-initialization_list = "p_shared_library_(pSharedLibrary)"
+initialization_list = "shared_library_(shared_library)"
 set_runtime_environment_supported = 'SetRuntimeEnvironment' in service_helpers.filter_api_functions(functions, only_mockable_functions=False)
 if set_runtime_environment_supported:
   initialization_list += ", runtime_environment_set_(false)"
@@ -45,11 +45,11 @@ namespace ${config["namespace_component"]}_grpc {
 
 ${class_name}::${class_name}() : ${class_name}(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : ${initialization_list}
+${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : ${initialization_list}
 {
-  p_shared_library_->set_library_name(kLibraryName);
-  p_shared_library_->load();
-  bool loaded = p_shared_library_->is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
@@ -58,7 +58,7 @@ ${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
 <%
   c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
-  function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(p_shared_library_->get_function_pointer("${c_name}"));
+  function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_->get_function_pointer("${c_name}"));
 % endfor
 % if set_runtime_environment_supported:
 
@@ -75,7 +75,7 @@ ${class_name}::~${class_name}()
 
 ::grpc::Status ${class_name}::check_function_exists(std::string functionName)
 {
-  return p_shared_library_->function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

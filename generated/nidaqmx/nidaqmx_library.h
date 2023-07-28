@@ -1206,7 +1206,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     WriteToTEDSFromFilePtr WriteToTEDSFromFile;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

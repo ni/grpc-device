@@ -36,7 +36,7 @@ class NiScopeRestrictedLibrary : public niscope_restricted_grpc::NiScopeRestrict
     GetStartTimestampInformationPtr GetStartTimestampInformation;
   } FunctionLoadStatus;
 
-  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

@@ -18,20 +18,20 @@ namespace nirfmxwlan_restricted_grpc {
 
 NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary() : NiRFmxWLANRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  p_shared_library_->set_library_name(kLibraryName);
-  p_shared_library_->load();
-  bool loaded = p_shared_library_->is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.GetChannelList = reinterpret_cast<GetChannelListPtr>(p_shared_library_->get_function_pointer("RFmxWLAN_GetChannelList"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(p_shared_library_->get_function_pointer("RFmxWLAN_GetError"));
-  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(p_shared_library_->get_function_pointer("RFmxWLAN_GetErrorString"));
-  function_pointers_.OFDMModAccFetchCommonPilotErrorTraceIndB = reinterpret_cast<OFDMModAccFetchCommonPilotErrorTraceIndBPtr>(p_shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchCommonPilotErrorTraceIndB"));
-  function_pointers_.OFDMModAccNoiseCalibrate = reinterpret_cast<OFDMModAccNoiseCalibratePtr>(p_shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccNoiseCalibrate"));
+  function_pointers_.GetChannelList = reinterpret_cast<GetChannelListPtr>(shared_library_->get_function_pointer("RFmxWLAN_GetChannelList"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxWLAN_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxWLAN_GetErrorString"));
+  function_pointers_.OFDMModAccFetchCommonPilotErrorTraceIndB = reinterpret_cast<OFDMModAccFetchCommonPilotErrorTraceIndBPtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchCommonPilotErrorTraceIndB"));
+  function_pointers_.OFDMModAccNoiseCalibrate = reinterpret_cast<OFDMModAccNoiseCalibratePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccNoiseCalibrate"));
 }
 
 NiRFmxWLANRestrictedLibrary::~NiRFmxWLANRestrictedLibrary()
@@ -40,7 +40,7 @@ NiRFmxWLANRestrictedLibrary::~NiRFmxWLANRestrictedLibrary()
 
 ::grpc::Status NiRFmxWLANRestrictedLibrary::check_function_exists(std::string functionName)
 {
-  return p_shared_library_->function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

@@ -18,16 +18,16 @@ namespace nifake_extension_grpc {
 
 NiFakeExtensionLibrary::NiFakeExtensionLibrary() : NiFakeExtensionLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiFakeExtensionLibrary::NiFakeExtensionLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary)
+NiFakeExtensionLibrary::NiFakeExtensionLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  p_shared_library_->set_library_name(kLibraryName);
-  p_shared_library_->load();
-  bool loaded = p_shared_library_->is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.AddCoolFunctionality = reinterpret_cast<AddCoolFunctionalityPtr>(p_shared_library_->get_function_pointer("niFakeExtension_AddCoolFunctionality"));
+  function_pointers_.AddCoolFunctionality = reinterpret_cast<AddCoolFunctionalityPtr>(shared_library_->get_function_pointer("niFakeExtension_AddCoolFunctionality"));
 }
 
 NiFakeExtensionLibrary::~NiFakeExtensionLibrary()
@@ -36,7 +36,7 @@ NiFakeExtensionLibrary::~NiFakeExtensionLibrary()
 
 ::grpc::Status NiFakeExtensionLibrary::check_function_exists(std::string functionName)
 {
-  return p_shared_library_->function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
