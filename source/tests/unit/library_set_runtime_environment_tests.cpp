@@ -39,7 +39,7 @@ TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentFound_Calls
     .Times(1);
 
   auto library = std::make_shared<niswitch_grpc::NiSwitchLibrary>(p_shared_library);
-  EXPECT_TRUE(library->get_runtime_environment_set());
+  EXPECT_TRUE(library->is_runtime_environment_set());
 }
 
 TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentNotFound_DoesNotCallSetRuntimeEnvironment)
@@ -55,7 +55,7 @@ TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentNotFound_Do
     .WillRepeatedly(Return(nullptr)); // means a function wasn't found
 
   auto library = std::make_shared<niswitch_grpc::NiSwitchLibrary>(p_shared_library);
-  EXPECT_FALSE(library->get_runtime_environment_set());
+  EXPECT_FALSE(library->is_runtime_environment_set());
 }
 
 }  // namespace unit

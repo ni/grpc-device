@@ -111,7 +111,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
-  bool get_runtime_environment_set(); // needed to test that we properly call SetRuntimeEnvironment
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortPtr = decltype(&niDMM_Abort);
@@ -300,7 +300,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
-  bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nidmm_grpc

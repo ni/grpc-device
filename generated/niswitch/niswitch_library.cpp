@@ -19,7 +19,7 @@ namespace niswitch_grpc {
 
 NiSwitchLibrary::NiSwitchLibrary() : NiSwitchLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiSwitchLibrary::NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set(false)
+NiSwitchLibrary::NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set_(false)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();
@@ -94,7 +94,7 @@ NiSwitchLibrary::NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInt
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
-    this->runtime_environment_set = true;
+    this->runtime_environment_set_ = true;
   }
 }
 
@@ -613,6 +613,6 @@ ViStatus NiSwitchLibrary::SetRuntimeEnvironment(ViConstString environment, ViCon
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
-bool NiSwitchLibrary::get_runtime_environment_set(){ return this->runtime_environment_set; }
+bool NiSwitchLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }
 
 }  // namespace niswitch_grpc

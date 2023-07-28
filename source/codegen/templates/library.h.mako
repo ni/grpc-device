@@ -45,7 +45,7 @@ class ${class_name} : public ${namespace_prefix}::${class_name}Interface {
   ${return_type} ${method_name}(${service_helpers.create_params(parameters, expand_varargs=True)});
 % endfor
 % if set_runtime_environment_supported:
-  bool get_runtime_environment_set(); // needed to test that we properly call SetRuntimeEnvironment
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 % endif
 
  private:

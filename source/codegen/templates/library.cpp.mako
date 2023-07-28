@@ -99,7 +99,7 @@ ${return_type} ${class_name}::${method_name}(${parameter_list})
 
 % endfor
 % if set_runtime_environment_supported:
-bool ${class_name}::get_runtime_environment_set(){ return this->runtime_environment_set_; }
+bool ${class_name}::is_runtime_environment_set() const { return this->runtime_environment_set_; }
 
 % endif
 }  // namespace ${config["namespace_component"]}_grpc

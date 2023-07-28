@@ -19,7 +19,7 @@ namespace nifake_grpc {
 
 NiFakeLibrary::NiFakeLibrary() : NiFakeLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiFakeLibrary::NiFakeLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set(false)
+NiFakeLibrary::NiFakeLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> pSharedLibrary) : p_shared_library_(pSharedLibrary), runtime_environment_set_(false)
 {
   p_shared_library_->set_library_name(kLibraryName);
   p_shared_library_->load();
@@ -125,7 +125,7 @@ NiFakeLibrary::NiFakeLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
-    this->runtime_environment_set = true;
+    this->runtime_environment_set_ = true;
   }
 }
 
@@ -892,6 +892,6 @@ ViStatus NiFakeLibrary::SetRuntimeEnvironment(ViConstString environment, ViConst
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
-bool NiFakeLibrary::get_runtime_environment_set(){ return this->runtime_environment_set; }
+bool NiFakeLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }
 
 }  // namespace nifake_grpc

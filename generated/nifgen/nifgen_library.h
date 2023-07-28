@@ -155,7 +155,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]);
   ViStatus WriteWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
-  bool get_runtime_environment_set(); // needed to test that we properly call SetRuntimeEnvironment
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortGenerationPtr = decltype(&niFgen_AbortGeneration);
@@ -432,7 +432,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> p_shared_library_;
   FunctionPointers function_pointers_;
-  bool runtime_environment_set; // needed to test that we properly call SetRuntimeEnvironment
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nifgen_grpc
