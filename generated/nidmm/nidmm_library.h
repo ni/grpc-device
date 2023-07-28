@@ -17,7 +17,7 @@ namespace nidmm_grpc {
 class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
  public:
   NiDmmLibrary();
-  NiDmmLibrary::NiDmmLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiDmmLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiDmmLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

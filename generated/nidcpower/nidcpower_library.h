@@ -17,7 +17,7 @@ namespace nidcpower_grpc {
 class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
  public:
   NiDCPowerLibrary();
-  NiDCPowerLibrary::NiDCPowerLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiDCPowerLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiDCPowerLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

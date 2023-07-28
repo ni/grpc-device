@@ -17,7 +17,7 @@ namespace nirfmxbluetooth_grpc {
 class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibraryInterface {
  public:
   NiRFmxBluetoothLibrary();
-  NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiRFmxBluetoothLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxBluetoothLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

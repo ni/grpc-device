@@ -17,7 +17,7 @@ namespace nirfmxdemod_grpc {
 class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface {
  public:
   NiRFmxDemodLibrary();
-  NiRFmxDemodLibrary::NiRFmxDemodLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiRFmxDemodLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFmxDemodLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

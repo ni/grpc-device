@@ -17,7 +17,7 @@ namespace niscope_grpc {
 class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
  public:
   NiScopeLibrary();
-  NiScopeLibrary::NiScopeLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiScopeLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiScopeLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

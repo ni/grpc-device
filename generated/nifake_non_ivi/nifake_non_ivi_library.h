@@ -17,7 +17,7 @@ namespace nifake_non_ivi_grpc {
 class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInterface {
  public:
   NiFakeNonIviLibrary();
-  NiFakeNonIviLibrary::NiFakeNonIviLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiFakeNonIviLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiFakeNonIviLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

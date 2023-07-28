@@ -17,7 +17,7 @@ namespace nifake_extension_grpc {
 class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibraryInterface {
  public:
   NiFakeExtensionLibrary();
-  NiFakeExtensionLibrary::NiFakeExtensionLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiFakeExtensionLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiFakeExtensionLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

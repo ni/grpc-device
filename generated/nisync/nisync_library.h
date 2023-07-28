@@ -17,7 +17,7 @@ namespace nisync_grpc {
 class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
  public:
   NiSyncLibrary();
-  NiSyncLibrary::NiSyncLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiSyncLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiSyncLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

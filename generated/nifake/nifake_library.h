@@ -17,7 +17,7 @@ namespace nifake_grpc {
 class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
  public:
   NiFakeLibrary();
-  NiFakeLibrary::NiFakeLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiFakeLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiFakeLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

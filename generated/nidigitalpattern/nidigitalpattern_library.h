@@ -17,7 +17,7 @@ namespace nidigitalpattern_grpc {
 class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface {
  public:
   NiDigitalLibrary();
-  NiDigitalLibrary::NiDigitalLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiDigitalLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiDigitalLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

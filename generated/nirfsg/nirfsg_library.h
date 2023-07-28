@@ -17,7 +17,7 @@ namespace nirfsg_grpc {
 class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
  public:
   NiRFSGLibrary();
-  NiRFSGLibrary::NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiRFSGLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

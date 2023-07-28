@@ -17,7 +17,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
 class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_restricted_grpc::NimxlcTerminalAdaptorRestrictedLibraryInterface {
  public:
   NimxlcTerminalAdaptorRestrictedLibrary();
-  NimxlcTerminalAdaptorRestrictedLibrary::NimxlcTerminalAdaptorRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NimxlcTerminalAdaptorRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NimxlcTerminalAdaptorRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

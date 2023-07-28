@@ -17,7 +17,7 @@ namespace niscope_restricted_grpc {
 class NiScopeRestrictedLibrary : public niscope_restricted_grpc::NiScopeRestrictedLibraryInterface {
  public:
   NiScopeRestrictedLibrary();
-  NiScopeRestrictedLibrary::NiScopeRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiScopeRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiScopeRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

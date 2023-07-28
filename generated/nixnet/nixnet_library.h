@@ -17,7 +17,7 @@ namespace nixnet_grpc {
 class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
  public:
   NiXnetLibrary();
-  NiXnetLibrary::NiXnetLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiXnetLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiXnetLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);

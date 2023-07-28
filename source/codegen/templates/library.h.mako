@@ -32,7 +32,7 @@ namespace ${config["namespace_component"]}_grpc {
 class ${class_name} : public ${namespace_prefix}::${class_name}Interface {
  public:
   ${class_name}();
-  ${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  ${class_name}(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~${class_name}();
 
   ::grpc::Status check_function_exists(std::string functionName);

@@ -17,7 +17,7 @@ namespace nitclk_grpc {
 class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
  public:
   NiTClkLibrary();
-  NiTClkLibrary::NiTClkLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
+  NiTClkLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface>);
   virtual ~NiTClkLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
