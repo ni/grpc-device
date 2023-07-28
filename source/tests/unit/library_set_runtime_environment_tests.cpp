@@ -10,8 +10,6 @@ namespace tests {
 namespace unit {
 
 using ::testing::_;
-using ::testing::AtLeast;
-using ::testing::StrEq;
 using ::testing::Return;
 
 void FunctionToPointAt() {}
@@ -26,14 +24,11 @@ TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentFound_Calls
 
   const char* func_name = "niSwitch_SetRuntimeEnvironment";
 
-  ON_CALL(*p_shared_library, get_function_pointer(_))
-    .WillByDefault(Return(nullptr));
-  // We must return an address for SetRuntimeEnvironment or we won't call it.
-  ON_CALL(*p_shared_library, get_function_pointer(func_name))
-    .WillByDefault(Return(&FunctionToPointAt));
   EXPECT_CALL(*p_shared_library, get_function_pointer(_))
-    .Times(AtLeast(1));
-  EXPECT_CALL(*p_shared_library, get_function_pointer(func_name));
+    .WillRepeatedly(Return(nullptr));
+  // We must return an address for SetRuntimeEnvironment or we won't call it.
+  EXPECT_CALL(*p_shared_library, get_function_pointer(func_name))
+    .WillOnce(Return(&FunctionToPointAt));
 
   auto library = std::make_shared<niswitch_grpc::NiSwitchLibrary>(p_shared_library);
   EXPECT_TRUE(library->is_runtime_environment_set());
