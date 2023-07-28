@@ -19,10 +19,8 @@ void FunctionToPointAt() {}
 TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentFound_CallsSetRuntimeEnvironment)
 {
   auto p_shared_library = std::make_shared<MockSharedLibrary>();
-  EXPECT_CALL(*p_shared_library, set_library_name(_))
-    .Times(1);
-  EXPECT_CALL(*p_shared_library, load())
-    .Times(1);
+  EXPECT_CALL(*p_shared_library, set_library_name(_));
+  EXPECT_CALL(*p_shared_library, load());
   EXPECT_CALL(*p_shared_library, is_loaded())
     .WillOnce(Return(true)); // the constructor will bail out early if false
 
@@ -35,8 +33,7 @@ TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentFound_Calls
     .WillByDefault(Return(&FunctionToPointAt));
   EXPECT_CALL(*p_shared_library, get_function_pointer(_))
     .Times(AtLeast(1));
-  EXPECT_CALL(*p_shared_library, get_function_pointer(func_name))
-    .Times(1);
+  EXPECT_CALL(*p_shared_library, get_function_pointer(func_name));
 
   auto library = std::make_shared<niswitch_grpc::NiSwitchLibrary>(p_shared_library);
   EXPECT_TRUE(library->is_runtime_environment_set());
@@ -45,10 +42,8 @@ TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentFound_Calls
 TEST(LibrarySetRuntimeEnvironmentTests, Library_SetRuntimeEnvironmentNotFound_DoesNotCallSetRuntimeEnvironment)
 {
   auto p_shared_library = std::make_shared<MockSharedLibrary>();
-  EXPECT_CALL(*p_shared_library, set_library_name(_))
-    .Times(1);
-  EXPECT_CALL(*p_shared_library, load())
-    .Times(1);
+  EXPECT_CALL(*p_shared_library, set_library_name(_));
+  EXPECT_CALL(*p_shared_library, load());
   EXPECT_CALL(*p_shared_library, is_loaded())
     .WillOnce(Return(true)); // the constructor will bail out early if false
   EXPECT_CALL(*p_shared_library, get_function_pointer(_))
