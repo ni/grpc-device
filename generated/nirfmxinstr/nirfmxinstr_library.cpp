@@ -4,6 +4,9 @@
 // Service implementation for the NI-RFMXINSTR Metadata
 //---------------------------------------------------------------------
 #include "nirfmxinstr_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxInstr.dll";
@@ -13,107 +16,110 @@ static const char* kLibraryName = "libnirfmxinstr.so.1";
 
 namespace nirfmxinstr_grpc {
 
-NiRFmxInstrLibrary::NiRFmxInstrLibrary() : shared_library_(kLibraryName)
+NiRFmxInstrLibrary::NiRFmxInstrLibrary() : NiRFmxInstrLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.BuildCalibrationPlaneString = reinterpret_cast<BuildCalibrationPlaneStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildCalibrationPlaneString"));
-  function_pointers_.BuildInstrumentString = reinterpret_cast<BuildInstrumentStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildInstrumentString"));
-  function_pointers_.BuildLOString = reinterpret_cast<BuildLOStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildLOString"));
-  function_pointers_.BuildModuleString = reinterpret_cast<BuildModuleStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildModuleString"));
-  function_pointers_.BuildPortString = reinterpret_cast<BuildPortStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildPortString2"));
-  function_pointers_.CfgExternalAttenuationInterpolationLinear = reinterpret_cast<CfgExternalAttenuationInterpolationLinearPtr>(shared_library_.get_function_pointer("RFmxInstr_CfgExternalAttenuationInterpolationLinear"));
-  function_pointers_.CfgExternalAttenuationInterpolationNearest = reinterpret_cast<CfgExternalAttenuationInterpolationNearestPtr>(shared_library_.get_function_pointer("RFmxInstr_CfgExternalAttenuationInterpolationNearest"));
-  function_pointers_.CfgExternalAttenuationInterpolationSpline = reinterpret_cast<CfgExternalAttenuationInterpolationSplinePtr>(shared_library_.get_function_pointer("RFmxInstr_CfgExternalAttenuationInterpolationSpline"));
-  function_pointers_.CfgExternalAttenuationTable = reinterpret_cast<CfgExternalAttenuationTablePtr>(shared_library_.get_function_pointer("RFmxInstr_CfgExternalAttenuationTable"));
-  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_.get_function_pointer("RFmxInstr_CfgFrequencyReference"));
-  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_.get_function_pointer("RFmxInstr_CfgMechanicalAttenuation"));
-  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_.get_function_pointer("RFmxInstr_CfgRFAttenuation"));
-  function_pointers_.CfgSParameterExternalAttenuationTable = reinterpret_cast<CfgSParameterExternalAttenuationTablePtr>(shared_library_.get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationTable"));
-  function_pointers_.CfgSParameterExternalAttenuationType = reinterpret_cast<CfgSParameterExternalAttenuationTypePtr>(shared_library_.get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationType"));
-  function_pointers_.CheckAcquisitionStatus = reinterpret_cast<CheckAcquisitionStatusPtr>(shared_library_.get_function_pointer("RFmxInstr_CheckAcquisitionStatus"));
-  function_pointers_.CheckIfListExists = reinterpret_cast<CheckIfListExistsPtr>(shared_library_.get_function_pointer("RFmxInstr_CheckIfListExists"));
-  function_pointers_.CheckIfSignalConfigurationExists = reinterpret_cast<CheckIfSignalConfigurationExistsPtr>(shared_library_.get_function_pointer("RFmxInstr_CheckIfSignalConfigurationExists"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("RFmxInstr_Close"));
-  function_pointers_.DeleteAllExternalAttenuationTables = reinterpret_cast<DeleteAllExternalAttenuationTablesPtr>(shared_library_.get_function_pointer("RFmxInstr_DeleteAllExternalAttenuationTables"));
-  function_pointers_.DeleteExternalAttenuationTable = reinterpret_cast<DeleteExternalAttenuationTablePtr>(shared_library_.get_function_pointer("RFmxInstr_DeleteExternalAttenuationTable"));
-  function_pointers_.DisableCalibrationPlane = reinterpret_cast<DisableCalibrationPlanePtr>(shared_library_.get_function_pointer("RFmxInstr_DisableCalibrationPlane"));
-  function_pointers_.EnableCalibrationPlane = reinterpret_cast<EnableCalibrationPlanePtr>(shared_library_.get_function_pointer("RFmxInstr_EnableCalibrationPlane"));
-  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("RFmxInstr_ExportSignal"));
-  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeF32"));
-  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeF32Array"));
-  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeF64"));
-  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeF64Array"));
-  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeI16"));
-  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeI32"));
-  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeI32Array"));
-  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeI64"));
-  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeI64Array"));
-  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeI8"));
-  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeI8Array"));
-  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeNIComplexDoubleArray"));
-  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeNIComplexSingleArray"));
-  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeString"));
-  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeU16"));
-  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeU32"));
-  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeU32Array"));
-  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeU64Array"));
-  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeU8"));
-  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeU8Array"));
-  function_pointers_.GetAvailablePorts = reinterpret_cast<GetAvailablePortsPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAvailablePorts"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxInstr_GetError"));
-  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxInstr_GetErrorString"));
-  function_pointers_.GetExternalAttenuationTableActualValue = reinterpret_cast<GetExternalAttenuationTableActualValuePtr>(shared_library_.get_function_pointer("RFmxInstr_GetExternalAttenuationTableActualValue"));
-  function_pointers_.GetListNames = reinterpret_cast<GetListNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetListNames"));
-  function_pointers_.GetNIRFSASession = reinterpret_cast<GetNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxInstr_GetNIRFSASession"));
-  function_pointers_.GetNIRFSASessionArray = reinterpret_cast<GetNIRFSASessionArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetNIRFSASessionArray"));
-  function_pointers_.GetSParameterExternalAttenuationType = reinterpret_cast<GetSParameterExternalAttenuationTypePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSParameterExternalAttenuationType"));
-  function_pointers_.GetSelfCalibrateLastDateAndTime = reinterpret_cast<GetSelfCalibrateLastDateAndTimePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSelfCalibrateLastDateAndTime"));
-  function_pointers_.GetSelfCalibrateLastTemperature = reinterpret_cast<GetSelfCalibrateLastTemperaturePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSelfCalibrateLastTemperature"));
-  function_pointers_.GetSignalConfigurationNames = reinterpret_cast<GetSignalConfigurationNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSignalConfigurationNames"));
-  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxInstr_Initialize"));
-  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxInstr_InitializeFromNIRFSASession"));
-  function_pointers_.InitializeFromNIRFSASessionArray = reinterpret_cast<InitializeFromNIRFSASessionArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_InitializeFromNIRFSASessionArray"));
-  function_pointers_.IsSelfCalibrateValid = reinterpret_cast<IsSelfCalibrateValidPtr>(shared_library_.get_function_pointer("RFmxInstr_IsSelfCalibrateValid"));
-  function_pointers_.LoadAllConfigurations = reinterpret_cast<LoadAllConfigurationsPtr>(shared_library_.get_function_pointer("RFmxInstr_LoadAllConfigurations"));
-  function_pointers_.LoadSParameterExternalAttenuationTableFromS2PFile = reinterpret_cast<LoadSParameterExternalAttenuationTableFromS2PFilePtr>(shared_library_.get_function_pointer("RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile"));
-  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("RFmxInstr_ResetAttribute"));
-  function_pointers_.ResetDriver = reinterpret_cast<ResetDriverPtr>(shared_library_.get_function_pointer("RFmxInstr_ResetDriver"));
-  function_pointers_.ResetEntireSession = reinterpret_cast<ResetEntireSessionPtr>(shared_library_.get_function_pointer("RFmxInstr_ResetEntireSession"));
-  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_.get_function_pointer("RFmxInstr_ResetToDefault"));
-  function_pointers_.SaveAllConfigurations = reinterpret_cast<SaveAllConfigurationsPtr>(shared_library_.get_function_pointer("RFmxInstr_SaveAllConfigurations"));
-  function_pointers_.SelectActiveExternalAttenuationTable = reinterpret_cast<SelectActiveExternalAttenuationTablePtr>(shared_library_.get_function_pointer("RFmxInstr_SelectActiveExternalAttenuationTable"));
-  function_pointers_.SelfCalibrate = reinterpret_cast<SelfCalibratePtr>(shared_library_.get_function_pointer("RFmxInstr_SelfCalibrate"));
-  function_pointers_.SelfCalibrateRange = reinterpret_cast<SelfCalibrateRangePtr>(shared_library_.get_function_pointer("RFmxInstr_SelfCalibrateRange"));
-  function_pointers_.SendSoftwareEdgeAdvanceTrigger = reinterpret_cast<SendSoftwareEdgeAdvanceTriggerPtr>(shared_library_.get_function_pointer("RFmxInstr_SendSoftwareEdgeAdvanceTrigger"));
-  function_pointers_.SendSoftwareEdgeStartTrigger = reinterpret_cast<SendSoftwareEdgeStartTriggerPtr>(shared_library_.get_function_pointer("RFmxInstr_SendSoftwareEdgeStartTrigger"));
-  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeF32"));
-  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeF32Array"));
-  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeF64"));
-  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeF64Array"));
-  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeI16"));
-  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeI32"));
-  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeI32Array"));
-  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeI64"));
-  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeI64Array"));
-  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeI8"));
-  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeI8Array"));
-  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeNIComplexDoubleArray"));
-  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeNIComplexSingleArray"));
-  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeString"));
-  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeU16"));
-  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeU32"));
-  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeU32Array"));
-  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeU64Array"));
-  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeU8"));
-  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeU8Array"));
-  function_pointers_.TimestampFromValues = reinterpret_cast<TimestampFromValuesPtr>(shared_library_.get_function_pointer("RFmxInstr_TimestampFromValues"));
-  function_pointers_.ValuesFromTimestamp = reinterpret_cast<ValuesFromTimestampPtr>(shared_library_.get_function_pointer("RFmxInstr_ValuesFromTimestamp"));
-  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_.get_function_pointer("RFmxInstr_WaitForAcquisitionComplete"));
+  function_pointers_.BuildCalibrationPlaneString = reinterpret_cast<BuildCalibrationPlaneStringPtr>(shared_library_->get_function_pointer("RFmxInstr_BuildCalibrationPlaneString"));
+  function_pointers_.BuildInstrumentString = reinterpret_cast<BuildInstrumentStringPtr>(shared_library_->get_function_pointer("RFmxInstr_BuildInstrumentString"));
+  function_pointers_.BuildLOString = reinterpret_cast<BuildLOStringPtr>(shared_library_->get_function_pointer("RFmxInstr_BuildLOString"));
+  function_pointers_.BuildModuleString = reinterpret_cast<BuildModuleStringPtr>(shared_library_->get_function_pointer("RFmxInstr_BuildModuleString"));
+  function_pointers_.BuildPortString = reinterpret_cast<BuildPortStringPtr>(shared_library_->get_function_pointer("RFmxInstr_BuildPortString2"));
+  function_pointers_.CfgExternalAttenuationInterpolationLinear = reinterpret_cast<CfgExternalAttenuationInterpolationLinearPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgExternalAttenuationInterpolationLinear"));
+  function_pointers_.CfgExternalAttenuationInterpolationNearest = reinterpret_cast<CfgExternalAttenuationInterpolationNearestPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgExternalAttenuationInterpolationNearest"));
+  function_pointers_.CfgExternalAttenuationInterpolationSpline = reinterpret_cast<CfgExternalAttenuationInterpolationSplinePtr>(shared_library_->get_function_pointer("RFmxInstr_CfgExternalAttenuationInterpolationSpline"));
+  function_pointers_.CfgExternalAttenuationTable = reinterpret_cast<CfgExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_CfgExternalAttenuationTable"));
+  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_->get_function_pointer("RFmxInstr_CfgFrequencyReference"));
+  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgMechanicalAttenuation"));
+  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgRFAttenuation"));
+  function_pointers_.CfgSParameterExternalAttenuationTable = reinterpret_cast<CfgSParameterExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationTable"));
+  function_pointers_.CfgSParameterExternalAttenuationType = reinterpret_cast<CfgSParameterExternalAttenuationTypePtr>(shared_library_->get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationType"));
+  function_pointers_.CheckAcquisitionStatus = reinterpret_cast<CheckAcquisitionStatusPtr>(shared_library_->get_function_pointer("RFmxInstr_CheckAcquisitionStatus"));
+  function_pointers_.CheckIfListExists = reinterpret_cast<CheckIfListExistsPtr>(shared_library_->get_function_pointer("RFmxInstr_CheckIfListExists"));
+  function_pointers_.CheckIfSignalConfigurationExists = reinterpret_cast<CheckIfSignalConfigurationExistsPtr>(shared_library_->get_function_pointer("RFmxInstr_CheckIfSignalConfigurationExists"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("RFmxInstr_Close"));
+  function_pointers_.DeleteAllExternalAttenuationTables = reinterpret_cast<DeleteAllExternalAttenuationTablesPtr>(shared_library_->get_function_pointer("RFmxInstr_DeleteAllExternalAttenuationTables"));
+  function_pointers_.DeleteExternalAttenuationTable = reinterpret_cast<DeleteExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_DeleteExternalAttenuationTable"));
+  function_pointers_.DisableCalibrationPlane = reinterpret_cast<DisableCalibrationPlanePtr>(shared_library_->get_function_pointer("RFmxInstr_DisableCalibrationPlane"));
+  function_pointers_.EnableCalibrationPlane = reinterpret_cast<EnableCalibrationPlanePtr>(shared_library_->get_function_pointer("RFmxInstr_EnableCalibrationPlane"));
+  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("RFmxInstr_ExportSignal"));
+  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF32"));
+  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF32Array"));
+  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF64"));
+  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF64Array"));
+  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeI16"));
+  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeI32"));
+  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeI32Array"));
+  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeI64"));
+  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeI64Array"));
+  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeI8"));
+  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeNIComplexSingleArray"));
+  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeString"));
+  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU16"));
+  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU32"));
+  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU32Array"));
+  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU64Array"));
+  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU8"));
+  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU8Array"));
+  function_pointers_.GetAvailablePorts = reinterpret_cast<GetAvailablePortsPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAvailablePorts"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxInstr_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxInstr_GetErrorString"));
+  function_pointers_.GetExternalAttenuationTableActualValue = reinterpret_cast<GetExternalAttenuationTableActualValuePtr>(shared_library_->get_function_pointer("RFmxInstr_GetExternalAttenuationTableActualValue"));
+  function_pointers_.GetListNames = reinterpret_cast<GetListNamesPtr>(shared_library_->get_function_pointer("RFmxInstr_GetListNames"));
+  function_pointers_.GetNIRFSASession = reinterpret_cast<GetNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxInstr_GetNIRFSASession"));
+  function_pointers_.GetNIRFSASessionArray = reinterpret_cast<GetNIRFSASessionArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetNIRFSASessionArray"));
+  function_pointers_.GetSParameterExternalAttenuationType = reinterpret_cast<GetSParameterExternalAttenuationTypePtr>(shared_library_->get_function_pointer("RFmxInstr_GetSParameterExternalAttenuationType"));
+  function_pointers_.GetSelfCalibrateLastDateAndTime = reinterpret_cast<GetSelfCalibrateLastDateAndTimePtr>(shared_library_->get_function_pointer("RFmxInstr_GetSelfCalibrateLastDateAndTime"));
+  function_pointers_.GetSelfCalibrateLastTemperature = reinterpret_cast<GetSelfCalibrateLastTemperaturePtr>(shared_library_->get_function_pointer("RFmxInstr_GetSelfCalibrateLastTemperature"));
+  function_pointers_.GetSignalConfigurationNames = reinterpret_cast<GetSignalConfigurationNamesPtr>(shared_library_->get_function_pointer("RFmxInstr_GetSignalConfigurationNames"));
+  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxInstr_Initialize"));
+  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxInstr_InitializeFromNIRFSASession"));
+  function_pointers_.InitializeFromNIRFSASessionArray = reinterpret_cast<InitializeFromNIRFSASessionArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_InitializeFromNIRFSASessionArray"));
+  function_pointers_.IsSelfCalibrateValid = reinterpret_cast<IsSelfCalibrateValidPtr>(shared_library_->get_function_pointer("RFmxInstr_IsSelfCalibrateValid"));
+  function_pointers_.LoadAllConfigurations = reinterpret_cast<LoadAllConfigurationsPtr>(shared_library_->get_function_pointer("RFmxInstr_LoadAllConfigurations"));
+  function_pointers_.LoadSParameterExternalAttenuationTableFromS2PFile = reinterpret_cast<LoadSParameterExternalAttenuationTableFromS2PFilePtr>(shared_library_->get_function_pointer("RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("RFmxInstr_ResetAttribute"));
+  function_pointers_.ResetDriver = reinterpret_cast<ResetDriverPtr>(shared_library_->get_function_pointer("RFmxInstr_ResetDriver"));
+  function_pointers_.ResetEntireSession = reinterpret_cast<ResetEntireSessionPtr>(shared_library_->get_function_pointer("RFmxInstr_ResetEntireSession"));
+  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_->get_function_pointer("RFmxInstr_ResetToDefault"));
+  function_pointers_.SaveAllConfigurations = reinterpret_cast<SaveAllConfigurationsPtr>(shared_library_->get_function_pointer("RFmxInstr_SaveAllConfigurations"));
+  function_pointers_.SelectActiveExternalAttenuationTable = reinterpret_cast<SelectActiveExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_SelectActiveExternalAttenuationTable"));
+  function_pointers_.SelfCalibrate = reinterpret_cast<SelfCalibratePtr>(shared_library_->get_function_pointer("RFmxInstr_SelfCalibrate"));
+  function_pointers_.SelfCalibrateRange = reinterpret_cast<SelfCalibrateRangePtr>(shared_library_->get_function_pointer("RFmxInstr_SelfCalibrateRange"));
+  function_pointers_.SendSoftwareEdgeAdvanceTrigger = reinterpret_cast<SendSoftwareEdgeAdvanceTriggerPtr>(shared_library_->get_function_pointer("RFmxInstr_SendSoftwareEdgeAdvanceTrigger"));
+  function_pointers_.SendSoftwareEdgeStartTrigger = reinterpret_cast<SendSoftwareEdgeStartTriggerPtr>(shared_library_->get_function_pointer("RFmxInstr_SendSoftwareEdgeStartTrigger"));
+  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeF32"));
+  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeF32Array"));
+  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeF64"));
+  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeF64Array"));
+  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeI16"));
+  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeI32"));
+  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeI32Array"));
+  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeI64"));
+  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeI64Array"));
+  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeI8"));
+  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeNIComplexSingleArray"));
+  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeString"));
+  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeU16"));
+  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeU32"));
+  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeU32Array"));
+  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeU64Array"));
+  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeU8"));
+  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_SetAttributeU8Array"));
+  function_pointers_.TimestampFromValues = reinterpret_cast<TimestampFromValuesPtr>(shared_library_->get_function_pointer("RFmxInstr_TimestampFromValues"));
+  function_pointers_.ValuesFromTimestamp = reinterpret_cast<ValuesFromTimestampPtr>(shared_library_->get_function_pointer("RFmxInstr_ValuesFromTimestamp"));
+  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxInstr_WaitForAcquisitionComplete"));
 }
 
 NiRFmxInstrLibrary::~NiRFmxInstrLibrary()
@@ -122,7 +128,7 @@ NiRFmxInstrLibrary::~NiRFmxInstrLibrary()
 
 ::grpc::Status NiRFmxInstrLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

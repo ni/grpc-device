@@ -8,13 +8,16 @@
 
 #include "nidcpower_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nidcpower_grpc {
 
 class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
  public:
   NiDCPowerLibrary();
+  explicit NiDCPowerLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiDCPowerLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -167,6 +170,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout);
   ViStatus WaitForEventWithChannels(ViSession vi, ViConstString channelName, ViInt32 eventId, ViReal64 timeout);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortPtr = decltype(&niDCPower_Abort);
@@ -471,8 +475,9 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nidcpower_grpc

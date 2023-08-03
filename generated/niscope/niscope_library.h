@@ -8,13 +8,16 @@
 
 #include "niscope_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace niscope_grpc {
 
 class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
  public:
   NiScopeLibrary();
+  explicit NiScopeLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiScopeLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -111,6 +114,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortPtr = decltype(&niScope_Abort);
@@ -303,8 +307,9 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace niscope_grpc

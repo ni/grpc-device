@@ -4,7 +4,10 @@
 // Service implementation for the NI-FGEN Metadata
 //---------------------------------------------------------------------
 #include "nifgen_library.h"
+#include <server/shared_library.h>
 #include "version.h"
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niFgen_64.dll";
@@ -14,151 +17,155 @@ static const char* kLibraryName = "libnifgen.so";
 
 namespace nifgen_grpc {
 
-NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
+NiFgenLibrary::NiFgenLibrary() : NiFgenLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiFgenLibrary::NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library), runtime_environment_set_(false)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.AbortGeneration = reinterpret_cast<AbortGenerationPtr>(shared_library_.get_function_pointer("niFgen_AbortGeneration"));
-  function_pointers_.AdjustSampleClockRelativeDelay = reinterpret_cast<AdjustSampleClockRelativeDelayPtr>(shared_library_.get_function_pointer("niFgen_AdjustSampleClockRelativeDelay"));
-  function_pointers_.AllocateNamedWaveform = reinterpret_cast<AllocateNamedWaveformPtr>(shared_library_.get_function_pointer("niFgen_AllocateNamedWaveform"));
-  function_pointers_.AllocateWaveform = reinterpret_cast<AllocateWaveformPtr>(shared_library_.get_function_pointer("niFgen_AllocateWaveform"));
-  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViBoolean"));
-  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViInt32"));
-  function_pointers_.CheckAttributeViInt64 = reinterpret_cast<CheckAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViInt64"));
-  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViReal64"));
-  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViSession"));
-  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niFgen_CheckAttributeViString"));
-  function_pointers_.ClearArbMemory = reinterpret_cast<ClearArbMemoryPtr>(shared_library_.get_function_pointer("niFgen_ClearArbMemory"));
-  function_pointers_.ClearArbSequence = reinterpret_cast<ClearArbSequencePtr>(shared_library_.get_function_pointer("niFgen_ClearArbSequence"));
-  function_pointers_.ClearArbWaveform = reinterpret_cast<ClearArbWaveformPtr>(shared_library_.get_function_pointer("niFgen_ClearArbWaveform"));
-  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niFgen_ClearError"));
-  function_pointers_.ClearFreqList = reinterpret_cast<ClearFreqListPtr>(shared_library_.get_function_pointer("niFgen_ClearFreqList"));
-  function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niFgen_ClearInterchangeWarnings"));
-  function_pointers_.ClearUserStandardWaveform = reinterpret_cast<ClearUserStandardWaveformPtr>(shared_library_.get_function_pointer("niFgen_ClearUserStandardWaveform"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niFgen_close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niFgen_Commit"));
-  function_pointers_.ConfigureAmplitude = reinterpret_cast<ConfigureAmplitudePtr>(shared_library_.get_function_pointer("niFgen_ConfigureAmplitude"));
-  function_pointers_.ConfigureArbSequence = reinterpret_cast<ConfigureArbSequencePtr>(shared_library_.get_function_pointer("niFgen_ConfigureArbSequence"));
-  function_pointers_.ConfigureArbWaveform = reinterpret_cast<ConfigureArbWaveformPtr>(shared_library_.get_function_pointer("niFgen_ConfigureArbWaveform"));
-  function_pointers_.ConfigureChannels = reinterpret_cast<ConfigureChannelsPtr>(shared_library_.get_function_pointer("niFgen_ConfigureChannels"));
-  function_pointers_.ConfigureClockMode = reinterpret_cast<ConfigureClockModePtr>(shared_library_.get_function_pointer("niFgen_ConfigureClockMode"));
-  function_pointers_.ConfigureCustomFIRFilterCoefficients = reinterpret_cast<ConfigureCustomFIRFilterCoefficientsPtr>(shared_library_.get_function_pointer("niFgen_ConfigureCustomFIRFilterCoefficients"));
-  function_pointers_.ConfigureDigitalEdgeScriptTrigger = reinterpret_cast<ConfigureDigitalEdgeScriptTriggerPtr>(shared_library_.get_function_pointer("niFgen_ConfigureDigitalEdgeScriptTrigger"));
-  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niFgen_ConfigureDigitalEdgeStartTrigger"));
-  function_pointers_.ConfigureDigitalLevelScriptTrigger = reinterpret_cast<ConfigureDigitalLevelScriptTriggerPtr>(shared_library_.get_function_pointer("niFgen_ConfigureDigitalLevelScriptTrigger"));
-  function_pointers_.ConfigureFreqList = reinterpret_cast<ConfigureFreqListPtr>(shared_library_.get_function_pointer("niFgen_ConfigureFreqList"));
-  function_pointers_.ConfigureFrequency = reinterpret_cast<ConfigureFrequencyPtr>(shared_library_.get_function_pointer("niFgen_ConfigureFrequency"));
-  function_pointers_.ConfigureOperationMode = reinterpret_cast<ConfigureOperationModePtr>(shared_library_.get_function_pointer("niFgen_ConfigureOperationMode"));
-  function_pointers_.ConfigureOutputEnabled = reinterpret_cast<ConfigureOutputEnabledPtr>(shared_library_.get_function_pointer("niFgen_ConfigureOutputEnabled"));
-  function_pointers_.ConfigureOutputImpedance = reinterpret_cast<ConfigureOutputImpedancePtr>(shared_library_.get_function_pointer("niFgen_ConfigureOutputImpedance"));
-  function_pointers_.ConfigureOutputMode = reinterpret_cast<ConfigureOutputModePtr>(shared_library_.get_function_pointer("niFgen_ConfigureOutputMode"));
-  function_pointers_.ConfigureP2PEndpointFullnessStartTrigger = reinterpret_cast<ConfigureP2PEndpointFullnessStartTriggerPtr>(shared_library_.get_function_pointer("niFgen_ConfigureP2PEndpointFullnessStartTrigger"));
-  function_pointers_.ConfigureReferenceClock = reinterpret_cast<ConfigureReferenceClockPtr>(shared_library_.get_function_pointer("niFgen_ConfigureReferenceClock"));
-  function_pointers_.ConfigureSampleClockSource = reinterpret_cast<ConfigureSampleClockSourcePtr>(shared_library_.get_function_pointer("niFgen_ConfigureSampleClockSource"));
-  function_pointers_.ConfigureSampleRate = reinterpret_cast<ConfigureSampleRatePtr>(shared_library_.get_function_pointer("niFgen_ConfigureSampleRate"));
-  function_pointers_.ConfigureSoftwareEdgeScriptTrigger = reinterpret_cast<ConfigureSoftwareEdgeScriptTriggerPtr>(shared_library_.get_function_pointer("niFgen_ConfigureSoftwareEdgeScriptTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeStartTrigger = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niFgen_ConfigureSoftwareEdgeStartTrigger"));
-  function_pointers_.ConfigureStandardWaveform = reinterpret_cast<ConfigureStandardWaveformPtr>(shared_library_.get_function_pointer("niFgen_ConfigureStandardWaveform"));
-  function_pointers_.ConfigureSynchronization = reinterpret_cast<ConfigureSynchronizationPtr>(shared_library_.get_function_pointer("niFgen_ConfigureSynchronization"));
-  function_pointers_.ConfigureTriggerMode = reinterpret_cast<ConfigureTriggerModePtr>(shared_library_.get_function_pointer("niFgen_ConfigureTriggerMode"));
-  function_pointers_.CreateAdvancedArbSequence = reinterpret_cast<CreateAdvancedArbSequencePtr>(shared_library_.get_function_pointer("niFgen_CreateAdvancedArbSequence"));
-  function_pointers_.CreateArbSequence = reinterpret_cast<CreateArbSequencePtr>(shared_library_.get_function_pointer("niFgen_CreateArbSequence"));
-  function_pointers_.CreateFreqList = reinterpret_cast<CreateFreqListPtr>(shared_library_.get_function_pointer("niFgen_CreateFreqList"));
-  function_pointers_.CreateWaveformComplexF64 = reinterpret_cast<CreateWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformComplexF64"));
-  function_pointers_.CreateWaveformF64 = reinterpret_cast<CreateWaveformF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformF64"));
-  function_pointers_.CreateWaveformFromFileF64 = reinterpret_cast<CreateWaveformFromFileF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileF64"));
-  function_pointers_.CreateWaveformFromFileHWS = reinterpret_cast<CreateWaveformFromFileHWSPtr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileHWS"));
-  function_pointers_.CreateWaveformFromFileI16 = reinterpret_cast<CreateWaveformFromFileI16Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileI16"));
-  function_pointers_.CreateWaveformI16 = reinterpret_cast<CreateWaveformI16Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformI16"));
-  function_pointers_.DefineUserStandardWaveform = reinterpret_cast<DefineUserStandardWaveformPtr>(shared_library_.get_function_pointer("niFgen_DefineUserStandardWaveform"));
-  function_pointers_.DeleteNamedWaveform = reinterpret_cast<DeleteNamedWaveformPtr>(shared_library_.get_function_pointer("niFgen_DeleteNamedWaveform"));
-  function_pointers_.DeleteScript = reinterpret_cast<DeleteScriptPtr>(shared_library_.get_function_pointer("niFgen_DeleteScript"));
-  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niFgen_Disable"));
-  function_pointers_.DisableAnalogFilter = reinterpret_cast<DisableAnalogFilterPtr>(shared_library_.get_function_pointer("niFgen_DisableAnalogFilter"));
-  function_pointers_.DisableDigitalFilter = reinterpret_cast<DisableDigitalFilterPtr>(shared_library_.get_function_pointer("niFgen_DisableDigitalFilter"));
-  function_pointers_.DisableDigitalPatterning = reinterpret_cast<DisableDigitalPatterningPtr>(shared_library_.get_function_pointer("niFgen_DisableDigitalPatterning"));
-  function_pointers_.DisableScriptTrigger = reinterpret_cast<DisableScriptTriggerPtr>(shared_library_.get_function_pointer("niFgen_DisableScriptTrigger"));
-  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_.get_function_pointer("niFgen_DisableStartTrigger"));
-  function_pointers_.EnableAnalogFilter = reinterpret_cast<EnableAnalogFilterPtr>(shared_library_.get_function_pointer("niFgen_EnableAnalogFilter"));
-  function_pointers_.EnableDigitalFilter = reinterpret_cast<EnableDigitalFilterPtr>(shared_library_.get_function_pointer("niFgen_EnableDigitalFilter"));
-  function_pointers_.EnableDigitalPatterning = reinterpret_cast<EnableDigitalPatterningPtr>(shared_library_.get_function_pointer("niFgen_EnableDigitalPatterning"));
-  function_pointers_.ErrorHandler = reinterpret_cast<ErrorHandlerPtr>(shared_library_.get_function_pointer("niFgen_ErrorHandler"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niFgen_error_message"));
-  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_.get_function_pointer("niFgen_error_query"));
-  function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niFgen_ExportAttributeConfigurationBuffer"));
-  function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niFgen_ExportAttributeConfigurationFile"));
-  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niFgen_ExportSignal"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFgen_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFgen_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFgen_GetAttributeViInt64"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFgen_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niFgen_GetAttributeViSession"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niFgen_GetAttributeViString"));
-  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niFgen_GetChannelName"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niFgen_GetError"));
-  function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niFgen_GetExtCalLastDateAndTime"));
-  function_pointers_.GetExtCalLastTemp = reinterpret_cast<GetExtCalLastTempPtr>(shared_library_.get_function_pointer("niFgen_GetExtCalLastTemp"));
-  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_.get_function_pointer("niFgen_GetExtCalRecommendedInterval"));
-  function_pointers_.GetFIRFilterCoefficients = reinterpret_cast<GetFIRFilterCoefficientsPtr>(shared_library_.get_function_pointer("niFgen_GetFIRFilterCoefficients"));
-  function_pointers_.GetHardwareState = reinterpret_cast<GetHardwareStatePtr>(shared_library_.get_function_pointer("niFgen_GetHardwareState"));
-  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_.get_function_pointer("niFgen_GetNextCoercionRecord"));
-  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_.get_function_pointer("niFgen_GetNextInterchangeWarning"));
-  function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niFgen_GetSelfCalLastDateAndTime"));
-  function_pointers_.GetSelfCalLastTemp = reinterpret_cast<GetSelfCalLastTempPtr>(shared_library_.get_function_pointer("niFgen_GetSelfCalLastTemp"));
-  function_pointers_.GetSelfCalSupported = reinterpret_cast<GetSelfCalSupportedPtr>(shared_library_.get_function_pointer("niFgen_GetSelfCalSupported"));
-  function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_.get_function_pointer("niFgen_GetStreamEndpointHandle"));
-  function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niFgen_ImportAttributeConfigurationBuffer"));
-  function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niFgen_ImportAttributeConfigurationFile"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFgen_init"));
-  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niFgen_InitWithOptions"));
-  function_pointers_.InitializeWithChannels = reinterpret_cast<InitializeWithChannelsPtr>(shared_library_.get_function_pointer("niFgen_InitializeWithChannels"));
-  function_pointers_.InitiateGeneration = reinterpret_cast<InitiateGenerationPtr>(shared_library_.get_function_pointer("niFgen_InitiateGeneration"));
-  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niFgen_InvalidateAllAttributes"));
-  function_pointers_.IsDone = reinterpret_cast<IsDonePtr>(shared_library_.get_function_pointer("niFgen_IsDone"));
-  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niFgen_LockSession"));
-  function_pointers_.ManualEnableP2PStream = reinterpret_cast<ManualEnableP2PStreamPtr>(shared_library_.get_function_pointer("niFgen_ManualEnableP2PStream"));
-  function_pointers_.QueryArbSeqCapabilities = reinterpret_cast<QueryArbSeqCapabilitiesPtr>(shared_library_.get_function_pointer("niFgen_QueryArbSeqCapabilities"));
-  function_pointers_.QueryArbWfmCapabilities = reinterpret_cast<QueryArbWfmCapabilitiesPtr>(shared_library_.get_function_pointer("niFgen_QueryArbWfmCapabilities"));
-  function_pointers_.QueryFreqListCapabilities = reinterpret_cast<QueryFreqListCapabilitiesPtr>(shared_library_.get_function_pointer("niFgen_QueryFreqListCapabilities"));
-  function_pointers_.ReadCurrentTemperature = reinterpret_cast<ReadCurrentTemperaturePtr>(shared_library_.get_function_pointer("niFgen_ReadCurrentTemperature"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niFgen_reset"));
-  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("niFgen_ResetAttribute"));
-  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niFgen_ResetDevice"));
-  function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_.get_function_pointer("niFgen_ResetInterchangeCheck"));
-  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niFgen_ResetWithDefaults"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niFgen_revision_query"));
-  function_pointers_.RouteSignalOut = reinterpret_cast<RouteSignalOutPtr>(shared_library_.get_function_pointer("niFgen_RouteSignalOut"));
-  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_.get_function_pointer("niFgen_SelfCal"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niFgen_self_test"));
-  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("niFgen_SendSoftwareEdgeTrigger"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niFgen_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niFgen_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niFgen_SetAttributeViInt64"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niFgen_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niFgen_SetAttributeViSession"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niFgen_SetAttributeViString"));
-  function_pointers_.SetNamedWaveformNextWritePosition = reinterpret_cast<SetNamedWaveformNextWritePositionPtr>(shared_library_.get_function_pointer("niFgen_SetNamedWaveformNextWritePosition"));
-  function_pointers_.SetWaveformNextWritePosition = reinterpret_cast<SetWaveformNextWritePositionPtr>(shared_library_.get_function_pointer("niFgen_SetWaveformNextWritePosition"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niFgen_UnlockSession"));
-  function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_.get_function_pointer("niFgen_WaitUntilDone"));
-  function_pointers_.WriteBinary16Waveform = reinterpret_cast<WriteBinary16WaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteBinary16Waveform"));
-  function_pointers_.WriteComplexBinary16Waveform = reinterpret_cast<WriteComplexBinary16WaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteComplexBinary16Waveform"));
-  function_pointers_.WriteNamedWaveformComplexF64 = reinterpret_cast<WriteNamedWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformComplexF64"));
-  function_pointers_.WriteNamedWaveformComplexI16 = reinterpret_cast<WriteNamedWaveformComplexI16Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformComplexI16"));
-  function_pointers_.WriteNamedWaveformF64 = reinterpret_cast<WriteNamedWaveformF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformF64"));
-  function_pointers_.WriteNamedWaveformI16 = reinterpret_cast<WriteNamedWaveformI16Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformI16"));
-  function_pointers_.WriteP2PEndpointI16 = reinterpret_cast<WriteP2PEndpointI16Ptr>(shared_library_.get_function_pointer("niFgen_WriteP2PEndpointI16"));
-  function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_.get_function_pointer("niFgen_WriteScript"));
-  function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteWaveform"));
-  function_pointers_.WriteWaveformComplexF64 = reinterpret_cast<WriteWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteWaveformComplexF64"));
-  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niFgen_SetRuntimeEnvironment"));
+  function_pointers_.AbortGeneration = reinterpret_cast<AbortGenerationPtr>(shared_library_->get_function_pointer("niFgen_AbortGeneration"));
+  function_pointers_.AdjustSampleClockRelativeDelay = reinterpret_cast<AdjustSampleClockRelativeDelayPtr>(shared_library_->get_function_pointer("niFgen_AdjustSampleClockRelativeDelay"));
+  function_pointers_.AllocateNamedWaveform = reinterpret_cast<AllocateNamedWaveformPtr>(shared_library_->get_function_pointer("niFgen_AllocateNamedWaveform"));
+  function_pointers_.AllocateWaveform = reinterpret_cast<AllocateWaveformPtr>(shared_library_->get_function_pointer("niFgen_AllocateWaveform"));
+  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_->get_function_pointer("niFgen_CheckAttributeViBoolean"));
+  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_->get_function_pointer("niFgen_CheckAttributeViInt32"));
+  function_pointers_.CheckAttributeViInt64 = reinterpret_cast<CheckAttributeViInt64Ptr>(shared_library_->get_function_pointer("niFgen_CheckAttributeViInt64"));
+  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_->get_function_pointer("niFgen_CheckAttributeViReal64"));
+  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_->get_function_pointer("niFgen_CheckAttributeViSession"));
+  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_->get_function_pointer("niFgen_CheckAttributeViString"));
+  function_pointers_.ClearArbMemory = reinterpret_cast<ClearArbMemoryPtr>(shared_library_->get_function_pointer("niFgen_ClearArbMemory"));
+  function_pointers_.ClearArbSequence = reinterpret_cast<ClearArbSequencePtr>(shared_library_->get_function_pointer("niFgen_ClearArbSequence"));
+  function_pointers_.ClearArbWaveform = reinterpret_cast<ClearArbWaveformPtr>(shared_library_->get_function_pointer("niFgen_ClearArbWaveform"));
+  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_->get_function_pointer("niFgen_ClearError"));
+  function_pointers_.ClearFreqList = reinterpret_cast<ClearFreqListPtr>(shared_library_->get_function_pointer("niFgen_ClearFreqList"));
+  function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_->get_function_pointer("niFgen_ClearInterchangeWarnings"));
+  function_pointers_.ClearUserStandardWaveform = reinterpret_cast<ClearUserStandardWaveformPtr>(shared_library_->get_function_pointer("niFgen_ClearUserStandardWaveform"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("niFgen_close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("niFgen_Commit"));
+  function_pointers_.ConfigureAmplitude = reinterpret_cast<ConfigureAmplitudePtr>(shared_library_->get_function_pointer("niFgen_ConfigureAmplitude"));
+  function_pointers_.ConfigureArbSequence = reinterpret_cast<ConfigureArbSequencePtr>(shared_library_->get_function_pointer("niFgen_ConfigureArbSequence"));
+  function_pointers_.ConfigureArbWaveform = reinterpret_cast<ConfigureArbWaveformPtr>(shared_library_->get_function_pointer("niFgen_ConfigureArbWaveform"));
+  function_pointers_.ConfigureChannels = reinterpret_cast<ConfigureChannelsPtr>(shared_library_->get_function_pointer("niFgen_ConfigureChannels"));
+  function_pointers_.ConfigureClockMode = reinterpret_cast<ConfigureClockModePtr>(shared_library_->get_function_pointer("niFgen_ConfigureClockMode"));
+  function_pointers_.ConfigureCustomFIRFilterCoefficients = reinterpret_cast<ConfigureCustomFIRFilterCoefficientsPtr>(shared_library_->get_function_pointer("niFgen_ConfigureCustomFIRFilterCoefficients"));
+  function_pointers_.ConfigureDigitalEdgeScriptTrigger = reinterpret_cast<ConfigureDigitalEdgeScriptTriggerPtr>(shared_library_->get_function_pointer("niFgen_ConfigureDigitalEdgeScriptTrigger"));
+  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_->get_function_pointer("niFgen_ConfigureDigitalEdgeStartTrigger"));
+  function_pointers_.ConfigureDigitalLevelScriptTrigger = reinterpret_cast<ConfigureDigitalLevelScriptTriggerPtr>(shared_library_->get_function_pointer("niFgen_ConfigureDigitalLevelScriptTrigger"));
+  function_pointers_.ConfigureFreqList = reinterpret_cast<ConfigureFreqListPtr>(shared_library_->get_function_pointer("niFgen_ConfigureFreqList"));
+  function_pointers_.ConfigureFrequency = reinterpret_cast<ConfigureFrequencyPtr>(shared_library_->get_function_pointer("niFgen_ConfigureFrequency"));
+  function_pointers_.ConfigureOperationMode = reinterpret_cast<ConfigureOperationModePtr>(shared_library_->get_function_pointer("niFgen_ConfigureOperationMode"));
+  function_pointers_.ConfigureOutputEnabled = reinterpret_cast<ConfigureOutputEnabledPtr>(shared_library_->get_function_pointer("niFgen_ConfigureOutputEnabled"));
+  function_pointers_.ConfigureOutputImpedance = reinterpret_cast<ConfigureOutputImpedancePtr>(shared_library_->get_function_pointer("niFgen_ConfigureOutputImpedance"));
+  function_pointers_.ConfigureOutputMode = reinterpret_cast<ConfigureOutputModePtr>(shared_library_->get_function_pointer("niFgen_ConfigureOutputMode"));
+  function_pointers_.ConfigureP2PEndpointFullnessStartTrigger = reinterpret_cast<ConfigureP2PEndpointFullnessStartTriggerPtr>(shared_library_->get_function_pointer("niFgen_ConfigureP2PEndpointFullnessStartTrigger"));
+  function_pointers_.ConfigureReferenceClock = reinterpret_cast<ConfigureReferenceClockPtr>(shared_library_->get_function_pointer("niFgen_ConfigureReferenceClock"));
+  function_pointers_.ConfigureSampleClockSource = reinterpret_cast<ConfigureSampleClockSourcePtr>(shared_library_->get_function_pointer("niFgen_ConfigureSampleClockSource"));
+  function_pointers_.ConfigureSampleRate = reinterpret_cast<ConfigureSampleRatePtr>(shared_library_->get_function_pointer("niFgen_ConfigureSampleRate"));
+  function_pointers_.ConfigureSoftwareEdgeScriptTrigger = reinterpret_cast<ConfigureSoftwareEdgeScriptTriggerPtr>(shared_library_->get_function_pointer("niFgen_ConfigureSoftwareEdgeScriptTrigger"));
+  function_pointers_.ConfigureSoftwareEdgeStartTrigger = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerPtr>(shared_library_->get_function_pointer("niFgen_ConfigureSoftwareEdgeStartTrigger"));
+  function_pointers_.ConfigureStandardWaveform = reinterpret_cast<ConfigureStandardWaveformPtr>(shared_library_->get_function_pointer("niFgen_ConfigureStandardWaveform"));
+  function_pointers_.ConfigureSynchronization = reinterpret_cast<ConfigureSynchronizationPtr>(shared_library_->get_function_pointer("niFgen_ConfigureSynchronization"));
+  function_pointers_.ConfigureTriggerMode = reinterpret_cast<ConfigureTriggerModePtr>(shared_library_->get_function_pointer("niFgen_ConfigureTriggerMode"));
+  function_pointers_.CreateAdvancedArbSequence = reinterpret_cast<CreateAdvancedArbSequencePtr>(shared_library_->get_function_pointer("niFgen_CreateAdvancedArbSequence"));
+  function_pointers_.CreateArbSequence = reinterpret_cast<CreateArbSequencePtr>(shared_library_->get_function_pointer("niFgen_CreateArbSequence"));
+  function_pointers_.CreateFreqList = reinterpret_cast<CreateFreqListPtr>(shared_library_->get_function_pointer("niFgen_CreateFreqList"));
+  function_pointers_.CreateWaveformComplexF64 = reinterpret_cast<CreateWaveformComplexF64Ptr>(shared_library_->get_function_pointer("niFgen_CreateWaveformComplexF64"));
+  function_pointers_.CreateWaveformF64 = reinterpret_cast<CreateWaveformF64Ptr>(shared_library_->get_function_pointer("niFgen_CreateWaveformF64"));
+  function_pointers_.CreateWaveformFromFileF64 = reinterpret_cast<CreateWaveformFromFileF64Ptr>(shared_library_->get_function_pointer("niFgen_CreateWaveformFromFileF64"));
+  function_pointers_.CreateWaveformFromFileHWS = reinterpret_cast<CreateWaveformFromFileHWSPtr>(shared_library_->get_function_pointer("niFgen_CreateWaveformFromFileHWS"));
+  function_pointers_.CreateWaveformFromFileI16 = reinterpret_cast<CreateWaveformFromFileI16Ptr>(shared_library_->get_function_pointer("niFgen_CreateWaveformFromFileI16"));
+  function_pointers_.CreateWaveformI16 = reinterpret_cast<CreateWaveformI16Ptr>(shared_library_->get_function_pointer("niFgen_CreateWaveformI16"));
+  function_pointers_.DefineUserStandardWaveform = reinterpret_cast<DefineUserStandardWaveformPtr>(shared_library_->get_function_pointer("niFgen_DefineUserStandardWaveform"));
+  function_pointers_.DeleteNamedWaveform = reinterpret_cast<DeleteNamedWaveformPtr>(shared_library_->get_function_pointer("niFgen_DeleteNamedWaveform"));
+  function_pointers_.DeleteScript = reinterpret_cast<DeleteScriptPtr>(shared_library_->get_function_pointer("niFgen_DeleteScript"));
+  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_->get_function_pointer("niFgen_Disable"));
+  function_pointers_.DisableAnalogFilter = reinterpret_cast<DisableAnalogFilterPtr>(shared_library_->get_function_pointer("niFgen_DisableAnalogFilter"));
+  function_pointers_.DisableDigitalFilter = reinterpret_cast<DisableDigitalFilterPtr>(shared_library_->get_function_pointer("niFgen_DisableDigitalFilter"));
+  function_pointers_.DisableDigitalPatterning = reinterpret_cast<DisableDigitalPatterningPtr>(shared_library_->get_function_pointer("niFgen_DisableDigitalPatterning"));
+  function_pointers_.DisableScriptTrigger = reinterpret_cast<DisableScriptTriggerPtr>(shared_library_->get_function_pointer("niFgen_DisableScriptTrigger"));
+  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_->get_function_pointer("niFgen_DisableStartTrigger"));
+  function_pointers_.EnableAnalogFilter = reinterpret_cast<EnableAnalogFilterPtr>(shared_library_->get_function_pointer("niFgen_EnableAnalogFilter"));
+  function_pointers_.EnableDigitalFilter = reinterpret_cast<EnableDigitalFilterPtr>(shared_library_->get_function_pointer("niFgen_EnableDigitalFilter"));
+  function_pointers_.EnableDigitalPatterning = reinterpret_cast<EnableDigitalPatterningPtr>(shared_library_->get_function_pointer("niFgen_EnableDigitalPatterning"));
+  function_pointers_.ErrorHandler = reinterpret_cast<ErrorHandlerPtr>(shared_library_->get_function_pointer("niFgen_ErrorHandler"));
+  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_->get_function_pointer("niFgen_error_message"));
+  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_->get_function_pointer("niFgen_error_query"));
+  function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_->get_function_pointer("niFgen_ExportAttributeConfigurationBuffer"));
+  function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_->get_function_pointer("niFgen_ExportAttributeConfigurationFile"));
+  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("niFgen_ExportSignal"));
+  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niFgen_GetAttributeViBoolean"));
+  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niFgen_GetAttributeViInt32"));
+  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niFgen_GetAttributeViInt64"));
+  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niFgen_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_->get_function_pointer("niFgen_GetAttributeViSession"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_->get_function_pointer("niFgen_GetAttributeViString"));
+  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_->get_function_pointer("niFgen_GetChannelName"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niFgen_GetError"));
+  function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_->get_function_pointer("niFgen_GetExtCalLastDateAndTime"));
+  function_pointers_.GetExtCalLastTemp = reinterpret_cast<GetExtCalLastTempPtr>(shared_library_->get_function_pointer("niFgen_GetExtCalLastTemp"));
+  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_->get_function_pointer("niFgen_GetExtCalRecommendedInterval"));
+  function_pointers_.GetFIRFilterCoefficients = reinterpret_cast<GetFIRFilterCoefficientsPtr>(shared_library_->get_function_pointer("niFgen_GetFIRFilterCoefficients"));
+  function_pointers_.GetHardwareState = reinterpret_cast<GetHardwareStatePtr>(shared_library_->get_function_pointer("niFgen_GetHardwareState"));
+  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_->get_function_pointer("niFgen_GetNextCoercionRecord"));
+  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_->get_function_pointer("niFgen_GetNextInterchangeWarning"));
+  function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_->get_function_pointer("niFgen_GetSelfCalLastDateAndTime"));
+  function_pointers_.GetSelfCalLastTemp = reinterpret_cast<GetSelfCalLastTempPtr>(shared_library_->get_function_pointer("niFgen_GetSelfCalLastTemp"));
+  function_pointers_.GetSelfCalSupported = reinterpret_cast<GetSelfCalSupportedPtr>(shared_library_->get_function_pointer("niFgen_GetSelfCalSupported"));
+  function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_->get_function_pointer("niFgen_GetStreamEndpointHandle"));
+  function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_->get_function_pointer("niFgen_ImportAttributeConfigurationBuffer"));
+  function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_->get_function_pointer("niFgen_ImportAttributeConfigurationFile"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_->get_function_pointer("niFgen_init"));
+  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_->get_function_pointer("niFgen_InitWithOptions"));
+  function_pointers_.InitializeWithChannels = reinterpret_cast<InitializeWithChannelsPtr>(shared_library_->get_function_pointer("niFgen_InitializeWithChannels"));
+  function_pointers_.InitiateGeneration = reinterpret_cast<InitiateGenerationPtr>(shared_library_->get_function_pointer("niFgen_InitiateGeneration"));
+  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_->get_function_pointer("niFgen_InvalidateAllAttributes"));
+  function_pointers_.IsDone = reinterpret_cast<IsDonePtr>(shared_library_->get_function_pointer("niFgen_IsDone"));
+  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_->get_function_pointer("niFgen_LockSession"));
+  function_pointers_.ManualEnableP2PStream = reinterpret_cast<ManualEnableP2PStreamPtr>(shared_library_->get_function_pointer("niFgen_ManualEnableP2PStream"));
+  function_pointers_.QueryArbSeqCapabilities = reinterpret_cast<QueryArbSeqCapabilitiesPtr>(shared_library_->get_function_pointer("niFgen_QueryArbSeqCapabilities"));
+  function_pointers_.QueryArbWfmCapabilities = reinterpret_cast<QueryArbWfmCapabilitiesPtr>(shared_library_->get_function_pointer("niFgen_QueryArbWfmCapabilities"));
+  function_pointers_.QueryFreqListCapabilities = reinterpret_cast<QueryFreqListCapabilitiesPtr>(shared_library_->get_function_pointer("niFgen_QueryFreqListCapabilities"));
+  function_pointers_.ReadCurrentTemperature = reinterpret_cast<ReadCurrentTemperaturePtr>(shared_library_->get_function_pointer("niFgen_ReadCurrentTemperature"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("niFgen_reset"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("niFgen_ResetAttribute"));
+  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_->get_function_pointer("niFgen_ResetDevice"));
+  function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_->get_function_pointer("niFgen_ResetInterchangeCheck"));
+  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_->get_function_pointer("niFgen_ResetWithDefaults"));
+  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_->get_function_pointer("niFgen_revision_query"));
+  function_pointers_.RouteSignalOut = reinterpret_cast<RouteSignalOutPtr>(shared_library_->get_function_pointer("niFgen_RouteSignalOut"));
+  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_->get_function_pointer("niFgen_SelfCal"));
+  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_->get_function_pointer("niFgen_self_test"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("niFgen_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niFgen_SetAttributeViBoolean"));
+  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niFgen_SetAttributeViInt32"));
+  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niFgen_SetAttributeViInt64"));
+  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niFgen_SetAttributeViReal64"));
+  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_->get_function_pointer("niFgen_SetAttributeViSession"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_->get_function_pointer("niFgen_SetAttributeViString"));
+  function_pointers_.SetNamedWaveformNextWritePosition = reinterpret_cast<SetNamedWaveformNextWritePositionPtr>(shared_library_->get_function_pointer("niFgen_SetNamedWaveformNextWritePosition"));
+  function_pointers_.SetWaveformNextWritePosition = reinterpret_cast<SetWaveformNextWritePositionPtr>(shared_library_->get_function_pointer("niFgen_SetWaveformNextWritePosition"));
+  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_->get_function_pointer("niFgen_UnlockSession"));
+  function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_->get_function_pointer("niFgen_WaitUntilDone"));
+  function_pointers_.WriteBinary16Waveform = reinterpret_cast<WriteBinary16WaveformPtr>(shared_library_->get_function_pointer("niFgen_WriteBinary16Waveform"));
+  function_pointers_.WriteComplexBinary16Waveform = reinterpret_cast<WriteComplexBinary16WaveformPtr>(shared_library_->get_function_pointer("niFgen_WriteComplexBinary16Waveform"));
+  function_pointers_.WriteNamedWaveformComplexF64 = reinterpret_cast<WriteNamedWaveformComplexF64Ptr>(shared_library_->get_function_pointer("niFgen_WriteNamedWaveformComplexF64"));
+  function_pointers_.WriteNamedWaveformComplexI16 = reinterpret_cast<WriteNamedWaveformComplexI16Ptr>(shared_library_->get_function_pointer("niFgen_WriteNamedWaveformComplexI16"));
+  function_pointers_.WriteNamedWaveformF64 = reinterpret_cast<WriteNamedWaveformF64Ptr>(shared_library_->get_function_pointer("niFgen_WriteNamedWaveformF64"));
+  function_pointers_.WriteNamedWaveformI16 = reinterpret_cast<WriteNamedWaveformI16Ptr>(shared_library_->get_function_pointer("niFgen_WriteNamedWaveformI16"));
+  function_pointers_.WriteP2PEndpointI16 = reinterpret_cast<WriteP2PEndpointI16Ptr>(shared_library_->get_function_pointer("niFgen_WriteP2PEndpointI16"));
+  function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_->get_function_pointer("niFgen_WriteScript"));
+  function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_->get_function_pointer("niFgen_WriteWaveform"));
+  function_pointers_.WriteWaveformComplexF64 = reinterpret_cast<WriteWaveformComplexF64Ptr>(shared_library_->get_function_pointer("niFgen_WriteWaveformComplexF64"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_->get_function_pointer("niFgen_SetRuntimeEnvironment"));
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+    this->runtime_environment_set_ = true;
   }
 }
 
@@ -168,7 +175,7 @@ NiFgenLibrary::~NiFgenLibrary()
 
 ::grpc::Status NiFgenLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
@@ -1244,5 +1251,7 @@ ViStatus NiFgenLibrary::SetRuntimeEnvironment(ViConstString environment, ViConst
   }
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
+
+bool NiFgenLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }
 
 }  // namespace nifgen_grpc

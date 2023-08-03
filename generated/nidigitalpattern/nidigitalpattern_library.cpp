@@ -4,7 +4,10 @@
 // Service implementation for the NI-Digital Pattern Driver Metadata
 //---------------------------------------------------------------------
 #include "nidigitalpattern_library.h"
+#include <server/shared_library.h>
 #include "version.h"
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niDigital_64.dll";
@@ -14,150 +17,154 @@ static const char* kLibraryName = "libnidigital.so";
 
 namespace nidigitalpattern_grpc {
 
-NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
+NiDigitalLibrary::NiDigitalLibrary() : NiDigitalLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiDigitalLibrary::NiDigitalLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library), runtime_environment_set_(false)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niDigital_Abort"));
-  function_pointers_.AbortKeepAlive = reinterpret_cast<AbortKeepAlivePtr>(shared_library_.get_function_pointer("niDigital_AbortKeepAlive"));
-  function_pointers_.ApplyLevelsAndTiming = reinterpret_cast<ApplyLevelsAndTimingPtr>(shared_library_.get_function_pointer("niDigital_ApplyLevelsAndTiming"));
-  function_pointers_.ApplyTDROffsets = reinterpret_cast<ApplyTDROffsetsPtr>(shared_library_.get_function_pointer("niDigital_ApplyTDROffsets"));
-  function_pointers_.BurstPattern = reinterpret_cast<BurstPatternPtr>(shared_library_.get_function_pointer("niDigital_BurstPattern"));
-  function_pointers_.BurstPatternSynchronized = reinterpret_cast<BurstPatternSynchronizedPtr>(shared_library_.get_function_pointer("niDigital_BurstPatternSynchronized"));
-  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niDigital_ClearError"));
-  function_pointers_.ClockGeneratorAbort = reinterpret_cast<ClockGeneratorAbortPtr>(shared_library_.get_function_pointer("niDigital_ClockGenerator_Abort"));
-  function_pointers_.ClockGeneratorGenerateClock = reinterpret_cast<ClockGeneratorGenerateClockPtr>(shared_library_.get_function_pointer("niDigital_ClockGenerator_GenerateClock"));
-  function_pointers_.ClockGeneratorInitiate = reinterpret_cast<ClockGeneratorInitiatePtr>(shared_library_.get_function_pointer("niDigital_ClockGenerator_Initiate"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niDigital_close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niDigital_Commit"));
-  function_pointers_.ConfigureActiveLoadLevels = reinterpret_cast<ConfigureActiveLoadLevelsPtr>(shared_library_.get_function_pointer("niDigital_ConfigureActiveLoadLevels"));
-  function_pointers_.ConfigureCycleNumberHistoryRAMTrigger = reinterpret_cast<ConfigureCycleNumberHistoryRAMTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigureCycleNumberHistoryRAMTrigger"));
-  function_pointers_.ConfigureDigitalEdgeConditionalJumpTrigger = reinterpret_cast<ConfigureDigitalEdgeConditionalJumpTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigureDigitalEdgeConditionalJumpTrigger"));
-  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigureDigitalEdgeStartTrigger"));
-  function_pointers_.ConfigureFirstFailureHistoryRAMTrigger = reinterpret_cast<ConfigureFirstFailureHistoryRAMTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigureFirstFailureHistoryRAMTrigger"));
-  function_pointers_.ConfigureHistoryRAMCyclesToAcquire = reinterpret_cast<ConfigureHistoryRAMCyclesToAcquirePtr>(shared_library_.get_function_pointer("niDigital_ConfigureHistoryRAMCyclesToAcquire"));
-  function_pointers_.ConfigurePatternBurstSites = reinterpret_cast<ConfigurePatternBurstSitesPtr>(shared_library_.get_function_pointer("niDigital_ConfigurePatternBurstSites"));
-  function_pointers_.ConfigurePatternLabelHistoryRAMTrigger = reinterpret_cast<ConfigurePatternLabelHistoryRAMTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigurePatternLabelHistoryRAMTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeConditionalJumpTrigger = reinterpret_cast<ConfigureSoftwareEdgeConditionalJumpTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigureSoftwareEdgeConditionalJumpTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeStartTrigger = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigureSoftwareEdgeStartTrigger"));
-  function_pointers_.ConfigureStartLabel = reinterpret_cast<ConfigureStartLabelPtr>(shared_library_.get_function_pointer("niDigital_ConfigureStartLabel"));
-  function_pointers_.ConfigureTerminationMode = reinterpret_cast<ConfigureTerminationModePtr>(shared_library_.get_function_pointer("niDigital_ConfigureTerminationMode"));
-  function_pointers_.ConfigureTimeSetCompareEdgesStrobe = reinterpret_cast<ConfigureTimeSetCompareEdgesStrobePtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetCompareEdgesStrobe"));
-  function_pointers_.ConfigureTimeSetCompareEdgesStrobe2x = reinterpret_cast<ConfigureTimeSetCompareEdgesStrobe2xPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetCompareEdgesStrobe2x"));
-  function_pointers_.ConfigureTimeSetDriveEdges = reinterpret_cast<ConfigureTimeSetDriveEdgesPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetDriveEdges"));
-  function_pointers_.ConfigureTimeSetDriveEdges2x = reinterpret_cast<ConfigureTimeSetDriveEdges2xPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetDriveEdges2x"));
-  function_pointers_.ConfigureTimeSetDriveFormat = reinterpret_cast<ConfigureTimeSetDriveFormatPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetDriveFormat"));
-  function_pointers_.ConfigureTimeSetEdge = reinterpret_cast<ConfigureTimeSetEdgePtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetEdge"));
-  function_pointers_.ConfigureTimeSetEdgeMultiplier = reinterpret_cast<ConfigureTimeSetEdgeMultiplierPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetEdgeMultiplier"));
-  function_pointers_.ConfigureTimeSetPeriod = reinterpret_cast<ConfigureTimeSetPeriodPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetPeriod"));
-  function_pointers_.ConfigureVoltageLevels = reinterpret_cast<ConfigureVoltageLevelsPtr>(shared_library_.get_function_pointer("niDigital_ConfigureVoltageLevels"));
-  function_pointers_.CreateCaptureWaveformFromFileDigicapture = reinterpret_cast<CreateCaptureWaveformFromFileDigicapturePtr>(shared_library_.get_function_pointer("niDigital_CreateCaptureWaveformFromFileDigicapture"));
-  function_pointers_.CreateCaptureWaveformParallel = reinterpret_cast<CreateCaptureWaveformParallelPtr>(shared_library_.get_function_pointer("niDigital_CreateCaptureWaveformParallel"));
-  function_pointers_.CreateCaptureWaveformSerial = reinterpret_cast<CreateCaptureWaveformSerialPtr>(shared_library_.get_function_pointer("niDigital_CreateCaptureWaveformSerial"));
-  function_pointers_.CreateChannelMap = reinterpret_cast<CreateChannelMapPtr>(shared_library_.get_function_pointer("niDigital_CreateChannelMap"));
-  function_pointers_.CreatePinGroup = reinterpret_cast<CreatePinGroupPtr>(shared_library_.get_function_pointer("niDigital_CreatePinGroup"));
-  function_pointers_.CreatePinMap = reinterpret_cast<CreatePinMapPtr>(shared_library_.get_function_pointer("niDigital_CreatePinMap"));
-  function_pointers_.CreateSourceWaveformFromFileTDMS = reinterpret_cast<CreateSourceWaveformFromFileTDMSPtr>(shared_library_.get_function_pointer("niDigital_CreateSourceWaveformFromFileTDMS"));
-  function_pointers_.CreateSourceWaveformParallel = reinterpret_cast<CreateSourceWaveformParallelPtr>(shared_library_.get_function_pointer("niDigital_CreateSourceWaveformParallel"));
-  function_pointers_.CreateSourceWaveformSerial = reinterpret_cast<CreateSourceWaveformSerialPtr>(shared_library_.get_function_pointer("niDigital_CreateSourceWaveformSerial"));
-  function_pointers_.CreateTimeSet = reinterpret_cast<CreateTimeSetPtr>(shared_library_.get_function_pointer("niDigital_CreateTimeSet"));
-  function_pointers_.DeleteAllTimeSets = reinterpret_cast<DeleteAllTimeSetsPtr>(shared_library_.get_function_pointer("niDigital_DeleteAllTimeSets"));
-  function_pointers_.DisableConditionalJumpTrigger = reinterpret_cast<DisableConditionalJumpTriggerPtr>(shared_library_.get_function_pointer("niDigital_DisableConditionalJumpTrigger"));
-  function_pointers_.DisableSites = reinterpret_cast<DisableSitesPtr>(shared_library_.get_function_pointer("niDigital_DisableSites"));
-  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_.get_function_pointer("niDigital_DisableStartTrigger"));
-  function_pointers_.EnableMatchFailCombination = reinterpret_cast<EnableMatchFailCombinationPtr>(shared_library_.get_function_pointer("niDigital_EnableMatchFailCombination"));
-  function_pointers_.EnableSites = reinterpret_cast<EnableSitesPtr>(shared_library_.get_function_pointer("niDigital_EnableSites"));
-  function_pointers_.EndChannelMap = reinterpret_cast<EndChannelMapPtr>(shared_library_.get_function_pointer("niDigital_EndChannelMap"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niDigital_error_message"));
-  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niDigital_ExportSignal"));
-  function_pointers_.FetchCaptureWaveformU32 = reinterpret_cast<FetchCaptureWaveformU32Ptr>(shared_library_.get_function_pointer("niDigital_FetchCaptureWaveformU32"));
-  function_pointers_.FetchHistoryRAMCycleInformation = reinterpret_cast<FetchHistoryRAMCycleInformationPtr>(shared_library_.get_function_pointer("niDigital_FetchHistoryRAMCycleInformation"));
-  function_pointers_.FetchHistoryRAMCyclePinData = reinterpret_cast<FetchHistoryRAMCyclePinDataPtr>(shared_library_.get_function_pointer("niDigital_FetchHistoryRAMCyclePinData"));
-  function_pointers_.FetchHistoryRAMScanCycleNumber = reinterpret_cast<FetchHistoryRAMScanCycleNumberPtr>(shared_library_.get_function_pointer("niDigital_FetchHistoryRAMScanCycleNumber"));
-  function_pointers_.FrequencyCounterConfigureMeasurementMode = reinterpret_cast<FrequencyCounterConfigureMeasurementModePtr>(shared_library_.get_function_pointer("niDigital_FrequencyCounter_ConfigureMeasurementMode"));
-  function_pointers_.FrequencyCounterConfigureMeasurementTime = reinterpret_cast<FrequencyCounterConfigureMeasurementTimePtr>(shared_library_.get_function_pointer("niDigital_FrequencyCounter_ConfigureMeasurementTime"));
-  function_pointers_.FrequencyCounterMeasureFrequency = reinterpret_cast<FrequencyCounterMeasureFrequencyPtr>(shared_library_.get_function_pointer("niDigital_FrequencyCounter_MeasureFrequency"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDigital_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViInt64"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDigital_GetAttributeViSession"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niDigital_GetAttributeViString"));
-  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niDigital_GetChannelName"));
-  function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_.get_function_pointer("niDigital_GetChannelNameFromString"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niDigital_GetError"));
-  function_pointers_.GetFailCount = reinterpret_cast<GetFailCountPtr>(shared_library_.get_function_pointer("niDigital_GetFailCount"));
-  function_pointers_.GetHistoryRAMSampleCount = reinterpret_cast<GetHistoryRAMSampleCountPtr>(shared_library_.get_function_pointer("niDigital_GetHistoryRAMSampleCount"));
-  function_pointers_.GetPatternName = reinterpret_cast<GetPatternNamePtr>(shared_library_.get_function_pointer("niDigital_GetPatternName"));
-  function_pointers_.GetPatternPinIndexes = reinterpret_cast<GetPatternPinIndexesPtr>(shared_library_.get_function_pointer("niDigital_GetPatternPinIndexes"));
-  function_pointers_.GetPatternPinList = reinterpret_cast<GetPatternPinListPtr>(shared_library_.get_function_pointer("niDigital_GetPatternPinList"));
-  function_pointers_.GetPinName = reinterpret_cast<GetPinNamePtr>(shared_library_.get_function_pointer("niDigital_GetPinName"));
-  function_pointers_.GetPinResultsPinInformation = reinterpret_cast<GetPinResultsPinInformationPtr>(shared_library_.get_function_pointer("niDigital_GetPinResultsPinInformation"));
-  function_pointers_.GetSitePassFail = reinterpret_cast<GetSitePassFailPtr>(shared_library_.get_function_pointer("niDigital_GetSitePassFail"));
-  function_pointers_.GetSiteResultsSiteNumbers = reinterpret_cast<GetSiteResultsSiteNumbersPtr>(shared_library_.get_function_pointer("niDigital_GetSiteResultsSiteNumbers"));
-  function_pointers_.GetTimeSetDriveFormat = reinterpret_cast<GetTimeSetDriveFormatPtr>(shared_library_.get_function_pointer("niDigital_GetTimeSetDriveFormat"));
-  function_pointers_.GetTimeSetEdge = reinterpret_cast<GetTimeSetEdgePtr>(shared_library_.get_function_pointer("niDigital_GetTimeSetEdge"));
-  function_pointers_.GetTimeSetEdgeMultiplier = reinterpret_cast<GetTimeSetEdgeMultiplierPtr>(shared_library_.get_function_pointer("niDigital_GetTimeSetEdgeMultiplier"));
-  function_pointers_.GetTimeSetName = reinterpret_cast<GetTimeSetNamePtr>(shared_library_.get_function_pointer("niDigital_GetTimeSetName"));
-  function_pointers_.GetTimeSetPeriod = reinterpret_cast<GetTimeSetPeriodPtr>(shared_library_.get_function_pointer("niDigital_GetTimeSetPeriod"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niDigital_init"));
-  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niDigital_InitWithOptions"));
-  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niDigital_Initiate"));
-  function_pointers_.IsDone = reinterpret_cast<IsDonePtr>(shared_library_.get_function_pointer("niDigital_IsDone"));
-  function_pointers_.IsSiteEnabled = reinterpret_cast<IsSiteEnabledPtr>(shared_library_.get_function_pointer("niDigital_IsSiteEnabled"));
-  function_pointers_.LoadLevels = reinterpret_cast<LoadLevelsPtr>(shared_library_.get_function_pointer("niDigital_LoadLevels"));
-  function_pointers_.LoadPattern = reinterpret_cast<LoadPatternPtr>(shared_library_.get_function_pointer("niDigital_LoadPattern"));
-  function_pointers_.LoadPinMap = reinterpret_cast<LoadPinMapPtr>(shared_library_.get_function_pointer("niDigital_LoadPinMap"));
-  function_pointers_.LoadSpecifications = reinterpret_cast<LoadSpecificationsPtr>(shared_library_.get_function_pointer("niDigital_LoadSpecifications"));
-  function_pointers_.LoadTiming = reinterpret_cast<LoadTimingPtr>(shared_library_.get_function_pointer("niDigital_LoadTiming"));
-  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niDigital_LockSession"));
-  function_pointers_.MapPinToChannel = reinterpret_cast<MapPinToChannelPtr>(shared_library_.get_function_pointer("niDigital_MapPinToChannel"));
-  function_pointers_.PPMUConfigureApertureTime = reinterpret_cast<PPMUConfigureApertureTimePtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureApertureTime"));
-  function_pointers_.PPMUConfigureCurrentLevel = reinterpret_cast<PPMUConfigureCurrentLevelPtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureCurrentLevel"));
-  function_pointers_.PPMUConfigureCurrentLevelRange = reinterpret_cast<PPMUConfigureCurrentLevelRangePtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureCurrentLevelRange"));
-  function_pointers_.PPMUConfigureCurrentLimit = reinterpret_cast<PPMUConfigureCurrentLimitPtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureCurrentLimit"));
-  function_pointers_.PPMUConfigureCurrentLimitRange = reinterpret_cast<PPMUConfigureCurrentLimitRangePtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureCurrentLimitRange"));
-  function_pointers_.PPMUConfigureOutputFunction = reinterpret_cast<PPMUConfigureOutputFunctionPtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureOutputFunction"));
-  function_pointers_.PPMUConfigureVoltageLevel = reinterpret_cast<PPMUConfigureVoltageLevelPtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureVoltageLevel"));
-  function_pointers_.PPMUConfigureVoltageLimits = reinterpret_cast<PPMUConfigureVoltageLimitsPtr>(shared_library_.get_function_pointer("niDigital_PPMU_ConfigureVoltageLimits"));
-  function_pointers_.PPMUMeasure = reinterpret_cast<PPMUMeasurePtr>(shared_library_.get_function_pointer("niDigital_PPMU_Measure"));
-  function_pointers_.PPMUSource = reinterpret_cast<PPMUSourcePtr>(shared_library_.get_function_pointer("niDigital_PPMU_Source"));
-  function_pointers_.ReadSequencerFlag = reinterpret_cast<ReadSequencerFlagPtr>(shared_library_.get_function_pointer("niDigital_ReadSequencerFlag"));
-  function_pointers_.ReadSequencerRegister = reinterpret_cast<ReadSequencerRegisterPtr>(shared_library_.get_function_pointer("niDigital_ReadSequencerRegister"));
-  function_pointers_.ReadStatic = reinterpret_cast<ReadStaticPtr>(shared_library_.get_function_pointer("niDigital_ReadStatic"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niDigital_reset"));
-  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("niDigital_ResetAttribute"));
-  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niDigital_ResetDevice"));
-  function_pointers_.SelectFunction = reinterpret_cast<SelectFunctionPtr>(shared_library_.get_function_pointer("niDigital_SelectFunction"));
-  function_pointers_.SelfCalibrate = reinterpret_cast<SelfCalibratePtr>(shared_library_.get_function_pointer("niDigital_SelfCalibrate"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niDigital_self_test"));
-  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("niDigital_SendSoftwareEdgeTrigger"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDigital_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDigital_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niDigital_SetAttributeViInt64"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDigital_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDigital_SetAttributeViSession"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niDigital_SetAttributeViString"));
-  function_pointers_.TDR = reinterpret_cast<TDRPtr>(shared_library_.get_function_pointer("niDigital_TDR"));
-  function_pointers_.UnloadAllPatterns = reinterpret_cast<UnloadAllPatternsPtr>(shared_library_.get_function_pointer("niDigital_UnloadAllPatterns"));
-  function_pointers_.UnloadSpecifications = reinterpret_cast<UnloadSpecificationsPtr>(shared_library_.get_function_pointer("niDigital_UnloadSpecifications"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDigital_UnlockSession"));
-  function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_.get_function_pointer("niDigital_WaitUntilDone"));
-  function_pointers_.WriteSequencerFlag = reinterpret_cast<WriteSequencerFlagPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerFlag"));
-  function_pointers_.WriteSequencerFlagSynchronized = reinterpret_cast<WriteSequencerFlagSynchronizedPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerFlagSynchronized"));
-  function_pointers_.WriteSequencerRegister = reinterpret_cast<WriteSequencerRegisterPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerRegister"));
-  function_pointers_.WriteSourceWaveformBroadcastU32 = reinterpret_cast<WriteSourceWaveformBroadcastU32Ptr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformBroadcastU32"));
-  function_pointers_.WriteSourceWaveformDataFromFileTDMS = reinterpret_cast<WriteSourceWaveformDataFromFileTDMSPtr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformDataFromFileTDMS"));
-  function_pointers_.WriteSourceWaveformSiteUniqueU32 = reinterpret_cast<WriteSourceWaveformSiteUniqueU32Ptr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformSiteUniqueU32"));
-  function_pointers_.WriteStatic = reinterpret_cast<WriteStaticPtr>(shared_library_.get_function_pointer("niDigital_WriteStatic"));
-  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_.get_function_pointer("niDigital_SetRuntimeEnvironment"));
+  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("niDigital_Abort"));
+  function_pointers_.AbortKeepAlive = reinterpret_cast<AbortKeepAlivePtr>(shared_library_->get_function_pointer("niDigital_AbortKeepAlive"));
+  function_pointers_.ApplyLevelsAndTiming = reinterpret_cast<ApplyLevelsAndTimingPtr>(shared_library_->get_function_pointer("niDigital_ApplyLevelsAndTiming"));
+  function_pointers_.ApplyTDROffsets = reinterpret_cast<ApplyTDROffsetsPtr>(shared_library_->get_function_pointer("niDigital_ApplyTDROffsets"));
+  function_pointers_.BurstPattern = reinterpret_cast<BurstPatternPtr>(shared_library_->get_function_pointer("niDigital_BurstPattern"));
+  function_pointers_.BurstPatternSynchronized = reinterpret_cast<BurstPatternSynchronizedPtr>(shared_library_->get_function_pointer("niDigital_BurstPatternSynchronized"));
+  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_->get_function_pointer("niDigital_ClearError"));
+  function_pointers_.ClockGeneratorAbort = reinterpret_cast<ClockGeneratorAbortPtr>(shared_library_->get_function_pointer("niDigital_ClockGenerator_Abort"));
+  function_pointers_.ClockGeneratorGenerateClock = reinterpret_cast<ClockGeneratorGenerateClockPtr>(shared_library_->get_function_pointer("niDigital_ClockGenerator_GenerateClock"));
+  function_pointers_.ClockGeneratorInitiate = reinterpret_cast<ClockGeneratorInitiatePtr>(shared_library_->get_function_pointer("niDigital_ClockGenerator_Initiate"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("niDigital_close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("niDigital_Commit"));
+  function_pointers_.ConfigureActiveLoadLevels = reinterpret_cast<ConfigureActiveLoadLevelsPtr>(shared_library_->get_function_pointer("niDigital_ConfigureActiveLoadLevels"));
+  function_pointers_.ConfigureCycleNumberHistoryRAMTrigger = reinterpret_cast<ConfigureCycleNumberHistoryRAMTriggerPtr>(shared_library_->get_function_pointer("niDigital_ConfigureCycleNumberHistoryRAMTrigger"));
+  function_pointers_.ConfigureDigitalEdgeConditionalJumpTrigger = reinterpret_cast<ConfigureDigitalEdgeConditionalJumpTriggerPtr>(shared_library_->get_function_pointer("niDigital_ConfigureDigitalEdgeConditionalJumpTrigger"));
+  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_->get_function_pointer("niDigital_ConfigureDigitalEdgeStartTrigger"));
+  function_pointers_.ConfigureFirstFailureHistoryRAMTrigger = reinterpret_cast<ConfigureFirstFailureHistoryRAMTriggerPtr>(shared_library_->get_function_pointer("niDigital_ConfigureFirstFailureHistoryRAMTrigger"));
+  function_pointers_.ConfigureHistoryRAMCyclesToAcquire = reinterpret_cast<ConfigureHistoryRAMCyclesToAcquirePtr>(shared_library_->get_function_pointer("niDigital_ConfigureHistoryRAMCyclesToAcquire"));
+  function_pointers_.ConfigurePatternBurstSites = reinterpret_cast<ConfigurePatternBurstSitesPtr>(shared_library_->get_function_pointer("niDigital_ConfigurePatternBurstSites"));
+  function_pointers_.ConfigurePatternLabelHistoryRAMTrigger = reinterpret_cast<ConfigurePatternLabelHistoryRAMTriggerPtr>(shared_library_->get_function_pointer("niDigital_ConfigurePatternLabelHistoryRAMTrigger"));
+  function_pointers_.ConfigureSoftwareEdgeConditionalJumpTrigger = reinterpret_cast<ConfigureSoftwareEdgeConditionalJumpTriggerPtr>(shared_library_->get_function_pointer("niDigital_ConfigureSoftwareEdgeConditionalJumpTrigger"));
+  function_pointers_.ConfigureSoftwareEdgeStartTrigger = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerPtr>(shared_library_->get_function_pointer("niDigital_ConfigureSoftwareEdgeStartTrigger"));
+  function_pointers_.ConfigureStartLabel = reinterpret_cast<ConfigureStartLabelPtr>(shared_library_->get_function_pointer("niDigital_ConfigureStartLabel"));
+  function_pointers_.ConfigureTerminationMode = reinterpret_cast<ConfigureTerminationModePtr>(shared_library_->get_function_pointer("niDigital_ConfigureTerminationMode"));
+  function_pointers_.ConfigureTimeSetCompareEdgesStrobe = reinterpret_cast<ConfigureTimeSetCompareEdgesStrobePtr>(shared_library_->get_function_pointer("niDigital_ConfigureTimeSetCompareEdgesStrobe"));
+  function_pointers_.ConfigureTimeSetCompareEdgesStrobe2x = reinterpret_cast<ConfigureTimeSetCompareEdgesStrobe2xPtr>(shared_library_->get_function_pointer("niDigital_ConfigureTimeSetCompareEdgesStrobe2x"));
+  function_pointers_.ConfigureTimeSetDriveEdges = reinterpret_cast<ConfigureTimeSetDriveEdgesPtr>(shared_library_->get_function_pointer("niDigital_ConfigureTimeSetDriveEdges"));
+  function_pointers_.ConfigureTimeSetDriveEdges2x = reinterpret_cast<ConfigureTimeSetDriveEdges2xPtr>(shared_library_->get_function_pointer("niDigital_ConfigureTimeSetDriveEdges2x"));
+  function_pointers_.ConfigureTimeSetDriveFormat = reinterpret_cast<ConfigureTimeSetDriveFormatPtr>(shared_library_->get_function_pointer("niDigital_ConfigureTimeSetDriveFormat"));
+  function_pointers_.ConfigureTimeSetEdge = reinterpret_cast<ConfigureTimeSetEdgePtr>(shared_library_->get_function_pointer("niDigital_ConfigureTimeSetEdge"));
+  function_pointers_.ConfigureTimeSetEdgeMultiplier = reinterpret_cast<ConfigureTimeSetEdgeMultiplierPtr>(shared_library_->get_function_pointer("niDigital_ConfigureTimeSetEdgeMultiplier"));
+  function_pointers_.ConfigureTimeSetPeriod = reinterpret_cast<ConfigureTimeSetPeriodPtr>(shared_library_->get_function_pointer("niDigital_ConfigureTimeSetPeriod"));
+  function_pointers_.ConfigureVoltageLevels = reinterpret_cast<ConfigureVoltageLevelsPtr>(shared_library_->get_function_pointer("niDigital_ConfigureVoltageLevels"));
+  function_pointers_.CreateCaptureWaveformFromFileDigicapture = reinterpret_cast<CreateCaptureWaveformFromFileDigicapturePtr>(shared_library_->get_function_pointer("niDigital_CreateCaptureWaveformFromFileDigicapture"));
+  function_pointers_.CreateCaptureWaveformParallel = reinterpret_cast<CreateCaptureWaveformParallelPtr>(shared_library_->get_function_pointer("niDigital_CreateCaptureWaveformParallel"));
+  function_pointers_.CreateCaptureWaveformSerial = reinterpret_cast<CreateCaptureWaveformSerialPtr>(shared_library_->get_function_pointer("niDigital_CreateCaptureWaveformSerial"));
+  function_pointers_.CreateChannelMap = reinterpret_cast<CreateChannelMapPtr>(shared_library_->get_function_pointer("niDigital_CreateChannelMap"));
+  function_pointers_.CreatePinGroup = reinterpret_cast<CreatePinGroupPtr>(shared_library_->get_function_pointer("niDigital_CreatePinGroup"));
+  function_pointers_.CreatePinMap = reinterpret_cast<CreatePinMapPtr>(shared_library_->get_function_pointer("niDigital_CreatePinMap"));
+  function_pointers_.CreateSourceWaveformFromFileTDMS = reinterpret_cast<CreateSourceWaveformFromFileTDMSPtr>(shared_library_->get_function_pointer("niDigital_CreateSourceWaveformFromFileTDMS"));
+  function_pointers_.CreateSourceWaveformParallel = reinterpret_cast<CreateSourceWaveformParallelPtr>(shared_library_->get_function_pointer("niDigital_CreateSourceWaveformParallel"));
+  function_pointers_.CreateSourceWaveformSerial = reinterpret_cast<CreateSourceWaveformSerialPtr>(shared_library_->get_function_pointer("niDigital_CreateSourceWaveformSerial"));
+  function_pointers_.CreateTimeSet = reinterpret_cast<CreateTimeSetPtr>(shared_library_->get_function_pointer("niDigital_CreateTimeSet"));
+  function_pointers_.DeleteAllTimeSets = reinterpret_cast<DeleteAllTimeSetsPtr>(shared_library_->get_function_pointer("niDigital_DeleteAllTimeSets"));
+  function_pointers_.DisableConditionalJumpTrigger = reinterpret_cast<DisableConditionalJumpTriggerPtr>(shared_library_->get_function_pointer("niDigital_DisableConditionalJumpTrigger"));
+  function_pointers_.DisableSites = reinterpret_cast<DisableSitesPtr>(shared_library_->get_function_pointer("niDigital_DisableSites"));
+  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_->get_function_pointer("niDigital_DisableStartTrigger"));
+  function_pointers_.EnableMatchFailCombination = reinterpret_cast<EnableMatchFailCombinationPtr>(shared_library_->get_function_pointer("niDigital_EnableMatchFailCombination"));
+  function_pointers_.EnableSites = reinterpret_cast<EnableSitesPtr>(shared_library_->get_function_pointer("niDigital_EnableSites"));
+  function_pointers_.EndChannelMap = reinterpret_cast<EndChannelMapPtr>(shared_library_->get_function_pointer("niDigital_EndChannelMap"));
+  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_->get_function_pointer("niDigital_error_message"));
+  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("niDigital_ExportSignal"));
+  function_pointers_.FetchCaptureWaveformU32 = reinterpret_cast<FetchCaptureWaveformU32Ptr>(shared_library_->get_function_pointer("niDigital_FetchCaptureWaveformU32"));
+  function_pointers_.FetchHistoryRAMCycleInformation = reinterpret_cast<FetchHistoryRAMCycleInformationPtr>(shared_library_->get_function_pointer("niDigital_FetchHistoryRAMCycleInformation"));
+  function_pointers_.FetchHistoryRAMCyclePinData = reinterpret_cast<FetchHistoryRAMCyclePinDataPtr>(shared_library_->get_function_pointer("niDigital_FetchHistoryRAMCyclePinData"));
+  function_pointers_.FetchHistoryRAMScanCycleNumber = reinterpret_cast<FetchHistoryRAMScanCycleNumberPtr>(shared_library_->get_function_pointer("niDigital_FetchHistoryRAMScanCycleNumber"));
+  function_pointers_.FrequencyCounterConfigureMeasurementMode = reinterpret_cast<FrequencyCounterConfigureMeasurementModePtr>(shared_library_->get_function_pointer("niDigital_FrequencyCounter_ConfigureMeasurementMode"));
+  function_pointers_.FrequencyCounterConfigureMeasurementTime = reinterpret_cast<FrequencyCounterConfigureMeasurementTimePtr>(shared_library_->get_function_pointer("niDigital_FrequencyCounter_ConfigureMeasurementTime"));
+  function_pointers_.FrequencyCounterMeasureFrequency = reinterpret_cast<FrequencyCounterMeasureFrequencyPtr>(shared_library_->get_function_pointer("niDigital_FrequencyCounter_MeasureFrequency"));
+  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niDigital_GetAttributeViBoolean"));
+  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niDigital_GetAttributeViInt32"));
+  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niDigital_GetAttributeViInt64"));
+  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niDigital_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_->get_function_pointer("niDigital_GetAttributeViSession"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_->get_function_pointer("niDigital_GetAttributeViString"));
+  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_->get_function_pointer("niDigital_GetChannelName"));
+  function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_->get_function_pointer("niDigital_GetChannelNameFromString"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niDigital_GetError"));
+  function_pointers_.GetFailCount = reinterpret_cast<GetFailCountPtr>(shared_library_->get_function_pointer("niDigital_GetFailCount"));
+  function_pointers_.GetHistoryRAMSampleCount = reinterpret_cast<GetHistoryRAMSampleCountPtr>(shared_library_->get_function_pointer("niDigital_GetHistoryRAMSampleCount"));
+  function_pointers_.GetPatternName = reinterpret_cast<GetPatternNamePtr>(shared_library_->get_function_pointer("niDigital_GetPatternName"));
+  function_pointers_.GetPatternPinIndexes = reinterpret_cast<GetPatternPinIndexesPtr>(shared_library_->get_function_pointer("niDigital_GetPatternPinIndexes"));
+  function_pointers_.GetPatternPinList = reinterpret_cast<GetPatternPinListPtr>(shared_library_->get_function_pointer("niDigital_GetPatternPinList"));
+  function_pointers_.GetPinName = reinterpret_cast<GetPinNamePtr>(shared_library_->get_function_pointer("niDigital_GetPinName"));
+  function_pointers_.GetPinResultsPinInformation = reinterpret_cast<GetPinResultsPinInformationPtr>(shared_library_->get_function_pointer("niDigital_GetPinResultsPinInformation"));
+  function_pointers_.GetSitePassFail = reinterpret_cast<GetSitePassFailPtr>(shared_library_->get_function_pointer("niDigital_GetSitePassFail"));
+  function_pointers_.GetSiteResultsSiteNumbers = reinterpret_cast<GetSiteResultsSiteNumbersPtr>(shared_library_->get_function_pointer("niDigital_GetSiteResultsSiteNumbers"));
+  function_pointers_.GetTimeSetDriveFormat = reinterpret_cast<GetTimeSetDriveFormatPtr>(shared_library_->get_function_pointer("niDigital_GetTimeSetDriveFormat"));
+  function_pointers_.GetTimeSetEdge = reinterpret_cast<GetTimeSetEdgePtr>(shared_library_->get_function_pointer("niDigital_GetTimeSetEdge"));
+  function_pointers_.GetTimeSetEdgeMultiplier = reinterpret_cast<GetTimeSetEdgeMultiplierPtr>(shared_library_->get_function_pointer("niDigital_GetTimeSetEdgeMultiplier"));
+  function_pointers_.GetTimeSetName = reinterpret_cast<GetTimeSetNamePtr>(shared_library_->get_function_pointer("niDigital_GetTimeSetName"));
+  function_pointers_.GetTimeSetPeriod = reinterpret_cast<GetTimeSetPeriodPtr>(shared_library_->get_function_pointer("niDigital_GetTimeSetPeriod"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_->get_function_pointer("niDigital_init"));
+  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_->get_function_pointer("niDigital_InitWithOptions"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("niDigital_Initiate"));
+  function_pointers_.IsDone = reinterpret_cast<IsDonePtr>(shared_library_->get_function_pointer("niDigital_IsDone"));
+  function_pointers_.IsSiteEnabled = reinterpret_cast<IsSiteEnabledPtr>(shared_library_->get_function_pointer("niDigital_IsSiteEnabled"));
+  function_pointers_.LoadLevels = reinterpret_cast<LoadLevelsPtr>(shared_library_->get_function_pointer("niDigital_LoadLevels"));
+  function_pointers_.LoadPattern = reinterpret_cast<LoadPatternPtr>(shared_library_->get_function_pointer("niDigital_LoadPattern"));
+  function_pointers_.LoadPinMap = reinterpret_cast<LoadPinMapPtr>(shared_library_->get_function_pointer("niDigital_LoadPinMap"));
+  function_pointers_.LoadSpecifications = reinterpret_cast<LoadSpecificationsPtr>(shared_library_->get_function_pointer("niDigital_LoadSpecifications"));
+  function_pointers_.LoadTiming = reinterpret_cast<LoadTimingPtr>(shared_library_->get_function_pointer("niDigital_LoadTiming"));
+  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_->get_function_pointer("niDigital_LockSession"));
+  function_pointers_.MapPinToChannel = reinterpret_cast<MapPinToChannelPtr>(shared_library_->get_function_pointer("niDigital_MapPinToChannel"));
+  function_pointers_.PPMUConfigureApertureTime = reinterpret_cast<PPMUConfigureApertureTimePtr>(shared_library_->get_function_pointer("niDigital_PPMU_ConfigureApertureTime"));
+  function_pointers_.PPMUConfigureCurrentLevel = reinterpret_cast<PPMUConfigureCurrentLevelPtr>(shared_library_->get_function_pointer("niDigital_PPMU_ConfigureCurrentLevel"));
+  function_pointers_.PPMUConfigureCurrentLevelRange = reinterpret_cast<PPMUConfigureCurrentLevelRangePtr>(shared_library_->get_function_pointer("niDigital_PPMU_ConfigureCurrentLevelRange"));
+  function_pointers_.PPMUConfigureCurrentLimit = reinterpret_cast<PPMUConfigureCurrentLimitPtr>(shared_library_->get_function_pointer("niDigital_PPMU_ConfigureCurrentLimit"));
+  function_pointers_.PPMUConfigureCurrentLimitRange = reinterpret_cast<PPMUConfigureCurrentLimitRangePtr>(shared_library_->get_function_pointer("niDigital_PPMU_ConfigureCurrentLimitRange"));
+  function_pointers_.PPMUConfigureOutputFunction = reinterpret_cast<PPMUConfigureOutputFunctionPtr>(shared_library_->get_function_pointer("niDigital_PPMU_ConfigureOutputFunction"));
+  function_pointers_.PPMUConfigureVoltageLevel = reinterpret_cast<PPMUConfigureVoltageLevelPtr>(shared_library_->get_function_pointer("niDigital_PPMU_ConfigureVoltageLevel"));
+  function_pointers_.PPMUConfigureVoltageLimits = reinterpret_cast<PPMUConfigureVoltageLimitsPtr>(shared_library_->get_function_pointer("niDigital_PPMU_ConfigureVoltageLimits"));
+  function_pointers_.PPMUMeasure = reinterpret_cast<PPMUMeasurePtr>(shared_library_->get_function_pointer("niDigital_PPMU_Measure"));
+  function_pointers_.PPMUSource = reinterpret_cast<PPMUSourcePtr>(shared_library_->get_function_pointer("niDigital_PPMU_Source"));
+  function_pointers_.ReadSequencerFlag = reinterpret_cast<ReadSequencerFlagPtr>(shared_library_->get_function_pointer("niDigital_ReadSequencerFlag"));
+  function_pointers_.ReadSequencerRegister = reinterpret_cast<ReadSequencerRegisterPtr>(shared_library_->get_function_pointer("niDigital_ReadSequencerRegister"));
+  function_pointers_.ReadStatic = reinterpret_cast<ReadStaticPtr>(shared_library_->get_function_pointer("niDigital_ReadStatic"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("niDigital_reset"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("niDigital_ResetAttribute"));
+  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_->get_function_pointer("niDigital_ResetDevice"));
+  function_pointers_.SelectFunction = reinterpret_cast<SelectFunctionPtr>(shared_library_->get_function_pointer("niDigital_SelectFunction"));
+  function_pointers_.SelfCalibrate = reinterpret_cast<SelfCalibratePtr>(shared_library_->get_function_pointer("niDigital_SelfCalibrate"));
+  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_->get_function_pointer("niDigital_self_test"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("niDigital_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niDigital_SetAttributeViBoolean"));
+  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niDigital_SetAttributeViInt32"));
+  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niDigital_SetAttributeViInt64"));
+  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niDigital_SetAttributeViReal64"));
+  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_->get_function_pointer("niDigital_SetAttributeViSession"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_->get_function_pointer("niDigital_SetAttributeViString"));
+  function_pointers_.TDR = reinterpret_cast<TDRPtr>(shared_library_->get_function_pointer("niDigital_TDR"));
+  function_pointers_.UnloadAllPatterns = reinterpret_cast<UnloadAllPatternsPtr>(shared_library_->get_function_pointer("niDigital_UnloadAllPatterns"));
+  function_pointers_.UnloadSpecifications = reinterpret_cast<UnloadSpecificationsPtr>(shared_library_->get_function_pointer("niDigital_UnloadSpecifications"));
+  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_->get_function_pointer("niDigital_UnlockSession"));
+  function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_->get_function_pointer("niDigital_WaitUntilDone"));
+  function_pointers_.WriteSequencerFlag = reinterpret_cast<WriteSequencerFlagPtr>(shared_library_->get_function_pointer("niDigital_WriteSequencerFlag"));
+  function_pointers_.WriteSequencerFlagSynchronized = reinterpret_cast<WriteSequencerFlagSynchronizedPtr>(shared_library_->get_function_pointer("niDigital_WriteSequencerFlagSynchronized"));
+  function_pointers_.WriteSequencerRegister = reinterpret_cast<WriteSequencerRegisterPtr>(shared_library_->get_function_pointer("niDigital_WriteSequencerRegister"));
+  function_pointers_.WriteSourceWaveformBroadcastU32 = reinterpret_cast<WriteSourceWaveformBroadcastU32Ptr>(shared_library_->get_function_pointer("niDigital_WriteSourceWaveformBroadcastU32"));
+  function_pointers_.WriteSourceWaveformDataFromFileTDMS = reinterpret_cast<WriteSourceWaveformDataFromFileTDMSPtr>(shared_library_->get_function_pointer("niDigital_WriteSourceWaveformDataFromFileTDMS"));
+  function_pointers_.WriteSourceWaveformSiteUniqueU32 = reinterpret_cast<WriteSourceWaveformSiteUniqueU32Ptr>(shared_library_->get_function_pointer("niDigital_WriteSourceWaveformSiteUniqueU32"));
+  function_pointers_.WriteStatic = reinterpret_cast<WriteStaticPtr>(shared_library_->get_function_pointer("niDigital_WriteStatic"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_->get_function_pointer("niDigital_SetRuntimeEnvironment"));
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+    this->runtime_environment_set_ = true;
   }
 }
 
@@ -167,7 +174,7 @@ NiDigitalLibrary::~NiDigitalLibrary()
 
 ::grpc::Status NiDigitalLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
@@ -1235,5 +1242,7 @@ ViStatus NiDigitalLibrary::SetRuntimeEnvironment(ViConstString environment, ViCo
   }
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
+
+bool NiDigitalLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }
 
 }  // namespace nidigitalpattern_grpc

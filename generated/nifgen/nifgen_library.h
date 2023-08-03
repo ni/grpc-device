@@ -8,13 +8,16 @@
 
 #include "nifgen_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nifgen_grpc {
 
 class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
  public:
   NiFgenLibrary();
+  explicit NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiFgenLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -152,6 +155,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]);
   ViStatus WriteWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle);
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortGenerationPtr = decltype(&niFgen_AbortGeneration);
@@ -426,8 +430,9 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nifgen_grpc
