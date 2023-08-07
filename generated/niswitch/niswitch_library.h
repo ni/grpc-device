@@ -21,7 +21,6 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   virtual ~NiSwitchLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-<<<<<<< HEAD
   ViStatus AbortScan(ViSession vi) override;
   ViStatus CanConnect(ViSession vi, ViConstString channel1, ViConstString channel2, ViInt32* pathCapability) override;
   ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) override;
@@ -84,72 +83,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) override;
   ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs) override;
   ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs) override;
-=======
-  ViStatus AbortScan(ViSession vi);
-  ViStatus CanConnect(ViSession vi, ViConstString channel1, ViConstString channel2, ViInt32* pathCapability);
-  ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
-  ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
-  ViStatus CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
-  ViStatus CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
-  ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
-  ViStatus ClearError(ViSession vi);
-  ViStatus ClearInterchangeWarnings(ViSession vi);
-  ViStatus Close(ViSession vi);
-  ViStatus Commit(ViSession vi);
-  ViStatus ConfigureScanList(ViSession vi, ViConstString scanlist, ViInt32 scanMode);
-  ViStatus ConfigureScanTrigger(ViSession vi, ViReal64 scanDelay, ViInt32 triggerInput, ViInt32 scanAdvancedOutput);
-  ViStatus Connect(ViSession vi, ViConstString channel1, ViConstString channel2);
-  ViStatus ConnectMultiple(ViSession vi, ViConstString connectionList);
-  ViStatus Disable(ViSession vi);
-  ViStatus Disconnect(ViSession vi, ViConstString channel1, ViConstString channel2);
-  ViStatus DisconnectAll(ViSession vi);
-  ViStatus DisconnectMultiple(ViSession vi, ViConstString disconnectionList);
-  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
-  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
-  ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
-  ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
-  ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
-  ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
-  ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]);
-  ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelNameBuffer[]);
-  ViStatus GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]);
-  ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]);
-  ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]);
-  ViStatus GetPath(ViSession vi, ViConstString channel1, ViConstString channel2, ViInt32 bufferSize, ViChar path[]);
-  ViStatus GetRelayCount(ViSession vi, ViConstString relayName, ViInt32* relayCount);
-  ViStatus GetRelayName(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]);
-  ViStatus GetRelayPosition(ViSession vi, ViConstString relayName, ViInt32* relayPosition);
-  ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
-  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionsString, ViSession* vi);
-  ViStatus InitWithTopology(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi);
-  ViStatus InitiateScan(ViSession vi);
-  ViStatus InvalidateAllAttributes(ViSession vi);
-  ViStatus IsDebounced(ViSession vi, ViBoolean* isDebounced);
-  ViStatus IsScanning(ViSession vi, ViBoolean* isScanning);
-  ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock);
-  ViStatus RelayControl(ViSession vi, ViConstString relayName, ViInt32 relayAction);
-  ViStatus Reset(ViSession vi);
-  ViStatus ResetInterchangeCheck(ViSession vi);
-  ViStatus ResetWithDefaults(ViSession vi);
-  ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
-  ViStatus RouteScanAdvancedOutput(ViSession vi, ViInt32 scanAdvancedOutputConnector, ViInt32 scanAdvancedOutputBusLine, ViBoolean invert);
-  ViStatus RouteTriggerInput(ViSession vi, ViInt32 triggerInputConnector, ViInt32 triggerInputBusLine, ViBoolean invert);
-  ViStatus Scan(ViSession vi, ViConstString scanlist, ViInt16 initiation);
-  ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
-  ViStatus SendSoftwareTrigger(ViSession vi);
-  ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
-  ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
-  ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
-  ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
-  ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
-  ViStatus SetContinuousScan(ViSession vi, ViBoolean continuousScan);
-  ViStatus SetPath(ViSession vi, ViConstString pathList);
-  ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
-  ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs);
-  ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs);
-  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) override;
   bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
->>>>>>> 53b2513fb0bee24c9a7e1a737ad53c5c17d2ff50
 
  private:
   using AbortScanPtr = decltype(&niSwitch_AbortScan);

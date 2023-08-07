@@ -21,7 +21,6 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   virtual ~NiRFmxInstrRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-<<<<<<< HEAD
   int32 ConvertForPowerUnitsUtility(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut) override;
   int32 DeleteSnapshot(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[]) override;
   int32 GetActiveResultName(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState) override;
@@ -59,46 +58,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 SetForceAllTracesEnabled(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attrVal) override;
   int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus) override;
   int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]) override;
-=======
-  int32 ConvertForPowerUnitsUtility(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut);
-  int32 DeleteSnapshot(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[]);
-  int32 GetActiveResultName(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState);
-  int32 GetActiveTableName(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char activeTableName[]);
-  int32 GetAttributeAuthor(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal);
-  int32 GetAttributeDesiredF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal);
-  int32 GetAttributeDesiredF32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize);
-  int32 GetAttributeDesiredF64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64* attrVal);
-  int32 GetAttributeDesiredF64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize);
-  int32 GetAttributeDesiredI32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32* attrVal);
-  int32 GetAttributeDesiredI64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int64* attrVal);
-  int32 GetAttributeDesiredString(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32 arraySize, char attrVal[]);
-  int32 GetCalibrationPlaneEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationPlaneEnabled);
-  int32 GetCalibrationPlaneNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calibrationPlaneNames[]);
-  int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
-  int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
-  int32 GetExternalAttenuationTableNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char externalAttenuationTableNames[]);
-  int32 GetForceAllTracesEnabled(niRFmxInstrHandle instrumentHandle, char channelName[], int32* attrVal);
-  int32 GetInitiaitedSnapshotStrings(niRFmxInstrHandle instrumentHandle, uInt64* snapshotInfoCacheIndex, int32 personalityIDArray[], int32 personalityIDArraySize, int32* personalityIDArrayActualSize, char signalNames[], int32 signalNamesSize, int32* signalNamesActualSize, char resultNames[], int32 resultNamesSize, int32* resultNamesActualSize, char snapshotIdentifiers[], int32 snapshotIdentifiersSize, int32* snapshotIdentifiersActualSize, uInt64 snapshotTimestampArray[], int32 snapshotTimestampArraySize, int32* snapshotTimestampArrayActualSize);
-  int32 GetLatestConfigurationSnapshot(niRFmxInstrHandle instrumentHandle, uInt64* snapshotInfoCacheIndex, int32* personalityID, char signalName[], int32 signalNameSize, int32* signalNameActualSize, char snapshotIdentifier[], int32 snapshotIdentifierSize, int32* snapshotIdentifierActualSize, int32* signalConfigurationState, uInt64* signalTimestamp);
-  int32 GetOpenSessionsInformation(char resourceName[], int32 infoJsonSize, char infoJson[]);
-  int32 GetPrivilegeLevel(niRFmxInstrHandle instrumentHandle, int32* isConnectionAlive, int32* privilegeLevel);
-  int32 GetRFmxVersion(niRFmxInstrHandle instrumentHandle, int32 arraySize, char RFmxVersion[]);
-  int32 GetSessionUniqueIdentifier(char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[]);
-  int32 GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
-  int32 GetSnapshotInfoFromCache(niRFmxInstrHandle instrumentHandle, uInt64 snapshotInfoCacheIndex, int32 personalityIDArray[], int32 personalityIDArraySize, int32* personalityIDArrayActualSize, char signalNames[], int32 signalNamesSize, int32* signalNamesActualSize, char resultNames[], int32 resultNamesSize, int32* resultNamesActualSize, char snapshotIdentifiers[], int32 snapshotIdentifiersSize, int32* snapshotIdentifiersActualSize, uInt64 snapshotTimestampArray[], int32 snapshotTimestampArraySize, int32* snapshotTimestampArrayActualSize);
-  int32 GetSnapshotState(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState);
-  int32 GetTracesInfoForMonitorSnapshot(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* allTracesEnabled);
-  int32 LoadAllForRevert(niRFmxInstrHandle instrumentHandle, char filePath[]);
-  int32 LoadConfigurationsFromJSON(niRFmxInstrHandle instrumentHandle, char jsonString[], int32 arraySize);
-  int32 RegisterSpecialClientSnapshotInterest(char resourceName[]);
-  int32 RequestPrivilege(niRFmxInstrHandle instrumentHandle, int32 privilegeLevel);
-  int32 SaveAllForRevert(niRFmxInstrHandle instrumentHandle, char filePath[]);
-  int32 SaveConfigurationsToJSON(niRFmxInstrHandle instrumentHandle, char signalNames[], char jsonStringOut[], int32 arraySize, int32* actualArraySize);
-  int32 SetForceAllTracesEnabled(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attrVal);
-  int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
-  int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]);
-  int32 GetSFPSessionAccessEnabled(char selectorString[], int32* isSFPSessionAccessEnabled);
->>>>>>> 53b2513fb0bee24c9a7e1a737ad53c5c17d2ff50
+  int32 GetSFPSessionAccessEnabled(char selectorString[], int32* isSFPSessionAccessEnabled) override;
 
  private:
   using ConvertForPowerUnitsUtilityPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut);
