@@ -8,13 +8,16 @@
 
 #include "nifake_extension_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nifake_extension_grpc {
 
 class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibraryInterface {
  public:
   NiFakeExtensionLibrary();
+  explicit NiFakeExtensionLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiFakeExtensionLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -27,7 +30,7 @@ class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibr
     AddCoolFunctionalityPtr AddCoolFunctionality;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

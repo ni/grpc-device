@@ -8,16 +8,20 @@
 
 #include "nifgen_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nifgen_grpc {
 
 class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
  public:
   NiFgenLibrary();
+  explicit NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiFgenLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
+<<<<<<< HEAD
   ViStatus AbortGeneration(ViSession vi) override;
   ViStatus AdjustSampleClockRelativeDelay(ViSession vi, ViReal64 adjustmentTime) override;
   ViStatus AllocateNamedWaveform(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 waveformSize) override;
@@ -151,6 +155,143 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus WriteScript(ViSession vi, ViConstString channelName, ViConstString script) override;
   ViStatus WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]) override;
   ViStatus WriteWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle) override;
+=======
+  ViStatus AbortGeneration(ViSession vi);
+  ViStatus AdjustSampleClockRelativeDelay(ViSession vi, ViReal64 adjustmentTime);
+  ViStatus AllocateNamedWaveform(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 waveformSize);
+  ViStatus AllocateWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt32* waveformHandle);
+  ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
+  ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
+  ViStatus CheckAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
+  ViStatus CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
+  ViStatus CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
+  ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  ViStatus ClearArbMemory(ViSession vi);
+  ViStatus ClearArbSequence(ViSession vi, ViInt32 sequenceHandle);
+  ViStatus ClearArbWaveform(ViSession vi, ViInt32 waveformHandle);
+  ViStatus ClearError(ViSession vi);
+  ViStatus ClearFreqList(ViSession vi, ViInt32 frequencyListHandle);
+  ViStatus ClearInterchangeWarnings(ViSession vi);
+  ViStatus ClearUserStandardWaveform(ViSession vi, ViConstString channelName);
+  ViStatus Close(ViSession vi);
+  ViStatus Commit(ViSession vi);
+  ViStatus ConfigureAmplitude(ViSession vi, ViConstString channelName, ViReal64 amplitude);
+  ViStatus ConfigureArbSequence(ViSession vi, ViConstString channelName, ViInt32 sequenceHandle, ViReal64 gain, ViReal64 offset);
+  ViStatus ConfigureArbWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViReal64 gain, ViReal64 offset);
+  ViStatus ConfigureChannels(ViSession vi, ViConstString channels);
+  ViStatus ConfigureClockMode(ViSession vi, ViInt32 clockMode);
+  ViStatus ConfigureCustomFIRFilterCoefficients(ViSession vi, ViConstString channelName, ViInt32 numberOfCoefficients, ViReal64 coefficientsArray[]);
+  ViStatus ConfigureDigitalEdgeScriptTrigger(ViSession vi, ViConstString triggerId, ViConstString source, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstString source, ViInt32 edge);
+  ViStatus ConfigureDigitalLevelScriptTrigger(ViSession vi, ViConstString triggerId, ViConstString source, ViInt32 triggerWhen);
+  ViStatus ConfigureFreqList(ViSession vi, ViConstString channelName, ViInt32 frequencyListHandle, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 startPhase);
+  ViStatus ConfigureFrequency(ViSession vi, ViConstString channelName, ViReal64 frequency);
+  ViStatus ConfigureOperationMode(ViSession vi, ViConstString channelName, ViInt32 operationMode);
+  ViStatus ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled);
+  ViStatus ConfigureOutputImpedance(ViSession vi, ViConstString channelName, ViReal64 impedance);
+  ViStatus ConfigureOutputMode(ViSession vi, ViInt32 outputMode);
+  ViStatus ConfigureP2PEndpointFullnessStartTrigger(ViSession vi, ViInt32 p2pEndpointFullnessLevel);
+  ViStatus ConfigureReferenceClock(ViSession vi, ViConstString referenceClockSource, ViReal64 referenceClockFrequency);
+  ViStatus ConfigureSampleClockSource(ViSession vi, ViConstString sampleClockSource);
+  ViStatus ConfigureSampleRate(ViSession vi, ViReal64 sampleRate);
+  ViStatus ConfigureSoftwareEdgeScriptTrigger(ViSession vi, ViConstString triggerId);
+  ViStatus ConfigureSoftwareEdgeStartTrigger(ViSession vi);
+  ViStatus ConfigureStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveform, ViReal64 amplitude, ViReal64 dcOffset, ViReal64 frequency, ViReal64 startPhase);
+  ViStatus ConfigureSynchronization(ViSession vi, ViConstString channelName, ViInt32 synchronizationSource);
+  ViStatus ConfigureTriggerMode(ViSession vi, ViConstString channelName, ViInt32 triggerMode);
+  ViStatus CreateAdvancedArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32 sampleCountsArray[], ViInt32 markerLocationArray[], ViInt32 coercedMarkersArray[], ViInt32* sequenceHandle);
+  ViStatus CreateArbSequence(ViSession vi, ViInt32 sequenceLength, ViInt32 waveformHandlesArray[], ViInt32 loopCountsArray[], ViInt32* sequenceHandle);
+  ViStatus CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle);
+  ViStatus CreateWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct waveformDataArray[], ViInt32* waveformHandle);
+  ViStatus CreateWaveformF64(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle);
+  ViStatus CreateWaveformFromFileF64(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle);
+  ViStatus CreateWaveformFromFileHWS(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle);
+  ViStatus CreateWaveformFromFileI16(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle);
+  ViStatus CreateWaveformI16(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle);
+  ViStatus DefineUserStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[]);
+  ViStatus DeleteNamedWaveform(ViSession vi, ViConstString channelName, ViConstString waveformName);
+  ViStatus DeleteScript(ViSession vi, ViConstString channelName, ViConstString scriptName);
+  ViStatus Disable(ViSession vi);
+  ViStatus DisableAnalogFilter(ViSession vi, ViConstString channelName);
+  ViStatus DisableDigitalFilter(ViSession vi, ViConstString channelName);
+  ViStatus DisableDigitalPatterning(ViSession vi, ViConstString channelName);
+  ViStatus DisableScriptTrigger(ViSession vi, ViConstString triggerId);
+  ViStatus DisableStartTrigger(ViSession vi);
+  ViStatus EnableAnalogFilter(ViSession vi, ViConstString channelName, ViReal64 filterCorrectionFrequency);
+  ViStatus EnableDigitalFilter(ViSession vi, ViConstString channelName);
+  ViStatus EnableDigitalPatterning(ViSession vi, ViConstString channelName);
+  ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
+  ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
+  ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
+  ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
+  ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
+  ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
+  ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue);
+  ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
+  ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
+  ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]);
+  ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelString[]);
+  ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
+  ViStatus GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
+  ViStatus GetExtCalLastTemp(ViSession vi, ViReal64* temperature);
+  ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months);
+  ViStatus GetFIRFilterCoefficients(ViSession vi, ViConstString channelName, ViInt32 arraySize, ViReal64 coefficientsArray[], ViInt32* numberOfCoefficientsRead);
+  ViStatus GetHardwareState(ViSession vi, ViInt32* state);
+  ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]);
+  ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]);
+  ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
+  ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature);
+  ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported);
+  ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle);
+  ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
+  ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
+  ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
+  ViStatus InitializeWithChannels(ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi);
+  ViStatus InitiateGeneration(ViSession vi);
+  ViStatus InvalidateAllAttributes(ViSession vi);
+  ViStatus IsDone(ViSession vi, ViBoolean* done);
+  ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock);
+  ViStatus ManualEnableP2PStream(ViSession vi, ViConstString endpointName);
+  ViStatus QueryArbSeqCapabilities(ViSession vi, ViInt32* maximumNumberOfSequences, ViInt32* minimumSequenceLength, ViInt32* maximumSequenceLength, ViInt32* maximumLoopCount);
+  ViStatus QueryArbWfmCapabilities(ViSession vi, ViInt32* maximumNumberOfWaveforms, ViInt32* waveformQuantum, ViInt32* minimumWaveformSize, ViInt32* maximumWaveformSize);
+  ViStatus QueryFreqListCapabilities(ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum);
+  ViStatus ReadCurrentTemperature(ViSession vi, ViReal64* temperature);
+  ViStatus Reset(ViSession vi);
+  ViStatus ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId);
+  ViStatus ResetDevice(ViSession vi);
+  ViStatus ResetInterchangeCheck(ViSession vi);
+  ViStatus ResetWithDefaults(ViSession vi);
+  ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
+  ViStatus RouteSignalOut(ViSession vi, ViConstString channelName, ViInt32 routeSignalFrom, ViInt32 routeSignalTo);
+  ViStatus SelfCal(ViSession vi);
+  ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
+  ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerId);
+  ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
+  ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
+  ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
+  ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
+  ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
+  ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  ViStatus SetNamedWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset);
+  ViStatus SetWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset);
+  ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
+  ViStatus WaitUntilDone(ViSession vi, ViInt32 maxTime);
+  ViStatus WriteBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViInt16 data[]);
+  ViStatus WriteComplexBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, NIComplexI16_struct data[]);
+  ViStatus WriteNamedWaveformComplexF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, NIComplexNumber_struct data[]);
+  ViStatus WriteNamedWaveformComplexI16(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, NIComplexI16_struct data[]);
+  ViStatus WriteNamedWaveformF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViReal64 data[]);
+  ViStatus WriteNamedWaveformI16(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViInt16 data[]);
+  ViStatus WriteP2PEndpointI16(ViSession vi, ViConstString endpointName, ViInt32 numberOfSamples, ViInt16 endpointData[]);
+  ViStatus WriteScript(ViSession vi, ViConstString channelName, ViConstString script);
+  ViStatus WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]);
+  ViStatus WriteWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
+>>>>>>> 53b2513fb0bee24c9a7e1a737ad53c5c17d2ff50
 
  private:
   using AbortGenerationPtr = decltype(&niFgen_AbortGeneration);
@@ -286,6 +427,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using WriteScriptPtr = decltype(&niFgen_WriteScript);
   using WriteWaveformPtr = decltype(&niFgen_WriteWaveform);
   using WriteWaveformComplexF64Ptr = decltype(&niFgen_WriteWaveformComplexF64);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortGenerationPtr AbortGeneration;
@@ -421,10 +563,12 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     WriteScriptPtr WriteScript;
     WriteWaveformPtr WriteWaveform;
     WriteWaveformComplexF64Ptr WriteWaveformComplexF64;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nifgen_grpc

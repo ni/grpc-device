@@ -425,6 +425,18 @@ if(WIN32)
   )
 endif()
 
+# Generate version header file
+# This file requires product name and version info that mako does not know, but CMake does
+configure_file(
+  source/server/version.h.in
+  ${service_output_dir}/version.h
+  @ONLY)
+
+target_sources(ni_grpc_device_server
+  PUBLIC "${service_output_dir}/version.h"
+)
+
+
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
   target_sources(ni_grpc_device_server
     PRIVATE "source/server/linux/syslog_logging.cpp"
@@ -536,6 +548,7 @@ add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/callback_router_tests.cpp"
     "source/tests/unit/converters_tests.cpp"
+    "source/tests/unit/library_set_runtime_environment_tests.cpp"
     "source/tests/unit/session_resource_repository_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/calibration_operations_tests.cpp"
@@ -589,6 +602,7 @@ add_executable(UnitTestsRunner
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_extension/nifake_extension_service.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"
+    "${service_output_dir}/niswitch/niswitch_library.cpp"
     "${service_output_dir}/nixnet/nixnet_service.cpp"
     "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_extension_service.custom.cpp"
@@ -604,9 +618,11 @@ if(MSVC)
 endif(MSVC)
 
 target_include_directories(UnitTestsRunner
+    PRIVATE "${service_output_dir}"
     PRIVATE "${service_output_dir}/nifake"
     PRIVATE "${service_output_dir}/nifake_extension"
-    PRIVATE "${service_output_dir}/nifake_non_ivi")
+    PRIVATE "${service_output_dir}/nifake_non_ivi"
+    PRIVATE "source/server")
 
 target_link_libraries(UnitTestsRunner
     gtest

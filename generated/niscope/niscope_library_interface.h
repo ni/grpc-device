@@ -107,6 +107,7 @@ class NiScopeLibraryInterface {
   virtual ViStatus SetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attributeId, ViSession value) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value) = 0;
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
+  virtual ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) = 0;
 };
 
 }  // namespace niscope_grpc

@@ -639,5 +639,22 @@ unregister_special_client_snapshot_interest(const StubPtr& stub, const std::stri
   return response;
 }
 
+GetSFPSessionAccessEnabledResponse
+get_sfp_session_access_enabled(const StubPtr& stub, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSFPSessionAccessEnabledRequest{};
+  request.set_selector_string(selector_string);
+
+  auto response = GetSFPSessionAccessEnabledResponse{};
+
+  raise_if_error(
+      stub->GetSFPSessionAccessEnabled(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client

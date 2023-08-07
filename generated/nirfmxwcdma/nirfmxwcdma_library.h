@@ -8,13 +8,16 @@
 
 #include "nirfmxwcdma_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nirfmxwcdma_grpc {
 
 class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface {
  public:
   NiRFmxWCDMALibrary();
+  explicit NiRFmxWCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxWCDMALibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -582,7 +585,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

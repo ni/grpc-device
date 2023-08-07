@@ -4,6 +4,10 @@
 // Service implementation for the NI-DMM Metadata
 //---------------------------------------------------------------------
 #include "nidmm_library.h"
+#include <server/shared_library.h>
+#include "version.h"
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nidmm_64.dll";
@@ -13,103 +17,112 @@ static const char* kLibraryName = "libnidmm.so";
 
 namespace nidmm_grpc {
 
-NiDmmLibrary::NiDmmLibrary() : shared_library_(kLibraryName)
+NiDmmLibrary::NiDmmLibrary() : NiDmmLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiDmmLibrary::NiDmmLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library), runtime_environment_set_(false)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niDMM_Abort"));
-  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDMM_CheckAttributeViBoolean"));
-  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDMM_CheckAttributeViInt32"));
-  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDMM_CheckAttributeViReal64"));
-  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_.get_function_pointer("niDMM_CheckAttributeViSession"));
-  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niDMM_CheckAttributeViString"));
-  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niDMM_ClearError"));
-  function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niDMM_ClearInterchangeWarnings"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niDMM_close"));
-  function_pointers_.ConfigureACBandwidth = reinterpret_cast<ConfigureACBandwidthPtr>(shared_library_.get_function_pointer("niDMM_ConfigureACBandwidth"));
-  function_pointers_.ConfigureADCCalibration = reinterpret_cast<ConfigureADCCalibrationPtr>(shared_library_.get_function_pointer("niDMM_ConfigureADCCalibration"));
-  function_pointers_.ConfigureAutoZeroMode = reinterpret_cast<ConfigureAutoZeroModePtr>(shared_library_.get_function_pointer("niDMM_ConfigureAutoZeroMode"));
-  function_pointers_.ConfigureCableCompType = reinterpret_cast<ConfigureCableCompTypePtr>(shared_library_.get_function_pointer("niDMM_ConfigureCableCompType"));
-  function_pointers_.ConfigureCurrentSource = reinterpret_cast<ConfigureCurrentSourcePtr>(shared_library_.get_function_pointer("niDMM_ConfigureCurrentSource"));
-  function_pointers_.ConfigureFixedRefJunction = reinterpret_cast<ConfigureFixedRefJunctionPtr>(shared_library_.get_function_pointer("niDMM_ConfigureFixedRefJunction"));
-  function_pointers_.ConfigureFrequencyVoltageRange = reinterpret_cast<ConfigureFrequencyVoltageRangePtr>(shared_library_.get_function_pointer("niDMM_ConfigureFrequencyVoltageRange"));
-  function_pointers_.ConfigureMeasCompleteDest = reinterpret_cast<ConfigureMeasCompleteDestPtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasCompleteDest"));
-  function_pointers_.ConfigureMeasCompleteSlope = reinterpret_cast<ConfigureMeasCompleteSlopePtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasCompleteSlope"));
-  function_pointers_.ConfigureMeasurementAbsolute = reinterpret_cast<ConfigureMeasurementAbsolutePtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasurementAbsolute"));
-  function_pointers_.ConfigureMeasurementDigits = reinterpret_cast<ConfigureMeasurementDigitsPtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasurementDigits"));
-  function_pointers_.ConfigureMultiPoint = reinterpret_cast<ConfigureMultiPointPtr>(shared_library_.get_function_pointer("niDMM_ConfigureMultiPoint"));
-  function_pointers_.ConfigureOffsetCompOhms = reinterpret_cast<ConfigureOffsetCompOhmsPtr>(shared_library_.get_function_pointer("niDMM_ConfigureOffsetCompOhms"));
-  function_pointers_.ConfigureOpenCableCompValues = reinterpret_cast<ConfigureOpenCableCompValuesPtr>(shared_library_.get_function_pointer("niDMM_ConfigureOpenCableCompValues"));
-  function_pointers_.ConfigurePowerLineFrequency = reinterpret_cast<ConfigurePowerLineFrequencyPtr>(shared_library_.get_function_pointer("niDMM_ConfigurePowerLineFrequency"));
-  function_pointers_.ConfigureRTDCustom = reinterpret_cast<ConfigureRTDCustomPtr>(shared_library_.get_function_pointer("niDMM_ConfigureRTDCustom"));
-  function_pointers_.ConfigureRTDType = reinterpret_cast<ConfigureRTDTypePtr>(shared_library_.get_function_pointer("niDMM_ConfigureRTDType"));
-  function_pointers_.ConfigureSampleTriggerSlope = reinterpret_cast<ConfigureSampleTriggerSlopePtr>(shared_library_.get_function_pointer("niDMM_ConfigureSampleTriggerSlope"));
-  function_pointers_.ConfigureShortCableCompValues = reinterpret_cast<ConfigureShortCableCompValuesPtr>(shared_library_.get_function_pointer("niDMM_ConfigureShortCableCompValues"));
-  function_pointers_.ConfigureThermistorCustom = reinterpret_cast<ConfigureThermistorCustomPtr>(shared_library_.get_function_pointer("niDMM_ConfigureThermistorCustom"));
-  function_pointers_.ConfigureThermistorType = reinterpret_cast<ConfigureThermistorTypePtr>(shared_library_.get_function_pointer("niDMM_ConfigureThermistorType"));
-  function_pointers_.ConfigureThermocouple = reinterpret_cast<ConfigureThermocouplePtr>(shared_library_.get_function_pointer("niDMM_ConfigureThermocouple"));
-  function_pointers_.ConfigureTransducerType = reinterpret_cast<ConfigureTransducerTypePtr>(shared_library_.get_function_pointer("niDMM_ConfigureTransducerType"));
-  function_pointers_.ConfigureTrigger = reinterpret_cast<ConfigureTriggerPtr>(shared_library_.get_function_pointer("niDMM_ConfigureTrigger"));
-  function_pointers_.ConfigureTriggerSlope = reinterpret_cast<ConfigureTriggerSlopePtr>(shared_library_.get_function_pointer("niDMM_ConfigureTriggerSlope"));
-  function_pointers_.ConfigureWaveformAcquisition = reinterpret_cast<ConfigureWaveformAcquisitionPtr>(shared_library_.get_function_pointer("niDMM_ConfigureWaveformAcquisition"));
-  function_pointers_.ConfigureWaveformCoupling = reinterpret_cast<ConfigureWaveformCouplingPtr>(shared_library_.get_function_pointer("niDMM_ConfigureWaveformCoupling"));
-  function_pointers_.Control = reinterpret_cast<ControlPtr>(shared_library_.get_function_pointer("niDMM_Control"));
-  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niDMM_Disable"));
-  function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDMM_ExportAttributeConfigurationBuffer"));
-  function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDMM_ExportAttributeConfigurationFile"));
-  function_pointers_.Fetch = reinterpret_cast<FetchPtr>(shared_library_.get_function_pointer("niDMM_Fetch"));
-  function_pointers_.FetchMultiPoint = reinterpret_cast<FetchMultiPointPtr>(shared_library_.get_function_pointer("niDMM_FetchMultiPoint"));
-  function_pointers_.FetchWaveform = reinterpret_cast<FetchWaveformPtr>(shared_library_.get_function_pointer("niDMM_FetchWaveform"));
-  function_pointers_.GetApertureTimeInfo = reinterpret_cast<GetApertureTimeInfoPtr>(shared_library_.get_function_pointer("niDMM_GetApertureTimeInfo"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDMM_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDMM_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDMM_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDMM_GetAttributeViSession"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niDMM_GetAttributeViString"));
-  function_pointers_.GetAutoRangeValue = reinterpret_cast<GetAutoRangeValuePtr>(shared_library_.get_function_pointer("niDMM_GetAutoRangeValue"));
-  function_pointers_.GetCalDateAndTime = reinterpret_cast<GetCalDateAndTimePtr>(shared_library_.get_function_pointer("niDMM_GetCalDateAndTime"));
-  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niDMM_GetChannelName"));
-  function_pointers_.GetDevTemp = reinterpret_cast<GetDevTempPtr>(shared_library_.get_function_pointer("niDMM_GetDevTemp"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niDMM_GetError"));
-  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_.get_function_pointer("niDMM_GetErrorMessage"));
-  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_.get_function_pointer("niDMM_GetExtCalRecommendedInterval"));
-  function_pointers_.GetLastCalTemp = reinterpret_cast<GetLastCalTempPtr>(shared_library_.get_function_pointer("niDMM_GetLastCalTemp"));
-  function_pointers_.GetMeasurementPeriod = reinterpret_cast<GetMeasurementPeriodPtr>(shared_library_.get_function_pointer("niDMM_GetMeasurementPeriod"));
-  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_.get_function_pointer("niDMM_GetNextCoercionRecord"));
-  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_.get_function_pointer("niDMM_GetNextInterchangeWarning"));
-  function_pointers_.GetSelfCalSupported = reinterpret_cast<GetSelfCalSupportedPtr>(shared_library_.get_function_pointer("niDMM_GetSelfCalSupported"));
-  function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDMM_ImportAttributeConfigurationBuffer"));
-  function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDMM_ImportAttributeConfigurationFile"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niDMM_init"));
-  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niDMM_InitWithOptions"));
-  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niDMM_Initiate"));
-  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niDMM_InvalidateAllAttributes"));
-  function_pointers_.IsOverRange = reinterpret_cast<IsOverRangePtr>(shared_library_.get_function_pointer("niDMM_IsOverRange"));
-  function_pointers_.IsUnderRange = reinterpret_cast<IsUnderRangePtr>(shared_library_.get_function_pointer("niDMM_IsUnderRange"));
-  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niDMM_LockSession"));
-  function_pointers_.PerformOpenCableComp = reinterpret_cast<PerformOpenCableCompPtr>(shared_library_.get_function_pointer("niDMM_PerformOpenCableComp"));
-  function_pointers_.PerformShortCableComp = reinterpret_cast<PerformShortCableCompPtr>(shared_library_.get_function_pointer("niDMM_PerformShortCableComp"));
-  function_pointers_.Read = reinterpret_cast<ReadPtr>(shared_library_.get_function_pointer("niDMM_Read"));
-  function_pointers_.ReadMultiPoint = reinterpret_cast<ReadMultiPointPtr>(shared_library_.get_function_pointer("niDMM_ReadMultiPoint"));
-  function_pointers_.ReadStatus = reinterpret_cast<ReadStatusPtr>(shared_library_.get_function_pointer("niDMM_ReadStatus"));
-  function_pointers_.ReadWaveform = reinterpret_cast<ReadWaveformPtr>(shared_library_.get_function_pointer("niDMM_ReadWaveform"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niDMM_reset"));
-  function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_.get_function_pointer("niDMM_ResetInterchangeCheck"));
-  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niDMM_ResetWithDefaults"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niDMM_revision_query"));
-  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_.get_function_pointer("niDMM_SelfCal"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niDMM_self_test"));
-  function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(shared_library_.get_function_pointer("niDMM_SendSoftwareTrigger"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDMM_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDMM_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDMM_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDMM_SetAttributeViSession"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niDMM_SetAttributeViString"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDMM_UnlockSession"));
+  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("niDMM_Abort"));
+  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_->get_function_pointer("niDMM_CheckAttributeViBoolean"));
+  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_->get_function_pointer("niDMM_CheckAttributeViInt32"));
+  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_->get_function_pointer("niDMM_CheckAttributeViReal64"));
+  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_->get_function_pointer("niDMM_CheckAttributeViSession"));
+  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_->get_function_pointer("niDMM_CheckAttributeViString"));
+  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_->get_function_pointer("niDMM_ClearError"));
+  function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_->get_function_pointer("niDMM_ClearInterchangeWarnings"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("niDMM_close"));
+  function_pointers_.ConfigureACBandwidth = reinterpret_cast<ConfigureACBandwidthPtr>(shared_library_->get_function_pointer("niDMM_ConfigureACBandwidth"));
+  function_pointers_.ConfigureADCCalibration = reinterpret_cast<ConfigureADCCalibrationPtr>(shared_library_->get_function_pointer("niDMM_ConfigureADCCalibration"));
+  function_pointers_.ConfigureAutoZeroMode = reinterpret_cast<ConfigureAutoZeroModePtr>(shared_library_->get_function_pointer("niDMM_ConfigureAutoZeroMode"));
+  function_pointers_.ConfigureCableCompType = reinterpret_cast<ConfigureCableCompTypePtr>(shared_library_->get_function_pointer("niDMM_ConfigureCableCompType"));
+  function_pointers_.ConfigureCurrentSource = reinterpret_cast<ConfigureCurrentSourcePtr>(shared_library_->get_function_pointer("niDMM_ConfigureCurrentSource"));
+  function_pointers_.ConfigureFixedRefJunction = reinterpret_cast<ConfigureFixedRefJunctionPtr>(shared_library_->get_function_pointer("niDMM_ConfigureFixedRefJunction"));
+  function_pointers_.ConfigureFrequencyVoltageRange = reinterpret_cast<ConfigureFrequencyVoltageRangePtr>(shared_library_->get_function_pointer("niDMM_ConfigureFrequencyVoltageRange"));
+  function_pointers_.ConfigureMeasCompleteDest = reinterpret_cast<ConfigureMeasCompleteDestPtr>(shared_library_->get_function_pointer("niDMM_ConfigureMeasCompleteDest"));
+  function_pointers_.ConfigureMeasCompleteSlope = reinterpret_cast<ConfigureMeasCompleteSlopePtr>(shared_library_->get_function_pointer("niDMM_ConfigureMeasCompleteSlope"));
+  function_pointers_.ConfigureMeasurementAbsolute = reinterpret_cast<ConfigureMeasurementAbsolutePtr>(shared_library_->get_function_pointer("niDMM_ConfigureMeasurementAbsolute"));
+  function_pointers_.ConfigureMeasurementDigits = reinterpret_cast<ConfigureMeasurementDigitsPtr>(shared_library_->get_function_pointer("niDMM_ConfigureMeasurementDigits"));
+  function_pointers_.ConfigureMultiPoint = reinterpret_cast<ConfigureMultiPointPtr>(shared_library_->get_function_pointer("niDMM_ConfigureMultiPoint"));
+  function_pointers_.ConfigureOffsetCompOhms = reinterpret_cast<ConfigureOffsetCompOhmsPtr>(shared_library_->get_function_pointer("niDMM_ConfigureOffsetCompOhms"));
+  function_pointers_.ConfigureOpenCableCompValues = reinterpret_cast<ConfigureOpenCableCompValuesPtr>(shared_library_->get_function_pointer("niDMM_ConfigureOpenCableCompValues"));
+  function_pointers_.ConfigurePowerLineFrequency = reinterpret_cast<ConfigurePowerLineFrequencyPtr>(shared_library_->get_function_pointer("niDMM_ConfigurePowerLineFrequency"));
+  function_pointers_.ConfigureRTDCustom = reinterpret_cast<ConfigureRTDCustomPtr>(shared_library_->get_function_pointer("niDMM_ConfigureRTDCustom"));
+  function_pointers_.ConfigureRTDType = reinterpret_cast<ConfigureRTDTypePtr>(shared_library_->get_function_pointer("niDMM_ConfigureRTDType"));
+  function_pointers_.ConfigureSampleTriggerSlope = reinterpret_cast<ConfigureSampleTriggerSlopePtr>(shared_library_->get_function_pointer("niDMM_ConfigureSampleTriggerSlope"));
+  function_pointers_.ConfigureShortCableCompValues = reinterpret_cast<ConfigureShortCableCompValuesPtr>(shared_library_->get_function_pointer("niDMM_ConfigureShortCableCompValues"));
+  function_pointers_.ConfigureThermistorCustom = reinterpret_cast<ConfigureThermistorCustomPtr>(shared_library_->get_function_pointer("niDMM_ConfigureThermistorCustom"));
+  function_pointers_.ConfigureThermistorType = reinterpret_cast<ConfigureThermistorTypePtr>(shared_library_->get_function_pointer("niDMM_ConfigureThermistorType"));
+  function_pointers_.ConfigureThermocouple = reinterpret_cast<ConfigureThermocouplePtr>(shared_library_->get_function_pointer("niDMM_ConfigureThermocouple"));
+  function_pointers_.ConfigureTransducerType = reinterpret_cast<ConfigureTransducerTypePtr>(shared_library_->get_function_pointer("niDMM_ConfigureTransducerType"));
+  function_pointers_.ConfigureTrigger = reinterpret_cast<ConfigureTriggerPtr>(shared_library_->get_function_pointer("niDMM_ConfigureTrigger"));
+  function_pointers_.ConfigureTriggerSlope = reinterpret_cast<ConfigureTriggerSlopePtr>(shared_library_->get_function_pointer("niDMM_ConfigureTriggerSlope"));
+  function_pointers_.ConfigureWaveformAcquisition = reinterpret_cast<ConfigureWaveformAcquisitionPtr>(shared_library_->get_function_pointer("niDMM_ConfigureWaveformAcquisition"));
+  function_pointers_.ConfigureWaveformCoupling = reinterpret_cast<ConfigureWaveformCouplingPtr>(shared_library_->get_function_pointer("niDMM_ConfigureWaveformCoupling"));
+  function_pointers_.Control = reinterpret_cast<ControlPtr>(shared_library_->get_function_pointer("niDMM_Control"));
+  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_->get_function_pointer("niDMM_Disable"));
+  function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_->get_function_pointer("niDMM_ExportAttributeConfigurationBuffer"));
+  function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_->get_function_pointer("niDMM_ExportAttributeConfigurationFile"));
+  function_pointers_.Fetch = reinterpret_cast<FetchPtr>(shared_library_->get_function_pointer("niDMM_Fetch"));
+  function_pointers_.FetchMultiPoint = reinterpret_cast<FetchMultiPointPtr>(shared_library_->get_function_pointer("niDMM_FetchMultiPoint"));
+  function_pointers_.FetchWaveform = reinterpret_cast<FetchWaveformPtr>(shared_library_->get_function_pointer("niDMM_FetchWaveform"));
+  function_pointers_.GetApertureTimeInfo = reinterpret_cast<GetApertureTimeInfoPtr>(shared_library_->get_function_pointer("niDMM_GetApertureTimeInfo"));
+  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niDMM_GetAttributeViBoolean"));
+  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niDMM_GetAttributeViInt32"));
+  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niDMM_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_->get_function_pointer("niDMM_GetAttributeViSession"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_->get_function_pointer("niDMM_GetAttributeViString"));
+  function_pointers_.GetAutoRangeValue = reinterpret_cast<GetAutoRangeValuePtr>(shared_library_->get_function_pointer("niDMM_GetAutoRangeValue"));
+  function_pointers_.GetCalDateAndTime = reinterpret_cast<GetCalDateAndTimePtr>(shared_library_->get_function_pointer("niDMM_GetCalDateAndTime"));
+  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_->get_function_pointer("niDMM_GetChannelName"));
+  function_pointers_.GetDevTemp = reinterpret_cast<GetDevTempPtr>(shared_library_->get_function_pointer("niDMM_GetDevTemp"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niDMM_GetError"));
+  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_->get_function_pointer("niDMM_GetErrorMessage"));
+  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_->get_function_pointer("niDMM_GetExtCalRecommendedInterval"));
+  function_pointers_.GetLastCalTemp = reinterpret_cast<GetLastCalTempPtr>(shared_library_->get_function_pointer("niDMM_GetLastCalTemp"));
+  function_pointers_.GetMeasurementPeriod = reinterpret_cast<GetMeasurementPeriodPtr>(shared_library_->get_function_pointer("niDMM_GetMeasurementPeriod"));
+  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_->get_function_pointer("niDMM_GetNextCoercionRecord"));
+  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_->get_function_pointer("niDMM_GetNextInterchangeWarning"));
+  function_pointers_.GetSelfCalSupported = reinterpret_cast<GetSelfCalSupportedPtr>(shared_library_->get_function_pointer("niDMM_GetSelfCalSupported"));
+  function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_->get_function_pointer("niDMM_ImportAttributeConfigurationBuffer"));
+  function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_->get_function_pointer("niDMM_ImportAttributeConfigurationFile"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_->get_function_pointer("niDMM_init"));
+  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_->get_function_pointer("niDMM_InitWithOptions"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("niDMM_Initiate"));
+  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_->get_function_pointer("niDMM_InvalidateAllAttributes"));
+  function_pointers_.IsOverRange = reinterpret_cast<IsOverRangePtr>(shared_library_->get_function_pointer("niDMM_IsOverRange"));
+  function_pointers_.IsUnderRange = reinterpret_cast<IsUnderRangePtr>(shared_library_->get_function_pointer("niDMM_IsUnderRange"));
+  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_->get_function_pointer("niDMM_LockSession"));
+  function_pointers_.PerformOpenCableComp = reinterpret_cast<PerformOpenCableCompPtr>(shared_library_->get_function_pointer("niDMM_PerformOpenCableComp"));
+  function_pointers_.PerformShortCableComp = reinterpret_cast<PerformShortCableCompPtr>(shared_library_->get_function_pointer("niDMM_PerformShortCableComp"));
+  function_pointers_.Read = reinterpret_cast<ReadPtr>(shared_library_->get_function_pointer("niDMM_Read"));
+  function_pointers_.ReadMultiPoint = reinterpret_cast<ReadMultiPointPtr>(shared_library_->get_function_pointer("niDMM_ReadMultiPoint"));
+  function_pointers_.ReadStatus = reinterpret_cast<ReadStatusPtr>(shared_library_->get_function_pointer("niDMM_ReadStatus"));
+  function_pointers_.ReadWaveform = reinterpret_cast<ReadWaveformPtr>(shared_library_->get_function_pointer("niDMM_ReadWaveform"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("niDMM_reset"));
+  function_pointers_.ResetInterchangeCheck = reinterpret_cast<ResetInterchangeCheckPtr>(shared_library_->get_function_pointer("niDMM_ResetInterchangeCheck"));
+  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_->get_function_pointer("niDMM_ResetWithDefaults"));
+  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_->get_function_pointer("niDMM_revision_query"));
+  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_->get_function_pointer("niDMM_SelfCal"));
+  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_->get_function_pointer("niDMM_self_test"));
+  function_pointers_.SendSoftwareTrigger = reinterpret_cast<SendSoftwareTriggerPtr>(shared_library_->get_function_pointer("niDMM_SendSoftwareTrigger"));
+  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niDMM_SetAttributeViBoolean"));
+  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niDMM_SetAttributeViInt32"));
+  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niDMM_SetAttributeViReal64"));
+  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_->get_function_pointer("niDMM_SetAttributeViSession"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_->get_function_pointer("niDMM_SetAttributeViString"));
+  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_->get_function_pointer("niDMM_UnlockSession"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_->get_function_pointer("niDMM_SetRuntimeEnvironment"));
+
+  if (function_pointers_.SetRuntimeEnvironment) {
+    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+    this->runtime_environment_set_ = true;
+  }
 }
 
 NiDmmLibrary::~NiDmmLibrary()
@@ -118,7 +131,7 @@ NiDmmLibrary::~NiDmmLibrary()
 
 ::grpc::Status NiDmmLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
@@ -834,5 +847,15 @@ ViStatus NiDmmLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   }
   return function_pointers_.UnlockSession(vi, callerHasLock);
 }
+
+ViStatus NiDmmLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
+}
+
+bool NiDmmLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }
 
 }  // namespace nidmm_grpc

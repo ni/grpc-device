@@ -8,16 +8,20 @@
 
 #include "nidcpower_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nidcpower_grpc {
 
 class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
  public:
   NiDCPowerLibrary();
+  explicit NiDCPowerLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiDCPowerLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
+<<<<<<< HEAD
   ViStatus Abort(ViSession vi) override;
   ViStatus AbortWithChannels(ViSession vi, ViConstString channelName) override;
   ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelName) override;
@@ -166,6 +170,158 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) override;
   ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout) override;
   ViStatus WaitForEventWithChannels(ViSession vi, ViConstString channelName, ViInt32 eventId, ViReal64 timeout) override;
+=======
+  ViStatus Abort(ViSession vi);
+  ViStatus AbortWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelName);
+  ViStatus ClearError(ViSession vi);
+  ViStatus ClearInterchangeWarnings(ViSession vi);
+  ViStatus ClearLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason);
+  ViStatus Close(ViSession vi);
+  ViStatus Commit(ViSession vi);
+  ViStatus CommitWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ConfigureApertureTime(ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units);
+  ViStatus ConfigureAutoZero(ViSession vi, ViConstString channelName, ViInt32 autoZero);
+  ViStatus ConfigureCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level);
+  ViStatus ConfigureCurrentLevelRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus ConfigureCurrentLimit(ViSession vi, ViConstString channelName, ViInt32 behavior, ViReal64 limit);
+  ViStatus ConfigureCurrentLimitRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus ConfigureDigitalEdgeMeasureTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeMeasureTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgePulseTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgePulseTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeSequenceAdvanceTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeShutdownTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeSourceTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeSourceTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureDigitalEdgeStartTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
+  ViStatus ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]);
+  ViStatus ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled);
+  ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function);
+  ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance);
+  ViStatus ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit);
+  ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerlineFrequency);
+  ViStatus ConfigurePulseBiasCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level);
+  ViStatus ConfigurePulseBiasCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 limit);
+  ViStatus ConfigurePulseBiasVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 level);
+  ViStatus ConfigurePulseBiasVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit);
+  ViStatus ConfigurePulseCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level);
+  ViStatus ConfigurePulseCurrentLevelRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus ConfigurePulseCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 limit);
+  ViStatus ConfigurePulseCurrentLimitRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus ConfigurePulseVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 level);
+  ViStatus ConfigurePulseVoltageLevelRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus ConfigurePulseVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit);
+  ViStatus ConfigurePulseVoltageLimitRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus ConfigureSense(ViSession vi, ViConstString channelName, ViInt32 sense);
+  ViStatus ConfigureSoftwareEdgeMeasureTrigger(ViSession vi);
+  ViStatus ConfigureSoftwareEdgeMeasureTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ConfigureSoftwareEdgePulseTrigger(ViSession vi);
+  ViStatus ConfigureSoftwareEdgePulseTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ConfigureSoftwareEdgeSequenceAdvanceTrigger(ViSession vi);
+  ViStatus ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ConfigureSoftwareEdgeShutdownTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ConfigureSoftwareEdgeSourceTrigger(ViSession vi);
+  ViStatus ConfigureSoftwareEdgeSourceTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ConfigureSoftwareEdgeStartTrigger(ViSession vi);
+  ViStatus ConfigureSoftwareEdgeStartTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ConfigureSourceMode(ViSession vi, ViInt32 sourceMode);
+  ViStatus ConfigureSourceModeWithChannels(ViSession vi, ViConstString channelName, ViInt32 sourceMode);
+  ViStatus ConfigureVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 level);
+  ViStatus ConfigureVoltageLevelRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus ConfigureVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit);
+  ViStatus ConfigureVoltageLimitRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
+  ViStatus CreateAdvancedSequenceCommitStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
+  ViStatus CreateAdvancedSequenceStep(ViSession vi, ViBoolean setAsActiveStep);
+  ViStatus CreateAdvancedSequenceStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
+  ViStatus CreateAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
+  ViStatus DeleteAdvancedSequence(ViSession vi, ViConstString sequenceName);
+  ViStatus DeleteAdvancedSequenceWithChannels(ViSession vi, ViConstString channelName, ViConstString sequenceName);
+  ViStatus Disable(ViSession vi);
+  ViStatus DisablePulseTrigger(ViSession vi);
+  ViStatus DisablePulseTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus DisableSequenceAdvanceTrigger(ViSession vi);
+  ViStatus DisableSequenceAdvanceTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus DisableShutdownTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus DisableSourceTrigger(ViSession vi);
+  ViStatus DisableSourceTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus DisableStartTrigger(ViSession vi);
+  ViStatus DisableStartTriggerWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
+  ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]);
+  ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
+  ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
+  ViStatus ExportSignalWithChannels(ViSession vi, ViConstString channelName, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
+  ViStatus FetchMultiple(ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount);
+  ViStatus FetchMultipleLCR(ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, NILCRMeasurement_struct measurements[], ViInt32* actualCount);
+  ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
+  ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
+  ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue);
+  ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
+  ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
+  ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]);
+  ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelName[]);
+  ViStatus GetChannelNameFromString(ViSession vi, ViConstString index, ViInt32 bufferSize, ViChar channelName[]);
+  ViStatus GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]);
+  ViStatus GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
+  ViStatus GetExtCalLastTemp(ViSession vi, ViReal64* temperature);
+  ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months);
+  ViStatus GetLCRCompensationLastDateAndTime(ViSession vi, ViConstString channelName, ViInt32 compensationType, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
+  ViStatus GetLCRCustomCableCompensationData(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]);
+  ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]);
+  ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]);
+  ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
+  ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature);
+  ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]);
+  ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
+  ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi);
+  ViStatus InitializeWithIndependentChannels(ViRsrc resourceName, ViBoolean reset, ViConstString optionString, ViSession* vi);
+  ViStatus Initiate(ViSession vi);
+  ViStatus InitiateWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus InvalidateAllAttributes(ViSession vi);
+  ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock);
+  ViStatus Measure(ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement);
+  ViStatus MeasureMultiple(ViSession vi, ViConstString channelName, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[]);
+  ViStatus MeasureMultipleLCR(ViSession vi, ViConstString channelName, NILCRMeasurement_struct measurements[]);
+  ViStatus ParseChannelCount(ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels);
+  ViStatus PerformLCRLoadCompensation(ViSession vi, ViConstString channelName, ViInt32 numCompensationSpots, NILCRLoadCompensationSpot_struct compensationSpots[]);
+  ViStatus PerformLCROpenCompensation(ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[]);
+  ViStatus PerformLCROpenCustomCableCompensation(ViSession vi, ViConstString channelName);
+  ViStatus PerformLCRShortCompensation(ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[]);
+  ViStatus PerformLCRShortCustomCableCompensation(ViSession vi, ViConstString channelName);
+  ViStatus QueryInCompliance(ViSession vi, ViConstString channelName, ViBoolean* inCompliance);
+  ViStatus QueryLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason, ViBoolean* outputCutoffState);
+  ViStatus QueryMaxCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit);
+  ViStatus QueryMaxVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel);
+  ViStatus QueryMinCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* minCurrentLimit);
+  ViStatus QueryOutputState(ViSession vi, ViConstString channelName, ViInt32 outputState, ViBoolean* inState);
+  ViStatus ReadCurrentTemperature(ViSession vi, ViReal64* temperature);
+  ViStatus Reset(ViSession vi);
+  ViStatus ResetDevice(ViSession vi);
+  ViStatus ResetInterchangeCheck(ViSession vi);
+  ViStatus ResetWithChannels(ViSession vi, ViConstString channelName);
+  ViStatus ResetWithDefaults(ViSession vi);
+  ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
+  ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
+  ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger);
+  ViStatus SendSoftwareEdgeTriggerWithChannels(ViSession vi, ViConstString channelName, ViInt32 trigger);
+  ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
+  ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
+  ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
+  ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
+  ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
+  ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  ViStatus SetSequence(ViSession vi, ViConstString channelName, ViReal64 values[], ViReal64 sourceDelays[], ViUInt32 size);
+  ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
+  ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout);
+  ViStatus WaitForEventWithChannels(ViSession vi, ViConstString channelName, ViInt32 eventId, ViReal64 timeout);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
+>>>>>>> 53b2513fb0bee24c9a7e1a737ad53c5c17d2ff50
 
  private:
   using AbortPtr = decltype(&niDCPower_Abort);
@@ -316,6 +472,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitForEventPtr = decltype(&niDCPower_WaitForEvent);
   using WaitForEventWithChannelsPtr = decltype(&niDCPower_WaitForEventWithChannels);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -466,10 +623,12 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     UnlockSessionPtr UnlockSession;
     WaitForEventPtr WaitForEvent;
     WaitForEventWithChannelsPtr WaitForEventWithChannels;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nidcpower_grpc
