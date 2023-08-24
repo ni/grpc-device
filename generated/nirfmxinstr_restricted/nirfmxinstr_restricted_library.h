@@ -55,7 +55,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 SetForceAllTracesEnabled(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attrVal);
   int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
   int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]);
-  int32 GetSFPSessionAccessEnabled(char selectorString[], int32* isSFPSessionAccessEnabled);
+  int32 GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled);
 
  private:
   using ConvertForPowerUnitsUtilityPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut);
@@ -95,7 +95,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using SetForceAllTracesEnabledPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attrVal);
   using SetIOTraceStatusPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
   using UnregisterSpecialClientSnapshotInterestPtr = int32 (*)(char resourceName[]);
-  using GetSFPSessionAccessEnabledPtr = int32 (*)(char selectorString[], int32* isSFPSessionAccessEnabled);
+  using GetSFPSessionAccessEnabledPtr = int32 (*)(char optionString[], int32* isSFPSessionAccessEnabled);
 
   typedef struct FunctionPointers {
     ConvertForPowerUnitsUtilityPtr ConvertForPowerUnitsUtility;

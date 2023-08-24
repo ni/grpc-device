@@ -1202,7 +1202,7 @@ functions = {
 		'parameters': [
             {
                 'direction': 'in',
-                'name': 'selectorString',
+                'name': 'optionString',
                 'type': 'char[]'
             },
             {
