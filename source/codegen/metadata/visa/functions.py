@@ -66,6 +66,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'SessionOrObjectData',
                 'name': 'objectHandle',
                 'type': 'ViObject'
             }
@@ -147,6 +148,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'rsrcManagerHandle',
                 'type': 'ViSession'
             },
@@ -197,6 +199,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'SessionOrObjectData',
                 'name': 'objectHandle',
                 'type': 'ViObject'
             },
@@ -207,6 +210,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'AttributeValueData',
                 'name': 'attributeValue',
                 'type': 'void'
             }
@@ -850,6 +854,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'rsrcManagerHandle',
                 'type': 'ViSession'
             },
@@ -985,6 +990,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'sessionHandle',
                 'type': 'ViSession'
             },
@@ -1269,6 +1275,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
                 'name': 'readBuffer',
                 'type': 'void'
             },
@@ -1304,6 +1311,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'SessionOrObjectData',
                 'name': 'objectHandle',
                 'type': 'ViObject'
             },
@@ -1314,6 +1322,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'AttributeValueData',
                 'name': 'attributeValue',
                 'type': 'ViAttrState'
             }
@@ -1369,8 +1378,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'objectHandle',
-                'type': 'ViObject'
+                'name': 'vi',
+                'type': 'ViSession'
             },
             {
                 'direction': 'in',
@@ -1516,6 +1525,32 @@ functions = {
                     'value': 'wLength'
                 },
                 'type': 'ViByte[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'VxiCommandQuery': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'VxiCmdType',
+                'name': 'mode',
+                'type': 'ViUInt16'
+            },
+            {
+                'direction': 'in',
+                'name': 'command',
+                'type': 'ViUInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'response',
+                'type': 'ViUInt32'
             }
         ],
         'returns': 'ViStatus'

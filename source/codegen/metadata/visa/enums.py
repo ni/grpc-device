@@ -1096,4 +1096,175 @@ enums = {
             }
         ]
     },
+    'UsbEndIn': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Specifies that short packets are ignored for read operations, so reads will not terminate until all of the requested data is received (or an error occurs)'
+                },
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': 'Specifies that the read operation will terminate on a short packet; use this if the device will terminate all read transfers with a short packet, including sending a zero (short) packet when the last data packet is full'
+                },
+                'name': 'SHORT',
+                'value': 4
+            },
+            {
+                'documentation': {
+                    'description': 'Specifies that the read operation will terminate on a short packet or when it receives the requested count of data bytes; use this if the device does not send zero packets'
+                },
+                'name': 'SHORT_OR_COUNT',
+                'value': 5
+            }
+        ]
+    },
+    'UsbPipeState': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Unknown pipe state'
+                },
+                'name': 'STATE_UNKNOWN',
+                'value': -1
+            },
+            {
+                'documentation': {
+                    'description': 'Pipe ready'
+                },
+                'name': 'READY',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': 'Pipe stalled'
+                },
+                'name': 'STALLED',
+                'value': 1
+            }
+        ]
+    },
+    'VxiCmdType': {
+        'values': [
+            {
+                'name': 'VXI_RESP16',
+                'value': 2
+            },
+            {
+                'name': 'VXI_RESP32',
+                'value': 4
+            },
+            {
+                'name': 'VXI_CMD16',
+                'value': 512
+            },
+            {
+                'name': 'VXI_CMD16_RESP16',
+                'value': 514
+            },
+            {
+                'name': 'VXI_CMD32',
+                'value': 1024
+            },
+            {
+                'name': 'VXI_CMD32_RESP16',
+                'value': 1026
+            },
+            {
+                'name': 'VXI_CMD32_RESP32',
+                'value': 1028
+            }
+        ]
+    },
+    'VxiDevClass': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'The VXI device is of type Memory class and supports register-based accesses'
+                },
+                'name': 'MEMORY',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': 'The VXI device is of type Extended class and supports register-based accesses'
+                },
+                'name': 'EXTENDED',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': 'The VXI device is of type Message class and supports both register-based and message-based accesses'
+                },
+                'name': 'MESSAGE',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': 'The VXI device is of type Register class and supports register-based accesses'
+                },
+                'name': 'REGISTER',
+                'value': 3
+            },
+            {
+                'documentation': {
+                    'description': 'The type of the VXI or VME device is unknown, but it supports register-based accesses'
+                },
+                'name': 'OTHER',
+                'value': 4
+            }
+        ]
+    },
+    'WinAccess': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Window is not currently mapped'
+                },
+                'name': 'NMAPPED',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': 'Low level accesses must use the viPeekXX/viPokeXX operations'
+                },
+                'name': 'USE_OPERS',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': 'Low level accesses can dereference the address pointer directly'
+                },
+                'name': 'DEREF_ADDR',
+                'value': 3
+            },
+            {
+                'documentation': {
+                    'description': 'Low level accesses can dereference the address pointer; byte-swapping is required'
+                },
+                'name': 'DEREF_ADDR_BYTE_SWAP',
+                'value': 4
+            }
+        ]
+    },
+    'WrOperMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Flushes formatted output buffer after each write operation'
+                },
+                'name': 'ON_ACCESS',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': 'Flushes formatted output buffer only when it becomes full'
+                },
+                'name': 'WHEN_FULL',
+                'value': 2
+            }
+        ]
+    }
 }

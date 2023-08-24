@@ -168,6 +168,15 @@ attributes = {
         'name': 'RD_BUF_SIZE',
         'type': 'ViUInt32'
     },
+    1073676333: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies the operational mode of the formatted I/O write buffer. When the operational mode is set to VI_FLUSH_WHEN_FULL (default), the buffer is flushed when an END indicator is written to the buffer, or when the buffer fills up. If the operational mode is set to VI_FLUSH_ON_ACCESS, the write buffer is flushed under the same conditions, and also every time a viPrintf() operation completes. '
+        },
+        'enum': 'WrOperMode',
+        'name': 'WR_BUF_OPER_MODE',
+        'type': 'ViUInt16'
+    },
     1073676334: {
         'access': 'read only',
         'documentation': {
@@ -336,6 +345,7 @@ attributes = {
         'documentation': {
             'description': ' This attribute represents the VXI-defined device class to which the resource belongs. '
         },
+        'enum': 'VxiDevClass',
         'name': 'VXI_DEV_CLASS',
         'type': 'ViUInt16'
     },
@@ -507,6 +517,15 @@ attributes = {
         },
         'name': 'ASRL_XOFF_CHAR',
         'type': 'ViUInt8'
+    },
+    1073676483: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute specifies the modes in which the current window may be accessed. If VI_NMAPPED, the window is not currently mapped. If VI_USE_OPERS, the window can be accessed through the viPeekXX() and viPokeXX() operations only. VI_DEREF_ADDR specifies that you can either use operations or directly dereference the mapped address as a pointer. VI_DEREF_ADDR_BYTE_SWAP specifies that you can either use operations or dereference the mapped address as a pointer. If the mapped address is dereferenced as a pointer, the host byte order does not match the device byte order, byte-swapping is required. '
+        },
+        'enum': 'WinAccess',
+        'name': 'WIN_ACCESS',
+        'type': 'ViUInt16'
     },
     1073676484: {
         'access': 'read only',
@@ -719,12 +738,112 @@ attributes = {
         'name': 'USB_INTFC_NUM',
         'type': 'ViInt16'
     },
+    1073676706: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies the endpoint number of the USB bulk-out or interrupt-out pipe used by the given session. This endpoint is used in viWrite and related operations. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_BULK_OUT_PIPE',
+        'type': 'ViInt16'
+    },
+    1073676707: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies the endpoint number of the USB bulk-in pipe used by the given session. This endpoint is used in viRead and related operations. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_BULK_IN_PIPE',
+        'type': 'ViInt16'
+    },
+    1073676708: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies the endpoint number of the USB interrupt-in pipe used by the given session. This endpoint is used in viEnableEvent for VI_EVENT_USB_INTR. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_INTR_IN_PIPE',
+        'type': 'ViInt16'
+    },
+    1073676709: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute specifies the USB class used by the given session. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_CLASS',
+        'type': 'ViInt16'
+    },
+    1073676710: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute specifies the USB subclass used by the given session. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_SUBCLASS',
+        'type': 'ViInt16'
+    },
     1073676711: {
         'access': 'read only',
         'documentation': {
             'description': ' This attribute specifies the USB protocol used by the given session. '
         },
         'name': 'USB_PROTOCOL',
+        'type': 'ViInt16'
+    },
+    1073676712: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies the USB alternate setting used by the given session. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_ALT_SETTING',
+        'type': 'ViInt16'
+    },
+    1073676713: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute indicates the method used to terminate read operations. '
+        },
+        'enum': 'UsbEndIn',
+        'name': 'USB_END_IN',
+        'type': 'ViUInt16'
+    },
+    1073676714: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute specifies the number of interfaces supported by this USB device. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_NUM_INTFCS',
+        'type': 'ViInt16'
+    },
+    1073676715: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute specifies the number of pipes supported by this USB interface. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_NUM_PIPES',
+        'type': 'ViInt16'
+    },
+    1073676716: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies whether the USB bulk-out or interrupt-out pipe used by the given session is stalled or ready. This attribute is valid only on USB RAW sessions. '
+        },
+        'enum': 'UsbPipeState',
+        'name': 'USB_BULK_OUT_STATUS',
+        'type': 'ViInt16'
+    },
+    1073676717: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies whether the USB bulk-in pipe used by the given session is stalled or ready. This attribute is valid only on USB RAW sessions. '
+        },
+        'enum': 'UsbPipeState',
+        'name': 'USB_BULK_IN_STATUS',
+        'type': 'ViInt16'
+    },
+    1073676718: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies whether the USB interrupt-in pipe used by the given session is stalled or ready. This attribute is valid only on USB RAW sessions. '
+        },
+        'enum': 'UsbPipeState',
+        'name': 'USB_INTR_IN_STATUS',
         'type': 'ViInt16'
     },
     1073676719: {
@@ -734,6 +853,14 @@ attributes = {
         },
         'name': 'USB_MAX_INTR_SIZE',
         'type': 'ViUInt16'
+    },
+    1073676720: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This attribute specifies the endpoint address of the USB control pipe used by the given session. A value of 0 signifies that the default control pipe will be used. This endpoint is used in viUsbControlIn and viUsbControlOut operations. This attribute is valid only on USB RAW sessions. '
+        },
+        'name': 'USB_CTRL_PIPE',
+        'type': 'ViInt16'
     },
     1073676731: {
         'access': 'read only',

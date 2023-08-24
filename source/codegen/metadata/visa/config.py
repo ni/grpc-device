@@ -13,6 +13,7 @@ config = {
     'extra_errors_used': [
     ],
     'init_function': 'Open',
+    'resource_handle_type': ['ViSession','ViObject'],
     'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {

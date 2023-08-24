@@ -697,7 +697,7 @@ def get_param_with_name(parameters: List[dict], name: str) -> dict:
 
 def get_first_session_param(parameters: List[dict]) -> dict:
     """Get the first parameter whose type is a Session."""
-    matched_params = (p for p in parameters if p.get("grpc_type", None) == "nidevice_grpc.Session")
+    matched_params = (p for p in parameters if p.get("grpc_type", None) == "nidevice_grpc.Session" or p.get("grpc_type", None) == "SessionOrObjectData")
     return next(matched_params)
 
 

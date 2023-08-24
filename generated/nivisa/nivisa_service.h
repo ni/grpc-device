@@ -35,10 +35,12 @@ class NiVISAService final : public NiVISA::Service {
 public:
   using LibrarySharedPtr = std::shared_ptr<NiVISALibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+  using ViObjectResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViObject>>;
 
   NiVISAService(
     LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
+    ViObjectResourceRepositorySharedPtr vi_object_resource_repository,
     const NiVISAFeatureToggles& feature_toggles = {});
   virtual ~NiVISAService();
 
@@ -103,13 +105,16 @@ public:
   ::grpc::Status UnmapTrigger(::grpc::ServerContext* context, const UnmapTriggerRequest* request, UnmapTriggerResponse* response) override;
   ::grpc::Status UsbControlIn(::grpc::ServerContext* context, const UsbControlInRequest* request, UsbControlInResponse* response) override;
   ::grpc::Status UsbControlOut(::grpc::ServerContext* context, const UsbControlOutRequest* request, UsbControlOutResponse* response) override;
+  ::grpc::Status VxiCommandQuery(::grpc::ServerContext* context, const VxiCommandQueryRequest* request, VxiCommandQueryResponse* response) override;
   ::grpc::Status WaitOnEvent(::grpc::ServerContext* context, const WaitOnEventRequest* request, WaitOnEventResponse* response) override;
   ::grpc::Status Write(::grpc::ServerContext* context, const WriteRequest* request, WriteResponse* response) override;
   ::grpc::Status WriteAsync(::grpc::ServerContext* context, const WriteAsyncRequest* request, WriteAsyncResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
+  ViObjectResourceRepositorySharedPtr vi_object_resource_repository_;
   ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViObject(::grpc::ServerContextBase* context, int32_t status, ViObject vi);
 
   NiVISAFeatureToggles feature_toggles_;
 };
