@@ -79,6 +79,7 @@ class NiSwitchMockLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, WaitForDebounce, (ViSession vi, ViInt32 maximumTimeMs), (override));
   MOCK_METHOD(ViStatus, WaitForScanComplete, (ViSession vi, ViInt32 maximumTimeMs), (override));
+  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
 };
 
 }  // namespace unit

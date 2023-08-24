@@ -1210,7 +1210,8 @@ functions = {
                 'name': 'isSFPSessionAccessEnabled',
                 'type': 'int32'
             }
-		],
+    ],
 		'returns': 'int32'
 	}
+
 }

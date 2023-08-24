@@ -4,6 +4,9 @@
 // Service implementation for the NI-RFMXINSTR-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "nirfmxinstr_restricted_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxInstr.dll";
@@ -13,14 +16,18 @@ static const char* kLibraryName = "libnirfmxinstr.so.1";
 
 namespace nirfmxinstr_restricted_grpc {
 
-NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(kLibraryName)
+NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : NiRFmxInstrRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
+
   function_pointers_.ConvertForPowerUnitsUtility = reinterpret_cast<ConvertForPowerUnitsUtilityPtr>(shared_library_.get_function_pointer("RFmxInstr_ConvertForPowerUnitsUtility"));
   function_pointers_.DeleteSnapshot = reinterpret_cast<DeleteSnapshotPtr>(shared_library_.get_function_pointer("RFmxInstr_DeleteSnapshot"));
   function_pointers_.GetActiveResultName = reinterpret_cast<GetActiveResultNamePtr>(shared_library_.get_function_pointer("RFmxInstr_GetActiveResultName"));
@@ -59,6 +66,7 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(k
   function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_.get_function_pointer("RFmxInstr_SetIOTraceStatus"));
   function_pointers_.UnregisterSpecialClientSnapshotInterest = reinterpret_cast<UnregisterSpecialClientSnapshotInterestPtr>(shared_library_.get_function_pointer("RFmxInstr_UnregisterSpecialClientSnapshotInterest"));
   function_pointers_.GetSFPSessionAccessEnabled = reinterpret_cast<GetSFPSessionAccessEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSFPSessionAccessEnabled"));
+
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -67,7 +75,7 @@ NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
 
 ::grpc::Status NiRFmxInstrRestrictedLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
@@ -368,12 +376,16 @@ int32 NiRFmxInstrRestrictedLibrary::UnregisterSpecialClientSnapshotInterest(char
   return function_pointers_.UnregisterSpecialClientSnapshotInterest(resourceName);
 }
 
+
 int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled)
+
 {
   if (!function_pointers_.GetSFPSessionAccessEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAccessEnabled.");
   }
+
   return function_pointers_.GetSFPSessionAccessEnabled(optionString, isSFPSessionAccessEnabled);
+
 }
 
 }  // namespace nirfmxinstr_restricted_grpc

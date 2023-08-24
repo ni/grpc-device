@@ -8,13 +8,16 @@
 
 #include "niswitch_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace niswitch_grpc {
 
 class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
  public:
   NiSwitchLibrary();
+  explicit NiSwitchLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiSwitchLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -80,6 +83,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs);
   ViStatus WaitForScanComplete(ViSession vi, ViInt32 maximumTimeMs);
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AbortScanPtr = decltype(&niSwitch_AbortScan);
@@ -144,6 +149,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitForDebouncePtr = decltype(&niSwitch_WaitForDebounce);
   using WaitForScanCompletePtr = decltype(&niSwitch_WaitForScanComplete);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortScanPtr AbortScan;
@@ -208,10 +214,12 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
     UnlockSessionPtr UnlockSession;
     WaitForDebouncePtr WaitForDebounce;
     WaitForScanCompletePtr WaitForScanComplete;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace niswitch_grpc

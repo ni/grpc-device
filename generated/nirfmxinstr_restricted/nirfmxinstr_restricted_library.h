@@ -8,13 +8,16 @@
 
 #include "nirfmxinstr_restricted_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nirfmxinstr_restricted_grpc {
 
 class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxInstrRestrictedLibraryInterface {
  public:
   NiRFmxInstrRestrictedLibrary();
+  explicit NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxInstrRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -57,6 +60,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]);
   int32 GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled);
 
+
  private:
   using ConvertForPowerUnitsUtilityPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut);
   using DeleteSnapshotPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[]);
@@ -96,7 +100,6 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using SetIOTraceStatusPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
   using UnregisterSpecialClientSnapshotInterestPtr = int32 (*)(char resourceName[]);
   using GetSFPSessionAccessEnabledPtr = int32 (*)(char optionString[], int32* isSFPSessionAccessEnabled);
-
   typedef struct FunctionPointers {
     ConvertForPowerUnitsUtilityPtr ConvertForPowerUnitsUtility;
     DeleteSnapshotPtr DeleteSnapshot;
@@ -138,7 +141,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     GetSFPSessionAccessEnabledPtr GetSFPSessionAccessEnabled;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

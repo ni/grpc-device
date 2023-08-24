@@ -1080,6 +1080,7 @@ namespace nirfmxinstr_restricted_grpc {
       char* option_string = (char*)option_string_mbcs.c_str();
       int32 is_sfp_session_access_enabled {};
       auto status = library_->GetSFPSessionAccessEnabled(option_string, &is_sfp_session_access_enabled);
+
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }

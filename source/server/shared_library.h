@@ -1,6 +1,7 @@
 #ifndef NIDEVICE_GRPC_SHARED_LIBRARY
 #define NIDEVICE_GRPC_SHARED_LIBRARY
 
+#include "shared_library_interface.h"
 #include <stdexcept>
 #include <string>
 
@@ -32,7 +33,7 @@ class SessionException : public NonDriverException {
   SessionException(const SessionException& other) : NonDriverException(other) {}
 };
 
-class SharedLibrary {
+class SharedLibrary : public SharedLibraryInterface {
  public:
   SharedLibrary();
   SharedLibrary(const char* library_name);
@@ -40,14 +41,14 @@ class SharedLibrary {
   virtual ~SharedLibrary();
 
   void swap(SharedLibrary& other);
-  bool is_loaded() const;
-  LibraryHandle get_handle() const;
-  void load();
-  void unload();
-  const void* get_function_pointer(const char* name) const;
-  bool function_exists(const char* name) const;
-  void set_library_name(const char* library_name);
-  std::string get_library_name() const;
+  bool is_loaded() const override;
+  LibraryHandle get_handle() const override;
+  void load() override;
+  void unload() override;
+  const void* get_function_pointer(const char* name) const override;
+  bool function_exists(const char* name) const override;
+  void set_library_name(const char* library_name) override;
+  std::string get_library_name() const override;
 
  private:
   std::string library_name_;
