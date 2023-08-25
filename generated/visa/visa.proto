@@ -436,7 +436,7 @@ enum VxiCmdType {
 message SessionOrObjectData {
   oneof data {
     nidevice_grpc.Session vi = 1;
-    ViObject object_handle = 2;
+    uint32 object_handle = 2;
   }
 }
 
@@ -507,7 +507,7 @@ message DisableEventRequest {
   nidevice_grpc.Session vi = 1;
   oneof event_type_enum {
     EventType event_type = 2;
-    ViEventType event_type_raw = 3;
+    uint32 event_type_raw = 3;
   }
   oneof event_mechanism_enum {
     EventMechanism event_mechanism = 4;
@@ -523,7 +523,7 @@ message DiscardEventsRequest {
   nidevice_grpc.Session vi = 1;
   oneof event_type_enum {
     EventType event_type = 2;
-    ViEventType event_type_raw = 3;
+    uint32 event_type_raw = 3;
   }
   oneof event_mechanism_enum {
     EventMechanism event_mechanism = 4;
@@ -539,13 +539,13 @@ message EnableEventRequest {
   nidevice_grpc.Session vi = 1;
   oneof event_type_enum {
     EventType event_type = 2;
-    ViEventType event_type_raw = 3;
+    uint32 event_type_raw = 3;
   }
   oneof event_mechanism_enum {
     EventMechanism event_mechanism = 4;
     uint32 event_mechanism_raw = 5;
   }
-  ViEventFilter filter_context = 6;
+  uint32 filter_context = 6;
 }
 
 message EnableEventResponse {
@@ -558,9 +558,7 @@ message FindRsrcRequest {
 
 message FindRsrcResponse {
   int32 status = 1;
-  ViFindList find_handle = 2;
-  uint32 return_count = 3;
-  string instrument_descriptor = 4;
+  repeated string instrument_descriptor = 2;
 }
 
 message FlushRequest {
@@ -587,7 +585,7 @@ message GetAttributeResponse {
 
 message GpibCommandRequest {
   nidevice_grpc.Session vi = 1;
-  repeated ViByte buffer = 2;
+  bytes buffer = 2;
 }
 
 message GpibCommandResponse {
@@ -643,7 +641,7 @@ message In16ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
 }
 
 message In16ExResponse {
@@ -657,7 +655,7 @@ message In32ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
 }
 
 message In32ExResponse {
@@ -671,7 +669,7 @@ message In64ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
 }
 
 message In64ExResponse {
@@ -685,7 +683,7 @@ message In8ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
 }
 
 message In8ExResponse {
@@ -697,10 +695,10 @@ message LockRequest {
   nidevice_grpc.Session vi = 1;
   oneof lock_type_enum {
     LockState lock_type = 2;
-    ViAccessMode lock_type_raw = 3;
+    uint32 lock_type_raw = 3;
   }
   uint32 timeout = 4;
-  ViConstKeyId requested_key = 5;
+  string requested_key = 5;
 }
 
 message LockResponse {
@@ -714,8 +712,8 @@ message MapAddressExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
-  ViBusSize map_size = 5;
+  fixed64 offset = 4;
+  uint64 map_size = 5;
   bool owner_access = 6;
   fixed64 suggested_address = 7;
 }
@@ -744,27 +742,27 @@ message MapTriggerResponse {
 
 message MemAllocRequest {
   nidevice_grpc.Session vi = 1;
-  ViBusSize size = 2;
+  uint32 size = 2;
 }
 
 message MemAllocResponse {
   int32 status = 1;
-  ViBusAddress offset = 2;
+  uint32 offset = 2;
 }
 
 message MemAllocExRequest {
   nidevice_grpc.Session vi = 1;
-  ViBusSize size = 2;
+  uint64 size = 2;
 }
 
 message MemAllocExResponse {
   int32 status = 1;
-  ViBusAddress64 offset = 2;
+  fixed64 offset = 2;
 }
 
 message MemFreeExRequest {
   nidevice_grpc.Session vi = 1;
-  ViBusAddress64 offset = 2;
+  fixed64 offset = 2;
 }
 
 message MemFreeExResponse {
@@ -777,8 +775,8 @@ message MoveIn16ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
-  ViBusSize count = 5;
+  fixed64 offset = 4;
+  uint64 count = 5;
 }
 
 message MoveIn16ExResponse {
@@ -792,8 +790,8 @@ message MoveIn32ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
-  ViBusSize count = 5;
+  fixed64 offset = 4;
+  uint64 count = 5;
 }
 
 message MoveIn32ExResponse {
@@ -807,8 +805,8 @@ message MoveIn64ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
-  ViBusSize count = 5;
+  fixed64 offset = 4;
+  uint64 count = 5;
 }
 
 message MoveIn64ExResponse {
@@ -822,8 +820,8 @@ message MoveIn8ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
-  ViBusSize count = 5;
+  fixed64 offset = 4;
+  uint64 count = 5;
 }
 
 message MoveIn8ExResponse {
@@ -837,7 +835,7 @@ message MoveOut16ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
   repeated uint32 buffer = 5;
 }
 
@@ -851,7 +849,7 @@ message MoveOut32ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
   repeated uint32 buffer = 5;
 }
 
@@ -865,7 +863,7 @@ message MoveOut64ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
   repeated uint64 buffer = 5;
 }
 
@@ -879,7 +877,7 @@ message MoveOut8ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
   bytes buffer = 5;
 }
 
@@ -888,10 +886,10 @@ message MoveOut8ExResponse {
 }
 
 message OpenRequest {
-  ViConstRsrc instrument_descriptor = 1;
+  string instrument_descriptor = 1;
   oneof access_mode_enum {
     LockState access_mode = 2;
-    ViAccessMode access_mode_raw = 3;
+    uint32 access_mode_raw = 3;
   }
   uint32 open_timeout = 4;
 }
@@ -907,7 +905,7 @@ message Out16ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
   uint32 value = 5;
 }
 
@@ -921,7 +919,7 @@ message Out32ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
   uint32 value = 5;
 }
 
@@ -935,7 +933,7 @@ message Out64ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
   uint64 value = 5;
 }
 
@@ -949,7 +947,7 @@ message Out8ExRequest {
     AddressSpace address_space = 2;
     uint32 address_space_raw = 3;
   }
-  ViBusAddress64 offset = 4;
+  fixed64 offset = 4;
   uint32 value = 5;
 }
 
@@ -958,7 +956,7 @@ message Out8ExResponse {
 }
 
 message ParseRsrcExRequest {
-  ViConstRsrc resource_name = 1;
+  string resource_name = 1;
 }
 
 message ParseRsrcExResponse {
@@ -1068,7 +1066,7 @@ message ReadRequest {
 
 message ReadResponse {
   int32 status = 1;
-  repeated ViByte buffer = 2;
+  bytes buffer = 2;
   uint32 return_count = 3;
 }
 
@@ -1079,7 +1077,7 @@ message ReadAsyncRequest {
 
 message ReadAsyncResponse {
   int32 status = 1;
-  ViJobId job_identifier = 2;
+  uint32 job_identifier = 2;
 }
 
 message ReadSTBRequest {
@@ -1115,7 +1113,7 @@ message SetBufResponse {
 }
 
 message StatusDescRequest {
-  ViObject object_handle = 1;
+  SessionOrObjectData object_handle = 1;
   sint32 status_value = 2;
 }
 
@@ -1127,7 +1125,7 @@ message StatusDescResponse {
 message TerminateRequest {
   nidevice_grpc.Session vi = 1;
   uint32 degree = 2;
-  ViJobId job_identifier = 3;
+  uint32 job_identifier = 3;
 }
 
 message TerminateResponse {
@@ -1177,7 +1175,7 @@ message UsbControlInRequest {
 
 message UsbControlInResponse {
   int32 status = 1;
-  repeated ViByte buffer = 2;
+  bytes buffer = 2;
   uint32 return_count = 3;
 }
 
@@ -1187,7 +1185,7 @@ message UsbControlOutRequest {
   sint32 b_request = 3;
   uint32 w_value = 4;
   uint32 w_index = 5;
-  repeated ViByte buffer = 6;
+  bytes buffer = 6;
 }
 
 message UsbControlOutResponse {
@@ -1205,14 +1203,14 @@ message VxiCommandQueryRequest {
 
 message VxiCommandQueryResponse {
   int32 status = 1;
-  uint32 response = 2;
+  uint32 command_response = 2;
 }
 
 message WaitOnEventRequest {
   nidevice_grpc.Session vi = 1;
   oneof in_event_type_enum {
     EventType in_event_type = 2;
-    ViEventType in_event_type_raw = 3;
+    uint32 in_event_type_raw = 3;
   }
   uint32 timeout = 4;
 }
@@ -1220,13 +1218,13 @@ message WaitOnEventRequest {
 message WaitOnEventResponse {
   int32 status = 1;
   EventType out_event_type = 2;
-  ViEventType out_event_type_raw = 3;
-  ViEvent event_handle = 4;
+  uint32 out_event_type_raw = 3;
+  uint32 event_handle = 4;
 }
 
 message WriteRequest {
   nidevice_grpc.Session vi = 1;
-  repeated ViByte buffer = 2;
+  bytes buffer = 2;
 }
 
 message WriteResponse {
@@ -1236,11 +1234,11 @@ message WriteResponse {
 
 message WriteAsyncRequest {
   nidevice_grpc.Session vi = 1;
-  repeated ViByte write_buffer = 2;
+  bytes buffer = 2;
 }
 
 message WriteAsyncResponse {
   int32 status = 1;
-  ViJobId job_identifier = 2;
+  uint32 job_identifier = 2;
 }
 

@@ -1,7 +1,7 @@
 message SessionOrObjectData {
   oneof data {
     nidevice_grpc.Session vi = 1;
-    ViObject object_handle = 2;
+    uint32 object_handle = 2;
   }
 }
 

@@ -63,6 +63,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Close': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -83,6 +84,7 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'EventType',
+                'grpc_type': 'uint32',
                 'name': 'eventType',
                 'type': 'ViEventType'
             },
@@ -105,6 +107,7 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'EventType',
+                'grpc_type': 'uint32',
                 'name': 'eventType',
                 'type': 'ViEventType'
             },
@@ -127,6 +130,7 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'EventType',
+                'grpc_type': 'uint32',
                 'name': 'eventType',
                 'type': 'ViEventType'
             },
@@ -138,6 +142,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'filterContext',
                 'type': 'ViEventFilter'
             }
@@ -165,6 +170,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FindRsrc': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -179,16 +185,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
                 'name': 'findHandle',
                 'type': 'ViFindList'
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
                 'name': 'returnCount',
                 'type': 'ViUInt32'
             },
             {
                 'direction': 'out',
+                'grpc_type': 'repeated string',
                 'name': 'instrumentDescriptor',
                 'size': {
                     'mechanism': 'fixed',
@@ -216,6 +225,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttribute': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -246,6 +256,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bytes',
                 'name': 'buffer',
                 'size': {
                     'mechanism': 'len',
@@ -343,6 +354,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
@@ -369,6 +381,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
@@ -395,6 +408,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
@@ -421,6 +435,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
@@ -442,6 +457,7 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'LockState',
+                'grpc_type': 'uint32',
                 'name': 'lockType',
                 'type': 'ViAccessMode'
             },
@@ -452,6 +468,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'string',
                 'name': 'requestedKey',
                 'type': 'ViConstKeyId'
             },
@@ -468,6 +485,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'MapAddressEx': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -482,11 +500,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'mapSize',
                 'type': 'ViBusSize'
             },
@@ -544,11 +564,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'size',
-                'type': 'ViBusSize'
+                'type': 'ViUInt32'
             },
             {
                 'direction': 'out',
+                'grpc_type': 'uint32',
                 'name': 'offset',
                 'type': 'ViBusAddress'
             }
@@ -564,11 +586,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'size',
                 'type': 'ViBusSize'
             },
             {
                 'direction': 'out',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             }
@@ -584,6 +608,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             }
@@ -605,11 +630,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'count',
                 'type': 'ViBusSize'
             },
@@ -640,11 +667,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'count',
                 'type': 'ViBusSize'
             },
@@ -675,11 +704,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'count',
                 'type': 'ViBusSize'
             },
@@ -710,11 +741,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'count',
                 'type': 'ViBusSize'
             },
@@ -745,11 +778,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'count',
                 'type': 'ViBusSize'
             },
@@ -780,11 +815,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'count',
                 'type': 'ViBusSize'
             },
@@ -815,11 +852,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'count',
                 'type': 'ViBusSize'
             },
@@ -850,11 +889,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint64',
                 'name': 'count',
                 'type': 'ViBusSize'
             },
@@ -871,6 +912,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Open': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -880,12 +922,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'string',
                 'name': 'instrumentDescriptor',
                 'type': 'ViConstRsrc'
             },
             {
                 'direction': 'in',
                 'enum': 'LockState',
+                'grpc_type': 'uint32',
                 'name': 'accessMode',
                 'type': 'ViAccessMode'
             },
@@ -929,6 +973,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
@@ -955,6 +1000,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
@@ -981,6 +1027,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
@@ -1007,6 +1054,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'fixed64',
                 'name': 'offset',
                 'type': 'ViBusAddress64'
             },
@@ -1019,6 +1067,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ParseRsrcEx': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1028,6 +1077,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'string',
                 'name': 'resourceName',
                 'type': 'ViConstRsrc'
             },
@@ -1072,6 +1122,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Peek16': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1092,6 +1143,7 @@ functions = {
         'returns': 'void'
     },
     'Peek32': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1112,6 +1164,7 @@ functions = {
         'returns': 'void'
     },
     'Peek64': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1132,6 +1185,7 @@ functions = {
         'returns': 'void'
     },
     'Peek8': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1152,6 +1206,7 @@ functions = {
         'returns': 'void'
     },
     'Poke16': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1172,6 +1227,7 @@ functions = {
         'returns': 'void'
     },
     'Poke32': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1192,6 +1248,7 @@ functions = {
         'returns': 'void'
     },
     'Poke64': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1212,6 +1269,7 @@ functions = {
         'returns': 'void'
     },
     'Poke8': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1270,6 +1328,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Read': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1278,6 +1337,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bytes',
                 'name': 'buffer',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1299,6 +1359,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ReadAsync': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1318,6 +1379,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'uint32',
                 'name': 'jobIdentifier',
                 'type': 'ViJobId'
             }
@@ -1340,6 +1402,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttribute': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1383,9 +1446,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'StatusDesc': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'SessionOrObjectData',
                 'name': 'objectHandle',
                 'type': 'ViObject'
             },
@@ -1420,6 +1485,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'jobIdentifier',
                 'type': 'ViJobId'
             }
@@ -1469,6 +1535,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'UsbControlIn': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1502,6 +1569,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bytes',
                 'name': 'buffer',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1551,6 +1619,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bytes',
                 'name': 'buffer',
                 'size': {
                     'mechanism': 'len',
@@ -1581,7 +1650,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'response',
+                'name': 'commandResponse',
                 'type': 'ViUInt32'
             }
         ],
@@ -1597,6 +1666,7 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'EventType',
+                'grpc_type': 'uint32',
                 'name': 'inEventType',
                 'type': 'ViEventType'
             },
@@ -1608,11 +1678,13 @@ functions = {
             {
                 'direction': 'out',
                 'enum': 'EventType',
+                'grpc_type': 'uint32',
                 'name': 'outEventType',
                 'type': 'ViEventType'
             },
             {
                 'direction': 'out',
+                'grpc_type': 'uint32',
                 'name': 'eventHandle',
                 'type': 'ViEvent'
             }
@@ -1628,6 +1700,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bytes',
                 'name': 'buffer',
                 'size': {
                     'mechanism': 'len',
@@ -1649,6 +1722,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'WriteAsync': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1657,7 +1731,8 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'writeBuffer',
+                'grpc_type': 'bytes',
+                'name': 'buffer',
                 'size': {
                     'mechanism': 'len',
                     'value': 'count'
@@ -1671,6 +1746,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'uint32',
                 'name': 'jobIdentifier',
                 'type': 'ViJobId'
             }

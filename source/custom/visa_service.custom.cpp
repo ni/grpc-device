@@ -5,15 +5,645 @@ namespace visa_grpc {
 ::grpc::Status VisaService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi)
 {
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-  library_->GetStatusDescription(vi, &description[0]);
+  library_->StatusDesc(vi, status, &description[0]);
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
 ::grpc::Status VisaService::ConvertApiErrorStatusForViObject(::grpc::ServerContextBase* context, int32_t status, ViObject vi)
 {
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-  library_->GetStatusDescription(vi, &description[0]);
+  library_->StatusDesc(vi, status, &description[0]);
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
+
+//---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      ViObject object_handle = request->object_handle();
+      vi_object_resource_repository_->remove_session(object_handle_grpc_session.name());
+      auto status = library_->Close(object_handle);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViObject(context, status, object_handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::FindRsrc(::grpc::ServerContext* context, const FindRsrcRequest* request, FindRsrcResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto rsrc_manager_handle_grpc_session = request->rsrc_manager_handle();
+      ViSession rsrc_manager_handle = session_repository_->access_session(rsrc_manager_handle_grpc_session.name());
+      auto expression_mbcs = convert_from_grpc<std::string>(request->expression());
+      auto expression = expression_mbcs.c_str();
+      ViFindList find_handle {};
+      ViUInt32 return_count {};
+      response->mutable_instrument_descriptor()->Resize(256, 0);
+      ViChar* instrument_descriptor = response->mutable_instrument_descriptor()->mutable_data();
+      auto status = library_->FindRsrc(rsrc_manager_handle, expression, &find_handle, &return_count, instrument_descriptor);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::GetAttribute(::grpc::ServerContext* context, const GetAttributeRequest* request, GetAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      ViObject object_handle = request->object_handle();
+      ViAttr attribute_name = request->attribute_name();
+      void attribute_value {};
+      auto status = library_->GetAttribute(object_handle, attribute_name, &attribute_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViObject(context, status, object_handle);
+      }
+      response->set_status(status);
+      response->set_attribute_value(attribute_value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::MapAddressEx(::grpc::ServerContext* context, const MapAddressExRequest* request, MapAddressExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViUInt16 address_space;
+      switch (request->address_space_enum_case()) {
+        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::kAddressSpace: {
+          address_space = static_cast<ViUInt16>(request->address_space());
+          break;
+        }
+        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+          address_space = static_cast<ViUInt16>(request->address_space_raw());
+          break;
+        }
+        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
+          break;
+        }
+      }
+
+      ViBusAddress64 offset = request->offset();
+      ViBusSize map_size = request->map_size();
+      ViBoolean owner_access = request->owner_access();
+      ViAddr suggested_address = request->suggested_address();
+      ViAddr address {};
+      auto status = library_->MapAddressEx(vi, address_space, offset, map_size, owner_access, suggested_address, &address);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_address(address);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Open(::grpc::ServerContext* context, const OpenRequest* request, OpenResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto rsrc_manager_handle_grpc_session = request->rsrc_manager_handle();
+      ViSession rsrc_manager_handle = session_repository_->access_session(rsrc_manager_handle_grpc_session.name());
+      auto instrument_descriptor_mbcs = convert_from_grpc<std::string>(request->instrument_descriptor());
+      ViConstRsrc instrument_descriptor = (ViConstRsrc)instrument_descriptor_mbcs.c_str();
+      ViAccessMode access_mode;
+      switch (request->access_mode_enum_case()) {
+        case visa_grpc::OpenRequest::AccessModeEnumCase::kAccessMode: {
+          access_mode = static_cast<ViAccessMode>(request->access_mode());
+          break;
+        }
+        case visa_grpc::OpenRequest::AccessModeEnumCase::kAccessModeRaw: {
+          access_mode = static_cast<ViAccessMode>(request->access_mode_raw());
+          break;
+        }
+        case visa_grpc::OpenRequest::AccessModeEnumCase::ACCESS_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for access_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      ViUInt32 open_timeout = request->open_timeout();
+      ViSession vi {};
+      auto status = library_->Open(rsrc_manager_handle, instrument_descriptor, access_mode, open_timeout, &vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
+      }
+      response->set_status(status);
+      auto grpc_device_session_name = session_repository_->resolve_session_name(vi);
+      response->mutable_vi()->set_name(grpc_device_session_name);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::ParseRsrcEx(::grpc::ServerContext* context, const ParseRsrcExRequest* request, ParseRsrcExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto session_handle_grpc_session = request->session_handle();
+      ViSession session_handle = session_repository_->access_session(session_handle_grpc_session.name());
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViConstRsrc resource_name = (ViConstRsrc)resource_name_mbcs.c_str();
+      ViUInt16 interface_type {};
+      ViUInt16 interface_number {};
+      std::string resource_class(256 - 1, '\0');
+      std::string expanded_unaliased_name(256 - 1, '\0');
+      std::string alias_if_exists(256 - 1, '\0');
+      auto status = library_->ParseRsrcEx(session_handle, resource_name, &interface_type, &interface_number, (ViChar*)resource_class.data(), (ViChar*)expanded_unaliased_name.data(), (ViChar*)alias_if_exists.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, session_handle);
+      }
+      response->set_status(status);
+      response->set_interface_type(interface_type);
+      response->set_interface_number(interface_number);
+      std::string resource_class_utf8;
+      convert_to_grpc(resource_class, &resource_class_utf8);
+      response->set_resource_class(resource_class_utf8);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_resource_class()));
+      std::string expanded_unaliased_name_utf8;
+      convert_to_grpc(expanded_unaliased_name, &expanded_unaliased_name_utf8);
+      response->set_expanded_unaliased_name(expanded_unaliased_name_utf8);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_expanded_unaliased_name()));
+      std::string alias_if_exists_utf8;
+      convert_to_grpc(alias_if_exists, &alias_if_exists_utf8);
+      response->set_alias_if_exists(alias_if_exists_utf8);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_alias_if_exists()));
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Peek16(::grpc::ServerContext* context, const Peek16Request* request, Peek16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = request->address();
+      ViUInt16 value {};
+      library_->Peek16(vi, address, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Peek32(::grpc::ServerContext* context, const Peek32Request* request, Peek32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = request->address();
+      ViUInt32 value {};
+      library_->Peek32(vi, address, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Peek64(::grpc::ServerContext* context, const Peek64Request* request, Peek64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = request->address();
+      ViUInt64 value {};
+      library_->Peek64(vi, address, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Peek8(::grpc::ServerContext* context, const Peek8Request* request, Peek8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = request->address();
+      ViUInt8 value {};
+      library_->Peek8(vi, address, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Poke16(::grpc::ServerContext* context, const Poke16Request* request, Poke16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = request->address();
+      ViUInt16 value = request->value();
+      library_->Poke16(vi, address, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Poke32(::grpc::ServerContext* context, const Poke32Request* request, Poke32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = request->address();
+      ViUInt32 value = request->value();
+      library_->Poke32(vi, address, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Poke64(::grpc::ServerContext* context, const Poke64Request* request, Poke64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = request->address();
+      ViUInt64 value = request->value();
+      library_->Poke64(vi, address, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Poke8(::grpc::ServerContext* context, const Poke8Request* request, Poke8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = request->address();
+      ViUInt8 value = request->value();
+      library_->Poke8(vi, address, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+    //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViUInt32 count = request->count();
+      std::string buffer(return_count, '\0');
+      ViUInt32 return_count {};
+      auto status = library_->Read(vi, (ViByte*)buffer.data(), count, &return_count);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_buffer(buffer);
+      response->set_return_count(return_count);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::ReadAsync(::grpc::ServerContext* context, const ReadAsyncRequest* request, ReadAsyncResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViUInt32 count = request->count();
+      void read_buffer {};
+      ViJobId job_identifier {};
+      auto status = library_->ReadAsync(vi, &read_buffer, count, &job_identifier);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_job_identifier(job_identifier);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::SetAttribute(::grpc::ServerContext* context, const SetAttributeRequest* request, SetAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      ViObject object_handle = request->object_handle();
+      ViAttr attribute_name = request->attribute_name();
+      ViAttrState attribute_value = request->attribute_value();
+      auto status = library_->SetAttribute(object_handle, attribute_name, attribute_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViObject(context, status, object_handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::StatusDesc(::grpc::ServerContext* context, const StatusDescRequest* request, StatusDescResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      ViObject object_handle = request->object_handle();
+      ViStatus status_value = request->status_value();
+      std::string status_description(256 - 1, '\0');
+      auto status = library_->StatusDesc(object_handle, status_value, (ViChar*)status_description.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViObject(context, status, object_handle);
+      }
+      response->set_status(status);
+      std::string status_description_utf8;
+      convert_to_grpc(status_description, &status_description_utf8);
+      response->set_status_description(status_description_utf8);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_status_description()));
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::UsbControlIn(::grpc::ServerContext* context, const UsbControlInRequest* request, UsbControlInResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt16 bm_request_type = (ViInt16)request->bm_request_type();
+      ViInt16 b_request = (ViInt16)request->b_request();
+      ViUInt16 w_value = request->w_value();
+      ViUInt16 w_index = request->w_index();
+      ViUInt16 w_length = request->w_length();
+      std::string buffer(return_count, '\0');
+      ViUInt16 return_count {};
+      auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, (ViByte*)buffer.data(), &return_count);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_buffer(buffer);
+      response->set_return_count(return_count);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::WriteAsync(::grpc::ServerContext* context, const WriteAsyncRequest* request, WriteAsyncResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    #if 1
+        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
+    #else
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViByte* buffer = (ViByte*)request->buffer().c_str();
+      ViUInt32 count = static_cast<ViUInt32>(request->buffer().size());
+      ViJobId job_identifier {};
+      auto status = library_->WriteAsync(vi, buffer, count, &job_identifier);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_job_identifier(job_identifier);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+    #endif
+  }
 
 }  // namespace visa_grpc

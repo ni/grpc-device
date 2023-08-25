@@ -122,7 +122,7 @@ ViStatus MapTrigger(ViSession vi, ViInt16 triggerSource, ViInt16 triggerDestinat
   return viMapTrigger(vi, triggerSource, triggerDestination, mode);
 }
 
-ViStatus MemAlloc(ViSession vi, ViBusSize size, ViBusAddress* offset)
+ViStatus MemAlloc(ViSession vi, ViUInt32 size, ViBusAddress* offset)
 {
   return viMemAlloc(vi, size, offset);
 }
@@ -312,9 +312,9 @@ ViStatus UsbControlOut(ViSession vi, ViInt16 bmRequestType, ViInt16 bRequest, Vi
   return viUsbControlOut(vi, bmRequestType, bRequest, wValue, wIndex, wLength, buffer);
 }
 
-ViStatus VxiCommandQuery(ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* response)
+ViStatus VxiCommandQuery(ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* commandResponse)
 {
-  return viVxiCommandQuery(vi, mode, command, response);
+  return viVxiCommandQuery(vi, mode, command, commandResponse);
 }
 
 ViStatus WaitOnEvent(ViSession vi, ViEventType inEventType, ViUInt32 timeout, ViEventType* outEventType, ViEvent* eventHandle)
@@ -327,9 +327,9 @@ ViStatus Write(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCo
   return viWrite(vi, buffer, count, returnCount);
 }
 
-ViStatus WriteAsync(ViSession vi, ViByte writeBuffer[], ViUInt32 count, ViJobId* jobIdentifier)
+ViStatus WriteAsync(ViSession vi, ViByte buffer[], ViUInt32 count, ViJobId* jobIdentifier)
 {
-  return viWriteAsync(vi, writeBuffer, count, jobIdentifier);
+  return viWriteAsync(vi, buffer, count, jobIdentifier);
 }
 
 }  // namespace visa_grpc

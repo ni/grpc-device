@@ -39,7 +39,7 @@ class VisaLibraryInterface {
   virtual ViStatus Lock(ViSession vi, ViAccessMode lockType, ViUInt32 timeout, ViConstKeyId requestedKey, ViChar accessKey[256]) = 0;
   virtual ViStatus MapAddressEx(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize mapSize, ViBoolean ownerAccess, ViAddr suggestedAddress, ViAddr* address) = 0;
   virtual ViStatus MapTrigger(ViSession vi, ViInt16 triggerSource, ViInt16 triggerDestination, ViUInt16 mode) = 0;
-  virtual ViStatus MemAlloc(ViSession vi, ViBusSize size, ViBusAddress* offset) = 0;
+  virtual ViStatus MemAlloc(ViSession vi, ViUInt32 size, ViBusAddress* offset) = 0;
   virtual ViStatus MemAllocEx(ViSession vi, ViBusSize size, ViBusAddress64* offset) = 0;
   virtual ViStatus MemFreeEx(ViSession vi, ViBusAddress64 offset) = 0;
   virtual ViStatus MoveIn16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[]) = 0;
@@ -78,10 +78,10 @@ class VisaLibraryInterface {
   virtual ViStatus UnmapTrigger(ViSession vi, ViInt16 triggerSource, ViInt16 triggerDestination) = 0;
   virtual ViStatus UsbControlIn(ViSession vi, ViInt16 bmRequestType, ViInt16 bRequest, ViUInt16 wValue, ViUInt16 wIndex, ViUInt16 wLength, ViByte buffer[], ViUInt16* returnCount) = 0;
   virtual ViStatus UsbControlOut(ViSession vi, ViInt16 bmRequestType, ViInt16 bRequest, ViUInt16 wValue, ViUInt16 wIndex, ViUInt16 wLength, ViByte buffer[]) = 0;
-  virtual ViStatus VxiCommandQuery(ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* response) = 0;
+  virtual ViStatus VxiCommandQuery(ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* commandResponse) = 0;
   virtual ViStatus WaitOnEvent(ViSession vi, ViEventType inEventType, ViUInt32 timeout, ViEventType* outEventType, ViEvent* eventHandle) = 0;
   virtual ViStatus Write(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCount) = 0;
-  virtual ViStatus WriteAsync(ViSession vi, ViByte writeBuffer[], ViUInt32 count, ViJobId* jobIdentifier) = 0;
+  virtual ViStatus WriteAsync(ViSession vi, ViByte buffer[], ViUInt32 count, ViJobId* jobIdentifier) = 0;
 };
 
 }  // namespace visa_grpc

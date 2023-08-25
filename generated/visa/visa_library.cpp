@@ -299,7 +299,7 @@ ViStatus VisaLibrary::MapTrigger(ViSession vi, ViInt16 triggerSource, ViInt16 tr
   return function_pointers_.MapTrigger(vi, triggerSource, triggerDestination, mode);
 }
 
-ViStatus VisaLibrary::MemAlloc(ViSession vi, ViBusSize size, ViBusAddress* offset)
+ViStatus VisaLibrary::MemAlloc(ViSession vi, ViUInt32 size, ViBusAddress* offset)
 {
   if (!function_pointers_.MemAlloc) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMemAlloc.");
@@ -611,12 +611,12 @@ ViStatus VisaLibrary::UsbControlOut(ViSession vi, ViInt16 bmRequestType, ViInt16
   return function_pointers_.UsbControlOut(vi, bmRequestType, bRequest, wValue, wIndex, wLength, buffer);
 }
 
-ViStatus VisaLibrary::VxiCommandQuery(ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* response)
+ViStatus VisaLibrary::VxiCommandQuery(ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* commandResponse)
 {
   if (!function_pointers_.VxiCommandQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find viVxiCommandQuery.");
   }
-  return function_pointers_.VxiCommandQuery(vi, mode, command, response);
+  return function_pointers_.VxiCommandQuery(vi, mode, command, commandResponse);
 }
 
 ViStatus VisaLibrary::WaitOnEvent(ViSession vi, ViEventType inEventType, ViUInt32 timeout, ViEventType* outEventType, ViEvent* eventHandle)
@@ -635,12 +635,12 @@ ViStatus VisaLibrary::Write(ViSession vi, ViByte buffer[], ViUInt32 count, ViUIn
   return function_pointers_.Write(vi, buffer, count, returnCount);
 }
 
-ViStatus VisaLibrary::WriteAsync(ViSession vi, ViByte writeBuffer[], ViUInt32 count, ViJobId* jobIdentifier)
+ViStatus VisaLibrary::WriteAsync(ViSession vi, ViByte buffer[], ViUInt32 count, ViJobId* jobIdentifier)
 {
   if (!function_pointers_.WriteAsync) {
     throw nidevice_grpc::LibraryLoadException("Could not find viWriteAsync.");
   }
-  return function_pointers_.WriteAsync(vi, writeBuffer, count, jobIdentifier);
+  return function_pointers_.WriteAsync(vi, buffer, count, jobIdentifier);
 }
 
 }  // namespace visa_grpc

@@ -45,7 +45,7 @@ class VisaLibrary : public visa_grpc::VisaLibraryInterface {
   ViStatus Lock(ViSession vi, ViAccessMode lockType, ViUInt32 timeout, ViConstKeyId requestedKey, ViChar accessKey[256]);
   ViStatus MapAddressEx(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize mapSize, ViBoolean ownerAccess, ViAddr suggestedAddress, ViAddr* address);
   ViStatus MapTrigger(ViSession vi, ViInt16 triggerSource, ViInt16 triggerDestination, ViUInt16 mode);
-  ViStatus MemAlloc(ViSession vi, ViBusSize size, ViBusAddress* offset);
+  ViStatus MemAlloc(ViSession vi, ViUInt32 size, ViBusAddress* offset);
   ViStatus MemAllocEx(ViSession vi, ViBusSize size, ViBusAddress64* offset);
   ViStatus MemFreeEx(ViSession vi, ViBusAddress64 offset);
   ViStatus MoveIn16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[]);
@@ -84,10 +84,10 @@ class VisaLibrary : public visa_grpc::VisaLibraryInterface {
   ViStatus UnmapTrigger(ViSession vi, ViInt16 triggerSource, ViInt16 triggerDestination);
   ViStatus UsbControlIn(ViSession vi, ViInt16 bmRequestType, ViInt16 bRequest, ViUInt16 wValue, ViUInt16 wIndex, ViUInt16 wLength, ViByte buffer[], ViUInt16* returnCount);
   ViStatus UsbControlOut(ViSession vi, ViInt16 bmRequestType, ViInt16 bRequest, ViUInt16 wValue, ViUInt16 wIndex, ViUInt16 wLength, ViByte buffer[]);
-  ViStatus VxiCommandQuery(ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* response);
+  ViStatus VxiCommandQuery(ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* commandResponse);
   ViStatus WaitOnEvent(ViSession vi, ViEventType inEventType, ViUInt32 timeout, ViEventType* outEventType, ViEvent* eventHandle);
   ViStatus Write(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCount);
-  ViStatus WriteAsync(ViSession vi, ViByte writeBuffer[], ViUInt32 count, ViJobId* jobIdentifier);
+  ViStatus WriteAsync(ViSession vi, ViByte buffer[], ViUInt32 count, ViJobId* jobIdentifier);
 
  private:
   using AssertIntrSignalPtr = decltype(&viAssertIntrSignal);

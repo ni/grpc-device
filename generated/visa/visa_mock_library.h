@@ -41,7 +41,7 @@ class VisaMockLibrary : public visa_grpc::VisaLibraryInterface {
   MOCK_METHOD(ViStatus, Lock, (ViSession vi, ViAccessMode lockType, ViUInt32 timeout, ViConstKeyId requestedKey, ViChar accessKey[256]), (override));
   MOCK_METHOD(ViStatus, MapAddressEx, (ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize mapSize, ViBoolean ownerAccess, ViAddr suggestedAddress, ViAddr* address), (override));
   MOCK_METHOD(ViStatus, MapTrigger, (ViSession vi, ViInt16 triggerSource, ViInt16 triggerDestination, ViUInt16 mode), (override));
-  MOCK_METHOD(ViStatus, MemAlloc, (ViSession vi, ViBusSize size, ViBusAddress* offset), (override));
+  MOCK_METHOD(ViStatus, MemAlloc, (ViSession vi, ViUInt32 size, ViBusAddress* offset), (override));
   MOCK_METHOD(ViStatus, MemAllocEx, (ViSession vi, ViBusSize size, ViBusAddress64* offset), (override));
   MOCK_METHOD(ViStatus, MemFreeEx, (ViSession vi, ViBusAddress64 offset), (override));
   MOCK_METHOD(ViStatus, MoveIn16Ex, (ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[]), (override));
@@ -80,10 +80,10 @@ class VisaMockLibrary : public visa_grpc::VisaLibraryInterface {
   MOCK_METHOD(ViStatus, UnmapTrigger, (ViSession vi, ViInt16 triggerSource, ViInt16 triggerDestination), (override));
   MOCK_METHOD(ViStatus, UsbControlIn, (ViSession vi, ViInt16 bmRequestType, ViInt16 bRequest, ViUInt16 wValue, ViUInt16 wIndex, ViUInt16 wLength, ViByte buffer[], ViUInt16* returnCount), (override));
   MOCK_METHOD(ViStatus, UsbControlOut, (ViSession vi, ViInt16 bmRequestType, ViInt16 bRequest, ViUInt16 wValue, ViUInt16 wIndex, ViUInt16 wLength, ViByte buffer[]), (override));
-  MOCK_METHOD(ViStatus, VxiCommandQuery, (ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* response), (override));
+  MOCK_METHOD(ViStatus, VxiCommandQuery, (ViSession vi, ViUInt16 mode, ViUInt32 command, ViUInt32* commandResponse), (override));
   MOCK_METHOD(ViStatus, WaitOnEvent, (ViSession vi, ViEventType inEventType, ViUInt32 timeout, ViEventType* outEventType, ViEvent* eventHandle), (override));
   MOCK_METHOD(ViStatus, Write, (ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCount), (override));
-  MOCK_METHOD(ViStatus, WriteAsync, (ViSession vi, ViByte writeBuffer[], ViUInt32 count, ViJobId* jobIdentifier), (override));
+  MOCK_METHOD(ViStatus, WriteAsync, (ViSession vi, ViByte buffer[], ViUInt32 count, ViJobId* jobIdentifier), (override));
 };
 
 }  // namespace unit
