@@ -58,7 +58,6 @@ SetIOTraceStatusResponse set_io_trace_status(const StubPtr& stub, const nidevice
 UnregisterSpecialClientSnapshotInterestResponse unregister_special_client_snapshot_interest(const StubPtr& stub, const std::string& resource_name);
 GetSFPSessionAccessEnabledResponse get_sfp_session_access_enabled(const StubPtr& stub, const std::string& option_string);
 
-
 } // namespace nirfmxinstr_restricted_grpc::experimental::client
 
 #endif /* NIRFMXINSTR_RESTRICTED_GRPC_CLIENT_H */
