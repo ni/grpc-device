@@ -56,7 +56,7 @@ SaveConfigurationsToJSONResponse save_configurations_to_json(const StubPtr& stub
 SetForceAllTracesEnabledResponse set_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const pb::int32& attr_val);
 SetIOTraceStatusResponse set_io_trace_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& io_trace_status);
 UnregisterSpecialClientSnapshotInterestResponse unregister_special_client_snapshot_interest(const StubPtr& stub, const std::string& resource_name);
-GetSFPSessionAccessEnabledResponse get_sfp_session_access_enabled(const StubPtr& stub, const std::string& selector_string);
+GetSFPSessionAccessEnabledResponse get_sfp_session_access_enabled(const StubPtr& stub, const std::string& option_string);
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client
 
