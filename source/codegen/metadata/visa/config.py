@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '23.5.0.49319-0+f167',
-    'c_header': 'visa.h',
-    'c_function_prefix': 'vi',
-    'java_package': 'com.ni.grpc.nivisa',
-    'csharp_namespace': 'NationalInstruments.Grpc.NiVISA',
-    'close_function': 'Close',
-    'custom_types': [],
     'additional_headers': {},
+    'api_version': '23.0.0',
+    'c_function_prefix': 'vi',
+    'c_header': 'visa.h',
+    'close_function': 'Close',
     'code_readiness': 'NextRelease',
-    'driver_name': 'NI-VISA Library',
-    'extra_errors_used': [
-    ],
+    'csharp_namespace': 'NationalInstruments.Grpc.Visa',
+    'custom_types': [],
+    'driver_name': 'VISA',
+    'extra_errors_used': [],
     'init_function': 'Open',
-    'resource_handle_type': ['ViSession','ViObject'],
-    'status_ok': 'status >= 0',
+    'java_package': 'com.ni.grpc.visa',
     'library_info': {
         'Linux': {
             '64bit': {
@@ -28,15 +25,17 @@ config = {
                 'type': 'windll'
             },
             '64bit': {
-                'name': 'nivisa64.dll',
+                'name': 'visa64.dll',
                 'type': 'cdll'
             }
         }
     },
     'linux_rt_support': True,
     'metadata_version': '0.1',
-    'module_name': 'nivisa',
-    'namespace_component': 'nivisa',    
-    'service_class_prefix': 'NiVISA',
-    'session_handle_parameter_name': 'vi'
+    'module_name': 'visa',
+    'namespace_component': 'visa',
+    'resource_handle_type': ['ViSession','ViObject'],
+    'service_class_prefix': 'Visa',
+    'session_handle_parameter_name': 'vi',
+    'status_ok': 'status >= 0'
 }

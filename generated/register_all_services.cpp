@@ -70,6 +70,7 @@
 #include "nitclk/nitclk_service_registrar.h"
 #include "nixnet/nixnet_service_registrar.h"
 #include "nixnetsocket/nixnetsocket_service_registrar.h"
+#include "visa/visa_service_registrar.h"
 
 namespace nidevice_grpc {
 
@@ -95,6 +96,7 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
   auto nx_database_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>(session_repository);
   auto nx_socket_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSOCKET>>(session_repository);
   auto nx_ip_stack_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>(session_repository);
+  auto vi_object_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViObject>>(session_repository);
 
   service_vector->push_back(
     nidaqmx_grpc::register_service(
@@ -283,6 +285,12 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       server_builder, 
       nx_socket_repository,
       nx_ip_stack_ref_t_repository,
+      feature_toggles));
+  service_vector->push_back(
+    visa_grpc::register_service(
+      server_builder, 
+      vi_session_repository,
+      vi_object_repository,
       feature_toggles));
 
   return service_vector;

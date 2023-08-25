@@ -144,6 +144,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'FindNext': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'findHandle',
+                'type': 'ViFindList'
+            },
+            {
+                'direction': 'out',
+                'name': 'instrumentDescriptor',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'FindRsrc': {
         'parameters': [
             {
@@ -877,6 +897,18 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'OpenDefaultRM': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'rsrcManagerHandle',
                 'type': 'ViSession'
             }
         ],
