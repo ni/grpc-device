@@ -27,7 +27,6 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidev
   if (!loaded) {
     return;
   }
-
   function_pointers_.ConvertForPowerUnitsUtility = reinterpret_cast<ConvertForPowerUnitsUtilityPtr>(shared_library_.get_function_pointer("RFmxInstr_ConvertForPowerUnitsUtility"));
   function_pointers_.DeleteSnapshot = reinterpret_cast<DeleteSnapshotPtr>(shared_library_.get_function_pointer("RFmxInstr_DeleteSnapshot"));
   function_pointers_.GetActiveResultName = reinterpret_cast<GetActiveResultNamePtr>(shared_library_.get_function_pointer("RFmxInstr_GetActiveResultName"));
@@ -66,7 +65,6 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidev
   function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_.get_function_pointer("RFmxInstr_SetIOTraceStatus"));
   function_pointers_.UnregisterSpecialClientSnapshotInterest = reinterpret_cast<UnregisterSpecialClientSnapshotInterestPtr>(shared_library_.get_function_pointer("RFmxInstr_UnregisterSpecialClientSnapshotInterest"));
   function_pointers_.GetSFPSessionAccessEnabled = reinterpret_cast<GetSFPSessionAccessEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSFPSessionAccessEnabled"));
-
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -376,16 +374,13 @@ int32 NiRFmxInstrRestrictedLibrary::UnregisterSpecialClientSnapshotInterest(char
   return function_pointers_.UnregisterSpecialClientSnapshotInterest(resourceName);
 }
 
-
 int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled)
-
 {
   if (!function_pointers_.GetSFPSessionAccessEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAccessEnabled.");
   }
 
   return function_pointers_.GetSFPSessionAccessEnabled(optionString, isSFPSessionAccessEnabled);
-
 }
 
 }  // namespace nirfmxinstr_restricted_grpc
