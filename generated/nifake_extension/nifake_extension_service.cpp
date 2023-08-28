@@ -91,44 +91,6 @@ namespace nifake_extension_grpc {
     }
   }
 
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFakeExtensionService::TestLargeEnum(::grpc::ServerContext* context, const TestLargeEnumRequest* request, TestLargeEnumResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViUInt32 mode;
-      switch (request->mode_enum_case()) {
-        case nifake_extension_grpc::TestLargeEnumRequest::ModeEnumCase::kMode: {
-          mode = static_cast<ViUInt32>(request->mode());
-          break;
-        }
-        case nifake_extension_grpc::TestLargeEnumRequest::ModeEnumCase::kModeRaw: {
-          mode = static_cast<ViUInt32>(request->mode_raw());
-          break;
-        }
-        case nifake_extension_grpc::TestLargeEnumRequest::ModeEnumCase::MODE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mode was not specified or out of range");
-          break;
-        }
-      }
-
-      auto status = library_->TestLargeEnum(vi, mode);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
 
   NiFakeExtensionFeatureToggles::NiFakeExtensionFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

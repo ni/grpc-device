@@ -17,9 +17,4 @@ ViStatus TestAddressParameters(ViSession vi, ViInt16 space, ViUInt64 offset, ViA
   return niFakeExtension_TestAddressParameters(vi, space, offset, suggested, actual);
 }
 
-ViStatus TestLargeEnum(ViSession vi, ViUInt32 mode)
-{
-  return niFakeExtension_TestLargeEnum(vi, mode);
-}
-
 }  // namespace nifake_extension_grpc

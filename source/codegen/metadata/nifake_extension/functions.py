@@ -45,20 +45,4 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'TestLargeEnum': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'enum': 'LargeValue',
-                'name': 'mode',
-                'type': 'ViUInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
 }

@@ -29,7 +29,6 @@ NiFakeExtensionLibrary::NiFakeExtensionLibrary(std::shared_ptr<nidevice_grpc::Sh
   }
   function_pointers_.AddCoolFunctionality = reinterpret_cast<AddCoolFunctionalityPtr>(shared_library_->get_function_pointer("niFakeExtension_AddCoolFunctionality"));
   function_pointers_.TestAddressParameters = reinterpret_cast<TestAddressParametersPtr>(shared_library_->get_function_pointer("niFakeExtension_TestAddressParameters"));
-  function_pointers_.TestLargeEnum = reinterpret_cast<TestLargeEnumPtr>(shared_library_->get_function_pointer("niFakeExtension_TestLargeEnum"));
 }
 
 NiFakeExtensionLibrary::~NiFakeExtensionLibrary()
@@ -57,14 +56,6 @@ ViStatus NiFakeExtensionLibrary::TestAddressParameters(ViSession vi, ViInt16 spa
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeExtension_TestAddressParameters.");
   }
   return function_pointers_.TestAddressParameters(vi, space, offset, suggested, actual);
-}
-
-ViStatus NiFakeExtensionLibrary::TestLargeEnum(ViSession vi, ViUInt32 mode)
-{
-  if (!function_pointers_.TestLargeEnum) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFakeExtension_TestLargeEnum.");
-  }
-  return function_pointers_.TestLargeEnum(vi, mode);
 }
 
 }  // namespace nifake_extension_grpc

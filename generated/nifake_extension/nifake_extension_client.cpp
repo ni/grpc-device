@@ -36,7 +36,7 @@ add_cool_functionality(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 TestAddressParametersResponse
-test_address_parameeters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& space, const pb::uint64& offset, const pb::uint64& suggested)
+test_address_parameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& space, const pb::uint64& offset, const pb::uint64& suggested)
 {
   ::grpc::ClientContext context;
 
@@ -50,31 +50,6 @@ test_address_parameeters(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 
   raise_if_error(
       stub->TestAddressParameters(&context, request, &response),
-      context);
-
-  return response;
-}
-
-TestLargeEnumResponse
-test_large_enum(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<LargeValue, pb::uint32>& mode)
-{
-  ::grpc::ClientContext context;
-
-  auto request = TestLargeEnumRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  const auto mode_ptr = mode.get_if<LargeValue>();
-  const auto mode_raw_ptr = mode.get_if<pb::uint32>();
-  if (mode_ptr) {
-    request.set_mode(*mode_ptr);
-  }
-  else if (mode_raw_ptr) {
-    request.set_mode_raw(*mode_raw_ptr);
-  }
-
-  auto response = TestLargeEnumResponse{};
-
-  raise_if_error(
-      stub->TestLargeEnum(&context, request, &response),
       context);
 
   return response;
