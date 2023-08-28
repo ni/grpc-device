@@ -62,7 +62,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     fgen::InitializeWithChannelsRequest request;
     request.set_channel_name("");
     request.set_resource_name("FakeDevice");
-    request.set_option_string("Simulate=1, DriverSetup=Model:5433;BoardType:PXI");
+    request.set_option_string("Simulate=1, DriverSetup=Model:5441;BoardType:PXI");
     request.set_reset_device(false);
     fgen::InitializeWithChannelsResponse response;
 
