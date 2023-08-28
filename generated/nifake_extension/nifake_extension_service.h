@@ -43,6 +43,8 @@ public:
   virtual ~NiFakeExtensionService();
 
   ::grpc::Status AddCoolFunctionality(::grpc::ServerContext* context, const AddCoolFunctionalityRequest* request, AddCoolFunctionalityResponse* response) override;
+  ::grpc::Status TestAddressParameeters(::grpc::ServerContext* context, const TestAddressParameetersRequest* request, TestAddressParameetersResponse* response) override;
+  ::grpc::Status TestLargeEnum(::grpc::ServerContext* context, const TestLargeEnumRequest* request, TestLargeEnumResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

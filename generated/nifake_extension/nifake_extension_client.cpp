@@ -35,5 +35,50 @@ add_cool_functionality(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   return response;
 }
 
+TestAddressParameetersResponse
+test_address_parameeters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& space, const pb::uint64& offset, const pb::uint64& suggested)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TestAddressParameetersRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_space(space);
+  request.set_offset(offset);
+  request.set_suggested(suggested);
+
+  auto response = TestAddressParameetersResponse{};
+
+  raise_if_error(
+      stub->TestAddressParameeters(&context, request, &response),
+      context);
+
+  return response;
+}
+
+TestLargeEnumResponse
+test_large_enum(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<LargeValue, pb::uint32>& mode)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TestLargeEnumRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  const auto mode_ptr = mode.get_if<LargeValue>();
+  const auto mode_raw_ptr = mode.get_if<pb::uint32>();
+  if (mode_ptr) {
+    request.set_mode(*mode_ptr);
+  }
+  else if (mode_raw_ptr) {
+    request.set_mode_raw(*mode_raw_ptr);
+  }
+
+  auto response = TestLargeEnumResponse{};
+
+  raise_if_error(
+      stub->TestLargeEnum(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nifake_extension_grpc::experimental::client
