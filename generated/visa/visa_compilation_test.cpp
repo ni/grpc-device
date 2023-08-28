@@ -257,7 +257,7 @@ ViStatus Read(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCou
   return viRead(vi, buffer, count, returnCount);
 }
 
-ViStatus ReadAsync(ViSession vi, void* readBuffer, ViUInt32 count, ViJobId* jobIdentifier)
+ViStatus ReadAsync(ViSession vi, ViByte readBuffer[], ViUInt32 count, ViJobId* jobIdentifier)
 {
   return viReadAsync(vi, readBuffer, count, jobIdentifier);
 }

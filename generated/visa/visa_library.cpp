@@ -523,7 +523,7 @@ ViStatus VisaLibrary::Read(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt
   return function_pointers_.Read(vi, buffer, count, returnCount);
 }
 
-ViStatus VisaLibrary::ReadAsync(ViSession vi, void* readBuffer, ViUInt32 count, ViJobId* jobIdentifier)
+ViStatus VisaLibrary::ReadAsync(ViSession vi, ViByte readBuffer[], ViUInt32 count, ViJobId* jobIdentifier)
 {
   if (!function_pointers_.ReadAsync) {
     throw nidevice_grpc::LibraryLoadException("Could not find viReadAsync.");

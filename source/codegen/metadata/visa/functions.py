@@ -1368,9 +1368,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bytes',
                 'include_in_proto': False,
                 'name': 'readBuffer',
-                'type': 'void'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'count'
+                },
+                'type': 'ViByte[]'
             },
             {
                 'direction': 'in',

@@ -69,7 +69,7 @@ class VisaMockLibrary : public visa_grpc::VisaLibraryInterface {
   MOCK_METHOD(void, Poke8, (ViSession vi, ViAddr address, ViUInt8 value), (override));
   MOCK_METHOD(ViStatus, PxiReserveTriggers, (ViSession vi, ViInt16 cnt, ViInt16 trigBuses[], ViInt16 trigLines[], ViInt16* failureIndex), (override));
   MOCK_METHOD(ViStatus, Read, (ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCount), (override));
-  MOCK_METHOD(ViStatus, ReadAsync, (ViSession vi, void* readBuffer, ViUInt32 count, ViJobId* jobIdentifier), (override));
+  MOCK_METHOD(ViStatus, ReadAsync, (ViSession vi, ViByte readBuffer[], ViUInt32 count, ViJobId* jobIdentifier), (override));
   MOCK_METHOD(ViStatus, ReadSTB, (ViSession vi, ViUInt16* statusByte), (override));
   MOCK_METHOD(ViStatus, SetAttribute, (ViObject objectHandle, ViAttr attributeName, ViAttrState attributeValue), (override));
   MOCK_METHOD(ViStatus, SetBuf, (ViSession vi, ViUInt16 mask, ViUInt32 bufferSize), (override));
