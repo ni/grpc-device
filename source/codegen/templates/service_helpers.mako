@@ -607,8 +607,10 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
         [](auto x) { return (${c_type_underlying_type})x; }); \
+% elif c_type == 'ViAddr':
+      ${c_type} ${parameter_name} = reinterpret_cast<${c_type}>(${request_snippet});\
 % elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
-      ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
+      ${c_type} ${parameter_name} = static_cast<${c_type}>(${request_snippet});\
 % elif grpc_type == 'nidevice_grpc.Session':
       auto ${parameter_name}_grpc_session = ${request_snippet};
       ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.name());\
@@ -894,6 +896,8 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
       response->mutable_${field_name}()->Resize(${common_helpers.get_size_expression(parameter)}, 0);
 %     endif
 ### pass: other array types don't need to copy.
+%   elif parameter['type'] == 'ViAddr':
+      response->set_${field_name}(reinterpret_cast<uint64_t>(${parameter_name}));
 %   else:
       response->set_${field_name}(${parameter_name});
 %   endif

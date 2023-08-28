@@ -741,6 +741,50 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status VisaService::MapAddressEx(::grpc::ServerContext* context, const MapAddressExRequest* request, MapAddressExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViUInt16 address_space;
+      switch (request->address_space_enum_case()) {
+        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::kAddressSpace: {
+          address_space = static_cast<ViUInt16>(request->address_space());
+          break;
+        }
+        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+          address_space = static_cast<ViUInt16>(request->address_space_raw());
+          break;
+        }
+        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
+          break;
+        }
+      }
+
+      ViBusAddress64 offset = request->offset();
+      ViBusSize map_size = request->map_size();
+      ViBoolean owner_access = request->owner_access();
+      ViAddr suggested_address = reinterpret_cast<ViAddr>(request->suggested_address());
+      ViAddr address {};
+      auto status = library_->MapAddressEx(vi, address_space, offset, map_size, owner_access, suggested_address, &address);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_address(reinterpret_cast<uint64_t>(address));
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status VisaService::MapTrigger(::grpc::ServerContext* context, const MapTriggerRequest* request, MapTriggerResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1361,6 +1405,210 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Peek16(::grpc::ServerContext* context, const Peek16Request* request, Peek16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = reinterpret_cast<ViAddr>(request->address());
+      ViUInt16 value {};
+      library_->Peek16(vi, address, &value);
+      auto status = 0;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Peek32(::grpc::ServerContext* context, const Peek32Request* request, Peek32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = reinterpret_cast<ViAddr>(request->address());
+      ViUInt32 value {};
+      library_->Peek32(vi, address, &value);
+      auto status = 0;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Peek64(::grpc::ServerContext* context, const Peek64Request* request, Peek64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = reinterpret_cast<ViAddr>(request->address());
+      ViUInt64 value {};
+      library_->Peek64(vi, address, &value);
+      auto status = 0;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Peek8(::grpc::ServerContext* context, const Peek8Request* request, Peek8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = reinterpret_cast<ViAddr>(request->address());
+      ViUInt8 value {};
+      library_->Peek8(vi, address, &value);
+      auto status = 0;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Poke16(::grpc::ServerContext* context, const Poke16Request* request, Poke16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = reinterpret_cast<ViAddr>(request->address());
+      ViUInt16 value = request->value();
+      library_->Poke16(vi, address, value);
+      auto status = 0;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Poke32(::grpc::ServerContext* context, const Poke32Request* request, Poke32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = reinterpret_cast<ViAddr>(request->address());
+      ViUInt32 value = request->value();
+      library_->Poke32(vi, address, value);
+      auto status = 0;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Poke64(::grpc::ServerContext* context, const Poke64Request* request, Poke64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = reinterpret_cast<ViAddr>(request->address());
+      ViUInt64 value = request->value();
+      library_->Poke64(vi, address, value);
+      auto status = 0;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status VisaService::Poke8(::grpc::ServerContext* context, const Poke8Request* request, Poke8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViAddr address = reinterpret_cast<ViAddr>(request->address());
+      ViUInt8 value = request->value();
+      library_->Poke8(vi, address, value);
+      auto status = 0;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status VisaService::PxiReserveTriggers(::grpc::ServerContext* context, const PxiReserveTriggersRequest* request, PxiReserveTriggersResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1604,8 +1852,8 @@ namespace visa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt16 bm_request_type = (ViInt16)request->bm_request_type();
-      ViInt16 b_request = (ViInt16)request->b_request();
+      ViInt16 bm_request_type = static_cast<ViInt16>(request->bm_request_type());
+      ViInt16 b_request = static_cast<ViInt16>(request->b_request());
       ViUInt16 w_value = request->w_value();
       ViUInt16 w_index = request->w_index();
       ViUInt16 w_length = static_cast<ViUInt16>(request->buffer().size());
