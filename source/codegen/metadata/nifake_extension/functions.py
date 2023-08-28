@@ -15,7 +15,7 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'TestAddressParameeters': {
+    'TestAddressParameters': {
         'parameters': [
             {
                 'direction': 'in',

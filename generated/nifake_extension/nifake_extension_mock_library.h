@@ -18,7 +18,7 @@ namespace unit {
 class NiFakeExtensionMockLibrary : public nifake_extension_grpc::NiFakeExtensionLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, AddCoolFunctionality, (ViSession vi, ViInt32 param), (override));
-  MOCK_METHOD(ViStatus, TestAddressParameeters, (ViSession vi, ViInt16 space, ViUInt64 offset, ViAddr suggested, ViAddr* actual), (override));
+  MOCK_METHOD(ViStatus, TestAddressParameters, (ViSession vi, ViInt16 space, ViUInt64 offset, ViAddr suggested, ViAddr* actual), (override));
   MOCK_METHOD(ViStatus, TestLargeEnum, (ViSession vi, ViUInt32 mode), (override));
 };
 

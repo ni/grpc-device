@@ -66,7 +66,7 @@ namespace nifake_extension_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFakeExtensionService::TestAddressParameeters(::grpc::ServerContext* context, const TestAddressParameetersRequest* request, TestAddressParameetersResponse* response)
+  ::grpc::Status NiFakeExtensionService::TestAddressParameters(::grpc::ServerContext* context, const TestAddressParametersRequest* request, TestAddressParametersResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -78,7 +78,7 @@ namespace nifake_extension_grpc {
       ViUInt64 offset = request->offset();
       ViAddr suggested = reinterpret_cast<ViAddr>(request->suggested());
       ViAddr actual {};
-      auto status = library_->TestAddressParameeters(vi, space, offset, suggested, &actual);
+      auto status = library_->TestAddressParameters(vi, space, offset, suggested, &actual);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }

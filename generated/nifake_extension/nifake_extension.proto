@@ -17,7 +17,7 @@ import "session.proto";
 
 service NiFakeExtension {
   rpc AddCoolFunctionality(AddCoolFunctionalityRequest) returns (AddCoolFunctionalityResponse);
-  rpc TestAddressParameeters(TestAddressParameetersRequest) returns (TestAddressParameetersResponse);
+  rpc TestAddressParameters(TestAddressParametersRequest) returns (TestAddressParametersResponse);
   rpc TestLargeEnum(TestLargeEnumRequest) returns (TestLargeEnumResponse);
 }
 
@@ -36,14 +36,14 @@ message AddCoolFunctionalityResponse {
   int32 status = 1;
 }
 
-message TestAddressParameetersRequest {
+message TestAddressParametersRequest {
   nidevice_grpc.Session vi = 1;
   sint32 space = 2;
   uint64 offset = 3;
   fixed64 suggested = 4;
 }
 
-message TestAddressParameetersResponse {
+message TestAddressParametersResponse {
   int32 status = 1;
   fixed64 actual = 2;
 }

@@ -22,17 +22,17 @@ class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibr
 
   ::grpc::Status check_function_exists(std::string functionName);
   ViStatus AddCoolFunctionality(ViSession vi, ViInt32 param);
-  ViStatus TestAddressParameeters(ViSession vi, ViInt16 space, ViUInt64 offset, ViAddr suggested, ViAddr* actual);
+  ViStatus TestAddressParameters(ViSession vi, ViInt16 space, ViUInt64 offset, ViAddr suggested, ViAddr* actual);
   ViStatus TestLargeEnum(ViSession vi, ViUInt32 mode);
 
  private:
   using AddCoolFunctionalityPtr = decltype(&niFakeExtension_AddCoolFunctionality);
-  using TestAddressParameetersPtr = decltype(&niFakeExtension_TestAddressParameeters);
+  using TestAddressParametersPtr = decltype(&niFakeExtension_TestAddressParameters);
   using TestLargeEnumPtr = decltype(&niFakeExtension_TestLargeEnum);
 
   typedef struct FunctionPointers {
     AddCoolFunctionalityPtr AddCoolFunctionality;
-    TestAddressParameetersPtr TestAddressParameeters;
+    TestAddressParametersPtr TestAddressParameters;
     TestLargeEnumPtr TestLargeEnum;
   } FunctionLoadStatus;
 
