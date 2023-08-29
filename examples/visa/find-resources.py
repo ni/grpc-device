@@ -37,7 +37,7 @@ if len(sys.argv) >= 3:
     SERVER_PORT = sys.argv[2]
 
 
-# Create the communication channel for the remote host and create connections to the NI-VISA service.
+# Create the communication channel for the remote host and a connection to the NI-VISA service.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_visa.VisaStub(channel)
 
