@@ -856,7 +856,7 @@ move_out8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple
 }
 
 OpenResponse
-open(const StubPtr& stub, const std::string& instrument_descriptor, const simple_variant<LockState, pb::uint32>& access_mode, const pb::uint32& open_timeout)
+open(const StubPtr& stub, const std::string& instrument_descriptor, const simple_variant<LockState, pb::uint32>& access_mode, const pb::uint32& open_timeout, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -871,6 +871,7 @@ open(const StubPtr& stub, const std::string& instrument_descriptor, const simple
     request.set_access_mode_raw(*access_mode_raw_ptr);
   }
   request.set_open_timeout(open_timeout);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = OpenResponse{};
 
