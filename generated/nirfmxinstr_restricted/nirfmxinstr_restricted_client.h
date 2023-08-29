@@ -57,7 +57,6 @@ SetForceAllTracesEnabledResponse set_force_all_traces_enabled(const StubPtr& stu
 SetIOTraceStatusResponse set_io_trace_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& io_trace_status);
 UnregisterSpecialClientSnapshotInterestResponse unregister_special_client_snapshot_interest(const StubPtr& stub, const std::string& resource_name);
 GetSFPSessionAccessEnabledResponse get_sfp_session_access_enabled(const StubPtr& stub, const std::string& option_string);
-InitializeWithChannelResponse initialize_with_channel(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const std::string& channel_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client
 

@@ -65,7 +65,6 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidev
   function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_->get_function_pointer("RFmxInstr_SetIOTraceStatus"));
   function_pointers_.UnregisterSpecialClientSnapshotInterest = reinterpret_cast<UnregisterSpecialClientSnapshotInterestPtr>(shared_library_->get_function_pointer("RFmxInstr_UnregisterSpecialClientSnapshotInterest"));
   function_pointers_.GetSFPSessionAccessEnabled = reinterpret_cast<GetSFPSessionAccessEnabledPtr>(shared_library_->get_function_pointer("RFmxInstr_GetSFPSessionAccessEnabled"));
-  function_pointers_.InitializeWithChannel = reinterpret_cast<InitializeWithChannelPtr>(shared_library_->get_function_pointer("RFmxInstr_InitializeWithChannel"));
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -381,14 +380,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAccessEnabled(char optionString
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAccessEnabled.");
   }
   return function_pointers_.GetSFPSessionAccessEnabled(optionString, isSFPSessionAccessEnabled);
-}
-
-int32 NiRFmxInstrRestrictedLibrary::InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession)
-{
-  if (!function_pointers_.InitializeWithChannel) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_InitializeWithChannel.");
-  }
-  return function_pointers_.InitializeWithChannel(resourceName, optionString, channelName, handleOut, isNewSession);
 }
 
 }  // namespace nirfmxinstr_restricted_grpc

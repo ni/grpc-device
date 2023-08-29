@@ -1134,6 +1134,26 @@ initialize(const StubPtr& stub, const std::string& resource_name, const std::str
   return response;
 }
 
+InitializeWithChannelResponse
+initialize_with_channel(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const std::string& channel_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitializeWithChannelRequest{};
+  request.set_resource_name(resource_name);
+  request.set_option_string(option_string);
+  request.set_channel_name(channel_name);
+  request.set_initialization_behavior(initialization_behavior);
+
+  auto response = InitializeWithChannelResponse{};
+
+  raise_if_error(
+      stub->InitializeWithChannel(&context, request, &response),
+      context);
+
+  return response;
+}
+
 InitializeFromNIRFSASessionResponse
 initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {

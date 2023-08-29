@@ -77,7 +77,6 @@ public:
   ::grpc::Status SetIOTraceStatus(::grpc::ServerContext* context, const SetIOTraceStatusRequest* request, SetIOTraceStatusResponse* response) override;
   ::grpc::Status UnregisterSpecialClientSnapshotInterest(::grpc::ServerContext* context, const UnregisterSpecialClientSnapshotInterestRequest* request, UnregisterSpecialClientSnapshotInterestResponse* response) override;
   ::grpc::Status GetSFPSessionAccessEnabled(::grpc::ServerContext* context, const GetSFPSessionAccessEnabledRequest* request, GetSFPSessionAccessEnabledResponse* response) override;
-  ::grpc::Status InitializeWithChannel(::grpc::ServerContext* context, const InitializeWithChannelRequest* request, InitializeWithChannelResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
