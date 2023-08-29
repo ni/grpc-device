@@ -26,9 +26,8 @@ enum ${common_helpers.get_attribute_enum_name(group_name, sub_group, config)} {
 %   for attribute in attributes:
 <%
    attribute_name = attributes[attribute]["name"]
-   signed_attribute_value = attribute if attribute <= 0x7FFFFFFF else attribute - 2**32
 %>\
-  ${attribute_value_prefix}_${attribute_name} = ${signed_attribute_value};
+  ${attribute_value_prefix}_${attribute_name} = ${attribute};
 %   endfor
 }
 
@@ -47,11 +46,7 @@ enum ${enum_name} {
   option allow_alias = true;
 %   endif
 %   for value in enum_definitions[enum_name]["values"]:
-<%
-   enum_value = value["value"]
-   signed_enum_value = enum_value if enum_value <= 0x7FFFFFFF else enum_value - 2**32
-%>\
-  ${value["name"]} = ${signed_enum_value};
+  ${value["name"]} = ${value["value"]};
 %   endfor
 }
 

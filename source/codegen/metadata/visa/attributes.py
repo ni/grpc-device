@@ -1,4 +1,116 @@
 attributes = {
+    -1073807359: {
+        'access': 'read only',
+        'documentation': {
+            'description': " This attribute specifies the resource class (for example, 'INSTR') as defined by the canonical resource name. "
+        },
+        'name': 'RSRC_CLASS',
+        'type': 'ViString'
+    },
+    -1073807358: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute specifies the unique identifier for a resource compliant with the address structure shown in the following table.  Optional string segments are shown in square brackets. Interface            Syntax GPIB INSTR           GPIB[board]::primary address[::secondary address][::INSTR] GPIB INTFC           GPIB[board]::INTFC GPIB SERVANT         GPIB[board]::SERVANT GPIB-VXI INSTR       GPIB-VXI[board]::VXI logical address[::INSTR] GPIB-VXI BACKPLANE   GPIB-VXI[board][::mainframe logical address]::BACKPLANE GPIB-VXI MEMACC      GPIB-VXI[board]::MEMACC PXI INSTR            PXI[bus]::device[::function][::INSTR] PXI INSTR            PXI[interface]::[bus-]device[.function][::INSTR] PXI BACKPLANE        PXI[interface]::chassis::BACKPLANE PXI MEMACC           PXI[interface]::MEMACC Serial INSTR         ASRL[board][::INSTR] TCPIP INSTR          TCPIP[board]::host address[::LAN device name][::INSTR] TCPIP SOCKET         TCPIP[board]::host address::port::SOCKET VXI INSTR            VXI[board]::VXI logical address[::INSTR] VXI BACKPLANE        VXI[board][::mainframe logical address]::BACKPLANE VXI MEMACC           VXI[board]::MEMACC VXI SERVANT          VXI[board]::SERVANT USB INSTR            USB[board]::vendor id::product id::serial number[::interface number][::INSTR] USB RAW              USB[board]::vendor id::product id::serial number[::interface number]::RAW FIREWIRE INSTR       FIREWIRE[board]::vendor id::chip id::INSTR Remote Access        visa://hostname[:port]/resource '
+        },
+        'name': 'RSRC_NAME',
+        'type': 'ViString'
+    },
+    -1073807246: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute is a human-readable string representation of the local controller associated with this session. '
+        },
+        'name': 'MANF_NAME',
+        'type': 'ViString'
+    },
+    -1073807241: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute is a human-readable string representation of the device model. '
+        },
+        'name': 'MODEL_NAME',
+        'type': 'ViString'
+    },
+    -1073807127: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' Human-readable text describing the given interface. '
+        },
+        'name': 'INTF_INST_NAME',
+        'type': 'ViString'
+    },
+    -1073806988: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute value is the name of the manufacturer that created the VISA implementation. '
+        },
+        'name': 'RSRC_MANF_NAME',
+        'type': 'ViString'
+    },
+    -1073806955: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This is the TCPIP address of the device to which the session is connected. This string is formatted in dot notation. '
+        },
+        'name': 'TCPIP_ADDR',
+        'type': 'ViString'
+    },
+    -1073806954: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This specifies the host name of the device. If no host name is available, this attribute returns an empty string. '
+        },
+        'name': 'TCPIP_HOSTNAME',
+        'type': 'ViString'
+    },
+    -1073806951: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This specifies the LAN device name used by the VXI-11 protocol during connection. This attribute is valid only on TCPIP INSTR sessions. '
+        },
+        'name': 'TCPIP_DEVICE_NAME',
+        'type': 'ViString'
+    },
+    -1073806944: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute specifies the USB serial number of this device. '
+        },
+        'name': 'USB_SERIAL_NUM',
+        'type': 'ViString'
+    },
+    -1073806841: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute specifies the slot path of this device. '
+        },
+        'name': 'PXI_SLOTPATH',
+        'type': 'ViString'
+    },
+    -1073790910: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute contains the name of the operation generating this event. This is valid for the VI_EVENT_IO_COMPLETION and VI_EVENT_EXCEPTION events. '
+        },
+        'name': 'OPER_NAME',
+        'type': 'ViString'
+    },
+    -1073790568: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This is the TCP/IP address of the device from which the session received a connection. '
+        },
+        'name': 'RECV_TCPIP_ADDR',
+        'type': 'ViString'
+    },
+    -1073790543: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute contains the actual received data from the USB Interrupt. The passed in data buffer must be of size at least equal to the Usb Received Interrupt Size Attribute (VI_ATTR_USB_RECV_INTR_SIZE). This is valid for the VI_EVENT_USB_INTR event. '
+        },
+        'name': 'USB_RECV_INTR_DATA',
+        'type': 'ViUInt8 []'
+    },
     1073676291: {
         'access': 'read only',
         'documentation': {
@@ -1398,117 +1510,5 @@ attributes = {
         },
         'name': 'PXI_RECV_INTR_DATA',
         'type': 'ViUInt32'
-    },
-    3221159937: {
-        'access': 'read only',
-        'documentation': {
-            'description': " This attribute specifies the resource class (for example, 'INSTR') as defined by the canonical resource name. "
-        },
-        'name': 'RSRC_CLASS',
-        'type': 'ViString'
-    },
-    3221159938: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute specifies the unique identifier for a resource compliant with the address structure shown in the following table.  Optional string segments are shown in square brackets. Interface            Syntax GPIB INSTR           GPIB[board]::primary address[::secondary address][::INSTR] GPIB INTFC           GPIB[board]::INTFC GPIB SERVANT         GPIB[board]::SERVANT GPIB-VXI INSTR       GPIB-VXI[board]::VXI logical address[::INSTR] GPIB-VXI BACKPLANE   GPIB-VXI[board][::mainframe logical address]::BACKPLANE GPIB-VXI MEMACC      GPIB-VXI[board]::MEMACC PXI INSTR            PXI[bus]::device[::function][::INSTR] PXI INSTR            PXI[interface]::[bus-]device[.function][::INSTR] PXI BACKPLANE        PXI[interface]::chassis::BACKPLANE PXI MEMACC           PXI[interface]::MEMACC Serial INSTR         ASRL[board][::INSTR] TCPIP INSTR          TCPIP[board]::host address[::LAN device name][::INSTR] TCPIP SOCKET         TCPIP[board]::host address::port::SOCKET VXI INSTR            VXI[board]::VXI logical address[::INSTR] VXI BACKPLANE        VXI[board][::mainframe logical address]::BACKPLANE VXI MEMACC           VXI[board]::MEMACC VXI SERVANT          VXI[board]::SERVANT USB INSTR            USB[board]::vendor id::product id::serial number[::interface number][::INSTR] USB RAW              USB[board]::vendor id::product id::serial number[::interface number]::RAW FIREWIRE INSTR       FIREWIRE[board]::vendor id::chip id::INSTR Remote Access        visa://hostname[:port]/resource '
-        },
-        'name': 'RSRC_NAME',
-        'type': 'ViString'
-    },
-    3221160050: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute is a human-readable string representation of the local controller associated with this session. '
-        },
-        'name': 'MANF_NAME',
-        'type': 'ViString'
-    },
-    3221160055: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute is a human-readable string representation of the device model. '
-        },
-        'name': 'MODEL_NAME',
-        'type': 'ViString'
-    },
-    3221160169: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' Human-readable text describing the given interface. '
-        },
-        'name': 'INTF_INST_NAME',
-        'type': 'ViString'
-    },
-    3221160308: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute value is the name of the manufacturer that created the VISA implementation. '
-        },
-        'name': 'RSRC_MANF_NAME',
-        'type': 'ViString'
-    },
-    3221160341: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This is the TCPIP address of the device to which the session is connected. This string is formatted in dot notation. '
-        },
-        'name': 'TCPIP_ADDR',
-        'type': 'ViString'
-    },
-    3221160342: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This specifies the host name of the device. If no host name is available, this attribute returns an empty string. '
-        },
-        'name': 'TCPIP_HOSTNAME',
-        'type': 'ViString'
-    },
-    3221160345: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This specifies the LAN device name used by the VXI-11 protocol during connection. This attribute is valid only on TCPIP INSTR sessions. '
-        },
-        'name': 'TCPIP_DEVICE_NAME',
-        'type': 'ViString'
-    },
-    3221160352: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute specifies the USB serial number of this device. '
-        },
-        'name': 'USB_SERIAL_NUM',
-        'type': 'ViString'
-    },
-    3221160455: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute specifies the slot path of this device. '
-        },
-        'name': 'PXI_SLOTPATH',
-        'type': 'ViString'
-    },
-    3221176386: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute contains the name of the operation generating this event. This is valid for the VI_EVENT_IO_COMPLETION and VI_EVENT_EXCEPTION events. '
-        },
-        'name': 'OPER_NAME',
-        'type': 'ViString'
-    },
-    3221176728: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This is the TCP/IP address of the device from which the session received a connection. '
-        },
-        'name': 'RECV_TCPIP_ADDR',
-        'type': 'ViString'
-    },
-    3221176753: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute contains the actual received data from the USB Interrupt. The passed in data buffer must be of size at least equal to the Usb Received Interrupt Size Attribute (VI_ATTR_USB_RECV_INTR_SIZE). This is valid for the VI_EVENT_USB_INTR event. '
-        },
-        'name': 'USB_RECV_INTR_DATA',
-        'type': 'ViUInt8 []'
     }
 }

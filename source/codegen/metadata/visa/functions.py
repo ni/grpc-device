@@ -485,7 +485,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'MapAddressEx': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1122,7 +1121,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'Peek16': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1140,10 +1138,10 @@ functions = {
                 'type': 'ViUInt16'
             }
         ],
-        'returns': 'void'
+        'returns': 'void',
+        'status_expression': '0'
     },
     'Peek32': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1161,10 +1159,10 @@ functions = {
                 'type': 'ViUInt32'
             }
         ],
-        'returns': 'void'
+        'returns': 'void',
+        'status_expression': '0'
     },
     'Peek64': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1182,10 +1180,10 @@ functions = {
                 'type': 'ViUInt64'
             }
         ],
-        'returns': 'void'
+        'returns': 'void',
+        'status_expression': '0'
     },
     'Peek8': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1203,10 +1201,10 @@ functions = {
                 'type': 'ViUInt8'
             }
         ],
-        'returns': 'void'
+        'returns': 'void',
+        'status_expression': '0'
     },
     'Poke16': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1224,10 +1222,10 @@ functions = {
                 'type': 'ViUInt16'
             }
         ],
-        'returns': 'void'
+        'returns': 'void',
+        'status_expression': '0'
     },
     'Poke32': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1245,10 +1243,10 @@ functions = {
                 'type': 'ViUInt32'
             }
         ],
-        'returns': 'void'
+        'returns': 'void',
+        'status_expression': '0'
     },
     'Poke64': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1266,10 +1264,10 @@ functions = {
                 'type': 'ViUInt64'
             }
         ],
-        'returns': 'void'
+        'returns': 'void',
+        'status_expression': '0'
     },
     'Poke8': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1287,7 +1285,8 @@ functions = {
                 'type': 'ViUInt8'
             }
         ],
-        'returns': 'void'
+        'returns': 'void',
+        'status_expression': '0'
     },
     'PxiReserveTriggers': {
         'parameters': [

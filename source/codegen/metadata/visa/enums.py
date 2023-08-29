@@ -479,7 +479,7 @@ enums = {
             },
             {
                 'name': 'EVENT_TRIG',
-                'value': 3221168138
+                'value': -1073799158
             },
             {
                 'name': 'EVENT_SERVICE_REQ',
@@ -491,7 +491,7 @@ enums = {
             },
             {
                 'name': 'EVENT_EXCEPTION',
-                'value': 3221168142
+                'value': -1073799154
             },
             {
                 'name': 'EVENT_GPIB_CIC',
@@ -519,7 +519,7 @@ enums = {
             },
             {
                 'name': 'EVENT_VXI_VME_INTR',
-                'value': 3221168161
+                'value': -1073799135
             },
             {
                 'name': 'EVENT_PXI_INTR',
