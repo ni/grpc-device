@@ -3073,6 +3073,26 @@ attributes = {
         'name': 'IM_AMPLITUDE_CORRECTION_TYPE',
         'type': 'int32'
     },
+    1114160: {
+        'access': 'read-write',
+        'name': 'IM_RESULTS_LOWER_INTERMOD_RELATIVE_POWER',
+        'type': 'float64'
+    },
+    1114161: {
+        'access': 'read-write',
+        'name': 'IM_RESULTS_UPPER_INTERMOD_RELATIVE_POWER',
+        'type': 'float64'
+    },
+    1114162: {
+        'access': 'read-write',
+        'name': 'IM_RESULTS_WORST_CASE_INTERMOD_ABSOLUTE_POWER',
+        'type': 'float64'
+    },
+    1114163: {
+        'access': 'read-write',
+        'name': 'IM_RESULTS_WORST_CASE_INTERMOD_RELATIVE_POWER',
+        'type': 'float64'
+    },
     1179649: {
         'access': 'read-write',
         'name': 'NF_MEASUREMENT_ENABLED',

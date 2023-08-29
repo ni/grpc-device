@@ -8516,16 +8516,16 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 intermod_order {};
-      float64 lower_intermod_power {};
-      float64 upper_intermod_power {};
-      auto status = library_->IMFetchIntermodMeasurement(instrument, selector_string, timeout, &intermod_order, &lower_intermod_power, &upper_intermod_power);
+      float64 lower_intermod_absolute_power {};
+      float64 upper_intermod_absolute_power {};
+      auto status = library_->IMFetchIntermodMeasurement(instrument, selector_string, timeout, &intermod_order, &lower_intermod_absolute_power, &upper_intermod_absolute_power);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_intermod_order(intermod_order);
-      response->set_lower_intermod_power(lower_intermod_power);
-      response->set_upper_intermod_power(upper_intermod_power);
+      response->set_lower_intermod_absolute_power(lower_intermod_absolute_power);
+      response->set_upper_intermod_absolute_power(upper_intermod_absolute_power);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -8554,12 +8554,12 @@ namespace nirfmxspecan_grpc {
         }
         response->mutable_intermod_order()->Resize(actual_array_size, 0);
         int32* intermod_order = reinterpret_cast<int32*>(response->mutable_intermod_order()->mutable_data());
-        response->mutable_lower_intermod_power()->Resize(actual_array_size, 0);
-        float64* lower_intermod_power = response->mutable_lower_intermod_power()->mutable_data();
-        response->mutable_upper_intermod_power()->Resize(actual_array_size, 0);
-        float64* upper_intermod_power = response->mutable_upper_intermod_power()->mutable_data();
+        response->mutable_lower_intermod_absolute_power()->Resize(actual_array_size, 0);
+        float64* lower_intermod_absolute_power = response->mutable_lower_intermod_absolute_power()->mutable_data();
+        response->mutable_upper_intermod_absolute_power()->Resize(actual_array_size, 0);
+        float64* upper_intermod_absolute_power = response->mutable_upper_intermod_absolute_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->IMFetchIntermodMeasurementArray(instrument, selector_string, timeout, intermod_order, lower_intermod_power, upper_intermod_power, array_size, &actual_array_size);
+        status = library_->IMFetchIntermodMeasurementArray(instrument, selector_string, timeout, intermod_order, lower_intermod_absolute_power, upper_intermod_absolute_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -8569,8 +8569,8 @@ namespace nirfmxspecan_grpc {
         }
         response->set_status(status);
         response->mutable_intermod_order()->Resize(actual_array_size, 0);
-        response->mutable_lower_intermod_power()->Resize(actual_array_size, 0);
-        response->mutable_upper_intermod_power()->Resize(actual_array_size, 0);
+        response->mutable_lower_intermod_absolute_power()->Resize(actual_array_size, 0);
+        response->mutable_upper_intermod_absolute_power()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
@@ -9102,6 +9102,31 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 marker_x_location = request->marker_x_location();
       auto status = library_->MarkerCfgXLocation(instrument, selector_string, marker_x_location);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::MarkerCfgYLocation(::grpc::ServerContext* context, const MarkerCfgYLocationRequest* request, MarkerCfgYLocationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 marker_y_location = request->marker_y_location();
+      auto status = library_->MarkerCfgYLocation(instrument, selector_string, marker_y_location);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

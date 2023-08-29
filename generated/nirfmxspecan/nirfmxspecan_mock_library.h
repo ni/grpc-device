@@ -235,8 +235,8 @@ class NiRFmxSpecAnMockLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInt
   MOCK_METHOD(int32, IMFetchFundamentalMeasurement, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerTonePower, float64* upperTonePower), (override));
   MOCK_METHOD(int32, IMFetchInterceptPower, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* worstCaseOutputInterceptPower, float64* lowerOutputInterceptPower, float64* upperOutputInterceptPower), (override));
   MOCK_METHOD(int32, IMFetchInterceptPowerArray, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 worstCaseOutputInterceptPower[], float64 lowerOutputInterceptPower[], float64 upperOutputInterceptPower[], int32 arraySize, int32* actualArraySize), (override));
-  MOCK_METHOD(int32, IMFetchIntermodMeasurement, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodPower, float64* upperIntermodPower), (override));
-  MOCK_METHOD(int32, IMFetchIntermodMeasurementArray, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodPower[], float64 upperIntermodPower[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, IMFetchIntermodMeasurement, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodAbsolutePower, float64* upperIntermodAbsolutePower), (override));
+  MOCK_METHOD(int32, IMFetchIntermodMeasurementArray, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodAbsolutePower[], float64 upperIntermodAbsolutePower[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, IMFetchSpectrum, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 spectrumIndex, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, IQCfgAcquisition, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 sampleRate, int32 numberOfRecords, float64 acquisitionTime, float64 pretriggerTime), (override));
   MOCK_METHOD(int32, IQCfgBandwidth, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 bandwidthAuto, float64 bandwidth), (override));
@@ -252,6 +252,7 @@ class NiRFmxSpecAnMockLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInt
   MOCK_METHOD(int32, MarkerCfgTrace, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 trace), (override));
   MOCK_METHOD(int32, MarkerCfgType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType), (override));
   MOCK_METHOD(int32, MarkerCfgXLocation, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation), (override));
+  MOCK_METHOD(int32, MarkerCfgYLocation, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation), (override));
   MOCK_METHOD(int32, MarkerFetchXY, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation), (override));
   MOCK_METHOD(int32, MarkerNextPeak, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound), (override));
   MOCK_METHOD(int32, MarkerPeakSearch, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks), (override));

@@ -233,8 +233,8 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 IMFetchFundamentalMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerTonePower, float64* upperTonePower) = 0;
   virtual int32 IMFetchInterceptPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* worstCaseOutputInterceptPower, float64* lowerOutputInterceptPower, float64* upperOutputInterceptPower) = 0;
   virtual int32 IMFetchInterceptPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 worstCaseOutputInterceptPower[], float64 lowerOutputInterceptPower[], float64 upperOutputInterceptPower[], int32 arraySize, int32* actualArraySize) = 0;
-  virtual int32 IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodPower, float64* upperIntermodPower) = 0;
-  virtual int32 IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodPower[], float64 upperIntermodPower[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodAbsolutePower, float64* upperIntermodAbsolutePower) = 0;
+  virtual int32 IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodAbsolutePower[], float64 upperIntermodAbsolutePower[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 IMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 spectrumIndex, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 IQCfgAcquisition(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 sampleRate, int32 numberOfRecords, float64 acquisitionTime, float64 pretriggerTime) = 0;
   virtual int32 IQCfgBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 bandwidthAuto, float64 bandwidth) = 0;
@@ -250,6 +250,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 MarkerCfgTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 trace) = 0;
   virtual int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType) = 0;
   virtual int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation) = 0;
+  virtual int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation) = 0;
   virtual int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation) = 0;
   virtual int32 MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound) = 0;
   virtual int32 MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks) = 0;

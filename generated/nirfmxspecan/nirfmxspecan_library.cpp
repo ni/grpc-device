@@ -262,6 +262,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.MarkerCfgTrace = reinterpret_cast<MarkerCfgTracePtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgTrace"));
   function_pointers_.MarkerCfgType = reinterpret_cast<MarkerCfgTypePtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgType"));
   function_pointers_.MarkerCfgXLocation = reinterpret_cast<MarkerCfgXLocationPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgXLocation"));
+  function_pointers_.MarkerCfgYLocation = reinterpret_cast<MarkerCfgYLocationPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgYLocation"));
   function_pointers_.MarkerFetchXY = reinterpret_cast<MarkerFetchXYPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerFetchXY"));
   function_pointers_.MarkerNextPeak = reinterpret_cast<MarkerNextPeakPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerNextPeak"));
   function_pointers_.MarkerPeakSearch = reinterpret_cast<MarkerPeakSearchPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerPeakSearch"));
@@ -2207,20 +2208,20 @@ int32 NiRFmxSpecAnLibrary::IMFetchInterceptPowerArray(niRFmxInstrHandle instrume
   return function_pointers_.IMFetchInterceptPowerArray(instrumentHandle, selectorString, timeout, intermodOrder, worstCaseOutputInterceptPower, lowerOutputInterceptPower, upperOutputInterceptPower, arraySize, actualArraySize);
 }
 
-int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodPower, float64* upperIntermodPower)
+int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodAbsolutePower, float64* upperIntermodAbsolutePower)
 {
   if (!function_pointers_.IMFetchIntermodMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchIntermodMeasurement.");
   }
-  return function_pointers_.IMFetchIntermodMeasurement(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodPower, upperIntermodPower);
+  return function_pointers_.IMFetchIntermodMeasurement(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodAbsolutePower, upperIntermodAbsolutePower);
 }
 
-int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodPower[], float64 upperIntermodPower[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodAbsolutePower[], float64 upperIntermodAbsolutePower[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.IMFetchIntermodMeasurementArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchIntermodMeasurementArray.");
   }
-  return function_pointers_.IMFetchIntermodMeasurementArray(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodPower, upperIntermodPower, arraySize, actualArraySize);
+  return function_pointers_.IMFetchIntermodMeasurementArray(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodAbsolutePower, upperIntermodAbsolutePower, arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::IMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 spectrumIndex, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
@@ -2341,6 +2342,14 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgXLocation.");
   }
   return function_pointers_.MarkerCfgXLocation(instrumentHandle, selectorString, markerXLocation);
+}
+
+int32 NiRFmxSpecAnLibrary::MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation)
+{
+  if (!function_pointers_.MarkerCfgYLocation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgYLocation.");
+  }
+  return function_pointers_.MarkerCfgYLocation(instrumentHandle, selectorString, markerYLocation);
 }
 
 int32 NiRFmxSpecAnLibrary::MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation)

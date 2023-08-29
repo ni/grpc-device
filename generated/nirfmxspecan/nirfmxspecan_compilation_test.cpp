@@ -1097,14 +1097,14 @@ int32 IMFetchInterceptPowerArray(niRFmxInstrHandle instrumentHandle, char select
   return RFmxSpecAn_IMFetchInterceptPowerArray(instrumentHandle, selectorString, timeout, intermodOrder, worstCaseOutputInterceptPower, lowerOutputInterceptPower, upperOutputInterceptPower, arraySize, actualArraySize);
 }
 
-int32 IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodPower, float64* upperIntermodPower)
+int32 IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodAbsolutePower, float64* upperIntermodAbsolutePower)
 {
-  return RFmxSpecAn_IMFetchIntermodMeasurement(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodPower, upperIntermodPower);
+  return RFmxSpecAn_IMFetchIntermodMeasurement(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodAbsolutePower, upperIntermodAbsolutePower);
 }
 
-int32 IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodPower[], float64 upperIntermodPower[], int32 arraySize, int32* actualArraySize)
+int32 IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodAbsolutePower[], float64 upperIntermodAbsolutePower[], int32 arraySize, int32* actualArraySize)
 {
-  return RFmxSpecAn_IMFetchIntermodMeasurementArray(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodPower, upperIntermodPower, arraySize, actualArraySize);
+  return RFmxSpecAn_IMFetchIntermodMeasurementArray(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodAbsolutePower, upperIntermodAbsolutePower, arraySize, actualArraySize);
 }
 
 int32 IMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 spectrumIndex, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
@@ -1180,6 +1180,11 @@ int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], i
 int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation)
 {
   return RFmxSpecAn_MarkerCfgXLocation(instrumentHandle, selectorString, markerXLocation);
+}
+
+int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation)
+{
+  return RFmxSpecAn_MarkerCfgYLocation(instrumentHandle, selectorString, markerYLocation);
 }
 
 int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation)

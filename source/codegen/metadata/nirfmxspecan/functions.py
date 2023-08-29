@@ -7440,12 +7440,12 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'lowerIntermodPower',
+                'name': 'lowerIntermodAbsolutePower',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'name': 'upperIntermodPower',
+                'name': 'upperIntermodAbsolutePower',
                 'type': 'float64'
             }
         ],
@@ -7481,7 +7481,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'lowerIntermodPower',
+                'name': 'lowerIntermodAbsolutePower',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',
@@ -7491,7 +7491,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'upperIntermodPower',
+                'name': 'upperIntermodAbsolutePower',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',
@@ -7982,6 +7982,27 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'markerXLocation',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'MarkerCfgYLocation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'markerYLocation',
                 'type': 'float64'
             }
         ],
