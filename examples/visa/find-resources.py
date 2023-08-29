@@ -21,9 +21,7 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763".
 """
 
-import math
 import sys
-import time
 
 import grpc
 import visa_pb2 as visa_types
@@ -45,20 +43,14 @@ client = grpc_visa.VisaStub(channel)
 
 try:
     # Query for resources.
-    find_resources_response = client.FindRsrc(
-        visa_types.FindRsrcRequest(
-            expression="?*"
-        )
-    )
+    find_resources_resp = client.FindRsrc(visa_types.FindRsrcRequest(expression="?*"))
 
     # Get information about each resource.
-    for resource in find_resources_response.instrument_descriptor:
-        parse_response = client.ParseRsrcEx(
-            visa_types.ParseRsrcExRequest(
-                resource_name=resource
-            )
+    for resource in find_resources_resp.instrument_descriptor:
+        parse_resp = client.ParseRsrcEx(visa_types.ParseRsrcExRequest(resource_name=resource))
+        print(
+            f"Resource: {parse_resp.expanded_unaliased_name}, Class: {parse_resp.resource_class}, Alias: {parse_resp.alias_if_exists}"
         )
-        print(f"Resource: {parse_response.expanded_unaliased_name}, Class: {parse_response.resource_class}, Alias: {parse_response.alias_if_exists}")
 
 except grpc.RpcError as rpc_error:
     error_message = str(rpc_error.details() or "")
