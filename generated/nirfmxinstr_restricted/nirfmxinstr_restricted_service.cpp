@@ -1118,7 +1118,7 @@ namespace nirfmxinstr_restricted_grpc {
       std::string grpc_device_session_name = request->session_name();
       // Capture the library shared_ptr by value. Do not capture `this` or any references.
       LibrarySharedPtr library = library_;
-      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXINSTR_VAL_FALSE); };
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->None(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);

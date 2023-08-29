@@ -1215,7 +1215,6 @@ functions = {
     },
 
     'InitializeWithChannel': {
-        'custom_close': 'Close(id, RFMXINSTR_VAL_FALSE)',
         'init_method': True,
         'parameters': [
             {
