@@ -28,6 +28,7 @@ NiFakeExtensionLibrary::NiFakeExtensionLibrary(std::shared_ptr<nidevice_grpc::Sh
     return;
   }
   function_pointers_.AddCoolFunctionality = reinterpret_cast<AddCoolFunctionalityPtr>(shared_library_->get_function_pointer("niFakeExtension_AddCoolFunctionality"));
+  function_pointers_.TestAddressParameters = reinterpret_cast<TestAddressParametersPtr>(shared_library_->get_function_pointer("niFakeExtension_TestAddressParameters"));
 }
 
 NiFakeExtensionLibrary::~NiFakeExtensionLibrary()
@@ -47,6 +48,14 @@ ViStatus NiFakeExtensionLibrary::AddCoolFunctionality(ViSession vi, ViInt32 para
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeExtension_AddCoolFunctionality.");
   }
   return function_pointers_.AddCoolFunctionality(vi, param);
+}
+
+ViStatus NiFakeExtensionLibrary::TestAddressParameters(ViSession vi, ViInt16 space, ViUInt64 offset, ViAddr suggested, ViAddr* actual)
+{
+  if (!function_pointers_.TestAddressParameters) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeExtension_TestAddressParameters.");
+  }
+  return function_pointers_.TestAddressParameters(vi, space, offset, suggested, actual);
 }
 
 }  // namespace nifake_extension_grpc
