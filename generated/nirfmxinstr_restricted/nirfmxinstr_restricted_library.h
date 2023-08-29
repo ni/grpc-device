@@ -58,7 +58,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 SetForceAllTracesEnabled(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attrVal);
   int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
   int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]);
-  int32 GetSFPSessionAccessEnabled(char selectorString[], int32* isSFPSessionAccessEnabled);
+  int32 GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled);
   int32 InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession);
 
  private:

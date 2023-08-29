@@ -1076,10 +1076,10 @@ namespace nirfmxinstr_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
-      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
+      char* option_string = (char*)option_string_mbcs.c_str();
       int32 is_sfp_session_access_enabled {};
-      auto status = library_->GetSFPSessionAccessEnabled(selector_string, &is_sfp_session_access_enabled);
+      auto status = library_->GetSFPSessionAccessEnabled(option_string, &is_sfp_session_access_enabled);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }

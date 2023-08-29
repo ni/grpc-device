@@ -375,12 +375,12 @@ int32 NiRFmxInstrRestrictedLibrary::UnregisterSpecialClientSnapshotInterest(char
   return function_pointers_.UnregisterSpecialClientSnapshotInterest(resourceName);
 }
 
-int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAccessEnabled(char selectorString[], int32* isSFPSessionAccessEnabled)
+int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled)
 {
   if (!function_pointers_.GetSFPSessionAccessEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAccessEnabled.");
   }
-  return function_pointers_.GetSFPSessionAccessEnabled(selectorString, isSFPSessionAccessEnabled);
+  return function_pointers_.GetSFPSessionAccessEnabled(optionString, isSFPSessionAccessEnabled);
 }
 
 int32 NiRFmxInstrRestrictedLibrary::InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession)

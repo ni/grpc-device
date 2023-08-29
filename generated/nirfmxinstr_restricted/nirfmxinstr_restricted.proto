@@ -418,7 +418,7 @@ message UnregisterSpecialClientSnapshotInterestResponse {
 }
 
 message GetSFPSessionAccessEnabledRequest {
-  string selector_string = 1;
+  string option_string = 1;
 }
 
 message GetSFPSessionAccessEnabledResponse {

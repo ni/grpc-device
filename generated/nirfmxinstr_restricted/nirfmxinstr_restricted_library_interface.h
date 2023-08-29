@@ -52,7 +52,7 @@ class NiRFmxInstrRestrictedLibraryInterface {
   virtual int32 SetForceAllTracesEnabled(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attrVal) = 0;
   virtual int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus) = 0;
   virtual int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]) = 0;
-  virtual int32 GetSFPSessionAccessEnabled(char selectorString[], int32* isSFPSessionAccessEnabled) = 0;
+  virtual int32 GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled) = 0;
   virtual int32 InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession) = 0;
 };
 

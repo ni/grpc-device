@@ -640,12 +640,12 @@ unregister_special_client_snapshot_interest(const StubPtr& stub, const std::stri
 }
 
 GetSFPSessionAccessEnabledResponse
-get_sfp_session_access_enabled(const StubPtr& stub, const std::string& selector_string)
+get_sfp_session_access_enabled(const StubPtr& stub, const std::string& option_string)
 {
   ::grpc::ClientContext context;
 
   auto request = GetSFPSessionAccessEnabledRequest{};
-  request.set_selector_string(selector_string);
+  request.set_option_string(option_string);
 
   auto response = GetSFPSessionAccessEnabledResponse{};
 
