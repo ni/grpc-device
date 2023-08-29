@@ -1,6 +1,46 @@
 #include <visa/visa_service.h>
 
 namespace visa_grpc {
+using nidevice_grpc::converters::convert_from_grpc;
+using nidevice_grpc::converters::convert_to_grpc;
+
+static ViSession s_defaultRM = VI_NULL;
+static std::shared_mutex s_resource_manager_lock;
+
+// Returns true if it's safe to use outputs of a method with the given status.
+inline bool status_ok(int32 status)
+{
+  return status >= VI_SUCCESS;
+}
+
+class DriverErrorException : public std::runtime_error
+{
+  private:
+    int status_ = 0;
+
+  public:
+    DriverErrorException(int status) : std::runtime_error(""), status_(status)
+    {
+    }
+    int status() const
+    {
+      return status_;
+    }
+};
+
+static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibrarySharedPtr library)
+{
+    std::unique_lock<std::shared_mutex> lock(s_resource_manager_lock);
+    if (!s_defaultRM)
+    {
+        ViStatus status = library->OpenDefaultRM(&s_defaultRM);
+        if (!status_ok(status))
+        {
+            throw DriverErrorException(status);
+        }
+    }
+    return s_defaultRM;
+}
 
 ::grpc::Status VisaService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi)
 {
@@ -48,21 +88,25 @@ namespace visa_grpc {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
-    #if 1
-        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-    #else
     try {
-      auto rsrc_manager_handle_grpc_session = request->rsrc_manager_handle();
-      ViSession rsrc_manager_handle = session_repository_->access_session(rsrc_manager_handle_grpc_session.name());
+      ViSession rsrc_manager_handle = GetResourceManagerSession(library_);
       auto expression_mbcs = convert_from_grpc<std::string>(request->expression());
       auto expression = expression_mbcs.c_str();
       ViFindList find_handle {};
       ViUInt32 return_count {};
-      response->mutable_instrument_descriptor()->Resize(256, 0);
-      ViChar* instrument_descriptor = response->mutable_instrument_descriptor()->mutable_data();
-      auto status = library_->FindRsrc(rsrc_manager_handle, expression, &find_handle, &return_count, instrument_descriptor);
+      ViChar descriptor[256];
+      auto status = library_->FindRsrc(rsrc_manager_handle, expression, &find_handle, &return_count, descriptor);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
+      }
+      response->add_instrument_descriptor(descriptor);
+      for (ViUInt32 index=1; index<return_count; ++index)
+      {
+        status = library_->FindNext(find_handle, descriptor);
+        if (!status_ok(status)) {
+            return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
+        }
+        response->add_instrument_descriptor(descriptor);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -70,7 +114,9 @@ namespace visa_grpc {
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
     }
-    #endif
+    catch (const DriverErrorException& ex) {
+      return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
+    }
   }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -153,12 +199,8 @@ namespace visa_grpc {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
-    #if 1
-        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-    #else
     try {
-      auto session_handle_grpc_session = request->session_handle();
-      ViSession session_handle = session_repository_->access_session(session_handle_grpc_session.name());
+      ViSession rsrc_manager_handle = GetResourceManagerSession(library_);
       auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
       ViConstRsrc resource_name = (ViConstRsrc)resource_name_mbcs.c_str();
       ViUInt16 interface_type {};
@@ -166,9 +208,9 @@ namespace visa_grpc {
       std::string resource_class(256 - 1, '\0');
       std::string expanded_unaliased_name(256 - 1, '\0');
       std::string alias_if_exists(256 - 1, '\0');
-      auto status = library_->ParseRsrcEx(session_handle, resource_name, &interface_type, &interface_number, (ViChar*)resource_class.data(), (ViChar*)expanded_unaliased_name.data(), (ViChar*)alias_if_exists.data());
+      auto status = library_->ParseRsrcEx(rsrc_manager_handle, resource_name, &interface_type, &interface_number, (ViChar*)resource_class.data(), (ViChar*)expanded_unaliased_name.data(), (ViChar*)alias_if_exists.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, session_handle);
+        return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
       }
       response->set_status(status);
       response->set_interface_type(interface_type);
@@ -190,7 +232,9 @@ namespace visa_grpc {
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
     }
-    #endif
+    catch (const DriverErrorException& ex) {
+      return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
+    }
   }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
