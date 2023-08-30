@@ -319,7 +319,10 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIotAcpFromExample_FetchData_DataLooksReasonabl
   EXPECT_EQ(2, acp_fetch_offset_measurement_array_response.upper_absolute_power().size());
   EXPECT_GT(0.0, acp_fetch_offset_measurement_array_response.upper_absolute_power(0));
   EXPECT_LT(0.0, acp_fetch_component_carrier_measurement_response.absolute_power());
-  EXPECT_EQ(0.0, acp_fetch_component_carrier_measurement_response.relative_power());
+  // There have been intermittent instances where the relative_power returned
+  // isn't absolutely 0.0 from the driver. When this happens it doesn't appear to affect
+  // any of the other tests.
+  EXPECT_NEAR(0.0, acp_fetch_component_carrier_measurement_response.relative_power(), 0.001);
   EXPECT_LT(0.0, acp_fetch_absolute_powers_trace_response.x0());
   EXPECT_LT(0.0, acp_fetch_absolute_powers_trace_response.dx());
   EXPECT_EQ(2, acp_fetch_absolute_powers_trace_response.absolute_powers_trace_size());
