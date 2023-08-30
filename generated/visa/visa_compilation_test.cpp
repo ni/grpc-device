@@ -87,22 +87,22 @@ ViStatus GpibSendIFC(ViSession vi)
   return viGpibSendIFC(vi);
 }
 
-ViStatus In16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt16* value)
+ViStatus In16(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt16* value)
 {
   return viIn16Ex(vi, addressSpace, offset, value);
 }
 
-ViStatus In32Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32* value)
+ViStatus In32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32* value)
 {
   return viIn32Ex(vi, addressSpace, offset, value);
 }
 
-ViStatus In64Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64* value)
+ViStatus In64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64* value)
 {
   return viIn64Ex(vi, addressSpace, offset, value);
 }
 
-ViStatus In8Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8* value)
+ViStatus In8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8* value)
 {
   return viIn8Ex(vi, addressSpace, offset, value);
 }
@@ -112,7 +112,7 @@ ViStatus Lock(ViSession vi, ViAccessMode lockType, ViUInt32 timeout, ViConstKeyI
   return viLock(vi, lockType, timeout, requestedKey, accessKey);
 }
 
-ViStatus MapAddressEx(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize mapSize, ViBoolean ownerAccess, ViAddr suggestedAddress, ViAddr* address)
+ViStatus MapAddress(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize mapSize, ViBoolean ownerAccess, ViAddr suggestedAddress, ViAddr* address)
 {
   return viMapAddressEx(vi, addressSpace, offset, mapSize, ownerAccess, suggestedAddress, address);
 }
@@ -132,47 +132,47 @@ ViStatus MemAllocEx(ViSession vi, ViBusSize size, ViBusAddress64* offset)
   return viMemAllocEx(vi, size, offset);
 }
 
-ViStatus MemFreeEx(ViSession vi, ViBusAddress64 offset)
+ViStatus MemFree(ViSession vi, ViBusAddress64 offset)
 {
   return viMemFreeEx(vi, offset);
 }
 
-ViStatus MoveIn16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[])
+ViStatus MoveIn16(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[])
 {
   return viMoveIn16Ex(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus MoveIn32Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt32 buffer[])
+ViStatus MoveIn32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt32 buffer[])
 {
   return viMoveIn32Ex(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus MoveIn64Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt64 buffer[])
+ViStatus MoveIn64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt64 buffer[])
 {
   return viMoveIn64Ex(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus MoveIn8Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt8 buffer[])
+ViStatus MoveIn8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt8 buffer[])
 {
   return viMoveIn8Ex(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus MoveOut16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[])
+ViStatus MoveOut16(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[])
 {
   return viMoveOut16Ex(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus MoveOut32Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt32 buffer[])
+ViStatus MoveOut32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt32 buffer[])
 {
   return viMoveOut32Ex(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus MoveOut64Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt64 buffer[])
+ViStatus MoveOut64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt64 buffer[])
 {
   return viMoveOut64Ex(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus MoveOut8Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt8 buffer[])
+ViStatus MoveOut8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt8 buffer[])
 {
   return viMoveOut8Ex(vi, addressSpace, offset, count, buffer);
 }
@@ -182,29 +182,29 @@ ViStatus Open(ViSession rsrcManagerHandle, ViConstRsrc instrumentDescriptor, ViA
   return viOpen(rsrcManagerHandle, instrumentDescriptor, accessMode, openTimeout, vi);
 }
 
-ViStatus Out16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt16 value)
+ViStatus Out16(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt16 value)
 {
   return viOut16Ex(vi, addressSpace, offset, value);
 }
 
-ViStatus Out32Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32 value)
+ViStatus Out32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32 value)
 {
   return viOut32Ex(vi, addressSpace, offset, value);
 }
 
-ViStatus Out64Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64 value)
+ViStatus Out64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64 value)
 {
   return viOut64Ex(vi, addressSpace, offset, value);
 }
 
-ViStatus Out8Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8 value)
+ViStatus Out8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8 value)
 {
   return viOut8Ex(vi, addressSpace, offset, value);
 }
 
-ViStatus ParseRsrcEx(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar resourceClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256])
+ViStatus ParseRsrc(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar rsrcClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256])
 {
-  return viParseRsrcEx(sessionHandle, resourceName, interfaceType, interfaceNumber, resourceClass, expandedUnaliasedName, aliasIfExists);
+  return viParseRsrcEx(sessionHandle, resourceName, interfaceType, interfaceNumber, rsrcClass, expandedUnaliasedName, aliasIfExists);
 }
 
 void Peek16(ViSession vi, ViAddr address, ViUInt16* value)

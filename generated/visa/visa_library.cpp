@@ -44,31 +44,31 @@ VisaLibrary::VisaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> 
   function_pointers_.GpibControlREN = reinterpret_cast<GpibControlRENPtr>(shared_library_->get_function_pointer("viGpibControlREN"));
   function_pointers_.GpibPassControl = reinterpret_cast<GpibPassControlPtr>(shared_library_->get_function_pointer("viGpibPassControl"));
   function_pointers_.GpibSendIFC = reinterpret_cast<GpibSendIFCPtr>(shared_library_->get_function_pointer("viGpibSendIFC"));
-  function_pointers_.In16Ex = reinterpret_cast<In16ExPtr>(shared_library_->get_function_pointer("viIn16Ex"));
-  function_pointers_.In32Ex = reinterpret_cast<In32ExPtr>(shared_library_->get_function_pointer("viIn32Ex"));
-  function_pointers_.In64Ex = reinterpret_cast<In64ExPtr>(shared_library_->get_function_pointer("viIn64Ex"));
-  function_pointers_.In8Ex = reinterpret_cast<In8ExPtr>(shared_library_->get_function_pointer("viIn8Ex"));
+  function_pointers_.In16 = reinterpret_cast<In16Ptr>(shared_library_->get_function_pointer("viIn16Ex"));
+  function_pointers_.In32 = reinterpret_cast<In32Ptr>(shared_library_->get_function_pointer("viIn32Ex"));
+  function_pointers_.In64 = reinterpret_cast<In64Ptr>(shared_library_->get_function_pointer("viIn64Ex"));
+  function_pointers_.In8 = reinterpret_cast<In8Ptr>(shared_library_->get_function_pointer("viIn8Ex"));
   function_pointers_.Lock = reinterpret_cast<LockPtr>(shared_library_->get_function_pointer("viLock"));
-  function_pointers_.MapAddressEx = reinterpret_cast<MapAddressExPtr>(shared_library_->get_function_pointer("viMapAddressEx"));
+  function_pointers_.MapAddress = reinterpret_cast<MapAddressPtr>(shared_library_->get_function_pointer("viMapAddressEx"));
   function_pointers_.MapTrigger = reinterpret_cast<MapTriggerPtr>(shared_library_->get_function_pointer("viMapTrigger"));
   function_pointers_.MemAlloc = reinterpret_cast<MemAllocPtr>(shared_library_->get_function_pointer("viMemAlloc"));
   function_pointers_.MemAllocEx = reinterpret_cast<MemAllocExPtr>(shared_library_->get_function_pointer("viMemAllocEx"));
-  function_pointers_.MemFreeEx = reinterpret_cast<MemFreeExPtr>(shared_library_->get_function_pointer("viMemFreeEx"));
-  function_pointers_.MoveIn16Ex = reinterpret_cast<MoveIn16ExPtr>(shared_library_->get_function_pointer("viMoveIn16Ex"));
-  function_pointers_.MoveIn32Ex = reinterpret_cast<MoveIn32ExPtr>(shared_library_->get_function_pointer("viMoveIn32Ex"));
-  function_pointers_.MoveIn64Ex = reinterpret_cast<MoveIn64ExPtr>(shared_library_->get_function_pointer("viMoveIn64Ex"));
-  function_pointers_.MoveIn8Ex = reinterpret_cast<MoveIn8ExPtr>(shared_library_->get_function_pointer("viMoveIn8Ex"));
-  function_pointers_.MoveOut16Ex = reinterpret_cast<MoveOut16ExPtr>(shared_library_->get_function_pointer("viMoveOut16Ex"));
-  function_pointers_.MoveOut32Ex = reinterpret_cast<MoveOut32ExPtr>(shared_library_->get_function_pointer("viMoveOut32Ex"));
-  function_pointers_.MoveOut64Ex = reinterpret_cast<MoveOut64ExPtr>(shared_library_->get_function_pointer("viMoveOut64Ex"));
-  function_pointers_.MoveOut8Ex = reinterpret_cast<MoveOut8ExPtr>(shared_library_->get_function_pointer("viMoveOut8Ex"));
+  function_pointers_.MemFree = reinterpret_cast<MemFreePtr>(shared_library_->get_function_pointer("viMemFreeEx"));
+  function_pointers_.MoveIn16 = reinterpret_cast<MoveIn16Ptr>(shared_library_->get_function_pointer("viMoveIn16Ex"));
+  function_pointers_.MoveIn32 = reinterpret_cast<MoveIn32Ptr>(shared_library_->get_function_pointer("viMoveIn32Ex"));
+  function_pointers_.MoveIn64 = reinterpret_cast<MoveIn64Ptr>(shared_library_->get_function_pointer("viMoveIn64Ex"));
+  function_pointers_.MoveIn8 = reinterpret_cast<MoveIn8Ptr>(shared_library_->get_function_pointer("viMoveIn8Ex"));
+  function_pointers_.MoveOut16 = reinterpret_cast<MoveOut16Ptr>(shared_library_->get_function_pointer("viMoveOut16Ex"));
+  function_pointers_.MoveOut32 = reinterpret_cast<MoveOut32Ptr>(shared_library_->get_function_pointer("viMoveOut32Ex"));
+  function_pointers_.MoveOut64 = reinterpret_cast<MoveOut64Ptr>(shared_library_->get_function_pointer("viMoveOut64Ex"));
+  function_pointers_.MoveOut8 = reinterpret_cast<MoveOut8Ptr>(shared_library_->get_function_pointer("viMoveOut8Ex"));
   function_pointers_.Open = reinterpret_cast<OpenPtr>(shared_library_->get_function_pointer("viOpen"));
   function_pointers_.OpenDefaultRM = reinterpret_cast<OpenDefaultRMPtr>(shared_library_->get_function_pointer("viOpenDefaultRM"));
-  function_pointers_.Out16Ex = reinterpret_cast<Out16ExPtr>(shared_library_->get_function_pointer("viOut16Ex"));
-  function_pointers_.Out32Ex = reinterpret_cast<Out32ExPtr>(shared_library_->get_function_pointer("viOut32Ex"));
-  function_pointers_.Out64Ex = reinterpret_cast<Out64ExPtr>(shared_library_->get_function_pointer("viOut64Ex"));
-  function_pointers_.Out8Ex = reinterpret_cast<Out8ExPtr>(shared_library_->get_function_pointer("viOut8Ex"));
-  function_pointers_.ParseRsrcEx = reinterpret_cast<ParseRsrcExPtr>(shared_library_->get_function_pointer("viParseRsrcEx"));
+  function_pointers_.Out16 = reinterpret_cast<Out16Ptr>(shared_library_->get_function_pointer("viOut16Ex"));
+  function_pointers_.Out32 = reinterpret_cast<Out32Ptr>(shared_library_->get_function_pointer("viOut32Ex"));
+  function_pointers_.Out64 = reinterpret_cast<Out64Ptr>(shared_library_->get_function_pointer("viOut64Ex"));
+  function_pointers_.Out8 = reinterpret_cast<Out8Ptr>(shared_library_->get_function_pointer("viOut8Ex"));
+  function_pointers_.ParseRsrc = reinterpret_cast<ParseRsrcPtr>(shared_library_->get_function_pointer("viParseRsrcEx"));
   function_pointers_.Peek16 = reinterpret_cast<Peek16Ptr>(shared_library_->get_function_pointer("viPeek16"));
   function_pointers_.Peek32 = reinterpret_cast<Peek32Ptr>(shared_library_->get_function_pointer("viPeek32"));
   function_pointers_.Peek64 = reinterpret_cast<Peek64Ptr>(shared_library_->get_function_pointer("viPeek64"));
@@ -243,36 +243,36 @@ ViStatus VisaLibrary::GpibSendIFC(ViSession vi)
   return function_pointers_.GpibSendIFC(vi);
 }
 
-ViStatus VisaLibrary::In16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt16* value)
+ViStatus VisaLibrary::In16(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt16* value)
 {
-  if (!function_pointers_.In16Ex) {
+  if (!function_pointers_.In16) {
     throw nidevice_grpc::LibraryLoadException("Could not find viIn16Ex.");
   }
-  return function_pointers_.In16Ex(vi, addressSpace, offset, value);
+  return function_pointers_.In16(vi, addressSpace, offset, value);
 }
 
-ViStatus VisaLibrary::In32Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32* value)
+ViStatus VisaLibrary::In32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32* value)
 {
-  if (!function_pointers_.In32Ex) {
+  if (!function_pointers_.In32) {
     throw nidevice_grpc::LibraryLoadException("Could not find viIn32Ex.");
   }
-  return function_pointers_.In32Ex(vi, addressSpace, offset, value);
+  return function_pointers_.In32(vi, addressSpace, offset, value);
 }
 
-ViStatus VisaLibrary::In64Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64* value)
+ViStatus VisaLibrary::In64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64* value)
 {
-  if (!function_pointers_.In64Ex) {
+  if (!function_pointers_.In64) {
     throw nidevice_grpc::LibraryLoadException("Could not find viIn64Ex.");
   }
-  return function_pointers_.In64Ex(vi, addressSpace, offset, value);
+  return function_pointers_.In64(vi, addressSpace, offset, value);
 }
 
-ViStatus VisaLibrary::In8Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8* value)
+ViStatus VisaLibrary::In8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8* value)
 {
-  if (!function_pointers_.In8Ex) {
+  if (!function_pointers_.In8) {
     throw nidevice_grpc::LibraryLoadException("Could not find viIn8Ex.");
   }
-  return function_pointers_.In8Ex(vi, addressSpace, offset, value);
+  return function_pointers_.In8(vi, addressSpace, offset, value);
 }
 
 ViStatus VisaLibrary::Lock(ViSession vi, ViAccessMode lockType, ViUInt32 timeout, ViConstKeyId requestedKey, ViChar accessKey[256])
@@ -283,12 +283,12 @@ ViStatus VisaLibrary::Lock(ViSession vi, ViAccessMode lockType, ViUInt32 timeout
   return function_pointers_.Lock(vi, lockType, timeout, requestedKey, accessKey);
 }
 
-ViStatus VisaLibrary::MapAddressEx(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize mapSize, ViBoolean ownerAccess, ViAddr suggestedAddress, ViAddr* address)
+ViStatus VisaLibrary::MapAddress(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize mapSize, ViBoolean ownerAccess, ViAddr suggestedAddress, ViAddr* address)
 {
-  if (!function_pointers_.MapAddressEx) {
+  if (!function_pointers_.MapAddress) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMapAddressEx.");
   }
-  return function_pointers_.MapAddressEx(vi, addressSpace, offset, mapSize, ownerAccess, suggestedAddress, address);
+  return function_pointers_.MapAddress(vi, addressSpace, offset, mapSize, ownerAccess, suggestedAddress, address);
 }
 
 ViStatus VisaLibrary::MapTrigger(ViSession vi, ViInt16 triggerSource, ViInt16 triggerDestination, ViUInt16 mode)
@@ -315,76 +315,76 @@ ViStatus VisaLibrary::MemAllocEx(ViSession vi, ViBusSize size, ViBusAddress64* o
   return function_pointers_.MemAllocEx(vi, size, offset);
 }
 
-ViStatus VisaLibrary::MemFreeEx(ViSession vi, ViBusAddress64 offset)
+ViStatus VisaLibrary::MemFree(ViSession vi, ViBusAddress64 offset)
 {
-  if (!function_pointers_.MemFreeEx) {
+  if (!function_pointers_.MemFree) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMemFreeEx.");
   }
-  return function_pointers_.MemFreeEx(vi, offset);
+  return function_pointers_.MemFree(vi, offset);
 }
 
-ViStatus VisaLibrary::MoveIn16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[])
+ViStatus VisaLibrary::MoveIn16(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[])
 {
-  if (!function_pointers_.MoveIn16Ex) {
+  if (!function_pointers_.MoveIn16) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMoveIn16Ex.");
   }
-  return function_pointers_.MoveIn16Ex(vi, addressSpace, offset, count, buffer);
+  return function_pointers_.MoveIn16(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus VisaLibrary::MoveIn32Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt32 buffer[])
+ViStatus VisaLibrary::MoveIn32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt32 buffer[])
 {
-  if (!function_pointers_.MoveIn32Ex) {
+  if (!function_pointers_.MoveIn32) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMoveIn32Ex.");
   }
-  return function_pointers_.MoveIn32Ex(vi, addressSpace, offset, count, buffer);
+  return function_pointers_.MoveIn32(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus VisaLibrary::MoveIn64Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt64 buffer[])
+ViStatus VisaLibrary::MoveIn64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt64 buffer[])
 {
-  if (!function_pointers_.MoveIn64Ex) {
+  if (!function_pointers_.MoveIn64) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMoveIn64Ex.");
   }
-  return function_pointers_.MoveIn64Ex(vi, addressSpace, offset, count, buffer);
+  return function_pointers_.MoveIn64(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus VisaLibrary::MoveIn8Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt8 buffer[])
+ViStatus VisaLibrary::MoveIn8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt8 buffer[])
 {
-  if (!function_pointers_.MoveIn8Ex) {
+  if (!function_pointers_.MoveIn8) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMoveIn8Ex.");
   }
-  return function_pointers_.MoveIn8Ex(vi, addressSpace, offset, count, buffer);
+  return function_pointers_.MoveIn8(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus VisaLibrary::MoveOut16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[])
+ViStatus VisaLibrary::MoveOut16(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt16 buffer[])
 {
-  if (!function_pointers_.MoveOut16Ex) {
+  if (!function_pointers_.MoveOut16) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMoveOut16Ex.");
   }
-  return function_pointers_.MoveOut16Ex(vi, addressSpace, offset, count, buffer);
+  return function_pointers_.MoveOut16(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus VisaLibrary::MoveOut32Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt32 buffer[])
+ViStatus VisaLibrary::MoveOut32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt32 buffer[])
 {
-  if (!function_pointers_.MoveOut32Ex) {
+  if (!function_pointers_.MoveOut32) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMoveOut32Ex.");
   }
-  return function_pointers_.MoveOut32Ex(vi, addressSpace, offset, count, buffer);
+  return function_pointers_.MoveOut32(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus VisaLibrary::MoveOut64Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt64 buffer[])
+ViStatus VisaLibrary::MoveOut64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt64 buffer[])
 {
-  if (!function_pointers_.MoveOut64Ex) {
+  if (!function_pointers_.MoveOut64) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMoveOut64Ex.");
   }
-  return function_pointers_.MoveOut64Ex(vi, addressSpace, offset, count, buffer);
+  return function_pointers_.MoveOut64(vi, addressSpace, offset, count, buffer);
 }
 
-ViStatus VisaLibrary::MoveOut8Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt8 buffer[])
+ViStatus VisaLibrary::MoveOut8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViBusSize count, ViUInt8 buffer[])
 {
-  if (!function_pointers_.MoveOut8Ex) {
+  if (!function_pointers_.MoveOut8) {
     throw nidevice_grpc::LibraryLoadException("Could not find viMoveOut8Ex.");
   }
-  return function_pointers_.MoveOut8Ex(vi, addressSpace, offset, count, buffer);
+  return function_pointers_.MoveOut8(vi, addressSpace, offset, count, buffer);
 }
 
 ViStatus VisaLibrary::Open(ViSession rsrcManagerHandle, ViConstRsrc instrumentDescriptor, ViAccessMode accessMode, ViUInt32 openTimeout, ViSession* vi)
@@ -403,44 +403,44 @@ ViStatus VisaLibrary::OpenDefaultRM(ViSession* rsrcManagerHandle)
   return function_pointers_.OpenDefaultRM(rsrcManagerHandle);
 }
 
-ViStatus VisaLibrary::Out16Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt16 value)
+ViStatus VisaLibrary::Out16(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt16 value)
 {
-  if (!function_pointers_.Out16Ex) {
+  if (!function_pointers_.Out16) {
     throw nidevice_grpc::LibraryLoadException("Could not find viOut16Ex.");
   }
-  return function_pointers_.Out16Ex(vi, addressSpace, offset, value);
+  return function_pointers_.Out16(vi, addressSpace, offset, value);
 }
 
-ViStatus VisaLibrary::Out32Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32 value)
+ViStatus VisaLibrary::Out32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32 value)
 {
-  if (!function_pointers_.Out32Ex) {
+  if (!function_pointers_.Out32) {
     throw nidevice_grpc::LibraryLoadException("Could not find viOut32Ex.");
   }
-  return function_pointers_.Out32Ex(vi, addressSpace, offset, value);
+  return function_pointers_.Out32(vi, addressSpace, offset, value);
 }
 
-ViStatus VisaLibrary::Out64Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64 value)
+ViStatus VisaLibrary::Out64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64 value)
 {
-  if (!function_pointers_.Out64Ex) {
+  if (!function_pointers_.Out64) {
     throw nidevice_grpc::LibraryLoadException("Could not find viOut64Ex.");
   }
-  return function_pointers_.Out64Ex(vi, addressSpace, offset, value);
+  return function_pointers_.Out64(vi, addressSpace, offset, value);
 }
 
-ViStatus VisaLibrary::Out8Ex(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8 value)
+ViStatus VisaLibrary::Out8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8 value)
 {
-  if (!function_pointers_.Out8Ex) {
+  if (!function_pointers_.Out8) {
     throw nidevice_grpc::LibraryLoadException("Could not find viOut8Ex.");
   }
-  return function_pointers_.Out8Ex(vi, addressSpace, offset, value);
+  return function_pointers_.Out8(vi, addressSpace, offset, value);
 }
 
-ViStatus VisaLibrary::ParseRsrcEx(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar resourceClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256])
+ViStatus VisaLibrary::ParseRsrc(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar rsrcClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256])
 {
-  if (!function_pointers_.ParseRsrcEx) {
+  if (!function_pointers_.ParseRsrc) {
     throw nidevice_grpc::LibraryLoadException("Could not find viParseRsrcEx.");
   }
-  return function_pointers_.ParseRsrcEx(sessionHandle, resourceName, interfaceType, interfaceNumber, resourceClass, expandedUnaliasedName, aliasIfExists);
+  return function_pointers_.ParseRsrc(sessionHandle, resourceName, interfaceType, interfaceNumber, rsrcClass, expandedUnaliasedName, aliasIfExists);
 }
 
 void VisaLibrary::Peek16(ViSession vi, ViAddr address, ViUInt16* value)

@@ -339,7 +339,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'In16Ex': {
+    'In16': {
+        'cname': 'viIn16Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -366,7 +367,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'In32Ex': {
+    'In32': {
+        'cname': 'viIn32Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -393,7 +395,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'In64Ex': {
+    'In64': {
+        'cname': 'viIn64Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -420,7 +423,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'In8Ex': {
+    'In8': {
+        'cname': 'viIn8Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -484,7 +488,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MapAddressEx': {
+    'MapAddress': {
+        'cname': 'viMapAddressEx',
         'parameters': [
             {
                 'direction': 'in',
@@ -598,7 +603,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MemFreeEx': {
+    'MemFree': {
+        'cname': 'viMemFreeEx',
         'parameters': [
             {
                 'direction': 'in',
@@ -614,7 +620,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MoveIn16Ex': {
+    'MoveIn16': {
+        'cname': 'viMoveIn16Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -651,7 +658,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MoveIn32Ex': {
+    'MoveIn32': {
+        'cname': 'viMoveIn32Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -688,7 +696,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MoveIn64Ex': {
+    'MoveIn64': {
+        'cname': 'viMoveIn64Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -725,7 +734,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MoveIn8Ex': {
+    'MoveIn8': {
+        'cname': 'viMoveIn8Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -762,7 +772,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MoveOut16Ex': {
+    'MoveOut16': {
+        'cname': 'viMoveOut16Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -799,7 +810,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MoveOut32Ex': {
+    'MoveOut32': {
+        'cname': 'viMoveOut32Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -836,7 +848,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MoveOut64Ex': {
+    'MoveOut64': {
+        'cname': 'viMoveOut64Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -873,7 +886,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'MoveOut8Ex': {
+    'MoveOut8': {
+        'cname': 'viMoveOut8Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -974,7 +988,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'Out16Ex': {
+    'Out16': {
+        'cname': 'viOut16Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -1001,7 +1016,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'Out32Ex': {
+    'Out32': {
+        'cname': 'viOut32Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -1028,7 +1044,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'Out64Ex': {
+    'Out64': {
+        'cname': 'viOut64Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -1055,7 +1072,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'Out8Ex': {
+    'Out8': {
+        'cname': 'viOut8Ex',
         'parameters': [
             {
                 'direction': 'in',
@@ -1082,7 +1100,8 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ParseRsrcEx': {
+    'ParseRsrc': {
+        'cname': 'viParseRsrcEx',
         'codegen_method': 'CustomCode',
         'parameters': [
             {
@@ -1109,7 +1128,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'resourceClass',
+                'name': 'rsrcClass',
                 'size': {
                     'mechanism': 'fixed',
                     'value': 256

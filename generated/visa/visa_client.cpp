@@ -391,12 +391,12 @@ gpib_send_ifc(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-In16ExResponse
-in16_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset)
+In16Response
+in16(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset)
 {
   ::grpc::ClientContext context;
 
-  auto request = In16ExRequest{};
+  auto request = In16Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -408,21 +408,21 @@ in16_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_vari
   }
   request.set_offset(offset);
 
-  auto response = In16ExResponse{};
+  auto response = In16Response{};
 
   raise_if_error(
-      stub->In16Ex(&context, request, &response),
+      stub->In16(&context, request, &response),
       context);
 
   return response;
 }
 
-In32ExResponse
-in32_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset)
+In32Response
+in32(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset)
 {
   ::grpc::ClientContext context;
 
-  auto request = In32ExRequest{};
+  auto request = In32Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -434,21 +434,21 @@ in32_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_vari
   }
   request.set_offset(offset);
 
-  auto response = In32ExResponse{};
+  auto response = In32Response{};
 
   raise_if_error(
-      stub->In32Ex(&context, request, &response),
+      stub->In32(&context, request, &response),
       context);
 
   return response;
 }
 
-In64ExResponse
-in64_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset)
+In64Response
+in64(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset)
 {
   ::grpc::ClientContext context;
 
-  auto request = In64ExRequest{};
+  auto request = In64Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -460,21 +460,21 @@ in64_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_vari
   }
   request.set_offset(offset);
 
-  auto response = In64ExResponse{};
+  auto response = In64Response{};
 
   raise_if_error(
-      stub->In64Ex(&context, request, &response),
+      stub->In64(&context, request, &response),
       context);
 
   return response;
 }
 
-In8ExResponse
-in8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset)
+In8Response
+in8(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset)
 {
   ::grpc::ClientContext context;
 
-  auto request = In8ExRequest{};
+  auto request = In8Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -486,10 +486,10 @@ in8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_varia
   }
   request.set_offset(offset);
 
-  auto response = In8ExResponse{};
+  auto response = In8Response{};
 
   raise_if_error(
-      stub->In8Ex(&context, request, &response),
+      stub->In8(&context, request, &response),
       context);
 
   return response;
@@ -522,12 +522,12 @@ lock(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant
   return response;
 }
 
-MapAddressExResponse
-map_address_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& map_size, const bool& owner_access, const pb::uint64& suggested_address)
+MapAddressResponse
+map_address(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& map_size, const bool& owner_access, const pb::uint64& suggested_address)
 {
   ::grpc::ClientContext context;
 
-  auto request = MapAddressExRequest{};
+  auto request = MapAddressRequest{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -542,10 +542,10 @@ map_address_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simp
   request.set_owner_access(owner_access);
   request.set_suggested_address(suggested_address);
 
-  auto response = MapAddressExResponse{};
+  auto response = MapAddressResponse{};
 
   raise_if_error(
-      stub->MapAddressEx(&context, request, &response),
+      stub->MapAddress(&context, request, &response),
       context);
 
   return response;
@@ -621,57 +621,30 @@ mem_alloc_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::ui
   return response;
 }
 
-MemFreeExResponse
-mem_free_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::uint64& offset)
+MemFreeResponse
+mem_free(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::uint64& offset)
 {
   ::grpc::ClientContext context;
 
-  auto request = MemFreeExRequest{};
+  auto request = MemFreeRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_offset(offset);
 
-  auto response = MemFreeExResponse{};
+  auto response = MemFreeResponse{};
 
   raise_if_error(
-      stub->MemFreeEx(&context, request, &response),
+      stub->MemFree(&context, request, &response),
       context);
 
   return response;
 }
 
-MoveIn16ExResponse
-move_in16_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& count)
+MoveIn16Response
+move_in16(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& count)
 {
   ::grpc::ClientContext context;
 
-  auto request = MoveIn16ExRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  const auto address_space_ptr = address_space.get_if<AddressSpace>();
-  const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
-  if (address_space_ptr) {
-    request.set_address_space(*address_space_ptr);
-  }
-  else if (address_space_raw_ptr) {
-    request.set_address_space_raw(*address_space_raw_ptr);
-  }
-  request.set_offset(offset);
-  request.set_count(count);
-
-  auto response = MoveIn16ExResponse{};
-
-  raise_if_error(
-      stub->MoveIn16Ex(&context, request, &response),
-      context);
-
-  return response;
-}
-
-MoveIn32ExResponse
-move_in32_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& count)
-{
-  ::grpc::ClientContext context;
-
-  auto request = MoveIn32ExRequest{};
+  auto request = MoveIn16Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -684,21 +657,21 @@ move_in32_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple
   request.set_offset(offset);
   request.set_count(count);
 
-  auto response = MoveIn32ExResponse{};
+  auto response = MoveIn16Response{};
 
   raise_if_error(
-      stub->MoveIn32Ex(&context, request, &response),
+      stub->MoveIn16(&context, request, &response),
       context);
 
   return response;
 }
 
-MoveIn64ExResponse
-move_in64_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& count)
+MoveIn32Response
+move_in32(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& count)
 {
   ::grpc::ClientContext context;
 
-  auto request = MoveIn64ExRequest{};
+  auto request = MoveIn32Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -711,21 +684,21 @@ move_in64_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple
   request.set_offset(offset);
   request.set_count(count);
 
-  auto response = MoveIn64ExResponse{};
+  auto response = MoveIn32Response{};
 
   raise_if_error(
-      stub->MoveIn64Ex(&context, request, &response),
+      stub->MoveIn32(&context, request, &response),
       context);
 
   return response;
 }
 
-MoveIn8ExResponse
-move_in8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& count)
+MoveIn64Response
+move_in64(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& count)
 {
   ::grpc::ClientContext context;
 
-  auto request = MoveIn8ExRequest{};
+  auto request = MoveIn64Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -738,21 +711,48 @@ move_in8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_
   request.set_offset(offset);
   request.set_count(count);
 
-  auto response = MoveIn8ExResponse{};
+  auto response = MoveIn64Response{};
 
   raise_if_error(
-      stub->MoveIn8Ex(&context, request, &response),
+      stub->MoveIn64(&context, request, &response),
       context);
 
   return response;
 }
 
-MoveOut16ExResponse
-move_out16_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const std::vector<pb::uint32>& buffer)
+MoveIn8Response
+move_in8(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& count)
 {
   ::grpc::ClientContext context;
 
-  auto request = MoveOut16ExRequest{};
+  auto request = MoveIn8Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  const auto address_space_ptr = address_space.get_if<AddressSpace>();
+  const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
+  if (address_space_ptr) {
+    request.set_address_space(*address_space_ptr);
+  }
+  else if (address_space_raw_ptr) {
+    request.set_address_space_raw(*address_space_raw_ptr);
+  }
+  request.set_offset(offset);
+  request.set_count(count);
+
+  auto response = MoveIn8Response{};
+
+  raise_if_error(
+      stub->MoveIn8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MoveOut16Response
+move_out16(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const std::vector<pb::uint32>& buffer)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MoveOut16Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -765,21 +765,21 @@ move_out16_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
   request.set_offset(offset);
   copy_array(buffer, request.mutable_buffer());
 
-  auto response = MoveOut16ExResponse{};
+  auto response = MoveOut16Response{};
 
   raise_if_error(
-      stub->MoveOut16Ex(&context, request, &response),
+      stub->MoveOut16(&context, request, &response),
       context);
 
   return response;
 }
 
-MoveOut32ExResponse
-move_out32_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const std::vector<pb::uint32>& buffer)
+MoveOut32Response
+move_out32(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const std::vector<pb::uint32>& buffer)
 {
   ::grpc::ClientContext context;
 
-  auto request = MoveOut32ExRequest{};
+  auto request = MoveOut32Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -792,21 +792,21 @@ move_out32_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
   request.set_offset(offset);
   copy_array(buffer, request.mutable_buffer());
 
-  auto response = MoveOut32ExResponse{};
+  auto response = MoveOut32Response{};
 
   raise_if_error(
-      stub->MoveOut32Ex(&context, request, &response),
+      stub->MoveOut32(&context, request, &response),
       context);
 
   return response;
 }
 
-MoveOut64ExResponse
-move_out64_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const std::vector<pb::uint64>& buffer)
+MoveOut64Response
+move_out64(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const std::vector<pb::uint64>& buffer)
 {
   ::grpc::ClientContext context;
 
-  auto request = MoveOut64ExRequest{};
+  auto request = MoveOut64Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -819,21 +819,21 @@ move_out64_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
   request.set_offset(offset);
   copy_array(buffer, request.mutable_buffer());
 
-  auto response = MoveOut64ExResponse{};
+  auto response = MoveOut64Response{};
 
   raise_if_error(
-      stub->MoveOut64Ex(&context, request, &response),
+      stub->MoveOut64(&context, request, &response),
       context);
 
   return response;
 }
 
-MoveOut8ExResponse
-move_out8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const std::string& buffer)
+MoveOut8Response
+move_out8(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const std::string& buffer)
 {
   ::grpc::ClientContext context;
 
-  auto request = MoveOut8ExRequest{};
+  auto request = MoveOut8Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -846,10 +846,10 @@ move_out8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple
   request.set_offset(offset);
   request.set_buffer(buffer);
 
-  auto response = MoveOut8ExResponse{};
+  auto response = MoveOut8Response{};
 
   raise_if_error(
-      stub->MoveOut8Ex(&context, request, &response),
+      stub->MoveOut8(&context, request, &response),
       context);
 
   return response;
@@ -882,12 +882,12 @@ open(const StubPtr& stub, const std::string& instrument_descriptor, const simple
   return response;
 }
 
-Out16ExResponse
-out16_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint32& value)
+Out16Response
+out16(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
-  auto request = Out16ExRequest{};
+  auto request = Out16Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -900,21 +900,21 @@ out16_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_var
   request.set_offset(offset);
   request.set_value(value);
 
-  auto response = Out16ExResponse{};
+  auto response = Out16Response{};
 
   raise_if_error(
-      stub->Out16Ex(&context, request, &response),
+      stub->Out16(&context, request, &response),
       context);
 
   return response;
 }
 
-Out32ExResponse
-out32_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint32& value)
+Out32Response
+out32(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
-  auto request = Out32ExRequest{};
+  auto request = Out32Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -927,21 +927,21 @@ out32_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_var
   request.set_offset(offset);
   request.set_value(value);
 
-  auto response = Out32ExResponse{};
+  auto response = Out32Response{};
 
   raise_if_error(
-      stub->Out32Ex(&context, request, &response),
+      stub->Out32(&context, request, &response),
       context);
 
   return response;
 }
 
-Out64ExResponse
-out64_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& value)
+Out64Response
+out64(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint64& value)
 {
   ::grpc::ClientContext context;
 
-  auto request = Out64ExRequest{};
+  auto request = Out64Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -954,21 +954,21 @@ out64_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_var
   request.set_offset(offset);
   request.set_value(value);
 
-  auto response = Out64ExResponse{};
+  auto response = Out64Response{};
 
   raise_if_error(
-      stub->Out64Ex(&context, request, &response),
+      stub->Out64(&context, request, &response),
       context);
 
   return response;
 }
 
-Out8ExResponse
-out8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint32& value)
+Out8Response
+out8(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AddressSpace, pb::uint32>& address_space, const pb::uint64& offset, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
-  auto request = Out8ExRequest{};
+  auto request = Out8Request{};
   request.mutable_vi()->CopyFrom(vi);
   const auto address_space_ptr = address_space.get_if<AddressSpace>();
   const auto address_space_raw_ptr = address_space.get_if<pb::uint32>();
@@ -981,27 +981,27 @@ out8_ex(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_vari
   request.set_offset(offset);
   request.set_value(value);
 
-  auto response = Out8ExResponse{};
+  auto response = Out8Response{};
 
   raise_if_error(
-      stub->Out8Ex(&context, request, &response),
+      stub->Out8(&context, request, &response),
       context);
 
   return response;
 }
 
-ParseRsrcExResponse
-parse_rsrc_ex(const StubPtr& stub, const std::string& resource_name)
+ParseRsrcResponse
+parse_rsrc(const StubPtr& stub, const std::string& resource_name)
 {
   ::grpc::ClientContext context;
 
-  auto request = ParseRsrcExRequest{};
+  auto request = ParseRsrcRequest{};
   request.set_resource_name(resource_name);
 
-  auto response = ParseRsrcExResponse{};
+  auto response = ParseRsrcResponse{};
 
   raise_if_error(
-      stub->ParseRsrcEx(&context, request, &response),
+      stub->ParseRsrc(&context, request, &response),
       context);
 
   return response;

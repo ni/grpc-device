@@ -194,7 +194,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
   }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::ParseRsrcEx(::grpc::ServerContext* context, const ParseRsrcExRequest* request, ParseRsrcExResponse* response)
+  ::grpc::Status VisaService::ParseRsrc(::grpc::ServerContext* context, const ParseRsrcRequest* request, ParseRsrcResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -208,7 +208,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
       std::string resource_class(256 - 1, '\0');
       std::string expanded_unaliased_name(256 - 1, '\0');
       std::string alias_if_exists(256 - 1, '\0');
-      auto status = library_->ParseRsrcEx(rsrc_manager_handle, resource_name, &interface_type, &interface_number, (ViChar*)resource_class.data(), (ViChar*)expanded_unaliased_name.data(), (ViChar*)alias_if_exists.data());
+      auto status = library_->ParseRsrc(rsrc_manager_handle, resource_name, &interface_type, &interface_number, (ViChar*)resource_class.data(), (ViChar*)expanded_unaliased_name.data(), (ViChar*)alias_if_exists.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
       }
@@ -217,8 +217,8 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
       response->set_interface_number(interface_number);
       std::string resource_class_utf8;
       convert_to_grpc(resource_class, &resource_class_utf8);
-      response->set_resource_class(resource_class_utf8);
-      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_resource_class()));
+      response->set_rsrc_class(resource_class_utf8);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_rsrc_class()));
       std::string expanded_unaliased_name_utf8;
       convert_to_grpc(expanded_unaliased_name, &expanded_unaliased_name_utf8);
       response->set_expanded_unaliased_name(expanded_unaliased_name_utf8);

@@ -32,30 +32,30 @@ service Visa {
   rpc GpibControlREN(GpibControlRENRequest) returns (GpibControlRENResponse);
   rpc GpibPassControl(GpibPassControlRequest) returns (GpibPassControlResponse);
   rpc GpibSendIFC(GpibSendIFCRequest) returns (GpibSendIFCResponse);
-  rpc In16Ex(In16ExRequest) returns (In16ExResponse);
-  rpc In32Ex(In32ExRequest) returns (In32ExResponse);
-  rpc In64Ex(In64ExRequest) returns (In64ExResponse);
-  rpc In8Ex(In8ExRequest) returns (In8ExResponse);
+  rpc In16(In16Request) returns (In16Response);
+  rpc In32(In32Request) returns (In32Response);
+  rpc In64(In64Request) returns (In64Response);
+  rpc In8(In8Request) returns (In8Response);
   rpc Lock(LockRequest) returns (LockResponse);
-  rpc MapAddressEx(MapAddressExRequest) returns (MapAddressExResponse);
+  rpc MapAddress(MapAddressRequest) returns (MapAddressResponse);
   rpc MapTrigger(MapTriggerRequest) returns (MapTriggerResponse);
   rpc MemAlloc(MemAllocRequest) returns (MemAllocResponse);
   rpc MemAllocEx(MemAllocExRequest) returns (MemAllocExResponse);
-  rpc MemFreeEx(MemFreeExRequest) returns (MemFreeExResponse);
-  rpc MoveIn16Ex(MoveIn16ExRequest) returns (MoveIn16ExResponse);
-  rpc MoveIn32Ex(MoveIn32ExRequest) returns (MoveIn32ExResponse);
-  rpc MoveIn64Ex(MoveIn64ExRequest) returns (MoveIn64ExResponse);
-  rpc MoveIn8Ex(MoveIn8ExRequest) returns (MoveIn8ExResponse);
-  rpc MoveOut16Ex(MoveOut16ExRequest) returns (MoveOut16ExResponse);
-  rpc MoveOut32Ex(MoveOut32ExRequest) returns (MoveOut32ExResponse);
-  rpc MoveOut64Ex(MoveOut64ExRequest) returns (MoveOut64ExResponse);
-  rpc MoveOut8Ex(MoveOut8ExRequest) returns (MoveOut8ExResponse);
+  rpc MemFree(MemFreeRequest) returns (MemFreeResponse);
+  rpc MoveIn16(MoveIn16Request) returns (MoveIn16Response);
+  rpc MoveIn32(MoveIn32Request) returns (MoveIn32Response);
+  rpc MoveIn64(MoveIn64Request) returns (MoveIn64Response);
+  rpc MoveIn8(MoveIn8Request) returns (MoveIn8Response);
+  rpc MoveOut16(MoveOut16Request) returns (MoveOut16Response);
+  rpc MoveOut32(MoveOut32Request) returns (MoveOut32Response);
+  rpc MoveOut64(MoveOut64Request) returns (MoveOut64Response);
+  rpc MoveOut8(MoveOut8Request) returns (MoveOut8Response);
   rpc Open(OpenRequest) returns (OpenResponse);
-  rpc Out16Ex(Out16ExRequest) returns (Out16ExResponse);
-  rpc Out32Ex(Out32ExRequest) returns (Out32ExResponse);
-  rpc Out64Ex(Out64ExRequest) returns (Out64ExResponse);
-  rpc Out8Ex(Out8ExRequest) returns (Out8ExResponse);
-  rpc ParseRsrcEx(ParseRsrcExRequest) returns (ParseRsrcExResponse);
+  rpc Out16(Out16Request) returns (Out16Response);
+  rpc Out32(Out32Request) returns (Out32Response);
+  rpc Out64(Out64Request) returns (Out64Response);
+  rpc Out8(Out8Request) returns (Out8Response);
+  rpc ParseRsrc(ParseRsrcRequest) returns (ParseRsrcResponse);
   rpc Peek16(Peek16Request) returns (Peek16Response);
   rpc Peek32(Peek32Request) returns (Peek32Response);
   rpc Peek64(Peek64Request) returns (Peek64Response);
@@ -635,7 +635,7 @@ message GpibSendIFCResponse {
   int32 status = 1;
 }
 
-message In16ExRequest {
+message In16Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -644,12 +644,12 @@ message In16ExRequest {
   fixed64 offset = 4;
 }
 
-message In16ExResponse {
+message In16Response {
   int32 status = 1;
   uint32 value = 2;
 }
 
-message In32ExRequest {
+message In32Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -658,12 +658,12 @@ message In32ExRequest {
   fixed64 offset = 4;
 }
 
-message In32ExResponse {
+message In32Response {
   int32 status = 1;
   uint32 value = 2;
 }
 
-message In64ExRequest {
+message In64Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -672,12 +672,12 @@ message In64ExRequest {
   fixed64 offset = 4;
 }
 
-message In64ExResponse {
+message In64Response {
   int32 status = 1;
   uint64 value = 2;
 }
 
-message In8ExRequest {
+message In8Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -686,7 +686,7 @@ message In8ExRequest {
   fixed64 offset = 4;
 }
 
-message In8ExResponse {
+message In8Response {
   int32 status = 1;
   uint32 value = 2;
 }
@@ -706,7 +706,7 @@ message LockResponse {
   string access_key = 2;
 }
 
-message MapAddressExRequest {
+message MapAddressRequest {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -718,7 +718,7 @@ message MapAddressExRequest {
   fixed64 suggested_address = 7;
 }
 
-message MapAddressExResponse {
+message MapAddressResponse {
   int32 status = 1;
   fixed64 address = 2;
 }
@@ -760,16 +760,16 @@ message MemAllocExResponse {
   fixed64 offset = 2;
 }
 
-message MemFreeExRequest {
+message MemFreeRequest {
   nidevice_grpc.Session vi = 1;
   fixed64 offset = 2;
 }
 
-message MemFreeExResponse {
+message MemFreeResponse {
   int32 status = 1;
 }
 
-message MoveIn16ExRequest {
+message MoveIn16Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -779,27 +779,12 @@ message MoveIn16ExRequest {
   uint64 count = 5;
 }
 
-message MoveIn16ExResponse {
-  int32 status = 1;
-  repeated uint32 buffer = 2;
-}
-
-message MoveIn32ExRequest {
-  nidevice_grpc.Session vi = 1;
-  oneof address_space_enum {
-    AddressSpace address_space = 2;
-    uint32 address_space_raw = 3;
-  }
-  fixed64 offset = 4;
-  uint64 count = 5;
-}
-
-message MoveIn32ExResponse {
+message MoveIn16Response {
   int32 status = 1;
   repeated uint32 buffer = 2;
 }
 
-message MoveIn64ExRequest {
+message MoveIn32Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -809,12 +794,27 @@ message MoveIn64ExRequest {
   uint64 count = 5;
 }
 
-message MoveIn64ExResponse {
+message MoveIn32Response {
+  int32 status = 1;
+  repeated uint32 buffer = 2;
+}
+
+message MoveIn64Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint64 count = 5;
+}
+
+message MoveIn64Response {
   int32 status = 1;
   repeated uint64 buffer = 2;
 }
 
-message MoveIn8ExRequest {
+message MoveIn8Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -824,12 +824,12 @@ message MoveIn8ExRequest {
   uint64 count = 5;
 }
 
-message MoveIn8ExResponse {
+message MoveIn8Response {
   int32 status = 1;
   bytes buffer = 2;
 }
 
-message MoveOut16ExRequest {
+message MoveOut16Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -839,11 +839,11 @@ message MoveOut16ExRequest {
   repeated uint32 buffer = 5;
 }
 
-message MoveOut16ExResponse {
+message MoveOut16Response {
   int32 status = 1;
 }
 
-message MoveOut32ExRequest {
+message MoveOut32Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -853,11 +853,11 @@ message MoveOut32ExRequest {
   repeated uint32 buffer = 5;
 }
 
-message MoveOut32ExResponse {
+message MoveOut32Response {
   int32 status = 1;
 }
 
-message MoveOut64ExRequest {
+message MoveOut64Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -867,11 +867,11 @@ message MoveOut64ExRequest {
   repeated uint64 buffer = 5;
 }
 
-message MoveOut64ExResponse {
+message MoveOut64Response {
   int32 status = 1;
 }
 
-message MoveOut8ExRequest {
+message MoveOut8Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -881,7 +881,7 @@ message MoveOut8ExRequest {
   bytes buffer = 5;
 }
 
-message MoveOut8ExResponse {
+message MoveOut8Response {
   int32 status = 1;
 }
 
@@ -902,7 +902,7 @@ message OpenResponse {
   bool new_session_initialized = 3;
 }
 
-message Out16ExRequest {
+message Out16Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -912,11 +912,11 @@ message Out16ExRequest {
   uint32 value = 5;
 }
 
-message Out16ExResponse {
+message Out16Response {
   int32 status = 1;
 }
 
-message Out32ExRequest {
+message Out32Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -926,11 +926,11 @@ message Out32ExRequest {
   uint32 value = 5;
 }
 
-message Out32ExResponse {
+message Out32Response {
   int32 status = 1;
 }
 
-message Out64ExRequest {
+message Out64Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -940,11 +940,11 @@ message Out64ExRequest {
   uint64 value = 5;
 }
 
-message Out64ExResponse {
+message Out64Response {
   int32 status = 1;
 }
 
-message Out8ExRequest {
+message Out8Request {
   nidevice_grpc.Session vi = 1;
   oneof address_space_enum {
     AddressSpace address_space = 2;
@@ -954,19 +954,19 @@ message Out8ExRequest {
   uint32 value = 5;
 }
 
-message Out8ExResponse {
+message Out8Response {
   int32 status = 1;
 }
 
-message ParseRsrcExRequest {
+message ParseRsrcRequest {
   string resource_name = 1;
 }
 
-message ParseRsrcExResponse {
+message ParseRsrcResponse {
   int32 status = 1;
   uint32 interface_type = 2;
   uint32 interface_number = 3;
-  string resource_class = 4;
+  string rsrc_class = 4;
   string expanded_unaliased_name = 5;
   string alias_if_exists = 6;
 }
