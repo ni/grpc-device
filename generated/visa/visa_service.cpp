@@ -531,7 +531,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::In16Ex(::grpc::ServerContext* context, const In16ExRequest* request, In16ExResponse* response)
+  ::grpc::Status VisaService::In16(::grpc::ServerContext* context, const In16Request* request, In16Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -541,15 +541,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::In16ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::In16Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::In16ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::In16Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::In16ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::In16Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -557,7 +557,7 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViUInt16 value {};
-      auto status = library_->In16Ex(vi, address_space, offset, &value);
+      auto status = library_->In16(vi, address_space, offset, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -572,7 +572,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::In32Ex(::grpc::ServerContext* context, const In32ExRequest* request, In32ExResponse* response)
+  ::grpc::Status VisaService::In32(::grpc::ServerContext* context, const In32Request* request, In32Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -582,15 +582,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::In32ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::In32Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::In32ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::In32Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::In32ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::In32Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -598,7 +598,7 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViUInt32 value {};
-      auto status = library_->In32Ex(vi, address_space, offset, &value);
+      auto status = library_->In32(vi, address_space, offset, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -613,7 +613,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::In64Ex(::grpc::ServerContext* context, const In64ExRequest* request, In64ExResponse* response)
+  ::grpc::Status VisaService::In64(::grpc::ServerContext* context, const In64Request* request, In64Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -623,15 +623,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::In64ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::In64Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::In64ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::In64Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::In64ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::In64Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -639,7 +639,7 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViUInt64 value {};
-      auto status = library_->In64Ex(vi, address_space, offset, &value);
+      auto status = library_->In64(vi, address_space, offset, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -654,7 +654,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::In8Ex(::grpc::ServerContext* context, const In8ExRequest* request, In8ExResponse* response)
+  ::grpc::Status VisaService::In8(::grpc::ServerContext* context, const In8Request* request, In8Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -664,15 +664,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::In8ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::In8Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::In8ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::In8Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::In8ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::In8Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -680,7 +680,7 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViUInt8 value {};
-      auto status = library_->In8Ex(vi, address_space, offset, &value);
+      auto status = library_->In8(vi, address_space, offset, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -741,7 +741,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MapAddressEx(::grpc::ServerContext* context, const MapAddressExRequest* request, MapAddressExResponse* response)
+  ::grpc::Status VisaService::MapAddress(::grpc::ServerContext* context, const MapAddressRequest* request, MapAddressResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -751,15 +751,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MapAddressRequest::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MapAddressRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MapAddressExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MapAddressRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -770,7 +770,7 @@ namespace visa_grpc {
       ViBoolean owner_access = request->owner_access();
       ViAddr suggested_address = reinterpret_cast<ViAddr>(request->suggested_address());
       ViAddr address {};
-      auto status = library_->MapAddressEx(vi, address_space, offset, map_size, owner_access, suggested_address, &address);
+      auto status = library_->MapAddress(vi, address_space, offset, map_size, owner_access, suggested_address, &address);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -890,7 +890,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MemFreeEx(::grpc::ServerContext* context, const MemFreeExRequest* request, MemFreeExResponse* response)
+  ::grpc::Status VisaService::MemFree(::grpc::ServerContext* context, const MemFreeRequest* request, MemFreeResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -899,7 +899,7 @@ namespace visa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViBusAddress64 offset = request->offset();
-      auto status = library_->MemFreeEx(vi, offset);
+      auto status = library_->MemFree(vi, offset);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -913,7 +913,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveIn16Ex(::grpc::ServerContext* context, const MoveIn16ExRequest* request, MoveIn16ExResponse* response)
+  ::grpc::Status VisaService::MoveIn16(::grpc::ServerContext* context, const MoveIn16Request* request, MoveIn16Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -923,15 +923,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveIn16ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MoveIn16ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MoveIn16ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -941,7 +941,7 @@ namespace visa_grpc {
       ViBusSize count = request->count();
       response->mutable_buffer()->Resize(count, 0);
       ViUInt16* buffer = reinterpret_cast<ViUInt16*>(response->mutable_buffer()->mutable_data());
-      auto status = library_->MoveIn16Ex(vi, address_space, offset, count, buffer);
+      auto status = library_->MoveIn16(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -955,7 +955,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveIn32Ex(::grpc::ServerContext* context, const MoveIn32ExRequest* request, MoveIn32ExResponse* response)
+  ::grpc::Status VisaService::MoveIn32(::grpc::ServerContext* context, const MoveIn32Request* request, MoveIn32Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -965,15 +965,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveIn32ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MoveIn32Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MoveIn32ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MoveIn32Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MoveIn32ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MoveIn32Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -983,7 +983,7 @@ namespace visa_grpc {
       ViBusSize count = request->count();
       response->mutable_buffer()->Resize(count, 0);
       ViUInt32* buffer = reinterpret_cast<ViUInt32*>(response->mutable_buffer()->mutable_data());
-      auto status = library_->MoveIn32Ex(vi, address_space, offset, count, buffer);
+      auto status = library_->MoveIn32(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -997,7 +997,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveIn64Ex(::grpc::ServerContext* context, const MoveIn64ExRequest* request, MoveIn64ExResponse* response)
+  ::grpc::Status VisaService::MoveIn64(::grpc::ServerContext* context, const MoveIn64Request* request, MoveIn64Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1007,15 +1007,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveIn64ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MoveIn64Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MoveIn64ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MoveIn64Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MoveIn64ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MoveIn64Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1025,7 +1025,7 @@ namespace visa_grpc {
       ViBusSize count = request->count();
       response->mutable_buffer()->Resize(count, 0);
       ViUInt64* buffer = response->mutable_buffer()->mutable_data();
-      auto status = library_->MoveIn64Ex(vi, address_space, offset, count, buffer);
+      auto status = library_->MoveIn64(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1039,7 +1039,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveIn8Ex(::grpc::ServerContext* context, const MoveIn8ExRequest* request, MoveIn8ExResponse* response)
+  ::grpc::Status VisaService::MoveIn8(::grpc::ServerContext* context, const MoveIn8Request* request, MoveIn8Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1049,15 +1049,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveIn8ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MoveIn8Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MoveIn8ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MoveIn8Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MoveIn8ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MoveIn8Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1066,7 +1066,7 @@ namespace visa_grpc {
       ViBusAddress64 offset = request->offset();
       ViBusSize count = request->count();
       std::string buffer(count, '\0');
-      auto status = library_->MoveIn8Ex(vi, address_space, offset, count, (ViUInt8*)buffer.data());
+      auto status = library_->MoveIn8(vi, address_space, offset, count, (ViUInt8*)buffer.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1081,7 +1081,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveOut16Ex(::grpc::ServerContext* context, const MoveOut16ExRequest* request, MoveOut16ExResponse* response)
+  ::grpc::Status VisaService::MoveOut16(::grpc::ServerContext* context, const MoveOut16Request* request, MoveOut16Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1091,15 +1091,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveOut16ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MoveOut16Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MoveOut16ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MoveOut16Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MoveOut16ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MoveOut16Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1108,7 +1108,7 @@ namespace visa_grpc {
       ViBusAddress64 offset = request->offset();
       ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
       auto buffer = const_cast<ViUInt16*>(reinterpret_cast<const ViUInt16*>(request->buffer().data()));
-      auto status = library_->MoveOut16Ex(vi, address_space, offset, count, buffer);
+      auto status = library_->MoveOut16(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1122,7 +1122,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveOut32Ex(::grpc::ServerContext* context, const MoveOut32ExRequest* request, MoveOut32ExResponse* response)
+  ::grpc::Status VisaService::MoveOut32(::grpc::ServerContext* context, const MoveOut32Request* request, MoveOut32Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1132,15 +1132,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveOut32ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MoveOut32Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MoveOut32ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MoveOut32Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MoveOut32ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MoveOut32Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1149,7 +1149,7 @@ namespace visa_grpc {
       ViBusAddress64 offset = request->offset();
       ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
       auto buffer = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->buffer().data()));
-      auto status = library_->MoveOut32Ex(vi, address_space, offset, count, buffer);
+      auto status = library_->MoveOut32(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1163,7 +1163,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveOut64Ex(::grpc::ServerContext* context, const MoveOut64ExRequest* request, MoveOut64ExResponse* response)
+  ::grpc::Status VisaService::MoveOut64(::grpc::ServerContext* context, const MoveOut64Request* request, MoveOut64Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1173,15 +1173,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveOut64ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MoveOut64Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MoveOut64ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MoveOut64Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MoveOut64ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MoveOut64Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1190,7 +1190,7 @@ namespace visa_grpc {
       ViBusAddress64 offset = request->offset();
       ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
       auto buffer = const_cast<ViUInt64*>(request->buffer().data());
-      auto status = library_->MoveOut64Ex(vi, address_space, offset, count, buffer);
+      auto status = library_->MoveOut64(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1204,7 +1204,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveOut8Ex(::grpc::ServerContext* context, const MoveOut8ExRequest* request, MoveOut8ExResponse* response)
+  ::grpc::Status VisaService::MoveOut8(::grpc::ServerContext* context, const MoveOut8Request* request, MoveOut8Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1214,15 +1214,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveOut8ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::MoveOut8Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::MoveOut8ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::MoveOut8Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::MoveOut8ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::MoveOut8Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1231,7 +1231,7 @@ namespace visa_grpc {
       ViBusAddress64 offset = request->offset();
       ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
       ViUInt8* buffer = (ViUInt8*)request->buffer().c_str();
-      auto status = library_->MoveOut8Ex(vi, address_space, offset, count, buffer);
+      auto status = library_->MoveOut8(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1245,7 +1245,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::Out16Ex(::grpc::ServerContext* context, const Out16ExRequest* request, Out16ExResponse* response)
+  ::grpc::Status VisaService::Out16(::grpc::ServerContext* context, const Out16Request* request, Out16Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1255,15 +1255,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::Out16ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::Out16Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::Out16ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::Out16Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::Out16ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::Out16Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1271,7 +1271,7 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViUInt16 value = request->value();
-      auto status = library_->Out16Ex(vi, address_space, offset, value);
+      auto status = library_->Out16(vi, address_space, offset, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1285,7 +1285,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::Out32Ex(::grpc::ServerContext* context, const Out32ExRequest* request, Out32ExResponse* response)
+  ::grpc::Status VisaService::Out32(::grpc::ServerContext* context, const Out32Request* request, Out32Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1295,15 +1295,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::Out32ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::Out32Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::Out32ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::Out32Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::Out32ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::Out32Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1311,7 +1311,7 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViUInt32 value = request->value();
-      auto status = library_->Out32Ex(vi, address_space, offset, value);
+      auto status = library_->Out32(vi, address_space, offset, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1325,7 +1325,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::Out64Ex(::grpc::ServerContext* context, const Out64ExRequest* request, Out64ExResponse* response)
+  ::grpc::Status VisaService::Out64(::grpc::ServerContext* context, const Out64Request* request, Out64Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1335,15 +1335,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::Out64ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::Out64Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::Out64ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::Out64Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::Out64ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::Out64Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1351,7 +1351,7 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViUInt64 value = request->value();
-      auto status = library_->Out64Ex(vi, address_space, offset, value);
+      auto status = library_->Out64(vi, address_space, offset, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1365,7 +1365,7 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::Out8Ex(::grpc::ServerContext* context, const Out8ExRequest* request, Out8ExResponse* response)
+  ::grpc::Status VisaService::Out8(::grpc::ServerContext* context, const Out8Request* request, Out8Response* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1375,15 +1375,15 @@ namespace visa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt16 address_space;
       switch (request->address_space_enum_case()) {
-        case visa_grpc::Out8ExRequest::AddressSpaceEnumCase::kAddressSpace: {
+        case visa_grpc::Out8Request::AddressSpaceEnumCase::kAddressSpace: {
           address_space = static_cast<ViUInt16>(request->address_space());
           break;
         }
-        case visa_grpc::Out8ExRequest::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        case visa_grpc::Out8Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
           address_space = static_cast<ViUInt16>(request->address_space_raw());
           break;
         }
-        case visa_grpc::Out8ExRequest::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        case visa_grpc::Out8Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
           break;
         }
@@ -1391,7 +1391,7 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViUInt8 value = request->value();
-      auto status = library_->Out8Ex(vi, address_space, offset, value);
+      auto status = library_->Out8(vi, address_space, offset, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
