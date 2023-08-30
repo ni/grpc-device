@@ -1597,6 +1597,44 @@ mod_acc_cfg_burst_synchronization_type(const StubPtr& stub, const nidevice_grpc:
   return response;
 }
 
+ModAccFetchCSDetrendedPhaseTraceResponse
+mod_acc_fetch_cs_detrended_phase_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchCSDetrendedPhaseTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchCSDetrendedPhaseTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchCSDetrendedPhaseTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchCSToneTraceResponse
+mod_acc_fetch_cs_tone_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchCSToneTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchCSToneTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchCSToneTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchConstellationTraceResponse
 mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

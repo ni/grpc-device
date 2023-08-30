@@ -387,6 +387,16 @@ int32 ModAccCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char
   return RFmxBT_ModAccCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
 }
 
+int32 ModAccFetchCSDetrendedPhaseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csDetrendedPhase[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxBT_ModAccFetchCSDetrendedPhaseTrace(instrumentHandle, selectorString, timeout, x0, dx, csDetrendedPhase, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchCSToneTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csToneAmplitude[], float32 csTonePhase[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxBT_ModAccFetchCSToneTrace(instrumentHandle, selectorString, timeout, x0, dx, csToneAmplitude, csTonePhase, arraySize, actualArraySize);
+}
+
 int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxBT_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);

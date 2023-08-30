@@ -45,6 +45,10 @@
 #define RFMXBT_ATTR_CTE_LENGTH                                                                     0x00b0002d
 #define RFMXBT_ATTR_CTE_SLOT_DURATION                                                              0x00b0002e
 #define RFMXBT_ATTR_CTE_NUMBER_OF_TRANSMIT_SLOTS                                                   0x00b0002f
+#define RFMXBT_ATTR_CHANNEL_SOUNDING_PACKET_FORMAT                                                 0x00b00030
+#define RFMXBT_ATTR_CHANNEL_SOUNDING_SYNC_SEQUENCE                                                 0x00b00031
+#define RFMXBT_ATTR_CHANNEL_SOUNDING_PHASE_MEASUREMENT_PERIOD                                      0x00b00032
+#define RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT                                           0x00b00033
 #define RFMXBT_ATTR_CHANNEL_NUMBER                                                                 0x00b00017
 #define RFMXBT_ATTR_DETECTED_PACKET_TYPE                                                           0x00b00019
 #define RFMXBT_ATTR_DETECTED_DATA_RATE                                                             0x00b0002a
@@ -89,6 +93,8 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_AVERAGE_RMS_PHASE_ERROR_MEAN                                    0x00b0402f
 #define RFMXBT_ATTR_MODACC_RESULTS_PEAK_RMS_PHASE_ERROR_MAXIMUM                                    0x00b04030
 #define RFMXBT_ATTR_MODACC_RESULTS_IQ_ORIGIN_OFFSET_MEAN                                           0x00b04023
+#define RFMXBT_ATTR_MODACC_RESULTS_CLOCK_DRIFT_MEAN                                                0x00b04032
+#define RFMXBT_ATTR_MODACC_RESULTS_PREAMBLE_START_TIME_MEAN                                        0x00b04033
 #define RFMXBT_ATTR_ACP_MEASUREMENT_ENABLED                                                        0x00b05000
 #define RFMXBT_ATTR_ACP_OFFSET_CHANNEL_MODE                                                        0x00b05002
 #define RFMXBT_ATTR_ACP_NUMBER_OF_OFFSETS                                                          0x00b05003
@@ -201,6 +207,7 @@
 #define RFMXBT_VAL_PACKET_TYPE_3_EV3                                                              14
 #define RFMXBT_VAL_PACKET_TYPE_3_EV5                                                              15
 #define RFMXBT_VAL_PACKET_TYPE_LE                                                                 16
+#define RFMXBT_VAL_PACKET_TYPE_LE_CS                                                              17
 
 // Values for RFMXBT_ATTR_PAYLOAD_BIT_PATTERN
 #define RFMXBT_VAL_PAYLOAD_BIT_PATTERN_STANDARD_DEFINED                                           0
@@ -293,6 +300,21 @@
 #define RFMXBT_VAL_BR                                                                             0
 #define RFMXBT_VAL_EDR                                                                            0
 #define RFMXBT_VAL_LE                                                                             1
+
+// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_PACKET_FORMAT
+#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_SYNC                                            0
+#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE                                         1
+#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE_AFTER_SYNC                              2
+#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE_BEFORE_SYNC                             3
+
+// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_SYNC_SEQUENCE
+#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_NONE                                            0
+#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_32_BIT                        1
+#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_96_BIT                        2
+
+// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT
+#define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_DISABLED                                  0
+#define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_ENABLED                                   1
 
 /* ---------------- RFmxBT APIs ------------------ */
 
@@ -1148,6 +1170,29 @@ int32 __stdcall RFmxBT_ModAccFetchConstellationTraceSplit(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxBT_ModAccFetchCSDetrendedPhaseTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 CSDetrendedPhase[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchCSToneTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 CSToneAmplitude[],
+   float32 CSTonePhase[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxBT_ModAccFetchDemodulatedBitTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1649,6 +1694,54 @@ int32 __stdcall RFmxBT_GetCTENumberOfTransmitSlots(
    int32 *attrVal
 );
 
+int32 __stdcall RFmxBT_GetChannelSoundingPacketFormat(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetChannelSoundingPacketFormat(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_GetChannelSoundingSyncSequence(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetChannelSoundingSyncSequence(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_GetChannelSoundingPhaseMeasurementPeriod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetChannelSoundingPhaseMeasurementPeriod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxBT_GetChannelSoundingToneExtensionSlot(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetChannelSoundingToneExtensionSlot(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxBT_GetChannelNumber(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1992,6 +2085,18 @@ int32 __stdcall RFmxBT_ModAccGetResultsPeakRMSPhaseErrorMaximum(
 );
 
 int32 __stdcall RFmxBT_ModAccGetResultsIQOriginOffsetMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsClockDriftMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsPreambleStartTimeMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

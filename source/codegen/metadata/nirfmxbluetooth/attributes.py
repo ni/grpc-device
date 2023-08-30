@@ -144,6 +144,29 @@ attributes = {
         'name': 'CTE_NUMBER_OF_TRANSMIT_SLOTS',
         'type': 'int32'
     },
+    11534384: {
+        'access': 'read-write',
+        'enum': 'ChannelSoundingPacketFormat',
+        'name': 'CHANNEL_SOUNDING_PACKET_FORMAT',
+        'type': 'int32'
+    },
+    11534385: {
+        'access': 'read-write',
+        'enum': 'ChannelSoundingSyncSequence',
+        'name': 'CHANNEL_SOUNDING_SYNC_SEQUENCE',
+        'type': 'int32'
+    },
+    11534386: {
+        'access': 'read-write',
+        'name': 'CHANNEL_SOUNDING_PHASE_MEASUREMENT_PERIOD',
+        'type': 'float64'
+    },
+    11534387: {
+        'access': 'read-write',
+        'enum': 'ChannelSoundingToneExtensionSlot',
+        'name': 'CHANNEL_SOUNDING_TONE_EXTENSION_SLOT',
+        'type': 'int32'
+    },
     11538428: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',
@@ -540,6 +563,16 @@ attributes = {
     11550769: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_LE_INITIAL_FREQUENCY_ERROR_MAXIMUM',
+        'type': 'float64'
+    },
+    11550770: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_CLOCK_DRIFT_MEAN',
+        'type': 'float64'
+    },
+    11550771: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PREAMBLE_START_TIME_MEAN',
         'type': 'float64'
     },
     11554816: {

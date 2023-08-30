@@ -16,7 +16,7 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-Digital Pattern Driver | 2023 Q1 | Not Supported | Not Supported |
 | NI-DMM                    | 2023 Q1 | 2023 Q1       | 2023 Q1       |
 | NI-FGEN                   | 2023 Q1 | 2023 Q1       | 2023 Q1       |
-| NI-RFmx Bluetooth         | 2022 Q3 | Not Supported | Not Supported |
+| NI-RFmx Bluetooth         | 2023 Q4 | Not Supported | Not Supported |
 | NI-RFmx LTE               | 2022 Q3 | Not Supported | Not Supported |
 | NI-RFmx NR                | 2023 Q3 | Not Supported | Not Supported |
 | NI-RFmx SpecAn            | 2023 Q3 | Not Supported | Not Supported |
