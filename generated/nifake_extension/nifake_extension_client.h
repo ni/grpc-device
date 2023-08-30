@@ -23,6 +23,7 @@ using namespace nidevice_grpc::experimental::client;
 
 
 AddCoolFunctionalityResponse add_cool_functionality(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& param);
+TestAddressParametersResponse test_address_parameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& space, const pb::uint64& offset, const pb::uint64& suggested);
 
 } // namespace nifake_extension_grpc::experimental::client
 

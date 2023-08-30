@@ -35,5 +35,25 @@ add_cool_functionality(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   return response;
 }
 
+TestAddressParametersResponse
+test_address_parameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& space, const pb::uint64& offset, const pb::uint64& suggested)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TestAddressParametersRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_space(space);
+  request.set_offset(offset);
+  request.set_suggested(suggested);
+
+  auto response = TestAddressParametersResponse{};
+
+  raise_if_error(
+      stub->TestAddressParameters(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nifake_extension_grpc::experimental::client

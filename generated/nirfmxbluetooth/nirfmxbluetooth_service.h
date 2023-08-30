@@ -120,6 +120,8 @@ public:
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status ModAccCfgAveraging(::grpc::ServerContext* context, const ModAccCfgAveragingRequest* request, ModAccCfgAveragingResponse* response) override;
   ::grpc::Status ModAccCfgBurstSynchronizationType(::grpc::ServerContext* context, const ModAccCfgBurstSynchronizationTypeRequest* request, ModAccCfgBurstSynchronizationTypeResponse* response) override;
+  ::grpc::Status ModAccFetchCSDetrendedPhaseTrace(::grpc::ServerContext* context, const ModAccFetchCSDetrendedPhaseTraceRequest* request, ModAccFetchCSDetrendedPhaseTraceResponse* response) override;
+  ::grpc::Status ModAccFetchCSToneTrace(::grpc::ServerContext* context, const ModAccFetchCSToneTraceRequest* request, ModAccFetchCSToneTraceResponse* response) override;
   ::grpc::Status ModAccFetchConstellationTrace(::grpc::ServerContext* context, const ModAccFetchConstellationTraceRequest* request, ModAccFetchConstellationTraceResponse* response) override;
   ::grpc::Status ModAccFetchDEVM(::grpc::ServerContext* context, const ModAccFetchDEVMRequest* request, ModAccFetchDEVMResponse* response) override;
   ::grpc::Status ModAccFetchDEVMMagnitudeError(::grpc::ServerContext* context, const ModAccFetchDEVMMagnitudeErrorRequest* request, ModAccFetchDEVMMagnitudeErrorResponse* response) override;
