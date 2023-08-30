@@ -120,6 +120,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.TimestampFromValues = reinterpret_cast<TimestampFromValuesPtr>(shared_library_->get_function_pointer("RFmxInstr_TimestampFromValues"));
   function_pointers_.ValuesFromTimestamp = reinterpret_cast<ValuesFromTimestampPtr>(shared_library_->get_function_pointer("RFmxInstr_ValuesFromTimestamp"));
   function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxInstr_WaitForAcquisitionComplete"));
+  function_pointers_.FetchRawIQData = reinterpret_cast<FetchRawIQDataPtr>(shared_library_->get_function_pointer("RFmxInstr_FetchRawIQData"));
 }
 
 NiRFmxInstrLibrary::~NiRFmxInstrLibrary()
@@ -875,6 +876,14 @@ int32 NiRFmxInstrLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumen
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_WaitForAcquisitionComplete.");
   }
   return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
+}
+
+int32 NiRFmxInstrLibrary::FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved)
+{
+  if (!function_pointers_.FetchRawIQData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_FetchRawIQData.");
+  }
+  return function_pointers_.FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, data, arraySize, actualArraySize, reserved);
 }
 
 }  // namespace nirfmxinstr_grpc

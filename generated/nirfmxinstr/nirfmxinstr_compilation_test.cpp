@@ -472,4 +472,9 @@ int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 tim
   return RFmxInstr_WaitForAcquisitionComplete(instrumentHandle, timeout);
 }
 
+int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved)
+{
+  return RFmxInstr_FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, data, arraySize, actualArraySize, reserved);
+}
+
 }  // namespace nirfmxinstr_grpc
