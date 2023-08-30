@@ -63,15 +63,25 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
-    #if 1
-        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-    #else
     try {
-      ViObject object_handle = request->object_handle();
-      vi_object_resource_repository_->remove_session(object_handle_grpc_session.name());
-      auto status = library_->Close(object_handle);
-      if (!status_ok(status)) {
+      ViStatus status;
+      if (request->object_handle().has_vi())
+      {
+        auto vi_grpc_session = request->object_handle().vi();
+        ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+        session_repository_->remove_session(vi_grpc_session.name());
+        status = library_->Close(vi);
+        if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViObject(context, status, vi);
+      }
+      }
+      else if (request->object_handle().has_object_handle())
+      {
+        auto object_handle = request->object_handle().object_handle();
+        status = library_->Close(object_handle);
+        if (!status_ok(status)) {
         return ConvertApiErrorStatusForViObject(context, status, object_handle);
+        }
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -79,7 +89,9 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
     }
-    #endif
+    catch (const DriverErrorException& ex) {
+      return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
+    }
   }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -152,12 +164,8 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
-    #if 1
-        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-    #else
     try {
-      auto rsrc_manager_handle_grpc_session = request->rsrc_manager_handle();
-      ViSession rsrc_manager_handle = session_repository_->access_session(rsrc_manager_handle_grpc_session.name());
+      ViSession rsrc_manager_handle = GetResourceManagerSession(library_);
       auto instrument_descriptor_mbcs = convert_from_grpc<std::string>(request->instrument_descriptor());
       ViConstRsrc instrument_descriptor = (ViConstRsrc)instrument_descriptor_mbcs.c_str();
       ViAccessMode access_mode;
@@ -177,20 +185,33 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
       }
 
       ViUInt32 open_timeout = request->open_timeout();
-      ViSession vi {};
-      auto status = library_->Open(rsrc_manager_handle, instrument_descriptor, access_mode, open_timeout, &vi);
+      auto initialization_behavior = request->initialization_behavior();
+
+      bool new_session_initialized {};
+      auto init_lambda = [&] () {
+        ViSession vi;
+        auto status = library_->Open(rsrc_manager_handle, instrument_descriptor, access_mode, open_timeout, &vi);
+        return std::make_tuple(status, vi);
+      };
+      std::string grpc_device_session_name = request->session_name();
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (ViSession id) { library->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
       }
       response->set_status(status);
-      auto grpc_device_session_name = session_repository_->resolve_session_name(vi);
       response->mutable_vi()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
     }
-    #endif
+    catch (const DriverErrorException& ex) {
+      return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
+    }
   }
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
