@@ -32,7 +32,6 @@ SERVER_PORT = "31763"
 SESSION_NAME = "visa_session"
 
 INSTRUMENT_DESCRIPTOR = "TCPIP::www.ni.com::80::SOCKET"
-ACCESS_MODE = 0
 TIME_OUT = 0
 INITIALIZATION_BEHAVIOR = 0
 
@@ -51,23 +50,58 @@ client = grpc_visa.VisaStub(channel)
 
 try:
     # Open IO Session
-    response = client.Open(
+    open_resp = client.Open(
         visa_types.OpenRequest(
             session_name=SESSION_NAME,
             instrument_descriptor=INSTRUMENT_DESCRIPTOR,
-            access_mode=ACCESS_MODE,
             open_timeout=TIME_OUT,
             initialization_behavior=INITIALIZATION_BEHAVIOR,
         )
     )
+    vi = open_resp.vi
+    session = visa_types.SessionOrEventData(vi=vi)
 
-    vi = response.vi
+    # Get some information about the connection
+    get_resp = client.GetAttribute(
+        visa_types.GetAttributeRequest(
+            object_handle = session,
+            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TCPIP_ADDR
+        )
+    )
+    print(f"Network address: {get_resp.attribute_value}")
 
-    # Close IO Session
-    if vi:
-        data = visa_types.SessionOrObjectData()
-        data.vi.CopyFrom(vi)
-        client.Close(visa_types.CloseRequest(object_handle=data))
+    get_resp = client.GetAttribute(
+        visa_types.GetAttributeRequest(
+            object_handle = session,
+            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TCPIP_HOSTNAME
+        )
+    )
+    print(f"Network hostname: {get_resp.attribute_value}")
+
+    # Change the timeout
+    get_resp = client.GetAttribute(
+        visa_types.GetAttributeRequest(
+            object_handle = session,
+            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE
+        )
+    )
+    print(f"Original timeout in milliseconds: {get_resp.attribute_value}")
+
+    set_resp = client.SetAttribute(
+        visa_types.SetAttributeRequest(
+            object_handle = session,
+            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE,
+            attribute_value = visa_types.AttributeValueData(value_u32=7500)
+        )
+    )
+
+    get_resp = client.GetAttribute(
+        visa_types.GetAttributeRequest(
+            object_handle = session,
+            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE
+        )
+    )
+    print(f"Original timeout in milliseconds: {get_resp.attribute_value}")
 
 except grpc.RpcError as rpc_error:
     error_message = str(rpc_error.details() or "")
@@ -82,3 +116,7 @@ except grpc.RpcError as rpc_error:
             "The operation is not implemented or is not supported/enabled in this service"
         )
     print(f"{error_message}")
+finally:
+    if "session" in vars():
+        # Close VISA session
+        client.Close(visa_types.CloseRequest(object_handle=session))

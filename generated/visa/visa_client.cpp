@@ -111,7 +111,7 @@ clear(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 CloseResponse
-close(const StubPtr& stub, const SessionOrObjectData& object_handle)
+close(const StubPtr& stub, const SessionOrEventData& object_handle)
 {
   ::grpc::ClientContext context;
 
@@ -270,7 +270,7 @@ flush(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_varian
 }
 
 GetAttributeResponse
-get_attribute(const StubPtr& stub, const SessionOrObjectData& object_handle, const VisaAttribute& attribute_name)
+get_attribute(const StubPtr& stub, const SessionOrEventData& object_handle, const VisaAttribute& attribute_name)
 {
   ::grpc::ClientContext context;
 
@@ -1228,7 +1228,7 @@ read_stb(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SetAttributeResponse
-set_attribute(const StubPtr& stub, const SessionOrObjectData& object_handle, const VisaAttribute& attribute_name, const AttributeValueData& attribute_value)
+set_attribute(const StubPtr& stub, const SessionOrEventData& object_handle, const VisaAttribute& attribute_name, const AttributeValueData& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1273,7 +1273,7 @@ set_buf(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_vari
 }
 
 StatusDescResponse
-status_desc(const StubPtr& stub, const SessionOrObjectData& object_handle, const pb::int32& status_value)
+status_desc(const StubPtr& stub, const SessionOrEventData& object_handle, const pb::int32& status_value)
 {
   ::grpc::ClientContext context;
 

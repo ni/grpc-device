@@ -1,4 +1,8 @@
+#define NIVISA_USB
 #include <visa/visa_service.h>
+
+// Copied from NiVisaImpl.h
+#define VI_ATTR_RSRC_USER_ALIAS        (0x3FFF018EUL) /* ViString  */
 
 namespace visa_grpc {
 using nidevice_grpc::converters::convert_from_grpc;
@@ -28,18 +32,234 @@ class DriverErrorException : public std::runtime_error
     }
 };
 
-static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibrarySharedPtr library)
+static ViSession GetResourceManagerSession(VisaService::LibrarySharedPtr library)
 {
-    std::unique_lock<std::shared_mutex> lock(s_resource_manager_lock);
-    if (!s_defaultRM)
-    {
-        ViStatus status = library->OpenDefaultRM(&s_defaultRM);
-        if (!status_ok(status))
-        {
-            throw DriverErrorException(status);
-        }
+  std::unique_lock<std::shared_mutex> lock(s_resource_manager_lock);
+  if (!s_defaultRM) {
+    ViStatus status = library->OpenDefaultRM(&s_defaultRM);
+    if (!status_ok(status)) {
+      throw DriverErrorException(status);
     }
-    return s_defaultRM;
+  }
+  return s_defaultRM;
+}
+
+static std::tuple<ViObject, bool> GetObjectValueWithType(const SessionOrEventData& data, VisaService::ResourceRepositorySharedPtr session_repository)
+{
+  if (data.has_vi()) {
+    auto vi_grpc_session = data.vi();
+    return { session_repository->access_session(vi_grpc_session.name()), true };
+  }
+  else if (data.has_event_handle()) {
+    return { data.event_handle(), false };
+  }
+  else {
+    throw nidevice_grpc::NonDriverException(::grpc::INVALID_ARGUMENT, "The value for object_handle was not specified or out of range");
+  }
+}
+
+static AttributeValueData::DataCase GetAttributeType(ViAttr attributeID)
+{
+      switch (attributeID)
+      {
+        case VI_ATTR_RSRC_NAME:
+        case VI_ATTR_RSRC_USER_ALIAS:
+        case VI_ATTR_INTF_INST_NAME:
+        case VI_ATTR_RSRC_MANF_NAME:
+        case VI_ATTR_RSRC_CLASS:
+        case VI_ATTR_MANF_NAME:
+        case VI_ATTR_MODEL_NAME:
+        case VI_ATTR_TCPIP_ADDR:
+        case VI_ATTR_TCPIP_HOSTNAME:
+        case VI_ATTR_TCPIP_DEVICE_NAME:
+        case VI_ATTR_USB_SERIAL_NUM:
+        case VI_ATTR_PXI_SLOTPATH:
+            return AttributeValueData::kValueString;
+
+        case VI_ATTR_WIN_BASE_ADDR_64:
+        case VI_ATTR_WIN_SIZE_64:
+        case VI_ATTR_MEM_BASE_64:
+        case VI_ATTR_MEM_SIZE_64:
+        case VI_ATTR_PXI_MEM_BASE_BAR0_64:
+        case VI_ATTR_PXI_MEM_BASE_BAR1_64:
+        case VI_ATTR_PXI_MEM_BASE_BAR2_64:
+        case VI_ATTR_PXI_MEM_BASE_BAR3_64:
+        case VI_ATTR_PXI_MEM_BASE_BAR4_64:
+        case VI_ATTR_PXI_MEM_BASE_BAR5_64:
+        case VI_ATTR_PXI_MEM_SIZE_BAR0_64:
+        case VI_ATTR_PXI_MEM_SIZE_BAR1_64:
+        case VI_ATTR_PXI_MEM_SIZE_BAR2_64:
+        case VI_ATTR_PXI_MEM_SIZE_BAR3_64:
+        case VI_ATTR_PXI_MEM_SIZE_BAR4_64:
+        case VI_ATTR_PXI_MEM_SIZE_BAR5_64:
+            return AttributeValueData::kValueU64;
+
+        case VI_ATTR_RSRC_SPEC_VERSION:
+        case VI_ATTR_RSRC_IMPL_VERSION:
+        case VI_ATTR_TCPIP_HISLIP_VERSION:
+        case VI_ATTR_RSRC_LOCK_STATE:
+        case VI_ATTR_MAX_QUEUE_LENGTH:
+        case VI_ATTR_TMO_VALUE:
+        case VI_ATTR_WIN_BASE_ADDR_32:
+        case VI_ATTR_WIN_SIZE_32:
+        case VI_ATTR_MEM_BASE_32:
+        case VI_ATTR_MEM_SIZE_32:
+        case VI_ATTR_INTR_STATUS_ID:
+        case VI_ATTR_ASRL_AVAIL_NUM:
+        case VI_ATTR_ASRL_BAUD:
+        case VI_ATTR_VXI_TRIG_STATUS:
+        case VI_ATTR_VXI_TRIG_SUPPORT:
+        case VI_ATTR_TCPIP_HISLIP_MAX_MESSAGE_KB:
+        case VI_ATTR_PXI_MEM_BASE_BAR0_32:
+        case VI_ATTR_PXI_MEM_BASE_BAR1_32:
+        case VI_ATTR_PXI_MEM_BASE_BAR2_32:
+        case VI_ATTR_PXI_MEM_BASE_BAR3_32:
+        case VI_ATTR_PXI_MEM_BASE_BAR4_32:
+        case VI_ATTR_PXI_MEM_BASE_BAR5_32:
+        case VI_ATTR_PXI_MEM_SIZE_BAR0_32:
+        case VI_ATTR_PXI_MEM_SIZE_BAR1_32:
+        case VI_ATTR_PXI_MEM_SIZE_BAR2_32:
+        case VI_ATTR_PXI_MEM_SIZE_BAR3_32:
+        case VI_ATTR_PXI_MEM_SIZE_BAR4_32:
+        case VI_ATTR_PXI_MEM_SIZE_BAR5_32:
+        case VI_ATTR_FIREWIRE_VENDOR_ID:
+        case VI_ATTR_FIREWIRE_LOWER_CHIP_ID:
+            return AttributeValueData::kValueU32;
+
+        case VI_ATTR_RSRC_MANF_ID:
+        case VI_ATTR_FDC_CHNL:
+        case VI_ATTR_FDC_MODE:
+        case VI_ATTR_IO_PROT:
+        case VI_ATTR_MANF_ID:
+        case VI_ATTR_MEM_SPACE:
+        case VI_ATTR_MODEL_CODE:
+        case VI_ATTR_DEST_ACCESS_PRIV:
+        case VI_ATTR_DEST_BYTE_ORDER:
+        case VI_ATTR_SRC_ACCESS_PRIV:
+        case VI_ATTR_SRC_BYTE_ORDER:
+        case VI_ATTR_WIN_ACCESS_PRIV:
+        case VI_ATTR_WIN_BYTE_ORDER:
+        case VI_ATTR_INTF_PARENT_NUM:
+        case VI_ATTR_GPIB_PRIMARY_ADDR:
+        case VI_ATTR_GPIB_SECONDARY_ADDR:
+        case VI_ATTR_ASRL_DATA_BITS:
+        case VI_ATTR_ASRL_PARITY:
+        case VI_ATTR_ASRL_STOP_BITS:
+        case VI_ATTR_ASRL_FLOW_CNTRL:
+        case VI_ATTR_ASRL_END_IN:
+        case VI_ATTR_ASRL_END_OUT:
+        case VI_ATTR_SIGP_STATUS_ID:
+        case VI_ATTR_VXI_DEV_CLASS:
+        case VI_ATTR_VXI_VME_INTR_STATUS:
+        case VI_ATTR_TCPIP_PORT:
+        case VI_ATTR_GPIB_ADDR_STATE:
+        case VI_ATTR_USB_MAX_INTR_SIZE:
+        case VI_ATTR_USB_END_IN:
+        case VI_ATTR_PXI_DEV_NUM:
+        case VI_ATTR_PXI_FUNC_NUM:
+        case VI_ATTR_PXI_MEM_TYPE_BAR0:
+        case VI_ATTR_PXI_MEM_TYPE_BAR1:
+        case VI_ATTR_PXI_MEM_TYPE_BAR2:
+        case VI_ATTR_PXI_MEM_TYPE_BAR3:
+        case VI_ATTR_PXI_MEM_TYPE_BAR4:
+        case VI_ATTR_PXI_MEM_TYPE_BAR5:
+        case VI_ATTR_PXI_BUS_NUM:
+        case VI_ATTR_VXI_TRIG_LINES_EN:
+        case VI_ATTR_VXI_TRIG_DIR:
+        case VI_ATTR_FIREWIRE_DEST_UPPER_OFFSET:
+        case VI_ATTR_FIREWIRE_SRC_UPPER_OFFSET:
+        case VI_ATTR_FIREWIRE_WIN_UPPER_OFFSET:
+        case VI_ATTR_WIN_ACCESS:
+            return AttributeValueData::kValueU16;
+
+        case VI_ATTR_FDC_GEN_SIGNAL_EN:
+        case VI_ATTR_FDC_USE_PAIR:
+        case VI_ATTR_SEND_END_EN:
+        case VI_ATTR_SUPPRESS_END_EN:
+        case VI_ATTR_TERMCHAR_EN:
+        case VI_ATTR_IMMEDIATE_SERV:
+        case VI_ATTR_GPIB_READDR_EN:
+        case VI_ATTR_GPIB_UNADDR_EN:
+        case VI_ATTR_ASRL_DISCARD_NULL:
+        case VI_ATTR_ASRL_ALLOW_TRANSMIT:
+        case VI_ATTR_GPIB_CIC_STATE:
+        case VI_ATTR_GPIB_SYS_CNTRL_STATE:
+        case VI_ATTR_FILE_APPEND_EN:
+        case VI_ATTR_DMA_ALLOW_EN:
+        case VI_ATTR_TCPIP_NODELAY:
+        case VI_ATTR_TCPIP_KEEPALIVE:
+        case VI_ATTR_TCPIP_HISLIP_OVERLAP_EN:
+        case VI_ATTR_TCPIP_IS_HISLIP:
+        case VI_ATTR_4882_COMPLIANT:
+        case VI_ATTR_SYNC_MXI_ALLOW_EN:
+        case VI_ATTR_ASRL_CONNECTED:
+        case VI_ATTR_PXI_IS_EXPRESS:
+        case VI_ATTR_PXI_ALLOW_WRITE_COMBINE:
+            return AttributeValueData::kValueBool;
+
+        case VI_ATTR_ASRL_REPLACE_CHAR:
+        case VI_ATTR_ASRL_XON_CHAR:
+        case VI_ATTR_ASRL_XOFF_CHAR:
+        case VI_ATTR_TERMCHAR:
+        case VI_ATTR_DEV_STATUS_BYTE:
+        case VI_ATTR_FIREWIRE_UPPER_CHIP_ID:
+            return AttributeValueData::kValueU8;
+
+        case VI_ATTR_SRC_INCREMENT:
+        case VI_ATTR_DEST_INCREMENT:
+            return AttributeValueData::kValueI32;
+
+        case VI_ATTR_VXI_LA:
+        case VI_ATTR_CMDR_LA:
+        case VI_ATTR_MAINFRAME_LA:
+        case VI_ATTR_SLOT:
+        case VI_ATTR_ASRL_CTS_STATE:
+        case VI_ATTR_ASRL_DCD_STATE:
+        case VI_ATTR_ASRL_DSR_STATE:
+        case VI_ATTR_ASRL_DTR_STATE:
+        case VI_ATTR_ASRL_RI_STATE:
+        case VI_ATTR_ASRL_RTS_STATE:
+        case VI_ATTR_TRIG_ID:
+        case VI_ATTR_GPIB_REN_STATE:
+        case VI_ATTR_GPIB_ATN_STATE:
+        case VI_ATTR_GPIB_SRQ_STATE:
+        case VI_ATTR_VXI_VME_SYSFAIL_STATE:
+        case VI_ATTR_GPIB_HS488_CBL_LEN:
+        case VI_ATTR_GPIB_NDAC_STATE:
+        case VI_ATTR_ASRL_BREAK_STATE:
+        case VI_ATTR_ASRL_BREAK_LEN:
+        case VI_ATTR_ASRL_WIRE_MODE:
+        case VI_ATTR_USB_INTFC_NUM:
+        case VI_ATTR_USB_PROTOCOL:
+        case VI_ATTR_USB_BULK_OUT_PIPE:
+        case VI_ATTR_USB_BULK_IN_PIPE:
+        case VI_ATTR_USB_INTR_IN_PIPE:
+        case VI_ATTR_USB_BULK_OUT_STATUS:
+        case VI_ATTR_USB_BULK_IN_STATUS:
+        case VI_ATTR_USB_INTR_IN_STATUS:
+        case VI_ATTR_USB_CLASS:
+        case VI_ATTR_USB_SUBCLASS:
+        case VI_ATTR_USB_ALT_SETTING:
+        case VI_ATTR_USB_NUM_INTFCS:
+        case VI_ATTR_USB_NUM_PIPES:
+        case VI_ATTR_PXI_CHASSIS:
+        case VI_ATTR_PXI_SLOT_LBUS_LEFT:
+        case VI_ATTR_PXI_SLOT_LBUS_RIGHT:
+        case VI_ATTR_PXI_TRIG_BUS:
+        case VI_ATTR_PXI_STAR_TRIG_BUS:
+        case VI_ATTR_PXI_STAR_TRIG_LINE:
+        case VI_ATTR_PXI_SRC_TRIG_BUS:
+        case VI_ATTR_PXI_DEST_TRIG_BUS:
+        case VI_ATTR_PXI_SLOT_LWIDTH:
+        case VI_ATTR_PXI_MAX_LWIDTH:
+        case VI_ATTR_PXI_ACTUAL_LWIDTH:
+        case VI_ATTR_PXI_DSTAR_BUS:
+        case VI_ATTR_PXI_DSTAR_SET:
+            return AttributeValueData::kValueI16;
+
+        default:
+            return AttributeValueData::DATA_NOT_SET;
+      }
 }
 
 ::grpc::Status VisaService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi)
@@ -56,7 +276,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
-//---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
@@ -64,24 +284,14 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViStatus status;
-      if (request->object_handle().has_vi())
-      {
-        auto vi_grpc_session = request->object_handle().vi();
-        ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-        session_repository_->remove_session(vi_grpc_session.name());
-        status = library_->Close(vi);
-        if (!status_ok(status)) {
+      auto [vi, isSession] = GetObjectValueWithType(request->object_handle(), session_repository_);
+      if (isSession) {
+        auto grpc_session = request->object_handle().vi();
+        session_repository_->remove_session(grpc_session.name());
+      }
+      ViStatus status = library_->Close(vi);
+      if (!status_ok(status)) {
         return ConvertApiErrorStatusForViObject(context, status, vi);
-      }
-      }
-      else if (request->object_handle().has_object_handle())
-      {
-        auto object_handle = request->object_handle().object_handle();
-        status = library_->Close(object_handle);
-        if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViObject(context, status, object_handle);
-        }
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -93,6 +303,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
       return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
     }
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::FindRsrc(::grpc::ServerContext* context, const FindRsrcRequest* request, FindRsrcResponse* response)
@@ -112,8 +323,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
         return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
       }
       response->add_instrument_descriptor(descriptor);
-      for (ViUInt32 index=1; index<return_count; ++index)
-      {
+      for (ViUInt32 index = 1; index < return_count; ++index) {
         status = library_->FindNext(find_handle, descriptor);
         if (!status_ok(status)) {
             return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
@@ -130,6 +340,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
       return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
     }
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::GetAttribute(::grpc::ServerContext* context, const GetAttributeRequest* request, GetAttributeResponse* response)
@@ -137,26 +348,89 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
-    #if 1
-        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-    #else
     try {
-      ViObject object_handle = request->object_handle();
-      ViAttr attribute_name = request->attribute_name();
-      void attribute_value {};
-      auto status = library_->GetAttribute(object_handle, attribute_name, &attribute_value);
+      auto [vi, isSession] = GetObjectValueWithType(request->object_handle(), session_repository_);
+      ViAttr attributeID = request->attribute_name();
+      ViStatus status;
+
+      switch (GetAttributeType(attributeID))
+      {
+        case AttributeValueData::kValueString: {
+            ViChar attrValue[256] = {0};
+            status = library_->GetAttribute(vi, attributeID, attrValue);
+            response->mutable_attribute_value()->mutable_value_string()->assign(attrValue);
+            break;
+        }
+
+        case AttributeValueData::kValueU64: {
+            ViUInt64 val64;
+            status = library_->GetAttribute(vi, attributeID, &val64);
+            response->mutable_attribute_value()->set_value_u64(val64);
+            break;
+        }
+
+        case AttributeValueData::kValueU32: {
+            ViUInt32 val32;
+            status = library_->GetAttribute(vi, attributeID, &val32);
+            response->mutable_attribute_value()->set_value_u32(val32);
+            break;
+        }
+
+        case AttributeValueData::kValueU16: {
+            ViUInt16 val16;
+            status = library_->GetAttribute(vi, attributeID, &val16);
+            // Special case logic for a specific property.
+            // If the mapped address is a pointer, the remote client cannot use it as such
+            if (attributeID == VI_ATTR_WIN_ACCESS && (val16 == VI_DEREF_ADDR || val16 == VI_DEREF_ADDR_BYTE_SWAP)) {
+                val16 = VI_USE_OPERS;
+            }
+            response->mutable_attribute_value()->set_value_u16(val16);
+            break;
+        }
+
+        case AttributeValueData::kValueBool: {
+            ViBoolean valBool;
+            status = library_->GetAttribute(vi, attributeID, &valBool);
+            response->mutable_attribute_value()->set_value_bool(valBool == VI_TRUE);
+            break;
+        }
+
+        case AttributeValueData::kValueU8: {
+            ViUInt8 val8;
+            status = library_->GetAttribute(vi, attributeID, &val8);
+            response->mutable_attribute_value()->set_value_u8(val8);
+            break;
+        }
+
+        case AttributeValueData::kValueI32: {
+            ViInt32 val32;
+            status = library_->GetAttribute(vi, attributeID, &val32);
+            response->mutable_attribute_value()->set_value_i32(val32);
+            break;
+        }
+
+        case AttributeValueData::kValueI16: {
+            ViInt16 val16;
+            status = library_->GetAttribute(vi, attributeID, &val16);
+            response->mutable_attribute_value()->set_value_i16(val16);
+            break;
+        }
+
+        default:
+            return ConvertApiErrorStatusForViSession(context, VI_ERROR_NSUP_ATTR, vi);
+      }
+
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViObject(context, status, object_handle);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
     }
-    #endif
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::Open(::grpc::ServerContext* context, const OpenRequest* request, OpenResponse* response)
@@ -178,8 +452,8 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
           access_mode = static_cast<ViAccessMode>(request->access_mode_raw());
           break;
         }
-        case visa_grpc::OpenRequest::AccessModeEnumCase::ACCESS_MODE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for access_mode was not specified or out of range");
+        default: {
+          access_mode = VI_NO_LOCK;
           break;
         }
       }
@@ -213,6 +487,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
       return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
     }
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::ParseRsrc(::grpc::ServerContext* context, const ParseRsrcRequest* request, ParseRsrcResponse* response)
@@ -257,6 +532,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
       return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
     }
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
@@ -317,6 +593,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     }
     #endif
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::SetAttribute(::grpc::ServerContext* context, const SetAttributeRequest* request, SetAttributeResponse* response)
@@ -324,16 +601,39 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
-    #if 1
-        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-    #else
     try {
-      ViObject object_handle = request->object_handle();
-      ViAttr attribute_name = request->attribute_name();
-      ViAttrState attribute_value = request->attribute_value();
-      auto status = library_->SetAttribute(object_handle, attribute_name, attribute_value);
+      auto [vi, isSession] = GetObjectValueWithType(request->object_handle(), session_repository_);
+      ViAttr attributeID = request->attribute_name();
+      ViAttrState attribute_value = 0;
+      if (request->attribute_value().has_value_bool()) {
+        attribute_value = static_cast<ViAttrState>(request->attribute_value().value_bool() ? VI_TRUE : VI_FALSE);
+      }
+#if defined(_VISA_ENV_IS_64_BIT)
+      else if (request->attribute_value().has_value_u64()) {
+        attribute_value = static_cast<ViAttrState>(request->attribute_value().value_u64());
+      }
+#endif
+      else if (request->attribute_value().has_value_i32()) {
+        attribute_value = static_cast<ViAttrState>(request->attribute_value().value_i32());
+      }
+      else if (request->attribute_value().has_value_u32()) {
+        attribute_value = static_cast<ViAttrState>(request->attribute_value().value_u32());
+      }
+      else if (request->attribute_value().has_value_i16()) {
+        attribute_value = static_cast<ViAttrState>(request->attribute_value().value_i16());
+      }
+      else if (request->attribute_value().has_value_u16()) {
+        attribute_value = static_cast<ViAttrState>(request->attribute_value().value_u16());
+      }
+      else if (request->attribute_value().has_value_u8()) {
+        attribute_value = static_cast<ViAttrState>(request->attribute_value().value_u8());
+      }
+      else {
+        throw nidevice_grpc::NonDriverException(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+      }
+      auto status = library_->SetAttribute(vi, attributeID, attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViObject(context, status, object_handle);
+        return ConvertApiErrorStatusForViObject(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -341,8 +641,8 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
     }
-    #endif
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::StatusDesc(::grpc::ServerContext* context, const StatusDescRequest* request, StatusDescResponse* response)
@@ -350,16 +650,13 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
-    #if 1
-        return  ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-    #else
     try {
-      ViObject object_handle = request->object_handle();
+      auto [vi, isSession] = GetObjectValueWithType(request->object_handle(), session_repository_);
       ViStatus status_value = request->status_value();
       std::string status_description(256 - 1, '\0');
-      auto status = library_->StatusDesc(object_handle, status_value, (ViChar*)status_description.data());
+      auto status = library_->StatusDesc(vi, status_value, (ViChar*)status_description.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViObject(context, status, object_handle);
+        return ConvertApiErrorStatusForViObject(context, status, vi);
       }
       response->set_status(status);
       std::string status_description_utf8;
@@ -371,8 +668,8 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
     }
-    #endif
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::UsbControlIn(::grpc::ServerContext* context, const UsbControlInRequest* request, UsbControlInResponse* response)
@@ -407,6 +704,7 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     }
     #endif
   }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status VisaService::WriteAsync(::grpc::ServerContext* context, const WriteAsyncRequest* request, WriteAsyncResponse* response)

@@ -67,7 +67,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SessionOrObjectData',
+                'grpc_type': 'SessionOrEventData',
                 'name': 'objectHandle',
                 'type': 'ViObject'
             }
@@ -229,7 +229,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SessionOrObjectData',
+                'grpc_type': 'SessionOrEventData',
                 'name': 'objectHandle',
                 'type': 'ViObject'
             },
@@ -1446,7 +1446,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SessionOrObjectData',
+                'grpc_type': 'SessionOrEventData',
                 'name': 'objectHandle',
                 'type': 'ViObject'
             },
@@ -1490,7 +1490,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SessionOrObjectData',
+                'grpc_type': 'SessionOrEventData',
                 'name': 'objectHandle',
                 'type': 'ViObject'
             },
