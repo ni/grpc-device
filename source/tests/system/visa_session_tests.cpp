@@ -13,7 +13,7 @@ const int kInvalidVisaSessionWarning = 1073676418;
 const char* kVisaErrorInstrumentDescriptorNotFoundMessage = "Insufficient location information or the device or resource is not present in the system.";
 const char* kInstrumentDescriptor = "TCPIP::www.ni.com::80::SOCKET";
 const char* kVisaTestSession = "SessionName";
-const char* kVisaTestInvalidInstrumentDescriptor = "";
+const char* kVisaTestInvalidInstrumentDescriptor = "FOO::BAR";
 
 class VisaSessionTest : public ::testing::Test {
  protected:
@@ -57,7 +57,7 @@ TEST_F(VisaSessionTest, OpenSessionWithInstrumentDescriptor_CreatesDriverSession
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE("", response.vi().name());
+  EXPECT_EQ(kVisaTestSession, response.vi().name());
 }
 
 TEST_F(VisaSessionTest, OpenSessionWithInstrumentDescriptorAndNoSessionName_CreatesDriverSession)
@@ -90,7 +90,7 @@ TEST_F(VisaSessionTest, OpenWithErrorFromDriver_ReturnsDriverErrorWithUserErrorM
 {
   EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     visa::OpenResponse init_response;
-    call_open("kInstrumentDescriptor", visa::LOCK_STATE_NO_LOCK, "", 0, &init_response);
+    call_open(kVisaTestInvalidInstrumentDescriptor, visa::LOCK_STATE_NO_LOCK, "", 0, &init_response);
   },
                                         kInvalidRsrc, kVisaErrorInstrumentDescriptorNotFoundMessage);
 }

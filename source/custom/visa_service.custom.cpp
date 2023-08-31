@@ -84,9 +84,6 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
   catch (nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
-  catch (const DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
-  }
 }
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
