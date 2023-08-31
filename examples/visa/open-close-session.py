@@ -64,16 +64,15 @@ try:
     # Get some information about the connection
     get_resp = client.GetAttribute(
         visa_types.GetAttributeRequest(
-            object_handle = session,
-            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TCPIP_ADDR
+            object_handle=session, attribute_name=visa_types.VisaAttribute.VISA_ATTRIBUTE_TCPIP_ADDR
         )
     )
     print(f"Network address: {get_resp.attribute_value}")
 
     get_resp = client.GetAttribute(
         visa_types.GetAttributeRequest(
-            object_handle = session,
-            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TCPIP_HOSTNAME
+            object_handle=session,
+            attribute_name=visa_types.VisaAttribute.VISA_ATTRIBUTE_TCPIP_HOSTNAME,
         )
     )
     print(f"Network hostname: {get_resp.attribute_value}")
@@ -81,24 +80,22 @@ try:
     # Change the timeout
     get_resp = client.GetAttribute(
         visa_types.GetAttributeRequest(
-            object_handle = session,
-            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE
+            object_handle=session, attribute_name=visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE
         )
     )
     print(f"Original timeout in milliseconds: {get_resp.attribute_value}")
 
     set_resp = client.SetAttribute(
         visa_types.SetAttributeRequest(
-            object_handle = session,
-            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE,
-            attribute_value = visa_types.AttributeValueData(value_u32=7500)
+            object_handle=session,
+            attribute_name=visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE,
+            attribute_value=visa_types.AttributeValueData(value_u32=7500),
         )
     )
 
     get_resp = client.GetAttribute(
         visa_types.GetAttributeRequest(
-            object_handle = session,
-            attribute_name = visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE
+            object_handle=session, attribute_name=visa_types.VisaAttribute.VISA_ATTRIBUTE_TMO_VALUE
         )
     )
     print(f"Original timeout in milliseconds: {get_resp.attribute_value}")
