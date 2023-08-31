@@ -98,6 +98,8 @@ InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name);
 ModAccCfgAveragingResponse mod_acc_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count);
 ModAccCfgBurstSynchronizationTypeResponse mod_acc_cfg_burst_synchronization_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccBurstSynchronizationType, pb::int32>& burst_synchronization_type);
+ModAccFetchCSDetrendedPhaseTraceResponse mod_acc_fetch_cs_detrended_phase_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+ModAccFetchCSToneTraceResponse mod_acc_fetch_cs_tone_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchConstellationTraceResponse mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDEVMResponse mod_acc_fetch_devm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDEVMMagnitudeErrorResponse mod_acc_fetch_devm_magnitude_error(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);

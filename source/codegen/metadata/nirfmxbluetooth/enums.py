@@ -55,6 +55,54 @@ enums = {
             }
         ]
     },
+    'ChannelSoundingPacketFormat': {
+        'values': [
+            {
+                'name': 'SYNC',
+                'value': 0
+            },
+            {
+                'name': 'CS_TONE',
+                'value': 1
+            },
+            {
+                'name': 'CS_TONE_AFTER_SYNC',
+                'value': 2
+            },
+            {
+                'name': 'CS_TONE_BEFORE_SYNC',
+                'value': 3
+            }
+        ]
+    },
+    'ChannelSoundingSyncSequence': {
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'SOUNDING_SEQUENCE_32_BIT',
+                'value': 1
+            },
+            {
+                'name': 'SOUNDING_SEQUENCE_96_BIT',
+                'value': 2
+            }
+        ]
+    },
+    'ChannelSoundingToneExtensionSlot': {
+        'values': [
+            {
+                'name': 'DISABLED',
+                'value': 0
+            },
+            {
+                'name': 'ENABLED',
+                'value': 1
+            }
+        ]
+    },
     'DigitalEdgeTriggerEdge': {
         'values': [
             {
@@ -377,6 +425,10 @@ enums = {
             {
                 'name': 'LE',
                 'value': 16
+            },
+            {
+                'name': 'LE_CS',
+                'value': 17
             }
         ]
     },

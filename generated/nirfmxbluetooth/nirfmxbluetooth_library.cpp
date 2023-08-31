@@ -103,6 +103,8 @@ NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary(std::shared_ptr<nidevice_grpc::Sh
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("RFmxBT_Initiate"));
   function_pointers_.ModAccCfgAveraging = reinterpret_cast<ModAccCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccCfgAveraging"));
   function_pointers_.ModAccCfgBurstSynchronizationType = reinterpret_cast<ModAccCfgBurstSynchronizationTypePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccCfgBurstSynchronizationType"));
+  function_pointers_.ModAccFetchCSDetrendedPhaseTrace = reinterpret_cast<ModAccFetchCSDetrendedPhaseTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchCSDetrendedPhaseTrace"));
+  function_pointers_.ModAccFetchCSToneTrace = reinterpret_cast<ModAccFetchCSToneTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchCSToneTrace"));
   function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchConstellationTrace"));
   function_pointers_.ModAccFetchDEVM = reinterpret_cast<ModAccFetchDEVMPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchDEVM"));
   function_pointers_.ModAccFetchDEVMMagnitudeError = reinterpret_cast<ModAccFetchDEVMMagnitudeErrorPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchDEVMMagnitudeError"));
@@ -777,6 +779,22 @@ int32 NiRFmxBluetoothLibrary::ModAccCfgBurstSynchronizationType(niRFmxInstrHandl
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccCfgBurstSynchronizationType.");
   }
   return function_pointers_.ModAccCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+}
+
+int32 NiRFmxBluetoothLibrary::ModAccFetchCSDetrendedPhaseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csDetrendedPhase[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchCSDetrendedPhaseTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchCSDetrendedPhaseTrace.");
+  }
+  return function_pointers_.ModAccFetchCSDetrendedPhaseTrace(instrumentHandle, selectorString, timeout, x0, dx, csDetrendedPhase, arraySize, actualArraySize);
+}
+
+int32 NiRFmxBluetoothLibrary::ModAccFetchCSToneTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csToneAmplitude[], float32 csTonePhase[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchCSToneTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchCSToneTrace.");
+  }
+  return function_pointers_.ModAccFetchCSToneTrace(instrumentHandle, selectorString, timeout, x0, dx, csToneAmplitude, csTonePhase, arraySize, actualArraySize);
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)

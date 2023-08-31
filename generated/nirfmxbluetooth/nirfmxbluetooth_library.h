@@ -97,6 +97,8 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]);
   int32 ModAccCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount);
   int32 ModAccCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType);
+  int32 ModAccFetchCSDetrendedPhaseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csDetrendedPhase[], int32 arraySize, int32* actualArraySize);
+  int32 ModAccFetchCSToneTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csToneAmplitude[], float32 csTonePhase[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchDEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakRMSDEVMMaximum, float64* peakDEVMMaximum, float64* ninetyninePercentDEVM);
   int32 ModAccFetchDEVMMagnitudeError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRMSMagnitudeErrorMean, float64* peakRMSMagnitudeErrorMaximum);
@@ -230,6 +232,8 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   using InitiatePtr = decltype(&RFmxBT_Initiate);
   using ModAccCfgAveragingPtr = decltype(&RFmxBT_ModAccCfgAveraging);
   using ModAccCfgBurstSynchronizationTypePtr = decltype(&RFmxBT_ModAccCfgBurstSynchronizationType);
+  using ModAccFetchCSDetrendedPhaseTracePtr = decltype(&RFmxBT_ModAccFetchCSDetrendedPhaseTrace);
+  using ModAccFetchCSToneTracePtr = decltype(&RFmxBT_ModAccFetchCSToneTrace);
   using ModAccFetchConstellationTracePtr = decltype(&RFmxBT_ModAccFetchConstellationTrace);
   using ModAccFetchDEVMPtr = decltype(&RFmxBT_ModAccFetchDEVM);
   using ModAccFetchDEVMMagnitudeErrorPtr = decltype(&RFmxBT_ModAccFetchDEVMMagnitudeError);
@@ -363,6 +367,8 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
     InitiatePtr Initiate;
     ModAccCfgAveragingPtr ModAccCfgAveraging;
     ModAccCfgBurstSynchronizationTypePtr ModAccCfgBurstSynchronizationType;
+    ModAccFetchCSDetrendedPhaseTracePtr ModAccFetchCSDetrendedPhaseTrace;
+    ModAccFetchCSToneTracePtr ModAccFetchCSToneTrace;
     ModAccFetchConstellationTracePtr ModAccFetchConstellationTrace;
     ModAccFetchDEVMPtr ModAccFetchDEVM;
     ModAccFetchDEVMMagnitudeErrorPtr ModAccFetchDEVMMagnitudeError;

@@ -91,6 +91,8 @@ class NiRFmxBluetoothLibraryInterface {
   virtual int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]) = 0;
   virtual int32 ModAccCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) = 0;
   virtual int32 ModAccCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType) = 0;
+  virtual int32 ModAccFetchCSDetrendedPhaseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csDetrendedPhase[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 ModAccFetchCSToneTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csToneAmplitude[], float32 csTonePhase[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 ModAccFetchDEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakRMSDEVMMaximum, float64* peakDEVMMaximum, float64* ninetyninePercentDEVM) = 0;
   virtual int32 ModAccFetchDEVMMagnitudeError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRMSMagnitudeErrorMean, float64* peakRMSMagnitudeErrorMaximum) = 0;
