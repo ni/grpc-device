@@ -3234,18 +3234,18 @@ namespace nirfmxinstr_grpc {
       float64 timeout = request->timeout();
       int32 records_to_fetch = request->records_to_fetch();
       int64 samples_to_read = request->samples_to_read();
-      auto reserved = nullptr;
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
+      auto reserved = nullptr;
       while (true) {
-        auto status = library_->FetchRawIQData(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, nullptr, 0, &actual_array_size, reserved);
+        auto status = library_->FetchRawIQData(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, nullptr, 0, &actual_array_size, &reserved);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> data(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->FetchRawIQData(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, data.data(), array_size, &actual_array_size, reserved);
+        status = library_->FetchRawIQData(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, data.data(), array_size, &actual_array_size, &reserved);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;

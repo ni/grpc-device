@@ -2831,11 +2831,10 @@ functions = {
                 'type': 'int32'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
-                'pointer': True,
                 'type': 'void'
             }
         ],
