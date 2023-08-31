@@ -1,4 +1,4 @@
-message SessionOrObjectData {
+message SessionOrEventData {
   oneof data {
     nidevice_grpc.Session vi = 1;
     uint32 object_handle = 2;

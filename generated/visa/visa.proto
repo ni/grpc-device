@@ -433,7 +433,7 @@ enum VxiCmdType {
   VXI_CMD_TYPE_VXI_CMD32_RESP32 = 1028;
 }
 
-message SessionOrObjectData {
+message SessionOrEventData {
   oneof data {
     nidevice_grpc.Session vi = 1;
     uint32 object_handle = 2;
@@ -496,7 +496,7 @@ message ClearResponse {
 }
 
 message CloseRequest {
-  SessionOrObjectData object_handle = 1;
+  SessionOrEventData object_handle = 1;
 }
 
 message CloseResponse {
@@ -574,7 +574,7 @@ message FlushResponse {
 }
 
 message GetAttributeRequest {
-  SessionOrObjectData object_handle = 1;
+  SessionOrEventData object_handle = 1;
   VisaAttribute attribute_name = 2;
 }
 
@@ -966,7 +966,7 @@ message ParseRsrcResponse {
   int32 status = 1;
   uint32 interface_type = 2;
   uint32 interface_number = 3;
-  string rsrc_class = 4;
+  string resource_class = 4;
   string expanded_unaliased_name = 5;
   string alias_if_exists = 6;
 }
@@ -1093,7 +1093,7 @@ message ReadSTBResponse {
 }
 
 message SetAttributeRequest {
-  SessionOrObjectData object_handle = 1;
+  SessionOrEventData object_handle = 1;
   VisaAttribute attribute_name = 2;
   AttributeValueData attribute_value = 3;
 }
@@ -1116,7 +1116,7 @@ message SetBufResponse {
 }
 
 message StatusDescRequest {
-  SessionOrObjectData object_handle = 1;
+  SessionOrEventData object_handle = 1;
   sint32 status_value = 2;
 }
 

@@ -58,7 +58,7 @@ class VisaMockLibrary : public visa_grpc::VisaLibraryInterface {
   MOCK_METHOD(ViStatus, Out32, (ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32 value), (override));
   MOCK_METHOD(ViStatus, Out64, (ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64 value), (override));
   MOCK_METHOD(ViStatus, Out8, (ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8 value), (override));
-  MOCK_METHOD(ViStatus, ParseRsrc, (ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar rsrcClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256]), (override));
+  MOCK_METHOD(ViStatus, ParseRsrc, (ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar resourceClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256]), (override));
   MOCK_METHOD(void, Peek16, (ViSession vi, ViAddr address, ViUInt16* value), (override));
   MOCK_METHOD(void, Peek32, (ViSession vi, ViAddr address, ViUInt32* value), (override));
   MOCK_METHOD(void, Peek64, (ViSession vi, ViAddr address, ViUInt64* value), (override));
