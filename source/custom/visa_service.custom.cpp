@@ -284,11 +284,12 @@ static AttributeValueData::DataCase GetAttributeType(ViAttr attributeID)
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto [vi, isSession] = GetObjectValueWithType(request->object_handle(), session_repository_);
-      if (isSession) {
+      auto objectWithType = GetObjectValueWithType(request->object_handle(), session_repository_);
+      if (std::get<bool>(objectWithType)) {
         auto grpc_session = request->object_handle().vi();
         session_repository_->remove_session(grpc_session.name());
       }
+      auto vi = std::get<ViObject>(objectWithType);
       ViStatus status = library_->Close(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViObject(context, status, vi);
@@ -349,7 +350,7 @@ static AttributeValueData::DataCase GetAttributeType(ViAttr attributeID)
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto [vi, isSession] = GetObjectValueWithType(request->object_handle(), session_repository_);
+      auto vi = std::get<ViObject>(GetObjectValueWithType(request->object_handle(), session_repository_));
       ViAttr attributeID = request->attribute_name();
       ViStatus status;
 
@@ -602,7 +603,7 @@ static AttributeValueData::DataCase GetAttributeType(ViAttr attributeID)
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto [vi, isSession] = GetObjectValueWithType(request->object_handle(), session_repository_);
+      auto vi = std::get<ViObject>(GetObjectValueWithType(request->object_handle(), session_repository_));
       ViAttr attributeID = request->attribute_name();
       ViAttrState attribute_value = 0;
       if (request->attribute_value().has_value_bool()) {
@@ -651,7 +652,7 @@ static AttributeValueData::DataCase GetAttributeType(ViAttr attributeID)
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto [vi, isSession] = GetObjectValueWithType(request->object_handle(), session_repository_);
+      auto vi = std::get<ViObject>(GetObjectValueWithType(request->object_handle(), session_repository_));
       ViStatus status_value = request->status_value();
       std::string status_description(256 - 1, '\0');
       auto status = library_->StatusDesc(vi, status_value, (ViChar*)status_description.data());
