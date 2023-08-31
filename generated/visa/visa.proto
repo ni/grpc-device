@@ -970,7 +970,7 @@ message ParseRsrcResponse {
   int32 status = 1;
   uint32 interface_type = 2;
   uint32 interface_number = 3;
-  string rsrc_class = 4;
+  string resource_class = 4;
   string expanded_unaliased_name = 5;
   string alias_if_exists = 6;
 }

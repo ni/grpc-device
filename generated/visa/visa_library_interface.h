@@ -56,7 +56,7 @@ class VisaLibraryInterface {
   virtual ViStatus Out32(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt32 value) = 0;
   virtual ViStatus Out64(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt64 value) = 0;
   virtual ViStatus Out8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt8 value) = 0;
-  virtual ViStatus ParseRsrc(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar rsrcClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256]) = 0;
+  virtual ViStatus ParseRsrc(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar resourceClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256]) = 0;
   virtual void Peek16(ViSession vi, ViAddr address, ViUInt16* value) = 0;
   virtual void Peek32(ViSession vi, ViAddr address, ViUInt32* value) = 0;
   virtual void Peek64(ViSession vi, ViAddr address, ViUInt64* value) = 0;

@@ -435,12 +435,12 @@ ViStatus VisaLibrary::Out8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 o
   return function_pointers_.Out8(vi, addressSpace, offset, value);
 }
 
-ViStatus VisaLibrary::ParseRsrc(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar rsrcClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256])
+ViStatus VisaLibrary::ParseRsrc(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar resourceClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256])
 {
   if (!function_pointers_.ParseRsrc) {
     throw nidevice_grpc::LibraryLoadException("Could not find viParseRsrcEx.");
   }
-  return function_pointers_.ParseRsrc(sessionHandle, resourceName, interfaceType, interfaceNumber, rsrcClass, expandedUnaliasedName, aliasIfExists);
+  return function_pointers_.ParseRsrc(sessionHandle, resourceName, interfaceType, interfaceNumber, resourceClass, expandedUnaliasedName, aliasIfExists);
 }
 
 void VisaLibrary::Peek16(ViSession vi, ViAddr address, ViUInt16* value)

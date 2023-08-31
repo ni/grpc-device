@@ -1128,7 +1128,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'rsrcClass',
+                'name': 'resourceClass',
                 'size': {
                     'mechanism': 'fixed',
                     'value': 256

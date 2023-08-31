@@ -202,9 +202,9 @@ ViStatus Out8(ViSession vi, ViUInt16 addressSpace, ViBusAddress64 offset, ViUInt
   return viOut8Ex(vi, addressSpace, offset, value);
 }
 
-ViStatus ParseRsrc(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar rsrcClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256])
+ViStatus ParseRsrc(ViSession sessionHandle, ViConstRsrc resourceName, ViUInt16* interfaceType, ViUInt16* interfaceNumber, ViChar resourceClass[256], ViChar expandedUnaliasedName[256], ViChar aliasIfExists[256])
 {
-  return viParseRsrcEx(sessionHandle, resourceName, interfaceType, interfaceNumber, rsrcClass, expandedUnaliasedName, aliasIfExists);
+  return viParseRsrcEx(sessionHandle, resourceName, interfaceType, interfaceNumber, resourceClass, expandedUnaliasedName, aliasIfExists);
 }
 
 void Peek16(ViSession vi, ViAddr address, ViUInt16* value)

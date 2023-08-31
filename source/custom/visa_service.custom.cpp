@@ -513,8 +513,8 @@ static AttributeValueData::DataCase GetAttributeType(ViAttr attributeID)
       response->set_interface_number(interface_number);
       std::string resource_class_utf8;
       convert_to_grpc(resource_class, &resource_class_utf8);
-      response->set_rsrc_class(resource_class_utf8);
-      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_rsrc_class()));
+      response->set_resource_class(resource_class_utf8);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_resource_class()));
       std::string expanded_unaliased_name_utf8;
       convert_to_grpc(expanded_unaliased_name, &expanded_unaliased_name_utf8);
       response->set_expanded_unaliased_name(expanded_unaliased_name_utf8);
