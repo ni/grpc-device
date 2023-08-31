@@ -686,6 +686,7 @@ set(system_test_runner_sources
   "source/tests/system/nixnet_can_driver_api_tests.cpp"
   "source/tests/system/nixnet_ethernet_driver_api_tests.cpp"
   "source/tests/system/nixnetsocket_driver_api_tests.cpp"
+  "source/tests/system/visa_session_tests.cpp"
   "source/server/calibration_operations_restricted_service_registrar.cpp"
   "source/server/calibration_operations_restricted_service.cpp"
   "source/server/debug_session_properties_restricted_service_registrar.cpp"
