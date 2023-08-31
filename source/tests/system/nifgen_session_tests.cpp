@@ -17,7 +17,7 @@ const int kInvalidFgenSession = -1074130544;
 const char* kViErrorFgenResourceNotFoundMessage = "Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
 const char* kInvalidFgenSessionMessage = "The session handle is not valid.";
 const char* kTestFgenRsrc = "FakeDevice";
-const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5421; BoardType:PXI";
+const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5433 (2CH); BoardType:PXI";
 const char* kFgenTestSession = "SessionName";
 const char* kTestInvalidFgenRsrc = "";
 
