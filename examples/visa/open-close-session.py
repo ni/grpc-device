@@ -54,8 +54,7 @@ try:
         visa_types.OpenRequest(
             session_name=SESSION_NAME,
             instrument_descriptor=INSTRUMENT_DESCRIPTOR,
-            open_timeout=TIME_OUT,
-            initialization_behavior=INITIALIZATION_BEHAVIOR,
+            open_timeout=TIME_OUT
         )
     )
     vi = open_resp.vi

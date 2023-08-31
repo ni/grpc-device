@@ -47,7 +47,7 @@ try:
 
     # Get information about each resource.
     for resource in find_resources_resp.instrument_descriptor:
-        parse_resp = client.ParseRsrcEx(visa_types.ParseRsrcExRequest(resource_name=resource))
+        parse_resp = client.ParseRsrc(visa_types.ParseRsrcRequest(resource_name=resource))
         print(
             f"Resource: {parse_resp.expanded_unaliased_name}, Class: {parse_resp.resource_class}, Alias: {parse_resp.alias_if_exists}"
         )
