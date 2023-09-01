@@ -25,14 +25,16 @@ class VisaLibrary : public visa_grpc::VisaLibraryInterface {
   ViStatus AssertTrigger(ViSession vi, ViUInt16 protocol);
   ViStatus AssertUtilSignal(ViSession vi, ViUInt16 mode);
   ViStatus Clear(ViSession vi);
-  ViStatus Close(ViObject objectHandle);
+  ViStatus Close(ViSession vi);
+  ViStatus CloseEvent(ViEvent eventHandle);
   ViStatus DisableEvent(ViSession vi, ViEventType eventType, ViUInt16 eventMechanism);
   ViStatus DiscardEvents(ViSession vi, ViEventType eventType, ViUInt16 eventMechanism);
   ViStatus EnableEvent(ViSession vi, ViEventType eventType, ViUInt16 eventMechanism, ViEventFilter filterContext);
   ViStatus FindNext(ViFindList findHandle, ViChar instrumentDescriptor[256]);
   ViStatus FindRsrc(ViSession rsrcManagerHandle, ViConstString expression, ViFindList* findHandle, ViUInt32* returnCount, ViChar instrumentDescriptor[256]);
   ViStatus Flush(ViSession vi, ViUInt16 mask);
-  ViStatus GetAttribute(ViObject objectHandle, ViAttr attributeName, void* attributeValue);
+  ViStatus GetAttribute(ViSession vi, ViAttr attributeName, void* attributeValue);
+  ViStatus GetAttributeEvent(ViEvent eventHandle, ViAttr attributeName, void* attributeValue);
   ViStatus GpibCommand(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCount);
   ViStatus GpibControlATN(ViSession vi, ViUInt16 mode);
   ViStatus GpibControlREN(ViSession vi, ViUInt16 mode);
@@ -75,9 +77,9 @@ class VisaLibrary : public visa_grpc::VisaLibraryInterface {
   ViStatus Read(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCount);
   ViStatus ReadAsync(ViSession vi, ViByte readBuffer[], ViUInt32 count, ViJobId* jobIdentifier);
   ViStatus ReadSTB(ViSession vi, ViUInt16* statusByte);
-  ViStatus SetAttribute(ViObject objectHandle, ViAttr attributeName, ViAttrState attributeValue);
+  ViStatus SetAttribute(ViSession vi, ViAttr attributeName, ViAttrState attributeValue);
   ViStatus SetBuf(ViSession vi, ViUInt16 mask, ViUInt32 bufferSize);
-  ViStatus StatusDesc(ViObject objectHandle, ViStatus statusValue, ViChar statusDescription[256]);
+  ViStatus StatusDesc(ViSession vi, ViStatus statusValue, ViChar statusDescription[256]);
   ViStatus Terminate(ViSession vi, ViUInt16 degree, ViJobId jobIdentifier);
   ViStatus Unlock(ViSession vi);
   ViStatus UnmapAddress(ViSession vi);
@@ -95,6 +97,7 @@ class VisaLibrary : public visa_grpc::VisaLibraryInterface {
   using AssertUtilSignalPtr = decltype(&viAssertUtilSignal);
   using ClearPtr = decltype(&viClear);
   using ClosePtr = decltype(&viClose);
+  using CloseEventPtr = decltype(&viClose);
   using DisableEventPtr = decltype(&viDisableEvent);
   using DiscardEventsPtr = decltype(&viDiscardEvents);
   using EnableEventPtr = decltype(&viEnableEvent);
@@ -102,6 +105,7 @@ class VisaLibrary : public visa_grpc::VisaLibraryInterface {
   using FindRsrcPtr = decltype(&viFindRsrc);
   using FlushPtr = decltype(&viFlush);
   using GetAttributePtr = decltype(&viGetAttribute);
+  using GetAttributeEventPtr = decltype(&viGetAttribute);
   using GpibCommandPtr = decltype(&viGpibCommand);
   using GpibControlATNPtr = decltype(&viGpibControlATN);
   using GpibControlRENPtr = decltype(&viGpibControlREN);
@@ -164,6 +168,7 @@ class VisaLibrary : public visa_grpc::VisaLibraryInterface {
     AssertUtilSignalPtr AssertUtilSignal;
     ClearPtr Clear;
     ClosePtr Close;
+    CloseEventPtr CloseEvent;
     DisableEventPtr DisableEvent;
     DiscardEventsPtr DiscardEvents;
     EnableEventPtr EnableEvent;
@@ -171,6 +176,7 @@ class VisaLibrary : public visa_grpc::VisaLibraryInterface {
     FindRsrcPtr FindRsrc;
     FlushPtr Flush;
     GetAttributePtr GetAttribute;
+    GetAttributeEventPtr GetAttributeEvent;
     GpibCommandPtr GpibCommand;
     GpibControlATNPtr GpibControlATN;
     GpibControlRENPtr GpibControlREN;

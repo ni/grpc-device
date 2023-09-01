@@ -111,17 +111,34 @@ clear(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 CloseResponse
-close(const StubPtr& stub, const SessionOrEventData& object_handle)
+close(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
   ::grpc::ClientContext context;
 
   auto request = CloseRequest{};
-  request.mutable_object_handle()->CopyFrom(object_handle);
+  request.mutable_vi()->CopyFrom(vi);
 
   auto response = CloseResponse{};
 
   raise_if_error(
       stub->Close(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CloseEventResponse
+close_event(const StubPtr& stub, const pb::uint32& event_handle)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloseEventRequest{};
+  request.set_event_handle(event_handle);
+
+  auto response = CloseEventResponse{};
+
+  raise_if_error(
+      stub->CloseEvent(&context, request, &response),
       context);
 
   return response;
@@ -270,18 +287,36 @@ flush(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_varian
 }
 
 GetAttributeResponse
-get_attribute(const StubPtr& stub, const SessionOrEventData& object_handle, const VisaAttribute& attribute_name)
+get_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const VisaAttribute& attribute_name)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeRequest{};
-  request.mutable_object_handle()->CopyFrom(object_handle);
+  request.mutable_vi()->CopyFrom(vi);
   request.set_attribute_name(attribute_name);
 
   auto response = GetAttributeResponse{};
 
   raise_if_error(
       stub->GetAttribute(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeEventResponse
+get_attribute_event(const StubPtr& stub, const pb::uint32& event_handle, const VisaAttribute& attribute_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeEventRequest{};
+  request.set_event_handle(event_handle);
+  request.set_attribute_name(attribute_name);
+
+  auto response = GetAttributeEventResponse{};
+
+  raise_if_error(
+      stub->GetAttributeEvent(&context, request, &response),
       context);
 
   return response;
@@ -1228,12 +1263,12 @@ read_stb(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SetAttributeResponse
-set_attribute(const StubPtr& stub, const SessionOrEventData& object_handle, const VisaAttribute& attribute_name, const AttributeValueData& attribute_value)
+set_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const VisaAttribute& attribute_name, const AttributeValueData& attribute_value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeRequest{};
-  request.mutable_object_handle()->CopyFrom(object_handle);
+  request.mutable_vi()->CopyFrom(vi);
   request.set_attribute_name(attribute_name);
   request.mutable_attribute_value()->CopyFrom(attribute_value);
 
@@ -1273,12 +1308,12 @@ set_buf(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_vari
 }
 
 StatusDescResponse
-status_desc(const StubPtr& stub, const SessionOrEventData& object_handle, const pb::int32& status_value)
+status_desc(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& status_value)
 {
   ::grpc::ClientContext context;
 
   auto request = StatusDescRequest{};
-  request.mutable_object_handle()->CopyFrom(object_handle);
+  request.mutable_vi()->CopyFrom(vi);
   request.set_status_value(status_value);
 
   auto response = StatusDescResponse{};

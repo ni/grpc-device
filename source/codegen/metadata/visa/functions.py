@@ -63,13 +63,23 @@ functions = {
         'returns': 'ViStatus'
     },
     'Close': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SessionOrEventData',
-                'name': 'objectHandle',
-                'type': 'ViObject'
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CloseEvent': {
+        'cname': 'viClose',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'uint32',
+                'name': 'eventHandle',
+                'type': 'ViEvent'
             }
         ],
         'returns': 'ViStatus'
@@ -229,9 +239,32 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SessionOrEventData',
-                'name': 'objectHandle',
-                'type': 'ViObject'
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeName',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'AttributeValueData',
+                'name': 'attributeValue',
+                'type': 'void'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeEvent': {
+        'cname': 'viGetAttribute',
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'uint32',
+                'name': 'eventHandle',
+                'type': 'ViEvent'
             },
             {
                 'direction': 'in',
@@ -1446,9 +1479,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SessionOrEventData',
-                'name': 'objectHandle',
-                'type': 'ViObject'
+                'name': 'vi',
+                'type': 'ViSession'
             },
             {
                 'direction': 'in',
@@ -1486,13 +1518,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'StatusDesc': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SessionOrEventData',
-                'name': 'objectHandle',
-                'type': 'ViObject'
+                'name': 'vi',
+                'type': 'ViSession'
             },
             {
                 'direction': 'in',

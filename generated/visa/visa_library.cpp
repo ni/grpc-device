@@ -32,6 +32,7 @@ VisaLibrary::VisaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> 
   function_pointers_.AssertUtilSignal = reinterpret_cast<AssertUtilSignalPtr>(shared_library_->get_function_pointer("viAssertUtilSignal"));
   function_pointers_.Clear = reinterpret_cast<ClearPtr>(shared_library_->get_function_pointer("viClear"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("viClose"));
+  function_pointers_.CloseEvent = reinterpret_cast<CloseEventPtr>(shared_library_->get_function_pointer("viClose"));
   function_pointers_.DisableEvent = reinterpret_cast<DisableEventPtr>(shared_library_->get_function_pointer("viDisableEvent"));
   function_pointers_.DiscardEvents = reinterpret_cast<DiscardEventsPtr>(shared_library_->get_function_pointer("viDiscardEvents"));
   function_pointers_.EnableEvent = reinterpret_cast<EnableEventPtr>(shared_library_->get_function_pointer("viEnableEvent"));
@@ -39,6 +40,7 @@ VisaLibrary::VisaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> 
   function_pointers_.FindRsrc = reinterpret_cast<FindRsrcPtr>(shared_library_->get_function_pointer("viFindRsrc"));
   function_pointers_.Flush = reinterpret_cast<FlushPtr>(shared_library_->get_function_pointer("viFlush"));
   function_pointers_.GetAttribute = reinterpret_cast<GetAttributePtr>(shared_library_->get_function_pointer("viGetAttribute"));
+  function_pointers_.GetAttributeEvent = reinterpret_cast<GetAttributeEventPtr>(shared_library_->get_function_pointer("viGetAttribute"));
   function_pointers_.GpibCommand = reinterpret_cast<GpibCommandPtr>(shared_library_->get_function_pointer("viGpibCommand"));
   function_pointers_.GpibControlATN = reinterpret_cast<GpibControlATNPtr>(shared_library_->get_function_pointer("viGpibControlATN"));
   function_pointers_.GpibControlREN = reinterpret_cast<GpibControlRENPtr>(shared_library_->get_function_pointer("viGpibControlREN"));
@@ -139,12 +141,20 @@ ViStatus VisaLibrary::Clear(ViSession vi)
   return function_pointers_.Clear(vi);
 }
 
-ViStatus VisaLibrary::Close(ViObject objectHandle)
+ViStatus VisaLibrary::Close(ViSession vi)
 {
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find viClose.");
   }
-  return function_pointers_.Close(objectHandle);
+  return function_pointers_.Close(vi);
+}
+
+ViStatus VisaLibrary::CloseEvent(ViEvent eventHandle)
+{
+  if (!function_pointers_.CloseEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find viClose.");
+  }
+  return function_pointers_.CloseEvent(eventHandle);
 }
 
 ViStatus VisaLibrary::DisableEvent(ViSession vi, ViEventType eventType, ViUInt16 eventMechanism)
@@ -195,12 +205,20 @@ ViStatus VisaLibrary::Flush(ViSession vi, ViUInt16 mask)
   return function_pointers_.Flush(vi, mask);
 }
 
-ViStatus VisaLibrary::GetAttribute(ViObject objectHandle, ViAttr attributeName, void* attributeValue)
+ViStatus VisaLibrary::GetAttribute(ViSession vi, ViAttr attributeName, void* attributeValue)
 {
   if (!function_pointers_.GetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find viGetAttribute.");
   }
-  return function_pointers_.GetAttribute(objectHandle, attributeName, attributeValue);
+  return function_pointers_.GetAttribute(vi, attributeName, attributeValue);
+}
+
+ViStatus VisaLibrary::GetAttributeEvent(ViEvent eventHandle, ViAttr attributeName, void* attributeValue)
+{
+  if (!function_pointers_.GetAttributeEvent) {
+    throw nidevice_grpc::LibraryLoadException("Could not find viGetAttribute.");
+  }
+  return function_pointers_.GetAttributeEvent(eventHandle, attributeName, attributeValue);
 }
 
 ViStatus VisaLibrary::GpibCommand(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCount)
@@ -539,12 +557,12 @@ ViStatus VisaLibrary::ReadSTB(ViSession vi, ViUInt16* statusByte)
   return function_pointers_.ReadSTB(vi, statusByte);
 }
 
-ViStatus VisaLibrary::SetAttribute(ViObject objectHandle, ViAttr attributeName, ViAttrState attributeValue)
+ViStatus VisaLibrary::SetAttribute(ViSession vi, ViAttr attributeName, ViAttrState attributeValue)
 {
   if (!function_pointers_.SetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find viSetAttribute.");
   }
-  return function_pointers_.SetAttribute(objectHandle, attributeName, attributeValue);
+  return function_pointers_.SetAttribute(vi, attributeName, attributeValue);
 }
 
 ViStatus VisaLibrary::SetBuf(ViSession vi, ViUInt16 mask, ViUInt32 bufferSize)
@@ -555,12 +573,12 @@ ViStatus VisaLibrary::SetBuf(ViSession vi, ViUInt16 mask, ViUInt32 bufferSize)
   return function_pointers_.SetBuf(vi, mask, bufferSize);
 }
 
-ViStatus VisaLibrary::StatusDesc(ViObject objectHandle, ViStatus statusValue, ViChar statusDescription[256])
+ViStatus VisaLibrary::StatusDesc(ViSession vi, ViStatus statusValue, ViChar statusDescription[256])
 {
   if (!function_pointers_.StatusDesc) {
     throw nidevice_grpc::LibraryLoadException("Could not find viStatusDesc.");
   }
-  return function_pointers_.StatusDesc(objectHandle, statusValue, statusDescription);
+  return function_pointers_.StatusDesc(vi, statusValue, statusDescription);
 }
 
 ViStatus VisaLibrary::Terminate(ViSession vi, ViUInt16 degree, ViJobId jobIdentifier)

@@ -21,12 +21,14 @@ service Visa {
   rpc AssertUtilSignal(AssertUtilSignalRequest) returns (AssertUtilSignalResponse);
   rpc Clear(ClearRequest) returns (ClearResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc CloseEvent(CloseEventRequest) returns (CloseEventResponse);
   rpc DisableEvent(DisableEventRequest) returns (DisableEventResponse);
   rpc DiscardEvents(DiscardEventsRequest) returns (DiscardEventsResponse);
   rpc EnableEvent(EnableEventRequest) returns (EnableEventResponse);
   rpc FindRsrc(FindRsrcRequest) returns (FindRsrcResponse);
   rpc Flush(FlushRequest) returns (FlushResponse);
   rpc GetAttribute(GetAttributeRequest) returns (GetAttributeResponse);
+  rpc GetAttributeEvent(GetAttributeEventRequest) returns (GetAttributeEventResponse);
   rpc GpibCommand(GpibCommandRequest) returns (GpibCommandResponse);
   rpc GpibControlATN(GpibControlATNRequest) returns (GpibControlATNResponse);
   rpc GpibControlREN(GpibControlRENRequest) returns (GpibControlRENResponse);
@@ -433,20 +435,17 @@ enum VxiCmdType {
   VXI_CMD_TYPE_VXI_CMD32_RESP32 = 1028;
 }
 
-message SessionOrEventData {
-  oneof data {
-    nidevice_grpc.Session vi = 1;
-    uint32 object_handle = 2;
-  }
-}
-
 message AttributeValueData {
   oneof data {
-    uint32 value8 = 1;
-    uint32 value16 = 2;
-    uint32 value32 = 3;
-    fixed64 value64 = 4;
-    string valueString = 5;
+    uint32 value_u8 = 1;
+    int32 value_i16 = 2;
+    uint32 value_u16 = 3;
+    int32 value_i32 = 4;
+    uint32 value_u32 = 5;
+    fixed64 value_u64 = 6;
+    bool value_bool = 7;
+    string value_string = 8;
+    bytes value_bytes = 9;
   }
 }
 
@@ -496,10 +495,18 @@ message ClearResponse {
 }
 
 message CloseRequest {
-  SessionOrEventData object_handle = 1;
+  nidevice_grpc.Session vi = 1;
 }
 
 message CloseResponse {
+  int32 status = 1;
+}
+
+message CloseEventRequest {
+  uint32 event_handle = 1;
+}
+
+message CloseEventResponse {
   int32 status = 1;
 }
 
@@ -574,11 +581,21 @@ message FlushResponse {
 }
 
 message GetAttributeRequest {
-  SessionOrEventData object_handle = 1;
+  nidevice_grpc.Session vi = 1;
   VisaAttribute attribute_name = 2;
 }
 
 message GetAttributeResponse {
+  int32 status = 1;
+  AttributeValueData attribute_value = 2;
+}
+
+message GetAttributeEventRequest {
+  uint32 event_handle = 1;
+  VisaAttribute attribute_name = 2;
+}
+
+message GetAttributeEventResponse {
   int32 status = 1;
   AttributeValueData attribute_value = 2;
 }
@@ -1093,7 +1110,7 @@ message ReadSTBResponse {
 }
 
 message SetAttributeRequest {
-  SessionOrEventData object_handle = 1;
+  nidevice_grpc.Session vi = 1;
   VisaAttribute attribute_name = 2;
   AttributeValueData attribute_value = 3;
 }
@@ -1116,7 +1133,7 @@ message SetBufResponse {
 }
 
 message StatusDescRequest {
-  SessionOrEventData object_handle = 1;
+  nidevice_grpc.Session vi = 1;
   sint32 status_value = 2;
 }
 

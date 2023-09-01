@@ -27,9 +27,14 @@ ViStatus Clear(ViSession vi)
   return viClear(vi);
 }
 
-ViStatus Close(ViObject objectHandle)
+ViStatus Close(ViSession vi)
 {
-  return viClose(objectHandle);
+  return viClose(vi);
+}
+
+ViStatus CloseEvent(ViEvent eventHandle)
+{
+  return viClose(eventHandle);
 }
 
 ViStatus DisableEvent(ViSession vi, ViEventType eventType, ViUInt16 eventMechanism)
@@ -57,9 +62,14 @@ ViStatus Flush(ViSession vi, ViUInt16 mask)
   return viFlush(vi, mask);
 }
 
-ViStatus GetAttribute(ViObject objectHandle, ViAttr attributeName, void* attributeValue)
+ViStatus GetAttribute(ViSession vi, ViAttr attributeName, void* attributeValue)
 {
-  return viGetAttribute(objectHandle, attributeName, attributeValue);
+  return viGetAttribute(vi, attributeName, attributeValue);
+}
+
+ViStatus GetAttributeEvent(ViEvent eventHandle, ViAttr attributeName, void* attributeValue)
+{
+  return viGetAttribute(eventHandle, attributeName, attributeValue);
 }
 
 ViStatus GpibCommand(ViSession vi, ViByte buffer[], ViUInt32 count, ViUInt32* returnCount)
@@ -267,9 +277,9 @@ ViStatus ReadSTB(ViSession vi, ViUInt16* statusByte)
   return viReadSTB(vi, statusByte);
 }
 
-ViStatus SetAttribute(ViObject objectHandle, ViAttr attributeName, ViAttrState attributeValue)
+ViStatus SetAttribute(ViSession vi, ViAttr attributeName, ViAttrState attributeValue)
 {
-  return viSetAttribute(objectHandle, attributeName, attributeValue);
+  return viSetAttribute(vi, attributeName, attributeValue);
 }
 
 ViStatus SetBuf(ViSession vi, ViUInt16 mask, ViUInt32 bufferSize)
@@ -277,9 +287,9 @@ ViStatus SetBuf(ViSession vi, ViUInt16 mask, ViUInt32 bufferSize)
   return viSetBuf(vi, mask, bufferSize);
 }
 
-ViStatus StatusDesc(ViObject objectHandle, ViStatus statusValue, ViChar statusDescription[256])
+ViStatus StatusDesc(ViSession vi, ViStatus statusValue, ViChar statusDescription[256])
 {
-  return viStatusDesc(objectHandle, statusValue, statusDescription);
+  return viStatusDesc(vi, statusValue, statusDescription);
 }
 
 ViStatus Terminate(ViSession vi, ViUInt16 degree, ViJobId jobIdentifier)
