@@ -76,6 +76,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 GetSelfCalibrateLastTemperature(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, float64* temperature);
   int32 GetSignalConfigurationNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char signalNames[], int32 signalNamesSize, int32* actualSignalNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize);
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession);
+  int32 InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession);
   int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut);
   int32 InitializeFromNIRFSASessionArray(uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* handleOut);
   int32 IsSelfCalibrateValid(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* selfCalibrateValid, int32* validSteps);
@@ -114,6 +115,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 TimestampFromValues(int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp);
   int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds);
   int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout);
+  int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved);
 
  private:
   using BuildCalibrationPlaneStringPtr = decltype(&RFmxInstr_BuildCalibrationPlaneString);
@@ -171,6 +173,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using GetSelfCalibrateLastTemperaturePtr = decltype(&RFmxInstr_GetSelfCalibrateLastTemperature);
   using GetSignalConfigurationNamesPtr = decltype(&RFmxInstr_GetSignalConfigurationNames);
   using InitializePtr = decltype(&RFmxInstr_Initialize);
+  using InitializeWithChannelPtr = decltype(&RFmxInstr_InitializeWithChannel);
   using InitializeFromNIRFSASessionPtr = decltype(&RFmxInstr_InitializeFromNIRFSASession);
   using InitializeFromNIRFSASessionArrayPtr = decltype(&RFmxInstr_InitializeFromNIRFSASessionArray);
   using IsSelfCalibrateValidPtr = decltype(&RFmxInstr_IsSelfCalibrateValid);
@@ -209,6 +212,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using TimestampFromValuesPtr = decltype(&RFmxInstr_TimestampFromValues);
   using ValuesFromTimestampPtr = decltype(&RFmxInstr_ValuesFromTimestamp);
   using WaitForAcquisitionCompletePtr = decltype(&RFmxInstr_WaitForAcquisitionComplete);
+  using FetchRawIQDataPtr = decltype(&RFmxInstr_FetchRawIQData);
 
   typedef struct FunctionPointers {
     BuildCalibrationPlaneStringPtr BuildCalibrationPlaneString;
@@ -266,6 +270,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     GetSelfCalibrateLastTemperaturePtr GetSelfCalibrateLastTemperature;
     GetSignalConfigurationNamesPtr GetSignalConfigurationNames;
     InitializePtr Initialize;
+    InitializeWithChannelPtr InitializeWithChannel;
     InitializeFromNIRFSASessionPtr InitializeFromNIRFSASession;
     InitializeFromNIRFSASessionArrayPtr InitializeFromNIRFSASessionArray;
     IsSelfCalibrateValidPtr IsSelfCalibrateValid;
@@ -304,6 +309,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     TimestampFromValuesPtr TimestampFromValues;
     ValuesFromTimestampPtr ValuesFromTimestamp;
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
+    FetchRawIQDataPtr FetchRawIQData;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

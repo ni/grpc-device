@@ -55,6 +55,7 @@ class NiRFmxInstrRestrictedMockLibrary : public nirfmxinstr_restricted_grpc::NiR
   MOCK_METHOD(int32, SetIOTraceStatus, (niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus), (override));
   MOCK_METHOD(int32, UnregisterSpecialClientSnapshotInterest, (char resourceName[]), (override));
   MOCK_METHOD(int32, GetSFPSessionAccessEnabled, (char optionString[], int32* isSFPSessionAccessEnabled), (override));
+  MOCK_METHOD(int32, CreateDefaultSignalConfiguration, (niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID), (override));
 };
 
 }  // namespace unit

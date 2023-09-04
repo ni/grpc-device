@@ -77,6 +77,7 @@ GetSelfCalibrateLastDateAndTimeResponse get_self_calibrate_last_date_and_time(co
 GetSelfCalibrateLastTemperatureResponse get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step);
 GetSignalConfigurationNamesResponse get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter);
 InitializeResponse initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+InitializeWithChannelResponse initialize_with_channel(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const std::string& channel_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitializeFromNIRFSASessionArrayResponse initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& nirfsa_sessions, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 IsSelfCalibrateValidResponse is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
@@ -115,6 +116,7 @@ SetAttributeU8ArrayResponse set_attribute_u8_array(const StubPtr& stub, const ni
 TimestampFromValuesResponse timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since_1970, const double& fractional_seconds);
 ValuesFromTimestampResponse values_from_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& timestamp);
 WaitForAcquisitionCompleteResponse wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout);
+FetchRawIQDataResponse fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read);
 
 } // namespace nirfmxinstr_grpc::experimental::client
 

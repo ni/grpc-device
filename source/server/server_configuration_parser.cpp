@@ -26,21 +26,23 @@ static const char* kMaxMessageSizeKey = "max_message_size";
 static const char* kFeatureTogglesKey = "feature_toggles";
 static const char* kCodeReadinessKey = "code_readiness";
 #if defined(_MSC_VER)
-static const char* kPathDelimitter = "\\";
+static const char* kPathDelimiter = "\\";
 #else
-static const char* kPathDelimitter = "/";
+static const char* kPathDelimiter = "/";
 #endif
 
 ServerConfigurationParser::ServerConfigurationParser()
-    : config_file_(load(get_exe_path() + kDefaultFilename)), certs_directory_(get_exe_path() + kCertsFolderName)
+    : config_file_path_(get_exe_path() + kDefaultFilename),
+      certs_directory_(get_exe_path() + kCertsFolderName)
 {
+   load_config_file();
 }
 
 ServerConfigurationParser::ServerConfigurationParser(const std::string& config_file_path)
     : config_file_path_(config_file_path),
-      config_file_(load(config_file_path)),
       certs_directory_(get_certs_directory(config_file_path))
 {
+   load_config_file();
 }
 
 ServerConfigurationParser::ServerConfigurationParser(const nlohmann::json& config_file)
@@ -49,7 +51,7 @@ ServerConfigurationParser::ServerConfigurationParser(const nlohmann::json& confi
 }
 
 // Returns the absolute path to the folder that contains the running executable.
-// The path includes the trailing platform-dependent delimitter (i.e. /path/to/exe/folder/
+// The path includes the trailing platform-dependent delimiter (i.e. /path/to/exe/folder/
 // or C:\path\to\exe\folder\) and does not contain the executable name. This function is
 // public for test use.
 std::string ServerConfigurationParser::get_exe_path()
@@ -65,28 +67,28 @@ std::string ServerConfigurationParser::get_exe_path()
     throw InvalidExePathException();
   }
   std::string exe_filename(filename, path_length);
-  return exe_filename.erase(exe_filename.find_last_of(kPathDelimitter) + 1);
+  return exe_filename.erase(exe_filename.find_last_of(kPathDelimiter) + 1);
 }
 
 std::string ServerConfigurationParser::get_certs_directory(const std::string& config_file_path)
 {
   std::string directory_path(config_file_path);
-  size_t end_of_path_index = directory_path.find_last_of(kPathDelimitter);
+  size_t end_of_path_index = directory_path.find_last_of(kPathDelimiter);
   return end_of_path_index != std::string::npos
       ? directory_path.erase(end_of_path_index + 1) + kCertsFolderName
       : kCertsFolderName;
 }
 
-nlohmann::json ServerConfigurationParser::load(const std::string& config_file_path)
+void ServerConfigurationParser::load_config_file()
 {
-  std::ifstream input_stream(config_file_path);
+  std::ifstream input_stream(config_file_path_);
 
   if (!input_stream) {
-    throw ConfigFileNotFoundException(config_file_path);
+    throw ConfigFileNotFoundException(config_file_path_);
   }
 
   try {
-    return nlohmann::json::parse(input_stream);
+    config_file_ = nlohmann::json::parse(input_stream);
   }
   catch (const nlohmann::json::parse_error& ex) {
     throw MalformedJsonException(ex.what());
@@ -102,19 +104,19 @@ std::string ServerConfigurationParser::parse_address() const
 std::string ServerConfigurationParser::parse_server_cert() const
 {
   auto file_name = parse_key_from_security_section(kServerCertJsonKey);
-  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimiter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_server_key() const
 {
   auto file_name = parse_key_from_security_section(kServerKeyJsonKey);
-  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimiter + file_name);
 }
 
 std::string ServerConfigurationParser::parse_root_cert() const
 {
   auto file_name = parse_key_from_security_section(kRootCertJsonKey);
-  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimitter + file_name);
+  return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimiter + file_name);
 }
 
 int ServerConfigurationParser::parse_max_message_size() const

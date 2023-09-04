@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXINSTR-RESTRICTED API metadata version 21.0.0
+// This file is generated from NI-RFMXINSTR-RESTRICTED API metadata version 23.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXINSTR-RESTRICTED Metadata
 //---------------------------------------------------------------------
@@ -51,6 +51,7 @@ service NiRFmxInstrRestricted {
   rpc SetIOTraceStatus(SetIOTraceStatusRequest) returns (SetIOTraceStatusResponse);
   rpc UnregisterSpecialClientSnapshotInterest(UnregisterSpecialClientSnapshotInterestRequest) returns (UnregisterSpecialClientSnapshotInterestResponse);
   rpc GetSFPSessionAccessEnabled(GetSFPSessionAccessEnabledRequest) returns (GetSFPSessionAccessEnabledResponse);
+  rpc CreateDefaultSignalConfiguration(CreateDefaultSignalConfigurationRequest) returns (CreateDefaultSignalConfigurationResponse);
 }
 
 message ConvertForPowerUnitsUtilityRequest {
@@ -423,5 +424,15 @@ message GetSFPSessionAccessEnabledRequest {
 message GetSFPSessionAccessEnabledResponse {
   int32 status = 1;
   int32 is_sfp_session_access_enabled = 2;
+}
+
+message CreateDefaultSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+  int32 personality_id = 3;
+}
+
+message CreateDefaultSignalConfigurationResponse {
+  int32 status = 1;
 }
 
