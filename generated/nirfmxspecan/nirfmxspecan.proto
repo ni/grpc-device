@@ -5620,8 +5620,8 @@ message IMFetchIntermodMeasurementRequest {
 message IMFetchIntermodMeasurementResponse {
   int32 status = 1;
   int32 intermod_order = 2;
-  double lower_intermod_absolute_power = 3;
-  double upper_intermod_absolute_power = 4;
+  double lower_intermod_power = 3;
+  double upper_intermod_power = 4;
 }
 
 message IMFetchIntermodMeasurementArrayRequest {
@@ -5633,8 +5633,8 @@ message IMFetchIntermodMeasurementArrayRequest {
 message IMFetchIntermodMeasurementArrayResponse {
   int32 status = 1;
   repeated int32 intermod_order = 2;
-  repeated double lower_intermod_absolute_power = 3;
-  repeated double upper_intermod_absolute_power = 4;
+  repeated double lower_intermod_power = 3;
+  repeated double upper_intermod_power = 4;
   int32 actual_array_size = 5;
 }
 

@@ -1097,14 +1097,14 @@ int32 IMFetchInterceptPowerArray(niRFmxInstrHandle instrumentHandle, char select
   return RFmxSpecAn_IMFetchInterceptPowerArray(instrumentHandle, selectorString, timeout, intermodOrder, worstCaseOutputInterceptPower, lowerOutputInterceptPower, upperOutputInterceptPower, arraySize, actualArraySize);
 }
 
-int32 IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodAbsolutePower, float64* upperIntermodAbsolutePower)
+int32 IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodPower, float64* upperIntermodPower)
 {
-  return RFmxSpecAn_IMFetchIntermodMeasurement(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodAbsolutePower, upperIntermodAbsolutePower);
+  return RFmxSpecAn_IMFetchIntermodMeasurement(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodPower, upperIntermodPower);
 }
 
-int32 IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodAbsolutePower[], float64 upperIntermodAbsolutePower[], int32 arraySize, int32* actualArraySize)
+int32 IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodPower[], float64 upperIntermodPower[], int32 arraySize, int32* actualArraySize)
 {
-  return RFmxSpecAn_IMFetchIntermodMeasurementArray(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodAbsolutePower, upperIntermodAbsolutePower, arraySize, actualArraySize);
+  return RFmxSpecAn_IMFetchIntermodMeasurementArray(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodPower, upperIntermodPower, arraySize, actualArraySize);
 }
 
 int32 IMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 spectrumIndex, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)

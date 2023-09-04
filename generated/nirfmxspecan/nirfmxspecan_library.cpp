@@ -2208,20 +2208,20 @@ int32 NiRFmxSpecAnLibrary::IMFetchInterceptPowerArray(niRFmxInstrHandle instrume
   return function_pointers_.IMFetchInterceptPowerArray(instrumentHandle, selectorString, timeout, intermodOrder, worstCaseOutputInterceptPower, lowerOutputInterceptPower, upperOutputInterceptPower, arraySize, actualArraySize);
 }
 
-int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodAbsolutePower, float64* upperIntermodAbsolutePower)
+int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* intermodOrder, float64* lowerIntermodPower, float64* upperIntermodPower)
 {
   if (!function_pointers_.IMFetchIntermodMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchIntermodMeasurement.");
   }
-  return function_pointers_.IMFetchIntermodMeasurement(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodAbsolutePower, upperIntermodAbsolutePower);
+  return function_pointers_.IMFetchIntermodMeasurement(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodPower, upperIntermodPower);
 }
 
-int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodAbsolutePower[], float64 upperIntermodAbsolutePower[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxSpecAnLibrary::IMFetchIntermodMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 intermodOrder[], float64 lowerIntermodPower[], float64 upperIntermodPower[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.IMFetchIntermodMeasurementArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IMFetchIntermodMeasurementArray.");
   }
-  return function_pointers_.IMFetchIntermodMeasurementArray(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodAbsolutePower, upperIntermodAbsolutePower, arraySize, actualArraySize);
+  return function_pointers_.IMFetchIntermodMeasurementArray(instrumentHandle, selectorString, timeout, intermodOrder, lowerIntermodPower, upperIntermodPower, arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::IMFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 spectrumIndex, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)

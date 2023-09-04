@@ -7440,12 +7440,12 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'lowerIntermodAbsolutePower',
+                'name': 'lowerIntermodPower',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'name': 'upperIntermodAbsolutePower',
+                'name': 'upperIntermodPower',
                 'type': 'float64'
             }
         ],
@@ -7481,7 +7481,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'lowerIntermodAbsolutePower',
+                'name': 'lowerIntermodPower',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',
@@ -7491,7 +7491,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'upperIntermodAbsolutePower',
+                'name': 'upperIntermodPower',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',
