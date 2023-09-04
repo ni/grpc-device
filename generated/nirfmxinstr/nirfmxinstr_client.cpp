@@ -1919,5 +1919,26 @@ wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session&
   return response;
 }
 
+FetchRawIQDataResponse
+fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchRawIQDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+  request.set_records_to_fetch(records_to_fetch);
+  request.set_samples_to_read(samples_to_read);
+
+  auto response = FetchRawIQDataResponse{};
+
+  raise_if_error(
+      stub->FetchRawIQData(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nirfmxinstr_grpc::experimental::client

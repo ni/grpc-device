@@ -65,6 +65,7 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidev
   function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_->get_function_pointer("RFmxInstr_SetIOTraceStatus"));
   function_pointers_.UnregisterSpecialClientSnapshotInterest = reinterpret_cast<UnregisterSpecialClientSnapshotInterestPtr>(shared_library_->get_function_pointer("RFmxInstr_UnregisterSpecialClientSnapshotInterest"));
   function_pointers_.GetSFPSessionAccessEnabled = reinterpret_cast<GetSFPSessionAccessEnabledPtr>(shared_library_->get_function_pointer("RFmxInstr_GetSFPSessionAccessEnabled"));
+  function_pointers_.CreateDefaultSignalConfiguration = reinterpret_cast<CreateDefaultSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxInstr_CreateDefaultSignalConfiguration"));
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -380,6 +381,14 @@ int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAccessEnabled(char optionString
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAccessEnabled.");
   }
   return function_pointers_.GetSFPSessionAccessEnabled(optionString, isSFPSessionAccessEnabled);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::CreateDefaultSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID)
+{
+  if (!function_pointers_.CreateDefaultSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CreateDefaultSignalConfiguration.");
+  }
+  return function_pointers_.CreateDefaultSignalConfiguration(instrumentHandle, signalName, personalityID);
 }
 
 }  // namespace nirfmxinstr_restricted_grpc

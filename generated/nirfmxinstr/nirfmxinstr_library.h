@@ -115,6 +115,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 TimestampFromValues(int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp);
   int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds);
   int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout);
+  int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved);
 
  private:
   using BuildCalibrationPlaneStringPtr = decltype(&RFmxInstr_BuildCalibrationPlaneString);
@@ -211,6 +212,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using TimestampFromValuesPtr = decltype(&RFmxInstr_TimestampFromValues);
   using ValuesFromTimestampPtr = decltype(&RFmxInstr_ValuesFromTimestamp);
   using WaitForAcquisitionCompletePtr = decltype(&RFmxInstr_WaitForAcquisitionComplete);
+  using FetchRawIQDataPtr = decltype(&RFmxInstr_FetchRawIQData);
 
   typedef struct FunctionPointers {
     BuildCalibrationPlaneStringPtr BuildCalibrationPlaneString;
@@ -307,6 +309,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     TimestampFromValuesPtr TimestampFromValues;
     ValuesFromTimestampPtr ValuesFromTimestamp;
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
+    FetchRawIQDataPtr FetchRawIQData;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

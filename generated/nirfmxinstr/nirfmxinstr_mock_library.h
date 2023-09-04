@@ -111,6 +111,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, TimestampFromValues, (int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp), (override));
   MOCK_METHOD(int32, ValuesFromTimestamp, (CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds), (override));
   MOCK_METHOD(int32, WaitForAcquisitionComplete, (niRFmxInstrHandle instrumentHandle, float64 timeout), (override));
+  MOCK_METHOD(int32, FetchRawIQData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved), (override));
 };
 
 }  // namespace unit

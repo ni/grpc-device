@@ -59,6 +59,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
   int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]);
   int32 GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled);
+  int32 CreateDefaultSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID);
 
  private:
   using ConvertForPowerUnitsUtilityPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut);
@@ -99,6 +100,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using SetIOTraceStatusPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
   using UnregisterSpecialClientSnapshotInterestPtr = int32 (*)(char resourceName[]);
   using GetSFPSessionAccessEnabledPtr = int32 (*)(char optionString[], int32* isSFPSessionAccessEnabled);
+  using CreateDefaultSignalConfigurationPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID);
 
   typedef struct FunctionPointers {
     ConvertForPowerUnitsUtilityPtr ConvertForPowerUnitsUtility;
@@ -139,6 +141,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     SetIOTraceStatusPtr SetIOTraceStatus;
     UnregisterSpecialClientSnapshotInterestPtr UnregisterSpecialClientSnapshotInterest;
     GetSFPSessionAccessEnabledPtr GetSFPSessionAccessEnabled;
+    CreateDefaultSignalConfigurationPtr CreateDefaultSignalConfiguration;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

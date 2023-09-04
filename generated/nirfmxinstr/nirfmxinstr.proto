@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXINSTR API metadata version 22.5.0
+// This file is generated from NI-RFMXINSTR API metadata version 23.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXINSTR Metadata
 //---------------------------------------------------------------------
@@ -112,6 +112,7 @@ service NiRFmxInstr {
   rpc TimestampFromValues(TimestampFromValuesRequest) returns (TimestampFromValuesResponse);
   rpc ValuesFromTimestamp(ValuesFromTimestampRequest) returns (ValuesFromTimestampResponse);
   rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
+  rpc FetchRawIQData(FetchRawIQDataRequest) returns (FetchRawIQDataResponse);
 }
 
 enum NiRFmxInstrAttribute {
@@ -211,6 +212,7 @@ enum NiRFmxInstrAttribute {
   NIRFMXINSTR_ATTRIBUTE_SELF_CALIBRATION_VALIDITY_CHECK_TIME_INTERVAL = 118;
   NIRFMXINSTR_ATTRIBUTE_TEMPERATURE_READ_INTERVAL = 119;
   NIRFMXINSTR_ATTRIBUTE_THERMAL_CORRECTION_TEMPERATURE_RESOLUTION = 120;
+  NIRFMXINSTR_ATTRIBUTE_NUMBER_OF_RAW_IQ_RECORDS = 128;
 }
 
 enum ExportSignalSource {
@@ -1505,5 +1507,21 @@ message WaitForAcquisitionCompleteRequest {
 
 message WaitForAcquisitionCompleteResponse {
   int32 status = 1;
+}
+
+message FetchRawIQDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 records_to_fetch = 4;
+  int64 samples_to_read = 5;
+}
+
+message FetchRawIQDataResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 data = 4;
+  int32 actual_array_size = 5;
 }
 
