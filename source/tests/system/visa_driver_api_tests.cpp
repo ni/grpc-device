@@ -7,6 +7,7 @@ namespace tests {
 namespace system {
 
 namespace visa = visa_grpc;
+namespace client = visa_grpc::experimental::client;
 
 class VisaDriverApiTest : public ::testing::Test {
  protected:
@@ -37,10 +38,13 @@ class VisaDriverApiTest : public ::testing::Test {
     return visa_stub_;
   }
 
-  std::string GetSessionName()
+  nidevice_grpc::Session GetNamedSession()
   {
-    return driver_session_->name();
+    nidevice_grpc::Session vi;
+    vi.set_name(driver_session_->name());
+    return vi;
   }
+
 
   void initialize_driver_session()
   {
@@ -52,7 +56,7 @@ class VisaDriverApiTest : public ::testing::Test {
     request.set_session_name("SessionName");
     request.set_open_timeout(VI_TMO_IMMEDIATE);
     ::grpc::Status status = GetStub()->Open(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    client::raise_if_error(status, context);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
     EXPECT_TRUE(status.ok());
@@ -64,51 +68,29 @@ class VisaDriverApiTest : public ::testing::Test {
     if (!driver_session_) {
       return;
     }
-    ::grpc::ClientContext context;
-    visa::CloseRequest request;
-    request.mutable_vi()->set_name(driver_session_->name());
-    visa::CloseResponse response;
-    ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-    EXPECT_TRUE(status.ok());
+    auto response = client::close(GetStub(), GetNamedSession());
     EXPECT_EQ(VI_SUCCESS, response.status());
   }
 
   void set_bool_attribute(visa::VisaAttribute attribute, bool value)
   {
-    ::grpc::ClientContext context;
-    visa::SetAttributeRequest request;
-    request.mutable_vi()->set_name(GetSessionName());
-    request.set_attribute_name(attribute);
-    request.mutable_attribute_value()->set_value_bool(value);
-    visa::SetAttributeResponse response;
-    ::grpc::Status status = GetStub()->SetAttribute(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    visa_grpc::AttributeValueData data;
+    data.set_value_bool(value);
+    auto response = client::set_attribute(GetStub(), GetNamedSession(), attribute, data);
+    EXPECT_EQ(VI_SUCCESS, response.status());
   }
 
   void set_uint32_attribute(visa::VisaAttribute attribute, uint32_t value)
   {
-    ::grpc::ClientContext context;
-    visa::SetAttributeRequest request;
-    request.mutable_vi()->set_name(GetSessionName());
-    request.set_attribute_name(attribute);
-    request.mutable_attribute_value()->set_value_u32(value);
-    visa::SetAttributeResponse response;
-    ::grpc::Status status = GetStub()->SetAttribute(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    visa_grpc::AttributeValueData data;
+    data.set_value_u32(value);
+    auto response = client::set_attribute(GetStub(), GetNamedSession(), attribute, data);
+    EXPECT_EQ(VI_SUCCESS, response.status());
   }
 
   bool get_bool_attribute(visa::VisaAttribute attribute)
   {
-    ::grpc::ClientContext context;
-    visa::GetAttributeRequest request;
-    request.mutable_vi()->set_name(GetSessionName());
-    request.set_attribute_name(attribute);
-    visa::GetAttributeResponse response;
-    ::grpc::Status status = GetStub()->GetAttribute(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
-
-    EXPECT_TRUE(status.ok());
+    auto response = client::get_attribute(GetStub(), GetNamedSession(), attribute);
     EXPECT_EQ(VI_SUCCESS, response.status());
     EXPECT_TRUE(response.has_attribute_value());
     EXPECT_TRUE(response.attribute_value().has_value_bool());
@@ -117,15 +99,7 @@ class VisaDriverApiTest : public ::testing::Test {
 
   int32 get_uint32_attribute(visa::VisaAttribute attribute)
   {
-    ::grpc::ClientContext context;
-    visa::GetAttributeRequest request;
-    request.mutable_vi()->set_name(GetSessionName());
-    request.set_attribute_name(attribute);
-    visa::GetAttributeResponse response;
-    ::grpc::Status status = GetStub()->GetAttribute(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
-
-    EXPECT_TRUE(status.ok());
+    auto response = client::get_attribute(GetStub(), GetNamedSession(), attribute);
     EXPECT_EQ(VI_SUCCESS, response.status());
     EXPECT_TRUE(response.has_attribute_value());
     EXPECT_TRUE(response.attribute_value().has_value_u32());
@@ -134,15 +108,7 @@ class VisaDriverApiTest : public ::testing::Test {
 
   std::string get_string_attribute(visa::VisaAttribute attribute)
   {
-    ::grpc::ClientContext context;
-    visa::GetAttributeRequest request;
-    request.mutable_vi()->set_name(GetSessionName());
-    request.set_attribute_name(attribute);
-    visa::GetAttributeResponse response;
-    ::grpc::Status status = GetStub()->GetAttribute(&context, request, &response);
-    nidevice_grpc::experimental::client::raise_if_error(status, context);
-
-    EXPECT_TRUE(status.ok());
+    auto response = client::get_attribute(GetStub(), GetNamedSession(), attribute);
     EXPECT_EQ(VI_SUCCESS, response.status());
     EXPECT_TRUE(response.has_attribute_value());
     EXPECT_TRUE(response.attribute_value().has_value_string());
