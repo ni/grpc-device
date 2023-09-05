@@ -7,7 +7,6 @@ import metadata_mutation
 import metadata_validation
 from mako.lookup import TemplateLookup  # type: ignore
 from mako.template import Template  # type: ignore
-from pathlib import Path
 from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
 
@@ -51,7 +50,9 @@ def _generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     if "custom_header" in metadata["config"]:
         custom_mako_full_path = os.path.join(metadata_dir, "custom_header.mako")
         template = Template(filename=str(custom_mako_full_path), lookup=lookup)
-        _generate_service_file_with_mako(metadata, template, metadata["config"]["custom_header"], gen_dir)
+        _generate_service_file_with_mako(
+            metadata, template, metadata["config"]["custom_header"], gen_dir
+        )
 
 
 if __name__ == "__main__":
