@@ -6,18 +6,23 @@ import os
 import metadata_mutation
 import metadata_validation
 from mako.lookup import TemplateLookup  # type: ignore
+from mako.template import Template  # type: ignore
+from pathlib import Path
 from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
 
-def _generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
+def _generate_service_file_with_mako(metadata, template, generated_file_suffix, gen_dir):
     module_name = metadata["config"]["module_name"]
     output_dir = os.path.join(gen_dir, module_name)
     file_name = module_name + generated_file_suffix
     output_file_path = os.path.join(output_dir, file_name)
-
     os.makedirs(output_dir, exist_ok=True)
-    template = instantiate_mako_template(template_file_name)
     write_if_changed(output_file_path, template.render(data=metadata))
+
+
+def _generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
+    template = instantiate_mako_template(template_file_name)
+    _generate_service_file_with_mako(metadata, template, generated_file_suffix, gen_dir)
 
 
 def _generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
@@ -43,6 +48,10 @@ def _generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     _generate_service_file(metadata, "client.h.mako", "_client.h", gen_dir)
     _generate_service_file(metadata, "client.cpp.mako", "_client.cpp", gen_dir)
     _generate_service_file(metadata, "compilation_test.cpp.mako", "_compilation_test.cpp", gen_dir)
+    if "custom_header" in metadata["config"]:
+        custom_mako_full_path = os.path.join(metadata_dir, "custom_header.mako")
+        template = Template(filename=str(custom_mako_full_path), lookup=lookup)
+        _generate_service_file_with_mako(metadata, template, metadata["config"]["custom_header"], gen_dir)
 
 
 if __name__ == "__main__":
