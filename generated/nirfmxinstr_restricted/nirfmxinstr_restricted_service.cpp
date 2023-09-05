@@ -1092,6 +1092,31 @@ namespace nirfmxinstr_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::CreateDefaultSignalConfiguration(::grpc::ServerContext* context, const CreateDefaultSignalConfigurationRequest* request, CreateDefaultSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      int32 personality_id = request->personality_id();
+      auto status = library_->CreateDefaultSignalConfiguration(instrument, signal_name, personality_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiRFmxInstrRestrictedFeatureToggles::NiRFmxInstrRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

@@ -53,6 +53,7 @@ class NiRFmxInstrRestrictedLibraryInterface {
   virtual int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus) = 0;
   virtual int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]) = 0;
   virtual int32 GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled) = 0;
+  virtual int32 CreateDefaultSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID) = 0;
 };
 
 }  // namespace nirfmxinstr_restricted_grpc

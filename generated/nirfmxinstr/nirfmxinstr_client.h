@@ -116,6 +116,7 @@ SetAttributeU8ArrayResponse set_attribute_u8_array(const StubPtr& stub, const ni
 TimestampFromValuesResponse timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since_1970, const double& fractional_seconds);
 ValuesFromTimestampResponse values_from_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& timestamp);
 WaitForAcquisitionCompleteResponse wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout);
+FetchRawIQDataResponse fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read);
 
 } // namespace nirfmxinstr_grpc::experimental::client
 
