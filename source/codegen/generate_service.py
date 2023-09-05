@@ -47,11 +47,11 @@ def _generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     _generate_service_file(metadata, "client.h.mako", "_client.h", gen_dir)
     _generate_service_file(metadata, "client.cpp.mako", "_client.cpp", gen_dir)
     _generate_service_file(metadata, "compilation_test.cpp.mako", "_compilation_test.cpp", gen_dir)
-    if "custom_header" in metadata["config"]:
+    if "custom_header_suffix" in metadata["config"]:
         custom_mako_full_path = os.path.join(metadata_dir, "custom_header.mako")
         template = Template(filename=str(custom_mako_full_path), lookup=lookup)
         _generate_service_file_with_mako(
-            metadata, template, metadata["config"]["custom_header"], gen_dir
+            metadata, template, metadata["config"]["custom_header_suffix"], gen_dir
         )
 
 
