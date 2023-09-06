@@ -78,7 +78,7 @@ TEST_F(VisaSessionTest, OpenSession_CloseSession_ClosesDriverSession)
   nidevice_grpc::Session session = open_response.vi();
   ::grpc::ClientContext context;
   visa::CloseRequest close_request;
-  close_request.mutable_object_handle()->mutable_vi()->set_name(session.name());
+  close_request.mutable_vi()->set_name(session.name());
   visa::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -102,7 +102,7 @@ TEST_F(VisaSessionTest, InvalidSession_CloseSession_ReturnsWarning)
 
   ::grpc::ClientContext context;
   visa::CloseRequest request;
-  request.mutable_object_handle()->mutable_vi()->set_name(session.name());
+  request.mutable_vi()->set_name(session.name());
   visa::CloseResponse response;
   auto status = GetStub()->Close(&context, request, &response);
   EXPECT_EQ(kInvalidVisaSessionWarning, response.status());

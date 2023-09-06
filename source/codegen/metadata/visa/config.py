@@ -7,6 +7,7 @@ config = {
     'close_function': 'Close',
     'code_readiness': 'NextRelease',
     'csharp_namespace': 'NationalInstruments.Grpc.Visa',
+    'custom_header_suffix': '_attributes.h',
     'custom_types': [],
     'driver_name': 'VISA',
     'extra_errors_used': [],

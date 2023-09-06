@@ -49,12 +49,14 @@ public:
   ::grpc::Status AssertUtilSignal(::grpc::ServerContext* context, const AssertUtilSignalRequest* request, AssertUtilSignalResponse* response) override;
   ::grpc::Status Clear(::grpc::ServerContext* context, const ClearRequest* request, ClearResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
+  ::grpc::Status CloseEvent(::grpc::ServerContext* context, const CloseEventRequest* request, CloseEventResponse* response) override;
   ::grpc::Status DisableEvent(::grpc::ServerContext* context, const DisableEventRequest* request, DisableEventResponse* response) override;
   ::grpc::Status DiscardEvents(::grpc::ServerContext* context, const DiscardEventsRequest* request, DiscardEventsResponse* response) override;
   ::grpc::Status EnableEvent(::grpc::ServerContext* context, const EnableEventRequest* request, EnableEventResponse* response) override;
   ::grpc::Status FindRsrc(::grpc::ServerContext* context, const FindRsrcRequest* request, FindRsrcResponse* response) override;
   ::grpc::Status Flush(::grpc::ServerContext* context, const FlushRequest* request, FlushResponse* response) override;
   ::grpc::Status GetAttribute(::grpc::ServerContext* context, const GetAttributeRequest* request, GetAttributeResponse* response) override;
+  ::grpc::Status GetAttributeEvent(::grpc::ServerContext* context, const GetAttributeEventRequest* request, GetAttributeEventResponse* response) override;
   ::grpc::Status GpibCommand(::grpc::ServerContext* context, const GpibCommandRequest* request, GpibCommandResponse* response) override;
   ::grpc::Status GpibControlATN(::grpc::ServerContext* context, const GpibControlATNRequest* request, GpibControlATNResponse* response) override;
   ::grpc::Status GpibControlREN(::grpc::ServerContext* context, const GpibControlRENRequest* request, GpibControlRENResponse* response) override;
