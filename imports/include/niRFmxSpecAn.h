@@ -477,6 +477,10 @@
 #define RFMXSPECAN_ATTR_IM_RESULTS_INTERMOD_ORDER                                      0x00110022
 #define RFMXSPECAN_ATTR_IM_RESULTS_LOWER_INTERMOD_POWER                                0x00110024
 #define RFMXSPECAN_ATTR_IM_RESULTS_UPPER_INTERMOD_POWER                                0x00110026
+#define RFMXSPECAN_ATTR_IM_RESULTS_WORST_CASE_INTERMOD_ABSOLUTE_POWER                  0x00110032
+#define RFMXSPECAN_ATTR_IM_RESULTS_LOWER_INTERMOD_RELATIVE_POWER                       0x00110030
+#define RFMXSPECAN_ATTR_IM_RESULTS_UPPER_INTERMOD_RELATIVE_POWER                       0x00110031
+#define RFMXSPECAN_ATTR_IM_RESULTS_WORST_CASE_INTERMOD_RELATIVE_POWER                  0x00110033
 #define RFMXSPECAN_ATTR_IM_RESULTS_LOWER_OUTPUT_INTERCEPT_POWER                        0x00110027
 #define RFMXSPECAN_ATTR_IM_RESULTS_UPPER_OUTPUT_INTERCEPT_POWER                        0x00110028
 #define RFMXSPECAN_ATTR_IM_RESULTS_WORST_CASE_OUTPUT_INTERCEPT_POWER                   0x00110029
@@ -1382,6 +1386,7 @@
 #define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_OFF                                                         0
 #define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_NORMAL                                                      1
 #define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_DELTA                                                       3
+#define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_FIXED                                                       4
 
 // Values for MarkerNextPeak
 #define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_HIGHEST                                                  0
@@ -2469,6 +2474,12 @@ int32 __stdcall RFmxSpecAn_MarkerCfgXLocation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 markerXLocation
+);
+
+int32 __stdcall RFmxSpecAn_MarkerCfgYLocation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 markerYLocation
 );
 
 int32 __stdcall RFmxSpecAn_DPDCfgPreviousDPDPolynomial(
@@ -4494,8 +4505,8 @@ int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurementArray(
    char selectorString[],
    float64 timeout,
    int32 intermodOrder[],
-   float64 lowerIntermodPower[],
-   float64 upperIntermodPower[],
+   float64 lowerIntermodAbsolutePower[],
+   float64 upperIntermodAbsolutePower[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -4537,8 +4548,8 @@ int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurement(
    char selectorString[],
    float64 timeout,
    int32* intermodOrder,
-   float64* lowerIntermodPower,
-   float64* upperIntermodPower
+   float64* lowerIntermodAbsolutePower,
+   float64* upperIntermodAbsolutePower
 );
 
 int32 __stdcall RFmxSpecAn_IMFetchInterceptPower(
@@ -11271,6 +11282,30 @@ int32 __stdcall RFmxSpecAn_IMGetResultsLowerIntermodPower(
 );
 
 int32 __stdcall RFmxSpecAn_IMGetResultsUpperIntermodPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IMGetResultsWorstCaseIntermodAbsolutePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IMGetResultsLowerIntermodRelativePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IMGetResultsUpperIntermodRelativePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IMGetResultsWorstCaseIntermodRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

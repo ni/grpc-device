@@ -1182,6 +1182,11 @@ int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxSpecAn_MarkerCfgXLocation(instrumentHandle, selectorString, markerXLocation);
 }
 
+int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation)
+{
+  return RFmxSpecAn_MarkerCfgYLocation(instrumentHandle, selectorString, markerYLocation);
+}
+
 int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation)
 {
   return RFmxSpecAn_MarkerFetchXY(instrumentHandle, selectorString, markerXLocation, markerYLocation);

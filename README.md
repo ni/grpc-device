@@ -19,7 +19,7 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-RFmx Bluetooth         | 2023 Q4 | Not Supported | Not Supported |
 | NI-RFmx LTE               | 2022 Q3 | Not Supported | Not Supported |
 | NI-RFmx NR                | 2023 Q3 | Not Supported | Not Supported |
-| NI-RFmx SpecAn            | 2023 Q3 | Not Supported | Not Supported |
+| NI-RFmx SpecAn            | 2023 Q4 | Not Supported | Not Supported |
 | NI-RFmx WLAN              | 2023 Q3 | Not Supported | Not Supported |
 | NI-RFSA                   | 21.0.0  | 21.0.0        | Not Supported |
 | NI-RFSG                   | 21.0.0  | 21.0.0        | Not Supported |

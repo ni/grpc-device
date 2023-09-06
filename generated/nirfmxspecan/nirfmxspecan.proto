@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXSPECAN API metadata version 23.5.0
+// This file is generated from NI-RFMXSPECAN API metadata version 23.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXSPECAN Metadata
 //---------------------------------------------------------------------
@@ -252,6 +252,7 @@ service NiRFmxSpecAn {
   rpc MarkerCfgTrace(MarkerCfgTraceRequest) returns (MarkerCfgTraceResponse);
   rpc MarkerCfgType(MarkerCfgTypeRequest) returns (MarkerCfgTypeResponse);
   rpc MarkerCfgXLocation(MarkerCfgXLocationRequest) returns (MarkerCfgXLocationResponse);
+  rpc MarkerCfgYLocation(MarkerCfgYLocationRequest) returns (MarkerCfgYLocationResponse);
   rpc MarkerFetchXY(MarkerFetchXYRequest) returns (MarkerFetchXYResponse);
   rpc MarkerNextPeak(MarkerNextPeakRequest) returns (MarkerNextPeakResponse);
   rpc MarkerPeakSearch(MarkerPeakSearchRequest) returns (MarkerPeakSearchResponse);
@@ -1018,6 +1019,10 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_WORST_CASE_OUTPUT_INTERCEPT_POWER = 1114153;
   NIRFMXSPECAN_ATTRIBUTE_IM_LOCAL_PEAK_SEARCH_ENABLED = 1114154;
   NIRFMXSPECAN_ATTRIBUTE_IM_AMPLITUDE_CORRECTION_TYPE = 1114155;
+  NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_LOWER_INTERMOD_RELATIVE_POWER = 1114160;
+  NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_UPPER_INTERMOD_RELATIVE_POWER = 1114161;
+  NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_WORST_CASE_INTERMOD_ABSOLUTE_POWER = 1114162;
+  NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_WORST_CASE_INTERMOD_RELATIVE_POWER = 1114163;
   NIRFMXSPECAN_ATTRIBUTE_NF_MEASUREMENT_ENABLED = 1179649;
   NIRFMXSPECAN_ATTRIBUTE_NF_FREQUENCY_LIST = 1179652;
   NIRFMXSPECAN_ATTRIBUTE_NF_MEASUREMENT_BANDWIDTH = 1179653;
@@ -1670,6 +1675,7 @@ enum MarkerType {
   MARKER_TYPE_OFF = 0;
   MARKER_TYPE_NORMAL = 1;
   MARKER_TYPE_DELTA = 3;
+  MARKER_TYPE_FIXED = 4;
 }
 
 enum MeasurementTypes {
@@ -5819,6 +5825,16 @@ message MarkerCfgXLocationRequest {
 }
 
 message MarkerCfgXLocationResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgYLocationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double marker_y_location = 3;
+}
+
+message MarkerCfgYLocationResponse {
   int32 status = 1;
 }
 

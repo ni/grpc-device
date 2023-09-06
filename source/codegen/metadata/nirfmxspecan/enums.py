@@ -2179,6 +2179,10 @@ enums = {
             {
                 'name': 'DELTA',
                 'value': 3
+            },
+            {
+                'name': 'FIXED',
+                'value': 4
             }
         ]
     },
