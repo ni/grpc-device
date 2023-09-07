@@ -639,14 +639,6 @@ attributes = {
         'name': 'WIN_ACCESS',
         'type': 'ViUInt16'
     },
-    1073676484: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute specifies the session of the Resource Manager that was used to open this session. '
-        },
-        'name': 'RM_SESSION',
-        'type': 'ViSession'
-    },
     1073676501: {
         'access': 'read only',
         'documentation': {
@@ -1446,14 +1438,6 @@ attributes = {
         },
         'name': 'RET_COUNT',
         'type': 'ViUInt32'
-    },
-    1073692711: {
-        'access': 'read only',
-        'documentation': {
-            'description': ' This attribute contains the address of a buffer that was used in an asynchronous operation. This is valid for the VI_EVENT_IO_COMPLETION only. '
-        },
-        'name': 'BUFFER',
-        'type': 'ViAddr'
     },
     1073692737: {
         'access': 'read only',

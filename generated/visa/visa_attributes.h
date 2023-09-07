@@ -130,9 +130,11 @@ namespace visa_grpc {
 
       case VI_ATTR_ASRL_AVAIL_NUM:
       case VI_ATTR_ASRL_BAUD:
+      case VI_ATTR_EVENT_TYPE:
       case VI_ATTR_FIREWIRE_LOWER_CHIP_ID:
       case VI_ATTR_FIREWIRE_VENDOR_ID:
       case VI_ATTR_INTR_STATUS_ID:
+      case VI_ATTR_JOB_ID:
       case VI_ATTR_MAX_QUEUE_LENGTH:
       case VI_ATTR_MEM_BASE_32:
       case VI_ATTR_MEM_SIZE_32:
@@ -178,6 +180,7 @@ namespace visa_grpc {
       case VI_ATTR_PXI_MEM_SIZE_BAR3_64:
       case VI_ATTR_PXI_MEM_SIZE_BAR4_64:
       case VI_ATTR_PXI_MEM_SIZE_BAR5_64:
+      case VI_ATTR_USER_DATA:
       case VI_ATTR_WIN_BASE_ADDR_64:
       case VI_ATTR_WIN_SIZE_64:
         return AttributeValueData::kValueU64;
