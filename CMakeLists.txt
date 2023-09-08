@@ -491,18 +491,28 @@ endif()
 
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
+    "imports/include/nierr_Status.cpp"
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/integration/ni_fake_service_tests_endtoend.cpp"
     "source/tests/integration/ni_fake_non_ivi_service_tests_endtoend.cpp"
     "source/tests/integration/session_utilities_service_tests.cpp"
     "source/tests/integration/session_utilities_service_tests_endtoend.cpp"
+    "source/tests/integration/visa_resource_manager_tests.cpp"
+    "source/server/calibration_operations_restricted_service_registrar.cpp"
+    "source/server/calibration_operations_restricted_service.cpp"
+    "source/server/core_services_registrar.cpp"
+    "source/server/debug_session_properties_restricted_service_registrar.cpp"
+    "source/server/debug_session_properties_restricted_service.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
+    "source/server/session_utilities_service_registrar.cpp"
     "source/server/shared_library.cpp"
     "source/server/software_enumerator.cpp"
+    "source/server/syscfg_library.cpp"
+    "source/server/syscfg_resource_accessor.cpp"
     "source/server/syscfg_session_handler.cpp"
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
@@ -515,6 +525,7 @@ add_executable(IntegrationTestsRunner
     ${debugsessionproperties_restricted_grpc_srcs}
     ${calibrationoperations_restricted_proto_srcs}
     ${calibrationoperations_restricted_grpc_srcs}
+    ${nidriver_service_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"

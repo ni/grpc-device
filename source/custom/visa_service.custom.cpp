@@ -32,7 +32,7 @@ class DriverErrorException : public std::runtime_error {
   }
 };
 
-static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibrarySharedPtr library)
+static ViSession GetResourceManagerSession(visa_grpc::VisaService::ResourceRepositorySharedPtr repository, visa_grpc::VisaService::LibrarySharedPtr library)
 {
   std::unique_lock<std::shared_mutex> lock(s_resource_manager_lock);
   if (!s_defaultRM) {
@@ -40,6 +40,11 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::LibraryShared
     if (!status_ok(status)) {
       throw DriverErrorException(status);
     }
+    // This should be cleaned up only when the user explicitly resets the server to close all sessions.
+    std::string manager_name = "INTERNAL::VISA::RESOURCE_MANAGER";
+    auto init_lambda = [&] () { return std::make_tuple(0, s_defaultRM); };
+    auto cleanup_lambda = [library](ViSession id) { library->Close(id); s_defaultRM = VI_NULL; };
+    repository->add_session(manager_name, init_lambda, cleanup_lambda, nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED, NULL);
   }
   return s_defaultRM;
 }
@@ -132,7 +137,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     return ::grpc::Status::CANCELLED;
   }
   try {
-    ViSession rsrc_manager_handle = GetResourceManagerSession(library_);
+    ViSession rsrc_manager_handle = GetResourceManagerSession(session_repository_, library_);
     auto expression_mbcs = convert_from_grpc<std::string>(request->expression());
     auto expression = expression_mbcs.c_str();
     ViFindList find_handle{};
@@ -214,7 +219,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     return ::grpc::Status::CANCELLED;
   }
   try {
-    ViSession rsrc_manager_handle = GetResourceManagerSession(library_);
+    ViSession rsrc_manager_handle = GetResourceManagerSession(session_repository_, library_);
     auto instrument_descriptor_mbcs = convert_from_grpc<std::string>(request->instrument_descriptor());
     ViConstRsrc instrument_descriptor = (ViConstRsrc)instrument_descriptor_mbcs.c_str();
     ViAccessMode access_mode;
@@ -271,7 +276,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     return ::grpc::Status::CANCELLED;
   }
   try {
-    ViSession rsrc_manager_handle = GetResourceManagerSession(library_);
+    ViSession rsrc_manager_handle = GetResourceManagerSession(session_repository_, library_);
     auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
     ViConstRsrc resource_name = (ViConstRsrc)resource_name_mbcs.c_str();
     ViUInt16 interface_type{};
