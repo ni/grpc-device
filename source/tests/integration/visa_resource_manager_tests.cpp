@@ -1,18 +1,9 @@
-#include <grpcpp/impl/grpc_library.h>
-#include <gtest/gtest.h>
 #include <server/session_repository.h>
 #include "visa/visa_mock_library.h"
 #include "visa/visa_service.h"
 
-#include <array>
-#include <iostream>
-#include <nlohmann/json.hpp>
-#include <string>
-
-using namespace ::nlohmann;
+using namespace testing;
 using namespace visa_grpc;
-using testing::Invoke;
-using testing::WithArg;
 
 namespace ni {
 namespace tests {
@@ -23,8 +14,8 @@ static const char* test_descriptor = "fake::descriptor";
 void call_open(VisaService& service, const char* session_name)
 {
     ::grpc::ServerContext context;
-    visa_grpc::OpenRequest request;
-    visa_grpc::OpenResponse response;
+    OpenRequest request;
+    OpenResponse response;
     request.set_instrument_descriptor(test_descriptor);
     request.set_access_mode(visa_grpc::LOCK_STATE_NO_LOCK);
     request.set_session_name(session_name);
@@ -38,8 +29,8 @@ void call_open(VisaService& service, const char* session_name)
 void call_parse(VisaService& service)
 {
     ::grpc::ServerContext context;
-    visa_grpc::ParseRsrcRequest request;
-    visa_grpc::ParseRsrcResponse response;
+    ParseRsrcRequest request;
+    ParseRsrcResponse response;
     request.set_resource_name(test_descriptor);
 
     auto status = service.ParseRsrc(&context, &request, &response);
@@ -59,7 +50,7 @@ TEST(VisaResourceManagerTest, ParsePlusOpen_OpensResourceManagerOnce)
   auto library = std::make_shared<ni::tests::unit::VisaMockLibrary>();
   auto resource_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository);
   auto object_repository = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViObject>>();
-  visa_grpc::VisaService service(library, resource_repository, object_repository);
+  VisaService service(library, resource_repository, object_repository);
 
   EXPECT_CALL(*library, OpenDefaultRM)
     .WillOnce(WithArg<0>(Invoke(SetSessionToOne)));
@@ -82,7 +73,7 @@ TEST(VisaResourceManagerTest, OpenTwoSessions_OpensResourceManagerOnce)
   auto library = std::make_shared<ni::tests::unit::VisaMockLibrary>();
   auto resource_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository);
   auto object_repository = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViObject>>();
-  visa_grpc::VisaService service(library, resource_repository, object_repository);
+  VisaService service(library, resource_repository, object_repository);
 
   EXPECT_CALL(*library, OpenDefaultRM)
     .WillOnce(WithArg<0>(Invoke(SetSessionToOne)));
@@ -103,7 +94,7 @@ TEST(VisaResourceManagerTest, ResetServerWithOpenSession_OpenNewSession_OpensRes
   auto library = std::make_shared<ni::tests::unit::VisaMockLibrary>();
   auto resource_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository);
   auto object_repository = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViObject>>();
-  visa_grpc::VisaService service(library, resource_repository, object_repository);
+  VisaService service(library, resource_repository, object_repository);
 
   EXPECT_CALL(*library, OpenDefaultRM)
     .Times(2)
