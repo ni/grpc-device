@@ -55,7 +55,7 @@ import nirfmxnr_pb2_grpc as grpc_nirfmxnr
 import nirfmxspecan_pb2 as nirfmxspecan_types
 import nirfmxspecan_pb2_grpc as grpc_nirfmxspecan
 
-SERVER_ADDRESS = "mercury07"
+SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
 SESSION_NAME = "RFmxNRSession"
 
