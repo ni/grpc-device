@@ -140,7 +140,9 @@ try:
     center_frequency = 3.5e9
     reference_level_dbm = 0
     power_level_dbm = -10
-    rfsg_script = "script GenerateWaveform  repeat forever generate waveform end repeat end script"
+    rfsg_script = (
+        "script GenerateWaveform  repeat forever generate waveform end repeat end script"
+    )
     rfsg_waveform_name = "waveform"
     # The following waveform is installed with RFmx NR
     file_path = r"C:\Users\Public\Documents\National Instruments\NI-RFmx\NR\Examples\C\Support\NR_FR1_UL_BW-100MHz_SCS-30kHz.tdms"
@@ -200,9 +202,7 @@ try:
             waveform_index=0,
         )
     )
-    rfsgclient.WriteScript(
-        nirfsg_types.WriteScriptRequest(vi=rfsgsession, script=rfsg_script)
-    )
+    rfsgclient.WriteScript(nirfsg_types.WriteScriptRequest(vi=rfsgsession, script=rfsg_script))
     rfsgclient.ExportSignal(
         nirfsg_types.ExportSignalRequest(
             vi=rfsgsession,
@@ -369,9 +369,7 @@ try:
         )
 
         iq = [
-            nidevice_grpc.NIComplexNumberF32(
-                real=sample.real, imaginary=sample.imaginary
-            )
+            nidevice_grpc.NIComplexNumberF32(real=sample.real, imaginary=sample.imaginary)
             for sample in read_response.data
         ]
 
@@ -398,16 +396,14 @@ except grpc.RpcError as rpc_error:
     error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = (
-                entry.value
-                if isinstance(entry.value, str)
-                else entry.value.decode("utf-8")
-            )
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 finally:
     if rfmxsession:
