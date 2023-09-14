@@ -140,9 +140,7 @@ try:
     center_frequency = 3.5e9
     reference_level_dbm = 0
     power_level_dbm = -10
-    rfsg_script = (
-        "script GenerateWaveform  repeat forever generate waveform end repeat end script"
-    )
+    rfsg_script = "script GenerateWaveform  repeat forever generate waveform end repeat end script"
     rfsg_waveform_name = "waveform"
     # The following waveform is installed with RFmx NR
     file_path = r"C:\Users\Public\Documents\National Instruments\NI-RFmx\NR\Examples\C\Support\NR_FR1_UL_BW-100MHz_SCS-30kHz.tdms"
@@ -218,9 +216,7 @@ try:
     nr_subcarrier_spacing = 30e3
     nr_auto_resource_block_detection_enabled = True
     nr_pusch_modulation_type = nirfmxnr_types.NIRFMXNR_INT32_PUSCH_MODULATION_TYPE_QAM64
-    nr_measurement_length_unit = (
-        nirfmxnr_types.NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT
-    )
+    nr_measurement_length_unit = nirfmxnr_types.NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT
     nr_link_direction = nirfmxnr_types.NIRFMXNR_INT32_LINK_DIRECTION_UPLINK
     nr_measurement_offset = 0
     nr_measurement_length = 1
@@ -407,9 +403,7 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 finally:
     if rfmxsession:
-        rfmxclient.Close(
-            nirfmxnr_types.CloseRequest(instrument=rfmxsession, force_destroy=True)
-        )
+        rfmxclient.Close(nirfmxnr_types.CloseRequest(instrument=rfmxsession, force_destroy=True))
     if rfsasession:
         rfsaclient.Close(nirfsa_types.CloseRequest(vi=rfsasession))
     if rfsgsession:
