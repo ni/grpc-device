@@ -323,7 +323,7 @@ try:
     print(f"Maximum Power(dBm)         {maximum_power}")
     print(f"Minimum Power(dBm)         {minimum_power}")
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
@@ -337,7 +337,7 @@ except grpc.RpcError as rpc_error:
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
-        nrclient.Close(
+        instrclient.Close(
             # Only one session can be closed and using any personality
             nirfmxinstr_types.CloseRequest(instrument=instr, force_destroy=False)
         )
