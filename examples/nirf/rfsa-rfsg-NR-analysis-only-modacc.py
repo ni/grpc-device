@@ -304,7 +304,7 @@ try:
         )
     )
     # Once commit is called, the recommended acquisition settings can be queried
-    # For these updates, the proto request (NR's GetAttributeF64) 
+    # For these updates, the proto request (NR's GetAttributeF64)
     # must match the RequestMessage type (come from nirfmxnr_types).
     # But for these, since you're getting an INSTR attribute,
     # I think you should use an instrclient's GetAttribute... RPC calls.
