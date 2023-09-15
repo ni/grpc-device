@@ -109,7 +109,7 @@ def check_for_warning(response, instrument):
 try:
     print(f"Initializing Instruments...", end="")
     # Updated these initialize_responses to be different variables.
-    # MyPy was complaining after the first one because you were 
+    # MyPy was complaining after the first one because you were
     # reassigning it with a different type.
     initialize_rfmx_response = rfmxclient.Initialize(
         nirfmxnr_types.InitializeRequest(
@@ -304,7 +304,7 @@ try:
         )
     )
     # Once commit is called, the recommended acquisition settings can be queried
-    # For these updates, the proto request (NR's GetAttributeF64) 
+    # For these updates, the proto request (NR's GetAttributeF64)
     # must match the RequestMessage type (come from nirfmxnr_types).
     # But for these, since you're getting an INSTR attribute,
     # I think you should use an instrclient's GetAttribute... RPC calls.
