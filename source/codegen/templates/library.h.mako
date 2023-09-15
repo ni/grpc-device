@@ -10,6 +10,7 @@ include_guard_name = service_helpers.get_include_guard_name(config, "_LIBRARY_H"
 c_function_prefix = config["c_function_prefix"]
 
 class_name = f"{service_class_prefix}Library"
+inherited_functions = service_helpers.filter_api_functions(functions)
 
 set_runtime_environment_supported = 'SetRuntimeEnvironment' in service_helpers.filter_api_functions(functions, only_mockable_functions=False)
 %>\
@@ -41,8 +42,9 @@ class ${class_name} : public ${namespace_prefix}::${class_name}Interface {
   f = functions[method_name]
   parameters = f['parameters']
   return_type = f['returns']
+  override_specifier = " override" if method_name in inherited_functions else ""
 %>\
-  ${return_type} ${method_name}(${service_helpers.create_params(parameters, expand_varargs=True)});
+  ${return_type} ${method_name}(${service_helpers.create_params(parameters, expand_varargs=True)})${override_specifier};
 % endfor
 % if set_runtime_environment_supported:
   bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
