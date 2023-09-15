@@ -15,7 +15,7 @@ jobs:
     - name: Setup python3
       uses: actions/setup-python@v2
       with:
-        python-version: '3.7.x'
+        python-version: '3.8.x'
 
     - name: Install build dependencies
       run: python -m pip install -r python_build_requirements.txt
@@ -27,8 +27,8 @@ jobs:
     - name: Install poetry for validate_examples.py
       uses: abatilo/actions-poetry@v2.0.0
       with:
-        poetry-version: 1.1.5
+        poetry-version: 1.2.2
 
-    - name: Validate examples (except DAQmx)
+    - name: Validate examples (except aio)
       run: |
-        python source/codegen/validate_examples.py -e "nidaqmx"
+        python source/codegen/validate_examples.py --exclude="-aio\.py$"

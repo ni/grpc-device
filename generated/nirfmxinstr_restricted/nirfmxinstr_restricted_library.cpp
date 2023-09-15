@@ -4,6 +4,9 @@
 // Service implementation for the NI-RFMXINSTR-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "nirfmxinstr_restricted_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxInstr.dll";
@@ -13,51 +16,56 @@ static const char* kLibraryName = "libnirfmxinstr.so.1";
 
 namespace nirfmxinstr_restricted_grpc {
 
-NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(kLibraryName)
+NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : NiRFmxInstrRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.ConvertForPowerUnitsUtility = reinterpret_cast<ConvertForPowerUnitsUtilityPtr>(shared_library_.get_function_pointer("RFmxInstr_ConvertForPowerUnitsUtility"));
-  function_pointers_.DeleteSnapshot = reinterpret_cast<DeleteSnapshotPtr>(shared_library_.get_function_pointer("RFmxInstr_DeleteSnapshot"));
-  function_pointers_.GetActiveResultName = reinterpret_cast<GetActiveResultNamePtr>(shared_library_.get_function_pointer("RFmxInstr_GetActiveResultName"));
-  function_pointers_.GetActiveTableName = reinterpret_cast<GetActiveTableNamePtr>(shared_library_.get_function_pointer("RFmxInstr_GetActiveTableName"));
-  function_pointers_.GetAttributeAuthor = reinterpret_cast<GetAttributeAuthorPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeAuthor"));
-  function_pointers_.GetAttributeDesiredF32 = reinterpret_cast<GetAttributeDesiredF32Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeDesiredF32"));
-  function_pointers_.GetAttributeDesiredF32Array = reinterpret_cast<GetAttributeDesiredF32ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeDesiredF32Array"));
-  function_pointers_.GetAttributeDesiredF64 = reinterpret_cast<GetAttributeDesiredF64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeDesiredF64"));
-  function_pointers_.GetAttributeDesiredF64Array = reinterpret_cast<GetAttributeDesiredF64ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeDesiredF64Array"));
-  function_pointers_.GetAttributeDesiredI32 = reinterpret_cast<GetAttributeDesiredI32Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeDesiredI32"));
-  function_pointers_.GetAttributeDesiredI64 = reinterpret_cast<GetAttributeDesiredI64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeDesiredI64"));
-  function_pointers_.GetAttributeDesiredString = reinterpret_cast<GetAttributeDesiredStringPtr>(shared_library_.get_function_pointer("RFmxInstr_GetAttributeDesiredString"));
-  function_pointers_.GetCalibrationPlaneEnabled = reinterpret_cast<GetCalibrationPlaneEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_GetCalibrationPlaneEnabled"));
-  function_pointers_.GetCalibrationPlaneNames = reinterpret_cast<GetCalibrationPlaneNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetCalibrationPlaneNames"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxInstr_GetError"));
-  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxInstr_GetErrorString"));
-  function_pointers_.GetExternalAttenuationTableNames = reinterpret_cast<GetExternalAttenuationTableNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetExternalAttenuationTableNames"));
-  function_pointers_.GetForceAllTracesEnabled = reinterpret_cast<GetForceAllTracesEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_GetForceAllTracesEnabled"));
-  function_pointers_.GetInitiaitedSnapshotStrings = reinterpret_cast<GetInitiaitedSnapshotStringsPtr>(shared_library_.get_function_pointer("RFmxInstr_GetInitiaitedSnapshotStrings"));
-  function_pointers_.GetLatestConfigurationSnapshot = reinterpret_cast<GetLatestConfigurationSnapshotPtr>(shared_library_.get_function_pointer("RFmxInstr_GetLatestConfigurationSnapshot"));
-  function_pointers_.GetOpenSessionsInformation = reinterpret_cast<GetOpenSessionsInformationPtr>(shared_library_.get_function_pointer("RFmxInstr_GetOpenSessionsInformation"));
-  function_pointers_.GetPrivilegeLevel = reinterpret_cast<GetPrivilegeLevelPtr>(shared_library_.get_function_pointer("RFmxInstr_GetPrivilegeLevel"));
-  function_pointers_.GetRFmxVersion = reinterpret_cast<GetRFmxVersionPtr>(shared_library_.get_function_pointer("RFmxInstr_GetRFmxVersion"));
-  function_pointers_.GetSessionUniqueIdentifier = reinterpret_cast<GetSessionUniqueIdentifierPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSessionUniqueIdentifier"));
-  function_pointers_.GetSignalConfigurationState64 = reinterpret_cast<GetSignalConfigurationState64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetSignalConfigurationState64"));
-  function_pointers_.GetSnapshotInfoFromCache = reinterpret_cast<GetSnapshotInfoFromCachePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSnapshotInfoFromCache"));
-  function_pointers_.GetSnapshotState = reinterpret_cast<GetSnapshotStatePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSnapshotState"));
-  function_pointers_.GetTracesInfoForMonitorSnapshot = reinterpret_cast<GetTracesInfoForMonitorSnapshotPtr>(shared_library_.get_function_pointer("RFmxInstr_GetTracesInfoForMonitorSnapshot"));
-  function_pointers_.LoadAllForRevert = reinterpret_cast<LoadAllForRevertPtr>(shared_library_.get_function_pointer("RFmxInstr_LoadAllForRevert"));
-  function_pointers_.LoadConfigurationsFromJSON = reinterpret_cast<LoadConfigurationsFromJSONPtr>(shared_library_.get_function_pointer("RFmxInstr_LoadConfigurationsFromJSON"));
-  function_pointers_.RegisterSpecialClientSnapshotInterest = reinterpret_cast<RegisterSpecialClientSnapshotInterestPtr>(shared_library_.get_function_pointer("RFmxInstr_RegisterSpecialClientSnapshotInterest"));
-  function_pointers_.RequestPrivilege = reinterpret_cast<RequestPrivilegePtr>(shared_library_.get_function_pointer("RFmxInstr_RequestPrivilege"));
-  function_pointers_.SaveAllForRevert = reinterpret_cast<SaveAllForRevertPtr>(shared_library_.get_function_pointer("RFmxInstr_SaveAllForRevert"));
-  function_pointers_.SaveConfigurationsToJSON = reinterpret_cast<SaveConfigurationsToJSONPtr>(shared_library_.get_function_pointer("RFmxInstr_SaveConfigurationsToJSON"));
-  function_pointers_.SetForceAllTracesEnabled = reinterpret_cast<SetForceAllTracesEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_SetForceAllTracesEnabled"));
-  function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_.get_function_pointer("RFmxInstr_SetIOTraceStatus"));
-  function_pointers_.UnregisterSpecialClientSnapshotInterest = reinterpret_cast<UnregisterSpecialClientSnapshotInterestPtr>(shared_library_.get_function_pointer("RFmxInstr_UnregisterSpecialClientSnapshotInterest"));
+  function_pointers_.ConvertForPowerUnitsUtility = reinterpret_cast<ConvertForPowerUnitsUtilityPtr>(shared_library_->get_function_pointer("RFmxInstr_ConvertForPowerUnitsUtility"));
+  function_pointers_.DeleteSnapshot = reinterpret_cast<DeleteSnapshotPtr>(shared_library_->get_function_pointer("RFmxInstr_DeleteSnapshot"));
+  function_pointers_.GetActiveResultName = reinterpret_cast<GetActiveResultNamePtr>(shared_library_->get_function_pointer("RFmxInstr_GetActiveResultName"));
+  function_pointers_.GetActiveTableName = reinterpret_cast<GetActiveTableNamePtr>(shared_library_->get_function_pointer("RFmxInstr_GetActiveTableName"));
+  function_pointers_.GetAttributeAuthor = reinterpret_cast<GetAttributeAuthorPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeAuthor"));
+  function_pointers_.GetAttributeDesiredF32 = reinterpret_cast<GetAttributeDesiredF32Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeDesiredF32"));
+  function_pointers_.GetAttributeDesiredF32Array = reinterpret_cast<GetAttributeDesiredF32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeDesiredF32Array"));
+  function_pointers_.GetAttributeDesiredF64 = reinterpret_cast<GetAttributeDesiredF64Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeDesiredF64"));
+  function_pointers_.GetAttributeDesiredF64Array = reinterpret_cast<GetAttributeDesiredF64ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeDesiredF64Array"));
+  function_pointers_.GetAttributeDesiredI32 = reinterpret_cast<GetAttributeDesiredI32Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeDesiredI32"));
+  function_pointers_.GetAttributeDesiredI64 = reinterpret_cast<GetAttributeDesiredI64Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeDesiredI64"));
+  function_pointers_.GetAttributeDesiredString = reinterpret_cast<GetAttributeDesiredStringPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeDesiredString"));
+  function_pointers_.GetCalibrationPlaneEnabled = reinterpret_cast<GetCalibrationPlaneEnabledPtr>(shared_library_->get_function_pointer("RFmxInstr_GetCalibrationPlaneEnabled"));
+  function_pointers_.GetCalibrationPlaneNames = reinterpret_cast<GetCalibrationPlaneNamesPtr>(shared_library_->get_function_pointer("RFmxInstr_GetCalibrationPlaneNames"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxInstr_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxInstr_GetErrorString"));
+  function_pointers_.GetExternalAttenuationTableNames = reinterpret_cast<GetExternalAttenuationTableNamesPtr>(shared_library_->get_function_pointer("RFmxInstr_GetExternalAttenuationTableNames"));
+  function_pointers_.GetForceAllTracesEnabled = reinterpret_cast<GetForceAllTracesEnabledPtr>(shared_library_->get_function_pointer("RFmxInstr_GetForceAllTracesEnabled"));
+  function_pointers_.GetInitiaitedSnapshotStrings = reinterpret_cast<GetInitiaitedSnapshotStringsPtr>(shared_library_->get_function_pointer("RFmxInstr_GetInitiaitedSnapshotStrings"));
+  function_pointers_.GetLatestConfigurationSnapshot = reinterpret_cast<GetLatestConfigurationSnapshotPtr>(shared_library_->get_function_pointer("RFmxInstr_GetLatestConfigurationSnapshot"));
+  function_pointers_.GetOpenSessionsInformation = reinterpret_cast<GetOpenSessionsInformationPtr>(shared_library_->get_function_pointer("RFmxInstr_GetOpenSessionsInformation"));
+  function_pointers_.GetPrivilegeLevel = reinterpret_cast<GetPrivilegeLevelPtr>(shared_library_->get_function_pointer("RFmxInstr_GetPrivilegeLevel"));
+  function_pointers_.GetRFmxVersion = reinterpret_cast<GetRFmxVersionPtr>(shared_library_->get_function_pointer("RFmxInstr_GetRFmxVersion"));
+  function_pointers_.GetSessionUniqueIdentifier = reinterpret_cast<GetSessionUniqueIdentifierPtr>(shared_library_->get_function_pointer("RFmxInstr_GetSessionUniqueIdentifier"));
+  function_pointers_.GetSignalConfigurationState64 = reinterpret_cast<GetSignalConfigurationState64Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetSignalConfigurationState64"));
+  function_pointers_.GetSnapshotInfoFromCache = reinterpret_cast<GetSnapshotInfoFromCachePtr>(shared_library_->get_function_pointer("RFmxInstr_GetSnapshotInfoFromCache"));
+  function_pointers_.GetSnapshotState = reinterpret_cast<GetSnapshotStatePtr>(shared_library_->get_function_pointer("RFmxInstr_GetSnapshotState"));
+  function_pointers_.GetTracesInfoForMonitorSnapshot = reinterpret_cast<GetTracesInfoForMonitorSnapshotPtr>(shared_library_->get_function_pointer("RFmxInstr_GetTracesInfoForMonitorSnapshot"));
+  function_pointers_.LoadAllForRevert = reinterpret_cast<LoadAllForRevertPtr>(shared_library_->get_function_pointer("RFmxInstr_LoadAllForRevert"));
+  function_pointers_.LoadConfigurationsFromJSON = reinterpret_cast<LoadConfigurationsFromJSONPtr>(shared_library_->get_function_pointer("RFmxInstr_LoadConfigurationsFromJSON"));
+  function_pointers_.RegisterSpecialClientSnapshotInterest = reinterpret_cast<RegisterSpecialClientSnapshotInterestPtr>(shared_library_->get_function_pointer("RFmxInstr_RegisterSpecialClientSnapshotInterest"));
+  function_pointers_.RequestPrivilege = reinterpret_cast<RequestPrivilegePtr>(shared_library_->get_function_pointer("RFmxInstr_RequestPrivilege"));
+  function_pointers_.SaveAllForRevert = reinterpret_cast<SaveAllForRevertPtr>(shared_library_->get_function_pointer("RFmxInstr_SaveAllForRevert"));
+  function_pointers_.SaveConfigurationsToJSON = reinterpret_cast<SaveConfigurationsToJSONPtr>(shared_library_->get_function_pointer("RFmxInstr_SaveConfigurationsToJSON"));
+  function_pointers_.SetForceAllTracesEnabled = reinterpret_cast<SetForceAllTracesEnabledPtr>(shared_library_->get_function_pointer("RFmxInstr_SetForceAllTracesEnabled"));
+  function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_->get_function_pointer("RFmxInstr_SetIOTraceStatus"));
+  function_pointers_.UnregisterSpecialClientSnapshotInterest = reinterpret_cast<UnregisterSpecialClientSnapshotInterestPtr>(shared_library_->get_function_pointer("RFmxInstr_UnregisterSpecialClientSnapshotInterest"));
+  function_pointers_.GetSFPSessionAccessEnabled = reinterpret_cast<GetSFPSessionAccessEnabledPtr>(shared_library_->get_function_pointer("RFmxInstr_GetSFPSessionAccessEnabled"));
+  function_pointers_.CreateDefaultSignalConfiguration = reinterpret_cast<CreateDefaultSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxInstr_CreateDefaultSignalConfiguration"));
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -66,7 +74,7 @@ NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
 
 ::grpc::Status NiRFmxInstrRestrictedLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
@@ -365,6 +373,22 @@ int32 NiRFmxInstrRestrictedLibrary::UnregisterSpecialClientSnapshotInterest(char
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_UnregisterSpecialClientSnapshotInterest.");
   }
   return function_pointers_.UnregisterSpecialClientSnapshotInterest(resourceName);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled)
+{
+  if (!function_pointers_.GetSFPSessionAccessEnabled) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSFPSessionAccessEnabled.");
+  }
+  return function_pointers_.GetSFPSessionAccessEnabled(optionString, isSFPSessionAccessEnabled);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::CreateDefaultSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID)
+{
+  if (!function_pointers_.CreateDefaultSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CreateDefaultSignalConfiguration.");
+  }
+  return function_pointers_.CreateDefaultSignalConfiguration(instrumentHandle, signalName, personalityID);
 }
 
 }  // namespace nirfmxinstr_restricted_grpc

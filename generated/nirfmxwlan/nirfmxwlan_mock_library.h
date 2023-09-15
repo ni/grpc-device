@@ -23,6 +23,7 @@ class NiRFmxWLANMockLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface
   MOCK_METHOD(int32, AnalyzeNWaveformsSpectrum, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset), (override));
   MOCK_METHOD(int32, AnalyzeSpectrum1Waveform, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved), (override));
   MOCK_METHOD(int32, AutoDetectSignal, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout), (override));
+  MOCK_METHOD(int32, AutoDetectSignalAnalysisOnly, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize), (override));
   MOCK_METHOD(int32, AutoLevel, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval), (override));
   MOCK_METHOD(int32, BuildChainString, (char selectorString[], int32 chainNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildGateString, (char selectorString[], int32 gateNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));

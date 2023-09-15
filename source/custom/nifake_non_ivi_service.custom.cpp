@@ -23,42 +23,60 @@ namespace nifake_non_ivi_grpc {
 
   class ReadStreamReactor : public nidevice_grpc::ServerWriterReactor<ReadStreamResponse, AutoJoinThread> {
    public:
-    ReadStreamReactor(int32 start, int32 stop)
-        : start_(start),
-          stop_(stop)
+    const int32_t MIN_VALUE = 0;
+    const int32_t MAX_VALUE = 1000000;
+
+    ReadStreamReactor(const ReadStreamRequest* request)
     {
-      this->set_producer(
-          start_thread());
+      auto status = start(request);
+      if (!status.ok()) {
+        this->try_finish(std::move(status));
+      }
     }
 
-    std::unique_ptr<AutoJoinThread> start_thread()
+    ::grpc::Status start(const ReadStreamRequest* request) {
+      if (request->start() < MIN_VALUE || request->start() > MAX_VALUE) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for start is out of range.");
+      }
+      if (request->stop() < MIN_VALUE || request->stop() > MAX_VALUE) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for stop is out of range.");
+      }
+      if (request->start() > request->stop()) {
+        // This error has a different status code and an arbitrary delay for testing purposes.
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        return ::grpc::Status(::grpc::UNKNOWN, "The values for start and stop are reversed.");
+      }
+
+      // Send initial metadata to indicate that the stream has started successfully.
+      StartSendInitialMetadata();
+
+      this->set_producer(start_thread(request->start(), request->stop()));
+      return ::grpc::Status::OK;
+    }
+
+    std::unique_ptr<AutoJoinThread> start_thread(int32_t start, int32_t stop)
     {
       return AutoJoinThread::make_auto_join(std::thread([=]() {
         ReadStreamResponse response;
-        for (auto i = start_; i <= stop_; ++i) {
+        for (auto i = start; i <= stop; ++i) {
           response.set_value(i);
           queue_write(response);
         }
       }));
     }
-
-    int32 start_;
-    int32 stop_;
   };
 
-  return new ReadStreamReactor(
-      request->start(),
-      request->stop());
+  return new ReadStreamReactor(request);
 }
 
-::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForFakeHandle(::grpc::ServerContext* context, int32_t status, FakeHandle handle)
+::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForFakeHandle(::grpc::ServerContextBase* context, int32_t status, FakeHandle handle)
 {
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
   library_->GetLatestErrorMessage(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
-::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForSecondarySessionHandle(::grpc::ServerContext* context, int32_t status, SecondarySessionHandle handle)
+::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForSecondarySessionHandle(::grpc::ServerContextBase* context, int32_t status, SecondarySessionHandle handle)
 {
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
   library_->GetLatestErrorMessage(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);

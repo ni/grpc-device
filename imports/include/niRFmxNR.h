@@ -239,6 +239,9 @@
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_DMRS_PEAK_EVM_MAXIMUM                             0x00904024
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PTRS_RMS_EVM_MEAN                                 0x00904048
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PTRS_PEAK_EVM_MAXIMUM                             0x00904049
+#define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_DATA_RE_POWER_MEAN                                0x009040a9
+#define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_DMRS_RE_POWER_MEAN                                0x009040aa
+#define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PTRS_RE_POWER_MEAN                                0x009040ab
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_DATA_TRANSIENT_RMS_EVM_MEAN                       0x009040a6
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_MAXIMUM                         0x009040a7
 #define RFMXNR_ATTR_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_SLOT_INDEX                      0x009040a8
@@ -254,6 +257,9 @@
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_DMRS_PEAK_EVM_MAXIMUM                             0x0090405c
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_PTRS_RMS_EVM_MEAN                                 0x0090405d
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_PTRS_PEAK_EVM_MAXIMUM                             0x0090405e
+#define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_DATA_RE_POWER_MEAN                                0x009040ac
+#define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_DMRS_RE_POWER_MEAN                                0x009040ad
+#define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_PTRS_RE_POWER_MEAN                                0x009040ae
 #define RFMXNR_ATTR_MODACC_RESULTS_PSS_RMS_EVM_MEAN                                        0x00904079
 #define RFMXNR_ATTR_MODACC_RESULTS_PSS_PEAK_EVM_MAXIMUM                                    0x0090407a
 #define RFMXNR_ATTR_MODACC_RESULTS_SSS_RMS_EVM_MEAN                                        0x0090407b
@@ -1080,6 +1086,8 @@
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS21                                                      6
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS27                                                      7
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS07                                                      8
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS03U                                                     9
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS21_REL_17_ONWARDS                                       10
 
 // Values for RFMXNR_ATTR_SEM_DOWNLINK_MASK_TYPE
 #define RFMXNR_VAL_SEM_DOWNLINK_MASK_TYPE_STANDARD                                                0
@@ -2251,6 +2259,13 @@ int32 __stdcall RFmxNR_GetAllNamedResultNames(
    int32 resultNamesBufferSize,
    int32* actualResultNamesSize,
    int32* defaultResultExists
+);
+
+int32 __stdcall RFmxNR_LoadFromGenerationConfigurationFile(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char filePath[],
+   int32 configurationIndex
 );
 
 int32 __stdcall RFmxNR_ModAccFetchPUSCHDemodulatedBits(
@@ -5855,6 +5870,24 @@ int32 __stdcall RFmxNR_ModAccGetResultsPUSCHPTRSPeakEVMMaximum(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxNR_ModAccGetResultsPUSCHDataREPowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPUSCHDMRSREPowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPUSCHPTRSREPowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxNR_ModAccGetResultsPUSCHDataTransientRMSEVMMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5940,6 +5973,24 @@ int32 __stdcall RFmxNR_ModAccGetResultsPDSCHPTRSRMSEVMMean(
 );
 
 int32 __stdcall RFmxNR_ModAccGetResultsPDSCHPTRSPeakEVMMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPDSCHDataREPowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPDSCHDMRSREPowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPDSCHPTRSREPowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

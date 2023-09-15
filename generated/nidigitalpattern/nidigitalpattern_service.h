@@ -33,14 +33,15 @@ struct NiDigitalFeatureToggles
 
 class NiDigitalService final : public NiDigital::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiDigitalLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiDigitalService(
-    NiDigitalLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiDigitalFeatureToggles& feature_toggles = {});
   virtual ~NiDigitalService();
-  
+
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AbortKeepAlive(::grpc::ServerContext* context, const AbortKeepAliveRequest* request, AbortKeepAliveResponse* response) override;
   ::grpc::Status ApplyLevelsAndTiming(::grpc::ServerContext* context, const ApplyLevelsAndTimingRequest* request, ApplyLevelsAndTimingResponse* response) override;
@@ -172,9 +173,9 @@ public:
   ::grpc::Status WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response) override;
   ::grpc::Status WriteStatic(::grpc::ServerContext* context, const WriteStaticRequest* request, WriteStaticResponse* response) override;
 private:
-  NiDigitalLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
   template <typename TEnum>
   void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);

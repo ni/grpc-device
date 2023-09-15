@@ -33,16 +33,17 @@ struct NiRFmxSpecAnFeatureToggles
 
 class NiRFmxSpecAnService final : public NiRFmxSpecAn::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxSpecAnLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
   using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxSpecAnService(
-    NiRFmxSpecAnLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxSpecAnFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxSpecAnService();
-  
+
   ::grpc::Status ACPCfgAveraging(::grpc::ServerContext* context, const ACPCfgAveragingRequest* request, ACPCfgAveragingResponse* response) override;
   ::grpc::Status ACPCfgCarrierAndOffsets(::grpc::ServerContext* context, const ACPCfgCarrierAndOffsetsRequest* request, ACPCfgCarrierAndOffsetsResponse* response) override;
   ::grpc::Status ACPCfgCarrierFrequency(::grpc::ServerContext* context, const ACPCfgCarrierFrequencyRequest* request, ACPCfgCarrierFrequencyResponse* response) override;
@@ -239,6 +240,14 @@ public:
   ::grpc::Status HarmFetchHarmonicPowerTrace(::grpc::ServerContext* context, const HarmFetchHarmonicPowerTraceRequest* request, HarmFetchHarmonicPowerTraceResponse* response) override;
   ::grpc::Status HarmFetchTHD(::grpc::ServerContext* context, const HarmFetchTHDRequest* request, HarmFetchTHDResponse* response) override;
   ::grpc::Status HarmRead(::grpc::ServerContext* context, const HarmReadRequest* request, HarmReadResponse* response) override;
+  ::grpc::Status IDPDCfgEqualizerCoefficients(::grpc::ServerContext* context, const IDPDCfgEqualizerCoefficientsRequest* request, IDPDCfgEqualizerCoefficientsResponse* response) override;
+  ::grpc::Status IDPDCfgPredistortedWaveform(::grpc::ServerContext* context, const IDPDCfgPredistortedWaveformRequest* request, IDPDCfgPredistortedWaveformResponse* response) override;
+  ::grpc::Status IDPDCfgReferenceWaveform(::grpc::ServerContext* context, const IDPDCfgReferenceWaveformRequest* request, IDPDCfgReferenceWaveformResponse* response) override;
+  ::grpc::Status IDPDFetchEqualizerCoefficients(::grpc::ServerContext* context, const IDPDFetchEqualizerCoefficientsRequest* request, IDPDFetchEqualizerCoefficientsResponse* response) override;
+  ::grpc::Status IDPDFetchPredistortedWaveform(::grpc::ServerContext* context, const IDPDFetchPredistortedWaveformRequest* request, IDPDFetchPredistortedWaveformResponse* response) override;
+  ::grpc::Status IDPDFetchProcessedMeanAcquiredWaveform(::grpc::ServerContext* context, const IDPDFetchProcessedMeanAcquiredWaveformRequest* request, IDPDFetchProcessedMeanAcquiredWaveformResponse* response) override;
+  ::grpc::Status IDPDFetchProcessedReferenceWaveform(::grpc::ServerContext* context, const IDPDFetchProcessedReferenceWaveformRequest* request, IDPDFetchProcessedReferenceWaveformResponse* response) override;
+  ::grpc::Status IDPDGetEqualizerReferenceWaveform(::grpc::ServerContext* context, const IDPDGetEqualizerReferenceWaveformRequest* request, IDPDGetEqualizerReferenceWaveformResponse* response) override;
   ::grpc::Status IMCfgAutoIntermodsSetup(::grpc::ServerContext* context, const IMCfgAutoIntermodsSetupRequest* request, IMCfgAutoIntermodsSetupResponse* response) override;
   ::grpc::Status IMCfgAveraging(::grpc::ServerContext* context, const IMCfgAveragingRequest* request, IMCfgAveragingResponse* response) override;
   ::grpc::Status IMCfgFFT(::grpc::ServerContext* context, const IMCfgFFTRequest* request, IMCfgFFTResponse* response) override;
@@ -270,6 +279,7 @@ public:
   ::grpc::Status MarkerCfgTrace(::grpc::ServerContext* context, const MarkerCfgTraceRequest* request, MarkerCfgTraceResponse* response) override;
   ::grpc::Status MarkerCfgType(::grpc::ServerContext* context, const MarkerCfgTypeRequest* request, MarkerCfgTypeResponse* response) override;
   ::grpc::Status MarkerCfgXLocation(::grpc::ServerContext* context, const MarkerCfgXLocationRequest* request, MarkerCfgXLocationResponse* response) override;
+  ::grpc::Status MarkerCfgYLocation(::grpc::ServerContext* context, const MarkerCfgYLocationRequest* request, MarkerCfgYLocationResponse* response) override;
   ::grpc::Status MarkerFetchXY(::grpc::ServerContext* context, const MarkerFetchXYRequest* request, MarkerFetchXYResponse* response) override;
   ::grpc::Status MarkerNextPeak(::grpc::ServerContext* context, const MarkerNextPeakRequest* request, MarkerNextPeakResponse* response) override;
   ::grpc::Status MarkerPeakSearch(::grpc::ServerContext* context, const MarkerPeakSearchRequest* request, MarkerPeakSearchResponse* response) override;
@@ -459,10 +469,10 @@ public:
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
   ::grpc::Status WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response) override;
 private:
-  NiRFmxSpecAnLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);
   std::map<std::int32_t, std::string> digitaledgetriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"}, };
   std::map<std::string, std::int32_t> digitaledgetriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXIe_DStarB", 12},{"TimerEvent", 13}, };
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"}, };

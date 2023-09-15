@@ -115,32 +115,22 @@ TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionErr
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     ::grpc::ClientContext context;
     niswitch::CloseRequest request;
     request.mutable_vi()->set_name(session.name());
     niswitch::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidSwitchSession);
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr(kInvalidSwitchSessionMessage));
-  }
+  }, kInvalidSwitchSession, kInvalidSwitchSessionMessage);
 }
 
 TEST_F(NiSwitchSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     niswitch::InitWithTopologyResponse init_response;
     call_init_with_topology(kInvalidRsrcName, "", "", &init_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kViErrorRsrcNotFound);
-    EXPECT_STREQ(kViErrorRsrcNotFoundMessage, ex.what());
-  }
+  }, kViErrorRsrcNotFound, kViErrorRsrcNotFoundMessage);
 }
 
 }  // namespace system

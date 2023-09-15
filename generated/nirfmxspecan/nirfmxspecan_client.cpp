@@ -4331,6 +4331,166 @@ harm_read(const StubPtr& stub, const nidevice_grpc::Session& instrument, const s
   return response;
 }
 
+IDPDCfgEqualizerCoefficientsResponse
+idpd_cfg_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& equalizer_coefficients)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgEqualizerCoefficientsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(equalizer_coefficients, request.mutable_equalizer_coefficients());
+
+  auto response = IDPDCfgEqualizerCoefficientsResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgEqualizerCoefficients(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDCfgPredistortedWaveformResponse
+idpd_cfg_predistorted_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& predistorted_waveform, const double& target_gain)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgPredistortedWaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(predistorted_waveform, request.mutable_predistorted_waveform());
+  request.set_target_gain(target_gain);
+
+  auto response = IDPDCfgPredistortedWaveformResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgPredistortedWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDCfgReferenceWaveformResponse
+idpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const pb::int32& idle_duration_present, const pb::int32& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgReferenceWaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform, request.mutable_reference_waveform());
+  request.set_idle_duration_present(idle_duration_present);
+  request.set_signal_type(signal_type);
+
+  auto response = IDPDCfgReferenceWaveformResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDFetchEqualizerCoefficientsResponse
+idpd_fetch_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchEqualizerCoefficientsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchEqualizerCoefficientsResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchEqualizerCoefficients(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDFetchPredistortedWaveformResponse
+idpd_fetch_predistorted_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchPredistortedWaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchPredistortedWaveformResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchPredistortedWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDFetchProcessedMeanAcquiredWaveformResponse
+idpd_fetch_processed_mean_acquired_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchProcessedMeanAcquiredWaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchProcessedMeanAcquiredWaveformResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchProcessedMeanAcquiredWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDFetchProcessedReferenceWaveformResponse
+idpd_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchProcessedReferenceWaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchProcessedReferenceWaveformResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchProcessedReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDGetEqualizerReferenceWaveformResponse
+idpd_get_equalizer_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDGetEqualizerReferenceWaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = IDPDGetEqualizerReferenceWaveformResponse{};
+
+  raise_if_error(
+      stub->IDPDGetEqualizerReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IMCfgAutoIntermodsSetupResponse
 im_cfg_auto_intermods_setup(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<IMAutoIntermodsSetupEnabled, pb::int32>& auto_intermods_setup_enabled, const pb::int32& maximum_intermod_order)
 {
@@ -5050,6 +5210,25 @@ marker_cfg_x_location(const StubPtr& stub, const nidevice_grpc::Session& instrum
 
   raise_if_error(
       stub->MarkerCfgXLocation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgYLocationResponse
+marker_cfg_y_location(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_y_location)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgYLocationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_marker_y_location(marker_y_location);
+
+  auto response = MarkerCfgYLocationResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgYLocation(&context, request, &response),
       context);
 
   return response;

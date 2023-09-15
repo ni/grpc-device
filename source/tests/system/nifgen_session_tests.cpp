@@ -17,7 +17,7 @@ const int kInvalidFgenSession = -1074130544;
 const char* kViErrorFgenResourceNotFoundMessage = "Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
 const char* kInvalidFgenSessionMessage = "The session handle is not valid.";
 const char* kTestFgenRsrc = "FakeDevice";
-const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5421; BoardType:PXI";
+const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5433 (2CH); BoardType:PXI";
 const char* kFgenTestSession = "SessionName";
 const char* kTestInvalidFgenRsrc = "";
 
@@ -117,32 +117,22 @@ TEST_F(NiFgenSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
   nidevice_grpc::Session session;
   session.set_name("");
 
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     ::grpc::ClientContext context;
     fgen::CloseRequest request;
     request.mutable_vi()->set_name(session.name());
     fgen::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidFgenSession);
-    EXPECT_STREQ(kInvalidFgenSessionMessage, ex.what());
-  }
+  }, kInvalidFgenSession, kInvalidFgenSessionMessage);
 }
 
 TEST_F(NiFgenSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  try {
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
     fgen::InitWithOptionsResponse initialize_response;
     call_init_with_options(kTestInvalidFgenRsrc, "", "", &initialize_response);
-    FAIL() << "We shouldn't get here.";
-  }
-  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    expect_driver_error(ex, kInvalidFgenRsrc);
-    EXPECT_THAT(ex.what(), HasSubstr(kViErrorFgenResourceNotFoundMessage));
-  }
+  }, kInvalidFgenRsrc, kViErrorFgenResourceNotFoundMessage);
 }
 
 }  // namespace system

@@ -2035,6 +2035,26 @@ initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const st
   return response;
 }
 
+LoadFromGenerationConfigurationFileResponse
+load_from_generation_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_path, const pb::int32& configuration_index)
+{
+  ::grpc::ClientContext context;
+
+  auto request = LoadFromGenerationConfigurationFileRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_file_path(file_path);
+  request.set_configuration_index(configuration_index);
+
+  auto response = LoadFromGenerationConfigurationFileResponse{};
+
+  raise_if_error(
+      stub->LoadFromGenerationConfigurationFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccAutoLevelResponse
 mod_acc_auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

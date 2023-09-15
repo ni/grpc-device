@@ -16,6 +16,7 @@ class NiFakeExtensionLibraryInterface {
   virtual ~NiFakeExtensionLibraryInterface() {}
 
   virtual ViStatus AddCoolFunctionality(ViSession vi, ViInt32 param) = 0;
+  virtual ViStatus TestAddressParameters(ViSession vi, ViInt16 space, ViUInt64 offset, ViAddr suggested, ViAddr* actual) = 0;
 };
 
 }  // namespace nifake_extension_grpc

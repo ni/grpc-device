@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXBLUETOOTH API metadata version 21.0.0
+// This file is generated from NI-RFMXBLUETOOTH API metadata version 23.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXBLUETOOTH Metadata
 //---------------------------------------------------------------------
@@ -93,6 +93,8 @@ service NiRFmxBluetooth {
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc ModAccCfgAveraging(ModAccCfgAveragingRequest) returns (ModAccCfgAveragingResponse);
   rpc ModAccCfgBurstSynchronizationType(ModAccCfgBurstSynchronizationTypeRequest) returns (ModAccCfgBurstSynchronizationTypeResponse);
+  rpc ModAccFetchCSDetrendedPhaseTrace(ModAccFetchCSDetrendedPhaseTraceRequest) returns (ModAccFetchCSDetrendedPhaseTraceResponse);
+  rpc ModAccFetchCSToneTrace(ModAccFetchCSToneTraceRequest) returns (ModAccFetchCSToneTraceResponse);
   rpc ModAccFetchConstellationTrace(ModAccFetchConstellationTraceRequest) returns (ModAccFetchConstellationTraceResponse);
   rpc ModAccFetchDEVM(ModAccFetchDEVMRequest) returns (ModAccFetchDEVMResponse);
   rpc ModAccFetchDEVMMagnitudeError(ModAccFetchDEVMMagnitudeErrorRequest) returns (ModAccFetchDEVMMagnitudeErrorResponse);
@@ -179,6 +181,10 @@ enum NiRFmxBluetoothAttribute {
   NIRFMXBLUETOOTH_ATTRIBUTE_CTE_LENGTH = 11534381;
   NIRFMXBLUETOOTH_ATTRIBUTE_CTE_SLOT_DURATION = 11534382;
   NIRFMXBLUETOOTH_ATTRIBUTE_CTE_NUMBER_OF_TRANSMIT_SLOTS = 11534383;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CHANNEL_SOUNDING_PACKET_FORMAT = 11534384;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CHANNEL_SOUNDING_SYNC_SEQUENCE = 11534385;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CHANNEL_SOUNDING_PHASE_MEASUREMENT_PERIOD = 11534386;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT = 11534387;
   NIRFMXBLUETOOTH_ATTRIBUTE_REFERENCE_LEVEL_HEADROOM = 11538428;
   NIRFMXBLUETOOTH_ATTRIBUTE_SELECTED_PORTS = 11538429;
   NIRFMXBLUETOOTH_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE = 11538431;
@@ -257,6 +263,8 @@ enum NiRFmxBluetoothAttribute {
   NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_AVERAGE_RMS_PHASE_ERROR_MEAN = 11550767;
   NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PEAK_RMS_PHASE_ERROR_MAXIMUM = 11550768;
   NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_LE_INITIAL_FREQUENCY_ERROR_MAXIMUM = 11550769;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_CLOCK_DRIFT_MEAN = 11550770;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PREAMBLE_START_TIME_MEAN = 11550771;
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_MEASUREMENT_ENABLED = 11554816;
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_OFFSET_CHANNEL_MODE = 11554818;
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_NUMBER_OF_OFFSETS = 11554819;
@@ -379,6 +387,7 @@ enum PacketType {
   PACKET_TYPE_3_EV3 = 14;
   PACKET_TYPE_3_EV5 = 15;
   PACKET_TYPE_LE = 16;
+  PACKET_TYPE_LE_CS = 17;
 }
 
 enum PayloadBitPattern {
@@ -438,6 +447,15 @@ enum NiRFmxBluetoothInt32AttributeValues {
   NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_FAIL = 0;
   NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_NOT_APPLICABLE = -1;
   NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_PASS = 1;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_PACKET_FORMAT_SYNC = 0;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE = 1;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE_AFTER_SYNC = 2;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE_BEFORE_SYNC = 3;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_SYNC_SEQUENCE_NONE = 0;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_32_BIT = 1;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_96_BIT = 2;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_DISABLED = 0;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_ENABLED = 1;
   NIRFMXBLUETOOTH_INT32_DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
   NIRFMXBLUETOOTH_INT32_DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
   NIRFMXBLUETOOTH_INT32_DIRECTION_FINDING_MODE_DISABLED = 0;
@@ -480,6 +498,7 @@ enum NiRFmxBluetoothInt32AttributeValues {
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_3_EV3 = 14;
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_3_EV5 = 15;
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_LE = 16;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_LE_CS = 17;
   NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_STANDARD_DEFINED = 0;
   NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_11110000 = 1;
   NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_10101010 = 2;
@@ -1426,6 +1445,35 @@ message ModAccCfgBurstSynchronizationTypeRequest {
 
 message ModAccCfgBurstSynchronizationTypeResponse {
   int32 status = 1;
+}
+
+message ModAccFetchCSDetrendedPhaseTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchCSDetrendedPhaseTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float cs_detrended_phase = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchCSToneTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchCSToneTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float cs_tone_amplitude = 4;
+  repeated float cs_tone_phase = 5;
+  int32 actual_array_size = 6;
 }
 
 message ModAccFetchConstellationTraceRequest {

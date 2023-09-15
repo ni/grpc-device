@@ -109,6 +109,7 @@ class NiScopeMockLibrary : public niscope_grpc::NiScopeLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViSession, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViSession value), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViConstString value), (override));
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
+  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
 };
 
 }  // namespace unit

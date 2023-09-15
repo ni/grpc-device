@@ -70,6 +70,7 @@
 #include "nitclk/nitclk_service_registrar.h"
 #include "nixnet/nixnet_service_registrar.h"
 #include "nixnetsocket/nixnetsocket_service_registrar.h"
+#include "visa/visa_service_registrar.h"
 
 namespace nidevice_grpc {
 
@@ -83,18 +84,19 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
   service_vector->push_back(session_repository);
   nidevice_grpc::register_core_services(service_vector, server_builder, session_repository, feature_toggles);
 
-  auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository.get());
-  auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository.get());
+  auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository);
+  auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository);
 #if defined(_MSC_VER)
-  auto nimxlc_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nimxlc_Session>>(session_repository.get());
+  auto nimxlc_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nimxlc_Session>>(session_repository);
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
-  auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository.get());
+  auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository);
 #endif // defined(_MSC_VER)
-  auto nx_session_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>(session_repository.get());
-  auto nx_database_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>(session_repository.get());
-  auto nx_socket_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSOCKET>>(session_repository.get());
-  auto nx_ip_stack_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>(session_repository.get());
+  auto nx_session_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>(session_repository);
+  auto nx_database_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>(session_repository);
+  auto nx_socket_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSOCKET>>(session_repository);
+  auto nx_ip_stack_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>(session_repository);
+  auto vi_object_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViObject>>(session_repository);
 
   service_vector->push_back(
     nidaqmx_grpc::register_service(
@@ -283,6 +285,12 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       server_builder, 
       nx_socket_repository,
       nx_ip_stack_ref_t_repository,
+      feature_toggles));
+  service_vector->push_back(
+    visa_grpc::register_service(
+      server_builder, 
+      vi_session_repository,
+      vi_object_repository,
       feature_toggles));
 
   return service_vector;

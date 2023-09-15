@@ -33,14 +33,15 @@ struct NiScopeFeatureToggles
 
 class NiScopeService final : public NiScope::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiScopeLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiScopeService(
-    NiScopeLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiScopeFeatureToggles& feature_toggles = {});
   virtual ~NiScopeService();
-  
+
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AcquisitionStatus(::grpc::ServerContext* context, const AcquisitionStatusRequest* request, AcquisitionStatusResponse* response) override;
   ::grpc::Status ActualMeasWfmSize(::grpc::ServerContext* context, const ActualMeasWfmSizeRequest* request, ActualMeasWfmSizeResponse* response) override;
@@ -132,9 +133,9 @@ public:
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
 private:
-  NiScopeLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   std::map<std::int32_t, std::string> clockingterminalvalues_input_map_ { {1, "VAL_NO_SOURCE"},{2, "VAL_RTSI_CLOCK"},{3, "VAL_EXTERNAL"},{4, "VAL_PFI_0"},{5, "VAL_PFI_1"},{6, "VAL_PFI_2"},{7, "VAL_CLK_IN"},{8, "VAL_CLK_OUT"},{9, "VAL_INTERNAL10MHZ_OSC"},{10, "VAL_PXI_CLK"},{11, "VAL_PXI_CLK10"},{12, "VAL_PXI_CLK100"},{13, "VAL_PXIE_DSTAR_A"},{14, "VAL_AUX_0_CLK_IN"},{15, "VAL_AUX_0_CLK_OUT"},{16, "VAL_ONBOARD_CONFIGURABLE_RATE_CLK"}, };
   std::map<std::string, std::int32_t> clockingterminalvalues_output_map_ { {"VAL_NO_SOURCE", 1},{"VAL_RTSI_CLOCK", 2},{"VAL_EXTERNAL", 3},{"VAL_PFI_0", 4},{"VAL_PFI_1", 5},{"VAL_PFI_2", 6},{"VAL_CLK_IN", 7},{"VAL_CLK_OUT", 8},{"VAL_INTERNAL10MHZ_OSC", 9},{"VAL_PXI_CLK", 10},{"VAL_PXI_CLK10", 11},{"VAL_PXI_CLK100", 12},{"VAL_PXIE_DSTAR_A", 13},{"VAL_AUX_0_CLK_IN", 14},{"VAL_AUX_0_CLK_OUT", 15},{"VAL_ONBOARD_CONFIGURABLE_RATE_CLK", 16}, };
   std::map<std::int32_t, double> niscopereal64attributevaluesmapped_input_map_ { {1, 50.0f},{2, 75.0f},{3, 1000000.0f},{4, 0.0f},{5, -1.0f},{6, 20000000.0f},{7, 100000000.0f},{8, 20000000.0f},{9, 100000000.0f}, };

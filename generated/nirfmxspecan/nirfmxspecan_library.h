@@ -8,13 +8,16 @@
 
 #include "nirfmxspecan_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nirfmxspecan_grpc {
 
 class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterface {
  public:
   NiRFmxSpecAnLibrary();
+  explicit NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxSpecAnLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -214,6 +217,14 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 HarmFetchHarmonicPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize);
   int32 HarmFetchTHD(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalHarmonicDistortion, float64* averageFundamentalPower, float64* fundamentalFrequency);
   int32 HarmRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalHarmonicDistortion, float64* averageFundamentalPower);
+  int32 IDPDCfgEqualizerCoefficients(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle equalizerCoefficients[], int32 arraySize);
+  int32 IDPDCfgPredistortedWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle predistortedWaveform[], int32 arraySize, float64 targetGain);
+  int32 IDPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType);
+  int32 IDPDFetchEqualizerCoefficients(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle equalizerCoefficients[], int32 arraySize, int32* actualArraySize);
+  int32 IDPDFetchPredistortedWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle predistortedWaveform[], float64* papr, float64* powerOffset, float64* gain, int32 arraySize, int32* actualArraySize);
+  int32 IDPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize);
+  int32 IDPDFetchProcessedReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedReferenceWaveform[], int32 arraySize, int32* actualArraySize);
+  int32 IDPDGetEqualizerReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, NIComplexSingle equalizerReferenceWaveform[], float64* papr, int32 arraySize, int32* actualArraySize);
   int32 IMCfgAutoIntermodsSetup(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 autoIntermodsSetupEnabled, int32 maximumIntermodOrder);
   int32 IMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType);
   int32 IMCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding);
@@ -245,6 +256,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 MarkerCfgTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 trace);
   int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType);
   int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation);
+  int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation);
   int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation);
   int32 MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound);
   int32 MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks);
@@ -631,6 +643,14 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using HarmFetchHarmonicPowerTracePtr = decltype(&RFmxSpecAn_HarmFetchHarmonicPowerTrace);
   using HarmFetchTHDPtr = decltype(&RFmxSpecAn_HarmFetchTHD);
   using HarmReadPtr = decltype(&RFmxSpecAn_HarmRead);
+  using IDPDCfgEqualizerCoefficientsPtr = decltype(&RFmxSpecAn_IDPDCfgEqualizerCoefficients);
+  using IDPDCfgPredistortedWaveformPtr = decltype(&RFmxSpecAn_IDPDCfgPredistortedWaveform);
+  using IDPDCfgReferenceWaveformPtr = decltype(&RFmxSpecAn_IDPDCfgReferenceWaveform);
+  using IDPDFetchEqualizerCoefficientsPtr = decltype(&RFmxSpecAn_IDPDFetchEqualizerCoefficients);
+  using IDPDFetchPredistortedWaveformPtr = decltype(&RFmxSpecAn_IDPDFetchPredistortedWaveform);
+  using IDPDFetchProcessedMeanAcquiredWaveformPtr = decltype(&RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform);
+  using IDPDFetchProcessedReferenceWaveformPtr = decltype(&RFmxSpecAn_IDPDFetchProcessedReferenceWaveform);
+  using IDPDGetEqualizerReferenceWaveformPtr = decltype(&RFmxSpecAn_IDPDGetEqualizerReferenceWaveform);
   using IMCfgAutoIntermodsSetupPtr = decltype(&RFmxSpecAn_IMCfgAutoIntermodsSetup);
   using IMCfgAveragingPtr = decltype(&RFmxSpecAn_IMCfgAveraging);
   using IMCfgFFTPtr = decltype(&RFmxSpecAn_IMCfgFFT);
@@ -662,6 +682,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using MarkerCfgTracePtr = decltype(&RFmxSpecAn_MarkerCfgTrace);
   using MarkerCfgTypePtr = decltype(&RFmxSpecAn_MarkerCfgType);
   using MarkerCfgXLocationPtr = decltype(&RFmxSpecAn_MarkerCfgXLocation);
+  using MarkerCfgYLocationPtr = decltype(&RFmxSpecAn_MarkerCfgYLocation);
   using MarkerFetchXYPtr = decltype(&RFmxSpecAn_MarkerFetchXY);
   using MarkerNextPeakPtr = decltype(&RFmxSpecAn_MarkerNextPeak);
   using MarkerPeakSearchPtr = decltype(&RFmxSpecAn_MarkerPeakSearch);
@@ -1048,6 +1069,14 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     HarmFetchHarmonicPowerTracePtr HarmFetchHarmonicPowerTrace;
     HarmFetchTHDPtr HarmFetchTHD;
     HarmReadPtr HarmRead;
+    IDPDCfgEqualizerCoefficientsPtr IDPDCfgEqualizerCoefficients;
+    IDPDCfgPredistortedWaveformPtr IDPDCfgPredistortedWaveform;
+    IDPDCfgReferenceWaveformPtr IDPDCfgReferenceWaveform;
+    IDPDFetchEqualizerCoefficientsPtr IDPDFetchEqualizerCoefficients;
+    IDPDFetchPredistortedWaveformPtr IDPDFetchPredistortedWaveform;
+    IDPDFetchProcessedMeanAcquiredWaveformPtr IDPDFetchProcessedMeanAcquiredWaveform;
+    IDPDFetchProcessedReferenceWaveformPtr IDPDFetchProcessedReferenceWaveform;
+    IDPDGetEqualizerReferenceWaveformPtr IDPDGetEqualizerReferenceWaveform;
     IMCfgAutoIntermodsSetupPtr IMCfgAutoIntermodsSetup;
     IMCfgAveragingPtr IMCfgAveraging;
     IMCfgFFTPtr IMCfgFFT;
@@ -1079,6 +1108,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     MarkerCfgTracePtr MarkerCfgTrace;
     MarkerCfgTypePtr MarkerCfgType;
     MarkerCfgXLocationPtr MarkerCfgXLocation;
+    MarkerCfgYLocationPtr MarkerCfgYLocation;
     MarkerFetchXYPtr MarkerFetchXY;
     MarkerNextPeakPtr MarkerNextPeak;
     MarkerPeakSearchPtr MarkerPeakSearch;
@@ -1269,7 +1299,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

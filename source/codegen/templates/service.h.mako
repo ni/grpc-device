@@ -60,24 +60,25 @@ struct ${service_class_prefix}FeatureToggles
 % endfor
 };
 
-% if type_from_enum != "":  
+% if type_from_enum != "":
 enum TypeIdentifier { ${type_from_enum} };
 
 % endif
 class ${service_class_prefix}Service final : public ${base_class_name} {
 public:
+  using LibrarySharedPtr = std::shared_ptr<${service_class_prefix}LibraryInterface>;
 % for resource_handle_type in resource_repository_deps:
   using ${resource_repository_deps[resource_handle_type].resource_repository_alias} = ${resource_repository_deps[resource_handle_type].resource_repository_type};
 % endfor
 
   ${service_class_prefix}Service(
-    ${service_class_prefix}LibraryInterface* library,
+    LibrarySharedPtr library,
 % for resource_handle_type in resource_repository_deps:
     ${resource_repository_deps[resource_handle_type].resource_repository_alias} ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
     const ${service_class_prefix}FeatureToggles& feature_toggles = {});
   virtual ~${service_class_prefix}Service();
-  
+
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   f = functions[function]
@@ -92,7 +93,7 @@ public:
 % endif
 % endfor
 private:
-  ${driver_library_interface}* library_;
+  LibrarySharedPtr library_;
 % for resource_handle_type in resource_repository_deps:
   ${resource_repository_deps[resource_handle_type].resource_repository_alias} ${resource_repository_deps[resource_handle_type].field_name};
 % endfor
@@ -100,7 +101,7 @@ private:
 <%
   cpp_handle_type = resource_handle_type[0].upper() + resource_handle_type[1:]
 %>\
-  ::grpc::Status ConvertApiErrorStatusFor${cpp_handle_type}(::grpc::ServerContext* context, int32_t status, ${resource_handle_type} ${config["session_handle_parameter_name"]});
+  ::grpc::Status ConvertApiErrorStatusFor${cpp_handle_type}(::grpc::ServerContextBase* context, int32_t status, ${resource_handle_type} ${config["session_handle_parameter_name"]});
 % endfor
 % if common_helpers.has_viboolean_array_param(functions):
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);

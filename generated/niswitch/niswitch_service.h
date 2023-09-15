@@ -33,14 +33,15 @@ struct NiSwitchFeatureToggles
 
 class NiSwitchService final : public NiSwitch::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiSwitchLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiSwitchService(
-    NiSwitchLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiSwitchFeatureToggles& feature_toggles = {});
   virtual ~NiSwitchService();
-  
+
   ::grpc::Status AbortScan(::grpc::ServerContext* context, const AbortScanRequest* request, AbortScanResponse* response) override;
   ::grpc::Status CanConnect(::grpc::ServerContext* context, const CanConnectRequest* request, CanConnectResponse* response) override;
   ::grpc::Status CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response) override;
@@ -102,9 +103,9 @@ public:
   ::grpc::Status WaitForDebounce(::grpc::ServerContext* context, const WaitForDebounceRequest* request, WaitForDebounceResponse* response) override;
   ::grpc::Status WaitForScanComplete(::grpc::ServerContext* context, const WaitForScanCompleteRequest* request, WaitForScanCompleteResponse* response) override;
 private:
-  NiSwitchLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
 
   NiSwitchFeatureToggles feature_toggles_;
 };

@@ -33,6 +33,8 @@ class ServerConfigurationParser {
 
   static std::string get_exe_path();
 
+  const std::string& get_config_file_path() const { return config_file_path_; }
+
   std::string parse_address() const;
   std::string parse_server_cert() const;
   std::string parse_server_key() const;
@@ -94,15 +96,15 @@ class ServerConfigurationParser {
   };
 
  private:
-  static nlohmann::json load(const std::string& config_file_path);
+  void load_config_file();
   static std::string read_keycert(const std::string& filename);
   static std::string get_certs_directory(const std::string& config_file_path);
   std::string parse_key_from_security_section(const char* key) const;
   std::string parse_bind_address() const;
   int parse_port() const;
 
-  nlohmann::json config_file_;
   std::string config_file_path_;
+  nlohmann::json config_file_;
   std::string certs_directory_;
 };
 

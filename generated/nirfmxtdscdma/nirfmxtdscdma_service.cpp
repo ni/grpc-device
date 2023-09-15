@@ -25,7 +25,7 @@ namespace nirfmxtdscdma_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxTDSCDMAService::NiRFmxTDSCDMAService(
-      NiRFmxTDSCDMALibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxTDSCDMAFeatureToggles& feature_toggles)
@@ -3527,7 +3527,9 @@ namespace nirfmxtdscdma_grpc {
         return std::make_tuple(status, instrument);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXTDSCDMA_VAL_FALSE); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXTDSCDMA_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
@@ -3562,7 +3564,9 @@ namespace nirfmxtdscdma_grpc {
         return std::make_tuple(status, instrument);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXTDSCDMA_VAL_FALSE); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXTDSCDMA_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
@@ -6499,7 +6503,7 @@ namespace nirfmxtdscdma_grpc {
   NiRFmxTDSCDMAFeatureToggles::NiRFmxTDSCDMAFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxtdscdma", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxtdscdma", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxtdscdma_grpc

@@ -148,6 +148,27 @@ auto_detect_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument
   return response;
 }
 
+AutoDetectSignalAnalysisOnlyResponse
+auto_detect_signal_analysis_only(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AutoDetectSignalAnalysisOnlyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iq, request.mutable_iq());
+
+  auto response = AutoDetectSignalAnalysisOnlyResponse{};
+
+  raise_if_error(
+      stub->AutoDetectSignalAnalysisOnly(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AutoLevelResponse
 auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_interval)
 {

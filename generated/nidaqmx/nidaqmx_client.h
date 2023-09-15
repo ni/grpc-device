@@ -387,6 +387,9 @@ StartTaskResponse start_task(const StubPtr& stub, const nidevice_grpc::Session& 
 StopTaskResponse stop_task(const StubPtr& stub, const nidevice_grpc::Session& task);
 TaskControlResponse task_control(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TaskControlAction, pb::int32>& action);
 TristateOutputTermResponse tristate_output_term(const StubPtr& stub, const std::string& output_terminal);
+UnregisterDoneEventResponse unregister_done_event(const StubPtr& stub, const nidevice_grpc::Session& task);
+UnregisterEveryNSamplesEventResponse unregister_every_n_samples_event(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<EveryNSamplesEventType, pb::int32>& every_n_samples_event_type);
+UnregisterSignalEventResponse unregister_signal_event(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<Signal2, pb::int32>& signal_id);
 UnreserveNetworkDeviceResponse unreserve_network_device(const StubPtr& stub, const std::string& device_name);
 WaitForNextSampleClockResponse wait_for_next_sample_clock(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout);
 WaitForValidTimestampResponse wait_for_valid_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimestampEvent, pb::int32>& timestamp_event, const double& timeout);

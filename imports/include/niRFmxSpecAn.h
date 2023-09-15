@@ -477,6 +477,10 @@
 #define RFMXSPECAN_ATTR_IM_RESULTS_INTERMOD_ORDER                                      0x00110022
 #define RFMXSPECAN_ATTR_IM_RESULTS_LOWER_INTERMOD_POWER                                0x00110024
 #define RFMXSPECAN_ATTR_IM_RESULTS_UPPER_INTERMOD_POWER                                0x00110026
+#define RFMXSPECAN_ATTR_IM_RESULTS_WORST_CASE_INTERMOD_ABSOLUTE_POWER                  0x00110032
+#define RFMXSPECAN_ATTR_IM_RESULTS_LOWER_INTERMOD_RELATIVE_POWER                       0x00110030
+#define RFMXSPECAN_ATTR_IM_RESULTS_UPPER_INTERMOD_RELATIVE_POWER                       0x00110031
+#define RFMXSPECAN_ATTR_IM_RESULTS_WORST_CASE_INTERMOD_RELATIVE_POWER                  0x00110033
 #define RFMXSPECAN_ATTR_IM_RESULTS_LOWER_OUTPUT_INTERCEPT_POWER                        0x00110027
 #define RFMXSPECAN_ATTR_IM_RESULTS_UPPER_OUTPUT_INTERCEPT_POWER                        0x00110028
 #define RFMXSPECAN_ATTR_IM_RESULTS_WORST_CASE_OUTPUT_INTERCEPT_POWER                   0x00110029
@@ -538,6 +542,29 @@
 #define RFMXSPECAN_ATTR_LIMITED_CONFIGURATION_CHANGE                                   0x0010000e
 #define RFMXSPECAN_ATTR_RESULT_FETCH_TIMEOUT                                           0x0010c000
 #define RFMXSPECAN_ATTR_CENTER_FREQUENCY                                               0x00100001
+#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_ENABLED                                       0x00140000
+#define RFMXSPECAN_ATTR_IDPD_EQUALIZER_MODE                                            0x00140002
+#define RFMXSPECAN_ATTR_IDPD_EQUALIZER_FILTER_LENGTH                                   0x00140003
+#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE_MODE                              0x00140004
+#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE                                   0x00140005
+#define RFMXSPECAN_ATTR_IDPD_SIGNAL_TYPE                                               0x00140006
+#define RFMXSPECAN_ATTR_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT                  0x0014000b
+#define RFMXSPECAN_ATTR_IDPD_DUT_AVERAGE_INPUT_POWER                                   0x0014000c
+#define RFMXSPECAN_ATTR_IDPD_AVERAGING_ENABLED                                         0x0014000f
+#define RFMXSPECAN_ATTR_IDPD_AVERAGING_COUNT                                           0x00140010
+#define RFMXSPECAN_ATTR_IDPD_EVM_ENABLED                                               0x00140013
+#define RFMXSPECAN_ATTR_IDPD_EVM_UNIT                                                  0x00140014
+#define RFMXSPECAN_ATTR_IDPD_IMPAIRMENT_ESTIMATION_START                               0x00140015
+#define RFMXSPECAN_ATTR_IDPD_IMPAIRMENT_ESTIMATION_STOP                                0x00140016
+#define RFMXSPECAN_ATTR_IDPD_SYNCHRONIZATION_ESTIMATION_START                          0x00140017
+#define RFMXSPECAN_ATTR_IDPD_SYNCHRONIZATION_ESTIMATION_STOP                           0x00140018
+#define RFMXSPECAN_ATTR_IDPD_GAIN_EXPANSION                                            0x00140019
+#define RFMXSPECAN_ATTR_IDPD_TARGET_GAIN                                               0x00140027
+#define RFMXSPECAN_ATTR_IDPD_POWER_LINEARITY_TRADEOFF                                  0x0014001b
+#define RFMXSPECAN_ATTR_IDPD_RESULTS_GAIN                                              0x0014001d
+#define RFMXSPECAN_ATTR_IDPD_RESULTS_MEAN_RMS_EVM                                      0x0014001e
+#define RFMXSPECAN_ATTR_IDPD_ALL_TRACES_ENABLED                                        0x0014001f
+#define RFMXSPECAN_ATTR_IDPD_NUMBER_OF_ANALYSIS_THREADS                                0x00140021
 #define RFMXSPECAN_ATTR_REFERENCE_LEVEL                                                0x00100002
 #define RFMXSPECAN_ATTR_EXTERNAL_ATTENUATION                                           0x00100003
 #define RFMXSPECAN_ATTR_TRIGGER_TYPE                                                   0x00100004
@@ -1359,6 +1386,7 @@
 #define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_OFF                                                         0
 #define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_NORMAL                                                      1
 #define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_DELTA                                                       3
+#define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_FIXED                                                       4
 
 // Values for MarkerNextPeak
 #define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_HIGHEST                                                  0
@@ -1532,6 +1560,35 @@
 #define RFMXSPECAN_VAL_FALSE                                                                          0
 #define RFMXSPECAN_VAL_TRUE                                                                           1
 
+// Values for RFMXSPECAN_ATTR_IDPD_EQUALIZER_MODE
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_OFF                                                        0
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_TRAIN                                                      1
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_HOLD                                                       2
+
+// Values for RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE_MODE
+#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_USER                                         0
+#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                           1
+
+// Values for RFMXSPECAN_ATTR_IDPD_SIGNAL_TYPE
+#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_MODULATED                                                     0
+#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_TONES                                                         1
+
+// Values for RFMXSPECAN_ATTR_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT
+#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                            0
+#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                             1
+
+// Values for RFMXSPECAN_ATTR_IDPD_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_TRUE                                                    1
+
+// Values for RFMXSPECAN_ATTR_IDPD_EVM_ENABLED
+#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_FALSE                                                         0
+#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_TRUE                                                          1
+
+// Values for RFMXSPECAN_ATTR_IDPD_EVM_UNIT
+#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_PERCENTAGE                                                       0
+#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_DB                                                               1
+
 // Values for MeasurementTypes
 #define RFMXSPECAN_VAL_ACP                                                                            1 << 0
 #define RFMXSPECAN_VAL_CCDF                                                                           1 << 1
@@ -1550,6 +1607,7 @@
 #define RFMXSPECAN_VAL_NF                                                                             1 << 14
 #define RFMXSPECAN_VAL_PHASENOISE                                                                     1 << 15
 #define RFMXSPECAN_VAL_PAVT                                                                           1 << 16
+#define RFMXSPECAN_VAL_IDPD                                                                           1 << 17
 
 // Values for FrequencyReferenceSource
 #define RFMXSPECAN_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
@@ -2418,6 +2476,12 @@ int32 __stdcall RFmxSpecAn_MarkerCfgXLocation(
    float64 markerXLocation
 );
 
+int32 __stdcall RFmxSpecAn_MarkerCfgYLocation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 markerYLocation
+);
+
 int32 __stdcall RFmxSpecAn_DPDCfgPreviousDPDPolynomial(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2509,6 +2573,69 @@ int32 __stdcall RFmxSpecAn_AMPMCfgReferenceWaveformSplit(
    int32 arraySize,
    int32 idleDurationPresent,
    int32 signalType
+);
+
+int32 __stdcall RFmxSpecAn_IDPDCfgEqualizerCoefficients(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   NIComplexSingle equalizerCoefficients[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDCfgEqualizerCoefficientsSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDCfgReferenceWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   NIComplexSingle referenceWaveform[],
+   int32 arraySize,
+   int32 idleDurationPresent,
+   int32 signalType
+);
+
+int32 __stdcall RFmxSpecAn_IDPDCfgReferenceWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32 idleDurationPresent,
+   int32 signalType
+);
+
+int32 __stdcall RFmxSpecAn_IDPDCfgPredistortedWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   NIComplexSingle predistortedWaveform[],
+   int32 arraySize,
+   float64 targetGain
+);
+
+int32 __stdcall RFmxSpecAn_IDPDCfgPredistortedWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   float64 targetGain
 );
 
 int32 __stdcall RFmxSpecAn_AutoLevel(
@@ -4162,6 +4289,58 @@ int32 __stdcall RFmxSpecAn_IQFetchDataSplit(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxSpecAn_IDPDFetchPredistortedWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   NIComplexSingle predistortedWaveform[],
+   float64* PAPR,
+   float64* powerOffset,
+   float64* gain,
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchPredistortedWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 I[],
+   float32 Q[],
+   float64* PAPR,
+   float64* powerOffset,
+   float64* gain,
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEqualizerReferenceWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64* x0,
+   float64* dx,
+   NIComplexSingle equalizerReferenceWaveform[],
+   float64* PAPR,
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEqualizerReferenceWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64* x0,
+   float64* dx,
+   float32 I[],
+   float32 Q[],
+   float64* PAPR,
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxSpecAn_MarkerNextPeak(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4326,8 +4505,8 @@ int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurementArray(
    char selectorString[],
    float64 timeout,
    int32 intermodOrder[],
-   float64 lowerIntermodPower[],
-   float64 upperIntermodPower[],
+   float64 lowerIntermodAbsolutePower[],
+   float64 upperIntermodAbsolutePower[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -4369,8 +4548,8 @@ int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurement(
    char selectorString[],
    float64 timeout,
    int32* intermodOrder,
-   float64* lowerIntermodPower,
-   float64* upperIntermodPower
+   float64* lowerIntermodAbsolutePower,
+   float64* upperIntermodAbsolutePower
 );
 
 int32 __stdcall RFmxSpecAn_IMFetchInterceptPower(
@@ -5394,6 +5573,75 @@ int32 __stdcall RFmxSpecAn_PAVTFetchPhaseAndAmplitude(
    float64* meanRelativeAmplitude,
    float64* meanAbsolutePhase,
    float64* meanAbsoluteAmplitude
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   NIComplexSingle processedMeanAcquiredWaveform[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchProcessedReferenceWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   NIComplexSingle processedReferenceWaveform[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchProcessedReferenceWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchEqualizerCoefficients(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   NIComplexSingle equalizerCoefficients[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchEqualizerCoefficientsSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
 int32 __stdcall RFmxSpecAn_MarkerFetchXY(
@@ -11039,6 +11287,30 @@ int32 __stdcall RFmxSpecAn_IMGetResultsUpperIntermodPower(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxSpecAn_IMGetResultsWorstCaseIntermodAbsolutePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IMGetResultsLowerIntermodRelativePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IMGetResultsUpperIntermodRelativePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IMGetResultsWorstCaseIntermodRelativePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxSpecAn_IMGetResultsLowerOutputInterceptPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -12055,6 +12327,270 @@ int32 __stdcall RFmxSpecAn_SetListStepTimerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEqualizerMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetEqualizerMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEqualizerFilterLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetEqualizerFilterLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetMeasurementSampleRateMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetMeasurementSampleRateMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetMeasurementSampleRate(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetMeasurementSampleRate(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetSignalType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetSignalType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetReferenceWaveformIdleDurationPresent(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetReferenceWaveformIdleDurationPresent(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetDUTAverageInputPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetDUTAverageInputPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEVMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetEVMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEVMUnit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetEVMUnit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetImpairmentEstimationStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetImpairmentEstimationStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetImpairmentEstimationStop(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetImpairmentEstimationStop(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetSynchronizationEstimationStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetSynchronizationEstimationStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetSynchronizationEstimationStop(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetSynchronizationEstimationStop(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetGainExpansion(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetGainExpansion(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetTargetGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetTargetGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetPowerLinearityTradeoff(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetPowerLinearityTradeoff(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetResultsGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetResultsMeanRMSEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetNumberofAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetNumberofAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_PhaseNoiseGetMeasurementEnabled(

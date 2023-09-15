@@ -23,7 +23,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
   using nidevice_grpc::converters::MatchState;
 
   NimxlcTerminalAdaptorRestrictedService::NimxlcTerminalAdaptorRestrictedService(
-      NimxlcTerminalAdaptorRestrictedLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NimxlcTerminalAdaptorRestrictedFeatureToggles& feature_toggles)
       : library_(library),
@@ -62,7 +62,9 @@ namespace nimxlcterminaladaptor_restricted_grpc {
         return std::make_tuple(status, handle);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (nimxlc_Session id) { library_->destroySession(id); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (nimxlc_Session id) { library->destroySession(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNimxlc_Session(context, status, 0);

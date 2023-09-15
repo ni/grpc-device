@@ -33,21 +33,22 @@ struct NiRFmxWLANRestrictedFeatureToggles
 
 class NiRFmxWLANRestrictedService final : public NiRFmxWLANRestricted::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxWLANRestrictedLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
 
   NiRFmxWLANRestrictedService(
-    NiRFmxWLANRestrictedLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiRFmxWLANRestrictedFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxWLANRestrictedService();
-  
+
   ::grpc::Status GetChannelList(::grpc::ServerContext* context, const GetChannelListRequest* request, GetChannelListResponse* response) override;
   ::grpc::Status OFDMModAccFetchCommonPilotErrorTraceIndB(::grpc::ServerContext* context, const OFDMModAccFetchCommonPilotErrorTraceIndBRequest* request, OFDMModAccFetchCommonPilotErrorTraceIndBResponse* response) override;
   ::grpc::Status OFDMModAccNoiseCalibrate(::grpc::ServerContext* context, const OFDMModAccNoiseCalibrateRequest* request, OFDMModAccNoiseCalibrateResponse* response) override;
 private:
-  NiRFmxWLANRestrictedLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);
 
   NiRFmxWLANRestrictedFeatureToggles feature_toggles_;
 };

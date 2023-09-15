@@ -60,8 +60,10 @@ def check_for_warning(response):
 
 
 try:
-    response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
-    task = response.task
+    create_task_response = client.CreateTask(
+        nidaqmx_types.CreateTaskRequest(session_name="my task")
+    )
+    task = create_task_response.task
 
     client.CreateDOChan(
         nidaqmx_types.CreateDOChanRequest(
@@ -72,7 +74,7 @@ try:
     start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
     check_for_warning(start_task_response)
 
-    response = client.WriteDigitalU32(
+    write_response = client.WriteDigitalU32(
         nidaqmx_types.WriteDigitalU32Request(
             task=task,
             num_samps_per_chan=1,
@@ -82,17 +84,17 @@ try:
             write_array=[0xFFFF],
         )
     )
-    check_for_warning(response)
+    check_for_warning(write_response)
 
     stop_task_response = client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
     check_for_warning(stop_task_response)
     print(f"Output was successfully written to {LINES}.")
 except grpc.RpcError as rpc_error:
     error_message = str(rpc_error.details() or "")
-    for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
-        if key == "ni-error":
-            details = value if isinstance(value, str) else value.decode("utf-8")
-            error_message += f"\nError status: {details}"
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:

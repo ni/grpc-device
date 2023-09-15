@@ -26,7 +26,7 @@ namespace nirfmxnr_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxNRService::NiRFmxNRService(
-      NiRFmxNRLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxNRFeatureToggles& feature_toggles)
@@ -3587,7 +3587,9 @@ namespace nirfmxnr_grpc {
         return std::make_tuple(status, instrument);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXNR_VAL_FALSE); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXNR_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
@@ -3622,7 +3624,9 @@ namespace nirfmxnr_grpc {
         return std::make_tuple(status, instrument);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXNR_VAL_FALSE); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXNR_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
@@ -3652,6 +3656,33 @@ namespace nirfmxnr_grpc {
       auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
       char* result_name = (char*)result_name_mbcs.c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxNRService::LoadFromGenerationConfigurationFile(::grpc::ServerContext* context, const LoadFromGenerationConfigurationFileRequest* request, LoadFromGenerationConfigurationFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
+      int32 configuration_index = request->configuration_index();
+      auto status = library_->LoadFromGenerationConfigurationFile(instrument, selector_string, file_path, configuration_index);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

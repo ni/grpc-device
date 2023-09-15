@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXNR API metadata version 23.0.0
+// This file is generated from NI-RFMXNR API metadata version 23.5.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXNR Metadata
 //---------------------------------------------------------------------
@@ -115,6 +115,7 @@ service NiRFmxNR {
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
   rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc LoadFromGenerationConfigurationFile(LoadFromGenerationConfigurationFileRequest) returns (LoadFromGenerationConfigurationFileResponse);
   rpc ModAccAutoLevel(ModAccAutoLevelRequest) returns (ModAccAutoLevelResponse);
   rpc ModAccCfgMeasurementMode(ModAccCfgMeasurementModeRequest) returns (ModAccCfgMeasurementModeResponse);
   rpc ModAccCfgNoiseCompensationEnabled(ModAccCfgNoiseCompensationEnabledRequest) returns (ModAccCfgNoiseCompensationEnabledResponse);
@@ -590,6 +591,12 @@ enum NiRFmxNRAttribute {
   NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_DATA_TRANSIENT_RMS_EVM_MEAN = 9453734;
   NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_MAXIMUM = 9453735;
   NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_PEAK_PHASE_OFFSET_SLOT_INDEX = 9453736;
+  NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_DATA_RE_POWER_MEAN = 9453737;
+  NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_DMRS_RE_POWER_MEAN = 9453738;
+  NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_PTRS_RE_POWER_MEAN = 9453739;
+  NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_DATA_RE_POWER_MEAN = 9453740;
+  NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_DMRS_RE_POWER_MEAN = 9453741;
+  NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_PTRS_RE_POWER_MEAN = 9453742;
   NIRFMXNR_ATTRIBUTE_OBW_MEASUREMENT_ENABLED = 9461760;
   NIRFMXNR_ATTRIBUTE_OBW_SPAN = 9461763;
   NIRFMXNR_ATTRIBUTE_OBW_RBW_FILTER_AUTO_BANDWIDTH = 9461766;
@@ -977,6 +984,8 @@ enum SemUplinkMaskType {
   SEM_UPLINK_MASK_TYPE_NS21 = 6;
   SEM_UPLINK_MASK_TYPE_NS27 = 7;
   SEM_UPLINK_MASK_TYPE_NS07 = 8;
+  SEM_UPLINK_MASK_TYPE_NS03U = 9;
+  SEM_UPLINK_MASK_TYPE_NS21_REL_17_ONWARDS = 10;
 }
 
 enum SemUpperOffsetMeasurementStatus {
@@ -1375,6 +1384,8 @@ enum NiRFmxNRInt32AttributeValues {
   NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS21 = 6;
   NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS27 = 7;
   NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS07 = 8;
+  NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS03U = 9;
+  NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS21_REL_17_ONWARDS = 10;
   NIRFMXNR_INT32_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
   NIRFMXNR_INT32_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
   NIRFMXNR_INT32_SSB_ENABLED_FALSE = 0;
@@ -2571,6 +2582,17 @@ message InitiateRequest {
 }
 
 message InitiateResponse {
+  int32 status = 1;
+}
+
+message LoadFromGenerationConfigurationFileRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string file_path = 3;
+  int32 configuration_index = 4;
+}
+
+message LoadFromGenerationConfigurationFileResponse {
   int32 status = 1;
 }
 

@@ -470,7 +470,7 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
     """Return function metadata only for functions to include for generating proto rpc methods."""
-    functions_for_proto = {"public", "CustomCode", "CustomCodeCustomProtoMessage", "grpc-only"}
+    functions_for_proto = {"public", "CustomCode", "CustomCodeCustomProtoMessage"}
     return [
         name
         for name, function in functions.items()
@@ -480,7 +480,7 @@ def filter_proto_rpc_functions(functions):
 
 def filter_proto_rpc_functions_for_message(functions):
     """Return function metadata only for functions to include for generating proto rpc messages."""
-    functions_for_proto = {"public", "CustomCode", "grpc-only"}
+    functions_for_proto = {"public", "CustomCode"}
     return [
         name
         for name, function in functions.items()
@@ -501,6 +501,10 @@ def get_attribute_enums_by_type(attributes):
         if "enum" in attribute:
             attribute_type = get_underlying_type(attribute)
             enum_name = attribute["enum"]
+            if "bitfield_enum" in attribute:
+                enum_name = attribute["bitfield_enum"]
+                if enum_name.startswith("_"):  # nidaqmx-python uses a leading underscore
+                    enum_name = enum_name[1:]
             attribute_enums_by_type[attribute_type].add(enum_name)
     return attribute_enums_by_type
 
@@ -888,7 +892,11 @@ class AttributeGroup:  # noqa: D101
 
         categorized_attributes = defaultdict(dict)
         for id, data in self.attributes.items():
-            data_type = get_grpc_type_name_for_identifier(data["type"], self._config)
+            data_type = data["type"]
+            if "bitfield_enum" in data:
+                assert data_type == "int32[]"
+                data_type = "int32"
+            data_type = get_grpc_type_name_for_identifier(data_type, self._config)
             categorized_attributes[data_type][id] = data
             if data.get("resettable", False):
                 categorized_attributes["Reset"][id] = data

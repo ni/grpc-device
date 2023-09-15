@@ -8,13 +8,16 @@
 
 #include "nirfmxdemod_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nirfmxdemod_grpc {
 
 class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface {
  public:
   NiRFmxDemodLibrary();
+  explicit NiRFmxDemodLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxDemodLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -121,7 +124,9 @@ class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface 
   int32 GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize);
   int32 GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal);
   int32 GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize);
+  int32 GetAttributeNIComplexDouble(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble* attrVal);
   int32 GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize);
+  int32 GetAttributeNIComplexSingle(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle* attrVal);
   int32 GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize);
   int32 GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[]);
   int32 GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal);
@@ -150,7 +155,9 @@ class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface 
   int32 SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize);
   int32 SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal);
   int32 SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize);
+  int32 SetAttributeNIComplexDouble(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal);
   int32 SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize);
+  int32 SetAttributeNIComplexSingle(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal);
   int32 SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize);
   int32 SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[]);
   int32 SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal);
@@ -266,7 +273,9 @@ class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface 
   using GetAttributeI64ArrayPtr = decltype(&RFmxDemod_GetAttributeI64Array);
   using GetAttributeI8Ptr = decltype(&RFmxDemod_GetAttributeI8);
   using GetAttributeI8ArrayPtr = decltype(&RFmxDemod_GetAttributeI8Array);
+  using GetAttributeNIComplexDoublePtr = decltype(&RFmxDemod_GetAttributeNIComplexDouble);
   using GetAttributeNIComplexDoubleArrayPtr = decltype(&RFmxDemod_GetAttributeNIComplexDoubleArray);
+  using GetAttributeNIComplexSinglePtr = decltype(&RFmxDemod_GetAttributeNIComplexSingle);
   using GetAttributeNIComplexSingleArrayPtr = decltype(&RFmxDemod_GetAttributeNIComplexSingleArray);
   using GetAttributeStringPtr = decltype(&RFmxDemod_GetAttributeString);
   using GetAttributeU16Ptr = decltype(&RFmxDemod_GetAttributeU16);
@@ -295,7 +304,9 @@ class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface 
   using SetAttributeI64ArrayPtr = decltype(&RFmxDemod_SetAttributeI64Array);
   using SetAttributeI8Ptr = decltype(&RFmxDemod_SetAttributeI8);
   using SetAttributeI8ArrayPtr = decltype(&RFmxDemod_SetAttributeI8Array);
+  using SetAttributeNIComplexDoublePtr = decltype(&RFmxDemod_SetAttributeNIComplexDouble);
   using SetAttributeNIComplexDoubleArrayPtr = decltype(&RFmxDemod_SetAttributeNIComplexDoubleArray);
+  using SetAttributeNIComplexSinglePtr = decltype(&RFmxDemod_SetAttributeNIComplexSingle);
   using SetAttributeNIComplexSingleArrayPtr = decltype(&RFmxDemod_SetAttributeNIComplexSingleArray);
   using SetAttributeStringPtr = decltype(&RFmxDemod_SetAttributeString);
   using SetAttributeU16Ptr = decltype(&RFmxDemod_SetAttributeU16);
@@ -411,7 +422,9 @@ class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface 
     GetAttributeI64ArrayPtr GetAttributeI64Array;
     GetAttributeI8Ptr GetAttributeI8;
     GetAttributeI8ArrayPtr GetAttributeI8Array;
+    GetAttributeNIComplexDoublePtr GetAttributeNIComplexDouble;
     GetAttributeNIComplexDoubleArrayPtr GetAttributeNIComplexDoubleArray;
+    GetAttributeNIComplexSinglePtr GetAttributeNIComplexSingle;
     GetAttributeNIComplexSingleArrayPtr GetAttributeNIComplexSingleArray;
     GetAttributeStringPtr GetAttributeString;
     GetAttributeU16Ptr GetAttributeU16;
@@ -440,7 +453,9 @@ class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface 
     SetAttributeI64ArrayPtr SetAttributeI64Array;
     SetAttributeI8Ptr SetAttributeI8;
     SetAttributeI8ArrayPtr SetAttributeI8Array;
+    SetAttributeNIComplexDoublePtr SetAttributeNIComplexDouble;
     SetAttributeNIComplexDoubleArrayPtr SetAttributeNIComplexDoubleArray;
+    SetAttributeNIComplexSinglePtr SetAttributeNIComplexSingle;
     SetAttributeNIComplexSingleArrayPtr SetAttributeNIComplexSingleArray;
     SetAttributeStringPtr SetAttributeString;
     SetAttributeU16Ptr SetAttributeU16;
@@ -453,7 +468,7 @@ class NiRFmxDemodLibrary : public nirfmxdemod_grpc::NiRFmxDemodLibraryInterface 
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

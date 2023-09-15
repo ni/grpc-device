@@ -16,11 +16,11 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-Digital Pattern Driver | 2023 Q1 | Not Supported | Not Supported |
 | NI-DMM                    | 2023 Q1 | 2023 Q1       | 2023 Q1       |
 | NI-FGEN                   | 2023 Q1 | 2023 Q1       | 2023 Q1       |
-| NI-RFmx Bluetooth         | 2022 Q3 | Not Supported | Not Supported |
+| NI-RFmx Bluetooth         | 2023 Q4 | Not Supported | Not Supported |
 | NI-RFmx LTE               | 2022 Q3 | Not Supported | Not Supported |
-| NI-RFmx NR                | 2022 Q3 | Not Supported | Not Supported |
-| NI-RFmx SpecAn            | 2022 Q3 | Not Supported | Not Supported |
-| NI-RFmx WLAN              | 2022 Q3 | Not Supported | Not Supported |
+| NI-RFmx NR                | 2023 Q3 | Not Supported | Not Supported |
+| NI-RFmx SpecAn            | 2023 Q4 | Not Supported | Not Supported |
+| NI-RFmx WLAN              | 2023 Q3 | Not Supported | Not Supported |
 | NI-RFSA                   | 21.0.0  | 21.0.0        | Not Supported |
 | NI-RFSG                   | 21.0.0  | 21.0.0        | Not Supported |
 | NI-SCOPE                  | 2023 Q1 | 2023 Q1       | 2023 Q1       |
@@ -35,7 +35,7 @@ Indicates the most recent driver version used to test builds of the current sour
 ## Downloading a Release
 
 ### Download the Server
-1. (Windows Only) Download and install the latest [Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0).
+1. (Windows Only) Download and install the latest [Microsoft Visual C++ Redistributable for Visual Studio 2017 and 2019](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0).
 2. Navigate to the [Releases](https://github.com/ni/grpc-device/releases) page.
 3. Download the latest Server Release `.tar.gz` or `.zip` for the desired platform.
 4. Extract the contents of the `.tar.gz` or `.zip` to a directory with read and write permissions.
@@ -57,7 +57,7 @@ If you're looking to build the grpc-device repo locally, look at the [Getting St
 
 ## Running the gRPC Server
 
-The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support). The location of the server binary is not important as long as the user has proper permissions in the chosen directory.
+The server's startup configuration is set by specifying port and security settings in a JSON configuration file. A default configuration file named `server_config.json` with an insecure configuration (no SSL/TLS) bound to localhost is located in the same directory as the server executable. For more information on SSL/TLS related security settings refer to the [SSL/TLS Support section](#ssltls-support). For more information on address binding refer to the [Bind Address Support section](#bind-address-support). The location of the server binary is not important as long as the user has proper permissions in the chosen directory.
 
 There are two ways to start the server:
 
@@ -123,6 +123,10 @@ Below are the contents of a default configuration file accepting localhost conne
 ### Bind Address Support
 
 The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
+
+### Licensing behaviour
+
+If you are using gRPC to control a licensed software, e.g. RFmx, the license checkout will happen on the machine running the gRPC server, not in the client side. As the license check-in happens, when the process which requested the license terminates, you need to close the gRPC server application to return the license. 
 
 ## Creating a gRPC Client
 

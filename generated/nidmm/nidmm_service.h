@@ -33,14 +33,15 @@ struct NiDmmFeatureToggles
 
 class NiDmmService final : public NiDmm::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiDmmLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiDmmService(
-    NiDmmLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiDmmFeatureToggles& feature_toggles = {});
   virtual ~NiDmmService();
-  
+
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response) override;
   ::grpc::Status CheckAttributeViInt32(::grpc::ServerContext* context, const CheckAttributeViInt32Request* request, CheckAttributeViInt32Response* response) override;
@@ -129,9 +130,9 @@ public:
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
 private:
-  NiDmmLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   std::map<std::int32_t, double> nidmmreal64attributevaluesmapped_input_map_ { {1, 1e-06f},{2, 1e-05f},{3, 0.0001f},{4, 0.001f},{5, 1000000},{6, 10000000},{7, 10000000000.0f}, };
   std::map<double, std::int32_t> nidmmreal64attributevaluesmapped_output_map_ { {1e-06f, 1},{1e-05f, 2},{0.0001f, 3},{0.001f, 4},{1000000, 5},{10000000, 6},{10000000000.0f, 7}, };
 

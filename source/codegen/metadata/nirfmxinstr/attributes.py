@@ -511,5 +511,10 @@ attributes = {
         'access': 'read-write',
         'name': 'THERMAL_CORRECTION_TEMPERATURE_RESOLUTION',
         'type': 'float64'
+    },
+    128: {
+        'access': 'read-write',
+        'name': 'NUMBER_OF_RAW_IQ_RECORDS',
+        'type': 'int32'
     }
 }

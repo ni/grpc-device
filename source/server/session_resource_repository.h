@@ -1,6 +1,7 @@
 #ifndef NIDEVICE_GRPC_SESSION_RESOURCE_REPOSITORY_H
 #define NIDEVICE_GRPC_SESSION_RESOURCE_REPOSITORY_H
 
+#include <memory>
 #include <mutex>
 #include <string>
 #include <unordered_map>
@@ -18,7 +19,7 @@ class SessionResourceRepository {
   typedef std::function<std::tuple<int, TResourceHandle>()> InitFunc;
   typedef std::function<void(TResourceHandle)> CleanupSessionFunc;
 
-  SessionResourceRepository(SessionRepository* session_repository)
+  explicit SessionResourceRepository(const std::shared_ptr<SessionRepository>& session_repository)
       : session_repository_(session_repository),
         resource_map_(std::make_shared<ResourceMap>())
   {
@@ -76,7 +77,9 @@ class SessionResourceRepository {
     mutable std::recursive_mutex map_mutex_;
   };
 
-  SessionRepository* session_repository_;
+  // Services share ownership of session resource repositories, which share ownership of the session repository.
+  std::shared_ptr<SessionRepository> session_repository_;
+
   // shared_ptr to allow sharing ownership with cleanup delegate in register_dependent_session.
   std::shared_ptr<ResourceMap> resource_map_;
 };

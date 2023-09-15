@@ -33,14 +33,15 @@ struct NiDCPowerFeatureToggles
 
 class NiDCPowerService final : public NiDCPower::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiDCPowerLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiDCPowerService(
-    NiDCPowerLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiDCPowerFeatureToggles& feature_toggles = {});
   virtual ~NiDCPowerService();
-  
+
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AbortWithChannels(::grpc::ServerContext* context, const AbortWithChannelsRequest* request, AbortWithChannelsResponse* response) override;
   ::grpc::Status CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response) override;
@@ -187,9 +188,9 @@ public:
   ::grpc::Status WaitForEvent(::grpc::ServerContext* context, const WaitForEventRequest* request, WaitForEventResponse* response) override;
   ::grpc::Status WaitForEventWithChannels(::grpc::ServerContext* context, const WaitForEventWithChannelsRequest* request, WaitForEventWithChannelsResponse* response) override;
 private:
-  NiDCPowerLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
 
   NiDCPowerFeatureToggles feature_toggles_;

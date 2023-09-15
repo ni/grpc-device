@@ -34,14 +34,15 @@ struct NiDAQmxFeatureToggles
 
 class NiDAQmxService final : public NiDAQmx::WithCallbackMethod_RegisterSignalEvent<NiDAQmx::WithCallbackMethod_RegisterEveryNSamplesEvent<NiDAQmx::WithCallbackMethod_RegisterDoneEvent<NiDAQmx::Service>>> {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiDAQmxLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<TaskHandle>>;
 
   NiDAQmxService(
-    NiDAQmxLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiDAQmxFeatureToggles& feature_toggles = {});
   virtual ~NiDAQmxService();
-  
+
   ::grpc::Status AddCDAQSyncConnection(::grpc::ServerContext* context, const AddCDAQSyncConnectionRequest* request, AddCDAQSyncConnectionResponse* response) override;
   ::grpc::Status AddGlobalChansToTask(::grpc::ServerContext* context, const AddGlobalChansToTaskRequest* request, AddGlobalChansToTaskResponse* response) override;
   ::grpc::Status AddNetworkDevice(::grpc::ServerContext* context, const AddNetworkDeviceRequest* request, AddNetworkDeviceResponse* response) override;
@@ -407,6 +408,9 @@ public:
   ::grpc::Status StopTask(::grpc::ServerContext* context, const StopTaskRequest* request, StopTaskResponse* response) override;
   ::grpc::Status TaskControl(::grpc::ServerContext* context, const TaskControlRequest* request, TaskControlResponse* response) override;
   ::grpc::Status TristateOutputTerm(::grpc::ServerContext* context, const TristateOutputTermRequest* request, TristateOutputTermResponse* response) override;
+  ::grpc::Status UnregisterDoneEvent(::grpc::ServerContext* context, const UnregisterDoneEventRequest* request, UnregisterDoneEventResponse* response) override;
+  ::grpc::Status UnregisterEveryNSamplesEvent(::grpc::ServerContext* context, const UnregisterEveryNSamplesEventRequest* request, UnregisterEveryNSamplesEventResponse* response) override;
+  ::grpc::Status UnregisterSignalEvent(::grpc::ServerContext* context, const UnregisterSignalEventRequest* request, UnregisterSignalEventResponse* response) override;
   ::grpc::Status UnreserveNetworkDevice(::grpc::ServerContext* context, const UnreserveNetworkDeviceRequest* request, UnreserveNetworkDeviceResponse* response) override;
   ::grpc::Status WaitForNextSampleClock(::grpc::ServerContext* context, const WaitForNextSampleClockRequest* request, WaitForNextSampleClockResponse* response) override;
   ::grpc::Status WaitForValidTimestamp(::grpc::ServerContext* context, const WaitForValidTimestampRequest* request, WaitForValidTimestampResponse* response) override;
@@ -432,9 +436,9 @@ public:
   ::grpc::Status WriteToTEDSFromArray(::grpc::ServerContext* context, const WriteToTEDSFromArrayRequest* request, WriteToTEDSFromArrayResponse* response) override;
   ::grpc::Status WriteToTEDSFromFile(::grpc::ServerContext* context, const WriteToTEDSFromFileRequest* request, WriteToTEDSFromFileResponse* response) override;
 private:
-  NiDAQmxLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForTaskHandle(::grpc::ServerContext* context, int32_t status, TaskHandle task);
+  ::grpc::Status ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task);
 
   NiDAQmxFeatureToggles feature_toggles_;
 };

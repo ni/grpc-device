@@ -33,20 +33,21 @@ struct NiRFmxSpecAnRestrictedFeatureToggles
 
 class NiRFmxSpecAnRestrictedService final : public NiRFmxSpecAnRestricted::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxSpecAnRestrictedLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
 
   NiRFmxSpecAnRestrictedService(
-    NiRFmxSpecAnRestrictedLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiRFmxSpecAnRestrictedFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxSpecAnRestrictedService();
-  
+
   ::grpc::Status CacheResult(::grpc::ServerContext* context, const CacheResultRequest* request, CacheResultResponse* response) override;
   ::grpc::Status IQFetchDataOverrideBehavior(::grpc::ServerContext* context, const IQFetchDataOverrideBehaviorRequest* request, IQFetchDataOverrideBehaviorResponse* response) override;
 private:
-  NiRFmxSpecAnRestrictedLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);
 
   NiRFmxSpecAnRestrictedFeatureToggles feature_toggles_;
 };

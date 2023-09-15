@@ -37,6 +37,11 @@ int32 AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[]
   return RFmxWLAN_AutoDetectSignal(instrumentHandle, selectorString, timeout);
 }
 
+int32 AutoDetectSignalAnalysisOnly(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize)
+{
+  return RFmxWLAN_AutoDetectSignalAnalysisOnly(instrumentHandle, selectorString, x0, dx, iq, arraySize);
+}
+
 int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
 {
   return RFmxWLAN_AutoLevel(instrumentHandle, selectorString, measurementInterval);

@@ -25,7 +25,7 @@ namespace nirfmxwlan_restricted_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxWLANRestrictedService::NiRFmxWLANRestrictedService(
-      NiRFmxWLANRestrictedLibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiRFmxWLANRestrictedFeatureToggles& feature_toggles)
       : library_(library),

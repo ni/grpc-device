@@ -4,6 +4,9 @@
 // Service implementation for the NI-RFSG Metadata
 //---------------------------------------------------------------------
 #include "nirfsg_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFSG_64.dll";
@@ -13,125 +16,128 @@ static const char* kLibraryName = "libnirfsg.so";
 
 namespace nirfsg_grpc {
 
-NiRFSGLibrary::NiRFSGLibrary() : shared_library_(kLibraryName)
+NiRFSGLibrary::NiRFSGLibrary() : NiRFSGLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFSGLibrary::NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niRFSG_Abort"));
-  function_pointers_.AllocateArbWaveform = reinterpret_cast<AllocateArbWaveformPtr>(shared_library_.get_function_pointer("niRFSG_AllocateArbWaveform"));
-  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niRFSG_CheckAttributeViBoolean"));
-  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niRFSG_CheckAttributeViInt32"));
-  function_pointers_.CheckAttributeViInt64 = reinterpret_cast<CheckAttributeViInt64Ptr>(shared_library_.get_function_pointer("niRFSG_CheckAttributeViInt64"));
-  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_.get_function_pointer("niRFSG_CheckAttributeViReal64"));
-  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_.get_function_pointer("niRFSG_CheckAttributeViSession"));
-  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niRFSG_CheckAttributeViString"));
-  function_pointers_.CheckGenerationStatus = reinterpret_cast<CheckGenerationStatusPtr>(shared_library_.get_function_pointer("niRFSG_CheckGenerationStatus"));
-  function_pointers_.CheckIfConfigurationListExists = reinterpret_cast<CheckIfConfigurationListExistsPtr>(shared_library_.get_function_pointer("niRFSG_CheckIfConfigurationListExists"));
-  function_pointers_.CheckIfScriptExists = reinterpret_cast<CheckIfScriptExistsPtr>(shared_library_.get_function_pointer("niRFSG_CheckIfScriptExists"));
-  function_pointers_.CheckIfWaveformExists = reinterpret_cast<CheckIfWaveformExistsPtr>(shared_library_.get_function_pointer("niRFSG_CheckIfWaveformExists"));
-  function_pointers_.ClearAllArbWaveforms = reinterpret_cast<ClearAllArbWaveformsPtr>(shared_library_.get_function_pointer("niRFSG_ClearAllArbWaveforms"));
-  function_pointers_.ClearArbWaveform = reinterpret_cast<ClearArbWaveformPtr>(shared_library_.get_function_pointer("niRFSG_ClearArbWaveform"));
-  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niRFSG_ClearError"));
-  function_pointers_.ClearSelfCalibrateRange = reinterpret_cast<ClearSelfCalibrateRangePtr>(shared_library_.get_function_pointer("niRFSG_ClearSelfCalibrateRange"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niRFSG_close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niRFSG_Commit"));
-  function_pointers_.ConfigureDeembeddingTableInterpolationLinear = reinterpret_cast<ConfigureDeembeddingTableInterpolationLinearPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureDeembeddingTableInterpolationLinear"));
-  function_pointers_.ConfigureDeembeddingTableInterpolationNearest = reinterpret_cast<ConfigureDeembeddingTableInterpolationNearestPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureDeembeddingTableInterpolationNearest"));
-  function_pointers_.ConfigureDeembeddingTableInterpolationSpline = reinterpret_cast<ConfigureDeembeddingTableInterpolationSplinePtr>(shared_library_.get_function_pointer("niRFSG_ConfigureDeembeddingTableInterpolationSpline"));
-  function_pointers_.ConfigureDigitalEdgeConfigurationListStepTrigger = reinterpret_cast<ConfigureDigitalEdgeConfigurationListStepTriggerPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureDigitalEdgeConfigurationListStepTrigger"));
-  function_pointers_.ConfigureDigitalEdgeScriptTrigger = reinterpret_cast<ConfigureDigitalEdgeScriptTriggerPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureDigitalEdgeScriptTrigger"));
-  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureDigitalEdgeStartTrigger"));
-  function_pointers_.ConfigureDigitalLevelScriptTrigger = reinterpret_cast<ConfigureDigitalLevelScriptTriggerPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureDigitalLevelScriptTrigger"));
-  function_pointers_.ConfigureDigitalModulationUserDefinedWaveform = reinterpret_cast<ConfigureDigitalModulationUserDefinedWaveformPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureDigitalModulationUserDefinedWaveform"));
-  function_pointers_.ConfigureGenerationMode = reinterpret_cast<ConfigureGenerationModePtr>(shared_library_.get_function_pointer("niRFSG_ConfigureGenerationMode"));
-  function_pointers_.ConfigureOutputEnabled = reinterpret_cast<ConfigureOutputEnabledPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureOutputEnabled"));
-  function_pointers_.ConfigureP2PEndpointFullnessStartTrigger = reinterpret_cast<ConfigureP2PEndpointFullnessStartTriggerPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureP2PEndpointFullnessStartTrigger"));
-  function_pointers_.ConfigurePXIChassisClk10 = reinterpret_cast<ConfigurePXIChassisClk10Ptr>(shared_library_.get_function_pointer("niRFSG_ConfigurePXIChassisClk10"));
-  function_pointers_.ConfigurePowerLevelType = reinterpret_cast<ConfigurePowerLevelTypePtr>(shared_library_.get_function_pointer("niRFSG_ConfigurePowerLevelType"));
-  function_pointers_.ConfigureRF = reinterpret_cast<ConfigureRFPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureRF"));
-  function_pointers_.ConfigureRefClock = reinterpret_cast<ConfigureRefClockPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureRefClock"));
-  function_pointers_.ConfigureSignalBandwidth = reinterpret_cast<ConfigureSignalBandwidthPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureSignalBandwidth"));
-  function_pointers_.ConfigureSoftwareScriptTrigger = reinterpret_cast<ConfigureSoftwareScriptTriggerPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureSoftwareScriptTrigger"));
-  function_pointers_.ConfigureSoftwareStartTrigger = reinterpret_cast<ConfigureSoftwareStartTriggerPtr>(shared_library_.get_function_pointer("niRFSG_ConfigureSoftwareStartTrigger"));
-  function_pointers_.ConfigureUpconverterPLLSettlingTime = reinterpret_cast<ConfigureUpconverterPLLSettlingTimePtr>(shared_library_.get_function_pointer("niRFSG_ConfigureUpconverterPLLSettlingTime"));
-  function_pointers_.CreateConfigurationList = reinterpret_cast<CreateConfigurationListPtr>(shared_library_.get_function_pointer("niRFSG_CreateConfigurationList"));
-  function_pointers_.CreateConfigurationListStep = reinterpret_cast<CreateConfigurationListStepPtr>(shared_library_.get_function_pointer("niRFSG_CreateConfigurationListStep"));
-  function_pointers_.CreateDeembeddingSparameterTableArray = reinterpret_cast<CreateDeembeddingSparameterTableArrayPtr>(shared_library_.get_function_pointer("niRFSG_CreateDeembeddingSparameterTableArray"));
-  function_pointers_.CreateDeembeddingSparameterTableS2PFile = reinterpret_cast<CreateDeembeddingSparameterTableS2PFilePtr>(shared_library_.get_function_pointer("niRFSG_CreateDeembeddingSparameterTableS2PFile"));
-  function_pointers_.DeleteAllDeembeddingTables = reinterpret_cast<DeleteAllDeembeddingTablesPtr>(shared_library_.get_function_pointer("niRFSG_DeleteAllDeembeddingTables"));
-  function_pointers_.DeleteConfigurationList = reinterpret_cast<DeleteConfigurationListPtr>(shared_library_.get_function_pointer("niRFSG_DeleteConfigurationList"));
-  function_pointers_.DeleteDeembeddingTable = reinterpret_cast<DeleteDeembeddingTablePtr>(shared_library_.get_function_pointer("niRFSG_DeleteDeembeddingTable"));
-  function_pointers_.DeleteScript = reinterpret_cast<DeleteScriptPtr>(shared_library_.get_function_pointer("niRFSG_DeleteScript"));
-  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niRFSG_Disable"));
-  function_pointers_.DisableAllModulation = reinterpret_cast<DisableAllModulationPtr>(shared_library_.get_function_pointer("niRFSG_DisableAllModulation"));
-  function_pointers_.DisableConfigurationListStepTrigger = reinterpret_cast<DisableConfigurationListStepTriggerPtr>(shared_library_.get_function_pointer("niRFSG_DisableConfigurationListStepTrigger"));
-  function_pointers_.DisableScriptTrigger = reinterpret_cast<DisableScriptTriggerPtr>(shared_library_.get_function_pointer("niRFSG_DisableScriptTrigger"));
-  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_.get_function_pointer("niRFSG_DisableStartTrigger"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niRFSG_error_message"));
-  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_.get_function_pointer("niRFSG_error_query"));
-  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niRFSG_ExportSignal"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niRFSG_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niRFSG_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niRFSG_GetAttributeViInt64"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niRFSG_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niRFSG_GetAttributeViSession"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niRFSG_GetAttributeViString"));
-  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niRFSG_GetChannelName"));
-  function_pointers_.GetDeembeddingSparameters = reinterpret_cast<GetDeembeddingSparametersPtr>(shared_library_.get_function_pointer("niRFSG_GetDeembeddingSparameters"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niRFSG_GetError"));
-  function_pointers_.GetExternalCalibrationLastDateAndTime = reinterpret_cast<GetExternalCalibrationLastDateAndTimePtr>(shared_library_.get_function_pointer("niRFSG_GetExternalCalibrationLastDateAndTime"));
-  function_pointers_.GetSelfCalibrationDateAndTime = reinterpret_cast<GetSelfCalibrationDateAndTimePtr>(shared_library_.get_function_pointer("niRFSG_GetSelfCalibrationDateAndTime"));
-  function_pointers_.GetSelfCalibrationTemperature = reinterpret_cast<GetSelfCalibrationTemperaturePtr>(shared_library_.get_function_pointer("niRFSG_GetSelfCalibrationTemperature"));
-  function_pointers_.GetTerminalName = reinterpret_cast<GetTerminalNamePtr>(shared_library_.get_function_pointer("niRFSG_GetTerminalName"));
-  function_pointers_.GetUserData = reinterpret_cast<GetUserDataPtr>(shared_library_.get_function_pointer("niRFSG_GetUserData"));
-  function_pointers_.GetWaveformBurstStartLocations = reinterpret_cast<GetWaveformBurstStartLocationsPtr>(shared_library_.get_function_pointer("niRFSG_GetWaveformBurstStartLocations"));
-  function_pointers_.GetWaveformBurstStopLocations = reinterpret_cast<GetWaveformBurstStopLocationsPtr>(shared_library_.get_function_pointer("niRFSG_GetWaveformBurstStopLocations"));
-  function_pointers_.GetWaveformMarkerEventLocations = reinterpret_cast<GetWaveformMarkerEventLocationsPtr>(shared_library_.get_function_pointer("niRFSG_GetWaveformMarkerEventLocations"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niRFSG_init"));
-  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niRFSG_InitWithOptions"));
-  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niRFSG_Initiate"));
-  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niRFSG_InvalidateAllAttributes"));
-  function_pointers_.LoadConfigurationsFromFile = reinterpret_cast<LoadConfigurationsFromFilePtr>(shared_library_.get_function_pointer("niRFSG_LoadConfigurationsFromFile"));
-  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niRFSG_LockSession"));
-  function_pointers_.PerformPowerSearch = reinterpret_cast<PerformPowerSearchPtr>(shared_library_.get_function_pointer("niRFSG_PerformPowerSearch"));
-  function_pointers_.PerformThermalCorrection = reinterpret_cast<PerformThermalCorrectionPtr>(shared_library_.get_function_pointer("niRFSG_PerformThermalCorrection"));
-  function_pointers_.QueryArbWaveformCapabilities = reinterpret_cast<QueryArbWaveformCapabilitiesPtr>(shared_library_.get_function_pointer("niRFSG_QueryArbWaveformCapabilities"));
-  function_pointers_.ReadAndDownloadWaveformFromFileTDMS = reinterpret_cast<ReadAndDownloadWaveformFromFileTDMSPtr>(shared_library_.get_function_pointer("niRFSG_ReadAndDownloadWaveformFromFileTDMS"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niRFSG_reset"));
-  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("niRFSG_ResetAttribute"));
-  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niRFSG_ResetDevice"));
-  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niRFSG_ResetWithDefaults"));
-  function_pointers_.ResetWithOptions = reinterpret_cast<ResetWithOptionsPtr>(shared_library_.get_function_pointer("niRFSG_ResetWithOptions"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niRFSG_revision_query"));
-  function_pointers_.SaveConfigurationsToFile = reinterpret_cast<SaveConfigurationsToFilePtr>(shared_library_.get_function_pointer("niRFSG_SaveConfigurationsToFile"));
-  function_pointers_.SelectArbWaveform = reinterpret_cast<SelectArbWaveformPtr>(shared_library_.get_function_pointer("niRFSG_SelectArbWaveform"));
-  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_.get_function_pointer("niRFSG_SelfCal"));
-  function_pointers_.SelfCalibrateRange = reinterpret_cast<SelfCalibrateRangePtr>(shared_library_.get_function_pointer("niRFSG_SelfCalibrateRange"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niRFSG_self_test"));
-  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("niRFSG_SendSoftwareEdgeTrigger"));
-  function_pointers_.SetArbWaveformNextWritePosition = reinterpret_cast<SetArbWaveformNextWritePositionPtr>(shared_library_.get_function_pointer("niRFSG_SetArbWaveformNextWritePosition"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niRFSG_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niRFSG_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niRFSG_SetAttributeViInt64"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niRFSG_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niRFSG_SetAttributeViSession"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niRFSG_SetAttributeViString"));
-  function_pointers_.SetUserData = reinterpret_cast<SetUserDataPtr>(shared_library_.get_function_pointer("niRFSG_SetUserData"));
-  function_pointers_.SetWaveformBurstStartLocations = reinterpret_cast<SetWaveformBurstStartLocationsPtr>(shared_library_.get_function_pointer("niRFSG_SetWaveformBurstStartLocations"));
-  function_pointers_.SetWaveformBurstStopLocations = reinterpret_cast<SetWaveformBurstStopLocationsPtr>(shared_library_.get_function_pointer("niRFSG_SetWaveformBurstStopLocations"));
-  function_pointers_.SetWaveformMarkerEventLocations = reinterpret_cast<SetWaveformMarkerEventLocationsPtr>(shared_library_.get_function_pointer("niRFSG_SetWaveformMarkerEventLocations"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niRFSG_UnlockSession"));
-  function_pointers_.WaitUntilSettled = reinterpret_cast<WaitUntilSettledPtr>(shared_library_.get_function_pointer("niRFSG_WaitUntilSettled"));
-  function_pointers_.WriteArbWaveform = reinterpret_cast<WriteArbWaveformPtr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveform"));
-  function_pointers_.WriteArbWaveformComplexF32 = reinterpret_cast<WriteArbWaveformComplexF32Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformComplexF32"));
-  function_pointers_.WriteArbWaveformComplexF64 = reinterpret_cast<WriteArbWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformComplexF64"));
-  function_pointers_.WriteArbWaveformComplexI16 = reinterpret_cast<WriteArbWaveformComplexI16Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformComplexI16"));
-  function_pointers_.WriteArbWaveformF32 = reinterpret_cast<WriteArbWaveformF32Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformF32"));
-  function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_.get_function_pointer("niRFSG_WriteScript"));
+  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("niRFSG_Abort"));
+  function_pointers_.AllocateArbWaveform = reinterpret_cast<AllocateArbWaveformPtr>(shared_library_->get_function_pointer("niRFSG_AllocateArbWaveform"));
+  function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_->get_function_pointer("niRFSG_CheckAttributeViBoolean"));
+  function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_->get_function_pointer("niRFSG_CheckAttributeViInt32"));
+  function_pointers_.CheckAttributeViInt64 = reinterpret_cast<CheckAttributeViInt64Ptr>(shared_library_->get_function_pointer("niRFSG_CheckAttributeViInt64"));
+  function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_->get_function_pointer("niRFSG_CheckAttributeViReal64"));
+  function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_->get_function_pointer("niRFSG_CheckAttributeViSession"));
+  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_->get_function_pointer("niRFSG_CheckAttributeViString"));
+  function_pointers_.CheckGenerationStatus = reinterpret_cast<CheckGenerationStatusPtr>(shared_library_->get_function_pointer("niRFSG_CheckGenerationStatus"));
+  function_pointers_.CheckIfConfigurationListExists = reinterpret_cast<CheckIfConfigurationListExistsPtr>(shared_library_->get_function_pointer("niRFSG_CheckIfConfigurationListExists"));
+  function_pointers_.CheckIfScriptExists = reinterpret_cast<CheckIfScriptExistsPtr>(shared_library_->get_function_pointer("niRFSG_CheckIfScriptExists"));
+  function_pointers_.CheckIfWaveformExists = reinterpret_cast<CheckIfWaveformExistsPtr>(shared_library_->get_function_pointer("niRFSG_CheckIfWaveformExists"));
+  function_pointers_.ClearAllArbWaveforms = reinterpret_cast<ClearAllArbWaveformsPtr>(shared_library_->get_function_pointer("niRFSG_ClearAllArbWaveforms"));
+  function_pointers_.ClearArbWaveform = reinterpret_cast<ClearArbWaveformPtr>(shared_library_->get_function_pointer("niRFSG_ClearArbWaveform"));
+  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_->get_function_pointer("niRFSG_ClearError"));
+  function_pointers_.ClearSelfCalibrateRange = reinterpret_cast<ClearSelfCalibrateRangePtr>(shared_library_->get_function_pointer("niRFSG_ClearSelfCalibrateRange"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("niRFSG_close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("niRFSG_Commit"));
+  function_pointers_.ConfigureDeembeddingTableInterpolationLinear = reinterpret_cast<ConfigureDeembeddingTableInterpolationLinearPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureDeembeddingTableInterpolationLinear"));
+  function_pointers_.ConfigureDeembeddingTableInterpolationNearest = reinterpret_cast<ConfigureDeembeddingTableInterpolationNearestPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureDeembeddingTableInterpolationNearest"));
+  function_pointers_.ConfigureDeembeddingTableInterpolationSpline = reinterpret_cast<ConfigureDeembeddingTableInterpolationSplinePtr>(shared_library_->get_function_pointer("niRFSG_ConfigureDeembeddingTableInterpolationSpline"));
+  function_pointers_.ConfigureDigitalEdgeConfigurationListStepTrigger = reinterpret_cast<ConfigureDigitalEdgeConfigurationListStepTriggerPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureDigitalEdgeConfigurationListStepTrigger"));
+  function_pointers_.ConfigureDigitalEdgeScriptTrigger = reinterpret_cast<ConfigureDigitalEdgeScriptTriggerPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureDigitalEdgeScriptTrigger"));
+  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureDigitalEdgeStartTrigger"));
+  function_pointers_.ConfigureDigitalLevelScriptTrigger = reinterpret_cast<ConfigureDigitalLevelScriptTriggerPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureDigitalLevelScriptTrigger"));
+  function_pointers_.ConfigureDigitalModulationUserDefinedWaveform = reinterpret_cast<ConfigureDigitalModulationUserDefinedWaveformPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureDigitalModulationUserDefinedWaveform"));
+  function_pointers_.ConfigureGenerationMode = reinterpret_cast<ConfigureGenerationModePtr>(shared_library_->get_function_pointer("niRFSG_ConfigureGenerationMode"));
+  function_pointers_.ConfigureOutputEnabled = reinterpret_cast<ConfigureOutputEnabledPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureOutputEnabled"));
+  function_pointers_.ConfigureP2PEndpointFullnessStartTrigger = reinterpret_cast<ConfigureP2PEndpointFullnessStartTriggerPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureP2PEndpointFullnessStartTrigger"));
+  function_pointers_.ConfigurePXIChassisClk10 = reinterpret_cast<ConfigurePXIChassisClk10Ptr>(shared_library_->get_function_pointer("niRFSG_ConfigurePXIChassisClk10"));
+  function_pointers_.ConfigurePowerLevelType = reinterpret_cast<ConfigurePowerLevelTypePtr>(shared_library_->get_function_pointer("niRFSG_ConfigurePowerLevelType"));
+  function_pointers_.ConfigureRF = reinterpret_cast<ConfigureRFPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureRF"));
+  function_pointers_.ConfigureRefClock = reinterpret_cast<ConfigureRefClockPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureRefClock"));
+  function_pointers_.ConfigureSignalBandwidth = reinterpret_cast<ConfigureSignalBandwidthPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureSignalBandwidth"));
+  function_pointers_.ConfigureSoftwareScriptTrigger = reinterpret_cast<ConfigureSoftwareScriptTriggerPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureSoftwareScriptTrigger"));
+  function_pointers_.ConfigureSoftwareStartTrigger = reinterpret_cast<ConfigureSoftwareStartTriggerPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureSoftwareStartTrigger"));
+  function_pointers_.ConfigureUpconverterPLLSettlingTime = reinterpret_cast<ConfigureUpconverterPLLSettlingTimePtr>(shared_library_->get_function_pointer("niRFSG_ConfigureUpconverterPLLSettlingTime"));
+  function_pointers_.CreateConfigurationList = reinterpret_cast<CreateConfigurationListPtr>(shared_library_->get_function_pointer("niRFSG_CreateConfigurationList"));
+  function_pointers_.CreateConfigurationListStep = reinterpret_cast<CreateConfigurationListStepPtr>(shared_library_->get_function_pointer("niRFSG_CreateConfigurationListStep"));
+  function_pointers_.CreateDeembeddingSparameterTableArray = reinterpret_cast<CreateDeembeddingSparameterTableArrayPtr>(shared_library_->get_function_pointer("niRFSG_CreateDeembeddingSparameterTableArray"));
+  function_pointers_.CreateDeembeddingSparameterTableS2PFile = reinterpret_cast<CreateDeembeddingSparameterTableS2PFilePtr>(shared_library_->get_function_pointer("niRFSG_CreateDeembeddingSparameterTableS2PFile"));
+  function_pointers_.DeleteAllDeembeddingTables = reinterpret_cast<DeleteAllDeembeddingTablesPtr>(shared_library_->get_function_pointer("niRFSG_DeleteAllDeembeddingTables"));
+  function_pointers_.DeleteConfigurationList = reinterpret_cast<DeleteConfigurationListPtr>(shared_library_->get_function_pointer("niRFSG_DeleteConfigurationList"));
+  function_pointers_.DeleteDeembeddingTable = reinterpret_cast<DeleteDeembeddingTablePtr>(shared_library_->get_function_pointer("niRFSG_DeleteDeembeddingTable"));
+  function_pointers_.DeleteScript = reinterpret_cast<DeleteScriptPtr>(shared_library_->get_function_pointer("niRFSG_DeleteScript"));
+  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_->get_function_pointer("niRFSG_Disable"));
+  function_pointers_.DisableAllModulation = reinterpret_cast<DisableAllModulationPtr>(shared_library_->get_function_pointer("niRFSG_DisableAllModulation"));
+  function_pointers_.DisableConfigurationListStepTrigger = reinterpret_cast<DisableConfigurationListStepTriggerPtr>(shared_library_->get_function_pointer("niRFSG_DisableConfigurationListStepTrigger"));
+  function_pointers_.DisableScriptTrigger = reinterpret_cast<DisableScriptTriggerPtr>(shared_library_->get_function_pointer("niRFSG_DisableScriptTrigger"));
+  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_->get_function_pointer("niRFSG_DisableStartTrigger"));
+  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_->get_function_pointer("niRFSG_error_message"));
+  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_->get_function_pointer("niRFSG_error_query"));
+  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("niRFSG_ExportSignal"));
+  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViBoolean"));
+  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViInt32"));
+  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViInt64"));
+  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViSession"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViString"));
+  function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_->get_function_pointer("niRFSG_GetChannelName"));
+  function_pointers_.GetDeembeddingSparameters = reinterpret_cast<GetDeembeddingSparametersPtr>(shared_library_->get_function_pointer("niRFSG_GetDeembeddingSparameters"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niRFSG_GetError"));
+  function_pointers_.GetExternalCalibrationLastDateAndTime = reinterpret_cast<GetExternalCalibrationLastDateAndTimePtr>(shared_library_->get_function_pointer("niRFSG_GetExternalCalibrationLastDateAndTime"));
+  function_pointers_.GetSelfCalibrationDateAndTime = reinterpret_cast<GetSelfCalibrationDateAndTimePtr>(shared_library_->get_function_pointer("niRFSG_GetSelfCalibrationDateAndTime"));
+  function_pointers_.GetSelfCalibrationTemperature = reinterpret_cast<GetSelfCalibrationTemperaturePtr>(shared_library_->get_function_pointer("niRFSG_GetSelfCalibrationTemperature"));
+  function_pointers_.GetTerminalName = reinterpret_cast<GetTerminalNamePtr>(shared_library_->get_function_pointer("niRFSG_GetTerminalName"));
+  function_pointers_.GetUserData = reinterpret_cast<GetUserDataPtr>(shared_library_->get_function_pointer("niRFSG_GetUserData"));
+  function_pointers_.GetWaveformBurstStartLocations = reinterpret_cast<GetWaveformBurstStartLocationsPtr>(shared_library_->get_function_pointer("niRFSG_GetWaveformBurstStartLocations"));
+  function_pointers_.GetWaveformBurstStopLocations = reinterpret_cast<GetWaveformBurstStopLocationsPtr>(shared_library_->get_function_pointer("niRFSG_GetWaveformBurstStopLocations"));
+  function_pointers_.GetWaveformMarkerEventLocations = reinterpret_cast<GetWaveformMarkerEventLocationsPtr>(shared_library_->get_function_pointer("niRFSG_GetWaveformMarkerEventLocations"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_->get_function_pointer("niRFSG_init"));
+  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_->get_function_pointer("niRFSG_InitWithOptions"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("niRFSG_Initiate"));
+  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_->get_function_pointer("niRFSG_InvalidateAllAttributes"));
+  function_pointers_.LoadConfigurationsFromFile = reinterpret_cast<LoadConfigurationsFromFilePtr>(shared_library_->get_function_pointer("niRFSG_LoadConfigurationsFromFile"));
+  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_->get_function_pointer("niRFSG_LockSession"));
+  function_pointers_.PerformPowerSearch = reinterpret_cast<PerformPowerSearchPtr>(shared_library_->get_function_pointer("niRFSG_PerformPowerSearch"));
+  function_pointers_.PerformThermalCorrection = reinterpret_cast<PerformThermalCorrectionPtr>(shared_library_->get_function_pointer("niRFSG_PerformThermalCorrection"));
+  function_pointers_.QueryArbWaveformCapabilities = reinterpret_cast<QueryArbWaveformCapabilitiesPtr>(shared_library_->get_function_pointer("niRFSG_QueryArbWaveformCapabilities"));
+  function_pointers_.ReadAndDownloadWaveformFromFileTDMS = reinterpret_cast<ReadAndDownloadWaveformFromFileTDMSPtr>(shared_library_->get_function_pointer("niRFSG_ReadAndDownloadWaveformFromFileTDMS"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("niRFSG_reset"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("niRFSG_ResetAttribute"));
+  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_->get_function_pointer("niRFSG_ResetDevice"));
+  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_->get_function_pointer("niRFSG_ResetWithDefaults"));
+  function_pointers_.ResetWithOptions = reinterpret_cast<ResetWithOptionsPtr>(shared_library_->get_function_pointer("niRFSG_ResetWithOptions"));
+  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_->get_function_pointer("niRFSG_revision_query"));
+  function_pointers_.SaveConfigurationsToFile = reinterpret_cast<SaveConfigurationsToFilePtr>(shared_library_->get_function_pointer("niRFSG_SaveConfigurationsToFile"));
+  function_pointers_.SelectArbWaveform = reinterpret_cast<SelectArbWaveformPtr>(shared_library_->get_function_pointer("niRFSG_SelectArbWaveform"));
+  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_->get_function_pointer("niRFSG_SelfCal"));
+  function_pointers_.SelfCalibrateRange = reinterpret_cast<SelfCalibrateRangePtr>(shared_library_->get_function_pointer("niRFSG_SelfCalibrateRange"));
+  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_->get_function_pointer("niRFSG_self_test"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("niRFSG_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetArbWaveformNextWritePosition = reinterpret_cast<SetArbWaveformNextWritePositionPtr>(shared_library_->get_function_pointer("niRFSG_SetArbWaveformNextWritePosition"));
+  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niRFSG_SetAttributeViBoolean"));
+  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niRFSG_SetAttributeViInt32"));
+  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niRFSG_SetAttributeViInt64"));
+  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niRFSG_SetAttributeViReal64"));
+  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_->get_function_pointer("niRFSG_SetAttributeViSession"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_->get_function_pointer("niRFSG_SetAttributeViString"));
+  function_pointers_.SetUserData = reinterpret_cast<SetUserDataPtr>(shared_library_->get_function_pointer("niRFSG_SetUserData"));
+  function_pointers_.SetWaveformBurstStartLocations = reinterpret_cast<SetWaveformBurstStartLocationsPtr>(shared_library_->get_function_pointer("niRFSG_SetWaveformBurstStartLocations"));
+  function_pointers_.SetWaveformBurstStopLocations = reinterpret_cast<SetWaveformBurstStopLocationsPtr>(shared_library_->get_function_pointer("niRFSG_SetWaveformBurstStopLocations"));
+  function_pointers_.SetWaveformMarkerEventLocations = reinterpret_cast<SetWaveformMarkerEventLocationsPtr>(shared_library_->get_function_pointer("niRFSG_SetWaveformMarkerEventLocations"));
+  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_->get_function_pointer("niRFSG_UnlockSession"));
+  function_pointers_.WaitUntilSettled = reinterpret_cast<WaitUntilSettledPtr>(shared_library_->get_function_pointer("niRFSG_WaitUntilSettled"));
+  function_pointers_.WriteArbWaveform = reinterpret_cast<WriteArbWaveformPtr>(shared_library_->get_function_pointer("niRFSG_WriteArbWaveform"));
+  function_pointers_.WriteArbWaveformComplexF32 = reinterpret_cast<WriteArbWaveformComplexF32Ptr>(shared_library_->get_function_pointer("niRFSG_WriteArbWaveformComplexF32"));
+  function_pointers_.WriteArbWaveformComplexF64 = reinterpret_cast<WriteArbWaveformComplexF64Ptr>(shared_library_->get_function_pointer("niRFSG_WriteArbWaveformComplexF64"));
+  function_pointers_.WriteArbWaveformComplexI16 = reinterpret_cast<WriteArbWaveformComplexI16Ptr>(shared_library_->get_function_pointer("niRFSG_WriteArbWaveformComplexI16"));
+  function_pointers_.WriteArbWaveformF32 = reinterpret_cast<WriteArbWaveformF32Ptr>(shared_library_->get_function_pointer("niRFSG_WriteArbWaveformF32"));
+  function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_->get_function_pointer("niRFSG_WriteScript"));
 }
 
 NiRFSGLibrary::~NiRFSGLibrary()
@@ -140,7 +146,7 @@ NiRFSGLibrary::~NiRFSGLibrary()
 
 ::grpc::Status NiRFSGLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

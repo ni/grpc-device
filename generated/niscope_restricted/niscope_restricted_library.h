@@ -8,13 +8,16 @@
 
 #include "niscope_restricted_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace niscope_restricted_grpc {
 
 class NiScopeRestrictedLibrary : public niscope_restricted_grpc::NiScopeRestrictedLibraryInterface {
  public:
   NiScopeRestrictedLibrary();
+  explicit NiScopeRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiScopeRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -33,7 +36,7 @@ class NiScopeRestrictedLibrary : public niscope_restricted_grpc::NiScopeRestrict
     GetStartTimestampInformationPtr GetStartTimestampInformation;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

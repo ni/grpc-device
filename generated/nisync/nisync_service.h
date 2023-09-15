@@ -33,14 +33,15 @@ struct NiSyncFeatureToggles
 
 class NiSyncService final : public NiSync::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiSyncLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiSyncService(
-    NiSyncLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiSyncFeatureToggles& feature_toggles = {});
   virtual ~NiSyncService();
-  
+
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
@@ -112,9 +113,9 @@ public:
   ::grpc::Status CalAdjustDDSStartPulsePhaseVoltage(::grpc::ServerContext* context, const CalAdjustDDSStartPulsePhaseVoltageRequest* request, CalAdjustDDSStartPulsePhaseVoltageResponse* response) override;
   ::grpc::Status CalAdjustDDSInitialPhase(::grpc::ServerContext* context, const CalAdjustDDSInitialPhaseRequest* request, CalAdjustDDSInitialPhaseResponse* response) override;
 private:
-  NiSyncLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
 
   NiSyncFeatureToggles feature_toggles_;
 };

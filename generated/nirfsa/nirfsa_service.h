@@ -33,14 +33,15 @@ struct NiRFSAFeatureToggles
 
 class NiRFSAService final : public NiRFSA::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFSALibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFSAService(
-    NiRFSALibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiRFSAFeatureToggles& feature_toggles = {});
   virtual ~NiRFSAService();
-  
+
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status CheckAcquisitionStatus(::grpc::ServerContext* context, const CheckAcquisitionStatusRequest* request, CheckAcquisitionStatusResponse* response) override;
   ::grpc::Status ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response) override;
@@ -145,9 +146,9 @@ public:
   ::grpc::Status SetCalUserDefinedInfo(::grpc::ServerContext* context, const SetCalUserDefinedInfoRequest* request, SetCalUserDefinedInfoResponse* response) override;
   ::grpc::Status SetUserData(::grpc::ServerContext* context, const SetUserDataRequest* request, SetUserDataResponse* response) override;
 private:
-  NiRFSALibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   std::map<std::int32_t, std::string> digitaledgetriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXI_Trig0"},{13, "PXI_Trig1"},{14, "PXI_Trig2"},{15, "PXI_Trig3"},{16, "PXI_Trig4"},{17, "PXI_Trig5"},{18, "PXI_Trig6"},{19, "PXI_Trig7"},{20, "TimerEvent"}, };
   std::map<std::string, std::int32_t> digitaledgetriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXI_Trig0", 12},{"PXI_Trig1", 13},{"PXI_Trig2", 14},{"PXI_Trig3", 15},{"PXI_Trig4", 16},{"PXI_Trig5", 17},{"PXI_Trig6", 18},{"PXI_Trig7", 19},{"TimerEvent", 20}, };
   std::map<std::int32_t, std::string> exportterminal_input_map_ { {1, ""},{2, "PFI0"},{3, "PFI1"},{4, "PXI_Trig0"},{5, "PXI_Trig1"},{6, "PXI_Trig2"},{7, "PXI_Trig3"},{8, "PXI_Trig4"},{9, "PXI_Trig5"},{10, "PXI_Trig6"},{11, "PXI_Trig7"},{12, "PXI_STAR"},{13, "PXIe_DStarC"},{14, "RefOut"},{15, "RefOut2"},{16, "ClkOut"}, };

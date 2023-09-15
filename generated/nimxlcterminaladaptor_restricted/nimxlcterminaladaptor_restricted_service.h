@@ -33,14 +33,15 @@ struct NimxlcTerminalAdaptorRestrictedFeatureToggles
 
 class NimxlcTerminalAdaptorRestrictedService final : public NimxlcTerminalAdaptorRestricted::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NimxlcTerminalAdaptorRestrictedLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nimxlc_Session>>;
 
   NimxlcTerminalAdaptorRestrictedService(
-    NimxlcTerminalAdaptorRestrictedLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NimxlcTerminalAdaptorRestrictedFeatureToggles& feature_toggles = {});
   virtual ~NimxlcTerminalAdaptorRestrictedService();
-  
+
   ::grpc::Status CreateSession(::grpc::ServerContext* context, const CreateSessionRequest* request, CreateSessionResponse* response) override;
   ::grpc::Status DestroySession(::grpc::ServerContext* context, const DestroySessionRequest* request, DestroySessionResponse* response) override;
   ::grpc::Status RefreshTerminalCache(::grpc::ServerContext* context, const RefreshTerminalCacheRequest* request, RefreshTerminalCacheResponse* response) override;
@@ -48,9 +49,9 @@ public:
   ::grpc::Status GetSystemChangeNumber(::grpc::ServerContext* context, const GetSystemChangeNumberRequest* request, GetSystemChangeNumberResponse* response) override;
   ::grpc::Status GetDeviceContainer(::grpc::ServerContext* context, const GetDeviceContainerRequest* request, GetDeviceContainerResponse* response) override;
 private:
-  NimxlcTerminalAdaptorRestrictedLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNimxlc_Session(::grpc::ServerContext* context, int32_t status, nimxlc_Session session);
+  ::grpc::Status ConvertApiErrorStatusForNimxlc_Session(::grpc::ServerContextBase* context, int32_t status, nimxlc_Session session);
 
   NimxlcTerminalAdaptorRestrictedFeatureToggles feature_toggles_;
 };

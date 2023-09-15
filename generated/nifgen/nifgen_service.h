@@ -33,14 +33,15 @@ struct NiFgenFeatureToggles
 
 class NiFgenService final : public NiFgen::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiFgenLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiFgenService(
-    NiFgenLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiFgenFeatureToggles& feature_toggles = {});
   virtual ~NiFgenService();
-  
+
   ::grpc::Status AbortGeneration(::grpc::ServerContext* context, const AbortGenerationRequest* request, AbortGenerationResponse* response) override;
   ::grpc::Status AdjustSampleClockRelativeDelay(::grpc::ServerContext* context, const AdjustSampleClockRelativeDelayRequest* request, AdjustSampleClockRelativeDelayResponse* response) override;
   ::grpc::Status AllocateNamedWaveform(::grpc::ServerContext* context, const AllocateNamedWaveformRequest* request, AllocateNamedWaveformResponse* response) override;
@@ -173,9 +174,9 @@ public:
   ::grpc::Status WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response) override;
   ::grpc::Status WriteWaveformComplexF64(::grpc::ServerContext* context, const WriteWaveformComplexF64Request* request, WriteWaveformComplexF64Response* response) override;
 private:
-  NiFgenLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   std::map<std::int32_t, std::string> nifgenstringattributevaluesmapped_input_map_ { {1, "ClkIn"},{2, "None"},{3, "OnboardRefClk"},{4, "PXI_Clk"},{5, "RTSI7"},{6, "ClkIn"},{7, "DDC_ClkIn"},{8, "OnboardClock"},{9, "PXI_Star"},{10, "PXI_Trig0"},{11, "PXI_Trig1"},{12, "PXI_Trig2"},{13, "PXI_Trig3"},{14, "PXI_Trig4"},{15, "PXI_Trig5"},{16, "PXI_Trig6"},{17, "PXI_Trig7"},{18, "ClkIn"},{19, "OnboardClock"}, };
   std::map<std::string, std::int32_t> nifgenstringattributevaluesmapped_output_map_ { {"ClkIn", 1},{"None", 2},{"OnboardRefClk", 3},{"PXI_Clk", 4},{"RTSI7", 5},{"ClkIn", 6},{"DDC_ClkIn", 7},{"OnboardClock", 8},{"PXI_Star", 9},{"PXI_Trig0", 10},{"PXI_Trig1", 11},{"PXI_Trig2", 12},{"PXI_Trig3", 13},{"PXI_Trig4", 14},{"PXI_Trig5", 15},{"PXI_Trig6", 16},{"PXI_Trig7", 17},{"ClkIn", 18},{"OnboardClock", 19}, };
 

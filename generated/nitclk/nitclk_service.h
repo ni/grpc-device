@@ -33,14 +33,15 @@ struct NiTClkFeatureToggles
 
 class NiTClkService final : public NiTClk::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiTClkLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiTClkService(
-    NiTClkLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiTClkFeatureToggles& feature_toggles = {});
   virtual ~NiTClkService();
-  
+
   ::grpc::Status ConfigureForHomogeneousTriggers(::grpc::ServerContext* context, const ConfigureForHomogeneousTriggersRequest* request, ConfigureForHomogeneousTriggersResponse* response) override;
   ::grpc::Status FinishSyncPulseSenderSynchronize(::grpc::ServerContext* context, const FinishSyncPulseSenderSynchronizeRequest* request, FinishSyncPulseSenderSynchronizeResponse* response) override;
   ::grpc::Status GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response) override;
@@ -57,9 +58,9 @@ public:
   ::grpc::Status SynchronizeToSyncPulseSender(::grpc::ServerContext* context, const SynchronizeToSyncPulseSenderRequest* request, SynchronizeToSyncPulseSenderResponse* response) override;
   ::grpc::Status WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response) override;
 private:
-  NiTClkLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession session_number);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession session_number);
 
   NiTClkFeatureToggles feature_toggles_;
 };

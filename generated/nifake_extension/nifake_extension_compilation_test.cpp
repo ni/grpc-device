@@ -12,4 +12,9 @@ ViStatus AddCoolFunctionality(ViSession vi, ViInt32 param)
   return niFakeExtension_AddCoolFunctionality(vi, param);
 }
 
+ViStatus TestAddressParameters(ViSession vi, ViInt16 space, ViUInt64 offset, ViAddr suggested, ViAddr* actual)
+{
+  return niFakeExtension_TestAddressParameters(vi, space, offset, suggested, actual);
+}
+
 }  // namespace nifake_extension_grpc

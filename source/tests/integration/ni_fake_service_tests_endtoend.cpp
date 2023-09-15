@@ -20,19 +20,19 @@ const auto kDriverSuccess = 0U;
 class NiFakeServiceTests_EndToEnd : public ::testing::Test {
  public:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<ViSession>;
-  nidevice_grpc::SessionRepository session_repository_;
+  std::shared_ptr<nidevice_grpc::SessionRepository> session_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
-  ni::tests::unit::NiFakeMockLibrary library_;
+  std::shared_ptr<ni::tests::unit::NiFakeMockLibrary> library_;
   NiFakeService service_;
   std::unique_ptr<::grpc::Server> server_;
   std::unique_ptr<NiFake::Stub> stub_;
   std::atomic<bool> shutdown_{false};
 
   NiFakeServiceTests_EndToEnd()
-      : session_repository_(),
-        resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
-        library_(),
-        service_(&library_, resource_repository_),
+      : session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        resource_repository_(std::make_shared<FakeResourceRepository>(session_repository_)),
+        library_(std::make_shared<ni::tests::unit::NiFakeMockLibrary>()),
+        service_(library_, resource_repository_),
         server_(start_server()),
         stub_(NiFake::NewStub(server_->InProcessChannel(::grpc::ChannelArguments())))
   {
@@ -73,7 +73,7 @@ TEST_F(NiFakeServiceTests_EndToEnd, PassMappedEnumToGeneratedClient_PassesString
 {
   auto init_response = init(stub());
   const auto EXPECTED = NIFAKE_VAL_ANDROID;
-  EXPECT_CALL(library_, StringValuedEnumInputFunctionWithDefaults(_, Pointee(*EXPECTED)))
+  EXPECT_CALL(*library_, StringValuedEnumInputFunctionWithDefaults(_, Pointee(*EXPECTED)))
       .WillOnce(Return(kDriverSuccess));
   auto response = client::string_valued_enum_input_function_with_defaults(stub(), init_response.vi(), MobileOSNames::MOBILE_OS_NAMES_ANDROID);
 
@@ -84,7 +84,7 @@ TEST_F(NiFakeServiceTests_EndToEnd, PassMappedEnumRawValueToGeneratedClient_Pass
 {
   auto init_response = init(stub());
   const auto RAW_VALUE = NIFAKE_VAL_IOS;
-  EXPECT_CALL(library_, StringValuedEnumInputFunctionWithDefaults(_, Pointee(*RAW_VALUE)))
+  EXPECT_CALL(*library_, StringValuedEnumInputFunctionWithDefaults(_, Pointee(*RAW_VALUE)))
       .WillOnce(Return(kDriverSuccess));
   auto response = client::string_valued_enum_input_function_with_defaults(stub(), init_response.vi(), std::string(RAW_VALUE));
 

@@ -33,14 +33,15 @@ struct NiRFSGFeatureToggles
 
 class NiRFSGService final : public NiRFSG::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFSGLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFSGService(
-    NiRFSGLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiRFSGFeatureToggles& feature_toggles = {});
   virtual ~NiRFSGService();
-  
+
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status AllocateArbWaveform(::grpc::ServerContext* context, const AllocateArbWaveformRequest* request, AllocateArbWaveformResponse* response) override;
   ::grpc::Status CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response) override;
@@ -151,9 +152,9 @@ public:
   ::grpc::Status WriteArbWaveformF32(::grpc::ServerContext* context, const WriteArbWaveformF32Request* request, WriteArbWaveformF32Response* response) override;
   ::grpc::Status WriteScript(::grpc::ServerContext* context, const WriteScriptRequest* request, WriteScriptResponse* response) override;
 private:
-  NiRFSGLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
   std::map<std::int32_t, std::string> digitaledgeconfigurationliststeptriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PFI2"},{4, "PFI3"},{5, "PXI_Trig0"},{6, "PXI_Trig1"},{7, "PXI_Trig2"},{8, "PXI_Trig3"},{9, "PXI_Trig4"},{10, "PXI_Trig5"},{11, "PXI_Trig6"},{12, "PXI_Trig7"},{13, "PXI_STAR"},{14, "Marker0Event"},{15, "Marker1Event"},{16, "Marker2Event"},{17, "Marker3Event"},{18, "TimerEvent"},{19, "TrigIn"}, };
   std::map<std::string, std::int32_t> digitaledgeconfigurationliststeptriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PFI2", 3},{"PFI3", 4},{"PXI_Trig0", 5},{"PXI_Trig1", 6},{"PXI_Trig2", 7},{"PXI_Trig3", 8},{"PXI_Trig4", 9},{"PXI_Trig5", 10},{"PXI_Trig6", 11},{"PXI_Trig7", 12},{"PXI_STAR", 13},{"Marker0Event", 14},{"Marker1Event", 15},{"Marker2Event", 16},{"Marker3Event", 17},{"TimerEvent", 18},{"TrigIn", 19}, };
   std::map<std::int32_t, std::string> digitaledgescripttriggeridentifier_input_map_ { {1, "scriptTrigger0"},{2, "scriptTrigger1"},{3, "scriptTrigger2"},{4, "scriptTrigger3"}, };

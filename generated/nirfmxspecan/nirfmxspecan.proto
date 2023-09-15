@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXSPECAN API metadata version 22.5.0
+// This file is generated from NI-RFMXSPECAN API metadata version 23.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXSPECAN Metadata
 //---------------------------------------------------------------------
@@ -213,6 +213,14 @@ service NiRFmxSpecAn {
   rpc HarmFetchHarmonicPowerTrace(HarmFetchHarmonicPowerTraceRequest) returns (HarmFetchHarmonicPowerTraceResponse);
   rpc HarmFetchTHD(HarmFetchTHDRequest) returns (HarmFetchTHDResponse);
   rpc HarmRead(HarmReadRequest) returns (HarmReadResponse);
+  rpc IDPDCfgEqualizerCoefficients(IDPDCfgEqualizerCoefficientsRequest) returns (IDPDCfgEqualizerCoefficientsResponse);
+  rpc IDPDCfgPredistortedWaveform(IDPDCfgPredistortedWaveformRequest) returns (IDPDCfgPredistortedWaveformResponse);
+  rpc IDPDCfgReferenceWaveform(IDPDCfgReferenceWaveformRequest) returns (IDPDCfgReferenceWaveformResponse);
+  rpc IDPDFetchEqualizerCoefficients(IDPDFetchEqualizerCoefficientsRequest) returns (IDPDFetchEqualizerCoefficientsResponse);
+  rpc IDPDFetchPredistortedWaveform(IDPDFetchPredistortedWaveformRequest) returns (IDPDFetchPredistortedWaveformResponse);
+  rpc IDPDFetchProcessedMeanAcquiredWaveform(IDPDFetchProcessedMeanAcquiredWaveformRequest) returns (IDPDFetchProcessedMeanAcquiredWaveformResponse);
+  rpc IDPDFetchProcessedReferenceWaveform(IDPDFetchProcessedReferenceWaveformRequest) returns (IDPDFetchProcessedReferenceWaveformResponse);
+  rpc IDPDGetEqualizerReferenceWaveform(IDPDGetEqualizerReferenceWaveformRequest) returns (IDPDGetEqualizerReferenceWaveformResponse);
   rpc IMCfgAutoIntermodsSetup(IMCfgAutoIntermodsSetupRequest) returns (IMCfgAutoIntermodsSetupResponse);
   rpc IMCfgAveraging(IMCfgAveragingRequest) returns (IMCfgAveragingResponse);
   rpc IMCfgFFT(IMCfgFFTRequest) returns (IMCfgFFTResponse);
@@ -244,6 +252,7 @@ service NiRFmxSpecAn {
   rpc MarkerCfgTrace(MarkerCfgTraceRequest) returns (MarkerCfgTraceResponse);
   rpc MarkerCfgType(MarkerCfgTypeRequest) returns (MarkerCfgTypeResponse);
   rpc MarkerCfgXLocation(MarkerCfgXLocationRequest) returns (MarkerCfgXLocationResponse);
+  rpc MarkerCfgYLocation(MarkerCfgYLocationRequest) returns (MarkerCfgYLocationResponse);
   rpc MarkerFetchXY(MarkerFetchXYRequest) returns (MarkerFetchXYResponse);
   rpc MarkerNextPeak(MarkerNextPeakRequest) returns (MarkerNextPeakResponse);
   rpc MarkerPeakSearch(MarkerPeakSearchRequest) returns (MarkerPeakSearchResponse);
@@ -1010,6 +1019,10 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_WORST_CASE_OUTPUT_INTERCEPT_POWER = 1114153;
   NIRFMXSPECAN_ATTRIBUTE_IM_LOCAL_PEAK_SEARCH_ENABLED = 1114154;
   NIRFMXSPECAN_ATTRIBUTE_IM_AMPLITUDE_CORRECTION_TYPE = 1114155;
+  NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_LOWER_INTERMOD_RELATIVE_POWER = 1114160;
+  NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_UPPER_INTERMOD_RELATIVE_POWER = 1114161;
+  NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_WORST_CASE_INTERMOD_ABSOLUTE_POWER = 1114162;
+  NIRFMXSPECAN_ATTRIBUTE_IM_RESULTS_WORST_CASE_INTERMOD_RELATIVE_POWER = 1114163;
   NIRFMXSPECAN_ATTRIBUTE_NF_MEASUREMENT_ENABLED = 1179649;
   NIRFMXSPECAN_ATTRIBUTE_NF_FREQUENCY_LIST = 1179652;
   NIRFMXSPECAN_ATTRIBUTE_NF_MEASUREMENT_BANDWIDTH = 1179653;
@@ -1103,6 +1116,29 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_PHASENOISE_CANCELLATION_THRESHOLD = 1245216;
   NIRFMXSPECAN_ATTRIBUTE_PHASENOISE_CANCELLATION_FREQUENCY = 1245217;
   NIRFMXSPECAN_ATTRIBUTE_PHASENOISE_CANCELLATION_REFERENCE_PHASE_NOISE = 1245218;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_MEASUREMENT_ENABLED = 1310720;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_EQUALIZER_MODE = 1310722;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_EQUALIZER_FILTER_LENGTH = 1310723;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_MEASUREMENT_SAMPLE_RATE_MODE = 1310724;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_MEASUREMENT_SAMPLE_RATE = 1310725;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_SIGNAL_TYPE = 1310726;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT = 1310731;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_DUT_AVERAGE_INPUT_POWER = 1310732;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_AVERAGING_ENABLED = 1310735;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_AVERAGING_COUNT = 1310736;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_EVM_ENABLED = 1310739;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_EVM_UNIT = 1310740;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_IMPAIRMENT_ESTIMATION_START = 1310741;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_IMPAIRMENT_ESTIMATION_STOP = 1310742;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_SYNCHRONIZATION_ESTIMATION_START = 1310743;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_SYNCHRONIZATION_ESTIMATION_STOP = 1310744;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_GAIN_EXPANSION = 1310745;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_POWER_LINEARITY_TRADEOFF = 1310747;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_RESULTS_GAIN = 1310749;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_RESULTS_MEAN_RMS_EVM = 1310750;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_ALL_TRACES_ENABLED = 1310751;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_NUMBER_OF_ANALYSIS_THREADS = 1310753;
+  NIRFMXSPECAN_ATTRIBUTE_IDPD_TARGET_GAIN = 1310759;
 }
 
 enum AcpAveragingEnabled {
@@ -1639,6 +1675,7 @@ enum MarkerType {
   MARKER_TYPE_OFF = 0;
   MARKER_TYPE_NORMAL = 1;
   MARKER_TYPE_DELTA = 3;
+  MARKER_TYPE_FIXED = 4;
 }
 
 enum MeasurementTypes {
@@ -1660,6 +1697,7 @@ enum MeasurementTypes {
   MEASUREMENT_TYPES_NF = 16384;
   MEASUREMENT_TYPES_PHASENOISE = 32768;
   MEASUREMENT_TYPES_PAVT = 65536;
+  MEASUREMENT_TYPES_IDPD = 131072;
 }
 
 enum MechanicalAttenuationAuto {
@@ -2459,6 +2497,21 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
   NIRFMXSPECAN_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING = 0;
   NIRFMXSPECAN_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING = 1;
+  NIRFMXSPECAN_INT32_IDPD_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXSPECAN_INT32_IDPD_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXSPECAN_INT32_IDPD_EQUALIZER_MODE_OFF = 0;
+  NIRFMXSPECAN_INT32_IDPD_EQUALIZER_MODE_TRAIN = 1;
+  NIRFMXSPECAN_INT32_IDPD_EQUALIZER_MODE_HOLD = 2;
+  NIRFMXSPECAN_INT32_IDPD_EVM_ENABLED_FALSE = 0;
+  NIRFMXSPECAN_INT32_IDPD_EVM_ENABLED_TRUE = 1;
+  NIRFMXSPECAN_INT32_IDPD_EVM_UNIT_PERCENTAGE = 0;
+  NIRFMXSPECAN_INT32_IDPD_EVM_UNIT_DB = 1;
+  NIRFMXSPECAN_INT32_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_USER = 0;
+  NIRFMXSPECAN_INT32_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM = 1;
+  NIRFMXSPECAN_INT32_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE = 0;
+  NIRFMXSPECAN_INT32_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE = 1;
+  NIRFMXSPECAN_INT32_IDPD_SIGNAL_TYPE_MODULATED = 0;
+  NIRFMXSPECAN_INT32_IDPD_SIGNAL_TYPE_TONES = 1;
   NIRFMXSPECAN_INT32_LIMITED_CONFIGURATION_CHANGE_DISABLED = 0;
   NIRFMXSPECAN_INT32_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE = 1;
   NIRFMXSPECAN_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY = 2;
@@ -5246,6 +5299,118 @@ message HarmReadResponse {
   double average_fundamental_power = 3;
 }
 
+message IDPDCfgEqualizerCoefficientsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated nidevice_grpc.NIComplexNumberF32 equalizer_coefficients = 5;
+}
+
+message IDPDCfgEqualizerCoefficientsResponse {
+  int32 status = 1;
+}
+
+message IDPDCfgPredistortedWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated nidevice_grpc.NIComplexNumberF32 predistorted_waveform = 5;
+  double target_gain = 6;
+}
+
+message IDPDCfgPredistortedWaveformResponse {
+  int32 status = 1;
+}
+
+message IDPDCfgReferenceWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated nidevice_grpc.NIComplexNumberF32 reference_waveform = 5;
+  int32 idle_duration_present = 6;
+  int32 signal_type = 7;
+}
+
+message IDPDCfgReferenceWaveformResponse {
+  int32 status = 1;
+}
+
+message IDPDFetchEqualizerCoefficientsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IDPDFetchEqualizerCoefficientsResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 equalizer_coefficients = 4;
+  int32 actual_array_size = 5;
+}
+
+message IDPDFetchPredistortedWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IDPDFetchPredistortedWaveformResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 predistorted_waveform = 4;
+  double papr = 5;
+  double power_offset = 6;
+  double gain = 7;
+  int32 actual_array_size = 8;
+}
+
+message IDPDFetchProcessedMeanAcquiredWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IDPDFetchProcessedMeanAcquiredWaveformResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 processed_mean_acquired_waveform = 4;
+  int32 actual_array_size = 5;
+}
+
+message IDPDFetchProcessedReferenceWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IDPDFetchProcessedReferenceWaveformResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 processed_reference_waveform = 4;
+  int32 actual_array_size = 5;
+}
+
+message IDPDGetEqualizerReferenceWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message IDPDGetEqualizerReferenceWaveformResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 equalizer_reference_waveform = 4;
+  double papr = 5;
+  int32 actual_array_size = 6;
+}
+
 message IMCfgAutoIntermodsSetupRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -5660,6 +5825,16 @@ message MarkerCfgXLocationRequest {
 }
 
 message MarkerCfgXLocationResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgYLocationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double marker_y_location = 3;
+}
+
+message MarkerCfgYLocationResponse {
   int32 status = 1;
 }
 

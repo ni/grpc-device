@@ -33,16 +33,17 @@ struct NiRFmxInstrFeatureToggles
 
 class NiRFmxInstrService final : public NiRFmxInstr::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxInstrLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
   using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxInstrService(
-    NiRFmxInstrLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxInstrFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxInstrService();
-  
+
   ::grpc::Status BuildCalibrationPlaneString(::grpc::ServerContext* context, const BuildCalibrationPlaneStringRequest* request, BuildCalibrationPlaneStringResponse* response) override;
   ::grpc::Status BuildInstrumentString(::grpc::ServerContext* context, const BuildInstrumentStringRequest* request, BuildInstrumentStringResponse* response) override;
   ::grpc::Status BuildLOString(::grpc::ServerContext* context, const BuildLOStringRequest* request, BuildLOStringResponse* response) override;
@@ -98,6 +99,7 @@ public:
   ::grpc::Status GetSelfCalibrateLastTemperature(::grpc::ServerContext* context, const GetSelfCalibrateLastTemperatureRequest* request, GetSelfCalibrateLastTemperatureResponse* response) override;
   ::grpc::Status GetSignalConfigurationNames(::grpc::ServerContext* context, const GetSignalConfigurationNamesRequest* request, GetSignalConfigurationNamesResponse* response) override;
   ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
+  ::grpc::Status InitializeWithChannel(::grpc::ServerContext* context, const InitializeWithChannelRequest* request, InitializeWithChannelResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASessionArray(::grpc::ServerContext* context, const InitializeFromNIRFSASessionArrayRequest* request, InitializeFromNIRFSASessionArrayResponse* response) override;
   ::grpc::Status IsSelfCalibrateValid(::grpc::ServerContext* context, const IsSelfCalibrateValidRequest* request, IsSelfCalibrateValidResponse* response) override;
@@ -136,11 +138,12 @@ public:
   ::grpc::Status TimestampFromValues(::grpc::ServerContext* context, const TimestampFromValuesRequest* request, TimestampFromValuesResponse* response) override;
   ::grpc::Status ValuesFromTimestamp(::grpc::ServerContext* context, const ValuesFromTimestampRequest* request, ValuesFromTimestampResponse* response) override;
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
+  ::grpc::Status FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response) override;
 private:
-  NiRFmxInstrLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"},{5, "RefIn2"},{6, "PXI_ClkMaster"}, };
   std::map<std::string, std::int32_t> frequencyreferencesource_output_map_ { {"OnboardClock", 1},{"RefIn", 2},{"PXI_Clk", 3},{"ClkIn", 4},{"RefIn2", 5},{"PXI_ClkMaster", 6}, };
   std::map<std::int32_t, std::string> nirfmxinstrstringattributevaluesmapped_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"},{14, ""},{15, "RefOut"},{16, "RefOut2"},{17, "ClkOut"},{18, ""},{19, "OnboardClock"},{20, "RefIn"},{21, "PXI_Clk"},{22, "ClkIn"},{23, "RefIn2"},{24, "PXI_ClkMaster"},{25, "Automatic_SG_SA_Shared"},{26, "LO_In"},{27, "None"},{28, "Onboard"},{29, "Secondary"},{30, "SG_SA_Shared"},{31, "PFI0"},{32, "PFI1"},{33, "PXI_Trig0"},{34, "PXI_Trig1"},{35, "PXI_Trig2"},{36, "PXI_Trig3"},{37, "PXI_Trig4"},{38, "PXI_Trig5"},{39, "PXI_Trig6"},{40, "PXI_Trig7"},{41, "PXI_STAR"},{42, "PXIe_DStarC"},{43, "PXIe_DStarB"},{44, "TimerEvent"}, };

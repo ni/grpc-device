@@ -2,6 +2,7 @@
 
 #include "device_server.h"
 #include "niscope/niscope_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -61,10 +62,11 @@ class NiScopeDriverApiTest : public ::testing::Test {
     scope::InitWithOptionsResponse response;
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
-    ASSERT_TRUE(status.ok());
-    ASSERT_EQ(kScopeDriverApiSuccess, response.status());
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kScopeDriverApiSuccess, response.status());
   }
 
   void close_driver_session()

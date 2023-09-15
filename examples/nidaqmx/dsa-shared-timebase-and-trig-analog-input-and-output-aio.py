@@ -70,7 +70,7 @@ Running from command line:
 
 Server machine's IP address, port number, leader_device, and follower_device can be passed as
 separate command line arguments.
-  > python dsa-shared-timebase-and-trig-analog-input-and-output.py <server_address> <port_number> <leader_device> <follower_device>
+  > python dsa-shared-timebase-and-trig-analog-input-and-output-aio.py <server_address> <port_number> <leader_device> <follower_device>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "Dev1" as the leader device and "Dev2" as the follower device.
 """  # noqa: W505
@@ -112,6 +112,7 @@ follower_output_task = None
 
 def check_for_warning(response):
     """Print to console if the status indicates a warning."""
+    assert client is not None
     if response.status > 0:
         warning_message = client.GetErrorString(
             nidaqmx_types.GetErrorStringRequest(error_code=response.status)
@@ -124,53 +125,52 @@ async def _main():
     num_leader_samples_written = 0
     num_follower_samples_written = 0
     async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
-        try:
-            client = grpc_nidaqmx.NiDAQmxStub(channel)
+        client = grpc_nidaqmx.NiDAQmxStub(channel)
 
-            async def get_terminal_name_with_dev_prefix(task, terminal_name):
-                num_devices_response = await client.GetTaskAttributeUInt32(
-                    nidaqmx_types.GetTaskAttributeUInt32Request(
-                        task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_DEVICES
-                    )
+        async def get_terminal_name_with_dev_prefix(task, terminal_name):
+            assert client is not None
+            num_devices_response = await client.GetTaskAttributeUInt32(
+                nidaqmx_types.GetTaskAttributeUInt32Request(
+                    task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_DEVICES
                 )
-                num_devices = num_devices_response.value
-                for i in range(num_devices):
-                    # devices are 1-indexed, so use i + 1 here
-                    device = (
-                        await client.GetNthTaskDevice(
-                            nidaqmx_types.GetNthTaskDeviceRequest(task=task, index=i + 1)
+            )
+            num_devices = num_devices_response.value
+            for i in range(num_devices):
+                # devices are 1-indexed, so use i + 1 here
+                device = (
+                    await client.GetNthTaskDevice(
+                        nidaqmx_types.GetNthTaskDeviceRequest(task=task, index=i + 1)
+                    )
+                ).buffer
+                device_category = (
+                    await client.GetDeviceAttributeInt32(
+                        nidaqmx_types.GetDeviceAttributeInt32Request(
+                            device_name=device,
+                            attribute=nidaqmx_types.DEVICE_ATTRIBUTE_PRODUCT_CATEGORY,
                         )
-                    ).buffer
-                    device_category = (
-                        await client.GetDeviceAttributeInt32(
-                            nidaqmx_types.GetDeviceAttributeInt32Request(
-                                device_name=device,
-                                attribute=nidaqmx_types.DEVICE_ATTRIBUTE_PRODUCT_CATEGORY,
-                            )
-                        )
-                    ).value
-                    if (
-                        device_category
-                        != nidaqmx_types.DEVICE_INT32_PRODUCT_CATEGORY_C_SERIES_MODULE
-                        and device_category
-                        != nidaqmx_types.DEVICE_INT32_PRODUCT_CATEGORY_SCXI_MODULE
-                    ):
-                        return "/" + device + "/" + terminal_name
-                raise Exception("Unable to get terminal name for timebase!")
+                    )
+                ).value
+                if (
+                    device_category != nidaqmx_types.DEVICE_INT32_PRODUCT_CATEGORY_C_SERIES_MODULE
+                    and device_category != nidaqmx_types.DEVICE_INT32_PRODUCT_CATEGORY_SCXI_MODULE
+                ):
+                    return "/" + device + "/" + terminal_name
+            raise Exception("Unable to get terminal name for timebase!")
 
-            def generate_sinewave(elements, amplitude, frequency, phase):
-                sinewave = [
-                    amplitude * math.sin(math.pi / 180.0 * (phase + 360.0 * frequency * i))
-                    for i in range(elements)
-                ]
-                new_phase = (phase + frequency * 360.0 * elements) % 360.0
-                return (sinewave, new_phase)
+        def generate_sinewave(elements, amplitude, frequency, phase):
+            sinewave = [
+                amplitude * math.sin(math.pi / 180.0 * (phase + 360.0 * frequency * i))
+                for i in range(elements)
+            ]
+            new_phase = (phase + frequency * 360.0 * elements) % 360.0
+            return (sinewave, new_phase)
 
+        try:
             # DAQmx Configure Tasks code
-            response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(
+            create_task_response = await client.CreateTask(
                 nidaqmx_types.CreateTaskRequest(session_name="Leader input task")
             )
-            leader_input_task = response.task
+            leader_input_task = create_task_response.task
             await client.CreateAIVoltageChan(
                 nidaqmx_types.CreateAIVoltageChanRequest(
                     task=leader_input_task,
@@ -191,10 +191,10 @@ async def _main():
                 )
             )
 
-            response = await client.CreateTask(
+            create_task_response = await client.CreateTask(
                 nidaqmx_types.CreateTaskRequest(session_name="Leader output task")
             )
-            leader_output_task = response.task
+            leader_output_task = create_task_response.task
             await client.CreateAOVoltageChan(
                 nidaqmx_types.CreateAOVoltageChanRequest(
                     task=leader_output_task,
@@ -214,10 +214,10 @@ async def _main():
                 )
             )
 
-            response = await client.CreateTask(
+            create_task_response = await client.CreateTask(
                 nidaqmx_types.CreateTaskRequest(session_name="Follower input task")
             )
-            follower_input_task = response.task
+            follower_input_task = create_task_response.task
             await client.CreateAIVoltageChan(
                 nidaqmx_types.CreateAIVoltageChanRequest(
                     task=follower_input_task,
@@ -238,10 +238,10 @@ async def _main():
                 )
             )
 
-            response = await client.CreateTask(
+            create_task_response = await client.CreateTask(
                 nidaqmx_types.CreateTaskRequest(session_name="Follower output task")
             )
-            follower_output_task = response.task
+            follower_output_task = create_task_response.task
             await client.CreateAOVoltageChan(
                 nidaqmx_types.CreateAOVoltageChanRequest(
                     task=follower_output_task,
@@ -458,30 +458,27 @@ async def _main():
             check_for_warning(start_task_response)
 
             async def read_data():
+                assert client is not None
                 nonlocal num_leader_samples_written, num_follower_samples_written
                 async for every_n_samples_response in every_n_samples_stream:
-                    leader_response: nidaqmx_types.ReadAnalogF64Response = (
-                        await client.ReadAnalogF64(
-                            nidaqmx_types.ReadAnalogF64Request(
-                                task=leader_input_task,
-                                num_samps_per_chan=2000,
-                                timeout=10.0,
-                                fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                array_size_in_samps=2000,
-                            )
+                    leader_response = await client.ReadAnalogF64(
+                        nidaqmx_types.ReadAnalogF64Request(
+                            task=leader_input_task,
+                            num_samps_per_chan=2000,
+                            timeout=10.0,
+                            fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                            array_size_in_samps=2000,
                         )
                     )
                     check_for_warning(leader_response)
                     num_leader_samples_written += leader_response.samps_per_chan_read
-                    follower_response: nidaqmx_types.ReadAnalogF64Response = (
-                        await client.ReadAnalogF64(
-                            nidaqmx_types.ReadAnalogF64Request(
-                                task=follower_input_task,
-                                num_samps_per_chan=2000,
-                                timeout=10.0,
-                                fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                array_size_in_samps=2000,
-                            )
+                    follower_response = await client.ReadAnalogF64(
+                        nidaqmx_types.ReadAnalogF64Request(
+                            task=follower_input_task,
+                            num_samps_per_chan=2000,
+                            timeout=10.0,
+                            fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                            array_size_in_samps=2000,
                         )
                     )
                     num_follower_samples_written += follower_response.samps_per_chan_read
@@ -527,7 +524,7 @@ async def _main():
 
         except grpc.RpcError as rpc_error:
             error_message = str(rpc_error.details() or "")
-            for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
+            for key, value in rpc_error.trailing_metadata() or []:
                 if key == "ni-error":
                     details = value if isinstance(value, str) else value.decode("utf-8")
                     error_message += f"\nError status: {details}"

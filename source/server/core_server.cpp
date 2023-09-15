@@ -13,10 +13,14 @@
   #include "linux/daemonize.h"
   #include "linux/syslog_logging.h"
 #endif
+#if defined(_WIN32)
+  #include "windows/console_ctrl_handler.h"
+#endif
 
 using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
 
 struct ServerConfiguration {
+  std::string config_file_path;
   std::string server_address;
   std::string server_cert;
   std::string server_key;
@@ -32,6 +36,8 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     nidevice_grpc::ServerConfigurationParser server_config_parser = config_file_path.empty()
         ? nidevice_grpc::ServerConfigurationParser()
         : nidevice_grpc::ServerConfigurationParser(config_file_path);
+
+    config.config_file_path = server_config_parser.get_config_file_path();
     config.server_address = server_config_parser.parse_address();
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
@@ -63,6 +69,13 @@ static void StopServer()
 
 static void RunServer(const ServerConfiguration& config)
 {
+  if (!config.config_file_path.empty()) {
+    nidevice_grpc::logging::log(
+      nidevice_grpc::logging::Level_Info,
+      "Using server configuration from %s",
+      config.config_file_path.c_str());
+  }
+
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
 
@@ -117,6 +130,8 @@ static void RunServer(const ServerConfiguration& config)
   while (!services->empty()) {
     services->pop_back();
   }
+
+  nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, "Server stopped.");
 }
 
 struct Options {
@@ -207,6 +222,9 @@ int main(int argc, char** argv)
   if (options.daemonize) {
     nidevice_grpc::daemonize(&StopServer, options.identity);
   }
+#endif
+#if defined(_WIN32)
+  nidevice_grpc::set_console_ctrl_handler(&StopServer);
 #endif
 
   RunServer(config);

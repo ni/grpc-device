@@ -282,6 +282,11 @@ int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* ha
   return RFmxInstr_Initialize(resourceName, optionString, handleOut, isNewSession);
 }
 
+int32 InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession)
+{
+  return RFmxInstr_InitializeWithChannel(resourceName, optionString, channelName, handleOut, isNewSession);
+}
+
 int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
 {
   return RFmxInstr_InitializeFromNIRFSASession(nirfsaSession, handleOut);
@@ -470,6 +475,11 @@ int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, fl
 int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
 {
   return RFmxInstr_WaitForAcquisitionComplete(instrumentHandle, timeout);
+}
+
+int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved)
+{
+  return RFmxInstr_FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, data, arraySize, actualArraySize, reserved);
 }
 
 }  // namespace nirfmxinstr_grpc

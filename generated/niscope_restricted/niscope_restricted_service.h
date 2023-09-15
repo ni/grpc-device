@@ -33,19 +33,20 @@ struct NiScopeRestrictedFeatureToggles
 
 class NiScopeRestrictedService final : public NiScopeRestricted::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiScopeRestrictedLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiScopeRestrictedService(
-    NiScopeRestrictedLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiScopeRestrictedFeatureToggles& feature_toggles = {});
   virtual ~NiScopeRestrictedService();
-  
+
   ::grpc::Status GetStartTimestampInformation(::grpc::ServerContext* context, const GetStartTimestampInformationRequest* request, GetStartTimestampInformationResponse* response) override;
 private:
-  NiScopeRestrictedLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
 
   NiScopeRestrictedFeatureToggles feature_toggles_;
 };

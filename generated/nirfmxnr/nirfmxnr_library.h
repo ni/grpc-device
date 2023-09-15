@@ -8,13 +8,16 @@
 
 #include "nirfmxnr_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nirfmxnr_grpc {
 
 class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
  public:
   NiRFmxNRLibrary();
+  explicit NiRFmxNRLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxNRLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -116,6 +119,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession);
   int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut);
   int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]);
+  int32 LoadFromGenerationConfigurationFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], int32 configurationIndex);
   int32 ModAccAutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout);
   int32 ModAccCfgMeasurementMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMode);
   int32 ModAccCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled);
@@ -338,6 +342,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   using InitializePtr = decltype(&RFmxNR_Initialize);
   using InitializeFromNIRFSASessionPtr = decltype(&RFmxNR_InitializeFromNIRFSASession);
   using InitiatePtr = decltype(&RFmxNR_Initiate);
+  using LoadFromGenerationConfigurationFilePtr = decltype(&RFmxNR_LoadFromGenerationConfigurationFile);
   using ModAccAutoLevelPtr = decltype(&RFmxNR_ModAccAutoLevel);
   using ModAccCfgMeasurementModePtr = decltype(&RFmxNR_ModAccCfgMeasurementMode);
   using ModAccCfgNoiseCompensationEnabledPtr = decltype(&RFmxNR_ModAccCfgNoiseCompensationEnabled);
@@ -560,6 +565,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     InitializePtr Initialize;
     InitializeFromNIRFSASessionPtr InitializeFromNIRFSASession;
     InitiatePtr Initiate;
+    LoadFromGenerationConfigurationFilePtr LoadFromGenerationConfigurationFile;
     ModAccAutoLevelPtr ModAccAutoLevel;
     ModAccCfgMeasurementModePtr ModAccCfgMeasurementMode;
     ModAccCfgNoiseCompensationEnabledPtr ModAccCfgNoiseCompensationEnabled;
@@ -684,7 +690,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

@@ -33,16 +33,17 @@ struct NiRFmxBluetoothFeatureToggles
 
 class NiRFmxBluetoothService final : public NiRFmxBluetooth::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxBluetoothLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
   using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxBluetoothService(
-    NiRFmxBluetoothLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxBluetoothFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxBluetoothService();
-  
+
   ::grpc::Status ACPCfgAveraging(::grpc::ServerContext* context, const ACPCfgAveragingRequest* request, ACPCfgAveragingResponse* response) override;
   ::grpc::Status ACPCfgBurstSynchronizationType(::grpc::ServerContext* context, const ACPCfgBurstSynchronizationTypeRequest* request, ACPCfgBurstSynchronizationTypeResponse* response) override;
   ::grpc::Status ACPCfgNumberOfOffsets(::grpc::ServerContext* context, const ACPCfgNumberOfOffsetsRequest* request, ACPCfgNumberOfOffsetsResponse* response) override;
@@ -119,6 +120,8 @@ public:
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status ModAccCfgAveraging(::grpc::ServerContext* context, const ModAccCfgAveragingRequest* request, ModAccCfgAveragingResponse* response) override;
   ::grpc::Status ModAccCfgBurstSynchronizationType(::grpc::ServerContext* context, const ModAccCfgBurstSynchronizationTypeRequest* request, ModAccCfgBurstSynchronizationTypeResponse* response) override;
+  ::grpc::Status ModAccFetchCSDetrendedPhaseTrace(::grpc::ServerContext* context, const ModAccFetchCSDetrendedPhaseTraceRequest* request, ModAccFetchCSDetrendedPhaseTraceResponse* response) override;
+  ::grpc::Status ModAccFetchCSToneTrace(::grpc::ServerContext* context, const ModAccFetchCSToneTraceRequest* request, ModAccFetchCSToneTraceResponse* response) override;
   ::grpc::Status ModAccFetchConstellationTrace(::grpc::ServerContext* context, const ModAccFetchConstellationTraceRequest* request, ModAccFetchConstellationTraceResponse* response) override;
   ::grpc::Status ModAccFetchDEVM(::grpc::ServerContext* context, const ModAccFetchDEVMRequest* request, ModAccFetchDEVMResponse* response) override;
   ::grpc::Status ModAccFetchDEVMMagnitudeError(::grpc::ServerContext* context, const ModAccFetchDEVMMagnitudeErrorRequest* request, ModAccFetchDEVMMagnitudeErrorResponse* response) override;
@@ -175,10 +178,10 @@ public:
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
   ::grpc::Status WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response) override;
 private:
-  NiRFmxBluetoothLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"}, };
   std::map<std::string, std::int32_t> frequencyreferencesource_output_map_ { {"OnboardClock", 1},{"RefIn", 2},{"PXI_Clk", 3},{"ClkIn", 4}, };
   std::map<std::int32_t, std::string> nirfmxbluetoothstringattributevaluesmapped_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"}, };

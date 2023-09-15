@@ -13,26 +13,8 @@
 
 namespace nixnetsocket_grpc {
 
-namespace {
-struct LibraryAndService {
-  LibraryAndService(
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSOCKET>>& resource_repository,
-    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>& nx_ip_stack_ref_t_resource_repository,
-    const NiXnetSocketFeatureToggles& feature_toggles) 
-      : library(), 
-      service(
-        &library, 
-        resource_repository,
-        nx_ip_stack_ref_t_resource_repository,
-        feature_toggles) {
-  }
-  NiXnetSocketLibrary library;
-  NiXnetSocketService service;
-};
-}
-
 std::shared_ptr<void> register_service(
-  grpc::ServerBuilder& builder, 
+  grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSOCKET>>& resource_repository,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>& nx_ip_stack_ref_t_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
@@ -41,13 +23,14 @@ std::shared_ptr<void> register_service(
 
   if (toggles.is_enabled)
   {
-    auto library_and_service_ptr = std::make_shared<LibraryAndService>(
+    auto library = std::make_shared<NiXnetSocketLibrary>();
+    auto service = std::make_shared<NiXnetSocketService>(
+      library,
       resource_repository,
       nx_ip_stack_ref_t_resource_repository,
       toggles);
-    auto& service = library_and_service_ptr->service;
-    builder.RegisterService(&service);
-    return library_and_service_ptr;
+    builder.RegisterService(service.get());
+    return service;
   }
 
   return {};

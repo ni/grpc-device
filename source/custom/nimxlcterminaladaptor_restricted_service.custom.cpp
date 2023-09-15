@@ -73,7 +73,7 @@ class TerminalContainerPtr {
     nimxlc_Session session = session_repository_->access_session(grpc_session.name());
 
     auto status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
-    DeviceContainerPtr deviceContainerPtr(library_, library_->getDeviceContainer(session, &status));
+    DeviceContainerPtr deviceContainerPtr(library_.get(), library_->getDeviceContainer(session, &status));
     if (nierr_Status_isNotFatal(&status)) {
       nimxlc_DeviceIterator deviceIterator = library_->DeviceContainer_begin(*deviceContainerPtr);
       while (!library_->DeviceIterator_isEnd(*deviceContainerPtr, deviceIterator) && nierr_Status_isNotFatal(&status)) {
@@ -81,7 +81,7 @@ class TerminalContainerPtr {
         device->set_name(library_->DeviceIterator_getDeviceName(*deviceContainerPtr, deviceIterator, &status));
         device->set_supportsonboardclock(library_->DeviceIterator_supportsOnBoardClock(*deviceContainerPtr, deviceIterator, &status));
 
-        TerminalContainerPtr terminalContainerPtr(library_, library_->DeviceIterator_getTerminalContainer(*deviceContainerPtr, deviceIterator, &status));
+        TerminalContainerPtr terminalContainerPtr(library_.get(), library_->DeviceIterator_getTerminalContainer(*deviceContainerPtr, deviceIterator, &status));
         if (nierr_Status_isNotFatal(&status)) {
           nimxlc_TerminalIterator terminalIterator = library_->TerminalContainer_begin(*terminalContainerPtr);
           while (!library_->TerminalIterator_isEnd(*terminalContainerPtr, terminalIterator) && nierr_Status_isNotFatal(&status)) {
@@ -107,7 +107,7 @@ class TerminalContainerPtr {
   }
 }
 
-::grpc::Status NimxlcTerminalAdaptorRestrictedService::ConvertApiErrorStatusForNimxlc_Session(::grpc::ServerContext* context, int32_t status, nimxlc_Session session)
+::grpc::Status NimxlcTerminalAdaptorRestrictedService::ConvertApiErrorStatusForNimxlc_Session(::grpc::ServerContextBase* context, int32_t status, nimxlc_Session session)
 {
   std::string description;
   auto metadata = context->client_metadata();

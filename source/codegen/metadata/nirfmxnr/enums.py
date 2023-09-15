@@ -2317,6 +2317,14 @@ enums = {
             {
                 'name': 'NS07',
                 'value': 8
+            },
+            {
+                'name': 'NS03U',
+                'value': 9
+            },
+            {
+                'name': 'NS21_REL_17_ONWARDS',
+                'value': 10
             }
         ]
     },

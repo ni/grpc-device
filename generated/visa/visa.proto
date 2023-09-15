@@ -1,0 +1,1262 @@
+
+//---------------------------------------------------------------------
+// This file is generated from VISA API metadata version 23.0.0
+//---------------------------------------------------------------------
+// Proto file for the VISA Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.visa";
+option java_outer_classname = "Visa";
+option csharp_namespace = "NationalInstruments.Grpc.Visa";
+
+package visa_grpc;
+
+import "session.proto";
+
+service Visa {
+  rpc AssertIntrSignal(AssertIntrSignalRequest) returns (AssertIntrSignalResponse);
+  rpc AssertTrigger(AssertTriggerRequest) returns (AssertTriggerResponse);
+  rpc AssertUtilSignal(AssertUtilSignalRequest) returns (AssertUtilSignalResponse);
+  rpc Clear(ClearRequest) returns (ClearResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc CloseEvent(CloseEventRequest) returns (CloseEventResponse);
+  rpc DisableEvent(DisableEventRequest) returns (DisableEventResponse);
+  rpc DiscardEvents(DiscardEventsRequest) returns (DiscardEventsResponse);
+  rpc EnableEvent(EnableEventRequest) returns (EnableEventResponse);
+  rpc FindRsrc(FindRsrcRequest) returns (FindRsrcResponse);
+  rpc Flush(FlushRequest) returns (FlushResponse);
+  rpc GetAttribute(GetAttributeRequest) returns (GetAttributeResponse);
+  rpc GetAttributeEvent(GetAttributeEventRequest) returns (GetAttributeEventResponse);
+  rpc GpibCommand(GpibCommandRequest) returns (GpibCommandResponse);
+  rpc GpibControlATN(GpibControlATNRequest) returns (GpibControlATNResponse);
+  rpc GpibControlREN(GpibControlRENRequest) returns (GpibControlRENResponse);
+  rpc GpibPassControl(GpibPassControlRequest) returns (GpibPassControlResponse);
+  rpc GpibSendIFC(GpibSendIFCRequest) returns (GpibSendIFCResponse);
+  rpc In16(In16Request) returns (In16Response);
+  rpc In32(In32Request) returns (In32Response);
+  rpc In64(In64Request) returns (In64Response);
+  rpc In8(In8Request) returns (In8Response);
+  rpc Lock(LockRequest) returns (LockResponse);
+  rpc MapAddress(MapAddressRequest) returns (MapAddressResponse);
+  rpc MapTrigger(MapTriggerRequest) returns (MapTriggerResponse);
+  rpc MemAlloc(MemAllocRequest) returns (MemAllocResponse);
+  rpc MemAllocEx(MemAllocExRequest) returns (MemAllocExResponse);
+  rpc MemFree(MemFreeRequest) returns (MemFreeResponse);
+  rpc MoveIn16(MoveIn16Request) returns (MoveIn16Response);
+  rpc MoveIn32(MoveIn32Request) returns (MoveIn32Response);
+  rpc MoveIn64(MoveIn64Request) returns (MoveIn64Response);
+  rpc MoveIn8(MoveIn8Request) returns (MoveIn8Response);
+  rpc MoveOut16(MoveOut16Request) returns (MoveOut16Response);
+  rpc MoveOut32(MoveOut32Request) returns (MoveOut32Response);
+  rpc MoveOut64(MoveOut64Request) returns (MoveOut64Response);
+  rpc MoveOut8(MoveOut8Request) returns (MoveOut8Response);
+  rpc Open(OpenRequest) returns (OpenResponse);
+  rpc Out16(Out16Request) returns (Out16Response);
+  rpc Out32(Out32Request) returns (Out32Response);
+  rpc Out64(Out64Request) returns (Out64Response);
+  rpc Out8(Out8Request) returns (Out8Response);
+  rpc ParseRsrc(ParseRsrcRequest) returns (ParseRsrcResponse);
+  rpc Peek16(Peek16Request) returns (Peek16Response);
+  rpc Peek32(Peek32Request) returns (Peek32Response);
+  rpc Peek64(Peek64Request) returns (Peek64Response);
+  rpc Peek8(Peek8Request) returns (Peek8Response);
+  rpc Poke16(Poke16Request) returns (Poke16Response);
+  rpc Poke32(Poke32Request) returns (Poke32Response);
+  rpc Poke64(Poke64Request) returns (Poke64Response);
+  rpc Poke8(Poke8Request) returns (Poke8Response);
+  rpc PxiReserveTriggers(PxiReserveTriggersRequest) returns (PxiReserveTriggersResponse);
+  rpc Read(ReadRequest) returns (ReadResponse);
+  rpc ReadAsync(ReadAsyncRequest) returns (ReadAsyncResponse);
+  rpc ReadSTB(ReadSTBRequest) returns (ReadSTBResponse);
+  rpc SetAttribute(SetAttributeRequest) returns (SetAttributeResponse);
+  rpc SetBuf(SetBufRequest) returns (SetBufResponse);
+  rpc StatusDesc(StatusDescRequest) returns (StatusDescResponse);
+  rpc Terminate(TerminateRequest) returns (TerminateResponse);
+  rpc Unlock(UnlockRequest) returns (UnlockResponse);
+  rpc UnmapAddress(UnmapAddressRequest) returns (UnmapAddressResponse);
+  rpc UnmapTrigger(UnmapTriggerRequest) returns (UnmapTriggerResponse);
+  rpc UsbControlIn(UsbControlInRequest) returns (UsbControlInResponse);
+  rpc UsbControlOut(UsbControlOutRequest) returns (UsbControlOutResponse);
+  rpc VxiCommandQuery(VxiCommandQueryRequest) returns (VxiCommandQueryResponse);
+  rpc WaitOnEvent(WaitOnEventRequest) returns (WaitOnEventResponse);
+  rpc Write(WriteRequest) returns (WriteResponse);
+  rpc WriteAsync(WriteAsyncRequest) returns (WriteAsyncResponse);
+}
+
+enum VisaAttribute {
+  VISA_ATTRIBUTE_UNSPECIFIED = 0;
+  VISA_ATTRIBUTE_RSRC_CLASS = -1073807359;
+  VISA_ATTRIBUTE_RSRC_NAME = -1073807358;
+  VISA_ATTRIBUTE_MANF_NAME = -1073807246;
+  VISA_ATTRIBUTE_MODEL_NAME = -1073807241;
+  VISA_ATTRIBUTE_INTF_INST_NAME = -1073807127;
+  VISA_ATTRIBUTE_RSRC_MANF_NAME = -1073806988;
+  VISA_ATTRIBUTE_TCPIP_ADDR = -1073806955;
+  VISA_ATTRIBUTE_TCPIP_HOSTNAME = -1073806954;
+  VISA_ATTRIBUTE_TCPIP_DEVICE_NAME = -1073806951;
+  VISA_ATTRIBUTE_USB_SERIAL_NUM = -1073806944;
+  VISA_ATTRIBUTE_PXI_SLOTPATH = -1073806841;
+  VISA_ATTRIBUTE_OPER_NAME = -1073790910;
+  VISA_ATTRIBUTE_RECV_TCPIP_ADDR = -1073790568;
+  VISA_ATTRIBUTE_USB_RECV_INTR_DATA = -1073790543;
+  VISA_ATTRIBUTE_RSRC_IMPL_VERSION = 1073676291;
+  VISA_ATTRIBUTE_RSRC_LOCK_STATE = 1073676292;
+  VISA_ATTRIBUTE_MAX_QUEUE_LENGTH = 1073676293;
+  VISA_ATTRIBUTE_USER_DATA = 1073676295;
+  VISA_ATTRIBUTE_FDC_CHNL = 1073676301;
+  VISA_ATTRIBUTE_FDC_MODE = 1073676303;
+  VISA_ATTRIBUTE_FDC_USE_PAIR = 1073676307;
+  VISA_ATTRIBUTE_SEND_END_EN = 1073676310;
+  VISA_ATTRIBUTE_TERMCHAR = 1073676312;
+  VISA_ATTRIBUTE_TMO_VALUE = 1073676314;
+  VISA_ATTRIBUTE_GPIB_READDR_EN = 1073676315;
+  VISA_ATTRIBUTE_IO_PROT = 1073676316;
+  VISA_ATTRIBUTE_DMA_ALLOW_EN = 1073676318;
+  VISA_ATTRIBUTE_ASRL_BAUD = 1073676321;
+  VISA_ATTRIBUTE_ASRL_DATA_BITS = 1073676322;
+  VISA_ATTRIBUTE_ASRL_PARITY = 1073676323;
+  VISA_ATTRIBUTE_ASRL_STOP_BITS = 1073676324;
+  VISA_ATTRIBUTE_ASRL_FLOW_CNTRL = 1073676325;
+  VISA_ATTRIBUTE_RD_BUF_OPER_MODE = 1073676330;
+  VISA_ATTRIBUTE_RD_BUF_SIZE = 1073676331;
+  VISA_ATTRIBUTE_WR_BUF_OPER_MODE = 1073676333;
+  VISA_ATTRIBUTE_WR_BUF_SIZE = 1073676334;
+  VISA_ATTRIBUTE_SUPPRESS_END_EN = 1073676342;
+  VISA_ATTRIBUTE_TERMCHAR_EN = 1073676344;
+  VISA_ATTRIBUTE_DEST_ACCESS_PRIV = 1073676345;
+  VISA_ATTRIBUTE_DEST_BYTE_ORDER = 1073676346;
+  VISA_ATTRIBUTE_SRC_ACCESS_PRIV = 1073676348;
+  VISA_ATTRIBUTE_SRC_BYTE_ORDER = 1073676349;
+  VISA_ATTRIBUTE_SRC_INCREMENT = 1073676352;
+  VISA_ATTRIBUTE_DEST_INCREMENT = 1073676353;
+  VISA_ATTRIBUTE_WIN_ACCESS_PRIV = 1073676357;
+  VISA_ATTRIBUTE_WIN_BYTE_ORDER = 1073676359;
+  VISA_ATTRIBUTE_GPIB_ATN_STATE = 1073676375;
+  VISA_ATTRIBUTE_GPIB_ADDR_STATE = 1073676380;
+  VISA_ATTRIBUTE_GPIB_CIC_STATE = 1073676382;
+  VISA_ATTRIBUTE_GPIB_NDAC_STATE = 1073676386;
+  VISA_ATTRIBUTE_GPIB_SRQ_STATE = 1073676391;
+  VISA_ATTRIBUTE_GPIB_SYS_CNTRL_STATE = 1073676392;
+  VISA_ATTRIBUTE_GPIB_HS488_CBL_LEN = 1073676393;
+  VISA_ATTRIBUTE_CMDR_LA = 1073676395;
+  VISA_ATTRIBUTE_VXI_DEV_CLASS = 1073676396;
+  VISA_ATTRIBUTE_MAINFRAME_LA = 1073676400;
+  VISA_ATTRIBUTE_VXI_VME_INTR_STATUS = 1073676427;
+  VISA_ATTRIBUTE_VXI_TRIG_STATUS = 1073676429;
+  VISA_ATTRIBUTE_VXI_VME_SYSFAIL_STATE = 1073676436;
+  VISA_ATTRIBUTE_WIN_BASE_ADDR = 1073676440;
+  VISA_ATTRIBUTE_WIN_SIZE = 1073676442;
+  VISA_ATTRIBUTE_ASRL_AVAIL_NUM = 1073676460;
+  VISA_ATTRIBUTE_MEM_BASE = 1073676461;
+  VISA_ATTRIBUTE_ASRL_CTS_STATE = 1073676462;
+  VISA_ATTRIBUTE_ASRL_DCD_STATE = 1073676463;
+  VISA_ATTRIBUTE_ASRL_DISCARD_NULL = 1073676464;
+  VISA_ATTRIBUTE_ASRL_DSR_STATE = 1073676465;
+  VISA_ATTRIBUTE_ASRL_DTR_STATE = 1073676466;
+  VISA_ATTRIBUTE_ASRL_END_IN = 1073676467;
+  VISA_ATTRIBUTE_ASRL_END_OUT = 1073676468;
+  VISA_ATTRIBUTE_ASRL_REPLACE_CHAR = 1073676478;
+  VISA_ATTRIBUTE_ASRL_RI_STATE = 1073676479;
+  VISA_ATTRIBUTE_ASRL_RTS_STATE = 1073676480;
+  VISA_ATTRIBUTE_ASRL_XON_CHAR = 1073676481;
+  VISA_ATTRIBUTE_ASRL_XOFF_CHAR = 1073676482;
+  VISA_ATTRIBUTE_WIN_ACCESS = 1073676483;
+  VISA_ATTRIBUTE_VXI_LA = 1073676501;
+  VISA_ATTRIBUTE_MANF_ID = 1073676505;
+  VISA_ATTRIBUTE_MEM_SIZE = 1073676509;
+  VISA_ATTRIBUTE_MEM_SPACE = 1073676510;
+  VISA_ATTRIBUTE_MODEL_CODE = 1073676511;
+  VISA_ATTRIBUTE_SLOT = 1073676520;
+  VISA_ATTRIBUTE_IMMEDIATE_SERV = 1073676544;
+  VISA_ATTRIBUTE_INTF_PARENT_NUM = 1073676545;
+  VISA_ATTRIBUTE_RSRC_SPEC_VERSION = 1073676656;
+  VISA_ATTRIBUTE_INTF_TYPE = 1073676657;
+  VISA_ATTRIBUTE_GPIB_PRIMARY_ADDR = 1073676658;
+  VISA_ATTRIBUTE_GPIB_SECONDARY_ADDR = 1073676659;
+  VISA_ATTRIBUTE_RSRC_MANF_ID = 1073676661;
+  VISA_ATTRIBUTE_INTF_NUM = 1073676662;
+  VISA_ATTRIBUTE_TRIG_ID = 1073676663;
+  VISA_ATTRIBUTE_GPIB_REN_STATE = 1073676673;
+  VISA_ATTRIBUTE_GPIB_UNADDR_EN = 1073676676;
+  VISA_ATTRIBUTE_DEV_STATUS_BYTE = 1073676681;
+  VISA_ATTRIBUTE_FILE_APPEND_EN = 1073676690;
+  VISA_ATTRIBUTE_VXI_TRIG_SUPPORT = 1073676692;
+  VISA_ATTRIBUTE_TCPIP_PORT = 1073676695;
+  VISA_ATTRIBUTE_TCPIP_NODELAY = 1073676698;
+  VISA_ATTRIBUTE_TCPIP_KEEPALIVE = 1073676699;
+  VISA_ATTRIBUTE_4882_COMPLIANT = 1073676703;
+  VISA_ATTRIBUTE_USB_INTFC_NUM = 1073676705;
+  VISA_ATTRIBUTE_USB_BULK_OUT_PIPE = 1073676706;
+  VISA_ATTRIBUTE_USB_BULK_IN_PIPE = 1073676707;
+  VISA_ATTRIBUTE_USB_INTR_IN_PIPE = 1073676708;
+  VISA_ATTRIBUTE_USB_CLASS = 1073676709;
+  VISA_ATTRIBUTE_USB_SUBCLASS = 1073676710;
+  VISA_ATTRIBUTE_USB_PROTOCOL = 1073676711;
+  VISA_ATTRIBUTE_USB_ALT_SETTING = 1073676712;
+  VISA_ATTRIBUTE_USB_END_IN = 1073676713;
+  VISA_ATTRIBUTE_USB_NUM_INTFCS = 1073676714;
+  VISA_ATTRIBUTE_USB_NUM_PIPES = 1073676715;
+  VISA_ATTRIBUTE_USB_BULK_OUT_STATUS = 1073676716;
+  VISA_ATTRIBUTE_USB_BULK_IN_STATUS = 1073676717;
+  VISA_ATTRIBUTE_USB_INTR_IN_STATUS = 1073676718;
+  VISA_ATTRIBUTE_USB_MAX_INTR_SIZE = 1073676719;
+  VISA_ATTRIBUTE_USB_CTRL_PIPE = 1073676720;
+  VISA_ATTRIBUTE_ASRL_CONNECTED = 1073676731;
+  VISA_ATTRIBUTE_ASRL_BREAK_STATE = 1073676732;
+  VISA_ATTRIBUTE_ASRL_BREAK_LEN = 1073676733;
+  VISA_ATTRIBUTE_ASRL_ALLOW_TRANSMIT = 1073676734;
+  VISA_ATTRIBUTE_ASRL_WIRE_MODE = 1073676735;
+  VISA_ATTRIBUTE_FIREWIRE_DEST_UPPER_OFFSET = 1073676784;
+  VISA_ATTRIBUTE_FIREWIRE_SRC_UPPER_OFFSET = 1073676785;
+  VISA_ATTRIBUTE_FIREWIRE_WIN_UPPER_OFFSET = 1073676786;
+  VISA_ATTRIBUTE_FIREWIRE_VENDOR_ID = 1073676787;
+  VISA_ATTRIBUTE_FIREWIRE_LOWER_CHIP_ID = 1073676788;
+  VISA_ATTRIBUTE_FIREWIRE_UPPER_CHIP_ID = 1073676789;
+  VISA_ATTRIBUTE_PXI_DEV_NUM = 1073676801;
+  VISA_ATTRIBUTE_PXI_FUNC_NUM = 1073676802;
+  VISA_ATTRIBUTE_PXI_BUS_NUM = 1073676805;
+  VISA_ATTRIBUTE_PXI_CHASSIS = 1073676806;
+  VISA_ATTRIBUTE_PXI_SLOT_LBUS_LEFT = 1073676808;
+  VISA_ATTRIBUTE_PXI_SLOT_LBUS_RIGHT = 1073676809;
+  VISA_ATTRIBUTE_PXI_TRIG_BUS = 1073676810;
+  VISA_ATTRIBUTE_PXI_STAR_TRIG_BUS = 1073676811;
+  VISA_ATTRIBUTE_PXI_STAR_TRIG_LINE = 1073676812;
+  VISA_ATTRIBUTE_PXI_SRC_TRIG_BUS = 1073676813;
+  VISA_ATTRIBUTE_PXI_DEST_TRIG_BUS = 1073676814;
+  VISA_ATTRIBUTE_PXI_MEM_TYPE_BAR0 = 1073676817;
+  VISA_ATTRIBUTE_PXI_MEM_TYPE_BAR1 = 1073676818;
+  VISA_ATTRIBUTE_PXI_MEM_TYPE_BAR2 = 1073676819;
+  VISA_ATTRIBUTE_PXI_MEM_TYPE_BAR3 = 1073676820;
+  VISA_ATTRIBUTE_PXI_MEM_TYPE_BAR4 = 1073676821;
+  VISA_ATTRIBUTE_PXI_MEM_TYPE_BAR5 = 1073676822;
+  VISA_ATTRIBUTE_PXI_MEM_BASE_BAR0 = 1073676833;
+  VISA_ATTRIBUTE_PXI_MEM_BASE_BAR1 = 1073676834;
+  VISA_ATTRIBUTE_PXI_MEM_BASE_BAR2 = 1073676835;
+  VISA_ATTRIBUTE_PXI_MEM_BASE_BAR3 = 1073676836;
+  VISA_ATTRIBUTE_PXI_MEM_BASE_BAR4 = 1073676837;
+  VISA_ATTRIBUTE_PXI_MEM_BASE_BAR5 = 1073676838;
+  VISA_ATTRIBUTE_PXI_MEM_SIZE_BAR0 = 1073676849;
+  VISA_ATTRIBUTE_PXI_MEM_SIZE_BAR1 = 1073676850;
+  VISA_ATTRIBUTE_PXI_MEM_SIZE_BAR2 = 1073676851;
+  VISA_ATTRIBUTE_PXI_MEM_SIZE_BAR3 = 1073676852;
+  VISA_ATTRIBUTE_PXI_MEM_SIZE_BAR4 = 1073676853;
+  VISA_ATTRIBUTE_PXI_MEM_SIZE_BAR5 = 1073676854;
+  VISA_ATTRIBUTE_PXI_IS_EXPRESS = 1073676864;
+  VISA_ATTRIBUTE_PXI_SLOT_LWIDTH = 1073676865;
+  VISA_ATTRIBUTE_PXI_MAX_LWIDTH = 1073676866;
+  VISA_ATTRIBUTE_PXI_ACTUAL_LWIDTH = 1073676867;
+  VISA_ATTRIBUTE_PXI_DSTAR_BUS = 1073676868;
+  VISA_ATTRIBUTE_PXI_DSTAR_SET = 1073676869;
+  VISA_ATTRIBUTE_PXI_ALLOW_WRITE_COMBINE = 1073676870;
+  VISA_ATTRIBUTE_TCPIP_HISLIP_OVERLAP_EN = 1073677056;
+  VISA_ATTRIBUTE_TCPIP_HISLIP_VERSION = 1073677057;
+  VISA_ATTRIBUTE_TCPIP_HISLIP_MAX_MESSAGE_KB = 1073677058;
+  VISA_ATTRIBUTE_TCPIP_IS_HISLIP = 1073677059;
+  VISA_ATTRIBUTE_JOB_ID = 1073692678;
+  VISA_ATTRIBUTE_EVENT_TYPE = 1073692688;
+  VISA_ATTRIBUTE_SIGP_STATUS_ID = 1073692689;
+  VISA_ATTRIBUTE_RECV_TRIG_ID = 1073692690;
+  VISA_ATTRIBUTE_INTR_STATUS_ID = 1073692707;
+  VISA_ATTRIBUTE_STATUS = 1073692709;
+  VISA_ATTRIBUTE_RET_COUNT = 1073692710;
+  VISA_ATTRIBUTE_RECV_INTR_LEVEL = 1073692737;
+  VISA_ATTRIBUTE_VXI_TRIG_LINES_EN = 1073692739;
+  VISA_ATTRIBUTE_VXI_TRIG_DIR = 1073692740;
+  VISA_ATTRIBUTE_GPIB_RECV_CIC_STATE = 1073693075;
+  VISA_ATTRIBUTE_USB_RECV_INTR_SIZE = 1073693104;
+  VISA_ATTRIBUTE_PXI_RECV_INTR_SEQ = 1073693248;
+  VISA_ATTRIBUTE_PXI_RECV_INTR_DATA = 1073693249;
+}
+
+enum AddressSpace {
+  ADDRESS_SPACE_LOCAL_SPACE = 0;
+  ADDRESS_SPACE_A16_SPACE = 1;
+  ADDRESS_SPACE_A24_SPACE = 2;
+  ADDRESS_SPACE_A32_SPACE = 3;
+  ADDRESS_SPACE_A64_SPACE = 4;
+  ADDRESS_SPACE_PXI_ALLOC_SPACE = 9;
+  ADDRESS_SPACE_PXI_CFG_SPACE = 10;
+  ADDRESS_SPACE_PXI_BAR0_SPACE = 11;
+  ADDRESS_SPACE_PXI_BAR1_SPACE = 12;
+  ADDRESS_SPACE_PXI_BAR2_SPACE = 13;
+  ADDRESS_SPACE_PXI_BAR3_SPACE = 14;
+  ADDRESS_SPACE_PXI_BAR4_SPACE = 15;
+  ADDRESS_SPACE_PXI_BAR5_SPACE = 16;
+  ADDRESS_SPACE_OPAQUE_SPACE = 65535;
+}
+
+enum AssertInterruptSignalMode {
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_USE_ASSIGNED = 0;
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_IRQ1 = 1;
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_IRQ2 = 2;
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_IRQ3 = 3;
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_IRQ4 = 4;
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_IRQ5 = 5;
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_IRQ6 = 6;
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_IRQ7 = 7;
+  ASSERT_INTERRUPT_SIGNAL_MODE_ASSERT_SIGNAL = -1;
+}
+
+enum AssertUtilSignalMode {
+  ASSERT_UTIL_SIGNAL_MODE_UNSPECIFIED = 0;
+  ASSERT_UTIL_SIGNAL_MODE_UTIL_ASSERT_SYSRESET = 1;
+  ASSERT_UTIL_SIGNAL_MODE_UTIL_ASSERT_SYSFAIL = 2;
+  ASSERT_UTIL_SIGNAL_MODE_UTIL_DEASSERT_SYSFAIL = 3;
+}
+
+enum BufferMask {
+  BUFFER_MASK_UNSPECIFIED = 0;
+  BUFFER_MASK_IO_IN_BUF = 16;
+  BUFFER_MASK_IO_OUT_BUF = 32;
+  BUFFER_MASK_IO_IN_BUF_DISCARD = 64;
+  BUFFER_MASK_IO_OUT_BUF_DISCARD = 128;
+}
+
+enum EventMechanism {
+  EVENT_MECHANISM_UNSPECIFIED = 0;
+  EVENT_MECHANISM_QUEUE = 1;
+  EVENT_MECHANISM_HNDLR = 2;
+  EVENT_MECHANISM_SUSPEND_HNDLR = 4;
+  EVENT_MECHANISM_ALL_MECH = 65535;
+}
+
+enum EventType {
+  EVENT_TYPE_UNSPECIFIED = 0;
+  EVENT_TYPE_ALL_ENABLED_EVENTS = 1073709055;
+  EVENT_TYPE_EVENT_ASRL_BREAK = 1073684515;
+  EVENT_TYPE_EVENT_ASRL_CTS = 1073684521;
+  EVENT_TYPE_EVENT_ASRL_DSR = 1073684522;
+  EVENT_TYPE_EVENT_ASRL_DCD = 1073684524;
+  EVENT_TYPE_EVENT_ASRL_RI = 1073684526;
+  EVENT_TYPE_EVENT_ASRL_CHAR = 1073684533;
+  EVENT_TYPE_EVENT_ASRL_TERMCHAR = 1073684516;
+  EVENT_TYPE_EVENT_IO_COMPLETION = 1073684489;
+  EVENT_TYPE_EVENT_TRIG = -1073799158;
+  EVENT_TYPE_EVENT_SERVICE_REQ = 1073684491;
+  EVENT_TYPE_EVENT_CLEAR = 1073684493;
+  EVENT_TYPE_EVENT_EXCEPTION = -1073799154;
+  EVENT_TYPE_EVENT_GPIB_CIC = 1073684498;
+  EVENT_TYPE_EVENT_GPIB_TALK = 1073684499;
+  EVENT_TYPE_EVENT_GPIB_LISTEN = 1073684500;
+  EVENT_TYPE_EVENT_VXI_VME_SYSFAIL = 1073684509;
+  EVENT_TYPE_EVENT_VXI_VME_SYSRESET = 1073684510;
+  EVENT_TYPE_EVENT_VXI_SIGP = 1073684512;
+  EVENT_TYPE_EVENT_VXI_VME_INTR = -1073799135;
+  EVENT_TYPE_EVENT_PXI_INTR = 1073684514;
+  EVENT_TYPE_EVENT_TCPIP_CONNECT = 1073684534;
+  EVENT_TYPE_EVENT_USB_INTR = 1073684535;
+}
+
+enum GpibControlAtnMode {
+  GPIB_CONTROL_ATN_MODE_ATN_DEASSERT = 0;
+  GPIB_CONTROL_ATN_MODE_ATN_ASSERT = 1;
+  GPIB_CONTROL_ATN_MODE_ATN_DEASSERT_HANDSHAKE = 2;
+  GPIB_CONTROL_ATN_MODE_ATN_ASSERT_IMMEDIATE = 3;
+}
+
+enum GpibControlRenMode {
+  GPIB_CONTROL_REN_MODE_REN_DEASSERT = 0;
+  GPIB_CONTROL_REN_MODE_REN_ASSERT = 1;
+  GPIB_CONTROL_REN_MODE_REN_DEASSERT_GTL = 2;
+  GPIB_CONTROL_REN_MODE_REN_ASSERT_ADDRESS = 3;
+  GPIB_CONTROL_REN_MODE_REN_ASSERT_LLO = 4;
+  GPIB_CONTROL_REN_MODE_REN_ASSERT_ADDRESS_LLO = 5;
+  GPIB_CONTROL_REN_MODE_REN_ADDRESS_GTL = 6;
+}
+
+enum LockState {
+  LOCK_STATE_NO_LOCK = 0;
+  LOCK_STATE_EXCLUSIVE_LOCK = 1;
+  LOCK_STATE_SHARED_LOCK = 2;
+}
+
+enum TriggerLine {
+  TRIGGER_LINE_TTL0 = 0;
+  TRIGGER_LINE_ALL = -2;
+  TRIGGER_LINE_SW = -1;
+  TRIGGER_LINE_TTL1 = 1;
+  TRIGGER_LINE_TTL2 = 2;
+  TRIGGER_LINE_TTL3 = 3;
+  TRIGGER_LINE_TTL4 = 4;
+  TRIGGER_LINE_TTL5 = 5;
+  TRIGGER_LINE_TTL6 = 6;
+  TRIGGER_LINE_TTL7 = 7;
+  TRIGGER_LINE_ECL0 = 8;
+  TRIGGER_LINE_ECL1 = 9;
+  TRIGGER_LINE_ECL2 = 10;
+  TRIGGER_LINE_ECL3 = 11;
+  TRIGGER_LINE_ECL4 = 12;
+  TRIGGER_LINE_ECL5 = 13;
+  TRIGGER_LINE_STAR_SLOT1 = 14;
+  TRIGGER_LINE_STAR_SLOT2 = 15;
+  TRIGGER_LINE_STAR_SLOT3 = 16;
+  TRIGGER_LINE_STAR_SLOT4 = 17;
+  TRIGGER_LINE_STAR_SLOT5 = 18;
+  TRIGGER_LINE_STAR_SLOT6 = 19;
+  TRIGGER_LINE_STAR_SLOT7 = 20;
+  TRIGGER_LINE_STAR_SLOT8 = 21;
+  TRIGGER_LINE_STAR_SLOT9 = 22;
+  TRIGGER_LINE_STAR_SLOT10 = 23;
+  TRIGGER_LINE_STAR_SLOT11 = 24;
+  TRIGGER_LINE_STAR_SLOT12 = 25;
+  TRIGGER_LINE_STAR_INSTR = 26;
+  TRIGGER_LINE_PANEL_IN = 27;
+  TRIGGER_LINE_PANEL_OUT = 28;
+  TRIGGER_LINE_STAR_VXI0 = 29;
+  TRIGGER_LINE_STAR_VXI1 = 30;
+  TRIGGER_LINE_STAR_VXI2 = 31;
+  TRIGGER_LINE_TTL8 = 32;
+  TRIGGER_LINE_TTL9 = 33;
+  TRIGGER_LINE_TTL10 = 34;
+  TRIGGER_LINE_TTL11 = 35;
+}
+
+enum TriggerProtocol {
+  TRIGGER_PROTOCOL_PROT_DEFAULT = 0;
+  TRIGGER_PROTOCOL_PROT_OFF = 1;
+  TRIGGER_PROTOCOL_PROT_ON = 2;
+  TRIGGER_PROTOCOL_PROT_SYNC = 5;
+  TRIGGER_PROTOCOL_PROT_RESERVE = 6;
+  TRIGGER_PROTOCOL_PROT_UNRESERVE = 7;
+}
+
+enum VxiCmdType {
+  VXI_CMD_TYPE_UNSPECIFIED = 0;
+  VXI_CMD_TYPE_VXI_RESP16 = 2;
+  VXI_CMD_TYPE_VXI_RESP32 = 4;
+  VXI_CMD_TYPE_VXI_CMD16 = 512;
+  VXI_CMD_TYPE_VXI_CMD16_RESP16 = 514;
+  VXI_CMD_TYPE_VXI_CMD32 = 1024;
+  VXI_CMD_TYPE_VXI_CMD32_RESP16 = 1026;
+  VXI_CMD_TYPE_VXI_CMD32_RESP32 = 1028;
+}
+
+message AttributeValueData {
+  oneof data {
+    uint32 value_u8 = 1;
+    int32 value_i16 = 2;
+    uint32 value_u16 = 3;
+    int32 value_i32 = 4;
+    uint32 value_u32 = 5;
+    fixed64 value_u64 = 6;
+    bool value_bool = 7;
+    string value_string = 8;
+    bytes value_bytes = 9;
+  }
+}
+
+message AssertIntrSignalRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof mode_enum {
+    AssertInterruptSignalMode mode = 2;
+    sint32 mode_raw = 3;
+  }
+  uint32 status_id = 4;
+}
+
+message AssertIntrSignalResponse {
+  int32 status = 1;
+}
+
+message AssertTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof protocol_enum {
+    TriggerProtocol protocol = 2;
+    uint32 protocol_raw = 3;
+  }
+}
+
+message AssertTriggerResponse {
+  int32 status = 1;
+}
+
+message AssertUtilSignalRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof mode_enum {
+    AssertUtilSignalMode mode = 2;
+    uint32 mode_raw = 3;
+  }
+}
+
+message AssertUtilSignalResponse {
+  int32 status = 1;
+}
+
+message ClearRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ClearResponse {
+  int32 status = 1;
+}
+
+message CloseRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
+message CloseEventRequest {
+  uint32 event_handle = 1;
+}
+
+message CloseEventResponse {
+  int32 status = 1;
+}
+
+message DisableEventRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof event_type_enum {
+    EventType event_type = 2;
+    uint32 event_type_raw = 3;
+  }
+  oneof event_mechanism_enum {
+    EventMechanism event_mechanism = 4;
+    uint32 event_mechanism_raw = 5;
+  }
+}
+
+message DisableEventResponse {
+  int32 status = 1;
+}
+
+message DiscardEventsRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof event_type_enum {
+    EventType event_type = 2;
+    uint32 event_type_raw = 3;
+  }
+  oneof event_mechanism_enum {
+    EventMechanism event_mechanism = 4;
+    uint32 event_mechanism_raw = 5;
+  }
+}
+
+message DiscardEventsResponse {
+  int32 status = 1;
+}
+
+message EnableEventRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof event_type_enum {
+    EventType event_type = 2;
+    uint32 event_type_raw = 3;
+  }
+  oneof event_mechanism_enum {
+    EventMechanism event_mechanism = 4;
+    uint32 event_mechanism_raw = 5;
+  }
+  uint32 filter_context = 6;
+}
+
+message EnableEventResponse {
+  int32 status = 1;
+}
+
+message FindRsrcRequest {
+  string expression = 1;
+}
+
+message FindRsrcResponse {
+  int32 status = 1;
+  repeated string instrument_descriptor = 2;
+}
+
+message FlushRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof mask_enum {
+    BufferMask mask = 2;
+    uint32 mask_raw = 3;
+  }
+}
+
+message FlushResponse {
+  int32 status = 1;
+}
+
+message GetAttributeRequest {
+  nidevice_grpc.Session vi = 1;
+  VisaAttribute attribute_name = 2;
+}
+
+message GetAttributeResponse {
+  int32 status = 1;
+  AttributeValueData attribute_value = 2;
+}
+
+message GetAttributeEventRequest {
+  uint32 event_handle = 1;
+  VisaAttribute attribute_name = 2;
+}
+
+message GetAttributeEventResponse {
+  int32 status = 1;
+  AttributeValueData attribute_value = 2;
+}
+
+message GpibCommandRequest {
+  nidevice_grpc.Session vi = 1;
+  bytes buffer = 2;
+}
+
+message GpibCommandResponse {
+  int32 status = 1;
+  uint32 return_count = 2;
+}
+
+message GpibControlATNRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof mode_enum {
+    GpibControlAtnMode mode = 2;
+    uint32 mode_raw = 3;
+  }
+}
+
+message GpibControlATNResponse {
+  int32 status = 1;
+}
+
+message GpibControlRENRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof mode_enum {
+    GpibControlRenMode mode = 2;
+    uint32 mode_raw = 3;
+  }
+}
+
+message GpibControlRENResponse {
+  int32 status = 1;
+}
+
+message GpibPassControlRequest {
+  nidevice_grpc.Session vi = 1;
+  uint32 primary_address = 2;
+  uint32 secondary_address = 3;
+}
+
+message GpibPassControlResponse {
+  int32 status = 1;
+}
+
+message GpibSendIFCRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GpibSendIFCResponse {
+  int32 status = 1;
+}
+
+message In16Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+}
+
+message In16Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message In32Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+}
+
+message In32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message In64Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+}
+
+message In64Response {
+  int32 status = 1;
+  uint64 value = 2;
+}
+
+message In8Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+}
+
+message In8Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message LockRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof lock_type_enum {
+    LockState lock_type = 2;
+    uint32 lock_type_raw = 3;
+  }
+  uint32 timeout = 4;
+  string requested_key = 5;
+}
+
+message LockResponse {
+  int32 status = 1;
+  string access_key = 2;
+}
+
+message MapAddressRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint64 map_size = 5;
+  bool owner_access = 6;
+  fixed64 suggested_address = 7;
+}
+
+message MapAddressResponse {
+  int32 status = 1;
+  fixed64 address = 2;
+}
+
+message MapTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof trigger_source_enum {
+    TriggerLine trigger_source = 2;
+    sint32 trigger_source_raw = 3;
+  }
+  oneof trigger_destination_enum {
+    TriggerLine trigger_destination = 4;
+    sint32 trigger_destination_raw = 5;
+  }
+  uint32 mode = 6;
+}
+
+message MapTriggerResponse {
+  int32 status = 1;
+}
+
+message MemAllocRequest {
+  nidevice_grpc.Session vi = 1;
+  uint32 size = 2;
+}
+
+message MemAllocResponse {
+  int32 status = 1;
+  uint32 offset = 2;
+}
+
+message MemAllocExRequest {
+  nidevice_grpc.Session vi = 1;
+  uint64 size = 2;
+}
+
+message MemAllocExResponse {
+  int32 status = 1;
+  fixed64 offset = 2;
+}
+
+message MemFreeRequest {
+  nidevice_grpc.Session vi = 1;
+  fixed64 offset = 2;
+}
+
+message MemFreeResponse {
+  int32 status = 1;
+}
+
+message MoveIn16Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint64 count = 5;
+}
+
+message MoveIn16Response {
+  int32 status = 1;
+  repeated uint32 buffer = 2;
+}
+
+message MoveIn32Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint64 count = 5;
+}
+
+message MoveIn32Response {
+  int32 status = 1;
+  repeated uint32 buffer = 2;
+}
+
+message MoveIn64Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint64 count = 5;
+}
+
+message MoveIn64Response {
+  int32 status = 1;
+  repeated uint64 buffer = 2;
+}
+
+message MoveIn8Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint64 count = 5;
+}
+
+message MoveIn8Response {
+  int32 status = 1;
+  bytes buffer = 2;
+}
+
+message MoveOut16Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  repeated uint32 buffer = 5;
+}
+
+message MoveOut16Response {
+  int32 status = 1;
+}
+
+message MoveOut32Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  repeated uint32 buffer = 5;
+}
+
+message MoveOut32Response {
+  int32 status = 1;
+}
+
+message MoveOut64Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  repeated uint64 buffer = 5;
+}
+
+message MoveOut64Response {
+  int32 status = 1;
+}
+
+message MoveOut8Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  bytes buffer = 5;
+}
+
+message MoveOut8Response {
+  int32 status = 1;
+}
+
+message OpenRequest {
+  string session_name = 1;
+  string instrument_descriptor = 2;
+  oneof access_mode_enum {
+    LockState access_mode = 3;
+    uint32 access_mode_raw = 4;
+  }
+  uint32 open_timeout = 5;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 6;
+}
+
+message OpenResponse {
+  int32 status = 1;
+  nidevice_grpc.Session vi = 2;
+  bool new_session_initialized = 3;
+}
+
+message Out16Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint32 value = 5;
+}
+
+message Out16Response {
+  int32 status = 1;
+}
+
+message Out32Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint32 value = 5;
+}
+
+message Out32Response {
+  int32 status = 1;
+}
+
+message Out64Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint64 value = 5;
+}
+
+message Out64Response {
+  int32 status = 1;
+}
+
+message Out8Request {
+  nidevice_grpc.Session vi = 1;
+  oneof address_space_enum {
+    AddressSpace address_space = 2;
+    uint32 address_space_raw = 3;
+  }
+  fixed64 offset = 4;
+  uint32 value = 5;
+}
+
+message Out8Response {
+  int32 status = 1;
+}
+
+message ParseRsrcRequest {
+  string resource_name = 1;
+}
+
+message ParseRsrcResponse {
+  int32 status = 1;
+  uint32 interface_type = 2;
+  uint32 interface_number = 3;
+  string resource_class = 4;
+  string expanded_unaliased_name = 5;
+  string alias_if_exists = 6;
+}
+
+message Peek16Request {
+  nidevice_grpc.Session vi = 1;
+  fixed64 address = 2;
+}
+
+message Peek16Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message Peek32Request {
+  nidevice_grpc.Session vi = 1;
+  fixed64 address = 2;
+}
+
+message Peek32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message Peek64Request {
+  nidevice_grpc.Session vi = 1;
+  fixed64 address = 2;
+}
+
+message Peek64Response {
+  int32 status = 1;
+  uint64 value = 2;
+}
+
+message Peek8Request {
+  nidevice_grpc.Session vi = 1;
+  fixed64 address = 2;
+}
+
+message Peek8Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message Poke16Request {
+  nidevice_grpc.Session vi = 1;
+  fixed64 address = 2;
+  uint32 value = 3;
+}
+
+message Poke16Response {
+  int32 status = 1;
+}
+
+message Poke32Request {
+  nidevice_grpc.Session vi = 1;
+  fixed64 address = 2;
+  uint32 value = 3;
+}
+
+message Poke32Response {
+  int32 status = 1;
+}
+
+message Poke64Request {
+  nidevice_grpc.Session vi = 1;
+  fixed64 address = 2;
+  uint64 value = 3;
+}
+
+message Poke64Response {
+  int32 status = 1;
+}
+
+message Poke8Request {
+  nidevice_grpc.Session vi = 1;
+  fixed64 address = 2;
+  uint32 value = 3;
+}
+
+message Poke8Response {
+  int32 status = 1;
+}
+
+message PxiReserveTriggersRequest {
+  nidevice_grpc.Session vi = 1;
+  repeated sint32 trig_buses = 2;
+  repeated sint32 trig_lines = 3;
+}
+
+message PxiReserveTriggersResponse {
+  int32 status = 1;
+  sint32 failure_index = 2;
+}
+
+message ReadRequest {
+  nidevice_grpc.Session vi = 1;
+  uint32 count = 2;
+}
+
+message ReadResponse {
+  int32 status = 1;
+  bytes buffer = 2;
+  uint32 return_count = 3;
+}
+
+message ReadAsyncRequest {
+  nidevice_grpc.Session vi = 1;
+  uint32 count = 2;
+}
+
+message ReadAsyncResponse {
+  int32 status = 1;
+  uint32 job_identifier = 2;
+}
+
+message ReadSTBRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ReadSTBResponse {
+  int32 status = 1;
+  uint32 status_byte = 2;
+}
+
+message SetAttributeRequest {
+  nidevice_grpc.Session vi = 1;
+  VisaAttribute attribute_name = 2;
+  AttributeValueData attribute_value = 3;
+}
+
+message SetAttributeResponse {
+  int32 status = 1;
+}
+
+message SetBufRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof mask_enum {
+    BufferMask mask = 2;
+    uint32 mask_raw = 3;
+  }
+  uint32 buffer_size = 4;
+}
+
+message SetBufResponse {
+  int32 status = 1;
+}
+
+message StatusDescRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 status_value = 2;
+}
+
+message StatusDescResponse {
+  int32 status = 1;
+  string status_description = 2;
+}
+
+message TerminateRequest {
+  nidevice_grpc.Session vi = 1;
+  uint32 degree = 2;
+  uint32 job_identifier = 3;
+}
+
+message TerminateResponse {
+  int32 status = 1;
+}
+
+message UnlockRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message UnlockResponse {
+  int32 status = 1;
+}
+
+message UnmapAddressRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message UnmapAddressResponse {
+  int32 status = 1;
+}
+
+message UnmapTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof trigger_source_enum {
+    TriggerLine trigger_source = 2;
+    sint32 trigger_source_raw = 3;
+  }
+  oneof trigger_destination_enum {
+    TriggerLine trigger_destination = 4;
+    sint32 trigger_destination_raw = 5;
+  }
+}
+
+message UnmapTriggerResponse {
+  int32 status = 1;
+}
+
+message UsbControlInRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 bm_request_type = 2;
+  sint32 b_request = 3;
+  uint32 w_value = 4;
+  uint32 w_index = 5;
+  uint32 w_length = 6;
+}
+
+message UsbControlInResponse {
+  int32 status = 1;
+  bytes buffer = 2;
+  uint32 return_count = 3;
+}
+
+message UsbControlOutRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 bm_request_type = 2;
+  sint32 b_request = 3;
+  uint32 w_value = 4;
+  uint32 w_index = 5;
+  bytes buffer = 6;
+}
+
+message UsbControlOutResponse {
+  int32 status = 1;
+}
+
+message VxiCommandQueryRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof mode_enum {
+    VxiCmdType mode = 2;
+    uint32 mode_raw = 3;
+  }
+  uint32 command = 4;
+}
+
+message VxiCommandQueryResponse {
+  int32 status = 1;
+  uint32 command_response = 2;
+}
+
+message WaitOnEventRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof in_event_type_enum {
+    EventType in_event_type = 2;
+    uint32 in_event_type_raw = 3;
+  }
+  uint32 timeout = 4;
+}
+
+message WaitOnEventResponse {
+  int32 status = 1;
+  EventType out_event_type = 2;
+  uint32 out_event_type_raw = 3;
+  uint32 event_handle = 4;
+}
+
+message WriteRequest {
+  nidevice_grpc.Session vi = 1;
+  bytes buffer = 2;
+}
+
+message WriteResponse {
+  int32 status = 1;
+  uint32 return_count = 2;
+}
+
+message WriteAsyncRequest {
+  nidevice_grpc.Session vi = 1;
+  bytes buffer = 2;
+}
+
+message WriteAsyncResponse {
+  int32 status = 1;
+  uint32 job_identifier = 2;
+}
+

@@ -66,7 +66,7 @@ namespace ${config["namespace_component"]}_grpc {
 
 % endif
   ${service_class_prefix}Service::${service_class_prefix}Service(
-      ${service_class_prefix}LibraryInterface* library,
+      LibrarySharedPtr library,
 % for resource_handle_type in resource_repository_deps:
       ${resource_repository_deps[resource_handle_type].resource_repository_alias} ${resource_repository_deps[resource_handle_type].local_name},
 % endfor

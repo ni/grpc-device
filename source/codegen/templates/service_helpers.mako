@@ -37,12 +37,14 @@ ${call_library_method(
   function_data=function_data,
   arg_string=service_helpers.create_args(parameters),
   indent_level=1,
-  library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
+  library_ptr=service_helpers.get_library_ptr_for_potentially_unmockable_function(config, parameters))
 }\
         return std::make_tuple(status, ${session_output_var_name});
       };
       std::string grpc_device_session_name = request->${session_field_name}();
-      auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (${resource_handle_type} id) { library->${close_function_call}; };
       int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->${add_session_snippet};
 ${populate_response(function_data=function_data, parameters=parameters, init_method=True)}\
       return ::grpc::Status::OK;\
@@ -168,19 +170,20 @@ ${populate_response(function_data=function_data, parameters=parameters, indent_l
   request_type = service_helpers.get_request_type(function_name)
   response_type = service_helpers.get_response_type(function_name)
   driver_library_interface = common_helpers.get_library_interface_type_name(config)
+  service_class = config["service_class_prefix"] + "Service"
 %>\
     using CallbackRouter = nidevice_grpc::CallbackRouter<int32, ${service_helpers.create_param_type_list(callback_parameters)}>;
     class ${function_name}Reactor : public nidevice_grpc::ServerWriterReactor<${response_type}, nidevice_grpc::CallbackRegistration> {
     public:
-    ${function_name}Reactor(const ${request_type}& request, ${driver_library_interface}* library, const ResourceRepositorySharedPtr& session_repository)
+    ${function_name}Reactor(::grpc::CallbackServerContext* context, const ${request_type}* request, LibrarySharedPtr library, ${service_class}* service)
     {
-      auto status = start(&request, library, session_repository);
+      auto status = start(context, request, library, service);
       if (!status.ok()) {
-        this->Finish(status);
+        this->try_finish(std::move(status));
       }
     }
 
-    ::grpc::Status start(const ${request_type}* request, ${driver_library_interface}* library, const ResourceRepositorySharedPtr& session_repository_)
+    ::grpc::Status start(::grpc::CallbackServerContext* context, const ${request_type}* request, LibrarySharedPtr library, ${service_class}* service)
     {
       try {
         auto handler = CallbackRouter::register_handler(
@@ -194,6 +197,7 @@ ${set_response_values(output_parameters=response_parameters, init_method=False)}
             return 0;
         });
 
+        const auto& session_repository_ = service->session_repository_;
 <%block filter="common_helpers.indent(1)">\
 ${initialize_input_params(function_name, parameters)}\
 </%block>\
@@ -202,18 +206,13 @@ ${call_library_method(
   function_name=function_name,
   function_data=function_data,
   arg_string=service_helpers.create_args(parameters),
-  library_lval="library",
+  library_ptr="library",
   indent_level=1)
 }\
+${populate_error_check(function_data, parameters, indent_level=1, service_deref="service->")}\
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
-
-        if (status) {
-          ${response_type} failed_to_register_response;
-          failed_to_register_response.set_status(status);
-          queue_write(failed_to_register_response);
-        }
 
         this->set_producer(std::move(handler));
       }
@@ -225,7 +224,7 @@ ${call_library_method(
     }
     };
 
-    return new ${function_name}Reactor(*request, library_, session_repository_);
+    return new ${function_name}Reactor(context, request, library_, this);
 </%def>
 
 ## Generate the core method body for a method with repeated varargs.
@@ -242,7 +241,7 @@ ${call_library_method(
   function_name=function_name,
   function_data=function_data,
   arg_string=service_helpers.create_args(parameters),
-  library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
+  library_ptr=service_helpers.get_library_ptr_for_potentially_unmockable_function(config, parameters))
 }\
 ${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
@@ -296,13 +295,13 @@ ${initialize_bitfield_as_enum_array_param(function_name, parameter)}
 ${initialize_enum_array_input_param(function_name, parameter)}
 % elif common_helpers.is_enum(parameter):
 ${initialize_enum_input_param(function_name, parameter)}
+% elif 'hardcoded_value' in parameter:
+${initialize_hardcoded_parameter(parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter, parameters)}
 % elif common_helpers.is_two_dimension_array_param(parameter):
 ${initialize_two_dimension_input_param(function_name, parameter, parameters)}
-% elif 'hardcoded_value' in parameter:
-${initialize_hardcoded_parameter(parameter)}
 % elif service_helpers.is_size_param_passed_by_ptr(parameter):
 ${initialize_pointer_input_parameter(parameter)}
 % else:
@@ -608,8 +607,10 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
         [](auto x) { return (${c_type_underlying_type})x; }); \
+% elif c_type == 'ViAddr':
+      ${c_type} ${parameter_name} = reinterpret_cast<${c_type}>(${request_snippet});\
 % elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
-      ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
+      ${c_type} ${parameter_name} = static_cast<${c_type}>(${request_snippet});\
 % elif grpc_type == 'nidevice_grpc.Session':
       auto ${parameter_name}_grpc_session = ${request_snippet};
       ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.name());\
@@ -751,11 +752,12 @@ ${set_response_values(normal_outputs, init_method)}\
 </%def>
 
 ## Handles populating the response message after calling the driver API.
-<%def name="populate_error_check(function_data, parameters, indent_level=0)">\
+<%def name="populate_error_check(function_data, parameters, indent_level=0, service_deref='')">\
 <%
   config = data['config']
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
   resource_handle_types = service_helpers.get_resource_handle_types(config)
+  error_parameters = [p for p in parameters if common_helpers.is_output_parameter(p) and "return_on_error_key" in p]
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
 <%
@@ -771,9 +773,16 @@ ${set_response_values(normal_outputs, init_method)}\
   if function_data.get('exclude_from_get_last_error', False):
     method_call = f'return nidevice_grpc::ApiErrorToStatus(context, status);'
   else:
-    method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(context, status, {session});'
+    method_call = f'return {service_deref}ConvertApiErrorStatusFor{cpp_handle_type}(context, status, {session});'
 %>\
+      %for error_parameter in error_parameters:
+      context->AddTrailingMetadata("${error_parameter["return_on_error_key"]}", std::to_string(${common_helpers.pascal_to_snake(error_parameter["name"])}));
+      %endfor
+      %if "timeout_error" in function_data:
+      if (!status_ok(status) && status != ${function_data["timeout_error"]}) {
+      %else:
       if (!status_ok(status)) {
+      %endif
         ${method_call}
       }
 </%block>\
@@ -887,6 +896,8 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
       response->mutable_${field_name}()->Resize(${common_helpers.get_size_expression(parameter)}, 0);
 %     endif
 ### pass: other array types don't need to copy.
+%   elif parameter['type'] == 'ViAddr':
+      response->set_${field_name}(reinterpret_cast<uint64_t>(${parameter_name}));
 %   else:
       response->set_${field_name}(${parameter_name});
 %   endif
@@ -942,14 +953,14 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 ## function_data: function metadata.
 ## arg_string: comma separated argument list to pass to the function (see service_helpers.create_args),
 ## indent_level: (Optional) levels of additional indentation for the call snippet.
-## library_lval: (Optional) variable or expression to use as the left-hand-side for the library pointer (default: this->library_).
+## library_ptr: (Optional) variable or expression for the library pointer (default: this->library_).
 ## declare_outputs: (Optional) If this is true, variables will be declared as "auto". If false, variables will just be assigned (default: False).
 <%def name="call_library_method(
   function_name,
   function_data,
   arg_string,
   indent_level=0,
-  library_lval='library_',
+  library_ptr='library_',
   declare_outputs=True)">\
 <%
   return_type = service_helpers.get_function_return_type(function_data)
@@ -958,9 +969,9 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
 % if return_type != "void":
-      ${auto_decl}${return_value_name} = ${library_lval}->${function_name}(${arg_string});
+      ${auto_decl}${return_value_name} = ${library_ptr}->${function_name}(${arg_string});
 % else:
-      ${library_lval}->${function_name}(${arg_string});
+      ${library_ptr}->${function_name}(${arg_string});
 % endif
 % if service_helpers.has_status_expression(function_data):
       ${auto_decl}status = ${service_helpers.get_status_expression(function_data)};

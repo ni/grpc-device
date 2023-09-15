@@ -8,6 +8,7 @@
 
 #include "device_server.h"
 #include "nidigitalpattern/nidigitalpattern_client.h"
+#include "tests/utilities/test_helpers.h"
 
 #define EXPECT_SUCCESS(status)               \
   EXPECT_TRUE((status).ok());                \
@@ -86,10 +87,11 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     digital::InitWithOptionsResponse response;
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
-    ASSERT_TRUE(status.ok());
-    ASSERT_EQ(kDigitalDriverApiSuccess, response.status());
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
   }
 
   void initialize_multi_instrument_driver_session()
@@ -104,10 +106,11 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     digital::InitWithOptionsResponse response;
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     multi_instrument_driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
-    ASSERT_TRUE(status.ok());
-    ASSERT_EQ(kDigitalDriverApiSuccess, response.status());
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
   }
 
   void close_driver_session()

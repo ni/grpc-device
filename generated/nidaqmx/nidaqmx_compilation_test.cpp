@@ -682,14 +682,14 @@ int32 GetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
   return DAQmxGetBufferAttribute(task, attribute, value);
 }
 
-int32 GetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
+int32 GetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32* value)
 {
-  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
+  return DAQmxGetCalInfoAttribute(deviceName, attribute, value);
 }
 
-int32 GetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size)
+int32 GetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64* value)
 {
-  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
+  return DAQmxGetCalInfoAttribute(deviceName, attribute, value);
 }
 
 int32 GetCalInfoAttributeString(const char deviceName[], int32 attribute, char value[], uInt32 size)
@@ -697,19 +697,19 @@ int32 GetCalInfoAttributeString(const char deviceName[], int32 attribute, char v
   return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
 }
 
-int32 GetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size)
+int32 GetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value)
 {
-  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
+  return DAQmxGetCalInfoAttribute(deviceName, attribute, value);
 }
 
-int32 GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size)
+int32 GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value)
 {
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxGetChanAttribute(task, channel, attribute, value);
 }
 
-int32 GetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64* value, uInt32 size)
+int32 GetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64* value)
 {
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxGetChanAttribute(task, channel, attribute, value);
 }
 
 int32 GetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, float64 value[], uInt32 size)
@@ -717,9 +717,9 @@ int32 GetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 a
   return DAQmxGetChanAttribute(task, channel, attribute, value, size);
 }
 
-int32 GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value, uInt32 size)
+int32 GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value)
 {
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxGetChanAttribute(task, channel, attribute, value);
 }
 
 int32 GetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, char value[], uInt32 size)
@@ -727,19 +727,19 @@ int32 GetChanAttributeString(TaskHandle task, const char channel[], int32 attrib
   return DAQmxGetChanAttribute(task, channel, attribute, value, size);
 }
 
-int32 GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value, uInt32 size)
+int32 GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value)
 {
-  return DAQmxGetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxGetChanAttribute(task, channel, attribute, value);
 }
 
-int32 GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
+int32 GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value)
 {
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value);
 }
 
-int32 GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size)
+int32 GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value)
 {
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value);
 }
 
 int32 GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, float64 value[], uInt32 size)
@@ -747,9 +747,9 @@ int32 GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, fl
   return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
 }
 
-int32 GetDeviceAttributeInt32(const char deviceName[], int32 attribute, int32* value, uInt32 size)
+int32 GetDeviceAttributeInt32(const char deviceName[], int32 attribute, int32* value)
 {
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value);
 }
 
 int32 GetDeviceAttributeInt32Array(const char deviceName[], int32 attribute, int32 value[], uInt32 size)
@@ -762,9 +762,9 @@ int32 GetDeviceAttributeString(const char deviceName[], int32 attribute, char va
   return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
 }
 
-int32 GetDeviceAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size)
+int32 GetDeviceAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value)
 {
-  return DAQmxGetDeviceAttribute(deviceName, attribute, value, size);
+  return DAQmxGetDeviceAttribute(deviceName, attribute, value);
 }
 
 int32 GetDeviceAttributeUInt32Array(const char deviceName[], int32 attribute, uInt32 value[], uInt32 size)
@@ -797,19 +797,19 @@ int32 GetErrorString(int32 errorCode, char errorString[], uInt32 bufferSize)
   return DAQmxGetErrorString(errorCode, errorString, bufferSize);
 }
 
-int32 GetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 GetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxGetExportedSignalAttribute(task, attribute, value);
 }
 
-int32 GetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 GetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxGetExportedSignalAttribute(task, attribute, value);
 }
 
-int32 GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxGetExportedSignalAttribute(task, attribute, value);
 }
 
 int32 GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -817,9 +817,9 @@ int32 GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char va
   return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
 }
 
-int32 GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
-  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxGetExportedSignalAttribute(task, attribute, value);
 }
 
 int32 GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data)
@@ -847,9 +847,9 @@ int32 GetNthTaskReadChannel(TaskHandle task, uInt32 index, char buffer[], int32 
   return DAQmxGetNthTaskReadChannel(task, index, buffer, bufferSize);
 }
 
-int32 GetPersistedChanAttributeBool(const char channel[], int32 attribute, bool32* value, uInt32 size)
+int32 GetPersistedChanAttributeBool(const char channel[], int32 attribute, bool32* value)
 {
-  return DAQmxGetPersistedChanAttribute(channel, attribute, value, size);
+  return DAQmxGetPersistedChanAttribute(channel, attribute, value);
 }
 
 int32 GetPersistedChanAttributeString(const char channel[], int32 attribute, char value[], uInt32 size)
@@ -857,9 +857,9 @@ int32 GetPersistedChanAttributeString(const char channel[], int32 attribute, cha
   return DAQmxGetPersistedChanAttribute(channel, attribute, value, size);
 }
 
-int32 GetPersistedScaleAttributeBool(const char scaleName[], int32 attribute, bool32* value, uInt32 size)
+int32 GetPersistedScaleAttributeBool(const char scaleName[], int32 attribute, bool32* value)
 {
-  return DAQmxGetPersistedScaleAttribute(scaleName, attribute, value, size);
+  return DAQmxGetPersistedScaleAttribute(scaleName, attribute, value);
 }
 
 int32 GetPersistedScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size)
@@ -867,9 +867,9 @@ int32 GetPersistedScaleAttributeString(const char scaleName[], int32 attribute, 
   return DAQmxGetPersistedScaleAttribute(scaleName, attribute, value, size);
 }
 
-int32 GetPersistedTaskAttributeBool(const char taskName[], int32 attribute, bool32* value, uInt32 size)
+int32 GetPersistedTaskAttributeBool(const char taskName[], int32 attribute, bool32* value)
 {
-  return DAQmxGetPersistedTaskAttribute(taskName, attribute, value, size);
+  return DAQmxGetPersistedTaskAttribute(taskName, attribute, value);
 }
 
 int32 GetPersistedTaskAttributeString(const char taskName[], int32 attribute, char value[], uInt32 size)
@@ -877,9 +877,9 @@ int32 GetPersistedTaskAttributeString(const char taskName[], int32 attribute, ch
   return DAQmxGetPersistedTaskAttribute(taskName, attribute, value, size);
 }
 
-int32 GetPhysicalChanAttributeBool(const char physicalChannel[], int32 attribute, bool32* value, uInt32 size)
+int32 GetPhysicalChanAttributeBool(const char physicalChannel[], int32 attribute, bool32* value)
 {
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value);
 }
 
 int32 GetPhysicalChanAttributeBytes(const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size)
@@ -887,9 +887,9 @@ int32 GetPhysicalChanAttributeBytes(const char physicalChannel[], int32 attribut
   return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
 }
 
-int32 GetPhysicalChanAttributeDouble(const char physicalChannel[], int32 attribute, float64* value, uInt32 size)
+int32 GetPhysicalChanAttributeDouble(const char physicalChannel[], int32 attribute, float64* value)
 {
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value);
 }
 
 int32 GetPhysicalChanAttributeDoubleArray(const char physicalChannel[], int32 attribute, float64 value[], uInt32 size)
@@ -897,9 +897,9 @@ int32 GetPhysicalChanAttributeDoubleArray(const char physicalChannel[], int32 at
   return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
 }
 
-int32 GetPhysicalChanAttributeInt32(const char physicalChannel[], int32 attribute, int32* value, uInt32 size)
+int32 GetPhysicalChanAttributeInt32(const char physicalChannel[], int32 attribute, int32* value)
 {
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value);
 }
 
 int32 GetPhysicalChanAttributeInt32Array(const char physicalChannel[], int32 attribute, int32 value[], uInt32 size)
@@ -912,9 +912,9 @@ int32 GetPhysicalChanAttributeString(const char physicalChannel[], int32 attribu
   return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
 }
 
-int32 GetPhysicalChanAttributeUInt32(const char physicalChannel[], int32 attribute, uInt32* value, uInt32 size)
+int32 GetPhysicalChanAttributeUInt32(const char physicalChannel[], int32 attribute, uInt32* value)
 {
-  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value);
 }
 
 int32 GetPhysicalChanAttributeUInt32Array(const char physicalChannel[], int32 attribute, uInt32 value[], uInt32 size)
@@ -922,19 +922,19 @@ int32 GetPhysicalChanAttributeUInt32Array(const char physicalChannel[], int32 at
   return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
 }
 
-int32 GetReadAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 GetReadAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
-  return DAQmxGetReadAttribute(task, attribute, value, size);
+  return DAQmxGetReadAttribute(task, attribute, value);
 }
 
-int32 GetReadAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 GetReadAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
-  return DAQmxGetReadAttribute(task, attribute, value, size);
+  return DAQmxGetReadAttribute(task, attribute, value);
 }
 
-int32 GetReadAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 GetReadAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
-  return DAQmxGetReadAttribute(task, attribute, value, size);
+  return DAQmxGetReadAttribute(task, attribute, value);
 }
 
 int32 GetReadAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -942,29 +942,29 @@ int32 GetReadAttributeString(TaskHandle task, int32 attribute, char value[], uIn
   return DAQmxGetReadAttribute(task, attribute, value, size);
 }
 
-int32 GetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 GetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
-  return DAQmxGetReadAttribute(task, attribute, value, size);
+  return DAQmxGetReadAttribute(task, attribute, value);
 }
 
-int32 GetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
+int32 GetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value)
 {
-  return DAQmxGetReadAttribute(task, attribute, value, size);
+  return DAQmxGetReadAttribute(task, attribute, value);
 }
 
-int32 GetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 GetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
-  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
+  return DAQmxGetRealTimeAttribute(task, attribute, value);
 }
 
-int32 GetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 GetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
-  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
+  return DAQmxGetRealTimeAttribute(task, attribute, value);
 }
 
-int32 GetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 GetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
-  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
+  return DAQmxGetRealTimeAttribute(task, attribute, value);
 }
 
 int32 GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
@@ -972,9 +972,9 @@ int32 GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
   return DAQmxGetRefTrigTimestampVal(task, data);
 }
 
-int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value, uInt32 size)
+int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value)
 {
-  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
+  return DAQmxGetScaleAttribute(scaleName, attribute, value);
 }
 
 int32 GetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, float64 value[], uInt32 size)
@@ -982,9 +982,9 @@ int32 GetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, floa
   return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
 }
 
-int32 GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value, uInt32 size)
+int32 GetScaleAttributeInt32(const char scaleName[], int32 attribute, int32* value)
 {
-  return DAQmxGetScaleAttribute(scaleName, attribute, value, size);
+  return DAQmxGetScaleAttribute(scaleName, attribute, value);
 }
 
 int32 GetScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size)
@@ -1017,14 +1017,14 @@ int32 GetSystemInfoAttributeString(int32 attribute, char value[], uInt32 size)
   return DAQmxGetSystemInfoAttribute(attribute, value, size);
 }
 
-int32 GetSystemInfoAttributeUInt32(int32 attribute, uInt32* value, uInt32 size)
+int32 GetSystemInfoAttributeUInt32(int32 attribute, uInt32* value)
 {
-  return DAQmxGetSystemInfoAttribute(attribute, value, size);
+  return DAQmxGetSystemInfoAttribute(attribute, value);
 }
 
-int32 GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 GetTaskAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
-  return DAQmxGetTaskAttribute(task, attribute, value, size);
+  return DAQmxGetTaskAttribute(task, attribute, value);
 }
 
 int32 GetTaskAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -1032,34 +1032,34 @@ int32 GetTaskAttributeString(TaskHandle task, int32 attribute, char value[], uIn
   return DAQmxGetTaskAttribute(task, attribute, value, size);
 }
 
-int32 GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 GetTaskAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
-  return DAQmxGetTaskAttribute(task, attribute, value, size);
+  return DAQmxGetTaskAttribute(task, attribute, value);
 }
 
-int32 GetTimingAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 GetTimingAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
+  return DAQmxGetTimingAttribute(task, attribute, value);
 }
 
-int32 GetTimingAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 GetTimingAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
+  return DAQmxGetTimingAttribute(task, attribute, value);
 }
 
-int32 GetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32* value, uInt32 size)
+int32 GetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32* value)
 {
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 GetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64* value, uInt32 size)
+int32 GetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64* value)
 {
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 GetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32* value, uInt32 size)
+int32 GetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32* value)
 {
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
 int32 GetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, char value[], uInt32 size)
@@ -1067,24 +1067,24 @@ int32 GetTimingAttributeExString(TaskHandle task, const char deviceNames[], int3
   return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
 }
 
-int32 GetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+int32 GetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime* value)
 {
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 GetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32* value, uInt32 size)
+int32 GetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32* value)
 {
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 GetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64* value, uInt32 size)
+int32 GetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64* value)
 {
-  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxGetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 GetTimingAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 GetTimingAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
+  return DAQmxGetTimingAttribute(task, attribute, value);
 }
 
 int32 GetTimingAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -1092,29 +1092,29 @@ int32 GetTimingAttributeString(TaskHandle task, int32 attribute, char value[], u
   return DAQmxGetTimingAttribute(task, attribute, value, size);
 }
 
-int32 GetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+int32 GetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value)
 {
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
+  return DAQmxGetTimingAttribute(task, attribute, value);
 }
 
-int32 GetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 GetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
+  return DAQmxGetTimingAttribute(task, attribute, value);
 }
 
-int32 GetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
+int32 GetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value)
 {
-  return DAQmxGetTimingAttribute(task, attribute, value, size);
+  return DAQmxGetTimingAttribute(task, attribute, value);
 }
 
-int32 GetTrigAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 GetTrigAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
+  return DAQmxGetTrigAttribute(task, attribute, value);
 }
 
-int32 GetTrigAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 GetTrigAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
+  return DAQmxGetTrigAttribute(task, attribute, value);
 }
 
 int32 GetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, float64 value[], uInt32 size)
@@ -1122,9 +1122,9 @@ int32 GetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, float64 valu
   return DAQmxGetTrigAttribute(task, attribute, value, size);
 }
 
-int32 GetTrigAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 GetTrigAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
+  return DAQmxGetTrigAttribute(task, attribute, value);
 }
 
 int32 GetTrigAttributeInt32Array(TaskHandle task, int32 attribute, int32 value[], uInt32 size)
@@ -1137,29 +1137,29 @@ int32 GetTrigAttributeString(TaskHandle task, int32 attribute, char value[], uIn
   return DAQmxGetTrigAttribute(task, attribute, value, size);
 }
 
-int32 GetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size)
+int32 GetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value)
 {
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
+  return DAQmxGetTrigAttribute(task, attribute, value);
 }
 
-int32 GetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 GetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
-  return DAQmxGetTrigAttribute(task, attribute, value, size);
+  return DAQmxGetTrigAttribute(task, attribute, value);
 }
 
-int32 GetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32* value, uInt32 size)
+int32 GetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32* value)
 {
-  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
+  return DAQmxGetWatchdogAttribute(task, lines, attribute, value);
 }
 
-int32 GetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64* value, uInt32 size)
+int32 GetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64* value)
 {
-  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
+  return DAQmxGetWatchdogAttribute(task, lines, attribute, value);
 }
 
-int32 GetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32* value, uInt32 size)
+int32 GetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32* value)
 {
-  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
+  return DAQmxGetWatchdogAttribute(task, lines, attribute, value);
 }
 
 int32 GetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, char value[], uInt32 size)
@@ -1167,19 +1167,19 @@ int32 GetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attr
   return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
 }
 
-int32 GetWriteAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+int32 GetWriteAttributeBool(TaskHandle task, int32 attribute, bool32* value)
 {
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
+  return DAQmxGetWriteAttribute(task, attribute, value);
 }
 
-int32 GetWriteAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+int32 GetWriteAttributeDouble(TaskHandle task, int32 attribute, float64* value)
 {
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
+  return DAQmxGetWriteAttribute(task, attribute, value);
 }
 
-int32 GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+int32 GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value)
 {
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
+  return DAQmxGetWriteAttribute(task, attribute, value);
 }
 
 int32 GetWriteAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
@@ -1187,14 +1187,14 @@ int32 GetWriteAttributeString(TaskHandle task, int32 attribute, char value[], uI
   return DAQmxGetWriteAttribute(task, attribute, value, size);
 }
 
-int32 GetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+int32 GetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value)
 {
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
+  return DAQmxGetWriteAttribute(task, attribute, value);
 }
 
-int32 GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size)
+int32 GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value)
 {
-  return DAQmxGetWriteAttribute(task, attribute, value, size);
+  return DAQmxGetWriteAttribute(task, attribute, value);
 }
 
 int32 IsTaskDone(TaskHandle task, bool32* isTaskDone)
@@ -1477,34 +1477,34 @@ int32 SetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
   return DAQmxSetBufferAttribute(task, attribute, value);
 }
 
-int32 SetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32 value, uInt32 size)
+int32 SetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32 value)
 {
-  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
+  return DAQmxSetCalInfoAttribute(deviceName, attribute, value);
 }
 
-int32 SetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64 value, uInt32 size)
+int32 SetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64 value)
 {
-  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
+  return DAQmxSetCalInfoAttribute(deviceName, attribute, value);
 }
 
-int32 SetCalInfoAttributeString(const char deviceName[], int32 attribute, const char value[], uInt32 size)
+int32 SetCalInfoAttributeString(const char deviceName[], int32 attribute, const char value[])
 {
-  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
+  return DAQmxSetCalInfoAttribute(deviceName, attribute, value);
 }
 
-int32 SetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32 value, uInt32 size)
+int32 SetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32 value)
 {
-  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
+  return DAQmxSetCalInfoAttribute(deviceName, attribute, value);
 }
 
-int32 SetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32 value, uInt32 size)
+int32 SetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32 value)
 {
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxSetChanAttribute(task, channel, attribute, value);
 }
 
-int32 SetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64 value, uInt32 size)
+int32 SetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64 value)
 {
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxSetChanAttribute(task, channel, attribute, value);
 }
 
 int32 SetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, const float64 value[], uInt32 size)
@@ -1512,19 +1512,19 @@ int32 SetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 a
   return DAQmxSetChanAttribute(task, channel, attribute, value, size);
 }
 
-int32 SetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32 value, uInt32 size)
+int32 SetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32 value)
 {
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxSetChanAttribute(task, channel, attribute, value);
 }
 
-int32 SetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, const char value[], uInt32 size)
+int32 SetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, const char value[])
 {
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxSetChanAttribute(task, channel, attribute, value);
 }
 
-int32 SetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32 value, uInt32 size)
+int32 SetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32 value)
 {
-  return DAQmxSetChanAttribute(task, channel, attribute, value, size);
+  return DAQmxSetChanAttribute(task, channel, attribute, value);
 }
 
 int32 SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily)
@@ -1542,29 +1542,29 @@ int32 SetDigitalPullUpPullDownStates(const char deviceName[], const char channel
   return DAQmxSetDigitalPullUpPullDownStates(deviceName, channelNames, state, channelNames0, state0, channelNames1, state1, channelNames2, state2, channelNames3, state3, channelNames4, state4, channelNames5, state5, channelNames6, state6, channelNames7, state7, channelNames8, state8, channelNames9, state9, channelNames10, state10, channelNames11, state11, channelNames12, state12, channelNames13, state13, channelNames14, state14, channelNames15, state15, channelNames16, state16, channelNames17, state17, channelNames18, state18, channelNames19, state19, channelNames20, state20, channelNames21, state21, channelNames22, state22, channelNames23, state23, channelNames24, state24, channelNames25, state25, channelNames26, state26, channelNames27, state27, channelNames28, state28, channelNames29, state29, channelNames30, state30, channelNames31, state31, channelNames32, state32, channelNames33, state33, channelNames34, state34, channelNames35, state35, channelNames36, state36, channelNames37, state37, channelNames38, state38, channelNames39, state39, channelNames40, state40, channelNames41, state41, channelNames42, state42, channelNames43, state43, channelNames44, state44, channelNames45, state45, channelNames46, state46, channelNames47, state47, channelNames48, state48, channelNames49, state49, channelNames50, state50, channelNames51, state51, channelNames52, state52, channelNames53, state53, channelNames54, state54, channelNames55, state55, channelNames56, state56, channelNames57, state57, channelNames58, state58, channelNames59, state59, channelNames60, state60, channelNames61, state61, channelNames62, state62, channelNames63, state63, channelNames64, state64, channelNames65, state65, channelNames66, state66, channelNames67, state67, channelNames68, state68, channelNames69, state69, channelNames70, state70, channelNames71, state71, channelNames72, state72, channelNames73, state73, channelNames74, state74, channelNames75, state75, channelNames76, state76, channelNames77, state77, channelNames78, state78, channelNames79, state79, channelNames80, state80, channelNames81, state81, channelNames82, state82, channelNames83, state83, channelNames84, state84, channelNames85, state85, channelNames86, state86, channelNames87, state87, channelNames88, state88, channelNames89, state89, channelNames90, state90, channelNames91, state91, channelNames92, state92, channelNames93, state93, channelNames94, state94, channelNames95, state95);
 }
 
-int32 SetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 SetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxSetExportedSignalAttribute(task, attribute, value);
 }
 
-int32 SetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 SetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxSetExportedSignalAttribute(task, attribute, value);
 }
 
-int32 SetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 SetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxSetExportedSignalAttribute(task, attribute, value);
 }
 
-int32 SetExportedSignalAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 SetExportedSignalAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxSetExportedSignalAttribute(task, attribute, value);
 }
 
-int32 SetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 SetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
-  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+  return DAQmxSetExportedSignalAttribute(task, attribute, value);
 }
 
 int32 SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data)
@@ -1572,54 +1572,54 @@ int32 SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data)
   return DAQmxSetFirstSampClkWhen(task, data);
 }
 
-int32 SetReadAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 SetReadAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
-  return DAQmxSetReadAttribute(task, attribute, value, size);
+  return DAQmxSetReadAttribute(task, attribute, value);
 }
 
-int32 SetReadAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 SetReadAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
-  return DAQmxSetReadAttribute(task, attribute, value, size);
+  return DAQmxSetReadAttribute(task, attribute, value);
 }
 
-int32 SetReadAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 SetReadAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
-  return DAQmxSetReadAttribute(task, attribute, value, size);
+  return DAQmxSetReadAttribute(task, attribute, value);
 }
 
-int32 SetReadAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 SetReadAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
-  return DAQmxSetReadAttribute(task, attribute, value, size);
+  return DAQmxSetReadAttribute(task, attribute, value);
 }
 
-int32 SetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 SetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
-  return DAQmxSetReadAttribute(task, attribute, value, size);
+  return DAQmxSetReadAttribute(task, attribute, value);
 }
 
-int32 SetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
+int32 SetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value)
 {
-  return DAQmxSetReadAttribute(task, attribute, value, size);
+  return DAQmxSetReadAttribute(task, attribute, value);
 }
 
-int32 SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
-  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
+  return DAQmxSetRealTimeAttribute(task, attribute, value);
 }
 
-int32 SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
-  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
+  return DAQmxSetRealTimeAttribute(task, attribute, value);
 }
 
-int32 SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
-  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
+  return DAQmxSetRealTimeAttribute(task, attribute, value);
 }
 
-int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size)
+int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value)
 {
-  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
+  return DAQmxSetScaleAttribute(scaleName, attribute, value);
 }
 
 int32 SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size)
@@ -1627,14 +1627,14 @@ int32 SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, cons
   return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
 }
 
-int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value, uInt32 size)
+int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value)
 {
-  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
+  return DAQmxSetScaleAttribute(scaleName, attribute, value);
 }
 
-int32 SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[], uInt32 size)
+int32 SetScaleAttributeString(const char scaleName[], int32 attribute, const char value[])
 {
-  return DAQmxSetScaleAttribute(scaleName, attribute, value, size);
+  return DAQmxSetScaleAttribute(scaleName, attribute, value);
 }
 
 int32 SetStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data)
@@ -1647,84 +1647,84 @@ int32 SetSyncPulseTimeWhen(TaskHandle task, CVIAbsoluteTime data)
   return DAQmxSetSyncPulseTimeWhen(task, data);
 }
 
-int32 SetTimingAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 SetTimingAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
+  return DAQmxSetTimingAttribute(task, attribute, value);
 }
 
-int32 SetTimingAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 SetTimingAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
+  return DAQmxSetTimingAttribute(task, attribute, value);
 }
 
-int32 SetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32 value, uInt32 size)
+int32 SetTimingAttributeExBool(TaskHandle task, const char deviceNames[], int32 attribute, bool32 value)
 {
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 SetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64 value, uInt32 size)
+int32 SetTimingAttributeExDouble(TaskHandle task, const char deviceNames[], int32 attribute, float64 value)
 {
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 SetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32 value, uInt32 size)
+int32 SetTimingAttributeExInt32(TaskHandle task, const char deviceNames[], int32 attribute, int32 value)
 {
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 SetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, const char value[], uInt32 size)
+int32 SetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, const char value[])
 {
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 SetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime value, uInt32 size)
+int32 SetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime value)
 {
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 SetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32 value, uInt32 size)
+int32 SetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32 value)
 {
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 SetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64 value, uInt32 size)
+int32 SetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64 value)
 {
-  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value, size);
+  return DAQmxSetTimingAttributeEx(task, deviceNames, attribute, value);
 }
 
-int32 SetTimingAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 SetTimingAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
+  return DAQmxSetTimingAttribute(task, attribute, value);
 }
 
-int32 SetTimingAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 SetTimingAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
+  return DAQmxSetTimingAttribute(task, attribute, value);
 }
 
-int32 SetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size)
+int32 SetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value)
 {
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
+  return DAQmxSetTimingAttribute(task, attribute, value);
 }
 
-int32 SetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 SetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
+  return DAQmxSetTimingAttribute(task, attribute, value);
 }
 
-int32 SetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
+int32 SetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value)
 {
-  return DAQmxSetTimingAttribute(task, attribute, value, size);
+  return DAQmxSetTimingAttribute(task, attribute, value);
 }
 
-int32 SetTrigAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 SetTrigAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
+  return DAQmxSetTrigAttribute(task, attribute, value);
 }
 
-int32 SetTrigAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 SetTrigAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
+  return DAQmxSetTrigAttribute(task, attribute, value);
 }
 
 int32 SetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, const float64 value[], uInt32 size)
@@ -1732,9 +1732,9 @@ int32 SetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, const float6
   return DAQmxSetTrigAttribute(task, attribute, value, size);
 }
 
-int32 SetTrigAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 SetTrigAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
+  return DAQmxSetTrigAttribute(task, attribute, value);
 }
 
 int32 SetTrigAttributeInt32Array(TaskHandle task, int32 attribute, const int32 value[], uInt32 size)
@@ -1742,69 +1742,69 @@ int32 SetTrigAttributeInt32Array(TaskHandle task, int32 attribute, const int32 v
   return DAQmxSetTrigAttribute(task, attribute, value, size);
 }
 
-int32 SetTrigAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 SetTrigAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
+  return DAQmxSetTrigAttribute(task, attribute, value);
 }
 
-int32 SetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size)
+int32 SetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value)
 {
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
+  return DAQmxSetTrigAttribute(task, attribute, value);
 }
 
-int32 SetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 SetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
-  return DAQmxSetTrigAttribute(task, attribute, value, size);
+  return DAQmxSetTrigAttribute(task, attribute, value);
 }
 
-int32 SetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32 value, uInt32 size)
+int32 SetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32 value)
 {
-  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
+  return DAQmxSetWatchdogAttribute(task, lines, attribute, value);
 }
 
-int32 SetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64 value, uInt32 size)
+int32 SetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64 value)
 {
-  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
+  return DAQmxSetWatchdogAttribute(task, lines, attribute, value);
 }
 
-int32 SetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32 value, uInt32 size)
+int32 SetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32 value)
 {
-  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
+  return DAQmxSetWatchdogAttribute(task, lines, attribute, value);
 }
 
-int32 SetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, const char value[], uInt32 size)
+int32 SetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, const char value[])
 {
-  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
+  return DAQmxSetWatchdogAttribute(task, lines, attribute, value);
 }
 
-int32 SetWriteAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+int32 SetWriteAttributeBool(TaskHandle task, int32 attribute, bool32 value)
 {
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
+  return DAQmxSetWriteAttribute(task, attribute, value);
 }
 
-int32 SetWriteAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+int32 SetWriteAttributeDouble(TaskHandle task, int32 attribute, float64 value)
 {
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
+  return DAQmxSetWriteAttribute(task, attribute, value);
 }
 
-int32 SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+int32 SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value)
 {
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
+  return DAQmxSetWriteAttribute(task, attribute, value);
 }
 
-int32 SetWriteAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+int32 SetWriteAttributeString(TaskHandle task, int32 attribute, const char value[])
 {
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
+  return DAQmxSetWriteAttribute(task, attribute, value);
 }
 
-int32 SetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+int32 SetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value)
 {
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
+  return DAQmxSetWriteAttribute(task, attribute, value);
 }
 
-int32 SetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size)
+int32 SetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value)
 {
-  return DAQmxSetWriteAttribute(task, attribute, value, size);
+  return DAQmxSetWriteAttribute(task, attribute, value);
 }
 
 int32 StartNewFile(TaskHandle task, const char filePath[])
@@ -1830,6 +1830,21 @@ int32 TaskControl(TaskHandle task, int32 action)
 int32 TristateOutputTerm(const char outputTerminal[])
 {
   return DAQmxTristateOutputTerm(outputTerminal);
+}
+
+int32 UnregisterDoneEvent(TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void* callbackData)
+{
+  return DAQmxRegisterDoneEvent(task, options, callbackFunction, callbackData);
+}
+
+int32 UnregisterEveryNSamplesEvent(TaskHandle task, int32 everyNSamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void* callbackData)
+{
+  return DAQmxRegisterEveryNSamplesEvent(task, everyNSamplesEventType, nSamples, options, callbackFunction, callbackData);
+}
+
+int32 UnregisterSignalEvent(TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void* callbackData)
+{
+  return DAQmxRegisterSignalEvent(task, signalID, options, callbackFunction, callbackData);
 }
 
 int32 UnreserveNetworkDevice(const char deviceName[])

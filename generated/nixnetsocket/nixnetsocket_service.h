@@ -33,16 +33,17 @@ struct NiXnetSocketFeatureToggles
 
 class NiXnetSocketService final : public NiXnetSocket::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiXnetSocketLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSOCKET>>;
   using nxIpStackRef_tResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>;
 
   NiXnetSocketService(
-    NiXnetSocketLibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     nxIpStackRef_tResourceRepositorySharedPtr nx_ip_stack_ref_t_resource_repository,
     const NiXnetSocketFeatureToggles& feature_toggles = {});
   virtual ~NiXnetSocketService();
-  
+
   ::grpc::Status Accept(::grpc::ServerContext* context, const AcceptRequest* request, AcceptResponse* response) override;
   ::grpc::Status Bind(::grpc::ServerContext* context, const BindRequest* request, BindResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
@@ -75,11 +76,11 @@ public:
   ::grpc::Status Socket(::grpc::ServerContext* context, const SocketRequest* request, SocketResponse* response) override;
   ::grpc::Status StrErrR(::grpc::ServerContext* context, const StrErrRRequest* request, StrErrRResponse* response) override;
 private:
-  NiXnetSocketLibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   nxIpStackRef_tResourceRepositorySharedPtr nx_ip_stack_ref_t_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNxSOCKET(::grpc::ServerContext* context, int32_t status, nxSOCKET socket);
-  ::grpc::Status ConvertApiErrorStatusForNxIpStackRef_t(::grpc::ServerContext* context, int32_t status, nxIpStackRef_t socket);
+  ::grpc::Status ConvertApiErrorStatusForNxSOCKET(::grpc::ServerContextBase* context, int32_t status, nxSOCKET socket);
+  ::grpc::Status ConvertApiErrorStatusForNxIpStackRef_t(::grpc::ServerContextBase* context, int32_t status, nxIpStackRef_t socket);
 
   NiXnetSocketFeatureToggles feature_toggles_;
 };

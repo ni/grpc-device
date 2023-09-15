@@ -4,6 +4,9 @@
 // Service implementation for the NI-rfmxdemod Metadata
 //---------------------------------------------------------------------
 #include "nirfmxdemod_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxDemod.dll";
@@ -13,157 +16,164 @@ static const char* kLibraryName = "libnirfmxdemod.so.1";
 
 namespace nirfmxdemod_grpc {
 
-NiRFmxDemodLibrary::NiRFmxDemodLibrary() : shared_library_(kLibraryName)
+NiRFmxDemodLibrary::NiRFmxDemodLibrary() : NiRFmxDemodLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFmxDemodLibrary::NiRFmxDemodLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.ADemodCfgAMCarrierSuppressed = reinterpret_cast<ADemodCfgAMCarrierSuppressedPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodCfgAMCarrierSuppressed"));
-  function_pointers_.ADemodCfgAudioFilter = reinterpret_cast<ADemodCfgAudioFilterPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodCfgAudioFilter"));
-  function_pointers_.ADemodCfgAveraging = reinterpret_cast<ADemodCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodCfgAveraging"));
-  function_pointers_.ADemodCfgCarrierCorrection = reinterpret_cast<ADemodCfgCarrierCorrectionPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodCfgCarrierCorrection"));
-  function_pointers_.ADemodCfgFMDeEmphasis = reinterpret_cast<ADemodCfgFMDeEmphasisPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodCfgFMDeEmphasis"));
-  function_pointers_.ADemodCfgMeasurementInterval = reinterpret_cast<ADemodCfgMeasurementIntervalPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodCfgMeasurementInterval"));
-  function_pointers_.ADemodCfgModulationType = reinterpret_cast<ADemodCfgModulationTypePtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodCfgModulationType"));
-  function_pointers_.ADemodCfgRBWFilter = reinterpret_cast<ADemodCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodCfgRBWFilter"));
-  function_pointers_.ADemodFetchAMMaximumModulationDepth = reinterpret_cast<ADemodFetchAMMaximumModulationDepthPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchAMMaximumModulationDepth"));
-  function_pointers_.ADemodFetchAMMeanModulationDepth = reinterpret_cast<ADemodFetchAMMeanModulationDepthPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchAMMeanModulationDepth"));
-  function_pointers_.ADemodFetchCarrierMeasurement = reinterpret_cast<ADemodFetchCarrierMeasurementPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchCarrierMeasurement"));
-  function_pointers_.ADemodFetchDemodSignalTrace = reinterpret_cast<ADemodFetchDemodSignalTracePtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchDemodSignalTrace"));
-  function_pointers_.ADemodFetchDemodSpectrumTrace = reinterpret_cast<ADemodFetchDemodSpectrumTracePtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchDemodSpectrumTrace"));
-  function_pointers_.ADemodFetchDistortions = reinterpret_cast<ADemodFetchDistortionsPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchDistortions"));
-  function_pointers_.ADemodFetchFMMaximumDeviation = reinterpret_cast<ADemodFetchFMMaximumDeviationPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchFMMaximumDeviation"));
-  function_pointers_.ADemodFetchFMMeanDeviation = reinterpret_cast<ADemodFetchFMMeanDeviationPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchFMMeanDeviation"));
-  function_pointers_.ADemodFetchMeanModulationFrequency = reinterpret_cast<ADemodFetchMeanModulationFrequencyPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchMeanModulationFrequency"));
-  function_pointers_.ADemodFetchPMMaximumDeviation = reinterpret_cast<ADemodFetchPMMaximumDeviationPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchPMMaximumDeviation"));
-  function_pointers_.ADemodFetchPMMeanDeviation = reinterpret_cast<ADemodFetchPMMeanDeviationPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodFetchPMMeanDeviation"));
-  function_pointers_.ADemodReadAM = reinterpret_cast<ADemodReadAMPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodReadAM"));
-  function_pointers_.ADemodReadFM = reinterpret_cast<ADemodReadFMPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodReadFM"));
-  function_pointers_.ADemodReadPM = reinterpret_cast<ADemodReadPMPtr>(shared_library_.get_function_pointer("RFmxDemod_ADemodReadPM"));
-  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_.get_function_pointer("RFmxDemod_AbortMeasurements"));
-  function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxDemod_AnalyzeIQ1Waveform"));
-  function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxDemod_AutoLevel"));
-  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_.get_function_pointer("RFmxDemod_BuildSignalString"));
-  function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgDigitalEdgeTrigger"));
-  function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgExternalAttenuation"));
-  function_pointers_.CfgFrequency = reinterpret_cast<CfgFrequencyPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgFrequency"));
-  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_.get_function_pointer("RFmxDemod_CfgFrequencyReference"));
-  function_pointers_.CfgIQPowerEdgeTrigger = reinterpret_cast<CfgIQPowerEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgIQPowerEdgeTrigger"));
-  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgMechanicalAttenuation"));
-  function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgRF"));
-  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgRFAttenuation"));
-  function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgReferenceLevel"));
-  function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxDemod_CfgSoftwareEdgeTrigger"));
-  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxDemod_CheckMeasurementStatus"));
-  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_.get_function_pointer("RFmxDemod_ClearAllNamedResults"));
-  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_.get_function_pointer("RFmxDemod_ClearNamedResult"));
-  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxDemod_CloneSignalConfiguration"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("RFmxDemod_Close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("RFmxDemod_Commit"));
-  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxDemod_CreateSignalConfiguration"));
-  function_pointers_.DDemodCfgAveraging = reinterpret_cast<DDemodCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgAveraging"));
-  function_pointers_.DDemodCfgEVMNormalizationReference = reinterpret_cast<DDemodCfgEVMNormalizationReferencePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgEVMNormalizationReference"));
-  function_pointers_.DDemodCfgEqualizer = reinterpret_cast<DDemodCfgEqualizerPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgEqualizer"));
-  function_pointers_.DDemodCfgEqualizerInitialCoefficients = reinterpret_cast<DDemodCfgEqualizerInitialCoefficientsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgEqualizerInitialCoefficients"));
-  function_pointers_.DDemodCfgFSKDeviation = reinterpret_cast<DDemodCfgFSKDeviationPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgFSKDeviation"));
-  function_pointers_.DDemodCfgM = reinterpret_cast<DDemodCfgMPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgM"));
-  function_pointers_.DDemodCfgMeasurementFilter = reinterpret_cast<DDemodCfgMeasurementFilterPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgMeasurementFilter"));
-  function_pointers_.DDemodCfgMeasurementFilterCustomCoefficients = reinterpret_cast<DDemodCfgMeasurementFilterCustomCoefficientsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgMeasurementFilterCustomCoefficients"));
-  function_pointers_.DDemodCfgModulationType = reinterpret_cast<DDemodCfgModulationTypePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgModulationType"));
-  function_pointers_.DDemodCfgNumberOfSymbols = reinterpret_cast<DDemodCfgNumberOfSymbolsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgNumberOfSymbols"));
-  function_pointers_.DDemodCfgPSKFormat = reinterpret_cast<DDemodCfgPSKFormatPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgPSKFormat"));
-  function_pointers_.DDemodCfgPulseShapingFilter = reinterpret_cast<DDemodCfgPulseShapingFilterPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgPulseShapingFilter"));
-  function_pointers_.DDemodCfgPulseShapingFilterCustomCoefficients = reinterpret_cast<DDemodCfgPulseShapingFilterCustomCoefficientsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgPulseShapingFilterCustomCoefficients"));
-  function_pointers_.DDemodCfgSamplesPerSymbol = reinterpret_cast<DDemodCfgSamplesPerSymbolPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgSamplesPerSymbol"));
-  function_pointers_.DDemodCfgSignalStructure = reinterpret_cast<DDemodCfgSignalStructurePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgSignalStructure"));
-  function_pointers_.DDemodCfgSpectrumInverted = reinterpret_cast<DDemodCfgSpectrumInvertedPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgSpectrumInverted"));
-  function_pointers_.DDemodCfgSymbolMap = reinterpret_cast<DDemodCfgSymbolMapPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgSymbolMap"));
-  function_pointers_.DDemodCfgSymbolRate = reinterpret_cast<DDemodCfgSymbolRatePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgSymbolRate"));
-  function_pointers_.DDemodCfgSynchronization = reinterpret_cast<DDemodCfgSynchronizationPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodCfgSynchronization"));
-  function_pointers_.DDemodFetchCarrierMeasurement = reinterpret_cast<DDemodFetchCarrierMeasurementPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchCarrierMeasurement"));
-  function_pointers_.DDemodFetchConstellationTrace = reinterpret_cast<DDemodFetchConstellationTracePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchConstellationTrace"));
-  function_pointers_.DDemodFetchDemodulatedBits = reinterpret_cast<DDemodFetchDemodulatedBitsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchDemodulatedBits"));
-  function_pointers_.DDemodFetchEVM = reinterpret_cast<DDemodFetchEVMPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchEVM"));
-  function_pointers_.DDemodFetchEVMTrace = reinterpret_cast<DDemodFetchEVMTracePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchEVMTrace"));
-  function_pointers_.DDemodFetchEqualizerCoefficients = reinterpret_cast<DDemodFetchEqualizerCoefficientsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchEqualizerCoefficients"));
-  function_pointers_.DDemodFetchFSKDeviationTrace = reinterpret_cast<DDemodFetchFSKDeviationTracePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchFSKDeviationTrace"));
-  function_pointers_.DDemodFetchFSKResults = reinterpret_cast<DDemodFetchFSKResultsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchFSKResults"));
-  function_pointers_.DDemodFetchIQImpairments = reinterpret_cast<DDemodFetchIQImpairmentsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchIQImpairments"));
-  function_pointers_.DDemodFetchMagnitudeError = reinterpret_cast<DDemodFetchMagnitudeErrorPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchMagnitudeError"));
-  function_pointers_.DDemodFetchMagnitudeErrorTrace = reinterpret_cast<DDemodFetchMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchMagnitudeErrorTrace"));
-  function_pointers_.DDemodFetchMeanAmplitudeDroop = reinterpret_cast<DDemodFetchMeanAmplitudeDroopPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchMeanAmplitudeDroop"));
-  function_pointers_.DDemodFetchMeanIQOriginOffset = reinterpret_cast<DDemodFetchMeanIQOriginOffsetPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchMeanIQOriginOffset"));
-  function_pointers_.DDemodFetchMeanQuadratureSkew = reinterpret_cast<DDemodFetchMeanQuadratureSkewPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchMeanQuadratureSkew"));
-  function_pointers_.DDemodFetchMeanRhoFactor = reinterpret_cast<DDemodFetchMeanRhoFactorPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchMeanRhoFactor"));
-  function_pointers_.DDemodFetchMeasurementWaveform = reinterpret_cast<DDemodFetchMeasurementWaveformPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchMeasurementWaveform"));
-  function_pointers_.DDemodFetchOffsetConstellationTrace = reinterpret_cast<DDemodFetchOffsetConstellationTracePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchOffsetConstellationTrace"));
-  function_pointers_.DDemodFetchOffsetEVM = reinterpret_cast<DDemodFetchOffsetEVMPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchOffsetEVM"));
-  function_pointers_.DDemodFetchOffsetEVMTrace = reinterpret_cast<DDemodFetchOffsetEVMTracePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchOffsetEVMTrace"));
-  function_pointers_.DDemodFetchPhaseError = reinterpret_cast<DDemodFetchPhaseErrorPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchPhaseError"));
-  function_pointers_.DDemodFetchPhaseErrorTrace = reinterpret_cast<DDemodFetchPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchPhaseErrorTrace"));
-  function_pointers_.DDemodFetchReferenceWaveform = reinterpret_cast<DDemodFetchReferenceWaveformPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchReferenceWaveform"));
-  function_pointers_.DDemodFetchSyncFound = reinterpret_cast<DDemodFetchSyncFoundPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodFetchSyncFound"));
-  function_pointers_.DDemodGetEqualizerInitialCoefficients = reinterpret_cast<DDemodGetEqualizerInitialCoefficientsPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodGetEqualizerInitialCoefficients"));
-  function_pointers_.DDemodGetSymbolMap = reinterpret_cast<DDemodGetSymbolMapPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodGetSymbolMap"));
-  function_pointers_.DDemodRead = reinterpret_cast<DDemodReadPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodRead"));
-  function_pointers_.DDemodSetSymbolMap = reinterpret_cast<DDemodSetSymbolMapPtr>(shared_library_.get_function_pointer("RFmxDemod_DDemodSetSymbolMap"));
-  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxDemod_DeleteSignalConfiguration"));
-  function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_.get_function_pointer("RFmxDemod_DisableTrigger"));
-  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAllNamedResultNames"));
-  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeF32"));
-  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeF32Array"));
-  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeF64"));
-  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeF64Array"));
-  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI16"));
-  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI32"));
-  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI32Array"));
-  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI64"));
-  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI64Array"));
-  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI8"));
-  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeI8Array"));
-  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeNIComplexDoubleArray"));
-  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeNIComplexSingleArray"));
-  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeString"));
-  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeU16"));
-  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeU32"));
-  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeU32Array"));
-  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeU64Array"));
-  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeU8"));
-  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_GetAttributeU8Array"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxDemod_GetError"));
-  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxDemod_GetErrorString"));
-  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxDemod_Initialize"));
-  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxDemod_InitializeFromNIRFSASession"));
-  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("RFmxDemod_Initiate"));
-  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("RFmxDemod_ResetAttribute"));
-  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_.get_function_pointer("RFmxDemod_ResetToDefault"));
-  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_.get_function_pointer("RFmxDemod_SelectMeasurements"));
-  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxDemod_SendSoftwareEdgeTrigger"));
-  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeF32"));
-  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeF32Array"));
-  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeF64"));
-  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeF64Array"));
-  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI16"));
-  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI32"));
-  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI32Array"));
-  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI64"));
-  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI64Array"));
-  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI8"));
-  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeI8Array"));
-  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeNIComplexDoubleArray"));
-  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeNIComplexSingleArray"));
-  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeString"));
-  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeU16"));
-  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeU32"));
-  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeU32Array"));
-  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeU64Array"));
-  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeU8"));
-  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxDemod_SetAttributeU8Array"));
-  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_.get_function_pointer("RFmxDemod_WaitForAcquisitionComplete"));
-  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_.get_function_pointer("RFmxDemod_WaitForMeasurementComplete"));
+  function_pointers_.ADemodCfgAMCarrierSuppressed = reinterpret_cast<ADemodCfgAMCarrierSuppressedPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodCfgAMCarrierSuppressed"));
+  function_pointers_.ADemodCfgAudioFilter = reinterpret_cast<ADemodCfgAudioFilterPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodCfgAudioFilter"));
+  function_pointers_.ADemodCfgAveraging = reinterpret_cast<ADemodCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodCfgAveraging"));
+  function_pointers_.ADemodCfgCarrierCorrection = reinterpret_cast<ADemodCfgCarrierCorrectionPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodCfgCarrierCorrection"));
+  function_pointers_.ADemodCfgFMDeEmphasis = reinterpret_cast<ADemodCfgFMDeEmphasisPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodCfgFMDeEmphasis"));
+  function_pointers_.ADemodCfgMeasurementInterval = reinterpret_cast<ADemodCfgMeasurementIntervalPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodCfgMeasurementInterval"));
+  function_pointers_.ADemodCfgModulationType = reinterpret_cast<ADemodCfgModulationTypePtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodCfgModulationType"));
+  function_pointers_.ADemodCfgRBWFilter = reinterpret_cast<ADemodCfgRBWFilterPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodCfgRBWFilter"));
+  function_pointers_.ADemodFetchAMMaximumModulationDepth = reinterpret_cast<ADemodFetchAMMaximumModulationDepthPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchAMMaximumModulationDepth"));
+  function_pointers_.ADemodFetchAMMeanModulationDepth = reinterpret_cast<ADemodFetchAMMeanModulationDepthPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchAMMeanModulationDepth"));
+  function_pointers_.ADemodFetchCarrierMeasurement = reinterpret_cast<ADemodFetchCarrierMeasurementPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchCarrierMeasurement"));
+  function_pointers_.ADemodFetchDemodSignalTrace = reinterpret_cast<ADemodFetchDemodSignalTracePtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchDemodSignalTrace"));
+  function_pointers_.ADemodFetchDemodSpectrumTrace = reinterpret_cast<ADemodFetchDemodSpectrumTracePtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchDemodSpectrumTrace"));
+  function_pointers_.ADemodFetchDistortions = reinterpret_cast<ADemodFetchDistortionsPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchDistortions"));
+  function_pointers_.ADemodFetchFMMaximumDeviation = reinterpret_cast<ADemodFetchFMMaximumDeviationPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchFMMaximumDeviation"));
+  function_pointers_.ADemodFetchFMMeanDeviation = reinterpret_cast<ADemodFetchFMMeanDeviationPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchFMMeanDeviation"));
+  function_pointers_.ADemodFetchMeanModulationFrequency = reinterpret_cast<ADemodFetchMeanModulationFrequencyPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchMeanModulationFrequency"));
+  function_pointers_.ADemodFetchPMMaximumDeviation = reinterpret_cast<ADemodFetchPMMaximumDeviationPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchPMMaximumDeviation"));
+  function_pointers_.ADemodFetchPMMeanDeviation = reinterpret_cast<ADemodFetchPMMeanDeviationPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodFetchPMMeanDeviation"));
+  function_pointers_.ADemodReadAM = reinterpret_cast<ADemodReadAMPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodReadAM"));
+  function_pointers_.ADemodReadFM = reinterpret_cast<ADemodReadFMPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodReadFM"));
+  function_pointers_.ADemodReadPM = reinterpret_cast<ADemodReadPMPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodReadPM"));
+  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxDemod_AbortMeasurements"));
+  function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxDemod_AnalyzeIQ1Waveform"));
+  function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxDemod_AutoLevel"));
+  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxDemod_BuildSignalString"));
+  function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgDigitalEdgeTrigger"));
+  function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgExternalAttenuation"));
+  function_pointers_.CfgFrequency = reinterpret_cast<CfgFrequencyPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgFrequency"));
+  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_->get_function_pointer("RFmxDemod_CfgFrequencyReference"));
+  function_pointers_.CfgIQPowerEdgeTrigger = reinterpret_cast<CfgIQPowerEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgIQPowerEdgeTrigger"));
+  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgMechanicalAttenuation"));
+  function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgRF"));
+  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgRFAttenuation"));
+  function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgReferenceLevel"));
+  function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgSoftwareEdgeTrigger"));
+  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_->get_function_pointer("RFmxDemod_CheckMeasurementStatus"));
+  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_->get_function_pointer("RFmxDemod_ClearAllNamedResults"));
+  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_->get_function_pointer("RFmxDemod_ClearNamedResult"));
+  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxDemod_CloneSignalConfiguration"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("RFmxDemod_Close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("RFmxDemod_Commit"));
+  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxDemod_CreateSignalConfiguration"));
+  function_pointers_.DDemodCfgAveraging = reinterpret_cast<DDemodCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgAveraging"));
+  function_pointers_.DDemodCfgEVMNormalizationReference = reinterpret_cast<DDemodCfgEVMNormalizationReferencePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgEVMNormalizationReference"));
+  function_pointers_.DDemodCfgEqualizer = reinterpret_cast<DDemodCfgEqualizerPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgEqualizer"));
+  function_pointers_.DDemodCfgEqualizerInitialCoefficients = reinterpret_cast<DDemodCfgEqualizerInitialCoefficientsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgEqualizerInitialCoefficients"));
+  function_pointers_.DDemodCfgFSKDeviation = reinterpret_cast<DDemodCfgFSKDeviationPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgFSKDeviation"));
+  function_pointers_.DDemodCfgM = reinterpret_cast<DDemodCfgMPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgM"));
+  function_pointers_.DDemodCfgMeasurementFilter = reinterpret_cast<DDemodCfgMeasurementFilterPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgMeasurementFilter"));
+  function_pointers_.DDemodCfgMeasurementFilterCustomCoefficients = reinterpret_cast<DDemodCfgMeasurementFilterCustomCoefficientsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgMeasurementFilterCustomCoefficients"));
+  function_pointers_.DDemodCfgModulationType = reinterpret_cast<DDemodCfgModulationTypePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgModulationType"));
+  function_pointers_.DDemodCfgNumberOfSymbols = reinterpret_cast<DDemodCfgNumberOfSymbolsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgNumberOfSymbols"));
+  function_pointers_.DDemodCfgPSKFormat = reinterpret_cast<DDemodCfgPSKFormatPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgPSKFormat"));
+  function_pointers_.DDemodCfgPulseShapingFilter = reinterpret_cast<DDemodCfgPulseShapingFilterPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgPulseShapingFilter"));
+  function_pointers_.DDemodCfgPulseShapingFilterCustomCoefficients = reinterpret_cast<DDemodCfgPulseShapingFilterCustomCoefficientsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgPulseShapingFilterCustomCoefficients"));
+  function_pointers_.DDemodCfgSamplesPerSymbol = reinterpret_cast<DDemodCfgSamplesPerSymbolPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSamplesPerSymbol"));
+  function_pointers_.DDemodCfgSignalStructure = reinterpret_cast<DDemodCfgSignalStructurePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSignalStructure"));
+  function_pointers_.DDemodCfgSpectrumInverted = reinterpret_cast<DDemodCfgSpectrumInvertedPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSpectrumInverted"));
+  function_pointers_.DDemodCfgSymbolMap = reinterpret_cast<DDemodCfgSymbolMapPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSymbolMap"));
+  function_pointers_.DDemodCfgSymbolRate = reinterpret_cast<DDemodCfgSymbolRatePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSymbolRate"));
+  function_pointers_.DDemodCfgSynchronization = reinterpret_cast<DDemodCfgSynchronizationPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSynchronization"));
+  function_pointers_.DDemodFetchCarrierMeasurement = reinterpret_cast<DDemodFetchCarrierMeasurementPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchCarrierMeasurement"));
+  function_pointers_.DDemodFetchConstellationTrace = reinterpret_cast<DDemodFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchConstellationTrace"));
+  function_pointers_.DDemodFetchDemodulatedBits = reinterpret_cast<DDemodFetchDemodulatedBitsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchDemodulatedBits"));
+  function_pointers_.DDemodFetchEVM = reinterpret_cast<DDemodFetchEVMPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchEVM"));
+  function_pointers_.DDemodFetchEVMTrace = reinterpret_cast<DDemodFetchEVMTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchEVMTrace"));
+  function_pointers_.DDemodFetchEqualizerCoefficients = reinterpret_cast<DDemodFetchEqualizerCoefficientsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchEqualizerCoefficients"));
+  function_pointers_.DDemodFetchFSKDeviationTrace = reinterpret_cast<DDemodFetchFSKDeviationTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchFSKDeviationTrace"));
+  function_pointers_.DDemodFetchFSKResults = reinterpret_cast<DDemodFetchFSKResultsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchFSKResults"));
+  function_pointers_.DDemodFetchIQImpairments = reinterpret_cast<DDemodFetchIQImpairmentsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchIQImpairments"));
+  function_pointers_.DDemodFetchMagnitudeError = reinterpret_cast<DDemodFetchMagnitudeErrorPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMagnitudeError"));
+  function_pointers_.DDemodFetchMagnitudeErrorTrace = reinterpret_cast<DDemodFetchMagnitudeErrorTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMagnitudeErrorTrace"));
+  function_pointers_.DDemodFetchMeanAmplitudeDroop = reinterpret_cast<DDemodFetchMeanAmplitudeDroopPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeanAmplitudeDroop"));
+  function_pointers_.DDemodFetchMeanIQOriginOffset = reinterpret_cast<DDemodFetchMeanIQOriginOffsetPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeanIQOriginOffset"));
+  function_pointers_.DDemodFetchMeanQuadratureSkew = reinterpret_cast<DDemodFetchMeanQuadratureSkewPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeanQuadratureSkew"));
+  function_pointers_.DDemodFetchMeanRhoFactor = reinterpret_cast<DDemodFetchMeanRhoFactorPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeanRhoFactor"));
+  function_pointers_.DDemodFetchMeasurementWaveform = reinterpret_cast<DDemodFetchMeasurementWaveformPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeasurementWaveform"));
+  function_pointers_.DDemodFetchOffsetConstellationTrace = reinterpret_cast<DDemodFetchOffsetConstellationTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchOffsetConstellationTrace"));
+  function_pointers_.DDemodFetchOffsetEVM = reinterpret_cast<DDemodFetchOffsetEVMPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchOffsetEVM"));
+  function_pointers_.DDemodFetchOffsetEVMTrace = reinterpret_cast<DDemodFetchOffsetEVMTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchOffsetEVMTrace"));
+  function_pointers_.DDemodFetchPhaseError = reinterpret_cast<DDemodFetchPhaseErrorPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchPhaseError"));
+  function_pointers_.DDemodFetchPhaseErrorTrace = reinterpret_cast<DDemodFetchPhaseErrorTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchPhaseErrorTrace"));
+  function_pointers_.DDemodFetchReferenceWaveform = reinterpret_cast<DDemodFetchReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchReferenceWaveform"));
+  function_pointers_.DDemodFetchSyncFound = reinterpret_cast<DDemodFetchSyncFoundPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchSyncFound"));
+  function_pointers_.DDemodGetEqualizerInitialCoefficients = reinterpret_cast<DDemodGetEqualizerInitialCoefficientsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodGetEqualizerInitialCoefficients"));
+  function_pointers_.DDemodGetSymbolMap = reinterpret_cast<DDemodGetSymbolMapPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodGetSymbolMap"));
+  function_pointers_.DDemodRead = reinterpret_cast<DDemodReadPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodRead"));
+  function_pointers_.DDemodSetSymbolMap = reinterpret_cast<DDemodSetSymbolMapPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodSetSymbolMap"));
+  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxDemod_DeleteSignalConfiguration"));
+  function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_->get_function_pointer("RFmxDemod_DisableTrigger"));
+  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAllNamedResultNames"));
+  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeF32"));
+  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeF32Array"));
+  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeF64"));
+  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeF64Array"));
+  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeI16"));
+  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeI32"));
+  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeI32Array"));
+  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeI64"));
+  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeI64Array"));
+  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeI8"));
+  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDouble = reinterpret_cast<GetAttributeNIComplexDoublePtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeNIComplexDouble"));
+  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingle = reinterpret_cast<GetAttributeNIComplexSinglePtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeNIComplexSingle"));
+  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeNIComplexSingleArray"));
+  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeString"));
+  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeU16"));
+  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeU32"));
+  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeU32Array"));
+  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeU64Array"));
+  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeU8"));
+  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAttributeU8Array"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxDemod_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxDemod_GetErrorString"));
+  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxDemod_Initialize"));
+  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxDemod_InitializeFromNIRFSASession"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("RFmxDemod_Initiate"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("RFmxDemod_ResetAttribute"));
+  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_->get_function_pointer("RFmxDemod_ResetToDefault"));
+  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_->get_function_pointer("RFmxDemod_SelectMeasurements"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxDemod_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeF32"));
+  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeF32Array"));
+  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeF64"));
+  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeF64Array"));
+  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeI16"));
+  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeI32"));
+  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeI32Array"));
+  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeI64"));
+  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeI64Array"));
+  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeI8"));
+  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDouble = reinterpret_cast<SetAttributeNIComplexDoublePtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeNIComplexDouble"));
+  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingle = reinterpret_cast<SetAttributeNIComplexSinglePtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeNIComplexSingle"));
+  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeNIComplexSingleArray"));
+  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeString"));
+  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeU16"));
+  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeU32"));
+  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeU32Array"));
+  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeU64Array"));
+  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeU8"));
+  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxDemod_SetAttributeU8Array"));
+  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxDemod_WaitForAcquisitionComplete"));
+  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_->get_function_pointer("RFmxDemod_WaitForMeasurementComplete"));
 }
 
 NiRFmxDemodLibrary::~NiRFmxDemodLibrary()
@@ -172,7 +182,7 @@ NiRFmxDemodLibrary::~NiRFmxDemodLibrary()
 
 ::grpc::Status NiRFmxDemodLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
@@ -1001,12 +1011,28 @@ int32 NiRFmxDemodLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle
   return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
+int32 NiRFmxDemodLibrary::GetAttributeNIComplexDouble(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble* attrVal)
+{
+  if (!function_pointers_.GetAttributeNIComplexDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_GetAttributeNIComplexDouble.");
+  }
+  return function_pointers_.GetAttributeNIComplexDouble(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
 int32 NiRFmxDemodLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_GetAttributeNIComplexDoubleArray.");
   }
   return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxDemodLibrary::GetAttributeNIComplexSingle(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle* attrVal)
+{
+  if (!function_pointers_.GetAttributeNIComplexSingle) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_GetAttributeNIComplexSingle.");
+  }
+  return function_pointers_.GetAttributeNIComplexSingle(instrumentHandle, selectorString, attributeID, attrVal);
 }
 
 int32 NiRFmxDemodLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
@@ -1233,12 +1259,28 @@ int32 NiRFmxDemodLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle
   return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
 }
 
+int32 NiRFmxDemodLibrary::SetAttributeNIComplexDouble(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal)
+{
+  if (!function_pointers_.SetAttributeNIComplexDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_SetAttributeNIComplexDouble.");
+  }
+  return function_pointers_.SetAttributeNIComplexDouble(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
 int32 NiRFmxDemodLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_SetAttributeNIComplexDoubleArray.");
   }
   return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxDemodLibrary::SetAttributeNIComplexSingle(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal)
+{
+  if (!function_pointers_.SetAttributeNIComplexSingle) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_SetAttributeNIComplexSingle.");
+  }
+  return function_pointers_.SetAttributeNIComplexSingle(instrumentHandle, selectorString, attributeID, attrVal);
 }
 
 int32 NiRFmxDemodLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
