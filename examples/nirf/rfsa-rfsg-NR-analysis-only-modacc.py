@@ -41,6 +41,7 @@ import sys
 import grpc
 import nidevice_pb2 as nidevice_grpc
 import nirfmxinstr_pb2 as nirfmxinstr_types
+import nirfmxinstr_pb2_grpc as grpc_nirfmxinstr
 import nirfmxnr_pb2 as nirfmxnr_types
 import nirfmxnr_pb2_grpc as grpc_nirfmxnr
 import nirfsa_pb2 as nirfsa_types
@@ -76,6 +77,7 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}", options=optio
 rfmxclient = grpc_nirfmxnr.NiRFmxNRStub(channel)
 rfsaclient = grpc_nirfsa.NiRFSAStub(channel)
 rfsgclient = grpc_nirfsg.NiRFSGStub(channel)
+instrclient = grpc_nirfmxinstr.NiRFmxInstrStub(channel)
 rfsgsession = None
 rfmxsession = None
 rfsasession = None
@@ -106,7 +108,9 @@ def check_for_warning(response, instrument):
 
 try:
     print(f"Initializing Instruments...", end="")
-    initialize_response = rfmxclient.Initialize(
+    # Updated these initialize_responses to be different variables.
+    # MyPy was complaining after the first one because you were reassigning it with a different type.
+    initialize_rfmx_response = rfmxclient.Initialize(
         nirfmxnr_types.InitializeRequest(
             session_name=RFMXSESSION_NAME,
             resource_name=RESOURCE,
@@ -114,9 +118,9 @@ try:
         )
     )
 
-    rfmxsession = initialize_response.instrument
+    rfmxsession = initialize_rfmx_response.instrument
 
-    initialize_response = rfsaclient.InitWithOptions(
+    initialize_rfsa_response = rfsaclient.InitWithOptions(
         nirfsa_types.InitWithOptionsRequest(
             session_name=RFSASESSION_NAME,
             resource_name=RESOURCE,
@@ -124,9 +128,9 @@ try:
         )
     )
 
-    rfsasession = initialize_response.vi
+    rfsasession = initialize_rfsa_response.vi
 
-    initialize_response = rfsgclient.InitWithOptions(
+    initialize_rfsg_response = rfsgclient.InitWithOptions(
         nirfsg_types.InitWithOptionsRequest(
             session_name=RFSGSESSION_NAME,
             resource_name=RESOURCE,
@@ -134,7 +138,7 @@ try:
         )
     )
 
-    rfsgsession = initialize_response.vi
+    rfsgsession = initialize_rfsg_response.vi
     print("Done")
 
     center_frequency = 3.5e9
@@ -299,7 +303,9 @@ try:
         )
     )
     # Once commit is called, the recommended acquisition settings can be queried
-    response = rfmxclient.GetAttributeF64(
+    # For these updates, the proto request (NR's GetAttributeF64) must match the RequestMessage type (come from nirfmxnr_types).
+    # But for these, since you're getting an INSTR attribute, I think you should use an instrclient's GetAttribute... RPC calls.
+    response = instrclient.GetAttributeF64(
         nirfmxinstr_types.GetAttributeF64Request(
             instrument=rfmxsession,
             channel_name="",
@@ -307,7 +313,7 @@ try:
         )
     )
     minimum_sample_rate = response.attr_val
-    response = rfmxclient.GetAttributeF64(
+    response = instrclient.GetAttributeF64(
         nirfmxinstr_types.GetAttributeF64Request(
             instrument=rfmxsession,
             channel_name="",
@@ -316,7 +322,7 @@ try:
     )
     acquisition_time = response.attr_val
     number_of_samples = acquisition_time * minimum_sample_rate
-    response = rfmxclient.GetAttributeF64(
+    response = instrclient.GetAttributeF64(
         nirfmxinstr_types.GetAttributeF64Request(
             instrument=rfmxsession,
             channel_name="",
@@ -325,14 +331,15 @@ try:
     )
     pre_trigger_time = response.attr_val
     number_of_pre_samples = pre_trigger_time * minimum_sample_rate
-    response = rfmxclient.GetAttributeI32(
+    # Here, MyPy would complain re-assigning to  response since the response type will be different here (before F64Response and now I32Response)
+    response_i32 = instrclient.GetAttributeI32(
         nirfmxinstr_types.GetAttributeI32Request(
             instrument=rfmxsession,
             channel_name="",
             attribute_id=nirfmxinstr_types.NIRFMXINSTR_ATTRIBUTE_RECOMMENDED_NUMBER_OF_RECORDS,
         )
     )
-    number_of_records = response.attr_val
+    number_of_records = response_i32.attr_val
 
     # Configure RFSA Acquisition Settings
     rfsaclient.ConfigureNumberOfSamples(
