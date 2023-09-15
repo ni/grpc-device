@@ -99,6 +99,7 @@ public:
   ::grpc::Status GetSelfCalibrateLastTemperature(::grpc::ServerContext* context, const GetSelfCalibrateLastTemperatureRequest* request, GetSelfCalibrateLastTemperatureResponse* response) override;
   ::grpc::Status GetSignalConfigurationNames(::grpc::ServerContext* context, const GetSignalConfigurationNamesRequest* request, GetSignalConfigurationNamesResponse* response) override;
   ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
+  ::grpc::Status InitializeWithChannel(::grpc::ServerContext* context, const InitializeWithChannelRequest* request, InitializeWithChannelResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASessionArray(::grpc::ServerContext* context, const InitializeFromNIRFSASessionArrayRequest* request, InitializeFromNIRFSASessionArrayResponse* response) override;
   ::grpc::Status IsSelfCalibrateValid(::grpc::ServerContext* context, const IsSelfCalibrateValidRequest* request, IsSelfCalibrateValidResponse* response) override;
@@ -137,6 +138,7 @@ public:
   ::grpc::Status TimestampFromValues(::grpc::ServerContext* context, const TimestampFromValuesRequest* request, TimestampFromValuesResponse* response) override;
   ::grpc::Status ValuesFromTimestamp(::grpc::ServerContext* context, const ValuesFromTimestampRequest* request, ValuesFromTimestampResponse* response) override;
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
+  ::grpc::Status FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

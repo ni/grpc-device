@@ -7987,6 +7987,27 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'MarkerCfgYLocation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'markerYLocation',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'MarkerFetchXY': {
         'parameters': [
             {

@@ -8,13 +8,16 @@
 
 #include "nisync_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nisync_grpc {
 
 class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
  public:
   NiSyncLibrary();
+  explicit NiSyncLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiSyncLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -234,7 +237,7 @@ class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
     CalAdjustDDSInitialPhasePtr CalAdjustDDSInitialPhase;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

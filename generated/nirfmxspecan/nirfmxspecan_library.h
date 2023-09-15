@@ -8,13 +8,16 @@
 
 #include "nirfmxspecan_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nirfmxspecan_grpc {
 
 class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterface {
  public:
   NiRFmxSpecAnLibrary();
+  explicit NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxSpecAnLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -253,6 +256,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 MarkerCfgTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 trace);
   int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType);
   int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation);
+  int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation);
   int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation);
   int32 MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound);
   int32 MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks);
@@ -678,6 +682,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using MarkerCfgTracePtr = decltype(&RFmxSpecAn_MarkerCfgTrace);
   using MarkerCfgTypePtr = decltype(&RFmxSpecAn_MarkerCfgType);
   using MarkerCfgXLocationPtr = decltype(&RFmxSpecAn_MarkerCfgXLocation);
+  using MarkerCfgYLocationPtr = decltype(&RFmxSpecAn_MarkerCfgYLocation);
   using MarkerFetchXYPtr = decltype(&RFmxSpecAn_MarkerFetchXY);
   using MarkerNextPeakPtr = decltype(&RFmxSpecAn_MarkerNextPeak);
   using MarkerPeakSearchPtr = decltype(&RFmxSpecAn_MarkerPeakSearch);
@@ -1103,6 +1108,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     MarkerCfgTracePtr MarkerCfgTrace;
     MarkerCfgTypePtr MarkerCfgType;
     MarkerCfgXLocationPtr MarkerCfgXLocation;
+    MarkerCfgYLocationPtr MarkerCfgYLocation;
     MarkerFetchXYPtr MarkerFetchXY;
     MarkerNextPeakPtr MarkerNextPeak;
     MarkerPeakSearchPtr MarkerPeakSearch;
@@ -1293,7 +1299,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

@@ -91,7 +91,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket" "visa")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -425,6 +425,18 @@ if(WIN32)
   )
 endif()
 
+# Generate version header file
+# This file requires product name and version info that mako does not know, but CMake does
+configure_file(
+  source/server/version.h.in
+  ${service_output_dir}/version.h
+  @ONLY)
+
+target_sources(ni_grpc_device_server
+  PUBLIC "${service_output_dir}/version.h"
+)
+
+
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
   target_sources(ni_grpc_device_server
     PRIVATE "source/server/linux/syslog_logging.cpp"
@@ -479,18 +491,28 @@ endif()
 
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
+    "imports/include/nierr_Status.cpp"
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/integration/ni_fake_service_tests_endtoend.cpp"
     "source/tests/integration/ni_fake_non_ivi_service_tests_endtoend.cpp"
     "source/tests/integration/session_utilities_service_tests.cpp"
     "source/tests/integration/session_utilities_service_tests_endtoend.cpp"
+    "source/tests/integration/visa_resource_manager_tests.cpp"
+    "source/server/calibration_operations_restricted_service_registrar.cpp"
+    "source/server/calibration_operations_restricted_service.cpp"
+    "source/server/core_services_registrar.cpp"
+    "source/server/debug_session_properties_restricted_service_registrar.cpp"
+    "source/server/debug_session_properties_restricted_service.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
     "source/server/semaphore.cpp"
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
+    "source/server/session_utilities_service_registrar.cpp"
     "source/server/shared_library.cpp"
     "source/server/software_enumerator.cpp"
+    "source/server/syscfg_library.cpp"
+    "source/server/syscfg_resource_accessor.cpp"
     "source/server/syscfg_session_handler.cpp"
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
@@ -503,6 +525,7 @@ add_executable(IntegrationTestsRunner
     ${debugsessionproperties_restricted_grpc_srcs}
     ${calibrationoperations_restricted_proto_srcs}
     ${calibrationoperations_restricted_grpc_srcs}
+    ${nidriver_service_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
@@ -536,6 +559,7 @@ add_executable(UnitTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/callback_router_tests.cpp"
     "source/tests/unit/converters_tests.cpp"
+    "source/tests/unit/library_set_runtime_environment_tests.cpp"
     "source/tests/unit/session_resource_repository_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/calibration_operations_tests.cpp"
@@ -589,6 +613,7 @@ add_executable(UnitTestsRunner
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_extension/nifake_extension_service.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"
+    "${service_output_dir}/niswitch/niswitch_library.cpp"
     "${service_output_dir}/nixnet/nixnet_service.cpp"
     "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_extension_service.custom.cpp"
@@ -604,9 +629,11 @@ if(MSVC)
 endif(MSVC)
 
 target_include_directories(UnitTestsRunner
+    PRIVATE "${service_output_dir}"
     PRIVATE "${service_output_dir}/nifake"
     PRIVATE "${service_output_dir}/nifake_extension"
-    PRIVATE "${service_output_dir}/nifake_non_ivi")
+    PRIVATE "${service_output_dir}/nifake_non_ivi"
+    PRIVATE "source/server")
 
 target_link_libraries(UnitTestsRunner
     gtest
@@ -670,6 +697,8 @@ set(system_test_runner_sources
   "source/tests/system/nixnet_can_driver_api_tests.cpp"
   "source/tests/system/nixnet_ethernet_driver_api_tests.cpp"
   "source/tests/system/nixnetsocket_driver_api_tests.cpp"
+  "source/tests/system/visa_driver_api_tests.cpp"
+  "source/tests/system/visa_session_tests.cpp"
   "source/server/calibration_operations_restricted_service_registrar.cpp"
   "source/server/calibration_operations_restricted_service.cpp"
   "source/server/debug_session_properties_restricted_service_registrar.cpp"

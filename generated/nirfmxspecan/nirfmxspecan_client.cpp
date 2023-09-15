@@ -5215,6 +5215,25 @@ marker_cfg_x_location(const StubPtr& stub, const nidevice_grpc::Session& instrum
   return response;
 }
 
+MarkerCfgYLocationResponse
+marker_cfg_y_location(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_y_location)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgYLocationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_marker_y_location(marker_y_location);
+
+  auto response = MarkerCfgYLocationResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgYLocation(&context, request, &response),
+      context);
+
+  return response;
+}
+
 MarkerFetchXYResponse
 marker_fetch_xy(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {

@@ -9115,6 +9115,31 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::MarkerCfgYLocation(::grpc::ServerContext* context, const MarkerCfgYLocationRequest* request, MarkerCfgYLocationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 marker_y_location = request->marker_y_location();
+      auto status = library_->MarkerCfgYLocation(instrument, selector_string, marker_y_location);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::MarkerFetchXY(::grpc::ServerContext* context, const MarkerFetchXYRequest* request, MarkerFetchXYResponse* response)
   {
     if (context->IsCancelled()) {

@@ -4,6 +4,9 @@
 // Service implementation for the NI-RFSA Metadata
 //---------------------------------------------------------------------
 #include "nirfsa_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFSA_64.dll";
@@ -13,119 +16,122 @@ static const char* kLibraryName = "libnirfsa.so";
 
 namespace nirfsa_grpc {
 
-NiRFSALibrary::NiRFSALibrary() : shared_library_(kLibraryName)
+NiRFSALibrary::NiRFSALibrary() : NiRFSALibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFSALibrary::NiRFSALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niRFSA_Abort"));
-  function_pointers_.CheckAcquisitionStatus = reinterpret_cast<CheckAcquisitionStatusPtr>(shared_library_.get_function_pointer("niRFSA_CheckAcquisitionStatus"));
-  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niRFSA_ClearError"));
-  function_pointers_.ClearSelfCalibrateRange = reinterpret_cast<ClearSelfCalibrateRangePtr>(shared_library_.get_function_pointer("niRFSA_ClearSelfCalibrateRange"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niRFSA_close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niRFSA_Commit"));
-  function_pointers_.ConfigureAcquisitionType = reinterpret_cast<ConfigureAcquisitionTypePtr>(shared_library_.get_function_pointer("niRFSA_ConfigureAcquisitionType"));
-  function_pointers_.ConfigureDeembeddingTableInterpolationLinear = reinterpret_cast<ConfigureDeembeddingTableInterpolationLinearPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureDeembeddingTableInterpolationLinear"));
-  function_pointers_.ConfigureDeembeddingTableInterpolationNearest = reinterpret_cast<ConfigureDeembeddingTableInterpolationNearestPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureDeembeddingTableInterpolationNearest"));
-  function_pointers_.ConfigureDeembeddingTableInterpolationSpline = reinterpret_cast<ConfigureDeembeddingTableInterpolationSplinePtr>(shared_library_.get_function_pointer("niRFSA_ConfigureDeembeddingTableInterpolationSpline"));
-  function_pointers_.ConfigureDigitalEdgeAdvanceTrigger = reinterpret_cast<ConfigureDigitalEdgeAdvanceTriggerPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureDigitalEdgeAdvanceTrigger"));
-  function_pointers_.ConfigureDigitalEdgeRefTrigger = reinterpret_cast<ConfigureDigitalEdgeRefTriggerPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureDigitalEdgeRefTrigger"));
-  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureDigitalEdgeStartTrigger"));
-  function_pointers_.ConfigureIQCarrierFrequency = reinterpret_cast<ConfigureIQCarrierFrequencyPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureIQCarrierFrequency"));
-  function_pointers_.ConfigureIQPowerEdgeRefTrigger = reinterpret_cast<ConfigureIQPowerEdgeRefTriggerPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureIQPowerEdgeRefTrigger"));
-  function_pointers_.ConfigureIQRate = reinterpret_cast<ConfigureIQRatePtr>(shared_library_.get_function_pointer("niRFSA_ConfigureIQRate"));
-  function_pointers_.ConfigureNumberOfRecords = reinterpret_cast<ConfigureNumberOfRecordsPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureNumberOfRecords"));
-  function_pointers_.ConfigureNumberOfSamples = reinterpret_cast<ConfigureNumberOfSamplesPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureNumberOfSamples"));
-  function_pointers_.ConfigurePXIChassisClk10 = reinterpret_cast<ConfigurePXIChassisClk10Ptr>(shared_library_.get_function_pointer("niRFSA_ConfigurePXIChassisClk10"));
-  function_pointers_.ConfigureRefClock = reinterpret_cast<ConfigureRefClockPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureRefClock"));
-  function_pointers_.ConfigureReferenceLevel = reinterpret_cast<ConfigureReferenceLevelPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureReferenceLevel"));
-  function_pointers_.ConfigureResolutionBandwidth = reinterpret_cast<ConfigureResolutionBandwidthPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureResolutionBandwidth"));
-  function_pointers_.ConfigureSoftwareEdgeAdvanceTrigger = reinterpret_cast<ConfigureSoftwareEdgeAdvanceTriggerPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureSoftwareEdgeAdvanceTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeRefTrigger = reinterpret_cast<ConfigureSoftwareEdgeRefTriggerPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureSoftwareEdgeRefTrigger"));
-  function_pointers_.ConfigureSoftwareEdgeStartTrigger = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureSoftwareEdgeStartTrigger"));
-  function_pointers_.ConfigureSpectrumFrequencyCenterSpan = reinterpret_cast<ConfigureSpectrumFrequencyCenterSpanPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureSpectrumFrequencyCenterSpan"));
-  function_pointers_.ConfigureSpectrumFrequencyStartStop = reinterpret_cast<ConfigureSpectrumFrequencyStartStopPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureSpectrumFrequencyStartStop"));
-  function_pointers_.CreateConfigurationList = reinterpret_cast<CreateConfigurationListPtr>(shared_library_.get_function_pointer("niRFSA_CreateConfigurationList"));
-  function_pointers_.CreateConfigurationListStep = reinterpret_cast<CreateConfigurationListStepPtr>(shared_library_.get_function_pointer("niRFSA_CreateConfigurationListStep"));
-  function_pointers_.CreateDeembeddingSparameterTableArray = reinterpret_cast<CreateDeembeddingSparameterTableArrayPtr>(shared_library_.get_function_pointer("niRFSA_CreateDeembeddingSparameterTableArray"));
-  function_pointers_.CreateDeembeddingSparameterTableS2PFile = reinterpret_cast<CreateDeembeddingSparameterTableS2PFilePtr>(shared_library_.get_function_pointer("niRFSA_CreateDeembeddingSparameterTableS2PFile"));
-  function_pointers_.DeleteAllDeembeddingTables = reinterpret_cast<DeleteAllDeembeddingTablesPtr>(shared_library_.get_function_pointer("niRFSA_DeleteAllDeembeddingTables"));
-  function_pointers_.DeleteConfigurationList = reinterpret_cast<DeleteConfigurationListPtr>(shared_library_.get_function_pointer("niRFSA_DeleteConfigurationList"));
-  function_pointers_.DeleteDeembeddingTable = reinterpret_cast<DeleteDeembeddingTablePtr>(shared_library_.get_function_pointer("niRFSA_DeleteDeembeddingTable"));
-  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niRFSA_Disable"));
-  function_pointers_.DisableAdvanceTrigger = reinterpret_cast<DisableAdvanceTriggerPtr>(shared_library_.get_function_pointer("niRFSA_DisableAdvanceTrigger"));
-  function_pointers_.DisableRefTrigger = reinterpret_cast<DisableRefTriggerPtr>(shared_library_.get_function_pointer("niRFSA_DisableRefTrigger"));
-  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_.get_function_pointer("niRFSA_DisableStartTrigger"));
-  function_pointers_.EnableSessionAccess = reinterpret_cast<EnableSessionAccessPtr>(shared_library_.get_function_pointer("niRFSA_EnableSessionAccess"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niRFSA_error_message"));
-  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_.get_function_pointer("niRFSA_error_query"));
-  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niRFSA_ExportSignal"));
-  function_pointers_.FetchIQMultiRecordComplexF32 = reinterpret_cast<FetchIQMultiRecordComplexF32Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQMultiRecordComplexF32"));
-  function_pointers_.FetchIQMultiRecordComplexF64 = reinterpret_cast<FetchIQMultiRecordComplexF64Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQMultiRecordComplexF64"));
-  function_pointers_.FetchIQMultiRecordComplexI16 = reinterpret_cast<FetchIQMultiRecordComplexI16Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQMultiRecordComplexI16"));
-  function_pointers_.FetchIQSingleRecordComplexF32 = reinterpret_cast<FetchIQSingleRecordComplexF32Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQSingleRecordComplexF32"));
-  function_pointers_.FetchIQSingleRecordComplexF64 = reinterpret_cast<FetchIQSingleRecordComplexF64Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQSingleRecordComplexF64"));
-  function_pointers_.FetchIQSingleRecordComplexI16 = reinterpret_cast<FetchIQSingleRecordComplexI16Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQSingleRecordComplexI16"));
-  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niRFSA_GetAttributeViBoolean"));
-  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niRFSA_GetAttributeViInt32"));
-  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niRFSA_GetAttributeViInt64"));
-  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niRFSA_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niRFSA_GetAttributeViSession"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niRFSA_GetAttributeViString"));
-  function_pointers_.GetCalUserDefinedInfo = reinterpret_cast<GetCalUserDefinedInfoPtr>(shared_library_.get_function_pointer("niRFSA_GetCalUserDefinedInfo"));
-  function_pointers_.GetCalUserDefinedInfoMaxSize = reinterpret_cast<GetCalUserDefinedInfoMaxSizePtr>(shared_library_.get_function_pointer("niRFSA_GetCalUserDefinedInfoMaxSize"));
-  function_pointers_.GetDeembeddingSparameters = reinterpret_cast<GetDeembeddingSparametersPtr>(shared_library_.get_function_pointer("niRFSA_GetDeembeddingSparameters"));
-  function_pointers_.GetDeviceResponse = reinterpret_cast<GetDeviceResponsePtr>(shared_library_.get_function_pointer("niRFSA_GetDeviceResponse"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niRFSA_GetError"));
-  function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niRFSA_GetExtCalLastDateAndTime"));
-  function_pointers_.GetExtCalLastTemp = reinterpret_cast<GetExtCalLastTempPtr>(shared_library_.get_function_pointer("niRFSA_GetExtCalLastTemp"));
-  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_.get_function_pointer("niRFSA_GetExtCalRecommendedInterval"));
-  function_pointers_.GetFetchBacklog = reinterpret_cast<GetFetchBacklogPtr>(shared_library_.get_function_pointer("niRFSA_GetFetchBacklog"));
-  function_pointers_.GetFrequencyResponse = reinterpret_cast<GetFrequencyResponsePtr>(shared_library_.get_function_pointer("niRFSA_GetFrequencyResponse"));
-  function_pointers_.GetNormalizationCoefficients = reinterpret_cast<GetNormalizationCoefficientsPtr>(shared_library_.get_function_pointer("niRFSA_GetNormalizationCoefficients"));
-  function_pointers_.GetNumberOfSpectralLines = reinterpret_cast<GetNumberOfSpectralLinesPtr>(shared_library_.get_function_pointer("niRFSA_GetNumberOfSpectralLines"));
-  function_pointers_.GetRelayName = reinterpret_cast<GetRelayNamePtr>(shared_library_.get_function_pointer("niRFSA_GetRelayName"));
-  function_pointers_.GetRelayOperationsCount = reinterpret_cast<GetRelayOperationsCountPtr>(shared_library_.get_function_pointer("niRFSA_GetRelayOperationsCount"));
-  function_pointers_.GetScalingCoefficients = reinterpret_cast<GetScalingCoefficientsPtr>(shared_library_.get_function_pointer("niRFSA_GetScalingCoefficients"));
-  function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_.get_function_pointer("niRFSA_GetSelfCalLastDateAndTime"));
-  function_pointers_.GetSelfCalLastTemp = reinterpret_cast<GetSelfCalLastTempPtr>(shared_library_.get_function_pointer("niRFSA_GetSelfCalLastTemp"));
-  function_pointers_.GetSpectralInfoForSMT = reinterpret_cast<GetSpectralInfoForSMTPtr>(shared_library_.get_function_pointer("niRFSA_GetSpectralInfoForSMT"));
-  function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_.get_function_pointer("niRFSA_GetStreamEndpointHandle"));
-  function_pointers_.GetTerminalName = reinterpret_cast<GetTerminalNamePtr>(shared_library_.get_function_pointer("niRFSA_GetTerminalName"));
-  function_pointers_.GetUserData = reinterpret_cast<GetUserDataPtr>(shared_library_.get_function_pointer("niRFSA_GetUserData"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niRFSA_init"));
-  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niRFSA_InitWithOptions"));
-  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niRFSA_Initiate"));
-  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niRFSA_InvalidateAllAttributes"));
-  function_pointers_.IsSelfCalValid = reinterpret_cast<IsSelfCalValidPtr>(shared_library_.get_function_pointer("niRFSA_IsSelfCalValid"));
-  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_.get_function_pointer("niRFSA_LockSession"));
-  function_pointers_.PerformThermalCorrection = reinterpret_cast<PerformThermalCorrectionPtr>(shared_library_.get_function_pointer("niRFSA_PerformThermalCorrection"));
-  function_pointers_.ReadIQSingleRecordComplexF64 = reinterpret_cast<ReadIQSingleRecordComplexF64Ptr>(shared_library_.get_function_pointer("niRFSA_ReadIQSingleRecordComplexF64"));
-  function_pointers_.ReadPowerSpectrumF32 = reinterpret_cast<ReadPowerSpectrumF32Ptr>(shared_library_.get_function_pointer("niRFSA_ReadPowerSpectrumF32"));
-  function_pointers_.ReadPowerSpectrumF64 = reinterpret_cast<ReadPowerSpectrumF64Ptr>(shared_library_.get_function_pointer("niRFSA_ReadPowerSpectrumF64"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_.get_function_pointer("niRFSA_reset"));
-  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("niRFSA_ResetAttribute"));
-  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("niRFSA_ResetDevice"));
-  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_.get_function_pointer("niRFSA_ResetWithDefaults"));
-  function_pointers_.ResetWithOptions = reinterpret_cast<ResetWithOptionsPtr>(shared_library_.get_function_pointer("niRFSA_ResetWithOptions"));
-  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_.get_function_pointer("niRFSA_revision_query"));
-  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_.get_function_pointer("niRFSA_SelfCal"));
-  function_pointers_.SelfCalibrate = reinterpret_cast<SelfCalibratePtr>(shared_library_.get_function_pointer("niRFSA_SelfCalibrate"));
-  function_pointers_.SelfCalibrateRange = reinterpret_cast<SelfCalibrateRangePtr>(shared_library_.get_function_pointer("niRFSA_SelfCalibrateRange"));
-  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_.get_function_pointer("niRFSA_self_test"));
-  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("niRFSA_SendSoftwareEdgeTrigger"));
-  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niRFSA_SetAttributeViBoolean"));
-  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niRFSA_SetAttributeViInt32"));
-  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niRFSA_SetAttributeViInt64"));
-  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niRFSA_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niRFSA_SetAttributeViSession"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niRFSA_SetAttributeViString"));
-  function_pointers_.SetCalUserDefinedInfo = reinterpret_cast<SetCalUserDefinedInfoPtr>(shared_library_.get_function_pointer("niRFSA_SetCalUserDefinedInfo"));
-  function_pointers_.SetUserData = reinterpret_cast<SetUserDataPtr>(shared_library_.get_function_pointer("niRFSA_SetUserData"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niRFSA_UnlockSession"));
+  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("niRFSA_Abort"));
+  function_pointers_.CheckAcquisitionStatus = reinterpret_cast<CheckAcquisitionStatusPtr>(shared_library_->get_function_pointer("niRFSA_CheckAcquisitionStatus"));
+  function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_->get_function_pointer("niRFSA_ClearError"));
+  function_pointers_.ClearSelfCalibrateRange = reinterpret_cast<ClearSelfCalibrateRangePtr>(shared_library_->get_function_pointer("niRFSA_ClearSelfCalibrateRange"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("niRFSA_close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("niRFSA_Commit"));
+  function_pointers_.ConfigureAcquisitionType = reinterpret_cast<ConfigureAcquisitionTypePtr>(shared_library_->get_function_pointer("niRFSA_ConfigureAcquisitionType"));
+  function_pointers_.ConfigureDeembeddingTableInterpolationLinear = reinterpret_cast<ConfigureDeembeddingTableInterpolationLinearPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureDeembeddingTableInterpolationLinear"));
+  function_pointers_.ConfigureDeembeddingTableInterpolationNearest = reinterpret_cast<ConfigureDeembeddingTableInterpolationNearestPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureDeembeddingTableInterpolationNearest"));
+  function_pointers_.ConfigureDeembeddingTableInterpolationSpline = reinterpret_cast<ConfigureDeembeddingTableInterpolationSplinePtr>(shared_library_->get_function_pointer("niRFSA_ConfigureDeembeddingTableInterpolationSpline"));
+  function_pointers_.ConfigureDigitalEdgeAdvanceTrigger = reinterpret_cast<ConfigureDigitalEdgeAdvanceTriggerPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureDigitalEdgeAdvanceTrigger"));
+  function_pointers_.ConfigureDigitalEdgeRefTrigger = reinterpret_cast<ConfigureDigitalEdgeRefTriggerPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureDigitalEdgeRefTrigger"));
+  function_pointers_.ConfigureDigitalEdgeStartTrigger = reinterpret_cast<ConfigureDigitalEdgeStartTriggerPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureDigitalEdgeStartTrigger"));
+  function_pointers_.ConfigureIQCarrierFrequency = reinterpret_cast<ConfigureIQCarrierFrequencyPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureIQCarrierFrequency"));
+  function_pointers_.ConfigureIQPowerEdgeRefTrigger = reinterpret_cast<ConfigureIQPowerEdgeRefTriggerPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureIQPowerEdgeRefTrigger"));
+  function_pointers_.ConfigureIQRate = reinterpret_cast<ConfigureIQRatePtr>(shared_library_->get_function_pointer("niRFSA_ConfigureIQRate"));
+  function_pointers_.ConfigureNumberOfRecords = reinterpret_cast<ConfigureNumberOfRecordsPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureNumberOfRecords"));
+  function_pointers_.ConfigureNumberOfSamples = reinterpret_cast<ConfigureNumberOfSamplesPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureNumberOfSamples"));
+  function_pointers_.ConfigurePXIChassisClk10 = reinterpret_cast<ConfigurePXIChassisClk10Ptr>(shared_library_->get_function_pointer("niRFSA_ConfigurePXIChassisClk10"));
+  function_pointers_.ConfigureRefClock = reinterpret_cast<ConfigureRefClockPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureRefClock"));
+  function_pointers_.ConfigureReferenceLevel = reinterpret_cast<ConfigureReferenceLevelPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureReferenceLevel"));
+  function_pointers_.ConfigureResolutionBandwidth = reinterpret_cast<ConfigureResolutionBandwidthPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureResolutionBandwidth"));
+  function_pointers_.ConfigureSoftwareEdgeAdvanceTrigger = reinterpret_cast<ConfigureSoftwareEdgeAdvanceTriggerPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureSoftwareEdgeAdvanceTrigger"));
+  function_pointers_.ConfigureSoftwareEdgeRefTrigger = reinterpret_cast<ConfigureSoftwareEdgeRefTriggerPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureSoftwareEdgeRefTrigger"));
+  function_pointers_.ConfigureSoftwareEdgeStartTrigger = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureSoftwareEdgeStartTrigger"));
+  function_pointers_.ConfigureSpectrumFrequencyCenterSpan = reinterpret_cast<ConfigureSpectrumFrequencyCenterSpanPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureSpectrumFrequencyCenterSpan"));
+  function_pointers_.ConfigureSpectrumFrequencyStartStop = reinterpret_cast<ConfigureSpectrumFrequencyStartStopPtr>(shared_library_->get_function_pointer("niRFSA_ConfigureSpectrumFrequencyStartStop"));
+  function_pointers_.CreateConfigurationList = reinterpret_cast<CreateConfigurationListPtr>(shared_library_->get_function_pointer("niRFSA_CreateConfigurationList"));
+  function_pointers_.CreateConfigurationListStep = reinterpret_cast<CreateConfigurationListStepPtr>(shared_library_->get_function_pointer("niRFSA_CreateConfigurationListStep"));
+  function_pointers_.CreateDeembeddingSparameterTableArray = reinterpret_cast<CreateDeembeddingSparameterTableArrayPtr>(shared_library_->get_function_pointer("niRFSA_CreateDeembeddingSparameterTableArray"));
+  function_pointers_.CreateDeembeddingSparameterTableS2PFile = reinterpret_cast<CreateDeembeddingSparameterTableS2PFilePtr>(shared_library_->get_function_pointer("niRFSA_CreateDeembeddingSparameterTableS2PFile"));
+  function_pointers_.DeleteAllDeembeddingTables = reinterpret_cast<DeleteAllDeembeddingTablesPtr>(shared_library_->get_function_pointer("niRFSA_DeleteAllDeembeddingTables"));
+  function_pointers_.DeleteConfigurationList = reinterpret_cast<DeleteConfigurationListPtr>(shared_library_->get_function_pointer("niRFSA_DeleteConfigurationList"));
+  function_pointers_.DeleteDeembeddingTable = reinterpret_cast<DeleteDeembeddingTablePtr>(shared_library_->get_function_pointer("niRFSA_DeleteDeembeddingTable"));
+  function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_->get_function_pointer("niRFSA_Disable"));
+  function_pointers_.DisableAdvanceTrigger = reinterpret_cast<DisableAdvanceTriggerPtr>(shared_library_->get_function_pointer("niRFSA_DisableAdvanceTrigger"));
+  function_pointers_.DisableRefTrigger = reinterpret_cast<DisableRefTriggerPtr>(shared_library_->get_function_pointer("niRFSA_DisableRefTrigger"));
+  function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_->get_function_pointer("niRFSA_DisableStartTrigger"));
+  function_pointers_.EnableSessionAccess = reinterpret_cast<EnableSessionAccessPtr>(shared_library_->get_function_pointer("niRFSA_EnableSessionAccess"));
+  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_->get_function_pointer("niRFSA_error_message"));
+  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_->get_function_pointer("niRFSA_error_query"));
+  function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("niRFSA_ExportSignal"));
+  function_pointers_.FetchIQMultiRecordComplexF32 = reinterpret_cast<FetchIQMultiRecordComplexF32Ptr>(shared_library_->get_function_pointer("niRFSA_FetchIQMultiRecordComplexF32"));
+  function_pointers_.FetchIQMultiRecordComplexF64 = reinterpret_cast<FetchIQMultiRecordComplexF64Ptr>(shared_library_->get_function_pointer("niRFSA_FetchIQMultiRecordComplexF64"));
+  function_pointers_.FetchIQMultiRecordComplexI16 = reinterpret_cast<FetchIQMultiRecordComplexI16Ptr>(shared_library_->get_function_pointer("niRFSA_FetchIQMultiRecordComplexI16"));
+  function_pointers_.FetchIQSingleRecordComplexF32 = reinterpret_cast<FetchIQSingleRecordComplexF32Ptr>(shared_library_->get_function_pointer("niRFSA_FetchIQSingleRecordComplexF32"));
+  function_pointers_.FetchIQSingleRecordComplexF64 = reinterpret_cast<FetchIQSingleRecordComplexF64Ptr>(shared_library_->get_function_pointer("niRFSA_FetchIQSingleRecordComplexF64"));
+  function_pointers_.FetchIQSingleRecordComplexI16 = reinterpret_cast<FetchIQSingleRecordComplexI16Ptr>(shared_library_->get_function_pointer("niRFSA_FetchIQSingleRecordComplexI16"));
+  function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niRFSA_GetAttributeViBoolean"));
+  function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niRFSA_GetAttributeViInt32"));
+  function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niRFSA_GetAttributeViInt64"));
+  function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niRFSA_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_->get_function_pointer("niRFSA_GetAttributeViSession"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_->get_function_pointer("niRFSA_GetAttributeViString"));
+  function_pointers_.GetCalUserDefinedInfo = reinterpret_cast<GetCalUserDefinedInfoPtr>(shared_library_->get_function_pointer("niRFSA_GetCalUserDefinedInfo"));
+  function_pointers_.GetCalUserDefinedInfoMaxSize = reinterpret_cast<GetCalUserDefinedInfoMaxSizePtr>(shared_library_->get_function_pointer("niRFSA_GetCalUserDefinedInfoMaxSize"));
+  function_pointers_.GetDeembeddingSparameters = reinterpret_cast<GetDeembeddingSparametersPtr>(shared_library_->get_function_pointer("niRFSA_GetDeembeddingSparameters"));
+  function_pointers_.GetDeviceResponse = reinterpret_cast<GetDeviceResponsePtr>(shared_library_->get_function_pointer("niRFSA_GetDeviceResponse"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niRFSA_GetError"));
+  function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_->get_function_pointer("niRFSA_GetExtCalLastDateAndTime"));
+  function_pointers_.GetExtCalLastTemp = reinterpret_cast<GetExtCalLastTempPtr>(shared_library_->get_function_pointer("niRFSA_GetExtCalLastTemp"));
+  function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_->get_function_pointer("niRFSA_GetExtCalRecommendedInterval"));
+  function_pointers_.GetFetchBacklog = reinterpret_cast<GetFetchBacklogPtr>(shared_library_->get_function_pointer("niRFSA_GetFetchBacklog"));
+  function_pointers_.GetFrequencyResponse = reinterpret_cast<GetFrequencyResponsePtr>(shared_library_->get_function_pointer("niRFSA_GetFrequencyResponse"));
+  function_pointers_.GetNormalizationCoefficients = reinterpret_cast<GetNormalizationCoefficientsPtr>(shared_library_->get_function_pointer("niRFSA_GetNormalizationCoefficients"));
+  function_pointers_.GetNumberOfSpectralLines = reinterpret_cast<GetNumberOfSpectralLinesPtr>(shared_library_->get_function_pointer("niRFSA_GetNumberOfSpectralLines"));
+  function_pointers_.GetRelayName = reinterpret_cast<GetRelayNamePtr>(shared_library_->get_function_pointer("niRFSA_GetRelayName"));
+  function_pointers_.GetRelayOperationsCount = reinterpret_cast<GetRelayOperationsCountPtr>(shared_library_->get_function_pointer("niRFSA_GetRelayOperationsCount"));
+  function_pointers_.GetScalingCoefficients = reinterpret_cast<GetScalingCoefficientsPtr>(shared_library_->get_function_pointer("niRFSA_GetScalingCoefficients"));
+  function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_->get_function_pointer("niRFSA_GetSelfCalLastDateAndTime"));
+  function_pointers_.GetSelfCalLastTemp = reinterpret_cast<GetSelfCalLastTempPtr>(shared_library_->get_function_pointer("niRFSA_GetSelfCalLastTemp"));
+  function_pointers_.GetSpectralInfoForSMT = reinterpret_cast<GetSpectralInfoForSMTPtr>(shared_library_->get_function_pointer("niRFSA_GetSpectralInfoForSMT"));
+  function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_->get_function_pointer("niRFSA_GetStreamEndpointHandle"));
+  function_pointers_.GetTerminalName = reinterpret_cast<GetTerminalNamePtr>(shared_library_->get_function_pointer("niRFSA_GetTerminalName"));
+  function_pointers_.GetUserData = reinterpret_cast<GetUserDataPtr>(shared_library_->get_function_pointer("niRFSA_GetUserData"));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_->get_function_pointer("niRFSA_init"));
+  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_->get_function_pointer("niRFSA_InitWithOptions"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("niRFSA_Initiate"));
+  function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_->get_function_pointer("niRFSA_InvalidateAllAttributes"));
+  function_pointers_.IsSelfCalValid = reinterpret_cast<IsSelfCalValidPtr>(shared_library_->get_function_pointer("niRFSA_IsSelfCalValid"));
+  function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_->get_function_pointer("niRFSA_LockSession"));
+  function_pointers_.PerformThermalCorrection = reinterpret_cast<PerformThermalCorrectionPtr>(shared_library_->get_function_pointer("niRFSA_PerformThermalCorrection"));
+  function_pointers_.ReadIQSingleRecordComplexF64 = reinterpret_cast<ReadIQSingleRecordComplexF64Ptr>(shared_library_->get_function_pointer("niRFSA_ReadIQSingleRecordComplexF64"));
+  function_pointers_.ReadPowerSpectrumF32 = reinterpret_cast<ReadPowerSpectrumF32Ptr>(shared_library_->get_function_pointer("niRFSA_ReadPowerSpectrumF32"));
+  function_pointers_.ReadPowerSpectrumF64 = reinterpret_cast<ReadPowerSpectrumF64Ptr>(shared_library_->get_function_pointer("niRFSA_ReadPowerSpectrumF64"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("niRFSA_reset"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("niRFSA_ResetAttribute"));
+  function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_->get_function_pointer("niRFSA_ResetDevice"));
+  function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_->get_function_pointer("niRFSA_ResetWithDefaults"));
+  function_pointers_.ResetWithOptions = reinterpret_cast<ResetWithOptionsPtr>(shared_library_->get_function_pointer("niRFSA_ResetWithOptions"));
+  function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_->get_function_pointer("niRFSA_revision_query"));
+  function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_->get_function_pointer("niRFSA_SelfCal"));
+  function_pointers_.SelfCalibrate = reinterpret_cast<SelfCalibratePtr>(shared_library_->get_function_pointer("niRFSA_SelfCalibrate"));
+  function_pointers_.SelfCalibrateRange = reinterpret_cast<SelfCalibrateRangePtr>(shared_library_->get_function_pointer("niRFSA_SelfCalibrateRange"));
+  function_pointers_.SelfTest = reinterpret_cast<SelfTestPtr>(shared_library_->get_function_pointer("niRFSA_self_test"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("niRFSA_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niRFSA_SetAttributeViBoolean"));
+  function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niRFSA_SetAttributeViInt32"));
+  function_pointers_.SetAttributeViInt64 = reinterpret_cast<SetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niRFSA_SetAttributeViInt64"));
+  function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niRFSA_SetAttributeViReal64"));
+  function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_->get_function_pointer("niRFSA_SetAttributeViSession"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_->get_function_pointer("niRFSA_SetAttributeViString"));
+  function_pointers_.SetCalUserDefinedInfo = reinterpret_cast<SetCalUserDefinedInfoPtr>(shared_library_->get_function_pointer("niRFSA_SetCalUserDefinedInfo"));
+  function_pointers_.SetUserData = reinterpret_cast<SetUserDataPtr>(shared_library_->get_function_pointer("niRFSA_SetUserData"));
+  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_->get_function_pointer("niRFSA_UnlockSession"));
 }
 
 NiRFSALibrary::~NiRFSALibrary()
@@ -134,7 +140,7 @@ NiRFSALibrary::~NiRFSALibrary()
 
 ::grpc::Status NiRFSALibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

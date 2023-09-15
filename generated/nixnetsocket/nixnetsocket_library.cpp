@@ -4,6 +4,9 @@
 // Service implementation for the NI-XNETSOCKET Metadata
 //---------------------------------------------------------------------
 #include "nixnetsocket_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nixntipstack.dll";
@@ -13,50 +16,53 @@ static const char* kLibraryName = "libnixntipstack.so.1";
 
 namespace nixnetsocket_grpc {
 
-NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
+NiXnetSocketLibrary::NiXnetSocketLibrary() : NiXnetSocketLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiXnetSocketLibrary::NiXnetSocketLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Accept = reinterpret_cast<AcceptPtr>(shared_library_.get_function_pointer("nxaccept"));
-  function_pointers_.Bind = reinterpret_cast<BindPtr>(shared_library_.get_function_pointer("nxbind"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
-  function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_.get_function_pointer("nxconnect"));
-  function_pointers_.FdIsSet = reinterpret_cast<FdIsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
-  function_pointers_.FreeAddrInfo = reinterpret_cast<FreeAddrInfoPtr>(shared_library_.get_function_pointer("nxfreeaddrinfo"));
-  function_pointers_.GetAddrInfo = reinterpret_cast<GetAddrInfoPtr>(shared_library_.get_function_pointer("nxgetaddrinfo"));
-  function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
-  function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_.get_function_pointer("nxgetlasterrorstr"));
-  function_pointers_.GetNameInfo = reinterpret_cast<GetNameInfoPtr>(shared_library_.get_function_pointer("nxgetnameinfo"));
-  function_pointers_.GetPeerName = reinterpret_cast<GetPeerNamePtr>(shared_library_.get_function_pointer("nxgetpeername"));
-  function_pointers_.GetSockName = reinterpret_cast<GetSockNamePtr>(shared_library_.get_function_pointer("nxgetsockname"));
-  function_pointers_.GetSockOpt = reinterpret_cast<GetSockOptPtr>(shared_library_.get_function_pointer("nxgetsockopt"));
-  function_pointers_.InetAddr = reinterpret_cast<InetAddrPtr>(shared_library_.get_function_pointer("nxinet_addr"));
-  function_pointers_.InetAToN = reinterpret_cast<InetAToNPtr>(shared_library_.get_function_pointer("nxinet_aton"));
-  function_pointers_.InetNToA = reinterpret_cast<InetNToAPtr>(shared_library_.get_function_pointer("nxinet_ntoa"));
-  function_pointers_.InetNToP = reinterpret_cast<InetNToPPtr>(shared_library_.get_function_pointer("nxinet_ntop"));
-  function_pointers_.InetPToN = reinterpret_cast<InetPToNPtr>(shared_library_.get_function_pointer("nxinet_pton"));
-  function_pointers_.IpStackClear = reinterpret_cast<IpStackClearPtr>(shared_library_.get_function_pointer("nxIpStackClear"));
-  function_pointers_.IpStackCreate = reinterpret_cast<IpStackCreatePtr>(shared_library_.get_function_pointer("nxIpStackCreate"));
-  function_pointers_.IpStackFreeAllStacksInfoStr = reinterpret_cast<IpStackFreeAllStacksInfoStrPtr>(shared_library_.get_function_pointer("nxIpStackFreeAllStacksInfoStr"));
-  function_pointers_.IpStackFreeInfo = reinterpret_cast<IpStackFreeInfoPtr>(shared_library_.get_function_pointer("nxIpStackFreeInfo"));
-  function_pointers_.IpStackGetAllStacksInfoStr = reinterpret_cast<IpStackGetAllStacksInfoStrPtr>(shared_library_.get_function_pointer("nxIpStackGetAllStacksInfoStr"));
-  function_pointers_.IpStackGetInfo = reinterpret_cast<IpStackGetInfoPtr>(shared_library_.get_function_pointer("nxIpStackGetInfo"));
-  function_pointers_.IpStackOpen = reinterpret_cast<IpStackOpenPtr>(shared_library_.get_function_pointer("nxIpStackOpen"));
-  function_pointers_.IpStackWaitForInterface = reinterpret_cast<IpStackWaitForInterfacePtr>(shared_library_.get_function_pointer("nxIpStackWaitForInterface"));
-  function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
-  function_pointers_.Recv = reinterpret_cast<RecvPtr>(shared_library_.get_function_pointer("nxrecv"));
-  function_pointers_.RecvFrom = reinterpret_cast<RecvFromPtr>(shared_library_.get_function_pointer("nxrecvfrom"));
-  function_pointers_.Select = reinterpret_cast<SelectPtr>(shared_library_.get_function_pointer("nxselect"));
-  function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_.get_function_pointer("nxsend"));
-  function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_.get_function_pointer("nxsendto"));
-  function_pointers_.SetSockOpt = reinterpret_cast<SetSockOptPtr>(shared_library_.get_function_pointer("nxsetsockopt"));
-  function_pointers_.Shutdown = reinterpret_cast<ShutdownPtr>(shared_library_.get_function_pointer("nxshutdown"));
-  function_pointers_.Socket = reinterpret_cast<SocketPtr>(shared_library_.get_function_pointer("nxsocket"));
-  function_pointers_.StrErrR = reinterpret_cast<StrErrRPtr>(shared_library_.get_function_pointer("nxstrerr_r"));
+  function_pointers_.Accept = reinterpret_cast<AcceptPtr>(shared_library_->get_function_pointer("nxaccept"));
+  function_pointers_.Bind = reinterpret_cast<BindPtr>(shared_library_->get_function_pointer("nxbind"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("nxclose"));
+  function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_->get_function_pointer("nxconnect"));
+  function_pointers_.FdIsSet = reinterpret_cast<FdIsSetPtr>(shared_library_->get_function_pointer("nxfd_isset"));
+  function_pointers_.FreeAddrInfo = reinterpret_cast<FreeAddrInfoPtr>(shared_library_->get_function_pointer("nxfreeaddrinfo"));
+  function_pointers_.GetAddrInfo = reinterpret_cast<GetAddrInfoPtr>(shared_library_->get_function_pointer("nxgetaddrinfo"));
+  function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_->get_function_pointer("nxgetlasterrornum"));
+  function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_->get_function_pointer("nxgetlasterrorstr"));
+  function_pointers_.GetNameInfo = reinterpret_cast<GetNameInfoPtr>(shared_library_->get_function_pointer("nxgetnameinfo"));
+  function_pointers_.GetPeerName = reinterpret_cast<GetPeerNamePtr>(shared_library_->get_function_pointer("nxgetpeername"));
+  function_pointers_.GetSockName = reinterpret_cast<GetSockNamePtr>(shared_library_->get_function_pointer("nxgetsockname"));
+  function_pointers_.GetSockOpt = reinterpret_cast<GetSockOptPtr>(shared_library_->get_function_pointer("nxgetsockopt"));
+  function_pointers_.InetAddr = reinterpret_cast<InetAddrPtr>(shared_library_->get_function_pointer("nxinet_addr"));
+  function_pointers_.InetAToN = reinterpret_cast<InetAToNPtr>(shared_library_->get_function_pointer("nxinet_aton"));
+  function_pointers_.InetNToA = reinterpret_cast<InetNToAPtr>(shared_library_->get_function_pointer("nxinet_ntoa"));
+  function_pointers_.InetNToP = reinterpret_cast<InetNToPPtr>(shared_library_->get_function_pointer("nxinet_ntop"));
+  function_pointers_.InetPToN = reinterpret_cast<InetPToNPtr>(shared_library_->get_function_pointer("nxinet_pton"));
+  function_pointers_.IpStackClear = reinterpret_cast<IpStackClearPtr>(shared_library_->get_function_pointer("nxIpStackClear"));
+  function_pointers_.IpStackCreate = reinterpret_cast<IpStackCreatePtr>(shared_library_->get_function_pointer("nxIpStackCreate"));
+  function_pointers_.IpStackFreeAllStacksInfoStr = reinterpret_cast<IpStackFreeAllStacksInfoStrPtr>(shared_library_->get_function_pointer("nxIpStackFreeAllStacksInfoStr"));
+  function_pointers_.IpStackFreeInfo = reinterpret_cast<IpStackFreeInfoPtr>(shared_library_->get_function_pointer("nxIpStackFreeInfo"));
+  function_pointers_.IpStackGetAllStacksInfoStr = reinterpret_cast<IpStackGetAllStacksInfoStrPtr>(shared_library_->get_function_pointer("nxIpStackGetAllStacksInfoStr"));
+  function_pointers_.IpStackGetInfo = reinterpret_cast<IpStackGetInfoPtr>(shared_library_->get_function_pointer("nxIpStackGetInfo"));
+  function_pointers_.IpStackOpen = reinterpret_cast<IpStackOpenPtr>(shared_library_->get_function_pointer("nxIpStackOpen"));
+  function_pointers_.IpStackWaitForInterface = reinterpret_cast<IpStackWaitForInterfacePtr>(shared_library_->get_function_pointer("nxIpStackWaitForInterface"));
+  function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_->get_function_pointer("nxlisten"));
+  function_pointers_.Recv = reinterpret_cast<RecvPtr>(shared_library_->get_function_pointer("nxrecv"));
+  function_pointers_.RecvFrom = reinterpret_cast<RecvFromPtr>(shared_library_->get_function_pointer("nxrecvfrom"));
+  function_pointers_.Select = reinterpret_cast<SelectPtr>(shared_library_->get_function_pointer("nxselect"));
+  function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_->get_function_pointer("nxsend"));
+  function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_->get_function_pointer("nxsendto"));
+  function_pointers_.SetSockOpt = reinterpret_cast<SetSockOptPtr>(shared_library_->get_function_pointer("nxsetsockopt"));
+  function_pointers_.Shutdown = reinterpret_cast<ShutdownPtr>(shared_library_->get_function_pointer("nxshutdown"));
+  function_pointers_.Socket = reinterpret_cast<SocketPtr>(shared_library_->get_function_pointer("nxsocket"));
+  function_pointers_.StrErrR = reinterpret_cast<StrErrRPtr>(shared_library_->get_function_pointer("nxstrerr_r"));
 }
 
 NiXnetSocketLibrary::~NiXnetSocketLibrary()
@@ -65,7 +71,7 @@ NiXnetSocketLibrary::~NiXnetSocketLibrary()
 
 ::grpc::Status NiXnetSocketLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

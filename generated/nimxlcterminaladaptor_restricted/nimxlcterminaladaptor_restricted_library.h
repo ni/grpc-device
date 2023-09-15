@@ -8,13 +8,16 @@
 
 #include "nimxlcterminaladaptor_restricted_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nimxlcterminaladaptor_restricted_grpc {
 
 class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_restricted_grpc::NimxlcTerminalAdaptorRestrictedLibraryInterface {
  public:
   NimxlcTerminalAdaptorRestrictedLibrary();
+  explicit NimxlcTerminalAdaptorRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NimxlcTerminalAdaptorRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
@@ -81,7 +84,7 @@ class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_rest
     TerminalIterator_getVisibilityPtr TerminalIterator_getVisibility;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

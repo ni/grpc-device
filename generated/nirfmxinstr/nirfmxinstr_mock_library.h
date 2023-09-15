@@ -72,6 +72,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, GetSelfCalibrateLastTemperature, (niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, float64* temperature), (override));
   MOCK_METHOD(int32, GetSignalConfigurationNames, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char signalNames[], int32 signalNamesSize, int32* actualSignalNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize), (override));
   MOCK_METHOD(int32, Initialize, (char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession), (override));
+  MOCK_METHOD(int32, InitializeWithChannel, (char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession), (override));
   MOCK_METHOD(int32, InitializeFromNIRFSASession, (uInt32 nirfsaSession, niRFmxInstrHandle* handleOut), (override));
   MOCK_METHOD(int32, InitializeFromNIRFSASessionArray, (uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* handleOut), (override));
   MOCK_METHOD(int32, IsSelfCalibrateValid, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* selfCalibrateValid, int32* validSteps), (override));
@@ -110,6 +111,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, TimestampFromValues, (int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp), (override));
   MOCK_METHOD(int32, ValuesFromTimestamp, (CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds), (override));
   MOCK_METHOD(int32, WaitForAcquisitionComplete, (niRFmxInstrHandle instrumentHandle, float64 timeout), (override));
+  MOCK_METHOD(int32, FetchRawIQData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved), (override));
 };
 
 }  // namespace unit

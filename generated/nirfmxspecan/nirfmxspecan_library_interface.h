@@ -250,6 +250,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 MarkerCfgTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 trace) = 0;
   virtual int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType) = 0;
   virtual int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation) = 0;
+  virtual int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation) = 0;
   virtual int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation) = 0;
   virtual int32 MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound) = 0;
   virtual int32 MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks) = 0;

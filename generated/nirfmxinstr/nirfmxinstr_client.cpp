@@ -1134,6 +1134,26 @@ initialize(const StubPtr& stub, const std::string& resource_name, const std::str
   return response;
 }
 
+InitializeWithChannelResponse
+initialize_with_channel(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const std::string& channel_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitializeWithChannelRequest{};
+  request.set_resource_name(resource_name);
+  request.set_option_string(option_string);
+  request.set_channel_name(channel_name);
+  request.set_initialization_behavior(initialization_behavior);
+
+  auto response = InitializeWithChannelResponse{};
+
+  raise_if_error(
+      stub->InitializeWithChannel(&context, request, &response),
+      context);
+
+  return response;
+}
+
 InitializeFromNIRFSASessionResponse
 initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
@@ -1894,6 +1914,27 @@ wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session&
 
   raise_if_error(
       stub->WaitForAcquisitionComplete(&context, request, &response),
+      context);
+
+  return response;
+}
+
+FetchRawIQDataResponse
+fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchRawIQDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+  request.set_records_to_fetch(records_to_fetch);
+  request.set_samples_to_read(samples_to_read);
+
+  auto response = FetchRawIQDataResponse{};
+
+  raise_if_error(
+      stub->FetchRawIQData(&context, request, &response),
       context);
 
   return response;

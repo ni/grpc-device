@@ -147,6 +147,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath) = 0;
   virtual ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]) = 0;
   virtual ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state) = 0;
+  virtual ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) = 0;
 };
 
 }  // namespace nidigitalpattern_grpc

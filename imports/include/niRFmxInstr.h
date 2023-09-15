@@ -211,6 +211,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_ATTR_DONE_EVENT_TERMINAL_NAME                            0x00000074
 #define RFMXINSTR_ATTR_TEMPERATURE_READ_INTERVAL                           0x00000077
 #define RFMXINSTR_ATTR_THERMAL_CORRECTION_TEMPERATURE_RESOLUTION           0x00000078
+#define RFMXINSTR_ATTR_NUMBER_OF_RAW_IQ_RECORDS                            0x00000080
 #define RFMXINSTR_ATTR_LO_SHARING_MODE                                     0x00000044
 #define RFMXINSTR_ATTR_NUMBER_OF_LO_SHARING_GROUPS                         0x00000061
 
@@ -475,6 +476,13 @@ extern "C"
       char optionString[],
       niRFmxInstrHandle *handleOut,
       int32 *isNewSession);
+
+   int32 __stdcall RFmxInstr_InitializeWithChannel(
+       char resourceName[],
+       char optionString[],
+       char channelName[],
+       niRFmxInstrHandle* handleOut,
+       int32* isNewSession);
 
    int32 __stdcall RFmxInstr_InitializeFromNIRFSASession(
       uInt32 NIRFSASession,
@@ -1964,6 +1972,11 @@ extern "C"
       float64 attrVal
    );
 
+   int32 __stdcall RFmxInstr_GetNumberOfRawIQRecords(
+       niRFmxInstrHandle instrumentHandle,
+       char selectorString[],
+       int32* attrVal
+   );
    int32 __stdcall RFmxInstr_GetSParameterExternalAttenuationType(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
@@ -2043,7 +2056,34 @@ extern "C"
        char channelName[],
        int32 attrVal
    );
+   int32 __stdcall RFmxInstr_FetchRawIQData(
+       niRFmxInstrHandle instrumentHandle,
+       char selectorString[],
+       float64 timeout,
+       int32 recordsToFetch,
+       int64 samplesToRead,
+       float64* x0,
+       float64* dx,
+       NIComplexSingle data[],
+       int32 arraySize,
+       int32* actualArraySize,
+       void* reserved
+   );
 
+   int32 __stdcall RFmxInstr_FetchRawIQDataSplit(
+       niRFmxInstrHandle instrumentHandle,
+       char selectorString[],
+       float64 timeout,
+       int32 recordsToFetch,
+       int64 samplesToRead,
+       float64* x0,
+       float64* dx,
+       float32 I[],
+       float32 Q[],
+       int32 arraySize,
+       int32* actualArraySize,
+       void* reserved
+   );
 #ifdef __cplusplus
 }
 #endif

@@ -108,6 +108,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus ViUInt8ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]) = 0;
   virtual ViStatus ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]) = 0;
   virtual ViStatus WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[]) = 0;
+  virtual ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) = 0;
 };
 
 }  // namespace nifake_grpc

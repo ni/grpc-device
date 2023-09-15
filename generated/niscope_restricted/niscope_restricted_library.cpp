@@ -4,6 +4,9 @@
 // Service implementation for the NI-SCOPE-RESTRICTED Metadata
 //---------------------------------------------------------------------
 #include "niscope_restricted_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niScope_64.dll";
@@ -13,17 +16,20 @@ static const char* kLibraryName = "libniscope.so";
 
 namespace niscope_restricted_grpc {
 
-NiScopeRestrictedLibrary::NiScopeRestrictedLibrary() : shared_library_(kLibraryName)
+NiScopeRestrictedLibrary::NiScopeRestrictedLibrary() : NiScopeRestrictedLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiScopeRestrictedLibrary::NiScopeRestrictedLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niScope_GetError"));
-  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_.get_function_pointer("niScope_GetErrorMessage"));
-  function_pointers_.GetStartTimestampInformation = reinterpret_cast<GetStartTimestampInformationPtr>(shared_library_.get_function_pointer("niScope_GetStartTimestampInformation"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niScope_GetError"));
+  function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_->get_function_pointer("niScope_GetErrorMessage"));
+  function_pointers_.GetStartTimestampInformation = reinterpret_cast<GetStartTimestampInformationPtr>(shared_library_->get_function_pointer("niScope_GetStartTimestampInformation"));
 }
 
 NiScopeRestrictedLibrary::~NiScopeRestrictedLibrary()
@@ -32,7 +38,7 @@ NiScopeRestrictedLibrary::~NiScopeRestrictedLibrary()
 
 ::grpc::Status NiScopeRestrictedLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }

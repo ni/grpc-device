@@ -279,6 +279,7 @@ public:
   ::grpc::Status MarkerCfgTrace(::grpc::ServerContext* context, const MarkerCfgTraceRequest* request, MarkerCfgTraceResponse* response) override;
   ::grpc::Status MarkerCfgType(::grpc::ServerContext* context, const MarkerCfgTypeRequest* request, MarkerCfgTypeResponse* response) override;
   ::grpc::Status MarkerCfgXLocation(::grpc::ServerContext* context, const MarkerCfgXLocationRequest* request, MarkerCfgXLocationResponse* response) override;
+  ::grpc::Status MarkerCfgYLocation(::grpc::ServerContext* context, const MarkerCfgYLocationRequest* request, MarkerCfgYLocationResponse* response) override;
   ::grpc::Status MarkerFetchXY(::grpc::ServerContext* context, const MarkerFetchXYRequest* request, MarkerFetchXYResponse* response) override;
   ::grpc::Status MarkerNextPeak(::grpc::ServerContext* context, const MarkerNextPeakRequest* request, MarkerNextPeakResponse* response) override;
   ::grpc::Status MarkerPeakSearch(::grpc::ServerContext* context, const MarkerPeakSearchRequest* request, MarkerPeakSearchResponse* response) override;

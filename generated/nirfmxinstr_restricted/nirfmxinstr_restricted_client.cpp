@@ -639,5 +639,41 @@ unregister_special_client_snapshot_interest(const StubPtr& stub, const std::stri
   return response;
 }
 
+GetSFPSessionAccessEnabledResponse
+get_sfp_session_access_enabled(const StubPtr& stub, const std::string& option_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSFPSessionAccessEnabledRequest{};
+  request.set_option_string(option_string);
+
+  auto response = GetSFPSessionAccessEnabledResponse{};
+
+  raise_if_error(
+      stub->GetSFPSessionAccessEnabled(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CreateDefaultSignalConfigurationResponse
+create_default_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name, const pb::int32& personality_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateDefaultSignalConfigurationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_signal_name(signal_name);
+  request.set_personality_id(personality_id);
+
+  auto response = CreateDefaultSignalConfigurationResponse{};
+
+  raise_if_error(
+      stub->CreateDefaultSignalConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client

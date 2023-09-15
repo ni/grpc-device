@@ -1048,7 +1048,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-'LoadConfigurationsFromJSON': {
+    'LoadConfigurationsFromJSON': {
         'parameters': [
             {
                 'direction': 'in',
@@ -1194,6 +1194,42 @@ functions = {
                 'direction': 'in',
                 'name': 'resourceName',
                 'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSFPSessionAccessEnabled': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'optionString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'isSFPSessionAccessEnabled',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateDefaultSignalConfiguration': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'signalName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'personalityID',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'

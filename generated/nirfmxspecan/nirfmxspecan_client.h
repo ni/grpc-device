@@ -257,6 +257,7 @@ MarkerCfgThresholdResponse marker_cfg_threshold(const StubPtr& stub, const nidev
 MarkerCfgTraceResponse marker_cfg_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerTrace, pb::int32>& trace);
 MarkerCfgTypeResponse marker_cfg_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerType, pb::int32>& marker_type);
 MarkerCfgXLocationResponse marker_cfg_x_location(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_x_location);
+MarkerCfgYLocationResponse marker_cfg_y_location(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_y_location);
 MarkerFetchXYResponse marker_fetch_xy(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 MarkerNextPeakResponse marker_next_peak(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerNextPeak, pb::int32>& next_peak);
 MarkerPeakSearchResponse marker_peak_search(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);

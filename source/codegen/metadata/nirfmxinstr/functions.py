@@ -1731,6 +1731,61 @@ functions = {
         ],
         'returns': 'int32'
     },
+       'InitializeWithChannel': {
+        'custom_close': 'Close(id, RFMXINSTR_VAL_FALSE)',
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'optionString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'grpc_name': 'instrument',
+                'name': 'handleOut',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'isNewSession',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'get_last_error': 'deprecated',
+                'name': 'errorMessage',
+                'type': 'char[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
+            }
+        ],
+        'returns': 'int32'
+    },
     'InitializeFromNIRFSASession': {
         'custom_close': 'Close(id, RFMXINSTR_VAL_FALSE)',
         'init_method': True,
@@ -2768,6 +2823,74 @@ functions = {
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'FetchRawIQData': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordsToFetch',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'samplesToRead',
+                'type': 'int64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'type': 'void'
             }
         ],
         'returns': 'int32'

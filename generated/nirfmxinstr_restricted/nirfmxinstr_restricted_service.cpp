@@ -1068,6 +1068,55 @@ namespace nirfmxinstr_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::GetSFPSessionAccessEnabled(::grpc::ServerContext* context, const GetSFPSessionAccessEnabledRequest* request, GetSFPSessionAccessEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
+      char* option_string = (char*)option_string_mbcs.c_str();
+      int32 is_sfp_session_access_enabled {};
+      auto status = library_->GetSFPSessionAccessEnabled(option_string, &is_sfp_session_access_enabled);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->set_is_sfp_session_access_enabled(is_sfp_session_access_enabled);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::CreateDefaultSignalConfiguration(::grpc::ServerContext* context, const CreateDefaultSignalConfigurationRequest* request, CreateDefaultSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      int32 personality_id = request->personality_id();
+      auto status = library_->CreateDefaultSignalConfiguration(instrument, signal_name, personality_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiRFmxInstrRestrictedFeatureToggles::NiRFmxInstrRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

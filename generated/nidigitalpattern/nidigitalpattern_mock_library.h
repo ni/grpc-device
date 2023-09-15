@@ -149,6 +149,7 @@ class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInter
   MOCK_METHOD(ViStatus, WriteSourceWaveformDataFromFileTDMS, (ViSession vi, ViConstString waveformName, ViConstString waveformFilePath), (override));
   MOCK_METHOD(ViStatus, WriteSourceWaveformSiteUniqueU32, (ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]), (override));
   MOCK_METHOD(ViStatus, WriteStatic, (ViSession vi, ViConstString channelList, ViUInt8 state), (override));
+  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
 };
 
 }  // namespace unit

@@ -64,6 +64,33 @@ namespace nifake_extension_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeExtensionService::TestAddressParameters(::grpc::ServerContext* context, const TestAddressParametersRequest* request, TestAddressParametersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt16 space = static_cast<ViInt16>(request->space());
+      ViUInt64 offset = request->offset();
+      ViAddr suggested = reinterpret_cast<ViAddr>(request->suggested());
+      ViAddr actual {};
+      auto status = library_->TestAddressParameters(vi, space, offset, suggested, &actual);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_actual(reinterpret_cast<uint64_t>(actual));
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiFakeExtensionFeatureToggles::NiFakeExtensionFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

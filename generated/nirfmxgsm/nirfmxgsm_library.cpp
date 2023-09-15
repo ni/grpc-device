@@ -4,6 +4,9 @@
 // Service implementation for the NI-RFMXGSM Metadata
 //---------------------------------------------------------------------
 #include "nirfmxgsm_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxGSM.dll";
@@ -13,131 +16,134 @@ static const char* kLibraryName = "libnirfmxgsm.so.1";
 
 namespace nirfmxgsm_grpc {
 
-NiRFmxGSMLibrary::NiRFmxGSMLibrary() : shared_library_(kLibraryName)
+NiRFmxGSMLibrary::NiRFmxGSMLibrary() : NiRFmxGSMLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFmxGSMLibrary::NiRFmxGSMLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_.get_function_pointer("RFmxGSM_AbortMeasurements"));
-  function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxGSM_AnalyzeIQ1Waveform"));
-  function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxGSM_AutoLevel"));
-  function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_.get_function_pointer("RFmxGSM_BuildOffsetString"));
-  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_.get_function_pointer("RFmxGSM_BuildSignalString"));
-  function_pointers_.BuildSlotString = reinterpret_cast<BuildSlotStringPtr>(shared_library_.get_function_pointer("RFmxGSM_BuildSlotString"));
-  function_pointers_.CfgAutoTSCDetectionEnabled = reinterpret_cast<CfgAutoTSCDetectionEnabledPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgAutoTSCDetectionEnabled"));
-  function_pointers_.CfgBand = reinterpret_cast<CfgBandPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgBand"));
-  function_pointers_.CfgBurstSynchronizationType = reinterpret_cast<CfgBurstSynchronizationTypePtr>(shared_library_.get_function_pointer("RFmxGSM_CfgBurstSynchronizationType"));
-  function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgDigitalEdgeTrigger"));
-  function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgExternalAttenuation"));
-  function_pointers_.CfgFrequency = reinterpret_cast<CfgFrequencyPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgFrequency"));
-  function_pointers_.CfgFrequencyARFCN = reinterpret_cast<CfgFrequencyARFCNPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgFrequencyARFCN"));
-  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_.get_function_pointer("RFmxGSM_CfgFrequencyReference"));
-  function_pointers_.CfgIQPowerEdgeTrigger = reinterpret_cast<CfgIQPowerEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgIQPowerEdgeTrigger"));
-  function_pointers_.CfgLinkDirection = reinterpret_cast<CfgLinkDirectionPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgLinkDirection"));
-  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgMechanicalAttenuation"));
-  function_pointers_.CfgNumberOfTimeslots = reinterpret_cast<CfgNumberOfTimeslotsPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgNumberOfTimeslots"));
-  function_pointers_.CfgPowerControlLevel = reinterpret_cast<CfgPowerControlLevelPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgPowerControlLevel"));
-  function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgRF"));
-  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgRFAttenuation"));
-  function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgReferenceLevel"));
-  function_pointers_.CfgSignalType = reinterpret_cast<CfgSignalTypePtr>(shared_library_.get_function_pointer("RFmxGSM_CfgSignalType"));
-  function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgSoftwareEdgeTrigger"));
-  function_pointers_.CfgTSC = reinterpret_cast<CfgTSCPtr>(shared_library_.get_function_pointer("RFmxGSM_CfgTSC"));
-  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxGSM_CheckMeasurementStatus"));
-  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_.get_function_pointer("RFmxGSM_ClearAllNamedResults"));
-  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_.get_function_pointer("RFmxGSM_ClearNamedResult"));
-  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxGSM_CloneSignalConfiguration"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("RFmxGSM_Close"));
-  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("RFmxGSM_Commit"));
-  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxGSM_CreateSignalConfiguration"));
-  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxGSM_DeleteSignalConfiguration"));
-  function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_.get_function_pointer("RFmxGSM_DisableTrigger"));
-  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAllNamedResultNames"));
-  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeF32"));
-  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeF32Array"));
-  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeF64"));
-  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeF64Array"));
-  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeI16"));
-  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeI32"));
-  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeI32Array"));
-  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeI64"));
-  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeI64Array"));
-  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeI8"));
-  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeI8Array"));
-  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeNIComplexDoubleArray"));
-  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeNIComplexSingleArray"));
-  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeString"));
-  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeU16"));
-  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeU32"));
-  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeU32Array"));
-  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeU64Array"));
-  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeU8"));
-  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_GetAttributeU8Array"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxGSM_GetError"));
-  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxGSM_GetErrorString"));
-  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxGSM_Initialize"));
-  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxGSM_InitializeFromNIRFSASession"));
-  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("RFmxGSM_Initiate"));
-  function_pointers_.ModAccCfgAveraging = reinterpret_cast<ModAccCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccCfgAveraging"));
-  function_pointers_.ModAccCfgDroopCompensationEnabled = reinterpret_cast<ModAccCfgDroopCompensationEnabledPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccCfgDroopCompensationEnabled"));
-  function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchConstellationTrace"));
-  function_pointers_.ModAccFetchDemodulatedBits = reinterpret_cast<ModAccFetchDemodulatedBitsPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchDemodulatedBits"));
-  function_pointers_.ModAccFetchDetectedTSC = reinterpret_cast<ModAccFetchDetectedTSCPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchDetectedTSC"));
-  function_pointers_.ModAccFetchDetectedTSCArray = reinterpret_cast<ModAccFetchDetectedTSCArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchDetectedTSCArray"));
-  function_pointers_.ModAccFetchEVM = reinterpret_cast<ModAccFetchEVMPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchEVM"));
-  function_pointers_.ModAccFetchEVMAmplitudeDroop = reinterpret_cast<ModAccFetchEVMAmplitudeDroopPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchEVMAmplitudeDroop"));
-  function_pointers_.ModAccFetchEVMMagnitudeError = reinterpret_cast<ModAccFetchEVMMagnitudeErrorPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchEVMMagnitudeError"));
-  function_pointers_.ModAccFetchEVMPhaseError = reinterpret_cast<ModAccFetchEVMPhaseErrorPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchEVMPhaseError"));
-  function_pointers_.ModAccFetchEVMTrace = reinterpret_cast<ModAccFetchEVMTracePtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchEVMTrace"));
-  function_pointers_.ModAccFetchIQImpairments = reinterpret_cast<ModAccFetchIQImpairmentsPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchIQImpairments"));
-  function_pointers_.ModAccFetchMagnitudeErrorTrace = reinterpret_cast<ModAccFetchMagnitudeErrorTracePtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchMagnitudeErrorTrace"));
-  function_pointers_.ModAccFetchPFER = reinterpret_cast<ModAccFetchPFERPtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchPFER"));
-  function_pointers_.ModAccFetchPhaseErrorTrace = reinterpret_cast<ModAccFetchPhaseErrorTracePtr>(shared_library_.get_function_pointer("RFmxGSM_ModAccFetchPhaseErrorTrace"));
-  function_pointers_.ORFSCfgAveraging = reinterpret_cast<ORFSCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSCfgAveraging"));
-  function_pointers_.ORFSCfgEvaluationSymbols = reinterpret_cast<ORFSCfgEvaluationSymbolsPtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSCfgEvaluationSymbols"));
-  function_pointers_.ORFSCfgMeasurementType = reinterpret_cast<ORFSCfgMeasurementTypePtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSCfgMeasurementType"));
-  function_pointers_.ORFSCfgModulationCustomOffsetFrequencyArray = reinterpret_cast<ORFSCfgModulationCustomOffsetFrequencyArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSCfgModulationCustomOffsetFrequencyArray"));
-  function_pointers_.ORFSCfgNoiseCompensationEnabled = reinterpret_cast<ORFSCfgNoiseCompensationEnabledPtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSCfgNoiseCompensationEnabled"));
-  function_pointers_.ORFSCfgOffsetFrequencyMode = reinterpret_cast<ORFSCfgOffsetFrequencyModePtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSCfgOffsetFrequencyMode"));
-  function_pointers_.ORFSCfgSwitchingCustomOffsetFrequencyArray = reinterpret_cast<ORFSCfgSwitchingCustomOffsetFrequencyArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSCfgSwitchingCustomOffsetFrequencyArray"));
-  function_pointers_.ORFSFetchModulationPowerTrace = reinterpret_cast<ORFSFetchModulationPowerTracePtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSFetchModulationPowerTrace"));
-  function_pointers_.ORFSFetchModulationResultsArray = reinterpret_cast<ORFSFetchModulationResultsArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSFetchModulationResultsArray"));
-  function_pointers_.ORFSFetchSwitchingPowerTrace = reinterpret_cast<ORFSFetchSwitchingPowerTracePtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSFetchSwitchingPowerTrace"));
-  function_pointers_.ORFSFetchSwitchingResultsArray = reinterpret_cast<ORFSFetchSwitchingResultsArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_ORFSFetchSwitchingResultsArray"));
-  function_pointers_.PVTCfgAveraging = reinterpret_cast<PVTCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxGSM_PVTCfgAveraging"));
-  function_pointers_.PVTFetchMeasurementStatus = reinterpret_cast<PVTFetchMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxGSM_PVTFetchMeasurementStatus"));
-  function_pointers_.PVTFetchPowerTrace = reinterpret_cast<PVTFetchPowerTracePtr>(shared_library_.get_function_pointer("RFmxGSM_PVTFetchPowerTrace"));
-  function_pointers_.PVTFetchSlotMeasurement = reinterpret_cast<PVTFetchSlotMeasurementPtr>(shared_library_.get_function_pointer("RFmxGSM_PVTFetchSlotMeasurement"));
-  function_pointers_.PVTFetchSlotMeasurementArray = reinterpret_cast<PVTFetchSlotMeasurementArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_PVTFetchSlotMeasurementArray"));
-  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("RFmxGSM_ResetAttribute"));
-  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_.get_function_pointer("RFmxGSM_ResetToDefault"));
-  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_.get_function_pointer("RFmxGSM_SelectMeasurements"));
-  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxGSM_SendSoftwareEdgeTrigger"));
-  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeF32"));
-  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeF32Array"));
-  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeF64"));
-  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeF64Array"));
-  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeI16"));
-  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeI32"));
-  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeI32Array"));
-  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeI64"));
-  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeI64Array"));
-  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeI8"));
-  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeI8Array"));
-  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeNIComplexDoubleArray"));
-  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeNIComplexSingleArray"));
-  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeString"));
-  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeU16"));
-  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeU32"));
-  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeU32Array"));
-  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeU64Array"));
-  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeU8"));
-  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxGSM_SetAttributeU8Array"));
-  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_.get_function_pointer("RFmxGSM_WaitForAcquisitionComplete"));
-  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_.get_function_pointer("RFmxGSM_WaitForMeasurementComplete"));
+  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxGSM_AbortMeasurements"));
+  function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxGSM_AnalyzeIQ1Waveform"));
+  function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxGSM_AutoLevel"));
+  function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_->get_function_pointer("RFmxGSM_BuildOffsetString"));
+  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxGSM_BuildSignalString"));
+  function_pointers_.BuildSlotString = reinterpret_cast<BuildSlotStringPtr>(shared_library_->get_function_pointer("RFmxGSM_BuildSlotString"));
+  function_pointers_.CfgAutoTSCDetectionEnabled = reinterpret_cast<CfgAutoTSCDetectionEnabledPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgAutoTSCDetectionEnabled"));
+  function_pointers_.CfgBand = reinterpret_cast<CfgBandPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgBand"));
+  function_pointers_.CfgBurstSynchronizationType = reinterpret_cast<CfgBurstSynchronizationTypePtr>(shared_library_->get_function_pointer("RFmxGSM_CfgBurstSynchronizationType"));
+  function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgDigitalEdgeTrigger"));
+  function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgExternalAttenuation"));
+  function_pointers_.CfgFrequency = reinterpret_cast<CfgFrequencyPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgFrequency"));
+  function_pointers_.CfgFrequencyARFCN = reinterpret_cast<CfgFrequencyARFCNPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgFrequencyARFCN"));
+  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_->get_function_pointer("RFmxGSM_CfgFrequencyReference"));
+  function_pointers_.CfgIQPowerEdgeTrigger = reinterpret_cast<CfgIQPowerEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgIQPowerEdgeTrigger"));
+  function_pointers_.CfgLinkDirection = reinterpret_cast<CfgLinkDirectionPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgLinkDirection"));
+  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgMechanicalAttenuation"));
+  function_pointers_.CfgNumberOfTimeslots = reinterpret_cast<CfgNumberOfTimeslotsPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgNumberOfTimeslots"));
+  function_pointers_.CfgPowerControlLevel = reinterpret_cast<CfgPowerControlLevelPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgPowerControlLevel"));
+  function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgRF"));
+  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgRFAttenuation"));
+  function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgReferenceLevel"));
+  function_pointers_.CfgSignalType = reinterpret_cast<CfgSignalTypePtr>(shared_library_->get_function_pointer("RFmxGSM_CfgSignalType"));
+  function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgSoftwareEdgeTrigger"));
+  function_pointers_.CfgTSC = reinterpret_cast<CfgTSCPtr>(shared_library_->get_function_pointer("RFmxGSM_CfgTSC"));
+  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_->get_function_pointer("RFmxGSM_CheckMeasurementStatus"));
+  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_->get_function_pointer("RFmxGSM_ClearAllNamedResults"));
+  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_->get_function_pointer("RFmxGSM_ClearNamedResult"));
+  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxGSM_CloneSignalConfiguration"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("RFmxGSM_Close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("RFmxGSM_Commit"));
+  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxGSM_CreateSignalConfiguration"));
+  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxGSM_DeleteSignalConfiguration"));
+  function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_->get_function_pointer("RFmxGSM_DisableTrigger"));
+  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAllNamedResultNames"));
+  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeF32"));
+  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeF32Array"));
+  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeF64"));
+  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeF64Array"));
+  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeI16"));
+  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeI32"));
+  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeI32Array"));
+  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeI64"));
+  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeI64Array"));
+  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeI8"));
+  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeNIComplexSingleArray"));
+  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeString"));
+  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeU16"));
+  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeU32"));
+  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeU32Array"));
+  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeU64Array"));
+  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeU8"));
+  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_GetAttributeU8Array"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxGSM_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxGSM_GetErrorString"));
+  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxGSM_Initialize"));
+  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxGSM_InitializeFromNIRFSASession"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("RFmxGSM_Initiate"));
+  function_pointers_.ModAccCfgAveraging = reinterpret_cast<ModAccCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccCfgAveraging"));
+  function_pointers_.ModAccCfgDroopCompensationEnabled = reinterpret_cast<ModAccCfgDroopCompensationEnabledPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccCfgDroopCompensationEnabled"));
+  function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchConstellationTrace"));
+  function_pointers_.ModAccFetchDemodulatedBits = reinterpret_cast<ModAccFetchDemodulatedBitsPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchDemodulatedBits"));
+  function_pointers_.ModAccFetchDetectedTSC = reinterpret_cast<ModAccFetchDetectedTSCPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchDetectedTSC"));
+  function_pointers_.ModAccFetchDetectedTSCArray = reinterpret_cast<ModAccFetchDetectedTSCArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchDetectedTSCArray"));
+  function_pointers_.ModAccFetchEVM = reinterpret_cast<ModAccFetchEVMPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchEVM"));
+  function_pointers_.ModAccFetchEVMAmplitudeDroop = reinterpret_cast<ModAccFetchEVMAmplitudeDroopPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchEVMAmplitudeDroop"));
+  function_pointers_.ModAccFetchEVMMagnitudeError = reinterpret_cast<ModAccFetchEVMMagnitudeErrorPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchEVMMagnitudeError"));
+  function_pointers_.ModAccFetchEVMPhaseError = reinterpret_cast<ModAccFetchEVMPhaseErrorPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchEVMPhaseError"));
+  function_pointers_.ModAccFetchEVMTrace = reinterpret_cast<ModAccFetchEVMTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchEVMTrace"));
+  function_pointers_.ModAccFetchIQImpairments = reinterpret_cast<ModAccFetchIQImpairmentsPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchIQImpairments"));
+  function_pointers_.ModAccFetchMagnitudeErrorTrace = reinterpret_cast<ModAccFetchMagnitudeErrorTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchMagnitudeErrorTrace"));
+  function_pointers_.ModAccFetchPFER = reinterpret_cast<ModAccFetchPFERPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchPFER"));
+  function_pointers_.ModAccFetchPhaseErrorTrace = reinterpret_cast<ModAccFetchPhaseErrorTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchPhaseErrorTrace"));
+  function_pointers_.ORFSCfgAveraging = reinterpret_cast<ORFSCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSCfgAveraging"));
+  function_pointers_.ORFSCfgEvaluationSymbols = reinterpret_cast<ORFSCfgEvaluationSymbolsPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSCfgEvaluationSymbols"));
+  function_pointers_.ORFSCfgMeasurementType = reinterpret_cast<ORFSCfgMeasurementTypePtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSCfgMeasurementType"));
+  function_pointers_.ORFSCfgModulationCustomOffsetFrequencyArray = reinterpret_cast<ORFSCfgModulationCustomOffsetFrequencyArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSCfgModulationCustomOffsetFrequencyArray"));
+  function_pointers_.ORFSCfgNoiseCompensationEnabled = reinterpret_cast<ORFSCfgNoiseCompensationEnabledPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSCfgNoiseCompensationEnabled"));
+  function_pointers_.ORFSCfgOffsetFrequencyMode = reinterpret_cast<ORFSCfgOffsetFrequencyModePtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSCfgOffsetFrequencyMode"));
+  function_pointers_.ORFSCfgSwitchingCustomOffsetFrequencyArray = reinterpret_cast<ORFSCfgSwitchingCustomOffsetFrequencyArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSCfgSwitchingCustomOffsetFrequencyArray"));
+  function_pointers_.ORFSFetchModulationPowerTrace = reinterpret_cast<ORFSFetchModulationPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSFetchModulationPowerTrace"));
+  function_pointers_.ORFSFetchModulationResultsArray = reinterpret_cast<ORFSFetchModulationResultsArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSFetchModulationResultsArray"));
+  function_pointers_.ORFSFetchSwitchingPowerTrace = reinterpret_cast<ORFSFetchSwitchingPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSFetchSwitchingPowerTrace"));
+  function_pointers_.ORFSFetchSwitchingResultsArray = reinterpret_cast<ORFSFetchSwitchingResultsArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSFetchSwitchingResultsArray"));
+  function_pointers_.PVTCfgAveraging = reinterpret_cast<PVTCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTCfgAveraging"));
+  function_pointers_.PVTFetchMeasurementStatus = reinterpret_cast<PVTFetchMeasurementStatusPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchMeasurementStatus"));
+  function_pointers_.PVTFetchPowerTrace = reinterpret_cast<PVTFetchPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchPowerTrace"));
+  function_pointers_.PVTFetchSlotMeasurement = reinterpret_cast<PVTFetchSlotMeasurementPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchSlotMeasurement"));
+  function_pointers_.PVTFetchSlotMeasurementArray = reinterpret_cast<PVTFetchSlotMeasurementArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchSlotMeasurementArray"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("RFmxGSM_ResetAttribute"));
+  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_->get_function_pointer("RFmxGSM_ResetToDefault"));
+  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_->get_function_pointer("RFmxGSM_SelectMeasurements"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxGSM_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeF32"));
+  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeF32Array"));
+  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeF64"));
+  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeF64Array"));
+  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeI16"));
+  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeI32"));
+  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeI32Array"));
+  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeI64"));
+  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeI64Array"));
+  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeI8"));
+  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeNIComplexSingleArray"));
+  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeString"));
+  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeU16"));
+  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeU32"));
+  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeU32Array"));
+  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeU64Array"));
+  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeU8"));
+  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_SetAttributeU8Array"));
+  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxGSM_WaitForAcquisitionComplete"));
+  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_->get_function_pointer("RFmxGSM_WaitForMeasurementComplete"));
 }
 
 NiRFmxGSMLibrary::~NiRFmxGSMLibrary()
@@ -146,7 +152,7 @@ NiRFmxGSMLibrary::~NiRFmxGSMLibrary()
 
 ::grpc::Status NiRFmxGSMLibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
