@@ -109,7 +109,8 @@ def check_for_warning(response, instrument):
 try:
     print(f"Initializing Instruments...", end="")
     # Updated these initialize_responses to be different variables.
-    # MyPy was complaining after the first one because you were reassigning it with a different type.
+    # MyPy was complaining after the first one because you were 
+    # reassigning it with a different type.
     initialize_rfmx_response = rfmxclient.Initialize(
         nirfmxnr_types.InitializeRequest(
             session_name=RFMXSESSION_NAME,
@@ -303,8 +304,10 @@ try:
         )
     )
     # Once commit is called, the recommended acquisition settings can be queried
-    # For these updates, the proto request (NR's GetAttributeF64) must match the RequestMessage type (come from nirfmxnr_types).
-    # But for these, since you're getting an INSTR attribute, I think you should use an instrclient's GetAttribute... RPC calls.
+    # For these updates, the proto request (NR's GetAttributeF64) 
+    # must match the RequestMessage type (come from nirfmxnr_types).
+    # But for these, since you're getting an INSTR attribute,
+    # I think you should use an instrclient's GetAttribute... RPC calls.
     response = instrclient.GetAttributeF64(
         nirfmxinstr_types.GetAttributeF64Request(
             instrument=rfmxsession,
@@ -331,7 +334,8 @@ try:
     )
     pre_trigger_time = response.attr_val
     number_of_pre_samples = pre_trigger_time * minimum_sample_rate
-    # Here, MyPy would complain re-assigning to  response since the response type will be different here (before F64Response and now I32Response)
+    # Here, MyPy would complain re-assigning to  response since the response type
+    # will be different here (before F64Response and now I32Response).
     response_i32 = instrclient.GetAttributeI32(
         nirfmxinstr_types.GetAttributeI32Request(
             instrument=rfmxsession,
