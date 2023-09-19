@@ -41,7 +41,8 @@ class _ArtifactReadiness:
         if "fake" in module_name:
             return False
 
-        if "session" == module_name:
+        # Special case for multidriver examples for RF located in this folder
+        if module_name in ["session", "nirf"]:
             return True
 
         if module_name not in self._module_to_readiness:
