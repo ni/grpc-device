@@ -1005,6 +1005,13 @@ functions = {
                 'name': 'newSessionInitialized',
                 'proto_only': True,
                 'type': 'bool'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'repeated EventType',
+                'name': 'supportedEvents',
+                'proto_only': True,
+                'type': 'ViEvent'
             }
         ],
         'returns': 'ViStatus'

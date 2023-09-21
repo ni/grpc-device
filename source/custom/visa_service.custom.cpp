@@ -4,6 +4,8 @@
 
 // Copied from NiVisaImpl.h
 #define VI_ATTR_RSRC_USER_ALIAS        (0x3FFF018EUL) /* ViString  */
+#define VI_ATTR_NUM_SUP_EVENTS         (0x3FFF019CUL) /* ViUInt16  */
+#define VI_ATTR_SUP_EVENTS             (0x3FFF019DUL) /* ViAEventType */
 
 namespace visa_grpc {
 using nidevice_grpc::converters::convert_from_grpc;
@@ -255,6 +257,19 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     if (!status_ok(status)) {
       return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
     }
+
+    ViUInt16 numEvents = 0;
+    ViSession vi = session_repository_->access_session(grpc_device_session_name);
+    if (library->GetAttribute(vi, VI_ATTR_NUM_SUP_EVENTS, &numEvents) == VI_SUCCESS && numEvents > 0) {
+      // NI-VISA writes the events followed by an extra "-1" value that we don't need.
+      EventType* events = new EventType[numEvents + 1];
+      library->GetAttribute(vi, VI_ATTR_SUP_EVENTS, events);
+      for (ViUInt16 i = 0; i < numEvents; ++i) {
+        response->add_supported_events(events[i]);
+      }
+      delete[] events;
+    }
+
     response->set_status(status);
     response->mutable_vi()->set_name(grpc_device_session_name);
     response->set_new_session_initialized(new_session_initialized);

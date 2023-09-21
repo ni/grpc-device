@@ -11,7 +11,7 @@ namespace integration {
 
 static const char* test_descriptor = "fake::descriptor";
 
-void call_open(VisaService& service, const char* session_name)
+OpenResponse call_open(VisaService& service, const char* session_name)
 {
     ::grpc::ServerContext context;
     OpenRequest request;
@@ -24,6 +24,7 @@ void call_open(VisaService& service, const char* session_name)
     auto status = service.Open(&context, &request, &response);
     EXPECT_TRUE(status.ok());
     EXPECT_EQ(0, response.status());
+    return response;
 }
 
 void call_parse(VisaService& service)
@@ -44,6 +45,18 @@ ViStatus SetSessionToOne(ViSession* session)
   return VI_SUCCESS;
 }
 
+ViStatus SetNumberEventsToOne(void* attributeValue)
+{
+  *(ViUInt16*)attributeValue = 1;
+  return VI_SUCCESS;
+}
+
+ViStatus SetEventTypeToTrigger(void* attributeValue)
+{
+  *(ViEventType*)attributeValue = VI_EVENT_TRIG;
+  return VI_SUCCESS;
+}
+
 TEST(VisaResourceManagerTest, ParsePlusOpen_OpensResourceManagerOnce)
 {
   auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
@@ -58,9 +71,15 @@ TEST(VisaResourceManagerTest, ParsePlusOpen_OpensResourceManagerOnce)
     .Times(1);
   EXPECT_CALL(*library, Open)
     .Times(1);
+  EXPECT_CALL(*library, GetAttribute(_, 0x3FFF019CUL, _))
+    .WillOnce(WithArg<2>(Invoke(SetNumberEventsToOne)));
+  EXPECT_CALL(*library, GetAttribute(_, 0x3FFF019DUL, _))
+    .WillOnce(WithArg<2>(Invoke(SetEventTypeToTrigger)));
 
   call_parse(service);
-  call_open(service, "name2");
+  auto response = call_open(service, "name2");
+  EXPECT_EQ(1, response.supported_events_size());
+  EXPECT_EQ(VI_EVENT_TRIG, response.supported_events(0));
 
   EXPECT_CALL(*library, Close)
     .Times(2);
@@ -79,9 +98,14 @@ TEST(VisaResourceManagerTest, OpenTwoSessions_OpensResourceManagerOnce)
     .WillOnce(WithArg<0>(Invoke(SetSessionToOne)));
   EXPECT_CALL(*library, Open)
     .Times(2);
+  EXPECT_CALL(*library, GetAttribute)
+    .Times(2)
+    .WillRepeatedly(Return(VI_ERROR_NSUP_ATTR));
 
-  call_open(service, "name1");
-  call_open(service, "name2");
+  auto response = call_open(service, "name1");
+  EXPECT_EQ(0, response.supported_events_size());
+  response = call_open(service, "name2");
+  EXPECT_EQ(0, response.supported_events_size());
 
   EXPECT_CALL(*library, Close)
     .Times(3);
@@ -101,6 +125,9 @@ TEST(VisaResourceManagerTest, ResetServerWithOpenSession_OpenNewSession_OpensRes
     .WillRepeatedly(WithArg<0>(Invoke(SetSessionToOne)));
   EXPECT_CALL(*library, Open)
     .Times(2);
+  EXPECT_CALL(*library, GetAttribute)
+    .Times(2)
+    .WillRepeatedly(Return(VI_ERROR_NSUP_ATTR));
   EXPECT_CALL(*library, Close)
     .Times(4);
 
