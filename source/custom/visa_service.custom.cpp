@@ -262,12 +262,11 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     ViSession vi = session_repository_->access_session(grpc_device_session_name);
     if (library->GetAttribute(vi, VI_ATTR_NUM_SUP_EVENTS, &numEvents) == VI_SUCCESS && numEvents > 0) {
       // NI-VISA writes the events followed by an extra "-1" value that we don't need.
-      EventType* events = new EventType[numEvents + 1];
-      library->GetAttribute(vi, VI_ATTR_SUP_EVENTS, events);
+      std::vector<EventType> events(numEvents+1);
+      library->GetAttribute(vi, VI_ATTR_SUP_EVENTS, events.data());
       for (ViUInt16 i = 0; i < numEvents; ++i) {
         response->add_supported_events(events[i]);
       }
-      delete[] events;
     }
 
     response->set_status(status);
