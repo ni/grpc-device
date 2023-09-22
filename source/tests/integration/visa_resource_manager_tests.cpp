@@ -71,9 +71,9 @@ TEST(VisaResourceManagerTest, ParsePlusOpen_OpensResourceManagerOnce)
     .Times(1);
   EXPECT_CALL(*library, Open)
     .Times(1);
-  EXPECT_CALL(*library, GetAttribute(_, 0x3FFF019CUL, _))
+  EXPECT_CALL(*library, GetAttribute(_, static_cast<ViAttr>(0x3FFF019CUL), _))
     .WillOnce(WithArg<2>(Invoke(SetNumberEventsToOne)));
-  EXPECT_CALL(*library, GetAttribute(_, 0x3FFF019DUL, _))
+  EXPECT_CALL(*library, GetAttribute(_, static_cast<ViAttr>(0x3FFF019DUL), _))
     .WillOnce(WithArg<2>(Invoke(SetEventTypeToTrigger)));
 
   call_parse(service);
