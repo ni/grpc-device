@@ -51,9 +51,9 @@ ViStatus SetNumberEventsToOne(void* attributeValue)
   return VI_SUCCESS;
 }
 
-ViStatus SetEventTypeToTrigger(void* attributeValue)
+ViStatus SetEventTypeToServiceRequest(void* attributeValue)
 {
-  *(ViEventType*)attributeValue = VI_EVENT_TRIG;
+  *(ViEventType*)attributeValue = VI_EVENT_SERVICE_REQ;
   return VI_SUCCESS;
 }
 
@@ -74,12 +74,12 @@ TEST(VisaResourceManagerTest, ParsePlusOpen_OpensResourceManagerOnce)
   EXPECT_CALL(*library, GetAttribute(_, static_cast<ViAttr>(0x3FFF019CUL), _))
     .WillOnce(WithArg<2>(Invoke(SetNumberEventsToOne)));
   EXPECT_CALL(*library, GetAttribute(_, static_cast<ViAttr>(0x3FFF019DUL), _))
-    .WillOnce(WithArg<2>(Invoke(SetEventTypeToTrigger)));
+    .WillOnce(WithArg<2>(Invoke(SetEventTypeToServiceRequest)));
 
   call_parse(service);
   auto response = call_open(service, "name2");
   EXPECT_EQ(1, response.supported_events_size());
-  EXPECT_EQ(VI_EVENT_TRIG, response.supported_events(0));
+  EXPECT_EQ(VI_EVENT_SERVICE_REQ, response.supported_events(0));
 
   EXPECT_CALL(*library, Close)
     .Times(2);
