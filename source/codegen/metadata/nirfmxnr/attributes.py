@@ -817,6 +817,12 @@ attributes = {
         'name': 'SSB_HRF_INDEX',
         'type': 'int32'
     },
+    9437473: {
+        'access': 'read-write',
+        'enum': 'BandwidthPartDCLocationKnown',
+        'name': 'BANDWIDTH_PART_DC_LOCATION_KNOWN',
+        'type': 'int32'
+    },
     9438267: {
         'access': 'read-write',
         'enum': 'TransmitterArchitecture',

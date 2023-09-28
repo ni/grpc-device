@@ -77,6 +77,7 @@
 #define RFMXNR_ATTR_GRID_SIZE                                                              0x0090009a
 #define RFMXNR_ATTR_BANDWIDTH_PART_RESOURCE_BLOCK_OFFSET                                   0x0090003e
 #define RFMXNR_ATTR_BANDWIDTH_PART_NUMBER_OF_RESOURCE_BLOCKS                               0x0090003f
+#define RFMXNR_ATTR_BANDWIDTH_PART_DC_LOCATION_KNOWN                                       0x00900121
 #define RFMXNR_ATTR_NUMBER_OF_USERS                                                        0x00900064
 #define RFMXNR_ATTR_RNTI                                                                   0x00900065
 #define RFMXNR_ATTR_NUMBER_OF_PUSCH_CONFIGURATIONS                                         0x0090004b
@@ -564,7 +565,8 @@
 
 // Values for RFMXNR_ATTR_FREQUENCY_RANGE
 #define RFMXNR_VAL_FREQUENCY_RANGE_RANGE1                                                         0
-#define RFMXNR_VAL_FREQUENCY_RANGE_RANGE2                                                         1
+#define RFMXNR_VAL_FREQUENCY_RANGE_RANGE2_1                                                       1
+#define RFMXNR_VAL_FREQUENCY_RANGE_RANGE2_2                                                       2
 
 // Values for RFMXNR_ATTR_COMPONENT_CARRIER_SPACING_TYPE
 #define RFMXNR_VAL_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL                                         0
@@ -603,6 +605,10 @@
 // Values for RFMXNR_ATTR_BANDWIDTH_PART_CYCLIC_PREFIX_MODE
 #define RFMXNR_VAL_BANDWIDTH_PART_CYCLIC_PREFIX_MODE_NORMAL                                       0
 #define RFMXNR_VAL_BANDWIDTH_PART_CYCLIC_PREFIX_MODE_EXTENDED                                     1
+
+// Values for RFMXNR_ATTR_BANDWIDTH_PART_DC_LOCATION_KNOWN
+#define RFMXNR_VAL_BANDWIDTH_PART_DC_LOCATION_KNOWN_FALSE                                         0
+#define RFMXNR_VAL_BANDWIDTH_PART_DC_LOCATION_KNOWN_TRUE                                          1
 
 // Values for RFMXNR_ATTR_PUSCH_TRANSFORM_PRECODING_ENABLED
 #define RFMXNR_VAL_PUSCH_TRANSFORM_PRECODING_ENABLED_FALSE                                        0
@@ -722,6 +728,8 @@
 #define RFMXNR_VAL_SSB_PATTERN_CASE_C_3GHZ_TO_6GHZ                                                5
 #define RFMXNR_VAL_SSB_PATTERN_CASE_D                                                             6
 #define RFMXNR_VAL_SSB_PATTERN_CASE_E                                                             7
+#define RFMXNR_VAL_SSB_PATTERN_CASE_F                                                             8
+#define RFMXNR_VAL_SSB_PATTERN_CASE_G                                                             9
 
 // Values for RFMXNR_ATTR_LIST_STEP_TIMER_UNIT
 #define RFMXNR_VAL_LIST_STEP_TIMER_UNIT_SLOT                                                      1
@@ -3941,6 +3949,18 @@ int32 __stdcall RFmxNR_GetBandwidthPartNumberOfResourceBlocks(
 );
 
 int32 __stdcall RFmxNR_SetBandwidthPartNumberOfResourceBlocks(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_GetBandwidthPartDCLocationKnown(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetBandwidthPartDCLocationKnown(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -8036,6 +8056,9 @@ int32 __stdcall RFmxNR_PVTGetResultsPeakWindowedOFFPowerTime(
 // Values for RFMXNR_ATTR_MODACC_TIMING_TRACKING_ENABLED
 #define RFMXNR_VAL_MODACC_TIMING_TRACKING_ENABLED_FALSE                                           0
 #define RFMXNR_VAL_MODACC_TIMING_TRACKING_ENABLED_TRUE                                            1
+
+// Values for RFMXNR_ATTR_FREQUENCY_RANGE
+#define RFMXNR_VAL_FREQUENCY_RANGE_RANGE2                                                         1
 
 #ifdef __cplusplus
 extern "C"
