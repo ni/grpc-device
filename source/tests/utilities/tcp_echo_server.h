@@ -20,12 +20,22 @@ public:
     {
     }
 
-    void start() {
+    ~TcpEchoSession() {
+#ifdef _WIN32
+    closesocket(socket_fd_);
+#else
+    close(socket_fd_);
+#endif
+    }
+
+    void start()
+    {
         do_read();
     }
 
 private:
-    void do_read() {
+    void do_read()
+    {
         auto self(shared_from_this());
         char buffer[max_length] = {0};
         int n = recv(socket_fd_, buffer, max_length, 0);
@@ -34,7 +44,8 @@ private:
         }
     }
 
-    void do_write(const char* data, int length) {
+    void do_write(const char* data, int length)
+    {
         auto self(shared_from_this());
         int n = send(socket_fd_, data, length, 0);
         if (n > 0) {

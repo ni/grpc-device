@@ -196,7 +196,7 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
   void run_server(SOCKET server_fd) {
     listen(server_fd, 1);
     SOCKET client_fd = accept(server_fd, NULL, NULL);
-    if (client_fd == INVALID_SOCKET) {
+    if (client_fd == -1) {
       return;
     }
     std::thread([this, client_fd]() {
