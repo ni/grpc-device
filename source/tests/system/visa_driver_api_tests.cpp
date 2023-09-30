@@ -158,6 +158,7 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
   VisaDriverLoopbackTest()
   : portNumber_("1234")
   , instrument_descriptor_("TCPIP0::localhost::" + portNumber_ + "::SOCKET")
+  , echoserver_(portNumber_)
   {
   }
   virtual ~VisaDriverLoopbackTest()
@@ -166,59 +167,14 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
 
   void SetUp() override
   {
-    start_server_session(portNumber_);
+    EXPECT_EQ(0, echoserver_.start());
     initialize_driver_session(instrument_descriptor_);
   }
 
   void TearDown() override
   {
     close_driver_session();
-    close_server_session();
-  }
-
-  void start_server_session(const std::string& portNumber)
-  {
-  #ifdef _WIN32
-    WSADATA wsa_data;
-    WSAStartup(MAKEWORD(2, 2), &wsa_data);
-  #endif
-    server_fd_ = socket(AF_INET, SOCK_STREAM, 0);
-    EXPECT_NE(-1, server_fd_);
-    struct sockaddr_in server_address;
-    server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = inet_addr("127.0.0.1");
-    server_address.sin_port = htons(std::stoi(portNumber));
-    EXPECT_EQ(0, bind(server_fd_, (struct sockaddr*)&server_address, sizeof(server_address)));
-
-    server_thread_ = std::thread(&VisaDriverLoopbackTest::run_server, this, server_fd_);
-  }
-
-  void run_server(SOCKET server_fd) {
-    listen(server_fd, 1);
-    SOCKET client_fd = accept(server_fd, NULL, NULL);
-    if (client_fd == -1) {
-      return;
-    }
-    std::thread([this, client_fd]() {
-      handle_client(client_fd);
-    }).detach();
-  }
-
-  void close_server_session()
-  {
-    server_thread_.join();
-  #ifdef _WIN32
-    closesocket(server_fd_);
-    WSACleanup();
-  #else
-    close(server_fd_);
-  #endif
-  }
-
-  void handle_client(SOCKET client_fd)
-  {
-    auto session = std::make_shared<TcpEchoSession>(client_fd);
-    session->start();
+    echoserver_.stop();
   }
 
   void write(const std::string& data)
@@ -239,8 +195,7 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
   private:
     std::string portNumber_;
     std::string instrument_descriptor_;
-    SOCKET server_fd_;
-    std::thread server_thread_;
+    TcpEchoServer echoserver_;
 };
 
 TEST_F(VisaDriverLoopbackTest, WriteAndRead_Matches)
