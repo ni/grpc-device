@@ -21,10 +21,12 @@ class TcpEchoSession : public std::enable_shared_from_this<TcpEchoSession> {
 public:
     TcpEchoSession(SOCKET socket_fd)
     : socket_fd_(socket_fd)
+    , stop_session_(false)
     {
     }
 
     ~TcpEchoSession() {
+        stop_session_ = true;
 #ifdef _WIN32
     closesocket(socket_fd_);
 #else
@@ -34,9 +36,14 @@ public:
 
     void start()
     {
-        for(;;) {
+        while(!stop_session_) {
             do_read();
         }
+    }
+
+    void stop()
+    {
+	stop_session_ = true;
     }
 
 private:
@@ -58,6 +65,7 @@ private:
 
     static const int max_length = 256;
     SOCKET socket_fd_;
+    bool stop_session_;
 };
 
 class TcpEchoServer
@@ -134,6 +142,7 @@ private:
 
     void close_server_session()
     {
+	session_->stop();
         server_thread_.join();
 #ifdef _WIN32
         closesocket(server_fd_);
@@ -145,10 +154,11 @@ private:
 
     void handle_client(SOCKET client_fd)
     {
-        auto session = std::make_shared<TcpEchoSession>(client_fd);
-        session->start();
+        session_ = std::make_shared<TcpEchoSession>(client_fd);
+        session_->start();
     }
 
     SOCKET server_fd_;
     std::thread server_thread_;
+    std::shared_ptr<TcpEchoSession> session_;
 };
