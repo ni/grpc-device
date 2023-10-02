@@ -320,13 +320,14 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+    vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = request->count();
-    std::string buffer(count, '\0');
+    std::vector<ViByte> buffer(count);
     ViUInt32 return_count{};
-    auto status = library_->Read(vi, (ViByte*)buffer.data(), count, &return_count);
+    auto status = library_->Read(vi, buffer.data(), count, &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
@@ -334,6 +335,9 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_buffer(buffer.data(), return_count);
     response->set_return_count(return_count);
     return ::grpc::Status::OK;
+  }
+  catch (std::bad_alloc&) {
+    return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
   }
   catch (nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
