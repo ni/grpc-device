@@ -324,15 +324,14 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     auto vi_grpc_session = request->vi();
     ViSession vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = request->count();
-    std::string buffer(256 - 1, '\0');
+    std::string buffer(count, '\0');
     ViUInt32 return_count{};
     auto status = library_->Read(vi, (ViByte*)buffer.data(), count, &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
-    buffer.resize(return_count);
-    response->set_buffer(buffer);
+    response->set_buffer(buffer.data(), return_count);
     response->set_return_count(return_count);
     return ::grpc::Status::OK;
   }

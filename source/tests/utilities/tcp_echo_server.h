@@ -1,16 +1,19 @@
-#include <arpa/inet.h>
+#include <cstring>
 #include <memory>
 #include <string>
 #include <thread>
 #ifdef _WIN32
 #include <winsock2.h>
 #else
+#include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #endif
 
-#ifndef _WIN32
+#ifdef _WIN32
+typedef int socklen_t;
+#else
 typedef int SOCKET;
 #endif
 
@@ -31,7 +34,9 @@ public:
 
     void start()
     {
-        do_read();
+        for(;;) {
+            do_read();
+        }
     }
 
 private:
@@ -49,9 +54,6 @@ private:
     {
         auto self(shared_from_this());
         int n = send(socket_fd_, data, length, 0);
-        if (n > 0) {
-            do_read();
-        }
     }
 
     static const int max_length = 256;
@@ -61,9 +63,8 @@ private:
 class TcpEchoServer
 {
 public:
-    TcpEchoServer(const std::string& portNumber)
-    : portNumber_(portNumber)
-    , server_fd_(-1)
+    TcpEchoServer()
+    : server_fd_(-1)
     {
     }
 
@@ -81,6 +82,18 @@ public:
         close_server_session();
     }
 
+    int get_server_port()
+    {
+        struct sockaddr_in assigned_address;
+        socklen_t len = sizeof(assigned_address);
+        if (getsockname(server_fd_, (struct sockaddr *)&assigned_address, &len) == -1) {
+            return -1;
+        }
+        else {
+            return ntohs(assigned_address.sin_port);
+        }
+    }
+
 private:
     int start_server_session()
     {
@@ -93,9 +106,10 @@ private:
             return -1;
         }
         struct sockaddr_in server_address;
+        std::memset(&server_address, 0, sizeof(server_address));
         server_address.sin_family = AF_INET;
         server_address.sin_addr.s_addr = inet_addr("127.0.0.1");
-        server_address.sin_port = htons(std::stoi(portNumber_));
+        server_address.sin_port = htons(0);
 
         if (bind(server_fd_, (struct sockaddr*)&server_address, sizeof(server_address)) == 0) {
             server_thread_ = std::thread(&TcpEchoServer::run_server, this, server_fd_);
@@ -135,7 +149,6 @@ private:
         session->start();
     }
 
-    std::string portNumber_;
     SOCKET server_fd_;
     std::thread server_thread_;
 };
