@@ -156,9 +156,7 @@ TEST_F(VisaDriverApiTest, SetNonTcpipAttribute_ReturnsAttributeError)
 class VisaDriverLoopbackTest : public VisaDriverApiTest {
   public:
   VisaDriverLoopbackTest()
-  : portNumber_("1234")
-  , instrument_descriptor_("TCPIP0::localhost::" + portNumber_ + "::SOCKET")
-  , echoserver_(portNumber_)
+  : echoserver_()
   {
   }
   virtual ~VisaDriverLoopbackTest()
@@ -168,7 +166,10 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
   void SetUp() override
   {
     EXPECT_EQ(0, echoserver_.start());
-    initialize_driver_session(instrument_descriptor_);
+  
+    std::string portNumber(std::to_string(echoserver_.get_server_port()));
+    std::string instrument_descriptor("TCPIP0::localhost::" + portNumber + "::SOCKET");
+    initialize_driver_session(instrument_descriptor);
   }
 
   void TearDown() override
@@ -193,8 +194,6 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
   }
 
   private:
-    std::string portNumber_;
-    std::string instrument_descriptor_;
     TcpEchoServer echoserver_;
 };
 
@@ -214,7 +213,7 @@ TEST_F(VisaDriverLoopbackTest, WriteTwice_ReadOnce_Matches)
   read(expectedReadData.size(), expectedReadData, VI_SUCCESS_MAX_CNT);
 }
 
-TEST_F(VisaDriverLoopbackTest, ReadMoreThanWritten_ReturnTimeout)
+TEST_F(VisaDriverLoopbackTest, ReadMoreThanWritten_ReturnTimeoutErrorWithDataInResponsePacket)
 {
   std::string writeData = "Visa gRPC read/write test";
   write(writeData);
@@ -250,6 +249,23 @@ TEST_F(VisaDriverLoopbackTest, ReadWithoutWrite_ThrowsError)
     VI_ERROR_TMO);
 }
 
+TEST_F(VisaDriverLoopbackTest, WriteSpecialData_ReadMatches)
+{
+  const char buffer[] = {'A', '\0', 'B', '\0', 'C'};
+  std::string writeData(buffer, sizeof(buffer));
+  write(writeData);
+  read(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
+}
+
+TEST_F(VisaDriverLoopbackTest, WriteWithTermChar_ReadMatches)
+{
+  std::string writeData = "Hello\nWorld\n";
+
+  write(writeData);
+  set_bool_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TERMCHAR_EN, true);
+  read(255, "Hello\n", VI_SUCCESS_TERM_CHAR);
+  read(255, "World\n", VI_SUCCESS_TERM_CHAR);
+}
 
 }  // namespace system
 }  // namespace tests
