@@ -43,7 +43,7 @@ public:
 
     void stop()
     {
-	    stop_session_ = true;
+        stop_session_ = true;
     }
 
 private:
@@ -139,7 +139,7 @@ private:
 
     void close_server_session()
     {
-	session_->stop();
+        session_->stop();
         server_thread_.join();
 #ifdef _WIN32
         closesocket(server_fd_);

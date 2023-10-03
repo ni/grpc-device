@@ -258,6 +258,15 @@ TEST_F(VisaDriverLoopbackTest, WriteWithTermChar_ReadMatches)
   read(255, "World\n", VI_SUCCESS_TERM_CHAR);
 }
 
+TEST_F(VisaDriverLoopbackTest, ReadInsanelyLargeData_ReturnsError)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write(writeData);
+  EXPECT_THROW_DRIVER_ERROR(
+    read(ULONG_MAX, "", -1),
+    VI_ERROR_ALLOC);
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
