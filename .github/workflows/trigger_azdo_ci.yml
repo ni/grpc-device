@@ -46,3 +46,11 @@ jobs:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device-release-linux-rt'
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+
+    - name: Trigger CI
+      uses: Azure/pipelines@v1
+      if: ${{ github.repository == 'ni/grpc-device'}}
+      with:
+        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
+        azure-pipeline-name: 'ni-central-grpc_device'
+        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
