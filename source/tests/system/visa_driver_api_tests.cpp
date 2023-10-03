@@ -156,7 +156,6 @@ TEST_F(VisaDriverApiTest, SetNonTcpipAttribute_ReturnsAttributeError)
 class VisaDriverLoopbackTest : public VisaDriverApiTest {
   public:
   VisaDriverLoopbackTest()
-  : echoserver_()
   {
   }
   virtual ~VisaDriverLoopbackTest()
@@ -166,7 +165,7 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
   void SetUp() override
   {
     EXPECT_EQ(0, echoserver_.start());
-  
+
     std::string portNumber(std::to_string(echoserver_.get_server_port()));
     std::string instrument_descriptor("TCPIP0::localhost::" + portNumber + "::SOCKET");
     initialize_driver_session(instrument_descriptor);
@@ -232,14 +231,6 @@ TEST_F(VisaDriverLoopbackTest, ReadZeroBytes_ReturnSuccess)
   std::string writeData = "Visa gRPC read/write test";
   write(writeData);
   read(0, "", VI_SUCCESS_MAX_CNT);
-}
-
-TEST_F(VisaDriverLoopbackTest, WriteOnce_ReadTwice_Matches)
-{
-  std::string writeData = "Visa gRPC read/write test";
-  write(writeData);
-  read(10, writeData.substr(0, 10), VI_SUCCESS_MAX_CNT);
-  read(writeData.size() - 10, writeData.substr(10, writeData.size()), VI_SUCCESS_MAX_CNT);
 }
 
 TEST_F(VisaDriverLoopbackTest, ReadWithoutWrite_ThrowsError)

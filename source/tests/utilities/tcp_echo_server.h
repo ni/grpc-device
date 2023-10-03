@@ -26,24 +26,24 @@ public:
     }
 
     ~TcpEchoSession() {
-        stop_session_ = true;
+        stop();
 #ifdef _WIN32
-    closesocket(socket_fd_);
+        closesocket(socket_fd_);
 #else
-    close(socket_fd_);
+        close(socket_fd_);
 #endif
     }
 
     void start()
     {
-        while(!stop_session_) {
+        while (!stop_session_) {
             do_read();
         }
     }
 
     void stop()
     {
-	stop_session_ = true;
+	    stop_session_ = true;
     }
 
 private:
@@ -119,14 +119,11 @@ private:
         server_address.sin_addr.s_addr = inet_addr("127.0.0.1");
         server_address.sin_port = htons(0);
 
-        if (bind(server_fd_, (struct sockaddr*)&server_address, sizeof(server_address)) == 0) {
-            server_thread_ = std::thread(&TcpEchoServer::run_server, this, server_fd_);
-            return 0;
-        }
-        else {
+        if (bind(server_fd_, (struct sockaddr*)&server_address, sizeof(server_address)) != 0) {
             return -1;
         }
-
+        server_thread_ = std::thread(&TcpEchoServer::run_server, this, server_fd_);
+        return 0;
     }
 
     void run_server(SOCKET server_fd) {
