@@ -334,28 +334,28 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
-#if 1
-  return ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-#else
+  ViSession vi = VI_NULL;
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+    vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = request->count();
-    std::string buffer(return_count, '\0');
+    std::vector<ViByte> buffer(count);
     ViUInt32 return_count{};
-    auto status = library_->Read(vi, (ViByte*)buffer.data(), count, &return_count);
-    if (!status_ok(status)) {
+    auto status = library_->Read(vi, buffer.data(), count, &return_count);
+    if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
-    response->set_buffer(buffer);
+    response->set_buffer(buffer.data(), return_count);
     response->set_return_count(return_count);
     return ::grpc::Status::OK;
+  }
+  catch (std::bad_alloc&) {
+    return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
   }
   catch (nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
-#endif
 }
 
 //---------------------------------------------------------------------

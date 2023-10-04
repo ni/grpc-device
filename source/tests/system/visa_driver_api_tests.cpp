@@ -1,4 +1,5 @@
 #include "device_server.h"
+#include "tests/utilities/tcp_echo_server.h"
 #include "tests/utilities/test_helpers.h"
 #include "visa/visa_client.h"
 
@@ -13,7 +14,8 @@ class VisaDriverApiTest : public ::testing::Test {
  protected:
   VisaDriverApiTest()
       : device_server_(DeviceServerInterface::Singleton()),
-        visa_stub_(visa::Visa::NewStub(device_server_->InProcessChannel()))
+        visa_stub_(visa::Visa::NewStub(device_server_->InProcessChannel())),
+        instrument_descriptor_ni_com_("TCPIP::www.ni.com::80::SOCKET")
   {
     device_server_->ResetServer();
   }
@@ -22,10 +24,7 @@ class VisaDriverApiTest : public ::testing::Test {
 
   void SetUp() override
   {
-#ifndef WIN32
-    GTEST_SKIP() << "Digital pattern is not supported on Linux.";
-#endif
-    initialize_driver_session();
+    initialize_driver_session(instrument_descriptor_ni_com_);
   }
 
   void TearDown() override
@@ -46,12 +45,12 @@ class VisaDriverApiTest : public ::testing::Test {
   }
 
 
-  void initialize_driver_session()
+  void initialize_driver_session(const std::string& instrument_descriptor)
   {
     ::grpc::ClientContext context;
     visa::OpenRequest request;
     visa::OpenResponse response;
-    request.set_instrument_descriptor("TCPIP::www.ni.com::80::SOCKET");
+    request.set_instrument_descriptor(instrument_descriptor);
     request.set_access_mode(visa::LOCK_STATE_NO_LOCK);
     request.set_session_name("SessionName");
     request.set_open_timeout(VI_TMO_IMMEDIATE);
@@ -119,6 +118,7 @@ class VisaDriverApiTest : public ::testing::Test {
   DeviceServerInterface* device_server_;
   std::unique_ptr<visa::Visa::Stub> visa_stub_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
+  std::string instrument_descriptor_ni_com_;
 };
 
 TEST_F(VisaDriverApiTest, GetOriginalTimeout_TwoSeconds)
@@ -151,6 +151,111 @@ TEST_F(VisaDriverApiTest, SetNonTcpipAttribute_ReturnsAttributeError)
     set_bool_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_ASRL_ALLOW_TRANSMIT, true),
     VI_ERROR_NSUP_ATTR
   );
+}
+
+class VisaDriverLoopbackTest : public VisaDriverApiTest {
+  public:
+  VisaDriverLoopbackTest()
+  {
+  }
+  virtual ~VisaDriverLoopbackTest()
+  {
+  }
+
+  void SetUp() override
+  {
+    EXPECT_EQ(0, echoserver_.start());
+
+    std::string portNumber(std::to_string(echoserver_.get_server_port()));
+    std::string instrument_descriptor("TCPIP0::localhost::" + portNumber + "::SOCKET");
+    initialize_driver_session(instrument_descriptor);
+  }
+
+  void TearDown() override
+  {
+    close_driver_session();
+    echoserver_.stop();
+  }
+
+  void write(const std::string& data)
+  {
+    auto response = client::write(GetStub(), GetNamedSession(), data);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    EXPECT_EQ(data.size(), response.return_count());
+  }
+
+  void read(uint32_t count, const std::string& expectedData, ViStatus expectedStatus)
+  {
+    auto response = client::read(GetStub(), GetNamedSession(), count);
+    EXPECT_EQ(expectedStatus, response.status());
+    EXPECT_EQ(expectedData.size(), response.return_count());
+    EXPECT_EQ(expectedData, response.buffer());
+  }
+
+  private:
+    TcpEchoServer echoserver_;
+};
+
+TEST_F(VisaDriverLoopbackTest, WriteAndRead_Matches)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write(writeData);
+  read(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
+}
+
+TEST_F(VisaDriverLoopbackTest, WriteTwice_ReadOnce_Matches)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write(writeData + "1 ");
+  write(writeData + "2");
+  std::string expectedReadData = writeData + "1 " + writeData + "2";
+  read(expectedReadData.size(), expectedReadData, VI_SUCCESS_MAX_CNT);
+}
+
+TEST_F(VisaDriverLoopbackTest, ReadMoreThanWritten_ReturnTimeoutErrorWithDataInResponsePacket)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write(writeData);
+  read(writeData.size() + 1, writeData, VI_ERROR_TMO);
+}
+
+TEST_F(VisaDriverLoopbackTest, ReadLessThanWritten_ReturnSuccess)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write(writeData);
+  read(writeData.size() - 1, writeData.substr(0, writeData.size() - 1), VI_SUCCESS_MAX_CNT);
+}
+
+TEST_F(VisaDriverLoopbackTest, ReadZeroBytes_ReturnSuccess)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write(writeData);
+  read(0, "", VI_SUCCESS_MAX_CNT);
+}
+
+TEST_F(VisaDriverLoopbackTest, ReadWithoutWrite_ThrowsError)
+{
+  EXPECT_THROW_DRIVER_ERROR(
+    read(10, "", -1),
+    VI_ERROR_TMO);
+}
+
+TEST_F(VisaDriverLoopbackTest, WriteSpecialData_ReadMatches)
+{
+  const char buffer[] = {'A', '\0', 'B', '\0', 'C'};
+  std::string writeData(buffer, sizeof(buffer));
+  write(writeData);
+  read(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
+}
+
+TEST_F(VisaDriverLoopbackTest, WriteWithTermChar_ReadMatches)
+{
+  std::string writeData = "Hello\nWorld\n";
+
+  write(writeData);
+  set_bool_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TERMCHAR_EN, true);
+  read(255, "Hello\n", VI_SUCCESS_TERM_CHAR);
+  read(255, "World\n", VI_SUCCESS_TERM_CHAR);
 }
 
 }  // namespace system
