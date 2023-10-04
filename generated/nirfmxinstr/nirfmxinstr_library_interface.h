@@ -58,6 +58,7 @@ class NiRFmxInstrLibraryInterface {
   virtual int32 GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 GetAttributeU8(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8* attrVal) = 0;
   virtual int32 GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 GetAvailablePaths(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePaths[]) = 0;
   virtual int32 GetAvailablePorts(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePorts[]) = 0;
   virtual int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;
   virtual int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;

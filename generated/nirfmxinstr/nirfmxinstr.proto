@@ -61,6 +61,7 @@ service NiRFmxInstr {
   rpc GetAttributeU64Array(GetAttributeU64ArrayRequest) returns (GetAttributeU64ArrayResponse);
   rpc GetAttributeU8(GetAttributeU8Request) returns (GetAttributeU8Response);
   rpc GetAttributeU8Array(GetAttributeU8ArrayRequest) returns (GetAttributeU8ArrayResponse);
+  rpc GetAvailablePaths(GetAvailablePathsRequest) returns (GetAvailablePathsResponse);
   rpc GetAvailablePorts(GetAvailablePortsRequest) returns (GetAvailablePortsResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
@@ -924,6 +925,16 @@ message GetAttributeU8ArrayResponse {
   int32 status = 1;
   bytes attr_val = 2;
   int32 actual_array_size = 3;
+}
+
+message GetAvailablePathsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetAvailablePathsResponse {
+  int32 status = 1;
+  string available_paths = 2;
 }
 
 message GetAvailablePortsRequest {

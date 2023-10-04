@@ -888,6 +888,24 @@ get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
   return response;
 }
 
+GetAvailablePathsResponse
+get_available_paths(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAvailablePathsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetAvailablePathsResponse{};
+
+  raise_if_error(
+      stub->GetAvailablePaths(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetAvailablePortsResponse
 get_available_ports(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {

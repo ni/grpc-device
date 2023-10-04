@@ -222,6 +222,11 @@ int32 GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char channelName[]
   return RFmxInstr_GetAttributeU8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
 }
 
+int32 GetAvailablePaths(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePaths[])
+{
+  return RFmxInstr_GetAvailablePaths(instrumentHandle, selectorString, arraySize, availablePaths);
+}
+
 int32 GetAvailablePorts(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePorts[])
 {
   return RFmxInstr_GetAvailablePorts(instrumentHandle, selectorString, arraySize, availablePorts);

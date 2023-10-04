@@ -60,6 +60,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, GetAttributeU64Array, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, GetAttributeU8, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8* attrVal), (override));
   MOCK_METHOD(int32, GetAttributeU8Array, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, GetAvailablePaths, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePaths[]), (override));
   MOCK_METHOD(int32, GetAvailablePorts, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePorts[]), (override));
   MOCK_METHOD(int32, GetError, (niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
   MOCK_METHOD(int32, GetErrorString, (niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
