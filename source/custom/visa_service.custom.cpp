@@ -266,8 +266,8 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
       // NI-VISA writes the events followed by an extra "-1" value that we don't need.
       std::vector<EventType> events(numEvents+1);
       library->GetAttribute(vi, VI_ATTR_SUP_EVENTS, events.data());
-      for (ViUInt16 i = 0; i < numEvents; ++i) {
-        response->add_supported_events(events[i]);
+      for (ViUInt16 index = 0; index < numEvents; ++index) {
+        response->add_supported_events(events[index]);
       }
     }
 
@@ -281,6 +281,57 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   }
   catch (const DriverErrorException& ex) {
     return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
+  }
+}
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+::grpc::Status VisaService::MoveIn16(::grpc::ServerContext* context, const MoveIn16Request* request, MoveIn16Response* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  ViSession vi = VI_NULL;
+  try {
+    auto vi_grpc_session = request->vi();
+    vi = session_repository_->access_session(vi_grpc_session.name());
+    ViUInt16 address_space;
+    switch (request->address_space_enum_case()) {
+      case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::kAddressSpace: {
+        address_space = static_cast<ViUInt16>(request->address_space());
+        break;
+      }
+      case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
+        address_space = static_cast<ViUInt16>(request->address_space_raw());
+        break;
+      }
+      case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
+        break;
+      }
+    }
+
+    ViBusAddress64 offset = request->offset();
+    ViBusSize count = request->count();
+    std::vector<ViUInt16> driver_buffer(count);
+    ViUInt16* buffer_pointer = driver_buffer.data();
+    auto status = library_->MoveIn16(vi, address_space, offset, count, buffer_pointer);
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForViSession(context, status, vi);
+    }
+    auto response_buffer = response->mutable_buffer();
+    response_buffer->Resize(static_cast<int>(count), 0);
+    for (ViUInt32 index = 0; index < count; ++index) {
+      response_buffer->Set(index, *buffer_pointer++);
+    }
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+  catch (std::bad_alloc&) {
+    return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
+  }
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 

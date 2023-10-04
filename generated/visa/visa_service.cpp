@@ -957,48 +957,6 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::MoveIn16(::grpc::ServerContext* context, const MoveIn16Request* request, MoveIn16Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViUInt16 address_space;
-      switch (request->address_space_enum_case()) {
-        case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::kAddressSpace: {
-          address_space = static_cast<ViUInt16>(request->address_space());
-          break;
-        }
-        case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::kAddressSpaceRaw: {
-          address_space = static_cast<ViUInt16>(request->address_space_raw());
-          break;
-        }
-        case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
-          break;
-        }
-      }
-
-      ViBusAddress64 offset = request->offset();
-      ViBusSize count = request->count();
-      response->mutable_buffer()->Resize(count, 0);
-      ViUInt16* buffer = reinterpret_cast<ViUInt16*>(response->mutable_buffer()->mutable_data());
-      auto status = library_->MoveIn16(vi, address_space, offset, count, buffer);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status VisaService::MoveIn32(::grpc::ServerContext* context, const MoveIn32Request* request, MoveIn32Response* response)
   {
     if (context->IsCancelled()) {
@@ -1151,8 +1109,14 @@ namespace visa_grpc {
 
       ViBusAddress64 offset = request->offset();
       ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
-      auto buffer = const_cast<ViUInt16*>(reinterpret_cast<const ViUInt16*>(request->buffer().data()));
-      auto status = library_->MoveOut16(vi, address_space, offset, count, buffer);
+      auto buffer_request = request->buffer();
+      std::vector<ViUInt16> buffer;
+      std::transform(
+        buffer_request.begin(),
+        buffer_request.end(),
+        std::back_inserter(buffer),
+        [](auto x) { return (ViUInt16)x; }); 
+      auto status = library_->MoveOut16(vi, address_space, offset, count, buffer.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }

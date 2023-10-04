@@ -655,6 +655,7 @@ functions = {
     },
     'MoveIn16': {
         'cname': 'viMoveIn16Ex',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
