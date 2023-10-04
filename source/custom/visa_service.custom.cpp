@@ -153,10 +153,12 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     for (ViUInt32 index = 1; index < return_count; ++index) {
       status = library_->FindNext(find_handle, descriptor);
       if (!status_ok(status)) {
+        library_->Close(find_handle);
         return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
       }
       response->add_instrument_descriptor(descriptor);
     }
+    library_->Close(find_handle);
     response->set_status(status);
     return ::grpc::Status::OK;
   }

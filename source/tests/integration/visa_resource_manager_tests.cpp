@@ -27,6 +27,19 @@ OpenResponse call_open(VisaService& service, const char* session_name)
     return response;
 }
 
+FindRsrcResponse call_find(VisaService& service)
+{
+    ::grpc::ServerContext context;
+    FindRsrcRequest request;
+    FindRsrcResponse response;
+    request.set_expression("?*");
+
+    auto status = service.FindRsrc(&context, &request, &response);
+    EXPECT_TRUE(status.ok());
+    EXPECT_EQ(0, response.status());
+    return response;
+}
+
 void call_parse(VisaService& service)
 {
     ::grpc::ServerContext context;
@@ -45,6 +58,14 @@ ViStatus SetSessionToOne(ViSession* session)
   return VI_SUCCESS;
 }
 
+ViStatus SetFindHandleToTwo(ViSession rsrcManagerHandle, ViConstString expression, ViFindList* findHandle, ViUInt32* returnCount, ViChar instrumentDescriptor[256])
+{
+  *findHandle = (ViSession)2;
+  *returnCount = 1;
+  strcpy(instrumentDescriptor, "RSRC");
+  return VI_SUCCESS;
+}
+
 ViStatus SetNumberEventsToOne(void* attributeValue)
 {
   *(ViUInt16*)attributeValue = 1;
@@ -55,6 +76,29 @@ ViStatus SetEventTypeToServiceRequest(void* attributeValue)
 {
   *(ViEventType*)attributeValue = VI_EVENT_SERVICE_REQ;
   return VI_SUCCESS;
+}
+
+TEST(VisaResourceManagerTest, FindRsrc_OpensResourceManagerOnceAndClosesFindHandle)
+{
+  auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
+  auto library = std::make_shared<ni::tests::unit::VisaMockLibrary>();
+  auto resource_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository);
+  auto object_repository = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViObject>>();
+  VisaService service(library, resource_repository, object_repository);
+
+  EXPECT_CALL(*library, OpenDefaultRM)
+    .WillOnce(WithArg<0>(Invoke(SetSessionToOne)));
+  EXPECT_CALL(*library, FindRsrc)
+    .WillOnce(Invoke(SetFindHandleToTwo));
+  EXPECT_CALL(*library, Close(2))
+    .Times(1);
+
+  auto response = call_find(service);
+  EXPECT_EQ(1, response.instrument_descriptor_size());
+
+  EXPECT_CALL(*library, Close(1))
+    .Times(1);
+  session_repository->reset_server();
 }
 
 TEST(VisaResourceManagerTest, ParsePlusOpen_OpensResourceManagerOnce)
