@@ -344,7 +344,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     std::string* buffer = response->mutable_buffer();
     buffer->resize(count);
     ViUInt32 return_count{};
-    auto status = library_->Read(vi, reinterpret_cast<ViByte*>(buffer->data()), count, &return_count);
+    auto status = library_->Read(vi, (ViByte*)buffer->data(), count, &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
@@ -461,7 +461,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     std::string* buffer = response->mutable_buffer();
     buffer->resize(w_length);
     ViUInt16 return_count{};
-    auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, reinterpret_cast<ViByte*>(buffer->data()), &return_count);
+    auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, (ViByte*)buffer->data(), &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
