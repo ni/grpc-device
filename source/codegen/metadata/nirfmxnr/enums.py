@@ -343,6 +343,18 @@ enums = {
             }
         ]
     },
+    'BandwidthPartDCLocationKnown': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'ChpAmplitudeCorrectionType': {
         'values': [
             {
@@ -787,8 +799,12 @@ enums = {
                 'value': 0
             },
             {
-                'name': 'RANGE2',
+                'name': 'RANGE2_1',
                 'value': 1
+            },
+            {
+                'name': 'RANGE2_2',
+                'value': 2
             }
         ]
     },
@@ -2385,6 +2401,14 @@ enums = {
             {
                 'name': 'E',
                 'value': 7
+            },
+            {
+                'name': 'F',
+                'value': 8
+            },
+            {
+                'name': 'G',
+                'value': 9
             }
         ]
     },
