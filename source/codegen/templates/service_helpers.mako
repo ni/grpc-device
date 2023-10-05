@@ -599,7 +599,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
         [](auto x) { return x ? VI_TRUE : VI_FALSE; });
-% elif c_type == 'ViInt16[]':
+% elif c_type in ['ViInt16[]', 'ViUInt16[]']:
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
       std::transform(
@@ -616,11 +616,11 @@ ${initialize_standard_input_param(function_name, parameter)}
       ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.name());\
 % elif is_array and common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(c_type_underlying_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
-%elif c_type in ['const int32[]', 'const uInt32[]']:
+% elif c_type in ['const int32[]', 'const uInt32[]']:
       auto ${parameter_name} = reinterpret_cast<${c_type_pointer}>(${request_snippet}.data());\
-%elif grpc_type == 'bytes':
+% elif grpc_type == 'bytes':
       auto ${parameter_name} = reinterpret_cast<const unsigned char*>(${request_snippet}.data());\
-%elif service_helpers.is_scalar_input_that_needs_coercion(parameter):
+% elif service_helpers.is_scalar_input_that_needs_coercion(parameter):
       auto ${parameter_name}_raw = ${request_snippet};
       if (${parameter_name}_raw < std::numeric_limits<${c_type}>::min() || ${parameter_name}_raw > std::numeric_limits<${c_type}>::max()) {
           std::string message("value ");
@@ -630,7 +630,7 @@ ${initialize_standard_input_param(function_name, parameter)}
           throw nidevice_grpc::ValueOutOfRangeException(message);
       }
       auto ${parameter_name} = static_cast<${c_type}>(${parameter_name}_raw);
-%elif service_helpers.is_input_array_that_needs_coercion(parameter):
+% elif service_helpers.is_input_array_that_needs_coercion(parameter):
       auto ${parameter_name}_raw = ${request_snippet};
       auto ${parameter_name} = std::vector<${c_element_type_that_needs_coercion}>();
       ${parameter_name}.reserve(${parameter_name}_raw.size());

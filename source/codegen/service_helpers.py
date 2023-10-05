@@ -86,8 +86,9 @@ def _is_array_that_requires_conversion(parameter):
             or get_c_element_type_for_array_that_needs_coercion(parameter) is not None
             # Sessions are "converted" by accessing the session repository.
             or parameter["grpc_type"] == "repeated nidevice_grpc.Session"
-            # ViInt16s have a hardcoded copy convert routine that predates the coerced flag.
+            # Vi*Int16s have a hardcoded copy convert routine that predates the coerced flag.
             or parameter["type"] == "ViInt16[]"
+            or parameter["type"] == "ViUInt16[]"
         )
 
     return False
