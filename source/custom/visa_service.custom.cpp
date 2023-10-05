@@ -327,10 +327,10 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (std::bad_alloc&) {
+  catch (const std::bad_alloc&) {
     return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
 }
