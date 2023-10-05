@@ -162,7 +162,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
   catch (const DriverErrorException& ex) {
@@ -188,7 +188,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
 }
@@ -210,7 +210,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
 }
@@ -276,7 +276,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_new_session_initialized(new_session_initialized);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
   catch (const DriverErrorException& ex) {
@@ -321,7 +321,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_alias_if_exists()));
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
   catch (const DriverErrorException& ex) {
@@ -341,21 +341,22 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     auto vi_grpc_session = request->vi();
     vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = request->count();
-    std::vector<ViByte> buffer(count);
+    std::string* buffer = response->mutable_buffer();
+    buffer->resize(count);
     ViUInt32 return_count{};
-    auto status = library_->Read(vi, buffer.data(), count, &return_count);
+    auto status = library_->Read(vi, reinterpret_cast<ViByte*>(buffer->data()), count, &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
-    response->set_buffer(buffer.data(), return_count);
+    buffer->resize(return_count);
     response->set_return_count(return_count);
     return ::grpc::Status::OK;
   }
-  catch (std::bad_alloc&) {
+  catch (const std::bad_alloc&) {
     return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
 }
@@ -384,7 +385,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_job_identifier(job_identifier);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
 #endif
@@ -435,7 +436,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
 }
@@ -451,27 +452,28 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
 
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+    vi = session_repository_->access_session(vi_grpc_session.name());
     ViInt16 bm_request_type = (ViInt16)request->bm_request_type();
     ViInt16 b_request = (ViInt16)request->b_request();
     ViUInt16 w_value = request->w_value();
     ViUInt16 w_index = request->w_index();
     ViUInt16 w_length = request->w_length();
-    std::vector<ViByte> buffer(w_length);
+    std::string* buffer = response->mutable_buffer();
+    buffer->resize(w_length);
     ViUInt16 return_count{};
-    auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, buffer.data(), &return_count);
+    auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, reinterpret_cast<ViByte*>(buffer->data()), &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
-    response->set_buffer(buffer.data(), return_count);
+    buffer->resize(return_count);
     response->set_return_count(return_count);
     return ::grpc::Status::OK;
   }
-  catch (std::bad_alloc) {
+  catch (const std::bad_alloc&) {
     return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
 }
@@ -500,7 +502,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_job_identifier(job_identifier);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::NonDriverException& ex) {
+  catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
 #endif
