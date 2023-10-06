@@ -218,7 +218,7 @@ inline std::vector<CType> convert_from_grpc(const google::protobuf::RepeatedFiel
 template <typename GrpcType, typename CType>
 inline void convert_to_grpc(const std::vector<CType>& input, google::protobuf::RepeatedPtrField<GrpcType>* output)
 {
-  output->Reserve(input.size());
+  output->Reserve(static_cast<int>(input.size()));
   for (auto item : input) {
     auto message = new GrpcType();
     convert_to_grpc(item, message);
@@ -229,7 +229,7 @@ inline void convert_to_grpc(const std::vector<CType>& input, google::protobuf::R
 template <typename BoolType>
 inline void convert_to_grpc(const std::vector<BoolType>& input, google::protobuf::RepeatedField<bool>* output)
 {
-  output->Reserve(input.size());
+  output->Reserve(static_cast<int>(input.size()));
   for (auto item : input) {
     output->Add(item != BoolType(0));
   }
