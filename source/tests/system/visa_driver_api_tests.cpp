@@ -177,6 +177,8 @@ class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
     echoserver_.stop();
   }
 
+  const uint32_t kFastTimeoutMsec = 500;
+
   void write(const std::string& data)
   {
     auto response = client::write(GetStub(), GetNamedSession(), data);
@@ -227,6 +229,7 @@ TEST_F(VisaMessageBasedLoopbackTest, WriteTwice_ReadOnce_Matches)
 TEST_F(VisaMessageBasedLoopbackTest, ReadMoreThanWritten_ReturnTimeoutErrorWithDataInResponsePacket)
 {
   std::string writeData = "Visa gRPC read/write test";
+  set_uint32_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TMO_VALUE, kFastTimeoutMsec);
   write(writeData);
   read(writeData.size() + 1, writeData, VI_ERROR_TMO);
 }
@@ -247,6 +250,7 @@ TEST_F(VisaMessageBasedLoopbackTest, ReadZeroBytes_ReturnSuccess)
 
 TEST_F(VisaMessageBasedLoopbackTest, ReadWithoutWrite_ThrowsError)
 {
+  set_uint32_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TMO_VALUE, kFastTimeoutMsec);
   EXPECT_THROW_DRIVER_ERROR(
     read(10, "", -1),
     VI_ERROR_TMO);
@@ -280,8 +284,8 @@ TEST_F(VisaMessageBasedLoopbackTest, AssertTrigger_SendsCommand)
 
 TEST_F(VisaMessageBasedLoopbackTest, Flush_ClearsBuffer)
 {
+  set_uint32_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TMO_VALUE, kFastTimeoutMsec);
   write("Some data in the pipe\n");
-  set_bool_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TERMCHAR_EN, true);
   flush(visa::BUFFER_MASK_IO_IN_BUF_DISCARD);
   EXPECT_THROW_DRIVER_ERROR(
     read(10, "", -1),
