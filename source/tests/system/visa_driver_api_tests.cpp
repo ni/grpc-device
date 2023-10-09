@@ -169,6 +169,8 @@ class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
     std::string portNumber(std::to_string(echoserver_.get_server_port()));
     std::string instrument_descriptor("TCPIP0::localhost::" + portNumber + "::SOCKET");
     initialize_driver_session(instrument_descriptor);
+    auto response = client::enable_event(GetStub(), GetNamedSession(), VI_EVENT_IO_COMPLETION, VI_QUEUE, VI_NULL);
+    EXPECT_EQ(VI_SUCCESS, response.status());
   }
 
   void TearDown() override
@@ -177,6 +179,7 @@ class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
     echoserver_.stop();
   }
 
+  const uint32_t kWaitTimeoutMsec = 2000;
   const uint32_t kFastTimeoutMsec = 500;
 
   void write(const std::string& data)
@@ -186,12 +189,52 @@ class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
     EXPECT_EQ(data.size(), response.return_count());
   }
 
+  void write_async(const std::string& data)
+  {
+    auto asyncResponse = client::write_async(GetStub(), GetNamedSession(), data);
+    EXPECT_THAT((std::array{ VI_SUCCESS, VI_SUCCESS_SYNC }), testing::Contains(asyncResponse.status()));
+    auto waitResponse = client::wait_on_event(GetStub(), GetNamedSession(), VI_EVENT_IO_COMPLETION, kWaitTimeoutMsec);
+    EXPECT_EQ(VI_SUCCESS, waitResponse.status());
+    auto eventResponse = client::get_attribute_event(GetStub(), waitResponse.event_handle(), visa::VisaAttribute::VISA_ATTRIBUTE_STATUS);
+    EXPECT_EQ(VI_SUCCESS, eventResponse.status());
+    EXPECT_EQ(VI_SUCCESS, eventResponse.attribute_value().value_i32());
+    eventResponse = client::get_attribute_event(GetStub(), waitResponse.event_handle(), visa::VisaAttribute::VISA_ATTRIBUTE_RET_COUNT);
+    EXPECT_EQ(VI_SUCCESS, eventResponse.status());
+    EXPECT_EQ(data.size(), eventResponse.attribute_value().value_u32());
+    auto closeResponse = client::close_event(GetStub(), waitResponse.event_handle());
+    EXPECT_EQ(VI_SUCCESS, closeResponse.status());
+  }
+
   void read(size_t count, const std::string& expectedData, ViStatus expectedStatus)
   {
-    auto response = client::read(GetStub(), GetNamedSession(), static_cast<uint32_t>(count));
+    auto response = client::read(GetStub(), GetNamedSession(), count);
     EXPECT_EQ(expectedStatus, response.status());
     EXPECT_EQ(expectedData.size(), response.return_count());
     EXPECT_EQ(expectedData, response.buffer());
+  }
+
+  void read_async(size_t count, const std::string& expectedData, ViStatus expectedStatus, bool requiresTerminate = false)
+  {
+    auto asyncResponse = client::read_async(GetStub(), GetNamedSession(), count);
+    EXPECT_THAT((std::array{ VI_SUCCESS, VI_SUCCESS_SYNC }), testing::Contains(asyncResponse.status()));
+    if (requiresTerminate) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(kFastTimeoutMsec));
+      auto terminateResponse = client::terminate(GetStub(), GetNamedSession(), 0, asyncResponse.job_identifier());
+      EXPECT_EQ(VI_SUCCESS, terminateResponse.status());
+    }
+    auto waitResponse = client::wait_on_event(GetStub(), GetNamedSession(), VI_EVENT_IO_COMPLETION, kWaitTimeoutMsec);
+    EXPECT_EQ(VI_SUCCESS, waitResponse.status());
+    auto eventResponse = client::get_attribute_event(GetStub(), waitResponse.event_handle(), visa::VisaAttribute::VISA_ATTRIBUTE_STATUS);
+    EXPECT_EQ(VI_SUCCESS, eventResponse.status());
+    EXPECT_EQ(expectedStatus, eventResponse.attribute_value().value_i32());
+    eventResponse = client::get_attribute_event(GetStub(), waitResponse.event_handle(), visa::VisaAttribute::VISA_ATTRIBUTE_RET_COUNT);
+    EXPECT_EQ(VI_SUCCESS, eventResponse.status());
+    EXPECT_EQ(expectedData.size(), eventResponse.attribute_value().value_u32());
+    eventResponse = client::get_attribute_event(GetStub(), waitResponse.event_handle(), visa::VisaAttribute::VISA_ATTRIBUTE_BUFFER);
+    EXPECT_EQ(VI_SUCCESS, eventResponse.status());
+    EXPECT_EQ(expectedData, eventResponse.attribute_value().value_bytes());
+    auto closeResponse = client::close_event(GetStub(), waitResponse.event_handle());
+    EXPECT_EQ(VI_SUCCESS, closeResponse.status());
   }
 
   void assert_trigger(visa::TriggerProtocol protocol)
@@ -217,6 +260,13 @@ TEST_F(VisaMessageBasedLoopbackTest, WriteAndRead_Matches)
   read(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
 }
 
+TEST_F(VisaMessageBasedLoopbackTest, WriteAsyncAndReadAsync_Matches)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write_async(writeData);
+  read_async(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
+}
+
 TEST_F(VisaMessageBasedLoopbackTest, WriteTwice_ReadOnce_Matches)
 {
   std::string writeData = "Visa gRPC read/write test";
@@ -234,6 +284,14 @@ TEST_F(VisaMessageBasedLoopbackTest, ReadMoreThanWritten_ReturnTimeoutErrorWithD
   read(writeData.size() + 1, writeData, VI_ERROR_TMO);
 }
 
+TEST_F(VisaMessageBasedLoopbackTest, ReadAsyncMoreThanWritten_ReturnTimeoutErrorWithDataInResponsePacket)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  set_uint32_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TMO_VALUE, kFastTimeoutMsec);
+  write(writeData);
+  read_async(writeData.size() + 1, writeData, VI_ERROR_ABORT, true);
+}
+
 TEST_F(VisaMessageBasedLoopbackTest, ReadLessThanWritten_ReturnSuccess)
 {
   std::string writeData = "Visa gRPC read/write test";
@@ -241,11 +299,25 @@ TEST_F(VisaMessageBasedLoopbackTest, ReadLessThanWritten_ReturnSuccess)
   read(writeData.size() - 1, writeData.substr(0, writeData.size() - 1), VI_SUCCESS_MAX_CNT);
 }
 
+TEST_F(VisaMessageBasedLoopbackTest, ReadAsyncLessThanWritten_ReturnSuccess)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write(writeData);
+  read_async(writeData.size() - 1, writeData.substr(0, writeData.size() - 1), VI_SUCCESS_MAX_CNT);
+}
+
 TEST_F(VisaMessageBasedLoopbackTest, ReadZeroBytes_ReturnSuccess)
 {
   std::string writeData = "Visa gRPC read/write test";
   write(writeData);
   read(0, "", VI_SUCCESS_MAX_CNT);
+}
+
+TEST_F(VisaMessageBasedLoopbackTest, ReadAsyncZeroBytes_ReturnSuccess)
+{
+  std::string writeData = "Visa gRPC read/write test";
+  write_async(writeData);
+  read_async(0, "", VI_SUCCESS_MAX_CNT);
 }
 
 TEST_F(VisaMessageBasedLoopbackTest, ReadWithoutWrite_ThrowsError)
@@ -262,6 +334,14 @@ TEST_F(VisaMessageBasedLoopbackTest, WriteSpecialData_ReadMatches)
   std::string writeData(buffer, sizeof(buffer));
   write(writeData);
   read(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
+}
+
+TEST_F(VisaMessageBasedLoopbackTest, WriteAsyncSpecialData_ReadAsyncMatches)
+{
+  const char buffer[] = {'A', '\0', 'B', '\0', 'C'};
+  std::string writeData(buffer, sizeof(buffer));
+  write_async(writeData);
+  read_async(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
 }
 
 TEST_F(VisaMessageBasedLoopbackTest, WriteWithTermChar_ReadMatches)

@@ -1439,6 +1439,14 @@ attributes = {
         'name': 'RET_COUNT',
         'type': 'ViUInt32'
     },
+    1073692711: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' This attribute contains the address of a buffer that was used in an asynchronous operation. This is valid for the VI_EVENT_IO_COMPLETION only. '
+        },
+        'name': 'BUFFER',
+        'type': 'ViAddr'
+    },
     1073692737: {
         'access': 'read only',
         'documentation': {

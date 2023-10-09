@@ -106,7 +106,7 @@ struct FrameHolder {
         throw std::invalid_argument("All FrameBufferRequest instances in repeated field should have same oneof set for the frame");
       }
 
-      u32 frame_size = get_frame_buffer_size(1, grpc_frame.enet().frame_data().length(),Protocol::PROTOCOL_ENET);
+      u32 frame_size = get_frame_buffer_size(1, static_cast<u32>(grpc_frame.enet().frame_data().length()), Protocol::PROTOCOL_ENET);
       frame_data.resize(frame_size, 0);
       nxFrameEnet_t* current_frame = (nxFrameEnet_t*)frame_data.data();
       // The Length field in ENET write frame is big-endian. Typecast to u16 before doing the conversion

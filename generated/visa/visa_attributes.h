@@ -5,6 +5,9 @@
 #ifndef VISA_ATTRIBUTE_TYPES_H
 #define VISA_ATTRIBUTE_TYPES_H
 
+#define NIVISA_USB
+
+#include <visa.h>
 #include <visa/visa_service.h>
 
 namespace visa_grpc {
@@ -152,7 +155,7 @@ namespace visa_grpc {
       case VI_ATTR_PXI_MEM_SIZE_BAR5_32:
       case VI_ATTR_PXI_RECV_INTR_DATA:
       case VI_ATTR_RD_BUF_SIZE:
-      case VI_ATTR_RET_COUNT:
+      case VI_ATTR_RET_COUNT_32:
       case VI_ATTR_RSRC_IMPL_VERSION:
       case VI_ATTR_RSRC_LOCK_STATE:
       case VI_ATTR_RSRC_SPEC_VERSION:
@@ -180,6 +183,7 @@ namespace visa_grpc {
       case VI_ATTR_PXI_MEM_SIZE_BAR3_64:
       case VI_ATTR_PXI_MEM_SIZE_BAR4_64:
       case VI_ATTR_PXI_MEM_SIZE_BAR5_64:
+      case VI_ATTR_RET_COUNT_64:
       case VI_ATTR_USER_DATA:
       case VI_ATTR_WIN_BASE_ADDR_64:
       case VI_ATTR_WIN_SIZE_64:
@@ -225,6 +229,7 @@ namespace visa_grpc {
         return AttributeValueData::kValueString;
 
       case VI_ATTR_USB_RECV_INTR_DATA:
+      case VI_ATTR_BUFFER:
         return AttributeValueData::kValueBytes;
 
       default:
