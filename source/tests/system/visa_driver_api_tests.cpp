@@ -153,12 +153,12 @@ TEST_F(VisaDriverApiTest, SetNonTcpipAttribute_ReturnsAttributeError)
   );
 }
 
-class VisaDriverLoopbackTest : public VisaDriverApiTest {
+class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
   public:
-  VisaDriverLoopbackTest()
+  VisaMessageBasedLoopbackTest()
   {
   }
-  virtual ~VisaDriverLoopbackTest()
+  virtual ~VisaMessageBasedLoopbackTest()
   {
   }
 
@@ -177,6 +177,8 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
     echoserver_.stop();
   }
 
+  const uint32_t kFastTimeoutMsec = 500;
+
   void write(const std::string& data)
   {
     auto response = client::write(GetStub(), GetNamedSession(), data);
@@ -184,26 +186,38 @@ class VisaDriverLoopbackTest : public VisaDriverApiTest {
     EXPECT_EQ(data.size(), response.return_count());
   }
 
-  void read(uint32_t count, const std::string& expectedData, ViStatus expectedStatus)
+  void read(size_t count, const std::string& expectedData, ViStatus expectedStatus)
   {
-    auto response = client::read(GetStub(), GetNamedSession(), count);
+    auto response = client::read(GetStub(), GetNamedSession(), static_cast<uint32_t>(count));
     EXPECT_EQ(expectedStatus, response.status());
     EXPECT_EQ(expectedData.size(), response.return_count());
     EXPECT_EQ(expectedData, response.buffer());
+  }
+
+  void assert_trigger(visa::TriggerProtocol protocol)
+  {
+    auto response = client::assert_trigger(GetStub(), GetNamedSession(), protocol);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  void flush(visa::BufferMask mask)
+  {
+    auto response = client::flush(GetStub(), GetNamedSession(), mask);
+    EXPECT_EQ(VI_SUCCESS, response.status());
   }
 
   private:
     TcpEchoServer echoserver_;
 };
 
-TEST_F(VisaDriverLoopbackTest, WriteAndRead_Matches)
+TEST_F(VisaMessageBasedLoopbackTest, WriteAndRead_Matches)
 {
   std::string writeData = "Visa gRPC read/write test";
   write(writeData);
   read(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
 }
 
-TEST_F(VisaDriverLoopbackTest, WriteTwice_ReadOnce_Matches)
+TEST_F(VisaMessageBasedLoopbackTest, WriteTwice_ReadOnce_Matches)
 {
   std::string writeData = "Visa gRPC read/write test";
   write(writeData + "1 ");
@@ -212,35 +226,37 @@ TEST_F(VisaDriverLoopbackTest, WriteTwice_ReadOnce_Matches)
   read(expectedReadData.size(), expectedReadData, VI_SUCCESS_MAX_CNT);
 }
 
-TEST_F(VisaDriverLoopbackTest, ReadMoreThanWritten_ReturnTimeoutErrorWithDataInResponsePacket)
+TEST_F(VisaMessageBasedLoopbackTest, ReadMoreThanWritten_ReturnTimeoutErrorWithDataInResponsePacket)
 {
   std::string writeData = "Visa gRPC read/write test";
+  set_uint32_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TMO_VALUE, kFastTimeoutMsec);
   write(writeData);
   read(writeData.size() + 1, writeData, VI_ERROR_TMO);
 }
 
-TEST_F(VisaDriverLoopbackTest, ReadLessThanWritten_ReturnSuccess)
+TEST_F(VisaMessageBasedLoopbackTest, ReadLessThanWritten_ReturnSuccess)
 {
   std::string writeData = "Visa gRPC read/write test";
   write(writeData);
   read(writeData.size() - 1, writeData.substr(0, writeData.size() - 1), VI_SUCCESS_MAX_CNT);
 }
 
-TEST_F(VisaDriverLoopbackTest, ReadZeroBytes_ReturnSuccess)
+TEST_F(VisaMessageBasedLoopbackTest, ReadZeroBytes_ReturnSuccess)
 {
   std::string writeData = "Visa gRPC read/write test";
   write(writeData);
   read(0, "", VI_SUCCESS_MAX_CNT);
 }
 
-TEST_F(VisaDriverLoopbackTest, ReadWithoutWrite_ThrowsError)
+TEST_F(VisaMessageBasedLoopbackTest, ReadWithoutWrite_ThrowsError)
 {
+  set_uint32_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TMO_VALUE, kFastTimeoutMsec);
   EXPECT_THROW_DRIVER_ERROR(
     read(10, "", -1),
     VI_ERROR_TMO);
 }
 
-TEST_F(VisaDriverLoopbackTest, WriteSpecialData_ReadMatches)
+TEST_F(VisaMessageBasedLoopbackTest, WriteSpecialData_ReadMatches)
 {
   const char buffer[] = {'A', '\0', 'B', '\0', 'C'};
   std::string writeData(buffer, sizeof(buffer));
@@ -248,7 +264,7 @@ TEST_F(VisaDriverLoopbackTest, WriteSpecialData_ReadMatches)
   read(writeData.size(), writeData, VI_SUCCESS_MAX_CNT);
 }
 
-TEST_F(VisaDriverLoopbackTest, WriteWithTermChar_ReadMatches)
+TEST_F(VisaMessageBasedLoopbackTest, WriteWithTermChar_ReadMatches)
 {
   std::string writeData = "Hello\nWorld\n";
 
@@ -256,6 +272,284 @@ TEST_F(VisaDriverLoopbackTest, WriteWithTermChar_ReadMatches)
   set_bool_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TERMCHAR_EN, true);
   read(255, "Hello\n", VI_SUCCESS_TERM_CHAR);
   read(255, "World\n", VI_SUCCESS_TERM_CHAR);
+}
+
+TEST_F(VisaMessageBasedLoopbackTest, AssertTrigger_SendsCommand)
+{
+  set_bool_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TERMCHAR_EN, true);
+  set_uint32_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_IO_PROT, 4); // VI_PROT_4882_STRS 
+  assert_trigger(visa::TRIGGER_PROTOCOL_PROT_DEFAULT);
+  read(255, "*TRG\n", VI_SUCCESS_TERM_CHAR);
+}
+
+TEST_F(VisaMessageBasedLoopbackTest, Flush_ClearsBuffer)
+{
+  set_uint32_attribute(visa::VisaAttribute::VISA_ATTRIBUTE_TMO_VALUE, kFastTimeoutMsec);
+  write("Some data in the pipe\n");
+  flush(visa::BUFFER_MASK_IO_IN_BUF_DISCARD);
+  EXPECT_THROW_DRIVER_ERROR(
+    read(10, "", -1),
+    VI_ERROR_TMO);
+}
+
+class VisaRegisterBasedLoopbackTest : public VisaDriverApiTest {
+  public:
+  VisaRegisterBasedLoopbackTest() : allocatedBase_(0)
+  {
+  }
+  virtual ~VisaRegisterBasedLoopbackTest()
+  {
+  }
+
+  void SetUp() override
+  {
+    initialize_driver_session("PXI::MEMACC");
+    allocatedBase_ = allocate(1024);
+  }
+
+  void TearDown() override
+  {
+    free(allocatedBase_);
+    close_driver_session();
+  }
+
+  uint64_t allocate(uint64_t size)
+  {
+    auto response = client::mem_alloc_ex(GetStub(), GetNamedSession(), size);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    return response.offset();
+  }
+
+  void free(uint64_t offset)
+  {
+    auto response = client::mem_free(GetStub(), GetNamedSession(), offset);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  ViUInt8 in8(uint64_t offset)
+  {
+    auto response = client::in8(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    return response.value();
+  }
+
+  ViUInt16 in16(uint64_t offset)
+  {
+    auto response = client::in16(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    return response.value();
+  }
+
+  ViUInt32 in32(uint64_t offset)
+  {
+    auto response = client::in32(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    return response.value();
+  }
+
+  ViUInt64 in64(uint64_t offset)
+  {
+    auto response = client::in64(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    return response.value();
+  }
+
+  void out8(uint64_t offset, ViUInt8 value)
+  {
+    auto response = client::out8(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, value);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  void out16(uint64_t offset, ViUInt16 value)
+  {
+    auto response = client::out16(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, value);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  void out32(uint64_t offset, ViUInt32 value)
+  {
+    auto response = client::out32(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, value);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  void out64(uint64_t offset, ViUInt64 value)
+  {
+    auto response = client::out64(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, value);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  std::vector<ViUInt8> moveIn8(uint64_t offset, int length)
+  {
+    auto response = client::move_in8(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, length);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    std::vector<ViUInt8> retval;
+    const std::string& responseBuffer = response.buffer();
+    for (int i = 0; i < responseBuffer.length(); i++) {
+      retval.push_back(responseBuffer[i]);
+    }
+    return retval;
+  }
+
+  google::protobuf::RepeatedField<uint32_t> moveIn16(uint64_t offset, int length)
+  {
+    auto response = client::move_in16(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, length);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    return response.buffer();
+  }
+
+  google::protobuf::RepeatedField<uint32_t> moveIn32(uint64_t offset, int length)
+  {
+    auto response = client::move_in32(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, length);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    return response.buffer();
+  }
+
+  google::protobuf::RepeatedField<uint64_t> moveIn64(uint64_t offset, int length)
+  {
+    auto response = client::move_in64(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, length);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+    return response.buffer();
+  }
+
+  void moveOut8(uint64_t offset, ViUInt8 data[], int length)
+  {
+    std::string buffer(reinterpret_cast<char*>(data), length);
+    auto response = client::move_out8(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, buffer);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  void moveOut16(uint64_t offset, ViUInt16 data[], int length)
+  {
+    std::vector<uint32_t> buffer;
+    for (int i = 0; i < length; i++) {
+      buffer.push_back(data[i]);
+    }
+    auto response = client::move_out16(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, buffer);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  void moveOut32(uint64_t offset, ViUInt32 data[], int length)
+  {
+    std::vector<uint32_t> buffer;
+    for (int i = 0; i < length; i++) {
+      buffer.push_back(data[i]);
+    }
+    auto response = client::move_out32(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, buffer);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  void moveOut64(uint64_t offset, ViUInt64 data[], int length)
+  {
+    std::vector<uint64_t> buffer;
+    for (int i = 0; i < length; i++) {
+      buffer.push_back(data[i]);
+    }
+    auto response = client::move_out64(GetStub(), GetNamedSession(), visa::ADDRESS_SPACE_PXI_ALLOC_SPACE, allocatedBase_ + offset, buffer);
+    EXPECT_EQ(VI_SUCCESS, response.status());
+  }
+
+  private:
+    uint64_t allocatedBase_;
+};
+
+TEST_F(VisaRegisterBasedLoopbackTest, DataWrittenWithMoveOut8_In8_ReadsData)
+{
+  const int testLength = 5;
+  const int startingOffset = 11;
+  ViUInt8 buffer[testLength] = { 0x01, 0x02, 0x00, 0x03, 0xFE };
+  moveOut8(startingOffset, buffer, testLength);
+  for (int i = 0; i < testLength; ++i) {
+    EXPECT_EQ(buffer[i], in8(startingOffset + i));
+  }
+}
+
+TEST_F(VisaRegisterBasedLoopbackTest, DataWrittenWithMoveOut16_In16_ReadsData)
+{
+  const int testLength = 5;
+  const int startingOffset = 14;
+  ViUInt16 buffer[testLength] = { 0x0123, 0x0234, 0x00, 0x8675, 0xFEDC };
+  moveOut16(startingOffset, buffer, testLength);
+  for (int i = 0; i < testLength; ++i) {
+    EXPECT_EQ(buffer[i], in16(startingOffset + i * 2));
+  }
+}
+
+TEST_F(VisaRegisterBasedLoopbackTest, DataWrittenWithMoveOut32_In32_ReadsData)
+{
+  const int testLength = 5;
+  const int startingOffset = 16;
+  ViUInt32 buffer[testLength] = { 0x01234567, 0x02340234, 0x00, 0x86754321, 0xC0FFEE };
+  moveOut32(startingOffset, buffer, testLength);
+  for (int i = 0; i < testLength; ++i) {
+    EXPECT_EQ(buffer[i], in32(startingOffset + i * 4));
+  }
+}
+
+TEST_F(VisaRegisterBasedLoopbackTest, DataWrittenWithMoveOut64_In64_ReadsData)
+{
+  const int testLength = 5;
+  const int startingOffset = 16;
+  ViUInt64 buffer[testLength] = { 0x01234567DEADBEEF, 0x02340234, 0x00, 0x867543210ABCDEF, 0xC0FFEE };
+  moveOut64(startingOffset, buffer, testLength);
+  for (int i = 0; i < testLength; ++i) {
+    EXPECT_EQ(buffer[i], in64(startingOffset + i * 8));
+  }
+}
+
+TEST_F(VisaRegisterBasedLoopbackTest, DataWrittenWithOut8_MoveIn8_ReadsData)
+{
+  const int testLength = 5;
+  const int startingOffset = 11;
+  ViUInt8 buffer[testLength] = { 0x01, 0x02, 0x00, 0x03, 0xFE };
+  for (int i = 0; i < testLength; ++i) {
+    out8(startingOffset + i, buffer[i]);
+  }
+  auto readBuffer = moveIn8(startingOffset, testLength);
+  for (int i = 0; i < testLength; ++i) {
+    EXPECT_EQ(readBuffer[i], buffer[i]);
+  }
+}
+
+TEST_F(VisaRegisterBasedLoopbackTest, DataWrittenWithOut16_MoveIn16_ReadsData)
+{
+  const int testLength = 5;
+  const int startingOffset = 14;
+  ViUInt16 buffer[testLength] = { 0x0123, 0x0234, 0x00, 0x8675, 0xFEDC };
+  for (int i = 0; i < testLength; ++i) {
+    out16(startingOffset + i * 2, buffer[i]);
+  }
+  auto readBuffer = moveIn16(startingOffset, testLength);
+  for (int i = 0; i < testLength; ++i) {
+    EXPECT_EQ(readBuffer[i], buffer[i]);
+  }
+}
+
+TEST_F(VisaRegisterBasedLoopbackTest, DataWrittenWithOut32_MoveIn32_ReadsData)
+{
+  const int testLength = 5;
+  const int startingOffset = 16;
+  ViUInt32 buffer[testLength] = { 0x01234567, 0x02340234, 0x00, 0x86754321, 0xC0FFEE };
+  for (int i = 0; i < testLength; ++i) {
+    out32(startingOffset + i * 4, buffer[i]);
+  }
+  auto readBuffer = moveIn32(startingOffset, testLength);
+  for (int i = 0; i < testLength; ++i) {
+    EXPECT_EQ(readBuffer[i], buffer[i]);
+  }
+}
+
+TEST_F(VisaRegisterBasedLoopbackTest, DataWrittenWithOut64_MoveIn64_ReadsData)
+{
+  const int testLength = 5;
+  const int startingOffset = 16;
+  ViUInt64 buffer[testLength] = { 0x01234567DEADBEEF, 0x02340234, 0x00, 0x867543210ABCDEF, 0xC0FFEE };
+  for (int i = 0; i < testLength; ++i) {
+    out64(startingOffset + i * 8, buffer[i]);
+  }
+  auto readBuffer = moveIn64(startingOffset, testLength);
+  for (int i = 0; i < testLength; ++i) {
+    EXPECT_EQ(readBuffer[i], buffer[i]);
+  }
 }
 
 }  // namespace system
