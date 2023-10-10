@@ -20,6 +20,13 @@ inline bool status_ok(int32 status)
   return status >= VI_SUCCESS;
 }
 
+template <typename T>
+inline ViByte* get_buffer_data_pointer(T* buffer, ViUInt32 requestedCount)
+{
+  auto buffer_ptr = requestedCount ? &buffer->front() : nullptr;
+  return reinterpret_cast<ViByte*>(buffer_ptr);
+}
+
 class DriverErrorException : public std::runtime_error {
  private:
   int status_ = 0;
@@ -344,7 +351,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     std::string* buffer = response->mutable_buffer();
     buffer->resize(count);
     ViUInt32 return_count{};
-    auto status = library_->Read(vi, reinterpret_cast<ViByte*>(&buffer[0]), count, &return_count);
+    auto status = library_->Read(vi, get_buffer_data_pointer<std::string>(buffer, count), count, &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
@@ -461,7 +468,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     std::string* buffer = response->mutable_buffer();
     buffer->resize(w_length);
     ViUInt16 return_count{};
-    auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, reinterpret_cast<ViByte*>(&buffer[0]), &return_count);
+    auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, get_buffer_data_pointer<std::string>(buffer, w_length), &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
