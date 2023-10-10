@@ -228,8 +228,8 @@ namespace visa_grpc {
       case VI_ATTR_USB_SERIAL_NUM:
         return AttributeValueData::kValueString;
 
-      case VI_ATTR_USB_RECV_INTR_DATA:
       case VI_ATTR_BUFFER:
+      case VI_ATTR_USB_RECV_INTR_DATA:
         return AttributeValueData::kValueBytes;
 
       default:

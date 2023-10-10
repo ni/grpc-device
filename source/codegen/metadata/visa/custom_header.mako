@@ -23,8 +23,6 @@ for key, attr in attributes.items():
     ):
         u32_attrs.append(f"{attr_name}_32")
         u64_attrs.append(f"{attr_name}_64")
-    elif "VI_ATTR_BUFFER" == attr['name']:
-        bytes_attrs.append(attr_name)
     elif attr_type in ["ViUInt8"]:
         u8_attrs.append(attr_name)
     elif attr_type in ["ViInt16"]:
