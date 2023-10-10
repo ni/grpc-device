@@ -64,6 +64,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize) override;
   int32 GetAttributeU8(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8* attrVal) override;
   int32 GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize) override;
+  int32 GetAvailablePaths(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePaths[]) override;
   int32 GetAvailablePorts(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePorts[]) override;
   int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
   int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
@@ -161,6 +162,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using GetAttributeU64ArrayPtr = decltype(&RFmxInstr_GetAttributeU64Array);
   using GetAttributeU8Ptr = decltype(&RFmxInstr_GetAttributeU8);
   using GetAttributeU8ArrayPtr = decltype(&RFmxInstr_GetAttributeU8Array);
+  using GetAvailablePathsPtr = decltype(&RFmxInstr_GetAvailablePaths);
   using GetAvailablePortsPtr = decltype(&RFmxInstr_GetAvailablePorts);
   using GetErrorPtr = decltype(&RFmxInstr_GetError);
   using GetErrorStringPtr = decltype(&RFmxInstr_GetErrorString);
@@ -258,6 +260,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     GetAttributeU64ArrayPtr GetAttributeU64Array;
     GetAttributeU8Ptr GetAttributeU8;
     GetAttributeU8ArrayPtr GetAttributeU8Array;
+    GetAvailablePathsPtr GetAvailablePaths;
     GetAvailablePortsPtr GetAvailablePorts;
     GetErrorPtr GetError;
     GetErrorStringPtr GetErrorString;

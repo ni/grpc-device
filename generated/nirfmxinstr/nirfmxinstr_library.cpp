@@ -70,6 +70,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU64Array"));
   function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU8"));
   function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeU8Array"));
+  function_pointers_.GetAvailablePaths = reinterpret_cast<GetAvailablePathsPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAvailablePaths"));
   function_pointers_.GetAvailablePorts = reinterpret_cast<GetAvailablePortsPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAvailablePorts"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxInstr_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxInstr_GetErrorString"));
@@ -477,6 +478,14 @@ int32 NiRFmxInstrLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeU8Array.");
   }
   return function_pointers_.GetAttributeU8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxInstrLibrary::GetAvailablePaths(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePaths[])
+{
+  if (!function_pointers_.GetAvailablePaths) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAvailablePaths.");
+  }
+  return function_pointers_.GetAvailablePaths(instrumentHandle, selectorString, arraySize, availablePaths);
 }
 
 int32 NiRFmxInstrLibrary::GetAvailablePorts(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePorts[])

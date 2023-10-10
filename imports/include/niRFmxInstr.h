@@ -476,8 +476,8 @@ extern "C"
       char optionString[],
       niRFmxInstrHandle *handleOut,
       int32 *isNewSession);
-
-   int32 __stdcall RFmxInstr_InitializeWithChannel(
+	  
+	int32 __stdcall RFmxInstr_InitializeWithChannel(
        char resourceName[],
        char optionString[],
        char channelName[],
@@ -779,6 +779,43 @@ extern "C"
       int32 callbackVersion);
 
    int32 __stdcall RFmxInstr_UnregisterExternalRFSubsystemCallbacks(niRFmxInstrHandle instrumentHandle);
+
+   int32 __stdcall RFmxInstr_GetAvailablePaths(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      int32 arraySize,
+      char availablePaths[]
+   );
+
+// Fetch methods 
+
+int32 __stdcall RFmxInstr_FetchRawIQData(
+       niRFmxInstrHandle instrumentHandle,
+       char selectorString[],
+       float64 timeout,
+       int32 recordsToFetch,
+       int64 samplesToRead,
+       float64* x0,
+       float64* dx,
+       NIComplexSingle data[],
+       int32 arraySize,
+       int32* actualArraySize,
+       void* reserved);
+
+   int32 __stdcall RFmxInstr_FetchRawIQDataSplit(
+       niRFmxInstrHandle instrumentHandle,
+       char selectorString[],
+       float64 timeout,
+       int32 recordsToFetch,
+       int64 samplesToRead,
+       float64* x0,
+       float64* dx,
+       float32 I[],
+       float32 Q[],
+       int32 arraySize,
+       int32* actualArraySize,
+       void* reserved);
+
 
    // Build string methods
    int32 __stdcall RFmxInstr_BuildPortString2(
@@ -2006,7 +2043,7 @@ extern "C"
       char selectorString[],
       int32 attrVal
    );
-
+   
 #ifdef __cplusplus
 }
 #endif
@@ -2056,34 +2093,7 @@ extern "C"
        char channelName[],
        int32 attrVal
    );
-   int32 __stdcall RFmxInstr_FetchRawIQData(
-       niRFmxInstrHandle instrumentHandle,
-       char selectorString[],
-       float64 timeout,
-       int32 recordsToFetch,
-       int64 samplesToRead,
-       float64* x0,
-       float64* dx,
-       NIComplexSingle data[],
-       int32 arraySize,
-       int32* actualArraySize,
-       void* reserved
-   );
-
-   int32 __stdcall RFmxInstr_FetchRawIQDataSplit(
-       niRFmxInstrHandle instrumentHandle,
-       char selectorString[],
-       float64 timeout,
-       int32 recordsToFetch,
-       int64 samplesToRead,
-       float64* x0,
-       float64* dx,
-       float32 I[],
-       float32 Q[],
-       int32 arraySize,
-       int32* actualArraySize,
-       void* reserved
-   );
+  
 #ifdef __cplusplus
 }
 #endif
