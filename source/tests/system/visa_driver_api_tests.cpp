@@ -192,7 +192,7 @@ class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
   void write_async(const std::string& data)
   {
     auto asyncResponse = client::write_async(GetStub(), GetNamedSession(), data);
-    EXPECT_THAT((std::array{ VI_SUCCESS, VI_SUCCESS_SYNC }), testing::Contains(asyncResponse.status()));
+    EXPECT_THAT((std::array<ViStatus, 2>{ VI_SUCCESS, VI_SUCCESS_SYNC }), testing::Contains(asyncResponse.status()));
     auto waitResponse = client::wait_on_event(GetStub(), GetNamedSession(), VI_EVENT_IO_COMPLETION, kWaitTimeoutMsec);
     EXPECT_EQ(VI_SUCCESS, waitResponse.status());
     auto eventResponse = client::get_attribute_event(GetStub(), waitResponse.event_handle(), visa::VisaAttribute::VISA_ATTRIBUTE_STATUS);
@@ -216,7 +216,7 @@ class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
   void read_async(size_t count, const std::string& expectedData, ViStatus expectedStatus, bool requiresTerminate = false)
   {
     auto asyncResponse = client::read_async(GetStub(), GetNamedSession(), count);
-    EXPECT_THAT((std::array{ VI_SUCCESS, VI_SUCCESS_SYNC }), testing::Contains(asyncResponse.status()));
+    EXPECT_THAT((std::array<ViStatus, 2>{ VI_SUCCESS, VI_SUCCESS_SYNC }), testing::Contains(asyncResponse.status()));
     if (requiresTerminate) {
       std::this_thread::sleep_for(std::chrono::milliseconds(kFastTimeoutMsec));
       auto terminateResponse = client::terminate(GetStub(), GetNamedSession(), 0, asyncResponse.job_identifier());

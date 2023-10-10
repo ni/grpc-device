@@ -31,6 +31,14 @@ inline bool status_ok(int32 status)
   return status >= VI_SUCCESS;
 }
 
+template <typename T>
+inline ViByte* get_sized_buffer_data_pointer(T* buffer, ViUInt32 requestedCount)
+{
+  buffer->resize(requestedCount);
+  auto buffer_ptr = requestedCount ? &buffer->front() : nullptr;
+  return reinterpret_cast<ViByte*>(buffer_ptr);
+}
+
 class DriverErrorException : public std::runtime_error {
  private:
   int status_ = 0;
@@ -134,8 +142,8 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
         status = library->GetAttribute(vi, VI_ATTR_USB_RECV_INTR_SIZE, &byteCount);
         if (status >= VI_SUCCESS) {
           std::string* bytesAsString = mutableValue->mutable_value_bytes();
-          bytesAsString->resize(byteCount);
-          status = library->GetAttribute(vi, attributeID, &bytesAsString->front());
+          auto buffer_pointer = get_sized_buffer_data_pointer(bytesAsString, byteCount);
+          status = library->GetAttribute(vi, attributeID, buffer_pointer);
         }
       }
       else if (attributeID == VI_ATTR_BUFFER) {
@@ -499,13 +507,12 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
       return ConvertApiErrorStatusForViSession(context, VI_ERROR_IN_PROGRESS, vi);
     }
     VisaAsyncOperation& operation_data = *s_async_operations.emplace(s_async_operations.end(), vi);
-    auto buffer_size = count ? count : 1;
-    operation_data.buffer.resize(buffer_size);
+    auto buffer_pointer = get_sized_buffer_data_pointer(&operation_data.buffer, count);
     // We release the lock while starting the actual I/O.
     lock.unlock();
 
     ViJobId job_identifier{};
-    auto status = library_->ReadAsync(vi, &operation_data.buffer.front(), count, &job_identifier);
+    auto status = library_->ReadAsync(vi, buffer_pointer, count, &job_identifier);
     if (!status_ok(status)) {
       lock.lock();
       s_async_operations.remove_if(outstanding_job_lambda);
@@ -678,14 +685,13 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
       return ConvertApiErrorStatusForViSession(context, VI_ERROR_IN_PROGRESS, vi);
     }
     VisaAsyncOperation& operation_data = *s_async_operations.emplace(s_async_operations.end(), vi);
-    auto buffer_size = count ? count : 1;
-    operation_data.buffer.resize(buffer_size);
-    memcpy(operation_data.buffer.data(), reinterpret_cast<const ViByte*>(&request->buffer().front()), count);
+    auto buffer_pointer = get_sized_buffer_data_pointer(&operation_data.buffer, count);
+    memcpy(buffer_pointer, reinterpret_cast<const ViByte*>(&request->buffer().front()), count);
     // We release the lock while starting the actual I/O.
     lock.unlock();
 
     ViJobId job_identifier{};
-    auto status = library_->WriteAsync(vi, &operation_data.buffer.front(), count, &job_identifier);
+    auto status = library_->WriteAsync(vi, buffer_pointer, count, &job_identifier);
     if (!status_ok(status)) {
       lock.lock();
       s_async_operations.remove_if(outstanding_job_lambda);
