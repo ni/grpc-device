@@ -58,6 +58,7 @@ static void ServerObjectCleanup(visa_grpc::VisaService::LibrarySharedPtr library
   std::unique_lock<std::shared_mutex> lock(s_server_object_lock);
   library->Close(s_defaultRM);
   s_defaultRM = VI_NULL;
+  s_async_operations.clear();
 }
 
 static ViSession GetResourceManagerSession(visa_grpc::VisaService::ResourceRepositorySharedPtr repository, visa_grpc::VisaService::LibrarySharedPtr library)
@@ -506,8 +507,8 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     if (std::find_if(s_async_operations.begin(), s_async_operations.end(), outstanding_job_lambda) != s_async_operations.end()) {
       return ConvertApiErrorStatusForViSession(context, VI_ERROR_IN_PROGRESS, vi);
     }
-    VisaAsyncOperation& operation_data = *s_async_operations.emplace(s_async_operations.end(), vi);
-    auto buffer_pointer = get_sized_buffer_data_pointer(&operation_data.buffer, count);
+    auto operation_data_iter = s_async_operations.emplace(s_async_operations.end(), vi);
+    auto buffer_pointer = get_sized_buffer_data_pointer(&operation_data_iter->buffer, count);
     // We release the lock while starting the actual I/O.
     lock.unlock();
 
@@ -515,7 +516,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     auto status = library_->ReadAsync(vi, buffer_pointer, count, &job_identifier);
     if (!status_ok(status)) {
       lock.lock();
-      s_async_operations.remove_if(outstanding_job_lambda);
+      s_async_operations.erase(operation_data_iter);
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
@@ -684,8 +685,8 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     if (std::find_if(s_async_operations.begin(), s_async_operations.end(), outstanding_job_lambda) != s_async_operations.end()) {
       return ConvertApiErrorStatusForViSession(context, VI_ERROR_IN_PROGRESS, vi);
     }
-    VisaAsyncOperation& operation_data = *s_async_operations.emplace(s_async_operations.end(), vi);
-    auto buffer_pointer = get_sized_buffer_data_pointer(&operation_data.buffer, count);
+    auto operation_data_iter = s_async_operations.emplace(s_async_operations.end(), vi);
+    auto buffer_pointer = get_sized_buffer_data_pointer(&operation_data_iter->buffer, count);
     memcpy(buffer_pointer, reinterpret_cast<const ViByte*>(&request->buffer().front()), count);
     // We release the lock while starting the actual I/O.
     lock.unlock();
@@ -694,7 +695,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     auto status = library_->WriteAsync(vi, buffer_pointer, count, &job_identifier);
     if (!status_ok(status)) {
       lock.lock();
-      s_async_operations.remove_if(outstanding_job_lambda);
+      s_async_operations.erase(operation_data_iter);
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
