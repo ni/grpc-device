@@ -496,9 +496,10 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+    vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = request->count();
 
     auto outstanding_job_lambda = [&](const VisaAsyncOperation& v) { return v.vi == vi && v.event == VI_NULL; };
@@ -522,6 +523,9 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_status(status);
     response->set_job_identifier(job_identifier);
     return ::grpc::Status::OK;
+  }
+  catch (const std::bad_alloc&) {
+    return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
   }
   catch (nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
@@ -674,9 +678,10 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+    vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = static_cast<ViUInt32>(request->buffer().size());
 
     auto outstanding_job_lambda = [&](const VisaAsyncOperation& v) { return v.vi == vi && v.event == VI_NULL; };
@@ -701,6 +706,9 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     response->set_status(status);
     response->set_job_identifier(job_identifier);
     return ::grpc::Status::OK;
+  }
+  catch (const std::bad_alloc&) {
+    return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
   }
   catch (nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
