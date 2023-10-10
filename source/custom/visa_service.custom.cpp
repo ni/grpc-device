@@ -21,8 +21,9 @@ inline bool status_ok(int32 status)
 }
 
 template <typename T>
-inline ViByte* get_buffer_data_pointer(T* buffer, ViUInt32 requestedCount)
+inline ViByte* get_sized_buffer_data_pointer(T* buffer, ViUInt32 requestedCount)
 {
+  buffer->resize(requestedCount);
   auto buffer_ptr = requestedCount ? &buffer->front() : nullptr;
   return reinterpret_cast<ViByte*>(buffer_ptr);
 }
@@ -349,9 +350,9 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = request->count();
     std::string* buffer = response->mutable_buffer();
-    buffer->resize(count);
+    auto buffer_pointer = get_sized_buffer_data_pointer(buffer, count);
     ViUInt32 return_count{};
-    auto status = library_->Read(vi, get_buffer_data_pointer(buffer, count), count, &return_count);
+    auto status = library_->Read(vi, buffer_pointer, count, &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
@@ -466,9 +467,9 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     ViUInt16 w_index = request->w_index();
     ViUInt16 w_length = request->w_length();
     std::string* buffer = response->mutable_buffer();
-    buffer->resize(w_length);
+    auto buffer_pointer = get_sized_buffer_data_pointer(buffer, w_length);
     ViUInt16 return_count{};
-    auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, get_buffer_data_pointer(buffer, w_length), &return_count);
+    auto status = library_->UsbControlIn(vi, bm_request_type, b_request, w_value, w_index, w_length, buffer_pointer, &return_count);
     if (!status_ok(status) && return_count == 0) {
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
