@@ -205,27 +205,6 @@ namespace visa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status VisaService::CloseEvent(::grpc::ServerContext* context, const CloseEventRequest* request, CloseEventResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      ViEvent event_handle = request->event_handle();
-      auto status = library_->CloseEvent(event_handle);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, 0);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status VisaService::DisableEvent(::grpc::ServerContext* context, const DisableEventRequest* request, DisableEventResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1940,50 +1919,6 @@ namespace visa_grpc {
       }
       response->set_status(status);
       response->set_command_response(command_response);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status VisaService::WaitOnEvent(::grpc::ServerContext* context, const WaitOnEventRequest* request, WaitOnEventResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViEventType in_event_type;
-      switch (request->in_event_type_enum_case()) {
-        case visa_grpc::WaitOnEventRequest::InEventTypeEnumCase::kInEventType: {
-          in_event_type = static_cast<ViEventType>(request->in_event_type());
-          break;
-        }
-        case visa_grpc::WaitOnEventRequest::InEventTypeEnumCase::kInEventTypeRaw: {
-          in_event_type = static_cast<ViEventType>(request->in_event_type_raw());
-          break;
-        }
-        case visa_grpc::WaitOnEventRequest::InEventTypeEnumCase::IN_EVENT_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for in_event_type was not specified or out of range");
-          break;
-        }
-      }
-
-      ViUInt32 timeout = request->timeout();
-      ViEventType out_event_type {};
-      ViEvent event_handle {};
-      auto status = library_->WaitOnEvent(vi, in_event_type, timeout, &out_event_type, &event_handle);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      response->set_out_event_type(static_cast<visa_grpc::EventType>(out_event_type));
-      response->set_out_event_type_raw(out_event_type);
-      response->set_event_handle(event_handle);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

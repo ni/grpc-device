@@ -1,6 +1,5 @@
-#define NIVISA_USB
-#include <visa/visa_service.h>
 #include <visa/visa_attributes.h>
+#include <visa/visa_service.h>
 
 // Copied from NiVisaImpl.h
 #define VI_ATTR_RSRC_USER_ALIAS        (0x3FFF018EUL) /* ViString  */
@@ -11,8 +10,20 @@ namespace visa_grpc {
 using nidevice_grpc::converters::convert_from_grpc;
 using nidevice_grpc::converters::convert_to_grpc;
 
+struct VisaAsyncOperation {
+  ViSession vi;
+  ViEvent event;
+  std::vector<ViByte> buffer;
+
+  VisaAsyncOperation(ViSession vi_):
+    vi(vi_), event(VI_NULL)
+  {
+  }
+};
+
 static ViSession s_defaultRM = VI_NULL;
-static std::shared_mutex s_resource_manager_lock;
+static std::shared_mutex s_server_object_lock;
+static std::list<VisaAsyncOperation> s_async_operations;
 
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
@@ -42,9 +53,19 @@ class DriverErrorException : public std::runtime_error {
   }
 };
 
+static void ServerObjectCleanup(visa_grpc::VisaService::LibrarySharedPtr library)
+{
+  std::unique_lock<std::shared_mutex> lock(s_server_object_lock);
+  library->Close(s_defaultRM);
+  s_defaultRM = VI_NULL;
+  s_async_operations.clear();
+}
+
 static ViSession GetResourceManagerSession(visa_grpc::VisaService::ResourceRepositorySharedPtr repository, visa_grpc::VisaService::LibrarySharedPtr library)
 {
-  std::unique_lock<std::shared_mutex> lock(s_resource_manager_lock);
+  auto cleanup_lambda = [library](ViSession id) { ServerObjectCleanup(library); };
+
+  std::unique_lock<std::shared_mutex> lock(s_server_object_lock);
   if (!s_defaultRM) {
     ViStatus status = library->OpenDefaultRM(&s_defaultRM);
     if (!status_ok(status)) {
@@ -53,7 +74,6 @@ static ViSession GetResourceManagerSession(visa_grpc::VisaService::ResourceRepos
     // This should be cleaned up only when the user explicitly resets the server to close all sessions.
     std::string manager_name = "INTERNAL::VISA::RESOURCE_MANAGER";
     auto init_lambda = [&] () { return std::make_tuple(0, s_defaultRM); };
-    auto cleanup_lambda = [library](ViSession id) { library->Close(id); s_defaultRM = VI_NULL; };
     repository->add_session(manager_name, init_lambda, cleanup_lambda, nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED, NULL);
   }
   return s_defaultRM;
@@ -117,6 +137,32 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
       mutableValue->set_value_i16(val16);
       break;
     }
+    case AttributeValueData::kValueBytes: {
+      if (attributeID == VI_ATTR_USB_RECV_INTR_DATA) {
+        ViUInt16 byteCount;
+        status = library->GetAttribute(vi, VI_ATTR_USB_RECV_INTR_SIZE, &byteCount);
+        if (status >= VI_SUCCESS) {
+          std::string* bytesAsString = mutableValue->mutable_value_bytes();
+          auto buffer_pointer = get_sized_buffer_data_pointer(bytesAsString, byteCount);
+          status = library->GetAttribute(vi, attributeID, buffer_pointer);
+        }
+      }
+      else if (attributeID == VI_ATTR_BUFFER) {
+        ViUInt32 byteCount;
+        status = library->GetAttribute(vi, VI_ATTR_RET_COUNT_32, &byteCount);
+        auto matching_event_lambda = [&](const VisaAsyncOperation& v) { return v.event == vi; };
+        std::unique_lock<std::shared_mutex> lock(s_server_object_lock);
+        auto iter = std::find_if(s_async_operations.begin(), s_async_operations.end(), matching_event_lambda);
+        if (status >= VI_SUCCESS && iter != s_async_operations.end()) {
+          std::string* bytesAsString = mutableValue->mutable_value_bytes();
+          bytesAsString->assign(reinterpret_cast<char*>((*iter).buffer.data()), byteCount);
+        }
+      }
+      else {
+        status = VI_ERROR_NSUP_ATTR;
+      }
+      break;
+    }
     default:
       status = VI_ERROR_NSUP_ATTR;
       break;
@@ -138,6 +184,30 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+::grpc::Status VisaService::CloseEvent(::grpc::ServerContext* context, const CloseEventRequest* request, CloseEventResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    ViEvent event_handle = request->event_handle();
+    auto status = library_->CloseEvent(event_handle);
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForViSession(context, status, 0);
+    }
+    auto matching_event_lambda = [&](const VisaAsyncOperation& v) { return v.event == event_handle; };
+    std::unique_lock<std::shared_mutex> lock(s_server_object_lock);
+    s_async_operations.remove_if(matching_event_lambda);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
+  }
+}
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -427,27 +497,40 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
-#if 1
-  return ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-#else
+  ViSession vi = VI_NULL;
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+    vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = request->count();
-    void read_buffer{};
+
+    auto outstanding_job_lambda = [&](const VisaAsyncOperation& v) { return v.vi == vi && v.event == VI_NULL; };
+    std::unique_lock<std::shared_mutex> lock(s_server_object_lock);
+    // Allow only 1 outstanding job per session
+    if (std::find_if(s_async_operations.begin(), s_async_operations.end(), outstanding_job_lambda) != s_async_operations.end()) {
+      return ConvertApiErrorStatusForViSession(context, VI_ERROR_IN_PROGRESS, vi);
+    }
+    auto operation_data_iter = s_async_operations.emplace(s_async_operations.end(), vi);
+    auto buffer_pointer = get_sized_buffer_data_pointer(&operation_data_iter->buffer, count);
+    // We release the lock while starting the actual I/O.
+    lock.unlock();
+
     ViJobId job_identifier{};
-    auto status = library_->ReadAsync(vi, &read_buffer, count, &job_identifier);
+    auto status = library_->ReadAsync(vi, buffer_pointer, count, &job_identifier);
     if (!status_ok(status)) {
+      lock.lock();
+      s_async_operations.erase(operation_data_iter);
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     response->set_job_identifier(job_identifier);
     return ::grpc::Status::OK;
   }
+  catch (const std::bad_alloc&) {
+    return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
+  }
   catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
-#endif
 }
 
 //---------------------------------------------------------------------
@@ -539,32 +622,100 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+::grpc::Status VisaService::WaitOnEvent(::grpc::ServerContext* context, const WaitOnEventRequest* request, WaitOnEventResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    auto vi_grpc_session = request->vi();
+    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+    ViEventType in_event_type;
+    switch (request->in_event_type_enum_case()) {
+      case visa_grpc::WaitOnEventRequest::InEventTypeEnumCase::kInEventType: {
+        in_event_type = static_cast<ViEventType>(request->in_event_type());
+        break;
+      }
+      case visa_grpc::WaitOnEventRequest::InEventTypeEnumCase::kInEventTypeRaw: {
+        in_event_type = static_cast<ViEventType>(request->in_event_type_raw());
+        break;
+      }
+      case visa_grpc::WaitOnEventRequest::InEventTypeEnumCase::IN_EVENT_TYPE_ENUM_NOT_SET: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for in_event_type was not specified or out of range");
+        break;
+      }
+    }
+
+    ViUInt32 timeout = request->timeout();
+    ViEventType out_event_type {};
+    ViEvent event_handle {};
+    auto status = library_->WaitOnEvent(vi, in_event_type, timeout, &out_event_type, &event_handle);
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForViSession(context, status, vi);
+    }
+
+    if (out_event_type == VI_EVENT_IO_COMPLETION) {
+      auto outstanding_job_lambda = [&](const VisaAsyncOperation& v) { return v.vi == vi && v.event == VI_NULL; };
+      std::unique_lock<std::shared_mutex> lock(s_server_object_lock);
+      auto iter = std::find_if(s_async_operations.begin(), s_async_operations.end(), outstanding_job_lambda);
+      if (iter != s_async_operations.end()) {
+        (*iter).event = event_handle;
+      }
+    }
+
+    response->set_status(status);
+    response->set_out_event_type(static_cast<visa_grpc::EventType>(out_event_type));
+    response->set_out_event_type_raw(out_event_type);
+    response->set_event_handle(event_handle);
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
+  }
+}
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
 ::grpc::Status VisaService::WriteAsync(::grpc::ServerContext* context, const WriteAsyncRequest* request, WriteAsyncResponse* response)
 {
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
-#if 1
-  return ::grpc::Status(grpc::StatusCode::DO_NOT_USE, "Custom code not implemented yet");
-#else
+  ViSession vi = VI_NULL;
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-    ViByte* buffer = (ViByte*)request->buffer().c_str();
+    vi = session_repository_->access_session(vi_grpc_session.name());
     ViUInt32 count = static_cast<ViUInt32>(request->buffer().size());
+
+    auto outstanding_job_lambda = [&](const VisaAsyncOperation& v) { return v.vi == vi && v.event == VI_NULL; };
+    std::unique_lock<std::shared_mutex> lock(s_server_object_lock);
+    // Allow only 1 outstanding job per session
+    if (std::find_if(s_async_operations.begin(), s_async_operations.end(), outstanding_job_lambda) != s_async_operations.end()) {
+      return ConvertApiErrorStatusForViSession(context, VI_ERROR_IN_PROGRESS, vi);
+    }
+    auto operation_data_iter = s_async_operations.emplace(s_async_operations.end(), vi);
+    auto buffer_pointer = get_sized_buffer_data_pointer(&operation_data_iter->buffer, count);
+    memcpy(buffer_pointer, reinterpret_cast<const ViByte*>(&request->buffer().front()), count);
+    // We release the lock while starting the actual I/O.
+    lock.unlock();
+
     ViJobId job_identifier{};
-    auto status = library_->WriteAsync(vi, buffer, count, &job_identifier);
+    auto status = library_->WriteAsync(vi, buffer_pointer, count, &job_identifier);
     if (!status_ok(status)) {
+      lock.lock();
+      s_async_operations.erase(operation_data_iter);
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     response->set_job_identifier(job_identifier);
     return ::grpc::Status::OK;
   }
+  catch (const std::bad_alloc&) {
+    return ConvertApiErrorStatusForViSession(context, VI_ERROR_ALLOC, vi);
+  }
   catch (const nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
-#endif
 }
 
 }  // namespace visa_grpc

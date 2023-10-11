@@ -74,6 +74,7 @@ functions = {
     },
     'CloseEvent': {
         'cname': 'viClose',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1735,6 +1736,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'WaitOnEvent': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',

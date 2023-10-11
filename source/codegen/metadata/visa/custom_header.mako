@@ -16,9 +16,9 @@ bytes_attrs = []
 for key, attr in attributes.items():
     attr_type = attr["type"]
     attr_name = f"VI_ATTR_{attr['name']}"
-    if ("MEM_BASE" in attr['name']
+    if ("_BASE" in attr['name']
+      or "_COUNT" in attr['name']
       or "MEM_SIZE" in attr['name']
-      or "WIN_BASE" in attr['name']
       or "WIN_SIZE" in attr['name']
     ):
         u32_attrs.append(f"{attr_name}_32")
@@ -50,6 +50,9 @@ for key, attr in attributes.items():
 #ifndef VISA_ATTRIBUTE_TYPES_H
 #define VISA_ATTRIBUTE_TYPES_H
 
+#define NIVISA_USB
+
+#include <visa.h>
 #include <visa/visa_service.h>
 
 namespace ${namespace_prefix} {
