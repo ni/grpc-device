@@ -65,6 +65,7 @@ GetAttributeU32ArrayResponse get_attribute_u32_array(const StubPtr& stub, const 
 GetAttributeU64ArrayResponse get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
 GetAttributeU8Response get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
 GetAttributeU8ArrayResponse get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
+GetAvailablePathsResponse get_available_paths(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 GetAvailablePortsResponse get_available_ports(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 GetErrorStringResponse get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& error_code);

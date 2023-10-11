@@ -87,6 +87,7 @@ public:
   ::grpc::Status GetAttributeU64Array(::grpc::ServerContext* context, const GetAttributeU64ArrayRequest* request, GetAttributeU64ArrayResponse* response) override;
   ::grpc::Status GetAttributeU8(::grpc::ServerContext* context, const GetAttributeU8Request* request, GetAttributeU8Response* response) override;
   ::grpc::Status GetAttributeU8Array(::grpc::ServerContext* context, const GetAttributeU8ArrayRequest* request, GetAttributeU8ArrayResponse* response) override;
+  ::grpc::Status GetAvailablePaths(::grpc::ServerContext* context, const GetAvailablePathsRequest* request, GetAvailablePathsResponse* response) override;
   ::grpc::Status GetAvailablePorts(::grpc::ServerContext* context, const GetAvailablePortsRequest* request, GetAvailablePortsResponse* response) override;
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;

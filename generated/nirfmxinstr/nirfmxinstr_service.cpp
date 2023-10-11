@@ -1583,6 +1583,51 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::GetAvailablePaths(::grpc::ServerContext* context, const GetAvailablePathsRequest* request, GetAvailablePathsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->GetAvailablePaths(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string available_paths;
+        if (array_size > 0) {
+            available_paths.resize(array_size - 1);
+        }
+        status = library_->GetAvailablePaths(instrument, selector_string, array_size, (char*)available_paths.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string available_paths_utf8;
+        convert_to_grpc(available_paths, &available_paths_utf8);
+        response->set_available_paths(available_paths_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_available_paths()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::GetAvailablePorts(::grpc::ServerContext* context, const GetAvailablePortsRequest* request, GetAvailablePortsResponse* response)
   {
     if (context->IsCancelled()) {
