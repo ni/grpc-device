@@ -58,8 +58,8 @@ class VisaDriverApiTest : public ::testing::Test {
     client::raise_if_error(status, context);
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
 
-    EXPECT_TRUE(status.ok());
-    EXPECT_EQ(VI_SUCCESS, response.status());
+    ASSERT_TRUE(status.ok());
+    ASSERT_EQ(VI_SUCCESS, response.status());
   }
 
   void close_driver_session()
@@ -384,20 +384,15 @@ class VisaRegisterBasedLoopbackTest : public VisaDriverApiTest {
   void SetUp() override
   {
     initialize_driver_session("PXI::MEMACC");
-    allocatedBase_ = allocate(1024);
+    auto response = client::mem_alloc_ex(GetStub(), GetNamedSession(), 4096);
+    ASSERT_EQ(VI_SUCCESS, response.status());
+    allocatedBase_ = response.offset();
   }
 
   void TearDown() override
   {
     free(allocatedBase_);
     close_driver_session();
-  }
-
-  uint64_t allocate(uint64_t size)
-  {
-    auto response = client::mem_alloc_ex(GetStub(), GetNamedSession(), size);
-    EXPECT_EQ(VI_SUCCESS, response.status());
-    return response.offset();
   }
 
   void free(uint64_t offset)
