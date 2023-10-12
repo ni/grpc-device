@@ -95,6 +95,15 @@ TEST_F(VisaSessionTest, OpenWithErrorFromDriver_ReturnsDriverErrorWithUserErrorM
                                         kInvalidRsrc, kVisaErrorInstrumentDescriptorNotFoundMessage);
 }
 
+TEST_F(VisaSessionTest, OpenWithErrorFromDriver_ReturnsDriverErrorWithResourceDescriptor)
+{
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
+    visa::OpenResponse init_response;
+    call_open(kVisaTestInvalidInstrumentDescriptor, visa::LOCK_STATE_NO_LOCK, "", 0, &init_response);
+  },
+                                        kInvalidRsrc, kVisaTestInvalidInstrumentDescriptor);
+}
+
 TEST_F(VisaSessionTest, InvalidSession_CloseSession_ReturnsWarning)
 {
   nidevice_grpc::Session session;

@@ -170,18 +170,27 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   return status;
 }
 
-::grpc::Status VisaService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi)
+::grpc::Status ConvertVisaApiErrorStatus(::grpc::ServerContextBase* context, ViStatus status, ViObject vi, VisaService::LibrarySharedPtr library, const char* extraInfo = nullptr)
 {
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-  library_->StatusDesc(vi, status, &description[0]);
+  library->StatusDesc(vi, status, &description[0]);
+  // Although NI-VISA messages don't currently include context, we shouldn't assume it.
+  if (extraInfo != nullptr && description.find(extraInfo) == description.npos) {
+    nidevice_grpc::converters::trim_trailing_nulls(description);
+    description.append("\n");
+    description.append(extraInfo);
+  }
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
+}
+
+::grpc::Status VisaService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi)
+{
+  return ConvertVisaApiErrorStatus(context, status, vi, library_);
 }
 
 ::grpc::Status VisaService::ConvertApiErrorStatusForViObject(::grpc::ServerContextBase* context, int32_t status, ViObject vi)
 {
-  std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-  library_->StatusDesc(vi, status, &description[0]);
-  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
+  return ConvertVisaApiErrorStatus(context, status, vi, library_);
 }
 
 
@@ -335,7 +344,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     auto cleanup_lambda = [library](ViSession id) { library->Close(id); };
     int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
+      return ConvertVisaApiErrorStatus(context, status, rsrc_manager_handle, library_, instrument_descriptor);
     }
 
     ViUInt16 numEvents = 0;
@@ -431,7 +440,7 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
     std::string alias_if_exists(256 - 1, '\0');
     auto status = library_->ParseRsrc(rsrc_manager_handle, resource_name, &interface_type, &interface_number, (ViChar*)resource_class.data(), (ViChar*)expanded_unaliased_name.data(), (ViChar*)alias_if_exists.data());
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForViSession(context, status, rsrc_manager_handle);
+      return ConvertVisaApiErrorStatus(context, status, rsrc_manager_handle, library_, resource_name);
     }
     response->set_status(status);
     response->set_interface_type(interface_type);
