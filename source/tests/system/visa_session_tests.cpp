@@ -88,20 +88,24 @@ TEST_F(VisaSessionTest, OpenSession_CloseSession_ClosesDriverSession)
 
 TEST_F(VisaSessionTest, OpenWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
-    visa::OpenResponse init_response;
-    call_open(kVisaTestInvalidInstrumentDescriptor, visa::LOCK_STATE_NO_LOCK, "", 0, &init_response);
-  },
-                                        kInvalidRsrc, kVisaErrorInstrumentDescriptorNotFoundMessage);
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR(
+    {
+      visa::OpenResponse init_response;
+      call_open(kVisaTestInvalidInstrumentDescriptor, visa::LOCK_STATE_NO_LOCK, "", 0, &init_response);
+    },
+    kInvalidRsrc,
+    kVisaErrorInstrumentDescriptorNotFoundMessage);
 }
 
 TEST_F(VisaSessionTest, OpenWithErrorFromDriver_ReturnsDriverErrorWithResourceDescriptor)
 {
-  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR({
-    visa::OpenResponse init_response;
-    call_open(kVisaTestInvalidInstrumentDescriptor, visa::LOCK_STATE_NO_LOCK, "", 0, &init_response);
-  },
-                                        kInvalidRsrc, kVisaTestInvalidInstrumentDescriptor);
+  EXPECT_THROW_DRIVER_ERROR_WITH_SUBSTR(
+    {
+      visa::OpenResponse init_response;
+      call_open(kVisaTestInvalidInstrumentDescriptor, visa::LOCK_STATE_NO_LOCK, "", 0, &init_response);
+    },
+    kInvalidRsrc,
+    kVisaTestInvalidInstrumentDescriptor);
 }
 
 TEST_F(VisaSessionTest, InvalidSession_CloseSession_ReturnsWarning)
