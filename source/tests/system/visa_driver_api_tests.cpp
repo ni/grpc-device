@@ -164,7 +164,7 @@ class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
 
   void SetUp() override
   {
-    EXPECT_EQ(0, echoserver_.start());
+    ASSERT_EQ(0, echoserver_.start());
 
     std::string portNumber(std::to_string(echoserver_.get_server_port()));
     std::string instrument_descriptor("TCPIP0::localhost::" + portNumber + "::SOCKET");
@@ -175,6 +175,10 @@ class VisaMessageBasedLoopbackTest : public VisaDriverApiTest {
 
   void TearDown() override
   {
+    echoserver_.prepare_stop();
+    // Sending any single byte at this point will stop the server loop.
+    client::write(GetStub(), GetNamedSession(), " ");
+
     close_driver_session();
     echoserver_.stop();
   }
