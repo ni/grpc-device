@@ -21,12 +21,12 @@ class TcpEchoSession : public std::enable_shared_from_this<TcpEchoSession> {
 public:
     TcpEchoSession(SOCKET socket_fd)
     : socket_fd_(socket_fd)
-    , stop_session_(false)
+    , stop_echoing_(false)
     {
     }
 
-    ~TcpEchoSession() {
-        stop();
+    ~TcpEchoSession()
+    {
 #ifdef _WIN32
         closesocket(socket_fd_);
 #else
@@ -34,45 +34,39 @@ public:
 #endif
     }
 
-    void start()
+    void run()
     {
-        while (!stop_session_) {
-            do_read();
+        while (!stop_echoing_) {
+            do_echo();
         }
     }
 
-    void stop()
+    void prepare_stop()
     {
-        stop_session_ = true;
+        stop_echoing_ = true;
     }
 
 private:
-    void do_read()
+    void do_echo()
     {
         auto self(shared_from_this());
         char buffer[max_length] = {0};
         int n = recv(socket_fd_, buffer, max_length, 0);
         if (n > 0) {
-            do_write(buffer, n);
+            send(socket_fd_, buffer, n, 0);
         }
-    }
-
-    void do_write(const char* data, int length)
-    {
-        auto self(shared_from_this());
-        int n = send(socket_fd_, data, length, 0);
     }
 
     static const int max_length = 256;
     SOCKET socket_fd_;
-    bool stop_session_;
+    bool stop_echoing_;
 };
 
 class TcpEchoServer
 {
 public:
     TcpEchoServer()
-    : server_fd_(-1)
+    : listening_fd_(-1)
     {
     }
 
@@ -85,6 +79,11 @@ public:
         return start_server_session();
     }
 
+    void prepare_stop()
+    {
+        session_->prepare_stop();
+    }
+
     void stop()
     {
         close_server_session();
@@ -94,7 +93,7 @@ public:
     {
         struct sockaddr_in assigned_address;
         socklen_t len = sizeof(assigned_address);
-        if (getsockname(server_fd_, (struct sockaddr *)&assigned_address, &len) == -1) {
+        if (getsockname(listening_fd_, (struct sockaddr *)&assigned_address, &len) == -1) {
             return -1;
         }
         else {
@@ -109,8 +108,8 @@ private:
         WSADATA wsa_data;
         WSAStartup(MAKEWORD(2, 2), &wsa_data);
 #endif
-        server_fd_ = socket(AF_INET, SOCK_STREAM, 0);
-        if (server_fd_ == -1) {
+        listening_fd_ = socket(AF_INET, SOCK_STREAM, 0);
+        if (listening_fd_ == -1) {
             return -1;
         }
         struct sockaddr_in server_address;
@@ -119,43 +118,39 @@ private:
         server_address.sin_addr.s_addr = inet_addr("127.0.0.1");
         server_address.sin_port = htons(0);
 
-        if (bind(server_fd_, (struct sockaddr*)&server_address, sizeof(server_address)) != 0) {
+        if (bind(listening_fd_, (struct sockaddr*)&server_address, sizeof(server_address)) != 0) {
             return -1;
         }
-        server_thread_ = std::thread(&TcpEchoServer::run_server, this, server_fd_);
-        return 0;
-    }
-
-    void run_server(SOCKET server_fd) {
-        listen(server_fd, 1);
-        SOCKET client_fd = accept(server_fd, NULL, NULL);
-        if (client_fd == -1) {
-            return;
+        if (listen(listening_fd_, 1) != 0) {
+            return -1;
         }
-        std::thread([this, client_fd]() {
-            handle_client(client_fd);
-        }).detach();
+        server_thread_ = std::thread(&TcpEchoServer::handle_client, this);
+        return 0;
     }
 
     void close_server_session()
     {
-        session_->stop();
         server_thread_.join();
+        session_.reset();
+
 #ifdef _WIN32
-        closesocket(server_fd_);
+        closesocket(listening_fd_);
         WSACleanup();
 #else
-        close(server_fd_);
+        close(listening_fd_);
 #endif
     }
 
-    void handle_client(SOCKET client_fd)
+    void handle_client()
     {
-        session_ = std::make_shared<TcpEchoSession>(client_fd);
-        session_->start();
+        SOCKET client_fd = accept(listening_fd_, NULL, NULL);
+        if (client_fd != -1) {
+            session_ = std::make_shared<TcpEchoSession>(client_fd);
+            session_->run();
+        }
     }
 
-    SOCKET server_fd_;
+    SOCKET listening_fd_;
     std::thread server_thread_;
     std::shared_ptr<TcpEchoSession> session_;
 };
