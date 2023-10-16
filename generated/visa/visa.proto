@@ -1076,7 +1076,6 @@ message PxiReserveTriggersRequest {
 
 message PxiReserveTriggersResponse {
   int32 status = 1;
-  sint32 failure_index = 2;
 }
 
 message ReadRequest {
