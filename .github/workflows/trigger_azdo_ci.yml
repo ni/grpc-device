@@ -54,10 +54,7 @@ jobs:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device'
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-        azure-pipeline-variables: '{"BRANCH": "main", 
-                                    "EXPORT_NAME": "ni-grpc-device", 
-                                    "PHASE": "d"} 
-                                  '
+        azure-pipeline-variables: '{"BRANCH": "main", "EXPORT_NAME": "ni-grpc-device", "PHASE": "d"}'
                                   
     - name: Trigger New Release CI 
       uses: Azure/pipelines@v1
@@ -66,8 +63,4 @@ jobs:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device'
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-        azure-pipeline-variables: '{"BRANCH": "releases", 
-                                    "EXPORT_NAME": "ni-grpc-device", 
-                                    "PHASE": "f", 
-                                    "RELEASE_BRANCH_OPTION": "--release-branch"} 
-                                  '
+        azure-pipeline-variables: '{"BRANCH": "releases", "EXPORT_NAME": "ni-grpc-device", "PHASE": "f", "RELEASE_BRANCH_OPTION": "--release-branch"}'
