@@ -48,7 +48,7 @@ jobs:
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
 
     - name: Trigger New Main CI 
-      uses: Azure/pipelines@v1
+      uses: Azure/pipelines@v1.2
       if: ${{ github.repository == 'ni/grpc-device' && github.event.workflow_run.head_branch == 'main' }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
@@ -57,7 +57,7 @@ jobs:
         azure-pipeline-variables: '{"BRANCH": "main", "EXPORT_NAME": "ni-grpc-device", "PHASE": "d"}'
                                   
     - name: Trigger New Release CI 
-      uses: Azure/pipelines@v1
+      uses: Azure/pipelines@v1.2
       if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.event.workflow_run.head_branch, 'releases') }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
