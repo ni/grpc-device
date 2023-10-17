@@ -1367,7 +1367,6 @@ functions = {
         'status_expression': '0'
     },
     'PxiReserveTriggers': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1401,6 +1400,7 @@ functions = {
                 'direction': 'out',
                 'include_in_proto': False,
                 'name': 'failureIndex',
+                'return_on_error_key': 'ni-failure-index',
                 'type': 'ViInt16'
             }
         ],

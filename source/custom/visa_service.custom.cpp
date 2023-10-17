@@ -7,10 +7,8 @@
 #define VI_ATTR_SUP_EVENTS             (0x3FFF019DUL) /* ViAEventType */
 
 namespace visa_grpc {
-using nidevice_grpc::converters::calculate_linked_array_size;
 using nidevice_grpc::converters::convert_from_grpc;
 using nidevice_grpc::converters::convert_to_grpc;
-using nidevice_grpc::converters::MatchState;
 
 struct VisaAsyncOperation {
   ViSession vi;
@@ -466,56 +464,6 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
   }
   catch (const DriverErrorException& ex) {
     return ConvertApiErrorStatusForViSession(context, ex.status(), VI_NULL);
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status VisaService::PxiReserveTriggers(::grpc::ServerContext* context, const PxiReserveTriggersRequest* request, PxiReserveTriggersResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-    auto cnt_determine_from_sizes = std::array<int, 2>
-    {
-      request->trig_buses_size(),
-      request->trig_lines_size()
-    };
-    const auto cnt_size_calculation = calculate_linked_array_size(cnt_determine_from_sizes, false);
-
-    if (cnt_size_calculation.match_state == MatchState::MISMATCH) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [trig_buses, trig_lines] do not match");
-    }
-    auto cnt = cnt_size_calculation.size;
-
-    auto trig_buses_request = request->trig_buses();
-    std::vector<ViInt16> trig_buses;
-    std::transform(
-      trig_buses_request.begin(),
-      trig_buses_request.end(),
-      std::back_inserter(trig_buses),
-      [](auto x) { return (ViInt16)x; }); 
-    auto trig_lines_request = request->trig_lines();
-    std::vector<ViInt16> trig_lines;
-    std::transform(
-      trig_lines_request.begin(),
-      trig_lines_request.end(),
-      std::back_inserter(trig_lines),
-      [](auto x) { return (ViInt16)x; }); 
-    ViInt16 failure_index {};
-    auto status = library_->PxiReserveTriggers(vi, cnt, trig_buses.data(), trig_lines.data(), &failure_index);
-    if (!status_ok(status)) {
-      context->AddTrailingMetadata("ni-failing-index", std::to_string(failure_index));
-      return ConvertApiErrorStatusForViSession(context, status, vi);
-    }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::NonDriverException& ex) {
-    return ex.GetStatus();
   }
 }
 
