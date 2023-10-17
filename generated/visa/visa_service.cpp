@@ -1632,11 +1632,11 @@ namespace visa_grpc {
         [](auto x) { return (ViInt16)x; }); 
       ViInt16 failure_index {};
       auto status = library_->PxiReserveTriggers(vi, cnt, trig_buses.data(), trig_lines.data(), &failure_index);
+      context->AddTrailingMetadata("ni-failure-index", std::to_string(failure_index));
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      response->set_failure_index(failure_index);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
