@@ -83,7 +83,6 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.GetSelfCalibrateLastTemperature = reinterpret_cast<GetSelfCalibrateLastTemperaturePtr>(shared_library_->get_function_pointer("RFmxInstr_GetSelfCalibrateLastTemperature"));
   function_pointers_.GetSignalConfigurationNames = reinterpret_cast<GetSignalConfigurationNamesPtr>(shared_library_->get_function_pointer("RFmxInstr_GetSignalConfigurationNames"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxInstr_Initialize"));
-  function_pointers_.InitializeWithChannel = reinterpret_cast<InitializeWithChannelPtr>(shared_library_->get_function_pointer("RFmxInstr_InitializeWithChannel"));
   function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxInstr_InitializeFromNIRFSASession"));
   function_pointers_.InitializeFromNIRFSASessionArray = reinterpret_cast<InitializeFromNIRFSASessionArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_InitializeFromNIRFSASessionArray"));
   function_pointers_.IsSelfCalibrateValid = reinterpret_cast<IsSelfCalibrateValidPtr>(shared_library_->get_function_pointer("RFmxInstr_IsSelfCalibrateValid"));
@@ -582,14 +581,6 @@ int32 NiRFmxInstrLibrary::Initialize(char resourceName[], char optionString[], n
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_Initialize.");
   }
   return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
-}
-
-int32 NiRFmxInstrLibrary::InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession)
-{
-  if (!function_pointers_.InitializeWithChannel) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_InitializeWithChannel.");
-  }
-  return function_pointers_.InitializeWithChannel(resourceName, optionString, channelName, handleOut, isNewSession);
 }
 
 int32 NiRFmxInstrLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)

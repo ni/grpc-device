@@ -74,7 +74,6 @@ service NiRFmxInstr {
   rpc GetSelfCalibrateLastTemperature(GetSelfCalibrateLastTemperatureRequest) returns (GetSelfCalibrateLastTemperatureResponse);
   rpc GetSignalConfigurationNames(GetSignalConfigurationNamesRequest) returns (GetSignalConfigurationNamesResponse);
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
-  rpc InitializeWithChannel(InitializeWithChannelRequest) returns (InitializeWithChannelResponse);
   rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
   rpc InitializeFromNIRFSASessionArray(InitializeFromNIRFSASessionArrayRequest) returns (InitializeFromNIRFSASessionArrayResponse);
   rpc IsSelfCalibrateValid(IsSelfCalibrateValidRequest) returns (IsSelfCalibrateValidResponse);
@@ -1080,22 +1079,6 @@ message InitializeRequest {
 }
 
 message InitializeResponse {
-  int32 status = 1;
-  nidevice_grpc.Session instrument = 2;
-  int32 is_new_session = 3;
-  string error_message = 4 [deprecated = true];
-  bool new_session_initialized = 5;
-}
-
-message InitializeWithChannelRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  string option_string = 3;
-  string channel_name = 4;
-  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 5;
-}
-
-message InitializeWithChannelResponse {
   int32 status = 1;
   nidevice_grpc.Session instrument = 2;
   int32 is_new_session = 3;
