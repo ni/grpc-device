@@ -87,6 +87,54 @@ attributes = {
         'name': 'PXI_SLOTPATH',
         'type': 'ViString'
     },
+    -1073806736: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' The name of the CA that signed the certificate . For an LDevId this will indicate the name of the PKI CA. '
+        },
+        'name': 'TCPIP_SERVER_CERT_ISSUER_NAME',
+        'type': 'ViString'
+    },
+    -1073806735: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' The subject field from the certificate. That is, the entity associated with the public key in the certificate. '
+        },
+        'name': 'TCPIP_SERVER_CERT_SUBJECT_NAME',
+        'type': 'ViString'
+    },
+    -1073806734: {
+        'access': 'read only',
+        'documentation': {
+            'description': " The expiration date of the server certificate. The form is UTC Time 'YYMMDDhhmm[ss]Z'. "
+        },
+        'name': 'TCPIP_SERVER_CERT_EXPIRATION_DATE',
+        'type': 'ViString'
+    },
+    -1073806732: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' Returns a string that indicates the SASL mechanism used to authenticate the client. The string is as defined by IANA in: https://www.iana.org/assignments/sasl-mechanisms. '
+        },
+        'name': 'TCPIP_SASL_MECHANISM',
+        'type': 'ViString'
+    },
+    -1073806731: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' Returns a string that indicates the cipher suite used by TLS, which tells the user something about the security of the connection. For details, refer to https://www.iana.org/assignments/tls-parameters. For example, look at TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384. '
+        },
+        'name': 'TCPIP_TLS_CIPHER_SUITE',
+        'type': 'ViString'
+    },
+    -1073806730: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' The full text of the server certificate in RFC 5652 PEM format. The passed in data buffer must be of size at least equal to the Certificate Size attribute (VI_ATTR_TCPIP_SERVER_CERT_SIZE). '
+        },
+        'name': 'TCPIP_SERVER_CERT',
+        'type': 'ViUInt8 []'
+    },
     -1073790910: {
         'access': 'read only',
         'documentation': {
@@ -1350,6 +1398,38 @@ attributes = {
         'name': 'PXI_ALLOW_WRITE_COMBINE',
         'type': 'ViBoolean'
     },
+    1073676871: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' The number of slots occupied by this device. The value for non-PXI-Express devices is always 1. '
+        },
+        'name': 'PXI_SLOT_WIDTH',
+        'type': 'ViUInt16'
+    },
+    1073676872: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' The number of slots occupied by the module to the left of the slot where this devfice connects to the PXI backplane. The value for non-PXI-Express devices is always 0. '
+        },
+        'name': 'PXI_SLOT_OFFSET',
+        'type': 'ViUInt16'
+    },
+    1073676915: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' Indicates whether the certificate expires. Note that this may indicate that the certificate is from an IDevID. '
+        },
+        'name': 'TCPIP_SERVER_CERT_IS_PERPETUAL',
+        'type': 'ViBoolean'
+    },
+    1073676919: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' The buffer size of the buffer required to hold the full text of the server certificate in RFC 5652 PEM format. '
+        },
+        'name': 'TCPIP_SERVER_CERT_SIZE',
+        'type': 'ViUInt32'
+    },
     1073677056: {
         'access': 'read-write',
         'documentation': {
@@ -1380,6 +1460,14 @@ attributes = {
             'description': ' Specifies whether this resource uses the HiSLIP protocol. '
         },
         'name': 'TCPIP_IS_HISLIP',
+        'type': 'ViBoolean'
+    },
+    1073677060: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' This is used to control and indicate if the communication is encrypted. '
+        },
+        'name': 'TCPIP_HISLIP_ENCRYPTION_EN',
         'type': 'ViBoolean'
     },
     1073692678: {

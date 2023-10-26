@@ -147,6 +147,15 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
           status = library->GetAttribute(vi, attributeID, buffer_pointer);
         }
       }
+      else if (attributeID == VI_ATTR_TCPIP_SERVER_CERT) {
+        ViUInt32 byteCount;
+        status = library->GetAttribute(vi, VI_ATTR_TCPIP_SERVER_CERT_SIZE, &byteCount);
+        if (status >= VI_SUCCESS) {
+          std::string* bytesAsString = mutableValue->mutable_value_bytes();
+          auto buffer_pointer = get_sized_buffer_data_pointer(bytesAsString, byteCount);
+          status = library->GetAttribute(vi, attributeID, buffer_pointer);
+        }
+      }
       else if (attributeID == VI_ATTR_BUFFER) {
         ViUInt32 byteCount;
         status = library->GetAttribute(vi, VI_ATTR_RET_COUNT_32, &byteCount);
