@@ -107,6 +107,8 @@ namespace visa_grpc {
       case VI_ATTR_PXI_MEM_TYPE_BAR3:
       case VI_ATTR_PXI_MEM_TYPE_BAR4:
       case VI_ATTR_PXI_MEM_TYPE_BAR5:
+      case VI_ATTR_PXI_SLOT_OFFSET:
+      case VI_ATTR_PXI_SLOT_WIDTH:
       case VI_ATTR_RD_BUF_OPER_MODE:
       case VI_ATTR_RSRC_MANF_ID:
       case VI_ATTR_SIGP_STATUS_ID:
@@ -161,6 +163,7 @@ namespace visa_grpc {
       case VI_ATTR_RSRC_SPEC_VERSION:
       case VI_ATTR_TCPIP_HISLIP_MAX_MESSAGE_KB:
       case VI_ATTR_TCPIP_HISLIP_VERSION:
+      case VI_ATTR_TCPIP_SERVER_CERT_SIZE:
       case VI_ATTR_TMO_VALUE:
       case VI_ATTR_VXI_TRIG_STATUS:
       case VI_ATTR_VXI_TRIG_SUPPORT:
@@ -206,10 +209,12 @@ namespace visa_grpc {
       case VI_ATTR_PXI_IS_EXPRESS:
       case VI_ATTR_SEND_END_EN:
       case VI_ATTR_SUPPRESS_END_EN:
+      case VI_ATTR_TCPIP_HISLIP_ENCRYPTION_EN:
       case VI_ATTR_TCPIP_HISLIP_OVERLAP_EN:
       case VI_ATTR_TCPIP_IS_HISLIP:
       case VI_ATTR_TCPIP_KEEPALIVE:
       case VI_ATTR_TCPIP_NODELAY:
+      case VI_ATTR_TCPIP_SERVER_CERT_IS_PERPETUAL:
       case VI_ATTR_TERMCHAR_EN:
         return AttributeValueData::kValueBool;
 
@@ -225,10 +230,16 @@ namespace visa_grpc {
       case VI_ATTR_TCPIP_ADDR:
       case VI_ATTR_TCPIP_DEVICE_NAME:
       case VI_ATTR_TCPIP_HOSTNAME:
+      case VI_ATTR_TCPIP_SASL_MECHANISM:
+      case VI_ATTR_TCPIP_SERVER_CERT_EXPIRATION_DATE:
+      case VI_ATTR_TCPIP_SERVER_CERT_ISSUER_NAME:
+      case VI_ATTR_TCPIP_SERVER_CERT_SUBJECT_NAME:
+      case VI_ATTR_TCPIP_TLS_CIPHER_SUITE:
       case VI_ATTR_USB_SERIAL_NUM:
         return AttributeValueData::kValueString;
 
       case VI_ATTR_BUFFER:
+      case VI_ATTR_TCPIP_SERVER_CERT:
       case VI_ATTR_USB_RECV_INTR_DATA:
         return AttributeValueData::kValueBytes;
 
