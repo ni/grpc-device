@@ -287,11 +287,6 @@ int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* ha
   return RFmxInstr_Initialize(resourceName, optionString, handleOut, isNewSession);
 }
 
-int32 InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession)
-{
-  return RFmxInstr_InitializeWithChannel(resourceName, optionString, channelName, handleOut, isNewSession);
-}
-
 int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
 {
   return RFmxInstr_InitializeFromNIRFSASession(nirfsaSession, handleOut);

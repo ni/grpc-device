@@ -2112,48 +2112,6 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrService::InitializeWithChannel(::grpc::ServerContext* context, const InitializeWithChannelRequest* request, InitializeWithChannelResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
-      char* resource_name = (char*)resource_name_mbcs.c_str();
-      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
-      char* option_string = (char*)option_string_mbcs.c_str();
-      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
-      char* channel_name = (char*)channel_name_mbcs.c_str();
-      auto initialization_behavior = request->initialization_behavior();
-
-      int32 is_new_session {};
-      bool new_session_initialized {};
-      auto init_lambda = [&] () {
-        niRFmxInstrHandle instrument;
-        auto status = library_->InitializeWithChannel(resource_name, option_string, channel_name, &instrument, &is_new_session);
-        return std::make_tuple(status, instrument);
-      };
-      std::string grpc_device_session_name = request->session_name();
-      // Capture the library shared_ptr by value. Do not capture `this` or any references.
-      LibrarySharedPtr library = library_;
-      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXINSTR_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
-      }
-      response->set_status(status);
-      response->mutable_instrument()->set_name(grpc_device_session_name);
-      response->set_is_new_session(is_new_session);
-      response->set_new_session_initialized(new_session_initialized);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response)
   {
     if (context->IsCancelled()) {

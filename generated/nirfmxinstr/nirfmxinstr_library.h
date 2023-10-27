@@ -77,7 +77,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 GetSelfCalibrateLastTemperature(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, float64* temperature) override;
   int32 GetSignalConfigurationNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char signalNames[], int32 signalNamesSize, int32* actualSignalNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize) override;
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) override;
-  int32 InitializeWithChannel(char resourceName[], char optionString[], char channelName[], niRFmxInstrHandle* handleOut, int32* isNewSession) override;
   int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut) override;
   int32 InitializeFromNIRFSASessionArray(uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* handleOut) override;
   int32 IsSelfCalibrateValid(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* selfCalibrateValid, int32* validSteps) override;
@@ -175,7 +174,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using GetSelfCalibrateLastTemperaturePtr = decltype(&RFmxInstr_GetSelfCalibrateLastTemperature);
   using GetSignalConfigurationNamesPtr = decltype(&RFmxInstr_GetSignalConfigurationNames);
   using InitializePtr = decltype(&RFmxInstr_Initialize);
-  using InitializeWithChannelPtr = decltype(&RFmxInstr_InitializeWithChannel);
   using InitializeFromNIRFSASessionPtr = decltype(&RFmxInstr_InitializeFromNIRFSASession);
   using InitializeFromNIRFSASessionArrayPtr = decltype(&RFmxInstr_InitializeFromNIRFSASessionArray);
   using IsSelfCalibrateValidPtr = decltype(&RFmxInstr_IsSelfCalibrateValid);
@@ -273,7 +271,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     GetSelfCalibrateLastTemperaturePtr GetSelfCalibrateLastTemperature;
     GetSignalConfigurationNamesPtr GetSignalConfigurationNames;
     InitializePtr Initialize;
-    InitializeWithChannelPtr InitializeWithChannel;
     InitializeFromNIRFSASessionPtr InitializeFromNIRFSASession;
     InitializeFromNIRFSASessionArrayPtr InitializeFromNIRFSASessionArray;
     IsSelfCalibrateValidPtr IsSelfCalibrateValid;

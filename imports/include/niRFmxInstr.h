@@ -476,13 +476,6 @@ extern "C"
       char optionString[],
       niRFmxInstrHandle *handleOut,
       int32 *isNewSession);
-	  
-	int32 __stdcall RFmxInstr_InitializeWithChannel(
-       char resourceName[],
-       char optionString[],
-       char channelName[],
-       niRFmxInstrHandle* handleOut,
-       int32* isNewSession);
 
    int32 __stdcall RFmxInstr_InitializeFromNIRFSASession(
       uInt32 NIRFSASession,
