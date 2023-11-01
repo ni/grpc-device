@@ -150,7 +150,7 @@ try:
             digital_edge_source_mapped=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0,
             digital_edge=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING,
             trigger_delay=0.0,
-            enable_trigger=True
+            enable_trigger=True,
         )
     )
 
@@ -233,7 +233,9 @@ try:
         nirfmxnr_types.SelectMeasurementsRequest(
             instrument=instr,
             selector_string="",
-            measurements=nirfmxnr_types.MEASUREMENT_TYPES_ACP | nirfmxnr_types.MEASUREMENT_TYPES_MODACC | nirfmxnr_types.MEASUREMENT_TYPES_TXP,
+            measurements=nirfmxnr_types.MEASUREMENT_TYPES_ACP
+            | nirfmxnr_types.MEASUREMENT_TYPES_MODACC
+            | nirfmxnr_types.MEASUREMENT_TYPES_TXP,
             enable_all_traces=True,
         )
     )
@@ -365,16 +367,26 @@ try:
     )
     check_for_warning(acp_fetch_offset_measurement_array_response, instr)
     array_size = len(acp_fetch_offset_measurement_array_response.lower_relative_power)
-    lower_relative_power = acp_fetch_offset_measurement_array_response.lower_relative_power
-    upper_relative_power = acp_fetch_offset_measurement_array_response.upper_relative_power
-    lower_absolute_power = acp_fetch_offset_measurement_array_response.lower_absolute_power
-    upper_absolute_power = acp_fetch_offset_measurement_array_response.upper_absolute_power
+    lower_relative_power = (
+        acp_fetch_offset_measurement_array_response.lower_relative_power
+    )
+    upper_relative_power = (
+        acp_fetch_offset_measurement_array_response.upper_relative_power
+    )
+    lower_absolute_power = (
+        acp_fetch_offset_measurement_array_response.lower_absolute_power
+    )
+    upper_absolute_power = (
+        acp_fetch_offset_measurement_array_response.upper_absolute_power
+    )
 
-    acp_fetch_component_carrier_measurement_response = client.ACPFetchComponentCarrierMeasurement(
-        nirfmxnr_types.ACPFetchComponentCarrierMeasurementRequest(
-            instrument=instr,
-            selector_string="",
-            timeout=10.0,
+    acp_fetch_component_carrier_measurement_response = (
+        client.ACPFetchComponentCarrierMeasurement(
+            nirfmxnr_types.ACPFetchComponentCarrierMeasurementRequest(
+                instrument=instr,
+                selector_string="",
+                timeout=10.0,
+            )
         )
     )
     check_for_warning(acp_fetch_component_carrier_measurement_response, instr)
@@ -393,7 +405,9 @@ try:
         check_for_warning(acp_fetch_relative_powers_trace_response, instr)
         x0 = acp_fetch_relative_powers_trace_response.x0
         dx = acp_fetch_relative_powers_trace_response.dx
-        relative_powers_trace = acp_fetch_relative_powers_trace_response.relative_powers_trace
+        relative_powers_trace = (
+            acp_fetch_relative_powers_trace_response.relative_powers_trace
+        )
 
     acp_fetch_spectrum_response = client.ACPFetchSpectrum(
         nirfmxnr_types.ACPFetchSpectrumRequest(
@@ -407,19 +421,17 @@ try:
     dx = acp_fetch_spectrum_response.dx
     spectrum = acp_fetch_spectrum_response.spectrum
 
-# Fetch modacc results
+    # Fetch modacc results
     modacc_fetch_composite_evm = client.ModAccFetchCompositeEVM(
         nirfmxnr_types.ModAccFetchCompositeEVMRequest(
-            instrument=instr,
-            selector_string="",
-            timeout=10.0
+            instrument=instr, selector_string="", timeout=10.0
         )
     )
     check_for_warning(modacc_fetch_composite_evm, instr)
     composite_rms_evm_mean = modacc_fetch_composite_evm.composite_rms_evm_mean
     composite_peak_evm_maximum = modacc_fetch_composite_evm.composite_peak_evm_maximum
 
-# Fetch txp results
+    # Fetch txp results
     txp_fetch_measurement_response = client.TXPFetchMeasurement(
         nirfmxnr_types.TXPFetchMeasurementRequest(
             instrument=instr,
@@ -453,14 +465,16 @@ except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            value = (
+                entry.value
+                if isinstance(entry.value, str)
+                else entry.value.decode("utf-8")
+            )
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = (
-            "The operation is not implemented or is not supported/enabled in this service"
-        )
+        error_message = "The operation is not implemented or is not supported/enabled in this service"
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
