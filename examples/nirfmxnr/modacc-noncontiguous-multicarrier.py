@@ -60,8 +60,10 @@ NUMBER_OF_SUBBLOCKS = 2
 SUBBLOCK_FREQUENCY = [0, 200e6]
 NUMBER_OF_COMPONENT_CARRIERS = 2
 BAND = [78, 78]
-COMPONENT_CARRIER_SPACING_TYPE = [nirfmxnr_types.NIRFMXNR_INT32_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL,
-                                  nirfmxnr_types.NIRFMXNR_INT32_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL]
+COMPONENT_CARRIER_SPACING_TYPE = [
+    nirfmxnr_types.NIRFMXNR_INT32_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL,
+    nirfmxnr_types.NIRFMXNR_INT32_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL,
+]
 COMPONENT_CARRIER_AT_CENTER_FREQUENCY = [-1, -1]
 CHANNEL_RASTER = [15e3, 15e3]
 COMPONENT_CARRIER_BANDWIDTH = [[100e6, 100e6], [100e6, 100e6]]
@@ -159,7 +161,7 @@ try:
             digital_edge_source_mapped=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0,
             digital_edge=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING,
             trigger_delay=0.0,
-            enable_trigger=True
+            enable_trigger=True,
         )
     )
 
@@ -529,16 +531,36 @@ try:
     check_for_warning(initiate_response, instr)
 
     # Fetch results
-    composite_rms_evm_mean = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    composite_peak_evm_maximum = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    composite_peak_evm_slot_index = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    composite_peak_evm_symbol_index = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    composite_peak_evm_subcarrier_index = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    component_carrier_frequency_error_mean = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    component_carrier_iq_origin_offset_mean = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    component_carrier_iq_gain_imbalance_mean = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    component_carrier_quadrature_error_mean = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
-    in_band_emission_margin = [[None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)]
+    composite_rms_evm_mean = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    composite_peak_evm_maximum = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    composite_peak_evm_slot_index = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    composite_peak_evm_symbol_index = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    composite_peak_evm_subcarrier_index = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    component_carrier_frequency_error_mean = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    component_carrier_iq_origin_offset_mean = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    component_carrier_iq_gain_imbalance_mean = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    component_carrier_quadrature_error_mean = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
+    in_band_emission_margin = [
+        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+    ]
 
     for i in range(NUMBER_OF_SUBBLOCKS):
         build_subblock_string_response = client.BuildSubblockString(
@@ -562,14 +584,16 @@ try:
 
             modacc_fetch_composite_evm = client.ModAccFetchCompositeEVM(
                 nirfmxnr_types.ModAccFetchCompositeEVMRequest(
-                    instrument=instr,
-                    selector_string=carrier_string,
-                    timeout=10.0
+                    instrument=instr, selector_string=carrier_string, timeout=10.0
                 )
             )
             check_for_warning(modacc_fetch_composite_evm, instr)
-            composite_rms_evm_mean[i][j] = modacc_fetch_composite_evm.composite_rms_evm_mean
-            composite_peak_evm_maximum[i][j] = modacc_fetch_composite_evm.composite_peak_evm_maximum
+            composite_rms_evm_mean[i][
+                j
+            ] = modacc_fetch_composite_evm.composite_rms_evm_mean
+            composite_peak_evm_maximum[i][
+                j
+            ] = modacc_fetch_composite_evm.composite_peak_evm_maximum
 
             modacc_fetch_composite_peak_evm_slot_index = client.GetAttributeI32(
                 nirfmxnr_types.GetAttributeI32Request(
@@ -579,7 +603,9 @@ try:
                 )
             )
             check_for_warning(modacc_fetch_composite_peak_evm_slot_index, instr)
-            composite_peak_evm_slot_index[i][j] = modacc_fetch_composite_peak_evm_slot_index.attr_val_raw
+            composite_peak_evm_slot_index[i][
+                j
+            ] = modacc_fetch_composite_peak_evm_slot_index.attr_val_raw
 
             modacc_fetch_composite_peak_evm_symbol_index = client.GetAttributeI32(
                 nirfmxnr_types.GetAttributeI32Request(
@@ -589,7 +615,9 @@ try:
                 )
             )
             check_for_warning(modacc_fetch_composite_peak_evm_symbol_index, instr)
-            composite_peak_evm_symbol_index[i][j] = modacc_fetch_composite_peak_evm_symbol_index.attr_val_raw
+            composite_peak_evm_symbol_index[i][
+                j
+            ] = modacc_fetch_composite_peak_evm_symbol_index.attr_val_raw
 
             modacc_fetch_composite_peak_evm_subcarrier_index = client.GetAttributeI32(
                 nirfmxnr_types.GetAttributeI32Request(
@@ -599,7 +627,9 @@ try:
                 )
             )
             check_for_warning(modacc_fetch_composite_peak_evm_subcarrier_index, instr)
-            composite_peak_evm_subcarrier_index[i][j] = modacc_fetch_composite_peak_evm_subcarrier_index.attr_val_raw
+            composite_peak_evm_subcarrier_index[i][
+                j
+            ] = modacc_fetch_composite_peak_evm_subcarrier_index.attr_val_raw
 
             modacc_fetch_component_carrier_frequency_error_mean = client.GetAttributeF64(
                 nirfmxnr_types.GetAttributeF64Request(
@@ -608,8 +638,12 @@ try:
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN,
                 )
             )
-            check_for_warning(modacc_fetch_component_carrier_frequency_error_mean, instr)
-            component_carrier_frequency_error_mean[i][j] = modacc_fetch_component_carrier_frequency_error_mean.attr_val
+            check_for_warning(
+                modacc_fetch_component_carrier_frequency_error_mean, instr
+            )
+            component_carrier_frequency_error_mean[i][
+                j
+            ] = modacc_fetch_component_carrier_frequency_error_mean.attr_val
 
             modacc_fetch_component_carrier_iq_origin_offset_mean = client.GetAttributeF64(
                 nirfmxnr_types.GetAttributeF64Request(
@@ -618,8 +652,12 @@ try:
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN,
                 )
             )
-            check_for_warning(modacc_fetch_component_carrier_iq_origin_offset_mean, instr)
-            component_carrier_iq_origin_offset_mean[i][j] = modacc_fetch_component_carrier_iq_origin_offset_mean.attr_val
+            check_for_warning(
+                modacc_fetch_component_carrier_iq_origin_offset_mean, instr
+            )
+            component_carrier_iq_origin_offset_mean[i][
+                j
+            ] = modacc_fetch_component_carrier_iq_origin_offset_mean.attr_val
 
             modacc_fetch_component_carrier_iq_gain_imbalance_mean = client.GetAttributeF64(
                 nirfmxnr_types.GetAttributeF64Request(
@@ -628,8 +666,12 @@ try:
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN,
                 )
             )
-            check_for_warning(modacc_fetch_component_carrier_iq_gain_imbalance_mean, instr)
-            component_carrier_iq_gain_imbalance_mean[i][j] = modacc_fetch_component_carrier_iq_gain_imbalance_mean.attr_val
+            check_for_warning(
+                modacc_fetch_component_carrier_iq_gain_imbalance_mean, instr
+            )
+            component_carrier_iq_gain_imbalance_mean[i][
+                j
+            ] = modacc_fetch_component_carrier_iq_gain_imbalance_mean.attr_val
 
             modacc_fetch_component_carrier_quadrature_error_mean = client.GetAttributeF64(
                 nirfmxnr_types.GetAttributeF64Request(
@@ -638,8 +680,12 @@ try:
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN,
                 )
             )
-            check_for_warning(modacc_fetch_component_carrier_quadrature_error_mean, instr)
-            component_carrier_quadrature_error_mean[i][j] = modacc_fetch_component_carrier_quadrature_error_mean.attr_val
+            check_for_warning(
+                modacc_fetch_component_carrier_quadrature_error_mean, instr
+            )
+            component_carrier_quadrature_error_mean[i][
+                j
+            ] = modacc_fetch_component_carrier_quadrature_error_mean.attr_val
 
             modacc_fetch_in_band_emission_margin = client.GetAttributeF64(
                 nirfmxnr_types.GetAttributeF64Request(
@@ -649,37 +695,63 @@ try:
                 )
             )
             check_for_warning(modacc_fetch_in_band_emission_margin, instr)
-            in_band_emission_margin[i][j] = modacc_fetch_in_band_emission_margin.attr_val
+            in_band_emission_margin[i][
+                j
+            ] = modacc_fetch_in_band_emission_margin.attr_val
 
     print("************************* ModAcc Results *************************")
     for i in range(NUMBER_OF_SUBBLOCKS):
         print(f"Subblock  :   {i}\n")
         for j in range(NUMBER_OF_COMPONENT_CARRIERS):
             print(f"Carrier  :   {j}")
-            print(f"Composite RMS EVM Mean (%)                    : {composite_rms_evm_mean[i][j]}")
-            print(f"Composite Peak EVM Maximum (%)                : {composite_peak_evm_maximum[i][j]}")
-            print(f"Composite Peak EVM Slot Index                 : {composite_peak_evm_slot_index[i][j]}")
-            print(f"Composite Peak EVM Symbol Index               : {composite_peak_evm_symbol_index[i][j]}")
-            print(f"Composite Peak EVM Subcarrier Index           : {composite_peak_evm_subcarrier_index[i][j]}\n")
-            print(f"Component Carrier Frequency Error Mean (Hz)   : {component_carrier_frequency_error_mean[i][j]}")
-            print(f"Component Carrier IQ Origin Offset Mean (dBc) : {component_carrier_iq_origin_offset_mean[i][j]}")
-            print(f"Component Carrier IQ Gain Imbalance Mean (dB) : {component_carrier_iq_gain_imbalance_mean[i][j]}")
-            print(f"Component Carrier Quadrature Error Mean (Hz)  : {component_carrier_quadrature_error_mean[i][j]}")
-            print(f"In-Band Emission Margin (dB)                  : {in_band_emission_margin[i][j]}\n")
-            print("******************************************************************\n")
+            print(
+                f"Composite RMS EVM Mean (%)                    : {composite_rms_evm_mean[i][j]}"
+            )
+            print(
+                f"Composite Peak EVM Maximum (%)                : {composite_peak_evm_maximum[i][j]}"
+            )
+            print(
+                f"Composite Peak EVM Slot Index                 : {composite_peak_evm_slot_index[i][j]}"
+            )
+            print(
+                f"Composite Peak EVM Symbol Index               : {composite_peak_evm_symbol_index[i][j]}"
+            )
+            print(
+                f"Composite Peak EVM Subcarrier Index           : {composite_peak_evm_subcarrier_index[i][j]}\n"
+            )
+            print(
+                f"Component Carrier Frequency Error Mean (Hz)   : {component_carrier_frequency_error_mean[i][j]}"
+            )
+            print(
+                f"Component Carrier IQ Origin Offset Mean (dBc) : {component_carrier_iq_origin_offset_mean[i][j]}"
+            )
+            print(
+                f"Component Carrier IQ Gain Imbalance Mean (dB) : {component_carrier_iq_gain_imbalance_mean[i][j]}"
+            )
+            print(
+                f"Component Carrier Quadrature Error Mean (Hz)  : {component_carrier_quadrature_error_mean[i][j]}"
+            )
+            print(
+                f"In-Band Emission Margin (dB)                  : {in_band_emission_margin[i][j]}\n"
+            )
+            print(
+                "******************************************************************\n"
+            )
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            value = (
+                entry.value
+                if isinstance(entry.value, str)
+                else entry.value.decode("utf-8")
+            )
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = (
-            "The operation is not implemented or is not supported/enabled in this service"
-        )
+        error_message = "The operation is not implemented or is not supported/enabled in this service"
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
