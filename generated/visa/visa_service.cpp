@@ -1956,7 +1956,7 @@ namespace visa_grpc {
   VisaFeatureToggles::VisaFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("visa", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("visa", CodeReadiness::kRelease))
   {
   }
 } // namespace visa_grpc
