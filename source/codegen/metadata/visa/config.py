@@ -5,7 +5,6 @@ config = {
     'c_function_prefix': 'vi',
     'c_header': 'visa.h',
     'close_function': 'Close',
-    'code_readiness': 'NextRelease',
     'csharp_namespace': 'NationalInstruments.Grpc.Visa',
     'custom_header_suffix': '_attributes.h',
     'custom_types': [],
