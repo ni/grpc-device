@@ -6,6 +6,7 @@ on:
       - 'releases/**'
   pull_request:
     types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 jobs:
   cancel_builds:
@@ -15,12 +16,12 @@ jobs:
   validate_python:
     uses: ./.github/workflows/validate_python.yml
   build_desktop:
-    needs: 
+    needs:
       - validate_imported_protos
       - validate_python
     uses: ./.github/workflows/build_cmake.yml
   build_nilrt:
-    needs: 
+    needs:
       - validate_imported_protos
       - validate_python
     uses: ./.github/workflows/build_nilrt.yml
