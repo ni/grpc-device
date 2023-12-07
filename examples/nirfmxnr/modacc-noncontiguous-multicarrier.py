@@ -322,7 +322,7 @@ try:
                     instrument=instr,
                     selector_string=carrier_string,
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_CELL_ID,
-                    attr_val=CELL_ID[i][j],
+                    attr_val_raw=CELL_ID[i][j],
                 )
             )
 
@@ -532,34 +532,34 @@ try:
 
     # Fetch results
     composite_rms_evm_mean = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     composite_peak_evm_maximum = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     composite_peak_evm_slot_index = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     composite_peak_evm_symbol_index = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     composite_peak_evm_subcarrier_index = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     component_carrier_frequency_error_mean = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     component_carrier_iq_origin_offset_mean = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     component_carrier_iq_gain_imbalance_mean = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     component_carrier_quadrature_error_mean = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
     in_band_emission_margin = [
-        [None] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
+        [0.0] * NUMBER_OF_COMPONENT_CARRIERS for i in range(NUMBER_OF_SUBBLOCKS)
     ]
 
     for i in range(NUMBER_OF_SUBBLOCKS):
@@ -721,7 +721,7 @@ try:
             print("******************************************************************\n")
 
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")

@@ -233,7 +233,7 @@ try:
         nirfmxnr_types.SelectMeasurementsRequest(
             instrument=instr,
             selector_string="",
-            measurements=nirfmxnr_types.MEASUREMENT_TYPES_ACP
+            measurements_raw=nirfmxnr_types.MEASUREMENT_TYPES_ACP
             | nirfmxnr_types.MEASUREMENT_TYPES_MODACC
             | nirfmxnr_types.MEASUREMENT_TYPES_TXP,
             enable_all_traces=True,
@@ -450,7 +450,7 @@ try:
 
 
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")

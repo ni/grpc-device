@@ -169,7 +169,7 @@ try:
         nirfmxwlan_types.SelectMeasurementsRequest(
             instrument=instr,
             selector_string="",
-            measurements=nirfmxwlan_types.MEASUREMENT_TYPES_OFDMMODACC
+            measurements_raw=nirfmxwlan_types.MEASUREMENT_TYPES_OFDMMODACC
             | nirfmxwlan_types.MEASUREMENT_TYPES_TXP,
             enable_all_traces=True,
         )
@@ -496,7 +496,7 @@ try:
     elif sig_b_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_B_CRC_STATUS_PASS:
         print("SIG-B CRC Status                        : Pass")
 except grpc.RpcError as rpc_error:
-    error_message = rpc_error.details()
+    error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
             value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")

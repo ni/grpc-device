@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/abseil-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/benchmark" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/abseil-cpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/capstone" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/demumble" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/googletest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/protobuf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/protobuf/third_party/benchmark" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/protobuf/third_party/googletest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/re2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/bloaty/third_party/zlib" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/boringssl-with-bazel" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/cares/cares" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/envoy-api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/googleapis" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/googletest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/libuv" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/opencensus-proto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/opentelemetry" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/protobuf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/protobuf/third_party/benchmark" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/protobuf/third_party/googletest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/re2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/xds" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/grpc/third_party/zlib" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/gtest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/json" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/utfcpp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/utfcpp/extern/ftest" vcs="Git" />
+  </component>
+</project>
