@@ -25,6 +25,7 @@ If they are not passed in as command line arguments, then by default the server 
 """
 
 import sys
+
 import grpc
 import nirfsg_pb2 as nirfsg_types
 import nirfsg_pb2_grpc as grpc_nirfsg
@@ -38,7 +39,7 @@ RESOURCE = "SimulatedRFSG"
 OPTIONS = "Simulate=1,DriverSetup=Model:5652"
 
 # Waveform filepath
-FILE_PATH = "C:/Users/Public/Documents/National Instruments/RFIC Test Software/Waveforms/test.tdms"
+FILE_PATH = "C:/Users/Public/Documents/National Instruments/NI-RFSG/Examples/Waveforms/FileWithSingleWaveform.tdms"
 SCRIPT = (
     "script GenerateWfm "
     "repeat forever "
@@ -68,9 +69,7 @@ def check_for_warning(response, vi):
         warning_message = client.ErrorMessage(
             nirfsg_types.ErrorMessageRequest(vi=vi, error_code=response.status)
         )
-        sys.stderr.write(
-            f"{warning_message.error_message}\nWarning status: {response.status}\n"
-        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 # Initialize RFSG
@@ -83,9 +82,7 @@ try:
     vi = response.vi
 
     # Configure RFSG
-    client.ConfigureRF(
-        nirfsg_types.ConfigureRFRequest(vi=vi, frequency=3.5e9, power_level=-10)
-    )
+    client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=3.5e9, power_level=-10))
     client.ConfigureRefClock(
         nirfsg_types.ConfigureRefClockRequest(
             vi=vi,
@@ -132,16 +129,14 @@ except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = (
-                entry.value
-                if isinstance(entry.value, str)
-                else entry.value.decode("utf-8")
-            )
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 finally:
     if vi:

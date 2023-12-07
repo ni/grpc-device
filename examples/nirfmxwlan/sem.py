@@ -247,13 +247,11 @@ try:
     absolute_power = sem_fetch_carrier_measurement_response.absolute_power
     relative_power = sem_fetch_carrier_measurement_response.relative_power
 
-    sem_fetch_lower_offset_margin_array_response = (
-        client.SEMFetchLowerOffsetMarginArray(
-            nirfmxwlan_types.SEMFetchLowerOffsetMarginArrayRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.0,
-            )
+    sem_fetch_lower_offset_margin_array_response = client.SEMFetchLowerOffsetMarginArray(
+        nirfmxwlan_types.SEMFetchLowerOffsetMarginArrayRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
     check_for_warning(sem_fetch_lower_offset_margin_array_response, instr)
@@ -264,9 +262,7 @@ try:
         sem_fetch_lower_offset_margin_array_response.measurement_status
     )
     lower_offset_margin = sem_fetch_lower_offset_margin_array_response.margin
-    lower_offset_margin_frequency = (
-        sem_fetch_lower_offset_margin_array_response.margin_frequency
-    )
+    lower_offset_margin_frequency = sem_fetch_lower_offset_margin_array_response.margin_frequency
     lower_offset_margin_absolute_power = (
         sem_fetch_lower_offset_margin_array_response.margin_absolute_power
     )
@@ -274,13 +270,11 @@ try:
         sem_fetch_lower_offset_margin_array_response.margin_relative_power
     )
 
-    sem_fetch_upper_offset_margin_array_response = (
-        client.SEMFetchUpperOffsetMarginArray(
-            nirfmxwlan_types.SEMFetchUpperOffsetMarginArrayRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.0,
-            )
+    sem_fetch_upper_offset_margin_array_response = client.SEMFetchUpperOffsetMarginArray(
+        nirfmxwlan_types.SEMFetchUpperOffsetMarginArrayRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
     check_for_warning(sem_fetch_upper_offset_margin_array_response, instr)
@@ -291,9 +285,7 @@ try:
         sem_fetch_upper_offset_margin_array_response.measurement_status
     )
     upper_offset_margin = sem_fetch_upper_offset_margin_array_response.margin
-    upper_offset_margin_frequency = (
-        sem_fetch_upper_offset_margin_array_response.margin_frequency
-    )
+    upper_offset_margin_frequency = sem_fetch_upper_offset_margin_array_response.margin_frequency
     upper_offset_margin_absolute_power = (
         sem_fetch_upper_offset_margin_array_response.margin_absolute_power
     )
@@ -331,9 +323,7 @@ try:
             print("Measurement Status               : FAIL")
         print(f"Margin (dB)                      : {lower_offset_margin[i]}")
         print(f"Margin Frequency (Hz)            : {lower_offset_margin_frequency[i]}")
-        print(
-            f"Margin Absolute Power (dBm)      : {lower_offset_margin_absolute_power[i]}"
-        )
+        print(f"Margin Absolute Power (dBm)      : {lower_offset_margin_absolute_power[i]}")
     print("\n-----------Upper Offset Measurements----------- \n")
     for i in range(upper_offset_array_size):
         print(f"Offset  {i}")
@@ -349,27 +339,21 @@ try:
             print("Measurement Status               : FAIL")
         print(f"Margin (dB)                      : {upper_offset_margin[i]}")
         print(f"Margin Frequency (Hz)            : {upper_offset_margin_frequency[i]}")
-        print(
-            f"Margin Absolute Power (dBm)      : {upper_offset_margin_absolute_power[i]}"
-        )
+        print(f"Margin Absolute Power (dBm)      : {upper_offset_margin_absolute_power[i]}")
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = (
-                entry.value
-                if isinstance(entry.value, str)
-                else entry.value.decode("utf-8")
-            )
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
-        client.Close(
-            nirfmxwlan_types.CloseRequest(instrument=instr, force_destroy=False)
-        )
+        client.Close(nirfmxwlan_types.CloseRequest(instrument=instr, force_destroy=False))

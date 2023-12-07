@@ -260,12 +260,8 @@ try:
     )
     check_for_warning(fetch_composite_rmsevm_response, instr)
     composite_rmsevm_mean = fetch_composite_rmsevm_response.composite_rms_evm_mean
-    composite_data_rmsevm_mean = (
-        fetch_composite_rmsevm_response.composite_data_rms_evm_mean
-    )
-    composite_pilot_rmsevm_mean = (
-        fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean
-    )
+    composite_data_rmsevm_mean = fetch_composite_rmsevm_response.composite_data_rms_evm_mean
+    composite_pilot_rmsevm_mean = fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean
 
     fetch_numberof_symbols_used_response = client.OFDMModAccFetchNumberofSymbolsUsed(
         nirfmxwlan_types.OFDMModAccFetchNumberofSymbolsUsedRequest(
@@ -295,9 +291,7 @@ try:
         )
     )
     check_for_warning(fetch_symbol_clock_error_mean_response, instr)
-    symbol_clock_error_mean = (
-        fetch_symbol_clock_error_mean_response.symbol_clock_error_mean
-    )
+    symbol_clock_error_mean = fetch_symbol_clock_error_mean_response.symbol_clock_error_mean
 
     fetch_iq_impairments_response = client.OFDMModAccFetchIQImpairments(
         nirfmxwlan_types.OFDMModAccFetchIQImpairmentsRequest(
@@ -307,14 +301,10 @@ try:
         )
     )
     check_for_warning(fetch_iq_impairments_response, instr)
-    relative_iq_origin_offset_mean = (
-        fetch_iq_impairments_response.relative_iq_origin_offset_mean
-    )
+    relative_iq_origin_offset_mean = fetch_iq_impairments_response.relative_iq_origin_offset_mean
     iq_gain_imbalance_mean = fetch_iq_impairments_response.iq_gain_imbalance_mean
     iq_quadrature_error_mean = fetch_iq_impairments_response.iq_quadrature_error_mean
-    absolute_iq_origin_offset_mean = (
-        fetch_iq_impairments_response.absolute_iq_origin_offset_mean
-    )
+    absolute_iq_origin_offset_mean = fetch_iq_impairments_response.absolute_iq_origin_offset_mean
     iq_timing_skew_mean = fetch_iq_impairments_response.iq_timing_skew_mean
 
     fetch_ppdu_type_response = client.OFDMModAccFetchPPDUType(
@@ -347,19 +337,15 @@ try:
     check_for_warning(fetch_guard_interval_type_response, instr)
     guard_interval_type = fetch_guard_interval_type_response.guard_interval_type
 
-    fetch_l_sig_parity_check_status_response = (
-        client.OFDMModAccFetchLSIGParityCheckStatus(
-            nirfmxwlan_types.OFDMModAccFetchLSIGParityCheckStatusRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.0,
-            )
+    fetch_l_sig_parity_check_status_response = client.OFDMModAccFetchLSIGParityCheckStatus(
+        nirfmxwlan_types.OFDMModAccFetchLSIGParityCheckStatusRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
     check_for_warning(fetch_l_sig_parity_check_status_response, instr)
-    l_sig_parity_check_status = (
-        fetch_l_sig_parity_check_status_response.l_sig_parity_check_status
-    )
+    l_sig_parity_check_status = fetch_l_sig_parity_check_status_response.l_sig_parity_check_status
 
     fetch_sigcrc_status_response = client.OFDMModAccFetchSIGCRCStatus(
         nirfmxwlan_types.OFDMModAccFetchSIGCRCStatusRequest(
@@ -381,25 +367,21 @@ try:
     check_for_warning(fetch_sigbcrc_status_response, instr)
     sig_b_crc_status = fetch_sigbcrc_status_response.sig_b_crc_status
 
-    fetch_pilot_constellation_trace_response = (
-        client.OFDMModAccFetchPilotConstellationTrace(
-            nirfmxwlan_types.OFDMModAccFetchPilotConstellationTraceRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.0,
-            )
+    fetch_pilot_constellation_trace_response = client.OFDMModAccFetchPilotConstellationTrace(
+        nirfmxwlan_types.OFDMModAccFetchPilotConstellationTraceRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
     check_for_warning(fetch_pilot_constellation_trace_response, instr)
     pilot_constellation = fetch_pilot_constellation_trace_response.pilot_constellation
 
-    fetch_data_constellation_trace_response = (
-        client.OFDMModAccFetchDataConstellationTrace(
-            nirfmxwlan_types.OFDMModAccFetchDataConstellationTraceRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.0,
-            )
+    fetch_data_constellation_trace_response = client.OFDMModAccFetchDataConstellationTrace(
+        nirfmxwlan_types.OFDMModAccFetchDataConstellationTraceRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
     check_for_warning(fetch_data_constellation_trace_response, instr)
@@ -463,15 +445,9 @@ try:
         == nirfmxwlan_types.OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_NOT_APPLICABLE
     ):
         print("L-SIG Parity Check Status               : Not Applicable")
-    elif (
-        l_sig_parity_check_status
-        == nirfmxwlan_types.OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_FAIL
-    ):
+    elif l_sig_parity_check_status == nirfmxwlan_types.OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_FAIL:
         print("L-SIG Parity Check Status               : Fail")
-    elif (
-        l_sig_parity_check_status
-        == nirfmxwlan_types.OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_PASS
-    ):
+    elif l_sig_parity_check_status == nirfmxwlan_types.OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_PASS:
         print("L-SIG Parity Check Status               : Pass")
     if sig_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_CRC_STATUS_NOT_APPLICABLE:
         print("SIG CRC Status                          : Not Applicable")
@@ -489,19 +465,15 @@ except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = (
-                entry.value
-                if isinstance(entry.value, str)
-                else entry.value.decode("utf-8")
-            )
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
-        client.Close(
-            nirfmxwlan_types.CloseRequest(instrument=instr, force_destroy=False)
-        )
+        client.Close(nirfmxwlan_types.CloseRequest(instrument=instr, force_destroy=False))

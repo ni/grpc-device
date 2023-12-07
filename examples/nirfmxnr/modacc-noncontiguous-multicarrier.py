@@ -588,12 +588,8 @@ try:
                 )
             )
             check_for_warning(modacc_fetch_composite_evm, instr)
-            composite_rms_evm_mean[i][
-                j
-            ] = modacc_fetch_composite_evm.composite_rms_evm_mean
-            composite_peak_evm_maximum[i][
-                j
-            ] = modacc_fetch_composite_evm.composite_peak_evm_maximum
+            composite_rms_evm_mean[i][j] = modacc_fetch_composite_evm.composite_rms_evm_mean
+            composite_peak_evm_maximum[i][j] = modacc_fetch_composite_evm.composite_peak_evm_maximum
 
             modacc_fetch_composite_peak_evm_slot_index = client.GetAttributeI32(
                 nirfmxnr_types.GetAttributeI32Request(
@@ -638,9 +634,7 @@ try:
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN,
                 )
             )
-            check_for_warning(
-                modacc_fetch_component_carrier_frequency_error_mean, instr
-            )
+            check_for_warning(modacc_fetch_component_carrier_frequency_error_mean, instr)
             component_carrier_frequency_error_mean[i][
                 j
             ] = modacc_fetch_component_carrier_frequency_error_mean.attr_val
@@ -652,9 +646,7 @@ try:
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN,
                 )
             )
-            check_for_warning(
-                modacc_fetch_component_carrier_iq_origin_offset_mean, instr
-            )
+            check_for_warning(modacc_fetch_component_carrier_iq_origin_offset_mean, instr)
             component_carrier_iq_origin_offset_mean[i][
                 j
             ] = modacc_fetch_component_carrier_iq_origin_offset_mean.attr_val
@@ -666,9 +658,7 @@ try:
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN,
                 )
             )
-            check_for_warning(
-                modacc_fetch_component_carrier_iq_gain_imbalance_mean, instr
-            )
+            check_for_warning(modacc_fetch_component_carrier_iq_gain_imbalance_mean, instr)
             component_carrier_iq_gain_imbalance_mean[i][
                 j
             ] = modacc_fetch_component_carrier_iq_gain_imbalance_mean.attr_val
@@ -680,9 +670,7 @@ try:
                     attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN,
                 )
             )
-            check_for_warning(
-                modacc_fetch_component_carrier_quadrature_error_mean, instr
-            )
+            check_for_warning(modacc_fetch_component_carrier_quadrature_error_mean, instr)
             component_carrier_quadrature_error_mean[i][
                 j
             ] = modacc_fetch_component_carrier_quadrature_error_mean.attr_val
@@ -695,18 +683,14 @@ try:
                 )
             )
             check_for_warning(modacc_fetch_in_band_emission_margin, instr)
-            in_band_emission_margin[i][
-                j
-            ] = modacc_fetch_in_band_emission_margin.attr_val
+            in_band_emission_margin[i][j] = modacc_fetch_in_band_emission_margin.attr_val
 
     print("************************* ModAcc Results *************************")
     for i in range(NUMBER_OF_SUBBLOCKS):
         print(f"Subblock  :   {i}\n")
         for j in range(NUMBER_OF_COMPONENT_CARRIERS):
             print(f"Carrier  :   {j}")
-            print(
-                f"Composite RMS EVM Mean (%)                    : {composite_rms_evm_mean[i][j]}"
-            )
+            print(f"Composite RMS EVM Mean (%)                    : {composite_rms_evm_mean[i][j]}")
             print(
                 f"Composite Peak EVM Maximum (%)                : {composite_peak_evm_maximum[i][j]}"
             )
@@ -734,24 +718,20 @@ try:
             print(
                 f"In-Band Emission Margin (dB)                  : {in_band_emission_margin[i][j]}\n"
             )
-            print(
-                "******************************************************************\n"
-            )
+            print("******************************************************************\n")
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = (
-                entry.value
-                if isinstance(entry.value, str)
-                else entry.value.decode("utf-8")
-            )
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
