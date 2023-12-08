@@ -46,6 +46,65 @@ namespace nirfmxspecan_restricted_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnRestrictedService::AMPMLoadReferenceWaveformFromTDMSFile(::grpc::ServerContext* context, const AMPMLoadReferenceWaveformFromTDMSFileRequest* request, AMPMLoadReferenceWaveformFromTDMSFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_handle_grpc_session = request->instrument_handle();
+      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
+      char* waveform_file_path = (char*)waveform_file_path_mbcs.c_str();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_restricted_grpc::AMPMLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::AMPMLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::AMPMLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 signal_type;
+      switch (request->signal_type_enum_case()) {
+        case nirfmxspecan_restricted_grpc::AMPMLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::kSignalType: {
+          signal_type = static_cast<int32>(request->signal_type());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::AMPMLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::kSignalTypeRaw: {
+          signal_type = static_cast<int32>(request->signal_type_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::AMPMLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 waveform_index = request->waveform_index();
+      auto status = library_->AMPMLoadReferenceWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnRestrictedService::CacheResult(::grpc::ServerContext* context, const CacheResultRequest* request, CacheResultResponse* response)
   {
     if (context->IsCancelled()) {

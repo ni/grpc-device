@@ -14,5 +14,29 @@ enums = {
                 'value': 2
             }
         ]
+    },
+    'AmpmReferenceWaveformIdleDurationPresent': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'AmpmSignalType': {
+        'values': [
+            {
+                'name': 'MODULATED',
+                'value': 0
+            },
+            {
+                'name': 'TONES',
+                'value': 1
+            }
+        ]
     }
 }

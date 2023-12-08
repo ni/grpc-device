@@ -17,6 +17,42 @@
 
 namespace nirfmxspecan_restricted_grpc::experimental::client {
 
+AMPMLoadReferenceWaveformFromTDMSFileResponse
+ampm_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AMPMLoadReferenceWaveformFromTDMSFileRequest{};
+  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.set_selector_string(selector_string);
+  request.set_waveform_file_path(waveform_file_path);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<AmpmReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<AmpmSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+  request.set_waveform_index(waveform_index);
+
+  auto response = AMPMLoadReferenceWaveformFromTDMSFileResponse{};
+
+  raise_if_error(
+      stub->AMPMLoadReferenceWaveformFromTDMSFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CacheResultResponse
 cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& selector_string_out_size)
 {
