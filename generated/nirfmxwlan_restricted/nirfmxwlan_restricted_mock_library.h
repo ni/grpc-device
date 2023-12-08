@@ -21,6 +21,7 @@ class NiRFmxWLANRestrictedMockLibrary : public nirfmxwlan_restricted_grpc::NiRFm
   MOCK_METHOD(int32, GetError, (niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
   MOCK_METHOD(int32, GetErrorString, (niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
   MOCK_METHOD(int32, OFDMModAccFetchCommonPilotErrorTraceIndB, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 commonPilotErrorMagnitude[], float32 commonPilotErrorPhase[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, OFDMModAccLoad1ReferenceWaveformFromTDMSFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 waveformIndex), (override));
   MOCK_METHOD(int32, OFDMModAccNoiseCalibrate, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection), (override));
 };
 

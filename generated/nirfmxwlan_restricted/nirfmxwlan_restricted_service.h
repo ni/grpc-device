@@ -44,6 +44,7 @@ public:
 
   ::grpc::Status GetChannelList(::grpc::ServerContext* context, const GetChannelListRequest* request, GetChannelListResponse* response) override;
   ::grpc::Status OFDMModAccFetchCommonPilotErrorTraceIndB(::grpc::ServerContext* context, const OFDMModAccFetchCommonPilotErrorTraceIndBRequest* request, OFDMModAccFetchCommonPilotErrorTraceIndBResponse* response) override;
+  ::grpc::Status OFDMModAccLoad1ReferenceWaveformFromTDMSFile(::grpc::ServerContext* context, const OFDMModAccLoad1ReferenceWaveformFromTDMSFileRequest* request, OFDMModAccLoad1ReferenceWaveformFromTDMSFileResponse* response) override;
   ::grpc::Status OFDMModAccNoiseCalibrate(::grpc::ServerContext* context, const OFDMModAccNoiseCalibrateRequest* request, OFDMModAccNoiseCalibrateResponse* response) override;
 private:
   LibrarySharedPtr library_;

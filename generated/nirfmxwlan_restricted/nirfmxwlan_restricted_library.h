@@ -25,6 +25,7 @@ class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLA
   int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
   int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
   int32 OFDMModAccFetchCommonPilotErrorTraceIndB(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 commonPilotErrorMagnitude[], float32 commonPilotErrorPhase[], int32 arraySize, int32* actualArraySize) override;
+  int32 OFDMModAccLoad1ReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 waveformIndex) override;
   int32 OFDMModAccNoiseCalibrate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection) override;
 
  private:
@@ -32,6 +33,7 @@ class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLA
   using GetErrorPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   using GetErrorStringPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   using OFDMModAccFetchCommonPilotErrorTraceIndBPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 commonPilotErrorMagnitude[], float32 commonPilotErrorPhase[], int32 arraySize, int32* actualArraySize);
+  using OFDMModAccLoad1ReferenceWaveformFromTDMSFilePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 waveformIndex);
   using OFDMModAccNoiseCalibratePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection);
 
   typedef struct FunctionPointers {
@@ -39,6 +41,7 @@ class NiRFmxWLANRestrictedLibrary : public nirfmxwlan_restricted_grpc::NiRFmxWLA
     GetErrorPtr GetError;
     GetErrorStringPtr GetErrorString;
     OFDMModAccFetchCommonPilotErrorTraceIndBPtr OFDMModAccFetchCommonPilotErrorTraceIndB;
+    OFDMModAccLoad1ReferenceWaveformFromTDMSFilePtr OFDMModAccLoad1ReferenceWaveformFromTDMSFile;
     OFDMModAccNoiseCalibratePtr OFDMModAccNoiseCalibrate;
   } FunctionLoadStatus;
 
