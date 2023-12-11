@@ -39,6 +39,18 @@ enums = {
             }
         ]
     },
+    'AcpReferenceChannelBandwidthMode': {
+        'values': [
+            {
+                'name': 'AUTO',
+                'value': 0
+            },
+            {
+                'name': 'MANUAL',
+                'value': 1
+            }
+        ]
+    },
     'AcpResultsMeasurementStatus': {
         'values': [
             {
@@ -294,6 +306,10 @@ enums = {
             {
                 'name': 'ACP',
                 'value': 16
+            },
+            {
+                'name': 'POWERRAMP',
+                'value': 32
             }
         ]
     },
@@ -457,6 +473,36 @@ enums = {
             {
                 'name': 'AUTO',
                 'value': 1
+            }
+        ]
+    },
+    'PowerRampAveragingEnabled': {
+        'enum-value-prefix': 'POWERRAMP_AVERAGING_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'PowerRampBurstSynchronizationType': {
+        'enum-value-prefix': 'POWERRAMP_BURST_SYNCHRONIZATION_TYPE',
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'PREAMBLE',
+                'value': 1
+            },
+            {
+                'name': 'SYNC_WORD',
+                'value': 2
             }
         ]
     },

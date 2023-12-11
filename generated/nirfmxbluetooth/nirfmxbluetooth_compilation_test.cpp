@@ -487,6 +487,16 @@ int32 ModAccFetchRMSDEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorS
   return RFmxBT_ModAccFetchRMSDEVMTrace(instrumentHandle, selectorString, timeout, rmsdevm, arraySize, actualArraySize);
 }
 
+int32 PowerRampCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  return RFmxBT_PowerRampCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 PowerRampCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
+{
+  return RFmxBT_PowerRampCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+}
+
 int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
 {
   return RFmxBT_ResetAttribute(instrumentHandle, selectorString, attributeID);

@@ -117,6 +117,8 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   int32 ModAccFetchFrequencyErrorWiPlusW0TraceEDR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 frequencyErrorWiPlusW0[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchFrequencyTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequency[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchRMSDEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 rmsdevm[], int32 arraySize, int32* actualArraySize) override;
+  int32 PowerRampCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) override;
+  int32 PowerRampCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType) override;
   int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID) override;
   int32 ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces) override;
@@ -252,6 +254,8 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   using ModAccFetchFrequencyErrorWiPlusW0TraceEDRPtr = decltype(&RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR);
   using ModAccFetchFrequencyTracePtr = decltype(&RFmxBT_ModAccFetchFrequencyTrace);
   using ModAccFetchRMSDEVMTracePtr = decltype(&RFmxBT_ModAccFetchRMSDEVMTrace);
+  using PowerRampCfgAveragingPtr = decltype(&RFmxBT_PowerRampCfgAveraging);
+  using PowerRampCfgBurstSynchronizationTypePtr = decltype(&RFmxBT_PowerRampCfgBurstSynchronizationType);
   using ResetAttributePtr = decltype(&RFmxBT_ResetAttribute);
   using ResetToDefaultPtr = decltype(&RFmxBT_ResetToDefault);
   using SelectMeasurementsPtr = decltype(&RFmxBT_SelectMeasurements);
@@ -387,6 +391,8 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
     ModAccFetchFrequencyErrorWiPlusW0TraceEDRPtr ModAccFetchFrequencyErrorWiPlusW0TraceEDR;
     ModAccFetchFrequencyTracePtr ModAccFetchFrequencyTrace;
     ModAccFetchRMSDEVMTracePtr ModAccFetchRMSDEVMTrace;
+    PowerRampCfgAveragingPtr PowerRampCfgAveraging;
+    PowerRampCfgBurstSynchronizationTypePtr PowerRampCfgBurstSynchronizationType;
     ResetAttributePtr ResetAttribute;
     ResetToDefaultPtr ResetToDefault;
     SelectMeasurementsPtr SelectMeasurements;

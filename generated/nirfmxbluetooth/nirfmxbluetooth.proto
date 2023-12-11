@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXBLUETOOTH API metadata version 23.8.0
+// This file is generated from NI-RFMXBLUETOOTH API metadata version 24.0.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXBLUETOOTH Metadata
 //---------------------------------------------------------------------
@@ -113,6 +113,8 @@ service NiRFmxBluetooth {
   rpc ModAccFetchFrequencyErrorWiPlusW0TraceEDR(ModAccFetchFrequencyErrorWiPlusW0TraceEDRRequest) returns (ModAccFetchFrequencyErrorWiPlusW0TraceEDRResponse);
   rpc ModAccFetchFrequencyTrace(ModAccFetchFrequencyTraceRequest) returns (ModAccFetchFrequencyTraceResponse);
   rpc ModAccFetchRMSDEVMTrace(ModAccFetchRMSDEVMTraceRequest) returns (ModAccFetchRMSDEVMTraceResponse);
+  rpc PowerRampCfgAveraging(PowerRampCfgAveragingRequest) returns (PowerRampCfgAveragingResponse);
+  rpc PowerRampCfgBurstSynchronizationType(PowerRampCfgBurstSynchronizationTypeRequest) returns (PowerRampCfgBurstSynchronizationTypeResponse);
   rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
   rpc ResetToDefault(ResetToDefaultRequest) returns (ResetToDefaultResponse);
   rpc SelectMeasurements(SelectMeasurementsRequest) returns (SelectMeasurementsResponse);
@@ -282,9 +284,19 @@ enum NiRFmxBluetoothAttribute {
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_UPPER_OFFSET_RELATIVE_POWER = 11554832;
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_UPPER_OFFSET_MARGIN = 11554833;
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_BURST_SYNCHRONIZATION_TYPE = 11554834;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_REFERENCE_CHANNEL_BANDWIDTH = 11554837;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE = 11554838;
   NIRFMXBLUETOOTH_ATTRIBUTE_RESULT_FETCH_TIMEOUT = 11583488;
   NIRFMXBLUETOOTH_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 11587584;
   NIRFMXBLUETOOTH_ATTRIBUTE_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL = 11587585;
+  NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_MEASUREMENT_ENABLED = 11591680;
+  NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_BURST_SYNCHRONIZATION_TYPE = 11591682;
+  NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_AVERAGING_ENABLED = 11591685;
+  NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_AVERAGING_COUNT = 11591686;
+  NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_NUMBER_OF_ANALYSIS_THREADS = 11591687;
+  NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_RESULTS_RISE_TIME_MEAN = 11591689;
+  NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_RESULTS_FALL_TIME_MEAN = 11591690;
+  NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_RESULTS_40DB_FALL_TIME_MEAN = 11591691;
 }
 
 enum AcpAveragingEnabled {
@@ -301,12 +313,6 @@ enum AcpBurstSynchronizationType {
 enum AcpOffsetChannelMode {
   ACP_OFFSET_CHANNEL_MODE_SYMMETRIC = 0;
   ACP_OFFSET_CHANNEL_MODE_INBAND = 1;
-}
-
-enum AcpResultsMeasurementStatus {
-  ACP_RESULTS_MEASUREMENT_STATUS_FAIL = 0;
-  ACP_RESULTS_MEASUREMENT_STATUS_NOT_APPLICABLE = -1;
-  ACP_RESULTS_MEASUREMENT_STATUS_PASS = 1;
 }
 
 enum DigitalEdgeTriggerEdge {
@@ -350,6 +356,7 @@ enum MeasurementTypes {
   MEASUREMENT_TYPES_TWENTY_DB_BANDWIDTH = 4;
   MEASUREMENT_TYPES_FREQUENCY_RANGE = 8;
   MEASUREMENT_TYPES_ACP = 16;
+  MEASUREMENT_TYPES_POWERRAMP = 32;
 }
 
 enum MechanicalAttenuationAuto {
@@ -401,6 +408,17 @@ enum PayloadLengthMode {
   PAYLOAD_LENGTH_MODE_AUTO = 1;
 }
 
+enum PowerRampAveragingEnabled {
+  POWERRAMP_AVERAGING_ENABLED_FALSE = 0;
+  POWERRAMP_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum PowerRampBurstSynchronizationType {
+  POWERRAMP_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  POWERRAMP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  POWERRAMP_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+}
+
 enum RFAttenuationAuto {
   RF_ATTENUATION_AUTO_FALSE = 0;
   RF_ATTENUATION_AUTO_TRUE = 1;
@@ -444,6 +462,8 @@ enum NiRFmxBluetoothInt32AttributeValues {
   NIRFMXBLUETOOTH_INT32_ACP_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
   NIRFMXBLUETOOTH_INT32_ACP_OFFSET_CHANNEL_MODE_SYMMETRIC = 0;
   NIRFMXBLUETOOTH_INT32_ACP_OFFSET_CHANNEL_MODE_INBAND = 1;
+  NIRFMXBLUETOOTH_INT32_ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE_AUTO = 0;
+  NIRFMXBLUETOOTH_INT32_ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE_MANUAL = 1;
   NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_FAIL = 0;
   NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_NOT_APPLICABLE = -1;
   NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_PASS = 1;
@@ -504,6 +524,11 @@ enum NiRFmxBluetoothInt32AttributeValues {
   NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_10101010 = 2;
   NIRFMXBLUETOOTH_INT32_PAYLOAD_LENGTH_MODE_MANUAL = 0;
   NIRFMXBLUETOOTH_INT32_PAYLOAD_LENGTH_MODE_AUTO = 1;
+  NIRFMXBLUETOOTH_INT32_POWERRAMP_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTH_INT32_POWERRAMP_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_POWERRAMP_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  NIRFMXBLUETOOTH_INT32_POWERRAMP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  NIRFMXBLUETOOTH_INT32_POWERRAMP_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
   NIRFMXBLUETOOTH_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
   NIRFMXBLUETOOTH_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
   NIRFMXBLUETOOTH_INT32_TRIGGER_TYPE_NONE = 0;
@@ -623,8 +648,7 @@ message ACPFetchMeasurementStatusRequest {
 
 message ACPFetchMeasurementStatusResponse {
   int32 status = 1;
-  AcpResultsMeasurementStatus measurement_status = 2;
-  int32 measurement_status_raw = 3;
+  int32 measurement_status = 2;
 }
 
 message ACPFetchOffsetMeasurementRequest {
@@ -1702,6 +1726,33 @@ message ModAccFetchRMSDEVMTraceResponse {
   int32 status = 1;
   repeated float rms_devm = 2;
   int32 actual_array_size = 3;
+}
+
+message PowerRampCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    PowerRampAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message PowerRampCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message PowerRampCfgBurstSynchronizationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof burst_synchronization_type_enum {
+    PowerRampBurstSynchronizationType burst_synchronization_type = 3;
+    int32 burst_synchronization_type_raw = 4;
+  }
+}
+
+message PowerRampCfgBurstSynchronizationTypeResponse {
+  int32 status = 1;
 }
 
 message ResetAttributeRequest {

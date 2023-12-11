@@ -109,7 +109,6 @@ attributes = {
     },
     11534361: {
         'access': 'read-write',
-        'enum': 'PacketType',
         'name': 'DETECTED_PACKET_TYPE',
         'type': 'int32'
     },
@@ -664,6 +663,17 @@ attributes = {
         'name': 'ACP_BURST_SYNCHRONIZATION_TYPE',
         'type': 'int32'
     },
+    11554837: {
+        'access': 'read-write',
+        'name': 'ACP_REFERENCE_CHANNEL_BANDWIDTH',
+        'type': 'float64'
+    },
+    11554838: {
+        'access': 'read-write',
+        'enum': 'AcpReferenceChannelBandwidthMode',
+        'name': 'ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE',
+        'type': 'int32'
+    },
     11583488: {
         'access': 'read-write',
         'name': 'RESULT_FETCH_TIMEOUT',
@@ -678,6 +688,48 @@ attributes = {
     11587585: {
         'access': 'read-write',
         'name': 'AUTO_LEVEL_INITIAL_REFERENCE_LEVEL',
+        'type': 'float64'
+    },
+    11591680: {
+        'access': 'read-write',
+        'name': 'POWERRAMP_MEASUREMENT_ENABLED',
+        'type': 'int32'
+    },
+    11591682: {
+        'access': 'read-write',
+        'enum': 'PowerRampBurstSynchronizationType',
+        'name': 'POWERRAMP_BURST_SYNCHRONIZATION_TYPE',
+        'type': 'int32'
+    },
+    11591685: {
+        'access': 'read-write',
+        'enum': 'PowerRampAveragingEnabled',
+        'name': 'POWERRAMP_AVERAGING_ENABLED',
+        'type': 'int32'
+    },
+    11591686: {
+        'access': 'read-write',
+        'name': 'POWERRAMP_AVERAGING_COUNT',
+        'type': 'int32'
+    },
+    11591687: {
+        'access': 'read-write',
+        'name': 'POWERRAMP_NUMBER_OF_ANALYSIS_THREADS',
+        'type': 'int32'
+    },
+    11591689: {
+        'access': 'read-write',
+        'name': 'POWERRAMP_RESULTS_RISE_TIME_MEAN',
+        'type': 'float64'
+    },
+    11591690: {
+        'access': 'read-write',
+        'name': 'POWERRAMP_RESULTS_FALL_TIME_MEAN',
+        'type': 'float64'
+    },
+    11591691: {
+        'access': 'read-write',
+        'name': 'POWERRAMP_RESULTS_40DB_FALL_TIME_MEAN',
         'type': 'float64'
     }
 }
