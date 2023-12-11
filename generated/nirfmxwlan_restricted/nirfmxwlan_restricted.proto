@@ -18,6 +18,7 @@ import "session.proto";
 service NiRFmxWLANRestricted {
   rpc GetChannelList(GetChannelListRequest) returns (GetChannelListResponse);
   rpc OFDMModAccFetchCommonPilotErrorTraceIndB(OFDMModAccFetchCommonPilotErrorTraceIndBRequest) returns (OFDMModAccFetchCommonPilotErrorTraceIndBResponse);
+  rpc OFDMModAccLoad1ReferenceWaveformFromTDMSFile(OFDMModAccLoad1ReferenceWaveformFromTDMSFileRequest) returns (OFDMModAccLoad1ReferenceWaveformFromTDMSFileResponse);
   rpc OFDMModAccNoiseCalibrate(OFDMModAccNoiseCalibrateRequest) returns (OFDMModAccNoiseCalibrateResponse);
 }
 
@@ -47,6 +48,17 @@ message OFDMModAccFetchCommonPilotErrorTraceIndBResponse {
   repeated float common_pilot_error_magnitude = 4;
   repeated float common_pilot_error_phase = 5;
   int32 actual_array_size = 6;
+}
+
+message OFDMModAccLoad1ReferenceWaveformFromTDMSFileRequest {
+  nidevice_grpc.Session instrument_handle = 1;
+  string selector_string = 2;
+  string waveform_file_path = 3;
+  int32 waveform_index = 4;
+}
+
+message OFDMModAccLoad1ReferenceWaveformFromTDMSFileResponse {
+  int32 status = 1;
 }
 
 message OFDMModAccNoiseCalibrateRequest {

@@ -42,6 +42,7 @@ public:
     const NiRFmxSpecAnRestrictedFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxSpecAnRestrictedService();
 
+  ::grpc::Status AMPMLoadReferenceWaveformFromTDMSFile(::grpc::ServerContext* context, const AMPMLoadReferenceWaveformFromTDMSFileRequest* request, AMPMLoadReferenceWaveformFromTDMSFileResponse* response) override;
   ::grpc::Status CacheResult(::grpc::ServerContext* context, const CacheResultRequest* request, CacheResultResponse* response) override;
   ::grpc::Status IQFetchDataOverrideBehavior(::grpc::ServerContext* context, const IQFetchDataOverrideBehaviorRequest* request, IQFetchDataOverrideBehaviorResponse* response) override;
 private:

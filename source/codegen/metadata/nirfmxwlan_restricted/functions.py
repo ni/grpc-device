@@ -173,6 +173,31 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'OFDMModAccLoad1ReferenceWaveformFromTDMSFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformIndex',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'OFDMModAccNoiseCalibrate': {
         'parameters': [
             {

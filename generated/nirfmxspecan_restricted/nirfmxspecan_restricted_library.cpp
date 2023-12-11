@@ -27,6 +27,7 @@ NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nid
   if (!loaded) {
     return;
   }
+  function_pointers_.AMPMLoadReferenceWaveformFromTDMSFile = reinterpret_cast<AMPMLoadReferenceWaveformFromTDMSFilePtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMLoadReferenceWaveformFromTDMSFile"));
   function_pointers_.CacheResult = reinterpret_cast<CacheResultPtr>(shared_library_->get_function_pointer("RFmxSpecAn_CacheResult"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxSpecAn_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxSpecAn_GetErrorString"));
@@ -42,6 +43,14 @@ NiRFmxSpecAnRestrictedLibrary::~NiRFmxSpecAnRestrictedLibrary()
   return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
+}
+
+int32 NiRFmxSpecAnRestrictedLibrary::AMPMLoadReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex)
+{
+  if (!function_pointers_.AMPMLoadReferenceWaveformFromTDMSFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMLoadReferenceWaveformFromTDMSFile.");
+  }
+  return function_pointers_.AMPMLoadReferenceWaveformFromTDMSFile(instrumentHandle, selectorString, waveformFilePath, idleDurationPresent, signalType, waveformIndex);
 }
 
 int32 NiRFmxSpecAnRestrictedLibrary::CacheResult(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 selectorStringOutSize, char selectorStringOut[])

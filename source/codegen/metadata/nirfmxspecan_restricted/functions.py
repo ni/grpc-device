@@ -1,4 +1,41 @@
 functions = {
+    'AMPMLoadReferenceWaveformFromTDMSFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AmpmReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AmpmSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformIndex',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CacheResult': {
         'parameters': [
             {

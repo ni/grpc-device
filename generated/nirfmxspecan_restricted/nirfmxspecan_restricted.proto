@@ -17,6 +17,7 @@ import "nidevice.proto";
 import "session.proto";
 
 service NiRFmxSpecAnRestricted {
+  rpc AMPMLoadReferenceWaveformFromTDMSFile(AMPMLoadReferenceWaveformFromTDMSFileRequest) returns (AMPMLoadReferenceWaveformFromTDMSFileResponse);
   rpc CacheResult(CacheResultRequest) returns (CacheResultResponse);
   rpc IQFetchDataOverrideBehavior(IQFetchDataOverrideBehaviorRequest) returns (IQFetchDataOverrideBehaviorResponse);
 }
@@ -25,6 +26,35 @@ enum IQDeleteOnFetch {
   IQ_DELETE_ON_FETCH_DEFAULT = 0;
   IQ_DELETE_ON_FETCH_TRUE = 1;
   IQ_DELETE_ON_FETCH_FALSE = 2;
+}
+
+enum AmpmReferenceWaveformIdleDurationPresent {
+  AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE = 0;
+  AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE = 1;
+}
+
+enum AmpmSignalType {
+  AMPM_SIGNAL_TYPE_MODULATED = 0;
+  AMPM_SIGNAL_TYPE_TONES = 1;
+}
+
+message AMPMLoadReferenceWaveformFromTDMSFileRequest {
+  nidevice_grpc.Session instrument_handle = 1;
+  string selector_string = 2;
+  string waveform_file_path = 3;
+  oneof idle_duration_present_enum {
+    AmpmReferenceWaveformIdleDurationPresent idle_duration_present = 4;
+    int32 idle_duration_present_raw = 5;
+  }
+  oneof signal_type_enum {
+    AmpmSignalType signal_type = 6;
+    int32 signal_type_raw = 7;
+  }
+  int32 waveform_index = 8;
+}
+
+message AMPMLoadReferenceWaveformFromTDMSFileResponse {
+  int32 status = 1;
 }
 
 message CacheResultRequest {

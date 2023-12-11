@@ -31,6 +31,7 @@ NiRFmxWLANRestrictedLibrary::NiRFmxWLANRestrictedLibrary(std::shared_ptr<nidevic
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxWLAN_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxWLAN_GetErrorString"));
   function_pointers_.OFDMModAccFetchCommonPilotErrorTraceIndB = reinterpret_cast<OFDMModAccFetchCommonPilotErrorTraceIndBPtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchCommonPilotErrorTraceIndB"));
+  function_pointers_.OFDMModAccLoad1ReferenceWaveformFromTDMSFile = reinterpret_cast<OFDMModAccLoad1ReferenceWaveformFromTDMSFilePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccLoad1ReferenceWaveformFromTDMSFile"));
   function_pointers_.OFDMModAccNoiseCalibrate = reinterpret_cast<OFDMModAccNoiseCalibratePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccNoiseCalibrate"));
 }
 
@@ -75,6 +76,14 @@ int32 NiRFmxWLANRestrictedLibrary::OFDMModAccFetchCommonPilotErrorTraceIndB(niRF
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchCommonPilotErrorTraceIndB.");
   }
   return function_pointers_.OFDMModAccFetchCommonPilotErrorTraceIndB(instrumentHandle, selectorString, timeout, x0, dx, commonPilotErrorMagnitude, commonPilotErrorPhase, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWLANRestrictedLibrary::OFDMModAccLoad1ReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 waveformIndex)
+{
+  if (!function_pointers_.OFDMModAccLoad1ReferenceWaveformFromTDMSFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccLoad1ReferenceWaveformFromTDMSFile.");
+  }
+  return function_pointers_.OFDMModAccLoad1ReferenceWaveformFromTDMSFile(instrumentHandle, selectorString, waveformFilePath, waveformIndex);
 }
 
 int32 NiRFmxWLANRestrictedLibrary::OFDMModAccNoiseCalibrate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sharedLOConnection)
