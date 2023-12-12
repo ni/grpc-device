@@ -223,6 +223,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'enum': 'AcpResultsMeasurementStatus',
                 'name': 'measurementStatus',
                 'type': 'int32'
             }

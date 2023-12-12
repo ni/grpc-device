@@ -305,7 +305,8 @@ namespace nirfmxbluetooth_grpc {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
-      response->set_measurement_status(measurement_status);
+      response->set_measurement_status(static_cast<nirfmxbluetooth_grpc::AcpResultsMeasurementStatus>(measurement_status));
+      response->set_measurement_status_raw(measurement_status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

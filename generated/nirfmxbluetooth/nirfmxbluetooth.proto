@@ -315,6 +315,12 @@ enum AcpOffsetChannelMode {
   ACP_OFFSET_CHANNEL_MODE_INBAND = 1;
 }
 
+enum AcpResultsMeasurementStatus {
+  ACP_RESULTS_MEASUREMENT_STATUS_FAIL = 0;
+  ACP_RESULTS_MEASUREMENT_STATUS_NOT_APPLICABLE = -1;
+  ACP_RESULTS_MEASUREMENT_STATUS_PASS = 1;
+}
+
 enum DigitalEdgeTriggerEdge {
   DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
   DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
@@ -648,7 +654,8 @@ message ACPFetchMeasurementStatusRequest {
 
 message ACPFetchMeasurementStatusResponse {
   int32 status = 1;
-  int32 measurement_status = 2;
+  AcpResultsMeasurementStatus measurement_status = 2;
+  int32 measurement_status_raw = 3;
 }
 
 message ACPFetchOffsetMeasurementRequest {
