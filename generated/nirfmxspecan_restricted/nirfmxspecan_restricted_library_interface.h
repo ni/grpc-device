@@ -15,6 +15,7 @@ class NiRFmxSpecAnRestrictedLibraryInterface {
  public:
   virtual ~NiRFmxSpecAnRestrictedLibraryInterface() {}
 
+  virtual int32 AMPMLoadReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex) = 0;
   virtual int32 CacheResult(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 selectorStringOutSize, char selectorStringOut[]) = 0;
   virtual int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;
   virtual int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;

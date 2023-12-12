@@ -2,7 +2,7 @@ contextlib2==21.6.0
 Mako==1.2.2
 MarkupSafe==2.0.1
 schema==0.7.4
-black>=21.10b0
+black==23.3.0
 mypy>=0.910
 ni-python-styleguide~=0.1
 pycodestyle==2.7.0
