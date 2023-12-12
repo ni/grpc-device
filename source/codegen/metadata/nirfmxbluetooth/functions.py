@@ -3235,6 +3235,55 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'PowerRampCfgAveraging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PowerRampAveragingEnabled',
+                'name': 'averagingEnabled',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'averagingCount',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'PowerRampCfgBurstSynchronizationType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PowerRampBurstSynchronizationType',
+                'name': 'burstSynchronizationType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ResetAttribute': {
         'parameters': [
             {

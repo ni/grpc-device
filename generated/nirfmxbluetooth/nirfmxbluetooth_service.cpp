@@ -3551,6 +3551,87 @@ namespace nirfmxbluetooth_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::PowerRampCfgAveraging(::grpc::ServerContext* context, const PowerRampCfgAveragingRequest* request, PowerRampCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxbluetooth_grpc::PowerRampCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxbluetooth_grpc::PowerRampCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxbluetooth_grpc::PowerRampCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->PowerRampCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::PowerRampCfgBurstSynchronizationType(::grpc::ServerContext* context, const PowerRampCfgBurstSynchronizationTypeRequest* request, PowerRampCfgBurstSynchronizationTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 burst_synchronization_type;
+      switch (request->burst_synchronization_type_enum_case()) {
+        case nirfmxbluetooth_grpc::PowerRampCfgBurstSynchronizationTypeRequest::BurstSynchronizationTypeEnumCase::kBurstSynchronizationType: {
+          burst_synchronization_type = static_cast<int32>(request->burst_synchronization_type());
+          break;
+        }
+        case nirfmxbluetooth_grpc::PowerRampCfgBurstSynchronizationTypeRequest::BurstSynchronizationTypeEnumCase::kBurstSynchronizationTypeRaw: {
+          burst_synchronization_type = static_cast<int32>(request->burst_synchronization_type_raw());
+          break;
+        }
+        case nirfmxbluetooth_grpc::PowerRampCfgBurstSynchronizationTypeRequest::BurstSynchronizationTypeEnumCase::BURST_SYNCHRONIZATION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for burst_synchronization_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->PowerRampCfgBurstSynchronizationType(instrument, selector_string, burst_synchronization_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxBluetoothService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
   {
     if (context->IsCancelled()) {

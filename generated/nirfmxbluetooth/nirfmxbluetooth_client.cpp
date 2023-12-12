@@ -1977,6 +1977,59 @@ mod_acc_fetch_rmsdevm_trace(const StubPtr& stub, const nidevice_grpc::Session& i
   return response;
 }
 
+PowerRampCfgAveragingResponse
+power_ramp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PowerRampAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PowerRampCfgAveragingRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<PowerRampAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
+  request.set_averaging_count(averaging_count);
+
+  auto response = PowerRampCfgAveragingResponse{};
+
+  raise_if_error(
+      stub->PowerRampCfgAveraging(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PowerRampCfgBurstSynchronizationTypeResponse
+power_ramp_cfg_burst_synchronization_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PowerRampBurstSynchronizationType, pb::int32>& burst_synchronization_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PowerRampCfgBurstSynchronizationTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto burst_synchronization_type_ptr = burst_synchronization_type.get_if<PowerRampBurstSynchronizationType>();
+  const auto burst_synchronization_type_raw_ptr = burst_synchronization_type.get_if<pb::int32>();
+  if (burst_synchronization_type_ptr) {
+    request.set_burst_synchronization_type(*burst_synchronization_type_ptr);
+  }
+  else if (burst_synchronization_type_raw_ptr) {
+    request.set_burst_synchronization_type_raw(*burst_synchronization_type_raw_ptr);
+  }
+
+  auto response = PowerRampCfgBurstSynchronizationTypeResponse{};
+
+  raise_if_error(
+      stub->PowerRampCfgBurstSynchronizationType(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ResetAttributeResponse
 reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxBluetoothAttribute& attribute_id)
 {

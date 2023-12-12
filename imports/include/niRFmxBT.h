@@ -2,7 +2,7 @@
 /****************************************************************************************************
 *          National Instruments RFmx BT
 *----------------------------------------------------------------------------------------------------
-*   Copyright(c) National Instruments 2021.  All Rights Reserved.
+*   Copyright(c) National Instruments 2024.  All Rights Reserved.
 *----------------------------------------------------------------------------------------------------
 *
 * Title:    niRFmxBT.h
@@ -78,8 +78,8 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_EDR_HEADER_FREQUENCY_ERROR_WI_MAXIMUM                           0x00b04017
 #define RFMXBT_ATTR_MODACC_RESULTS_EDR_PEAK_FREQUENCY_ERROR_WI_PLUS_W0_MAXIMUM                     0x00b04018
 #define RFMXBT_ATTR_MODACC_RESULTS_EDR_PEAK_FREQUENCY_ERROR_W0_MAXIMUM                             0x00b04019
-#define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_ERROR_MAXIMUM                                 0x00b0401a
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_INITIAL_FREQUENCY_ERROR_MAXIMUM                              0x00b04031
+#define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_ERROR_MAXIMUM                                 0x00b0401a
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_INITIAL_FREQUENCY_DRIFT_MAXIMUM                              0x00b0401b
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_DRIFT_MAXIMUM                                 0x00b0401c
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_DRIFT_RATE_MAXIMUM                            0x00b0401d
@@ -99,6 +99,8 @@
 #define RFMXBT_ATTR_ACP_OFFSET_CHANNEL_MODE                                                        0x00b05002
 #define RFMXBT_ATTR_ACP_NUMBER_OF_OFFSETS                                                          0x00b05003
 #define RFMXBT_ATTR_ACP_OFFSET_FREQUENCY                                                           0x00b05004
+#define RFMXBT_ATTR_ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE                                           0x00b05016
+#define RFMXBT_ATTR_ACP_REFERENCE_CHANNEL_BANDWIDTH                                                0x00b05015
 #define RFMXBT_ATTR_ACP_BURST_SYNCHRONIZATION_TYPE                                                 0x00b05012
 #define RFMXBT_ATTR_ACP_AVERAGING_ENABLED                                                          0x00b05005
 #define RFMXBT_ATTR_ACP_AVERAGING_COUNT                                                            0x00b05006
@@ -147,6 +149,14 @@
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CTE_REFERENCE_PERIOD_PEAK_ABSOLUTE_POWER_DEVIATION_MAXIMUM      0x00b01015
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_AVERAGE_POWER_MEAN                            0x00b01016
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_PEAK_ABSOLUTE_POWER_DEVIATION_MAXIMUM         0x00b01017
+#define RFMXBT_ATTR_POWERRAMP_MEASUREMENT_ENABLED                                                  0x00b0e000
+#define RFMXBT_ATTR_POWERRAMP_BURST_SYNCHRONIZATION_TYPE                                           0x00b0e002
+#define RFMXBT_ATTR_POWERRAMP_AVERAGING_ENABLED                                                    0x00b0e005
+#define RFMXBT_ATTR_POWERRAMP_AVERAGING_COUNT                                                      0x00b0e006
+#define RFMXBT_ATTR_POWERRAMP_NUMBER_OF_ANALYSIS_THREADS                                           0x00b0e007
+#define RFMXBT_ATTR_POWERRAMP_RESULTS_RISE_TIME_MEAN                                               0x00b0e009
+#define RFMXBT_ATTR_POWERRAMP_RESULTS_FALL_TIME_MEAN                                               0x00b0e00a
+#define RFMXBT_ATTR_POWERRAMP_RESULTS_40DB_FALL_TIME_MEAN                                          0x00b0e00b
 #define RFMXBT_ATTR_LIMITED_CONFIGURATION_CHANGE                                                   0x00b0d000
 #define RFMXBT_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                                             0x00b0d001
 #define RFMXBT_ATTR_RESULT_FETCH_TIMEOUT                                                           0x00b0c000
@@ -223,6 +233,21 @@
 #define RFMXBT_VAL_DIRECTION_FINDING_MODE_ANGLE_OF_ARRIVAL                                        1
 #define RFMXBT_VAL_DIRECTION_FINDING_MODE_ANGLE_OF_DEPARTURE                                      2
 
+// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_PACKET_FORMAT
+#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_SYNC                                            0
+#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE                                         1
+#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE_AFTER_SYNC                              2
+#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE_BEFORE_SYNC                             3
+
+// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_SYNC_SEQUENCE
+#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_NONE                                            0
+#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_32_BIT                        1
+#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_96_BIT                        2
+
+// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT
+#define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_DISABLED                                  0
+#define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_ENABLED                                   1
+
 // Values for RFMXBT_ATTR_MODACC_BURST_SYNCHRONIZATION_TYPE
 #define RFMXBT_VAL_MODACC_BURST_SYNCHRONIZATION_TYPE_NONE                                         0
 #define RFMXBT_VAL_MODACC_BURST_SYNCHRONIZATION_TYPE_PREAMBLE                                     1
@@ -239,6 +264,10 @@
 // Values for RFMXBT_ATTR_ACP_OFFSET_CHANNEL_MODE
 #define RFMXBT_VAL_ACP_OFFSET_CHANNEL_MODE_SYMMETRIC                                              0
 #define RFMXBT_VAL_ACP_OFFSET_CHANNEL_MODE_INBAND                                                 1
+
+// Values for RFMXBT_ATTR_ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE
+#define RFMXBT_VAL_ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE_AUTO                                      0
+#define RFMXBT_VAL_ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE_MANUAL                                    1
 
 // Values for RFMXBT_ATTR_ACP_BURST_SYNCHRONIZATION_TYPE
 #define RFMXBT_VAL_ACP_BURST_SYNCHRONIZATION_TYPE_NONE                                            0
@@ -271,6 +300,15 @@
 #define RFMXBT_VAL_TXP_AVERAGING_ENABLED_FALSE                                                    0
 #define RFMXBT_VAL_TXP_AVERAGING_ENABLED_TRUE                                                     1
 
+// Values for RFMXBT_ATTR_POWERRAMP_BURST_SYNCHRONIZATION_TYPE
+#define RFMXBT_VAL_POWERRAMP_BURST_SYNCHRONIZATION_TYPE_NONE                                      0
+#define RFMXBT_VAL_POWERRAMP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE                                  1
+#define RFMXBT_VAL_POWERRAMP_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD                                 2
+
+// Values for RFMXBT_ATTR_POWERRAMP_AVERAGING_ENABLED
+#define RFMXBT_VAL_POWERRAMP_AVERAGING_ENABLED_FALSE                                              0
+#define RFMXBT_VAL_POWERRAMP_AVERAGING_ENABLED_TRUE                                               1
+
 // Values for RFMXBT_ATTR_LIMITED_CONFIGURATION_CHANGE
 #define RFMXBT_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
 #define RFMXBT_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                         1
@@ -279,42 +317,28 @@
 #define RFMXBT_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
 #define RFMXBT_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
 
+// Values for Standard
+#define RFMXBT_VAL_STANDARD_BR                                                                    0
+#define RFMXBT_VAL_STANDARD_EDR                                                                   0
+#define RFMXBT_VAL_STANDARD_LE                                                                    1
+
+// Values for Boolean
+#define RFMXBT_VAL_FALSE                                                                          0
+#define RFMXBT_VAL_TRUE                                                                           1
+
 // Values for MeasurementTypes
 #define RFMXBT_VAL_TXP                                                                            1<<0
 #define RFMXBT_VAL_MODACC                                                                         1<<1
 #define RFMXBT_VAL_20DB_BANDWIDTH                                                                 1<<2
 #define RFMXBT_VAL_FREQUENCY_RANGE                                                                1<<3
 #define RFMXBT_VAL_ACP                                                                            1<<4
+#define RFMXBT_VAL_POWERRAMP                                                                      1<<5
 
 // Values for FrequencyReferenceSource
 #define RFMXBT_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
 #define RFMXBT_VAL_REF_IN_STR                                                                     "RefIn"
 #define RFMXBT_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
 #define RFMXBT_VAL_CLK_IN_STR                                                                     "ClkIn"
-
-// Values for Boolean
-#define RFMXBT_VAL_FALSE                                                                          0
-#define RFMXBT_VAL_TRUE                                                                           1
-
-// Values for Standard
-#define RFMXBT_VAL_BR                                                                             0
-#define RFMXBT_VAL_EDR                                                                            0
-#define RFMXBT_VAL_LE                                                                             1
-
-// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_PACKET_FORMAT
-#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_SYNC                                            0
-#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE                                         1
-#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE_AFTER_SYNC                              2
-#define RFMXBT_VAL_CHANNEL_SOUNDING_PACKET_FORMAT_CS_TONE_BEFORE_SYNC                             3
-
-// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_SYNC_SEQUENCE
-#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_NONE                                            0
-#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_32_BIT                        1
-#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_96_BIT                        2
-
-// Values for RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT
-#define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_DISABLED                                  0
-#define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_ENABLED                                   1
 
 /* ---------------- RFmxBT APIs ------------------ */
 
@@ -722,44 +746,6 @@ int32 __stdcall RFmxBT_GetAttributeString(
    char attrVal[]
 );
 
-int32 __stdcall RFmxBT_Initiate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char resultName[]
-);
-
-int32 __stdcall RFmxBT_WaitForMeasurementComplete(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout
-);
-
-int32 __stdcall RFmxBT_Commit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxBT_ClearNamedResult(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxBT_ClearAllNamedResults(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxBT_ResetToDefault(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxBT_CheckMeasurementStatus(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32* isDone
-);
-
 int32 __stdcall RFmxBT_AnalyzeIQ1Waveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -785,24 +771,10 @@ int32 __stdcall RFmxBT_AnalyzeIQ1WaveformSplit(
    int64 reserved
 );
 
-int32 __stdcall RFmxBT_SendSoftwareEdgeTrigger(
-   niRFmxInstrHandle instrumentHandle
-);
-
-int32 __stdcall RFmxBT_CreateSignalConfiguration(
+int32 __stdcall RFmxBT_AutoDetectSignal(
    niRFmxInstrHandle instrumentHandle,
-   char signalName[]
-);
-
-int32 __stdcall RFmxBT_CloneSignalConfiguration(
-   niRFmxInstrHandle instrumentHandle,
-   char oldSignalName[],
-   char newSignalName[]
-);
-
-int32 __stdcall RFmxBT_DeleteSignalConfiguration(
-   niRFmxInstrHandle instrumentHandle,
-   char signalName[]
+   char selectorString[],
+   float64 timeout
 );
 
 int32 __stdcall RFmxBT_AutoLevel(
@@ -812,6 +784,33 @@ int32 __stdcall RFmxBT_AutoLevel(
    float64* referenceLevel
 );
 
+int32 __stdcall RFmxBT_CheckMeasurementStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32* isDone
+);
+
+int32 __stdcall RFmxBT_ClearAllNamedResults(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxBT_ClearNamedResult(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxBT_CloneSignalConfiguration(
+   niRFmxInstrHandle instrumentHandle,
+   char oldSignalName[],
+   char newSignalName[]
+);
+
+int32 __stdcall RFmxBT_Commit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
 int32 __stdcall RFmxBT_CfgFrequencyChannelNumber(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -819,75 +818,35 @@ int32 __stdcall RFmxBT_CfgFrequencyChannelNumber(
    int32 channelNumber
 );
 
-int32 __stdcall RFmxBT_AutoDetectSignal(
+int32 __stdcall RFmxBT_CreateSignalConfiguration(
+   niRFmxInstrHandle instrumentHandle,
+   char signalName[]
+);
+
+int32 __stdcall RFmxBT_DeleteSignalConfiguration(
+   niRFmxInstrHandle instrumentHandle,
+   char signalName[]
+);
+
+int32 __stdcall RFmxBT_Initiate(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char resultName[]
+);
+
+int32 __stdcall RFmxBT_ResetToDefault(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxBT_SendSoftwareEdgeTrigger(
+   niRFmxInstrHandle instrumentHandle
+);
+
+int32 __stdcall RFmxBT_WaitForMeasurementComplete(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout
-);
-
-int32 __stdcall RFmxBT_CfgFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 centerFrequency
-);
-
-int32 __stdcall RFmxBT_CfgReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 referenceLevel
-);
-
-int32 __stdcall RFmxBT_CfgExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 externalAttenuation
-);
-
-int32 __stdcall RFmxBT_CfgRF(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 centerFrequency,
-   float64 referenceLevel,
-   float64 externalAttenuation
-);
-
-int32 __stdcall RFmxBT_CfgChannelNumber(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 channelNumber
-);
-
-int32 __stdcall RFmxBT_CfgPayloadLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 payloadLengthMode,
-   int32 payloadLength
-);
-
-int32 __stdcall RFmxBT_CfgPacketType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 packetType
-);
-
-int32 __stdcall RFmxBT_CfgDataRate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 dataRate
-);
-
-int32 __stdcall RFmxBT_CfgPayloadBitPattern(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 payloadBitPattern
-);
-
-int32 __stdcall RFmxBT_CfgLEDirectionFinding(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 directionFindingMode,
-   float64 CTELength,
-   float64 CTESlotDuration
 );
 
 int32 __stdcall RFmxBT_TXPCfgAveraging(
@@ -949,31 +908,97 @@ int32 __stdcall RFmxBT_ACPCfgBurstSynchronizationType(
    int32 burstSynchronizationType
 );
 
-int32 __stdcall RFmxBT_ACPCfgOffsetChannelMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 offsetChannelMode
-);
-
 int32 __stdcall RFmxBT_ACPCfgNumberOfOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfOffsets
 );
 
-int32 __stdcall RFmxBT_AbortMeasurements(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxBT_SelectMeasurements(
+int32 __stdcall RFmxBT_ACPCfgOffsetChannelMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   uInt32 measurements,
-   int32 enableAllTraces
+   int32 offsetChannelMode
 );
 
-int32 __stdcall RFmxBT_DisableTrigger(
+int32 __stdcall RFmxBT_PowerRampCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount
+);
+
+int32 __stdcall RFmxBT_PowerRampCfgBurstSynchronizationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 burstSynchronizationType
+);
+
+int32 __stdcall RFmxBT_CfgChannelNumber(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 channelNumber
+);
+
+int32 __stdcall RFmxBT_CfgDataRate(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 dataRate
+);
+
+int32 __stdcall RFmxBT_CfgExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 externalAttenuation
+);
+
+int32 __stdcall RFmxBT_CfgFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 centerFrequency
+);
+
+int32 __stdcall RFmxBT_CfgLEDirectionFinding(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 directionFindingMode,
+   float64 CTELength,
+   float64 CTESlotDuration
+);
+
+int32 __stdcall RFmxBT_CfgPacketType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 packetType
+);
+
+int32 __stdcall RFmxBT_CfgPayloadBitPattern(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 payloadBitPattern
+);
+
+int32 __stdcall RFmxBT_CfgPayloadLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 payloadLengthMode,
+   int32 payloadLength
+);
+
+int32 __stdcall RFmxBT_CfgReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 referenceLevel
+);
+
+int32 __stdcall RFmxBT_CfgRF(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 centerFrequency,
+   float64 referenceLevel,
+   float64 externalAttenuation
+);
+
+int32 __stdcall RFmxBT_AbortMeasurements(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
@@ -1007,6 +1032,11 @@ int32 __stdcall RFmxBT_CfgSoftwareEdgeTrigger(
    int32 enableTrigger
 );
 
+int32 __stdcall RFmxBT_DisableTrigger(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
 int32 __stdcall RFmxBT_GetAllNamedResultNames(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1014,6 +1044,13 @@ int32 __stdcall RFmxBT_GetAllNamedResultNames(
    int32 resultNamesBufferSize,
    int32* actualResultNamesSize,
    int32* defaultResultExists
+);
+
+int32 __stdcall RFmxBT_SelectMeasurements(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   uInt32 measurements,
+   int32 enableAllTraces
 );
 
 int32 __stdcall RFmxBT_TXPFetchLECTETransmitSlotPowersArray(
@@ -1035,16 +1072,6 @@ int32 __stdcall RFmxBT_TXPFetchPowerTrace(
    float32 power[],
    int32 arraySize,
    int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_TXPFetchPowers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* averagePowerMean,
-   float64* averagePowerMaximum,
-   float64* averagePowerMinimum,
-   float64* peakToAveragePowerRatioMaximum
 );
 
 int32 __stdcall RFmxBT_TXPFetchEDRPowers(
@@ -1072,83 +1099,14 @@ int32 __stdcall RFmxBT_TXPFetchLECTETransmitSlotPowers(
    float64* transmitSlotPeakAbsolutePowerDeviationMaximum
 );
 
-int32 __stdcall RFmxBT_ModAccFetchDf1maxTrace(
+int32 __stdcall RFmxBT_TXPFetchPowers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 time[],
-   float32 df1max[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_ModAccFetchFrequencyTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 frequency[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_ModAccFetchDf2maxTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 time[],
-   float32 df2max[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_ModAccFetchFrequencyErrorTraceBR(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 time[],
-   float32 frequencyError[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 time[],
-   float32 frequencyErrorWiPlusW0[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_ModAccFetchFrequencyErrorTraceLE(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 time[],
-   float32 frequencyError[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_ModAccFetchRMSDEVMTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 RMSDEVM[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_ModAccFetchDEVMPerSymbolTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 DEVMPerSymbol[],
-   int32 arraySize,
-   int32* actualArraySize
+   float64* averagePowerMean,
+   float64* averagePowerMaximum,
+   float64* averagePowerMinimum,
+   float64* peakToAveragePowerRatioMaximum
 );
 
 int32 __stdcall RFmxBT_ModAccFetchConstellationTrace(
@@ -1200,6 +1158,94 @@ int32 __stdcall RFmxBT_ModAccFetchDemodulatedBitTrace(
    int8 demodulatedBits[],
    int32 arraySize,
    int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchDEVMPerSymbolTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 DEVMPerSymbol[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchDf1maxTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 time[],
+   float32 df1max[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchDf2maxTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 time[],
+   float32 df2max[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchFrequencyErrorTraceBR(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 time[],
+   float32 frequencyError[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchFrequencyErrorTraceLE(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 time[],
+   float32 frequencyError[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 time[],
+   float32 frequencyErrorWiPlusW0[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchFrequencyTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 frequency[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchRMSDEVMTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 RMSDEVM[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchDEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* peakRMSDEVMMaximum,
+   float64* peakDEVMMaximum,
+   float64* ninetyninePercentDEVM
 );
 
 int32 __stdcall RFmxBT_ModAccFetchDEVMMagnitudeError(
@@ -1262,15 +1308,6 @@ int32 __stdcall RFmxBT_ModAccFetchFrequencyErrorLE(
    float64* peakFrequencyDriftRateMaximum
 );
 
-int32 __stdcall RFmxBT_ModAccFetchDEVM(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* peakRMSDEVMMaximum,
-   float64* peakDEVMMaximum,
-   float64* ninetyninePercentDEVM
-);
-
 int32 __stdcall RFmxBT_20dBBandwidthFetchSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1311,6 +1348,29 @@ int32 __stdcall RFmxBT_FrequencyRangeFetchMeasurement(
    float64* lowFrequency
 );
 
+int32 __stdcall RFmxBT_ACPFetchAbsolutePowerTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 absolutePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ACPFetchMaskTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 limitWithExceptionMask[],
+   float32 limitWithoutExceptionMask[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxBT_ACPFetchOffsetMeasurementArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1336,41 +1396,11 @@ int32 __stdcall RFmxBT_ACPFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxBT_ACPFetchAbsolutePowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 absolutePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxBT_ACPFetchMaskTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 limitWithExceptionMask[],
-   float32 limitWithoutExceptionMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
 int32 __stdcall RFmxBT_ACPFetchMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    int32* measurementStatus
-);
-
-int32 __stdcall RFmxBT_ACPFetchReferenceChannelPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* referenceChannelPower
 );
 
 int32 __stdcall RFmxBT_ACPFetchOffsetMeasurement(
@@ -1383,6 +1413,13 @@ int32 __stdcall RFmxBT_ACPFetchOffsetMeasurement(
    float64* upperRelativePower,
    float64* lowerMargin,
    float64* upperMargin
+);
+
+int32 __stdcall RFmxBT_ACPFetchReferenceChannelPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* referenceChannelPower
 );
 
 int32 __stdcall RFmxBT_GetSelectedPorts(
@@ -2000,13 +2037,13 @@ int32 __stdcall RFmxBT_ModAccGetResultsEDRPeakFrequencyErrorW0Maximum(
    float64 *attrVal
 );
 
-int32 __stdcall RFmxBT_ModAccGetResultsLEPeakFrequencyErrorMaximum(
+int32 __stdcall RFmxBT_ModAccGetResultsLEInitialFrequencyErrorMaximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 __stdcall RFmxBT_ModAccGetResultsLEInitialFrequencyErrorMaximum(
+int32 __stdcall RFmxBT_ModAccGetResultsLEPeakFrequencyErrorMaximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -2142,6 +2179,30 @@ int32 __stdcall RFmxBT_ACPGetOffsetFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ACPGetReferenceChannelBandwidthMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ACPSetReferenceChannelBandwidthMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_ACPGetReferenceChannelBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ACPSetReferenceChannelBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxBT_ACPGetBurstSynchronizationType(
@@ -2559,6 +2620,84 @@ int32 __stdcall RFmxBT_TXPGetResultsLECTETransmitSlotAveragePowerMean(
 );
 
 int32 __stdcall RFmxBT_TXPGetResultsLECTETransmitSlotPeakAbsolutePowerDeviationMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampSetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetBurstSynchronizationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampSetBurstSynchronizationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampSetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetNumberOfAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampSetNumberOfAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetResultsRiseTimeMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetResultsFallTimeMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetResults40dBFallTimeMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
