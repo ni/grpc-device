@@ -6627,11 +6627,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'IdpdReferenceWaveformIdleDurationPresent',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
             {
                 'direction': 'in',
+                'enum': 'IdpdSignalType',
                 'name': 'signalType',
                 'type': 'int32'
             }

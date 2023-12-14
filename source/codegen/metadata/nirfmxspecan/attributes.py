@@ -75,6 +75,11 @@ attributes = {
         'name': 'LIMITED_CONFIGURATION_CHANGE',
         'type': 'int32'
     },
+    1048591: {
+        'access': 'read-write',
+        'name': 'SELECTED_PATH',
+        'type': 'char[]'
+    },
     1052663: {
         'access': 'read-write',
         'name': 'LIST_STEP_TIMER_OFFSET',

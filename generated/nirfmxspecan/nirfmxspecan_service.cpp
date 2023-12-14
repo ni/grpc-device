@@ -7619,8 +7619,38 @@ namespace nirfmxspecan_grpc {
       float64 dx = request->dx();
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
       int32 array_size = static_cast<int32>(request->reference_waveform().size());
-      int32 idle_duration_present = request->idle_duration_present();
-      int32 signal_type = request->signal_type();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 signal_type;
+      switch (request->signal_type_enum_case()) {
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformRequest::SignalTypeEnumCase::kSignalType: {
+          signal_type = static_cast<int32>(request->signal_type());
+          break;
+        }
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformRequest::SignalTypeEnumCase::kSignalTypeRaw: {
+          signal_type = static_cast<int32>(request->signal_type_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->IDPDCfgReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size, idle_duration_present, signal_type);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);

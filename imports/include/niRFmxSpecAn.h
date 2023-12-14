@@ -2,7 +2,7 @@
 /****************************************************************************************************
 *          National Instruments RFmx SpecAn
 *----------------------------------------------------------------------------------------------------
-*   Copyright(c) National Instruments 2021.  All Rights Reserved.
+*   Copyright(c) National Instruments 2024.  All Rights Reserved.
 *----------------------------------------------------------------------------------------------------
 *
 * Title:    niRFmxSpecAn.h
@@ -19,6 +19,24 @@
 
 #include "niRFmxInstr.h"
 
+#define RFMXSPECAN_ATTR_SELECTED_PORTS                                                 0x00100ffd
+#define RFMXSPECAN_ATTR_CENTER_FREQUENCY                                               0x00100001
+#define RFMXSPECAN_ATTR_REFERENCE_LEVEL                                                0x00100002
+#define RFMXSPECAN_ATTR_EXTERNAL_ATTENUATION                                           0x00100003
+#define RFMXSPECAN_ATTR_REFERENCE_LEVEL_HEADROOM                                       0x00100ffc
+#define RFMXSPECAN_ATTR_TRIGGER_TYPE                                                   0x00100004
+#define RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                                    0x00100005
+#define RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                                      0x00100006
+#define RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                                   0x00100007
+#define RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                                    0x00100008
+#define RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                               0x00100fff
+#define RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                                    0x00100009
+#define RFMXSPECAN_ATTR_TRIGGER_DELAY                                                  0x0010000a
+#define RFMXSPECAN_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                                0x0010000b
+#define RFMXSPECAN_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                            0x0010000c
+#define RFMXSPECAN_ATTR_NUMBER_OF_STEPS                                                0x00100ff8
+#define RFMXSPECAN_ATTR_LIST_STEP_TIMER_DURATION                                       0x00100ff9
+#define RFMXSPECAN_ATTR_LIST_STEP_TIMER_OFFSET                                         0x00100ff7
 #define RFMXSPECAN_ATTR_ACP_MEASUREMENT_ENABLED                                        0x00101000
 #define RFMXSPECAN_ATTR_ACP_NUMBER_OF_CARRIERS                                         0x00101002
 #define RFMXSPECAN_ATTR_ACP_CARRIER_MODE                                               0x00101003
@@ -47,7 +65,6 @@
 #define RFMXSPECAN_ATTR_ACP_DETECTOR_POINTS                                            0x00101043
 #define RFMXSPECAN_ATTR_ACP_POWER_UNITS                                                0x00101013
 #define RFMXSPECAN_ATTR_ACP_MEASUREMENT_METHOD                                         0x00101012
-#define RFMXSPECAN_ATTR_ACP_SEQUENTIAL_FFT_SIZE                                        0x0010103a
 #define RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_MODE                                     0x00101041
 #define RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_AVERAGING_AUTO                           0x00101040
 #define RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_AVERAGING_COUNT                          0x0010103f
@@ -59,9 +76,13 @@
 #define RFMXSPECAN_ATTR_ACP_MEASUREMENT_MODE                                           0x0010103d
 #define RFMXSPECAN_ATTR_ACP_FFT_WINDOW                                                 0x00101019
 #define RFMXSPECAN_ATTR_ACP_FFT_PADDING                                                0x0010101a
+#define RFMXSPECAN_ATTR_ACP_FFT_OVERLAP_MODE                                           0x0010103b
+#define RFMXSPECAN_ATTR_ACP_FFT_OVERLAP                                                0x0010103c
 #define RFMXSPECAN_ATTR_ACP_IF_OUTPUT_POWER_OFFSET_AUTO                                0x00101034
 #define RFMXSPECAN_ATTR_ACP_NEAR_IF_OUTPUT_POWER_OFFSET                                0x00101035
 #define RFMXSPECAN_ATTR_ACP_FAR_IF_OUTPUT_POWER_OFFSET                                 0x00101036
+#define RFMXSPECAN_ATTR_ACP_SEQUENTIAL_FFT_SIZE                                        0x0010103a
+#define RFMXSPECAN_ATTR_ACP_AMPLITUDE_CORRECTION_TYPE                                  0x00101039
 #define RFMXSPECAN_ATTR_ACP_ALL_TRACES_ENABLED                                         0x00101021
 #define RFMXSPECAN_ATTR_ACP_NUMBER_OF_ANALYSIS_THREADS                                 0x00101014
 #define RFMXSPECAN_ATTR_ACP_RESULTS_TOTAL_CARRIER_POWER                                0x00101022
@@ -129,6 +150,7 @@
 #define RFMXSPECAN_ATTR_CHP_MEASUREMENT_MODE                                           0x00103020
 #define RFMXSPECAN_ATTR_CHP_FFT_WINDOW                                                 0x0010300a
 #define RFMXSPECAN_ATTR_CHP_FFT_PADDING                                                0x0010300b
+#define RFMXSPECAN_ATTR_CHP_AMPLITUDE_CORRECTION_TYPE                                  0x0010301f
 #define RFMXSPECAN_ATTR_CHP_ALL_TRACES_ENABLED                                         0x00103014
 #define RFMXSPECAN_ATTR_CHP_NUMBER_OF_ANALYSIS_THREADS                                 0x00103003
 #define RFMXSPECAN_ATTR_CHP_RESULTS_TOTAL_CARRIER_POWER                                0x0010301a
@@ -166,6 +188,8 @@
 #define RFMXSPECAN_ATTR_HARM_HARMONIC_ORDER                                            0x0010500a
 #define RFMXSPECAN_ATTR_HARM_HARMONIC_BANDWIDTH                                        0x00105018
 #define RFMXSPECAN_ATTR_HARM_HARMONIC_MEASUREMENT_INTERVAL                             0x0010500b
+#define RFMXSPECAN_ATTR_HARM_MEASUREMENT_METHOD                                        0x0010501a
+#define RFMXSPECAN_ATTR_HARM_NOISE_COMPENSATION_ENABLED                                0x0010501b
 #define RFMXSPECAN_ATTR_HARM_AVERAGING_ENABLED                                         0x0010500d
 #define RFMXSPECAN_ATTR_HARM_AVERAGING_COUNT                                           0x0010500c
 #define RFMXSPECAN_ATTR_HARM_AVERAGING_TYPE                                            0x0010500f
@@ -193,6 +217,7 @@
 #define RFMXSPECAN_ATTR_OBW_AVERAGING_TYPE                                             0x00106009
 #define RFMXSPECAN_ATTR_OBW_FFT_WINDOW                                                 0x0010600a
 #define RFMXSPECAN_ATTR_OBW_FFT_PADDING                                                0x0010600b
+#define RFMXSPECAN_ATTR_OBW_AMPLITUDE_CORRECTION_TYPE                                  0x0010601a
 #define RFMXSPECAN_ATTR_OBW_ALL_TRACES_ENABLED                                         0x00106012
 #define RFMXSPECAN_ATTR_OBW_NUMBER_OF_ANALYSIS_THREADS                                 0x00106003
 #define RFMXSPECAN_ATTR_OBW_RESULTS_OCCUPIED_BANDWIDTH                                 0x00106013
@@ -240,6 +265,7 @@
 #define RFMXSPECAN_ATTR_SEM_AVERAGING_TYPE                                             0x00108021
 #define RFMXSPECAN_ATTR_SEM_FFT_WINDOW                                                 0x00108022
 #define RFMXSPECAN_ATTR_SEM_FFT_PADDING                                                0x00108023
+#define RFMXSPECAN_ATTR_SEM_AMPLITUDE_CORRECTION_TYPE                                  0x0010804f
 #define RFMXSPECAN_ATTR_SEM_ALL_TRACES_ENABLED                                         0x00108027
 #define RFMXSPECAN_ATTR_SEM_NUMBER_OF_ANALYSIS_THREADS                                 0x0010801d
 #define RFMXSPECAN_ATTR_SEM_RESULTS_TOTAL_CARRIER_POWER                                0x00108028
@@ -284,8 +310,13 @@
 #define RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_BANDWIDTH                                  0x0010900c
 #define RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_TYPE                                       0x0010900d
 #define RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION                       0x00109016
+#define RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH                             0x0010901a
+#define RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_BANDWIDTH                                  0x0010901b
+#define RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_VBW_TO_RBW_RATIO                           0x0010901c
 #define RFMXSPECAN_ATTR_SPECTRUM_SWEEP_TIME_AUTO                                       0x0010900e
 #define RFMXSPECAN_ATTR_SPECTRUM_SWEEP_TIME_INTERVAL                                   0x0010900f
+#define RFMXSPECAN_ATTR_SPECTRUM_DETECTOR_TYPE                                         0x00109018
+#define RFMXSPECAN_ATTR_SPECTRUM_DETECTOR_POINTS                                       0x00109019
 #define RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_MODE                                0x00109022
 #define RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO                      0x00109021
 #define RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_AVERAGING_COUNT                     0x00109020
@@ -297,6 +328,8 @@
 #define RFMXSPECAN_ATTR_SPECTRUM_MEASUREMENT_MODE                                      0x0010901e
 #define RFMXSPECAN_ATTR_SPECTRUM_FFT_WINDOW                                            0x00109009
 #define RFMXSPECAN_ATTR_SPECTRUM_FFT_PADDING                                           0x0010900a
+#define RFMXSPECAN_ATTR_SPECTRUM_AMPLITUDE_CORRECTION_TYPE                             0x00109017
+#define RFMXSPECAN_ATTR_SPECTRUM_ANALYSIS_INPUT                                        0x00109023
 #define RFMXSPECAN_ATTR_SPECTRUM_NUMBER_OF_ANALYSIS_THREADS                            0x00109002
 #define RFMXSPECAN_ATTR_SPECTRUM_RESULTS_PEAK_AMPLITUDE                                0x00109012
 #define RFMXSPECAN_ATTR_SPECTRUM_RESULTS_PEAK_FREQUENCY                                0x00109013
@@ -310,8 +343,13 @@
 #define RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_BANDWIDTH                                0x0010a014
 #define RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_TYPE                                     0x0010a015
 #define RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION                     0x0010a023
+#define RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH                           0x0010a027
+#define RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_BANDWIDTH                                0x0010a028
+#define RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_VBW_TO_RBW_RATIO                         0x0010a029
 #define RFMXSPECAN_ATTR_SPUR_RANGE_SWEEP_TIME_AUTO                                     0x0010a016
 #define RFMXSPECAN_ATTR_SPUR_RANGE_SWEEP_TIME_INTERVAL                                 0x0010a017
+#define RFMXSPECAN_ATTR_SPUR_RANGE_DETECTOR_TYPE                                       0x0010a025
+#define RFMXSPECAN_ATTR_SPUR_RANGE_DETECTOR_POINTS                                     0x0010a026
 #define RFMXSPECAN_ATTR_SPUR_RANGE_ABSOLUTE_LIMIT_MODE                                 0x0010a010
 #define RFMXSPECAN_ATTR_SPUR_RANGE_ABSOLUTE_LIMIT_START                                0x0010a011
 #define RFMXSPECAN_ATTR_SPUR_RANGE_ABSOLUTE_LIMIT_STOP                                 0x0010a012
@@ -324,6 +362,7 @@
 #define RFMXSPECAN_ATTR_SPUR_AVERAGING_TYPE                                            0x0010a00d
 #define RFMXSPECAN_ATTR_SPUR_FFT_WINDOW                                                0x0010a00f
 #define RFMXSPECAN_ATTR_SPUR_TRACE_RANGE_INDEX                                         0x0010a020
+#define RFMXSPECAN_ATTR_SPUR_AMPLITUDE_CORRECTION_TYPE                                 0x0010a024
 #define RFMXSPECAN_ATTR_SPUR_ALL_TRACES_ENABLED                                        0x0010a018
 #define RFMXSPECAN_ATTR_SPUR_NUMBER_OF_ANALYSIS_THREADS                                0x0010a003
 #define RFMXSPECAN_ATTR_SPUR_RESULTS_MEASUREMENT_STATUS                                0x0010a019
@@ -338,6 +377,9 @@
 #define RFMXSPECAN_ATTR_TXP_RBW_FILTER_BANDWIDTH                                       0x0010b00a
 #define RFMXSPECAN_ATTR_TXP_RBW_FILTER_TYPE                                            0x0010b00b
 #define RFMXSPECAN_ATTR_TXP_RBW_FILTER_ALPHA                                           0x0010b009
+#define RFMXSPECAN_ATTR_TXP_VBW_FILTER_AUTO_BANDWIDTH                                  0x0010b017
+#define RFMXSPECAN_ATTR_TXP_VBW_FILTER_BANDWIDTH                                       0x0010b018
+#define RFMXSPECAN_ATTR_TXP_VBW_FILTER_VBW_TO_RBW_RATIO                                0x0010b019
 #define RFMXSPECAN_ATTR_TXP_THRESHOLD_ENABLED                                          0x0010b00c
 #define RFMXSPECAN_ATTR_TXP_THRESHOLD_TYPE                                             0x0010b00e
 #define RFMXSPECAN_ATTR_TXP_THRESHOLD_LEVEL                                            0x0010b00d
@@ -355,6 +397,11 @@
 #define RFMXSPECAN_ATTR_AMPM_MEASUREMENT_SAMPLE_RATE                                   0x0010e00c
 #define RFMXSPECAN_ATTR_AMPM_MEASUREMENT_INTERVAL                                      0x0010e009
 #define RFMXSPECAN_ATTR_AMPM_SIGNAL_TYPE                                               0x0010e00a
+#define RFMXSPECAN_ATTR_AMPM_SYNCHRONIZATION_METHOD                                    0x0010e02a
+#define RFMXSPECAN_ATTR_AMPM_AUTO_CARRIER_DETECTION_ENABLED                            0x0010e02b
+#define RFMXSPECAN_ATTR_AMPM_NUMBER_OF_CARRIERS                                        0x0010e02c
+#define RFMXSPECAN_ATTR_AMPM_CARRIER_OFFSET                                            0x0010e02d
+#define RFMXSPECAN_ATTR_AMPM_CARRIER_BANDWIDTH                                         0x0010e02e
 #define RFMXSPECAN_ATTR_AMPM_DUT_AVERAGE_INPUT_POWER                                   0x0010e010
 #define RFMXSPECAN_ATTR_AMPM_AM_TO_AM_CURVE_FIT_ORDER                                  0x0010e002
 #define RFMXSPECAN_ATTR_AMPM_AM_TO_AM_CURVE_FIT_TYPE                                   0x0010e003
@@ -364,12 +411,27 @@
 #define RFMXSPECAN_ATTR_AMPM_THRESHOLD_TYPE                                            0x0010e00e
 #define RFMXSPECAN_ATTR_AMPM_THRESHOLD_LEVEL                                           0x0010e00f
 #define RFMXSPECAN_ATTR_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED                       0x0010e021
+#define RFMXSPECAN_ATTR_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED                       0x0010e029
+#define RFMXSPECAN_ATTR_AMPM_AM_TO_AM_ENABLED                                          0x0010e031
+#define RFMXSPECAN_ATTR_AMPM_AM_TO_PM_ENABLED                                          0x0010e032
+#define RFMXSPECAN_ATTR_AMPM_EVM_ENABLED                                               0x0010e033
+#define RFMXSPECAN_ATTR_AMPM_EQUALIZER_MODE                                            0x0010e02f
+#define RFMXSPECAN_ATTR_AMPM_EQUALIZER_FILTER_LENGTH                                   0x0010e030
 #define RFMXSPECAN_ATTR_AMPM_AVERAGING_ENABLED                                         0x0010e006
 #define RFMXSPECAN_ATTR_AMPM_AVERAGING_COUNT                                           0x0010e007
+#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_ENABLED                                 0x0010e024
+#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_LEVEL                                   0x0010e025
+#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE                          0x0010e034
+#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_POWER                    0x0010e035
+#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_USER_GAIN                               0x0010e036
+#define RFMXSPECAN_ATTR_AMPM_MAXIMUM_TIMING_ERROR                                      0x0010e022
+#define RFMXSPECAN_ATTR_AMPM_REFERENCE_POWER_TYPE                                      0x0010e023
 #define RFMXSPECAN_ATTR_AMPM_ALL_TRACES_ENABLED                                        0x0010e011
 #define RFMXSPECAN_ATTR_AMPM_NUMBER_OF_ANALYSIS_THREADS                                0x0010e012
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_MEAN_LINEAR_GAIN                                  0x0010e016
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_1_DB_COMPRESSION_POINT                            0x0010e01d
+#define RFMXSPECAN_ATTR_AMPM_RESULTS_INPUT_COMPRESSION_POINT                           0x0010e026
+#define RFMXSPECAN_ATTR_AMPM_RESULTS_OUTPUT_COMPRESSION_POINT                          0x0010e027
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_COMPRESSION_POINT_GAIN_REFERENCE                  0x0010e037
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_PEAK_REFERENCE_POWER                              0x0010e038
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_PEAK_REFERENCE_POWER_GAIN                         0x0010e039
@@ -381,13 +443,16 @@
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_AM_TO_PM_CURVE_FIT_RESIDUAL                       0x0010e01a
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_AM_TO_AM_CURVE_FIT_COEFFICIENTS                   0x0010e014
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_AM_TO_PM_CURVE_FIT_COEFFICIENTS                   0x0010e015
-#define RFMXSPECAN_ATTR_AMPM_REFERENCE_POWER_TYPE                                      0x0010e023
-#define RFMXSPECAN_ATTR_AMPM_MAXIMUM_TIMING_ERROR                                      0x0010e022
 #define RFMXSPECAN_ATTR_DPD_MEASUREMENT_ENABLED                                        0x0010f000
 #define RFMXSPECAN_ATTR_DPD_MEASUREMENT_SAMPLE_RATE_MODE                               0x0010f002
 #define RFMXSPECAN_ATTR_DPD_MEASUREMENT_SAMPLE_RATE                                    0x0010f003
 #define RFMXSPECAN_ATTR_DPD_MEASUREMENT_INTERVAL                                       0x0010f004
 #define RFMXSPECAN_ATTR_DPD_SIGNAL_TYPE                                                0x0010f005
+#define RFMXSPECAN_ATTR_DPD_SYNCHRONIZATION_METHOD                                     0x0010f04a
+#define RFMXSPECAN_ATTR_DPD_AUTO_CARRIER_DETECTION_ENABLED                             0x0010f04b
+#define RFMXSPECAN_ATTR_DPD_NUMBER_OF_CARRIERS                                         0x0010f04c
+#define RFMXSPECAN_ATTR_DPD_CARRIER_OFFSET                                             0x0010f04d
+#define RFMXSPECAN_ATTR_DPD_CARRIER_BANDWIDTH                                          0x0010f04e
 #define RFMXSPECAN_ATTR_DPD_DUT_AVERAGE_INPUT_POWER                                    0x0010f007
 #define RFMXSPECAN_ATTR_DPD_MODEL                                                      0x0010f008
 #define RFMXSPECAN_ATTR_DPD_TARGET_GAIN_TYPE                                           0x0010f037
@@ -413,13 +478,37 @@
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE                           0x0010f051
 #define RFMXSPECAN_ATTR_DPD_ITERATIVE_DPD_ENABLED                                      0x0010f01a
 #define RFMXSPECAN_ATTR_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED                        0x0010f039
+#define RFMXSPECAN_ATTR_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED                        0x0010f065
 #define RFMXSPECAN_ATTR_DPD_AVERAGING_ENABLED                                          0x0010f01c
 #define RFMXSPECAN_ATTR_DPD_AVERAGING_COUNT                                            0x0010f01d
+#define RFMXSPECAN_ATTR_DPD_MAXIMUM_TIMING_ERROR                                       0x0010f03a
+#define RFMXSPECAN_ATTR_DPD_NMSE_ENABLED                                               0x0010f03b
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_ENABLED                                        0x0010f03c
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_METHOD                                         0x0010f03e
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_MAXIMUM_ITERATIONS                             0x0010f03d
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_TARGET_PAPR                                    0x0010f041
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_WINDOW_TYPE                                    0x0010f042
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_WINDOW_LENGTH                                  0x0010f043
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_SHAPING_FACTOR                                 0x0010f044
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_SHAPING_THRESHOLD                              0x0010f045
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_FILTER_ENABLED                                 0x0010f060
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_NUMBER_OF_CARRIERS                             0x0010f062
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CARRIER_OFFSET                                     0x0010f063
+#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CARRIER_BANDWIDTH                                  0x0010f064
 #define RFMXSPECAN_ATTR_DPD_ALL_TRACES_ENABLED                                         0x0010f01f
 #define RFMXSPECAN_ATTR_DPD_NUMBER_OF_ANALYSIS_THREADS                                 0x0010f020
 #define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CONFIGURATION_INPUT                              0x0010f021
 #define RFMXSPECAN_ATTR_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE                     0x0010f022
 #define RFMXSPECAN_ATTR_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE                     0x0010f036
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_ENABLED                                      0x0010f046
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_METHOD                                       0x0010f047
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_MAXIMUM_ITERATIONS                           0x0010f048
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE                             0x0010f049
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_TARGET_PAPR                                  0x0010f05a
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_WINDOW_TYPE                                  0x0010f05b
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_WINDOW_LENGTH                                0x0010f05c
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_SHAPING_FACTOR                               0x0010f05d
+#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_SHAPING_THRESHOLD                            0x0010f05e
 #define RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_DUT_AVERAGE_INPUT_POWER                     0x0010f025
 #define RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_DPD_MODEL                                   0x0010f026
 #define RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_MEASUREMENT_SAMPLE_RATE                     0x0010f027
@@ -434,7 +523,30 @@
 #define RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_MEMORY_POLYNOMIAL_MAXIMUM_LEAD              0x0010f030
 #define RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_MEMORY_POLYNOMIAL_MAXIMUM_LAG               0x0010f031
 #define RFMXSPECAN_ATTR_DPD_RESULTS_AVERAGE_GAIN                                       0x0010f033
-#define RFMXSPECAN_ATTR_DPD_MAXIMUM_TIMING_ERROR                                       0x0010f03a
+#define RFMXSPECAN_ATTR_DPD_RESULTS_NMSE                                               0x0010f05f
+#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_ENABLED                                       0x00140000
+#define RFMXSPECAN_ATTR_IDPD_EQUALIZER_MODE                                            0x00140002
+#define RFMXSPECAN_ATTR_IDPD_EQUALIZER_FILTER_LENGTH                                   0x00140003
+#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE_MODE                              0x00140004
+#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE                                   0x00140005
+#define RFMXSPECAN_ATTR_IDPD_SIGNAL_TYPE                                               0x00140006
+#define RFMXSPECAN_ATTR_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT                  0x0014000b
+#define RFMXSPECAN_ATTR_IDPD_DUT_AVERAGE_INPUT_POWER                                   0x0014000c
+#define RFMXSPECAN_ATTR_IDPD_AVERAGING_ENABLED                                         0x0014000f
+#define RFMXSPECAN_ATTR_IDPD_AVERAGING_COUNT                                           0x00140010
+#define RFMXSPECAN_ATTR_IDPD_EVM_ENABLED                                               0x00140013
+#define RFMXSPECAN_ATTR_IDPD_EVM_UNIT                                                  0x00140014
+#define RFMXSPECAN_ATTR_IDPD_IMPAIRMENT_ESTIMATION_START                               0x00140015
+#define RFMXSPECAN_ATTR_IDPD_IMPAIRMENT_ESTIMATION_STOP                                0x00140016
+#define RFMXSPECAN_ATTR_IDPD_SYNCHRONIZATION_ESTIMATION_START                          0x00140017
+#define RFMXSPECAN_ATTR_IDPD_SYNCHRONIZATION_ESTIMATION_STOP                           0x00140018
+#define RFMXSPECAN_ATTR_IDPD_GAIN_EXPANSION                                            0x00140019
+#define RFMXSPECAN_ATTR_IDPD_TARGET_GAIN                                               0x00140027
+#define RFMXSPECAN_ATTR_IDPD_POWER_LINEARITY_TRADEOFF                                  0x0014001b
+#define RFMXSPECAN_ATTR_IDPD_RESULTS_GAIN                                              0x0014001d
+#define RFMXSPECAN_ATTR_IDPD_RESULTS_MEAN_RMS_EVM                                      0x0014001e
+#define RFMXSPECAN_ATTR_IDPD_ALL_TRACES_ENABLED                                        0x0014001f
+#define RFMXSPECAN_ATTR_IDPD_NUMBER_OF_ANALYSIS_THREADS                                0x00140021
 #define RFMXSPECAN_ATTR_IQ_MEASUREMENT_ENABLED                                         0x0010f100
 #define RFMXSPECAN_ATTR_IQ_SAMPLE_RATE                                                 0x0010f102
 #define RFMXSPECAN_ATTR_IQ_ACQUISITION_TIME                                            0x0010f104
@@ -470,6 +582,7 @@
 #define RFMXSPECAN_ATTR_IM_IF_OUTPUT_POWER_OFFSET_AUTO                                 0x00110019
 #define RFMXSPECAN_ATTR_IM_NEAR_IF_OUTPUT_POWER_OFFSET                                 0x0011001a
 #define RFMXSPECAN_ATTR_IM_FAR_IF_OUTPUT_POWER_OFFSET                                  0x0011001b
+#define RFMXSPECAN_ATTR_IM_AMPLITUDE_CORRECTION_TYPE                                   0x0011002b
 #define RFMXSPECAN_ATTR_IM_ALL_TRACES_ENABLED                                          0x0011001c
 #define RFMXSPECAN_ATTR_IM_NUMBER_OF_ANALYSIS_THREADS                                  0x0011001d
 #define RFMXSPECAN_ATTR_IM_RESULTS_LOWER_TONE_POWER                                    0x0011001f
@@ -485,6 +598,11 @@
 #define RFMXSPECAN_ATTR_IM_RESULTS_UPPER_OUTPUT_INTERCEPT_POWER                        0x00110028
 #define RFMXSPECAN_ATTR_IM_RESULTS_WORST_CASE_OUTPUT_INTERCEPT_POWER                   0x00110029
 #define RFMXSPECAN_ATTR_NF_MEASUREMENT_ENABLED                                         0x00120001
+#define RFMXSPECAN_ATTR_NF_DUT_TYPE                                                    0x0012003a
+#define RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_LO_FREQUENCY                            0x0012003c
+#define RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT                       0x0012003e
+#define RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_SIDEBAND                                0x0012003f
+#define RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_IMAGE_REJECTION                         0x00120040
 #define RFMXSPECAN_ATTR_NF_FREQUENCY_LIST                                              0x00120004
 #define RFMXSPECAN_ATTR_NF_MEASUREMENT_BANDWIDTH                                       0x00120005
 #define RFMXSPECAN_ATTR_NF_MEASUREMENT_INTERVAL                                        0x00120006
@@ -528,6 +646,7 @@
 #define RFMXSPECAN_ATTR_NF_COLD_SOURCE_DUT_S12                                         0x00120030
 #define RFMXSPECAN_ATTR_NF_COLD_SOURCE_DUT_S11                                         0x00120031
 #define RFMXSPECAN_ATTR_NF_COLD_SOURCE_DUT_S22                                         0x00120032
+#define RFMXSPECAN_ATTR_NF_DEVICE_TEMPERATURE_TOLERANCE                                0x00120039
 #define RFMXSPECAN_ATTR_NF_NUMBER_OF_ANALYSIS_THREADS                                  0x00120021
 #define RFMXSPECAN_ATTR_NF_RESULTS_DUT_NOISE_FIGURE                                    0x00120022
 #define RFMXSPECAN_ATTR_NF_RESULTS_DUT_NOISE_TEMPERATURE                               0x00120023
@@ -538,66 +657,6 @@
 #define RFMXSPECAN_ATTR_NF_RESULTS_Y_FACTOR_HOT_POWER                                  0x00120028
 #define RFMXSPECAN_ATTR_NF_RESULTS_Y_FACTOR_COLD_POWER                                 0x00120029
 #define RFMXSPECAN_ATTR_NF_RESULTS_COLD_SOURCE_POWER                                   0x0012002a
-#define RFMXSPECAN_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                             0x0010000d
-#define RFMXSPECAN_ATTR_LIMITED_CONFIGURATION_CHANGE                                   0x0010000e
-#define RFMXSPECAN_ATTR_RESULT_FETCH_TIMEOUT                                           0x0010c000
-#define RFMXSPECAN_ATTR_CENTER_FREQUENCY                                               0x00100001
-#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_ENABLED                                       0x00140000
-#define RFMXSPECAN_ATTR_IDPD_EQUALIZER_MODE                                            0x00140002
-#define RFMXSPECAN_ATTR_IDPD_EQUALIZER_FILTER_LENGTH                                   0x00140003
-#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE_MODE                              0x00140004
-#define RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE                                   0x00140005
-#define RFMXSPECAN_ATTR_IDPD_SIGNAL_TYPE                                               0x00140006
-#define RFMXSPECAN_ATTR_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT                  0x0014000b
-#define RFMXSPECAN_ATTR_IDPD_DUT_AVERAGE_INPUT_POWER                                   0x0014000c
-#define RFMXSPECAN_ATTR_IDPD_AVERAGING_ENABLED                                         0x0014000f
-#define RFMXSPECAN_ATTR_IDPD_AVERAGING_COUNT                                           0x00140010
-#define RFMXSPECAN_ATTR_IDPD_EVM_ENABLED                                               0x00140013
-#define RFMXSPECAN_ATTR_IDPD_EVM_UNIT                                                  0x00140014
-#define RFMXSPECAN_ATTR_IDPD_IMPAIRMENT_ESTIMATION_START                               0x00140015
-#define RFMXSPECAN_ATTR_IDPD_IMPAIRMENT_ESTIMATION_STOP                                0x00140016
-#define RFMXSPECAN_ATTR_IDPD_SYNCHRONIZATION_ESTIMATION_START                          0x00140017
-#define RFMXSPECAN_ATTR_IDPD_SYNCHRONIZATION_ESTIMATION_STOP                           0x00140018
-#define RFMXSPECAN_ATTR_IDPD_GAIN_EXPANSION                                            0x00140019
-#define RFMXSPECAN_ATTR_IDPD_TARGET_GAIN                                               0x00140027
-#define RFMXSPECAN_ATTR_IDPD_POWER_LINEARITY_TRADEOFF                                  0x0014001b
-#define RFMXSPECAN_ATTR_IDPD_RESULTS_GAIN                                              0x0014001d
-#define RFMXSPECAN_ATTR_IDPD_RESULTS_MEAN_RMS_EVM                                      0x0014001e
-#define RFMXSPECAN_ATTR_IDPD_ALL_TRACES_ENABLED                                        0x0014001f
-#define RFMXSPECAN_ATTR_IDPD_NUMBER_OF_ANALYSIS_THREADS                                0x00140021
-#define RFMXSPECAN_ATTR_REFERENCE_LEVEL                                                0x00100002
-#define RFMXSPECAN_ATTR_EXTERNAL_ATTENUATION                                           0x00100003
-#define RFMXSPECAN_ATTR_TRIGGER_TYPE                                                   0x00100004
-#define RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                                    0x00100005
-#define RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                                      0x00100006
-#define RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                                   0x00100007
-#define RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                                    0x00100008
-#define RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                               0x00100fff
-#define RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                                    0x00100009
-#define RFMXSPECAN_ATTR_TRIGGER_DELAY                                                  0x0010000a
-#define RFMXSPECAN_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                                0x0010000b
-#define RFMXSPECAN_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                            0x0010000c
-#define RFMXSPECAN_ATTR_ACP_AMPLITUDE_CORRECTION_TYPE                                  0x00101039
-#define RFMXSPECAN_ATTR_CHP_AMPLITUDE_CORRECTION_TYPE                                  0x0010301f
-#define RFMXSPECAN_ATTR_OBW_AMPLITUDE_CORRECTION_TYPE                                  0x0010601a
-#define RFMXSPECAN_ATTR_SEM_AMPLITUDE_CORRECTION_TYPE                                  0x0010804f
-#define RFMXSPECAN_ATTR_SPECTRUM_DETECTOR_TYPE                                         0x00109018
-#define RFMXSPECAN_ATTR_SPECTRUM_DETECTOR_POINTS                                       0x00109019
-#define RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH                             0x0010901a
-#define RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_BANDWIDTH                                  0x0010901b
-#define RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_VBW_TO_RBW_RATIO                           0x0010901c
-#define RFMXSPECAN_ATTR_SPECTRUM_AMPLITUDE_CORRECTION_TYPE                             0x00109017
-#define RFMXSPECAN_ATTR_SPECTRUM_ANALYSIS_INPUT                                        0x00109023
-#define RFMXSPECAN_ATTR_SPUR_RANGE_DETECTOR_TYPE                                       0x0010a025
-#define RFMXSPECAN_ATTR_SPUR_RANGE_DETECTOR_POINTS                                     0x0010a026
-#define RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH                           0x0010a027
-#define RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_BANDWIDTH                                0x0010a028
-#define RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_VBW_TO_RBW_RATIO                         0x0010a029
-#define RFMXSPECAN_ATTR_SPUR_AMPLITUDE_CORRECTION_TYPE                                 0x0010a024
-#define RFMXSPECAN_ATTR_TXP_VBW_FILTER_AUTO_BANDWIDTH                                  0x0010b017
-#define RFMXSPECAN_ATTR_TXP_VBW_FILTER_BANDWIDTH                                       0x0010b018
-#define RFMXSPECAN_ATTR_TXP_VBW_FILTER_VBW_TO_RBW_RATIO                                0x0010b019
-#define RFMXSPECAN_ATTR_IM_AMPLITUDE_CORRECTION_TYPE                                   0x0011002b
 #define RFMXSPECAN_ATTR_PHASENOISE_MEASUREMENT_ENABLED                                 0x00130000
 #define RFMXSPECAN_ATTR_PHASENOISE_RANGE_DEFINITION                                    0x00130002
 #define RFMXSPECAN_ATTR_PHASENOISE_START_FREQUENCY                                     0x00130003
@@ -616,13 +675,13 @@
 #define RFMXSPECAN_ATTR_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION                   0x00130010
 #define RFMXSPECAN_ATTR_PHASENOISE_INTEGRATED_NOISE_START_FREQUENCY                    0x00130011
 #define RFMXSPECAN_ATTR_PHASENOISE_INTEGRATED_NOISE_STOP_FREQUENCY                     0x00130012
-#define RFMXSPECAN_ATTR_PHASENOISE_ALL_TRACES_ENABLED                                  0x00130013
 #define RFMXSPECAN_ATTR_PHASENOISE_SPUR_REMOVAL_ENABLED                                0x0013001d
 #define RFMXSPECAN_ATTR_PHASENOISE_SPUR_REMOVAL_PEAK_EXCURSION                         0x0013001e
 #define RFMXSPECAN_ATTR_PHASENOISE_CANCELLATION_ENABLED                                0x0013001f
 #define RFMXSPECAN_ATTR_PHASENOISE_CANCELLATION_THRESHOLD                              0x00130020
 #define RFMXSPECAN_ATTR_PHASENOISE_CANCELLATION_FREQUENCY                              0x00130021
 #define RFMXSPECAN_ATTR_PHASENOISE_CANCELLATION_REFERENCE_PHASE_NOISE                  0x00130022
+#define RFMXSPECAN_ATTR_PHASENOISE_ALL_TRACES_ENABLED                                  0x00130013
 #define RFMXSPECAN_ATTR_PHASENOISE_RESULTS_CARRIER_POWER                               0x00130015
 #define RFMXSPECAN_ATTR_PHASENOISE_RESULTS_CARRIER_FREQUENCY                           0x00130016
 #define RFMXSPECAN_ATTR_PHASENOISE_RESULTS_SPOT_PHASE_NOISE                            0x00130017
@@ -631,61 +690,8 @@
 #define RFMXSPECAN_ATTR_PHASENOISE_RESULTS_INTEGRATED_NOISE_RESIDUAL_PM_IN_DEGREE      0x0013001a
 #define RFMXSPECAN_ATTR_PHASENOISE_RESULTS_INTEGRATED_NOISE_RESIDUAL_FM                0x0013001b
 #define RFMXSPECAN_ATTR_PHASENOISE_RESULTS_INTEGRATED_NOISE_JITTER                     0x0013001c
-#define RFMXSPECAN_ATTR_DPD_NMSE_ENABLED                                               0x0010f03b
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_ENABLED                                        0x0010f03c
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_METHOD                                         0x0010f03e
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_MAXIMUM_ITERATIONS                             0x0010f03d
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_TARGET_PAPR                                    0x0010f041
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_WINDOW_TYPE                                    0x0010f042
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_WINDOW_LENGTH                                  0x0010f043
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_SHAPING_FACTOR                                 0x0010f044
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_SHAPING_THRESHOLD                              0x0010f045
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_FILTER_ENABLED                                 0x0010f060
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_NUMBER_OF_CARRIERS                             0x0010f062
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CARRIER_OFFSET                                     0x0010f063
-#define RFMXSPECAN_ATTR_DPD_PRE_DPD_CARRIER_BANDWIDTH                                  0x0010f064
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_ENABLED                                      0x0010f046
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_METHOD                                       0x0010f047
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_MAXIMUM_ITERATIONS                           0x0010f048
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE                             0x0010f049
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_TARGET_PAPR                                  0x0010f05a
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_WINDOW_TYPE                                  0x0010f05b
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_WINDOW_LENGTH                                0x0010f05c
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_SHAPING_FACTOR                               0x0010f05d
-#define RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_SHAPING_THRESHOLD                            0x0010f05e
-#define RFMXSPECAN_ATTR_DPD_RESULTS_NMSE                                               0x0010f05f
-#define RFMXSPECAN_ATTR_NF_DEVICE_TEMPERATURE_TOLERANCE                                0x00120039
-#define RFMXSPECAN_ATTR_SELECTED_PORTS                                                 0x00100ffd
-#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_ENABLED                                 0x0010e024
-#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_LEVEL                                   0x0010e025
-#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE                          0x0010e034
-#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_POWER                    0x0010e035
-#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_USER_GAIN                               0x0010e036
-#define RFMXSPECAN_ATTR_AMPM_RESULTS_INPUT_COMPRESSION_POINT                           0x0010e026
-#define RFMXSPECAN_ATTR_AMPM_RESULTS_OUTPUT_COMPRESSION_POINT                          0x0010e027
-#define RFMXSPECAN_ATTR_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED                       0x0010e029
-#define RFMXSPECAN_ATTR_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED                        0x0010f065
-#define RFMXSPECAN_ATTR_REFERENCE_LEVEL_HEADROOM                                       0x00100ffc
-#define RFMXSPECAN_ATTR_AMPM_SYNCHRONIZATION_METHOD                                    0x0010e02a
-#define RFMXSPECAN_ATTR_AMPM_AUTO_CARRIER_DETECTION_ENABLED                            0x0010e02b
-#define RFMXSPECAN_ATTR_AMPM_NUMBER_OF_CARRIERS                                        0x0010e02c
-#define RFMXSPECAN_ATTR_AMPM_CARRIER_OFFSET                                            0x0010e02d
-#define RFMXSPECAN_ATTR_AMPM_CARRIER_BANDWIDTH                                         0x0010e02e
-#define RFMXSPECAN_ATTR_DPD_SYNCHRONIZATION_METHOD                                     0x0010f04a
-#define RFMXSPECAN_ATTR_DPD_AUTO_CARRIER_DETECTION_ENABLED                             0x0010f04b
-#define RFMXSPECAN_ATTR_DPD_NUMBER_OF_CARRIERS                                         0x0010f04c
-#define RFMXSPECAN_ATTR_DPD_CARRIER_OFFSET                                             0x0010f04d
-#define RFMXSPECAN_ATTR_DPD_CARRIER_BANDWIDTH                                          0x0010f04e
-#define RFMXSPECAN_ATTR_NF_DUT_TYPE                                                    0x0012003a
-#define RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_LO_FREQUENCY                            0x0012003c
-#define RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT                       0x0012003e
-#define RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_SIDEBAND                                0x0012003f
-#define RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_IMAGE_REJECTION                         0x00120040
-#define RFMXSPECAN_ATTR_HARM_MEASUREMENT_METHOD                                        0x0010501a
-#define RFMXSPECAN_ATTR_HARM_NOISE_COMPENSATION_ENABLED                                0x0010501b
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_ENABLED                                       0x00107000
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_LOCATION_TYPE                                 0x00107002
-#define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_BANDWIDTH                                     0x0010700d
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_INTERVAL_MODE                                 0x00107015
 #define RFMXSPECAN_ATTR_PAVT_NUMBER_OF_SEGMENTS                                        0x00107003
 #define RFMXSPECAN_ATTR_PAVT_SEGMENT_TYPE                                              0x00107010
@@ -703,34 +709,16 @@
 #define RFMXSPECAN_ATTR_PAVT_RESULTS_MEAN_ABSOLUTE_PHASE                               0x0010700f
 #define RFMXSPECAN_ATTR_PAVT_RESULTS_MEAN_ABSOLUTE_AMPLITUDE                           0x0010700e
 #define RFMXSPECAN_ATTR_PAVT_RESULTS_FREQUENCY_ERROR_MEAN                              0x00107014
-#define RFMXSPECAN_ATTR_AMPM_EQUALIZER_MODE                                            0x0010e02f
-#define RFMXSPECAN_ATTR_AMPM_EQUALIZER_FILTER_LENGTH                                   0x0010e030
-#define RFMXSPECAN_ATTR_ACP_FFT_OVERLAP_MODE                                           0x0010103b
-#define RFMXSPECAN_ATTR_ACP_FFT_OVERLAP                                                0x0010103c
-#define RFMXSPECAN_ATTR_AMPM_AM_TO_AM_ENABLED                                          0x0010e031
-#define RFMXSPECAN_ATTR_AMPM_AM_TO_PM_ENABLED                                          0x0010e032
-#define RFMXSPECAN_ATTR_AMPM_EVM_ENABLED                                               0x0010e033
-#define RFMXSPECAN_ATTR_NUMBER_OF_STEPS                                                0x00100ff8
-#define RFMXSPECAN_ATTR_LIST_STEP_TIMER_DURATION                                       0x00100ff9
-#define RFMXSPECAN_ATTR_LIST_STEP_TIMER_OFFSET                                         0x00100ff7
+#define RFMXSPECAN_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                             0x0010000d
+#define RFMXSPECAN_ATTR_LIMITED_CONFIGURATION_CHANGE                                   0x0010000e
+#define RFMXSPECAN_ATTR_SELECTED_PATH                                                  0x0010000f
+#define RFMXSPECAN_ATTR_RESULT_FETCH_TIMEOUT                                           0x0010c000
 
 // Values for RFMXSPECAN_ATTR_TRIGGER_TYPE
 #define RFMXSPECAN_VAL_TRIGGER_TYPE_NONE                                                              0
 #define RFMXSPECAN_VAL_TRIGGER_TYPE_DIGITAL_EDGE                                                      1
 #define RFMXSPECAN_VAL_TRIGGER_TYPE_IQ_POWER_EDGE                                                     2
 #define RFMXSPECAN_VAL_TRIGGER_TYPE_SOFTWARE                                                          3
-
-// Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_TYPE
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_TYPE_LOG                                                      0
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_TYPE_LINEAR                                                   1
-
-// Values for RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_EDGE
-#define RFMXSPECAN_VAL_DIGITAL_EDGE_RISING_EDGE                                                       0
-#define RFMXSPECAN_VAL_DIGITAL_EDGE_FALLING_EDGE                                                      1
-
-// Values for RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE
-#define RFMXSPECAN_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE                                      0
-#define RFMXSPECAN_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE                                      1
 
 // Values for RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE
 #define RFMXSPECAN_VAL_PFI0_STR                                                                       "PFI0"
@@ -747,6 +735,14 @@
 #define RFMXSPECAN_VAL_PXIE_DSTARB_STR                                                                "PXIe_DStarB"
 #define RFMXSPECAN_VAL_TIMER_EVENT_STR                                                                "TimerEvent"
 
+// Values for RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_EDGE
+#define RFMXSPECAN_VAL_DIGITAL_EDGE_RISING_EDGE                                                       0
+#define RFMXSPECAN_VAL_DIGITAL_EDGE_FALLING_EDGE                                                      1
+
+// Values for RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE
+#define RFMXSPECAN_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE                                      0
+#define RFMXSPECAN_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE                                      1
+
 // Values for RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE
 #define RFMXSPECAN_VAL_IQ_POWER_EDGE_RISING_SLOPE                                                     0
 #define RFMXSPECAN_VAL_IQ_POWER_EDGE_FALLING_SLOPE                                                    1
@@ -759,13 +755,13 @@
 #define RFMXSPECAN_VAL_ACP_CARRIER_MODE_PASSIVE                                                       0
 #define RFMXSPECAN_VAL_ACP_CARRIER_MODE_ACTIVE                                                        1
 
-// Values for RFMXSPECAN_ATTR_ACP_OFFSET_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_ACP_OFFSET_RRC_FILTER_ENABLED_FALSE                                            0
-#define RFMXSPECAN_VAL_ACP_OFFSET_RRC_FILTER_ENABLED_TRUE                                             1
+// Values for RFMXSPECAN_ATTR_ACP_CARRIER_RRC_FILTER_ENABLED
+#define RFMXSPECAN_VAL_ACP_CARRIER_RRC_FILTER_ENABLED_FALSE                                           0
+#define RFMXSPECAN_VAL_ACP_CARRIER_RRC_FILTER_ENABLED_TRUE                                            1
 
-// Values for RFMXSPECAN_ATTR_ACP_OFFSET_FREQUENCY_DEFINITION
-#define RFMXSPECAN_VAL_ACP_CARRIER_CENTER_TO_OFFSET_CENTER                                            0
-#define RFMXSPECAN_VAL_ACP_CARRIER_CENTER_TO_OFFSET_EDGE                                              1
+// Values for RFMXSPECAN_ATTR_ACP_OFFSET_ENABLED
+#define RFMXSPECAN_VAL_ACP_OFFSET_FREQUENCY_ENABLED_FALSE                                             0
+#define RFMXSPECAN_VAL_ACP_OFFSET_FREQUENCY_ENABLED_TRUE                                              1
 
 // Values for RFMXSPECAN_ATTR_ACP_OFFSET_SIDEBAND
 #define RFMXSPECAN_VAL_ACP_OFFSET_SIDEBAND_NEGATIVE                                                   0
@@ -778,10 +774,30 @@
 #define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_COMPOSITE                                   2
 #define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_SPECIFIC                                    3
 
-// Values for RFMXSPECAN_ATTR_ACP_MEASUREMENT_METHOD
-#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_NORMAL                                                  0
-#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_DYNAMIC_RANGE                                           1
-#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT                                          2
+// Values for RFMXSPECAN_ATTR_ACP_OFFSET_RRC_FILTER_ENABLED
+#define RFMXSPECAN_VAL_ACP_OFFSET_RRC_FILTER_ENABLED_FALSE                                            0
+#define RFMXSPECAN_VAL_ACP_OFFSET_RRC_FILTER_ENABLED_TRUE                                             1
+
+// Values for RFMXSPECAN_ATTR_ACP_OFFSET_FREQUENCY_DEFINITION
+#define RFMXSPECAN_VAL_ACP_CARRIER_CENTER_TO_OFFSET_CENTER                                            0
+#define RFMXSPECAN_VAL_ACP_CARRIER_CENTER_TO_OFFSET_EDGE                                              1
+
+// Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_ACP_RBW_AUTO_FALSE                                                             0
+#define RFMXSPECAN_VAL_ACP_RBW_AUTO_TRUE                                                              1
+
+// Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_FFT_BASED                                                  0
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_FLAT                                                       2
+
+// Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_BANDWIDTH_DEFINITION
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
+
+// Values for RFMXSPECAN_ATTR_ACP_SWEEP_TIME_AUTO
+#define RFMXSPECAN_VAL_ACP_SWEEP_TIME_AUTO_FALSE                                                      0
+#define RFMXSPECAN_VAL_ACP_SWEEP_TIME_AUTO_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_ACP_DETECTOR_TYPE
 #define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NONE                                                         0
@@ -796,6 +812,31 @@
 // Values for RFMXSPECAN_ATTR_ACP_POWER_UNITS
 #define RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM                                                            0
 #define RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM_PER_HZ                                                     1
+
+// Values for RFMXSPECAN_ATTR_ACP_MEASUREMENT_METHOD
+#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_NORMAL                                                  0
+#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_DYNAMIC_RANGE                                           1
+#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT                                          2
+
+// Values for RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_MODE
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_MODE_MANUAL                                              0
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_MODE_AUTO                                                1
+
+// Values for RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_AVERAGING_AUTO
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                     0
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                      1
+
+// Values for RFMXSPECAN_ATTR_ACP_NOISE_COMPENSATION_ENABLED
+#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_ENABLED_FALSE                                           0
+#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_ENABLED_TRUE                                            1
+
+// Values for RFMXSPECAN_ATTR_ACP_NOISE_COMPENSATION_TYPE
+#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                           0
+#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                      1
+
+// Values for RFMXSPECAN_ATTR_ACP_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_ACP_AVERAGING_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_ACP_AVERAGING_ENABLED_TRUE                                                     1
 
 // Values for RFMXSPECAN_ATTR_ACP_AVERAGING_TYPE
 #define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_RMS                                                         0
@@ -818,50 +859,519 @@
 #define RFMXSPECAN_VAL_ACP_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
 #define RFMXSPECAN_VAL_ACP_FFT_WINDOW_KAISER_BESSEL                                                   7
 
-// Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_FFT_BASED                                                  0
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_FLAT                                                       2
-
-// Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
-
-// Values for RFMXSPECAN_ATTR_ACP_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_ACP_SWEEP_TIME_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_ACP_SWEEP_TIME_AUTO_TRUE                                                       1
-
-// Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_ACP_RBW_AUTO_FALSE                                                             0
-#define RFMXSPECAN_VAL_ACP_RBW_AUTO_TRUE                                                              1
-
-// Values for RFMXSPECAN_ATTR_ACP_OFFSET_ENABLED
-#define RFMXSPECAN_VAL_ACP_OFFSET_FREQUENCY_ENABLED_FALSE                                             0
-#define RFMXSPECAN_VAL_ACP_OFFSET_FREQUENCY_ENABLED_TRUE                                              1
-
-// Values for RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_MODE
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_MODE_MANUAL                                              0
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_MODE_AUTO                                                1
-
-// Values for RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_AVERAGING_AUTO
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                     0
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                      1
-
-// Values for RFMXSPECAN_ATTR_ACP_NOISE_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_ENABLED_TRUE                                            1
-
-// Values for RFMXSPECAN_ATTR_ACP_NOISE_COMPENSATION_TYPE
-#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                           0
-#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                      1
-
-// Values for RFMXSPECAN_ATTR_ACP_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_ACP_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_ACP_AVERAGING_ENABLED_TRUE                                                     1
+// Values for RFMXSPECAN_ATTR_ACP_FFT_OVERLAP_MODE
+#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_DISABLED                                                  0
+#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_AUTOMATIC                                                 1
+#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_USER_DEFINED                                              2
 
 // Values for RFMXSPECAN_ATTR_ACP_IF_OUTPUT_POWER_OFFSET_AUTO
 #define RFMXSPECAN_VAL_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_FALSE                                          0
 #define RFMXSPECAN_VAL_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_TRUE                                           1
+
+// Values for RFMXSPECAN_ATTR_ACP_AMPLITUDE_CORRECTION_TYPE
+#define RFMXSPECAN_VAL_ACP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
+#define RFMXSPECAN_VAL_ACP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+
+// Values for RFMXSPECAN_ATTR_CCDF_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_NONE                                                      5
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_GAUSSIAN                                                  1
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_FLAT                                                      2
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_RRC                                                       6
+
+// Values for RFMXSPECAN_ATTR_CCDF_THRESHOLD_ENABLED
+#define RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_TRUE                                                    1
+
+// Values for RFMXSPECAN_ATTR_CCDF_THRESHOLD_TYPE
+#define RFMXSPECAN_VAL_CCDF_THRESHOLD_TYPE_RELATIVE                                                   0
+#define RFMXSPECAN_VAL_CCDF_THRESHOLD_TYPE_ABSOLUTE                                                   1
+
+// Values for RFMXSPECAN_ATTR_CHP_CARRIER_RRC_FILTER_ENABLED
+#define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_FALSE                                           0
+#define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_TRUE                                            1
+
+// Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_CHP_RBW_AUTO_FALSE                                                             0
+#define RFMXSPECAN_VAL_CHP_RBW_AUTO_TRUE                                                              1
+
+// Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_FFT_BASED                                                  0
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_FLAT                                                       2
+
+// Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_BANDWIDTH_DEFINITION
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
+
+// Values for RFMXSPECAN_ATTR_CHP_SWEEP_TIME_AUTO
+#define RFMXSPECAN_VAL_CHP_SWEEP_TIME_AUTO_FALSE                                                      0
+#define RFMXSPECAN_VAL_CHP_SWEEP_TIME_AUTO_TRUE                                                       1
+
+// Values for RFMXSPECAN_ATTR_CHP_DETECTOR_TYPE
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NONE                                                         0
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_SAMPLE                                                       1
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NORMAL                                                       2
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_PEAK                                                         3
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NEGATIVE_PEAK                                                4
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_RMS                                                  5
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_VOLTAGE                                              6
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_LOG                                                  7
+
+// Values for RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_MODE
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_MODE_MANUAL                                              0
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_MODE_AUTO                                                1
+
+// Values for RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_AVERAGING_AUTO
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                     0
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                      1
+
+// Values for RFMXSPECAN_ATTR_CHP_NOISE_COMPENSATION_ENABLED
+#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_ENABLED_FALSE                                           0
+#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_ENABLED_TRUE                                            1
+
+// Values for RFMXSPECAN_ATTR_CHP_NOISE_COMPENSATION_TYPE
+#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                           0
+#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                      1
+
+// Values for RFMXSPECAN_ATTR_CHP_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_CHP_AVERAGING_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_CHP_AVERAGING_ENABLED_TRUE                                                     1
+
+// Values for RFMXSPECAN_ATTR_CHP_AVERAGING_TYPE
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_RMS                                                         0
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_LOG                                                         1
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_SCALAR                                                      2
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_MAXIMUM                                                     3
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_MINIMUM                                                     4
+
+// Values for RFMXSPECAN_ATTR_CHP_MEASUREMENT_MODE
+#define RFMXSPECAN_VAL_CHP_MEASUREMENT_MODE_MEASURE                                                   0
+#define RFMXSPECAN_VAL_CHP_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                     1
+
+// Values for RFMXSPECAN_ATTR_CHP_FFT_WINDOW
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_NONE                                                            0
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_FLAT_TOP                                                        1
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_HANNING                                                         2
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_HAMMING                                                         3
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_GAUSSIAN                                                        4
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_BLACKMAN                                                        5
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_KAISER_BESSEL                                                   7
+
+// Values for RFMXSPECAN_ATTR_CHP_AMPLITUDE_CORRECTION_TYPE
+#define RFMXSPECAN_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
+#define RFMXSPECAN_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+
+// Values for RFMXSPECAN_ATTR_FCNT_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_GAUSSIAN                                                  1
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_FLAT                                                      2
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_NONE                                                      5
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_RRC                                                       6
+
+// Values for RFMXSPECAN_ATTR_FCNT_THRESHOLD_ENABLED
+#define RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_TRUE                                                    1
+
+// Values for RFMXSPECAN_ATTR_FCNT_THRESHOLD_TYPE
+#define RFMXSPECAN_VAL_FCNT_THRESHOLD_TYPE_RELATIVE                                                   0
+#define RFMXSPECAN_VAL_FCNT_THRESHOLD_TYPE_ABSOLUTE                                                   1
+
+// Values for RFMXSPECAN_ATTR_FCNT_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_TRUE                                                    1
+
+// Values for RFMXSPECAN_ATTR_FCNT_AVERAGING_TYPE
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MAXIMUM                                                    3
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINIMUM                                                    4
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MEAN                                                       6
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINMAX                                                     7
+
+// Values for RFMXSPECAN_ATTR_HARM_FUNDAMENTAL_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_GAUSSIAN                                                  1
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_FLAT                                                      2
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_NONE                                                      5
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_RRC                                                       6
+
+// Values for RFMXSPECAN_ATTR_HARM_AUTO_SETUP_ENABLED
+#define RFMXSPECAN_VAL_HARM_AUTO_HARMONICS_SETUP_ENABLED_FALSE                                        0
+#define RFMXSPECAN_VAL_HARM_AUTO_HARMONICS_SETUP_ENABLED_TRUE                                         1
+
+// Values for RFMXSPECAN_ATTR_HARM_HARMONIC_ENABLED
+#define RFMXSPECAN_VAL_HARM_HARMONIC_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_HARM_HARMONIC_ENABLED_TRUE                                                     1
+
+// Values for RFMXSPECAN_ATTR_HARM_MEASUREMENT_METHOD
+#define RFMXSPECAN_VAL_HARM_MEASUREMENT_METHOD_TIME_DOMAIN                                            0
+#define RFMXSPECAN_VAL_HARM_MEASUREMENT_METHOD_DYNAMIC_RANGE                                          2
+
+// Values for RFMXSPECAN_ATTR_HARM_NOISE_COMPENSATION_ENABLED
+#define RFMXSPECAN_VAL_HARM_NOISE_COMPENSATION_ENABLED_FALSE                                          0
+#define RFMXSPECAN_VAL_HARM_NOISE_COMPENSATION_ENABLED_TRUE                                           1
+
+// Values for RFMXSPECAN_ATTR_HARM_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_HARM_AVERAGING_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_HARM_AVERAGING_ENABLED_TRUE                                                    1
+
+// Values for RFMXSPECAN_ATTR_HARM_AVERAGING_TYPE
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_RMS                                                        0
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_LOG                                                        1
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_SCALAR                                                     2
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MAXIMUM                                                    3
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MINIMUM                                                    4
+
+// Values for RFMXSPECAN_ATTR_OBW_POWER_UNITS
+#define RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM                                                            0
+#define RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM_PER_HZ                                                     1
+
+// Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_OBW_RBW_AUTO_FALSE                                                             0
+#define RFMXSPECAN_VAL_OBW_RBW_AUTO_TRUE                                                              1
+
+// Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_FFT_BASED                                                  0
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_GAUSSIAN                                                   1
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_FLAT                                                       2
+
+// Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_BANDWIDTH_DEFINITION
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
+
+// Values for RFMXSPECAN_ATTR_OBW_SWEEP_TIME_AUTO
+#define RFMXSPECAN_VAL_OBW_SWEEP_TIME_AUTO_FALSE                                                      0
+#define RFMXSPECAN_VAL_OBW_SWEEP_TIME_AUTO_TRUE                                                       1
+
+// Values for RFMXSPECAN_ATTR_OBW_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_OBW_AVERAGING_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_OBW_AVERAGING_ENABLED_TRUE                                                     1
+
+// Values for RFMXSPECAN_ATTR_OBW_AVERAGING_TYPE
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_RMS                                                         0
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_LOG                                                         1
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_SCALAR                                                      2
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_MAXIMUM                                                     3
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_MINIMUM                                                     4
+
+// Values for RFMXSPECAN_ATTR_OBW_FFT_WINDOW
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_NONE                                                            0
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_FLAT_TOP                                                        1
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_HANNING                                                         2
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_HAMMING                                                         3
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_GAUSSIAN                                                        4
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_BLACKMAN                                                        5
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_KAISER_BESSEL                                                   7
+
+// Values for RFMXSPECAN_ATTR_OBW_AMPLITUDE_CORRECTION_TYPE
+#define RFMXSPECAN_VAL_OBW_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
+#define RFMXSPECAN_VAL_OBW_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+
+// Values for RFMXSPECAN_ATTR_SEM_CARRIER_ENABLED
+#define RFMXSPECAN_VAL_SEM_ENABLED_FALSE                                                              0
+#define RFMXSPECAN_VAL_SEM_ENABLED_TRUE                                                               1
+
+// Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_AUTO_FALSE                                                     0
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_AUTO_TRUE                                                      1
+
+// Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_FFT_BASED                                          0
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_GAUSSIAN                                           1
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_FLAT                                               2
+
+// Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                0
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                          2
+
+// Values for RFMXSPECAN_ATTR_SEM_CARRIER_RRC_FILTER_ENABLED
+#define RFMXSPECAN_VAL_SEM_RRC_FILTER_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_SEM_RRC_FILTER_ENABLED_TRUE                                                    1
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_ENABLED
+#define RFMXSPECAN_VAL_SEM_OFFSET_ENABLED_FALSE                                                       0
+#define RFMXSPECAN_VAL_SEM_OFFSET_ENABLED_TRUE                                                        1
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_SIDEBAND
+#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_NEGATIVE                                                   0
+#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_POSITIVE                                                   1
+#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_BOTH                                                       2
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_SEM_RBW_AUTO_FALSE                                                             0
+#define RFMXSPECAN_VAL_SEM_RBW_AUTO_TRUE                                                              1
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_FFT_BASED                                                  0
+#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_GAUSSIAN                                                   1
+#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_FLAT                                                       2
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION
+#define RFMXSPECAN_VAL_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                 0
+#define RFMXSPECAN_VAL_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                           2
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK
+#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_AND_RELATIVE                               0
+#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_OR_RELATIVE                                1
+#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE                                            2
+#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_RELATIVE                                            3
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_ABSOLUTE_LIMIT_MODE
+#define RFMXSPECAN_VAL_SEM_OFFSET_ABSOLUTE_LIMIT_MODE_MANUAL                                          0
+#define RFMXSPECAN_VAL_SEM_OFFSET_ABSOLUTE_LIMIT_MODE_COUPLE                                          1
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_RELATIVE_LIMIT_MODE
+#define RFMXSPECAN_VAL_SEM_OFFSET_RELATIVE_LIMIT_MODE_MANUAL                                          0
+#define RFMXSPECAN_VAL_SEM_OFFSET_RELATIVE_LIMIT_MODE_COUPLE                                          1
+
+// Values for RFMXSPECAN_ATTR_SEM_OFFSET_FREQUENCY_DEFINITION
+#define RFMXSPECAN_VAL_SEM_CARRIER_CENTER_TO_MEASUREMENT_BANDWIDTH_CENTER                             0
+#define RFMXSPECAN_VAL_SEM_CARRIER_CENTER_TO_MEASUREMENT_BANDWIDTH_EDGE                               1
+#define RFMXSPECAN_VAL_SEM_CARRIER_EDGE_TO_MEASUREMENT_BANDWIDTH_CENTER                               2
+#define RFMXSPECAN_VAL_SEM_CARRIER_EDGE_TO_MEASUREMENT_BANDWIDTH_EDGE                                 3
+
+// Values for RFMXSPECAN_ATTR_SEM_POWER_UNITS
+#define RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM                                                            0
+#define RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ                                                     1
+
+// Values for RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE
+#define RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_INTEGRATION                                                 0
+#define RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_PEAK                                                        1
+
+// Values for RFMXSPECAN_ATTR_SEM_SWEEP_TIME_AUTO
+#define RFMXSPECAN_VAL_SEM_SWEEP_TIME_AUTO_FALSE                                                      0
+#define RFMXSPECAN_VAL_SEM_SWEEP_TIME_AUTO_TRUE                                                       1
+
+// Values for RFMXSPECAN_ATTR_SEM_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_SEM_AVERAGING_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_SEM_AVERAGING_ENABLED_TRUE                                                     1
+
+// Values for RFMXSPECAN_ATTR_SEM_AVERAGING_TYPE
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_RMS                                                         0
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_LOG                                                         1
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_SCALAR                                                      2
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_MAXIMUM                                                     3
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_MINIMUM                                                     4
+
+// Values for RFMXSPECAN_ATTR_SEM_FFT_WINDOW
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_NONE                                                            0
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_FLAT_TOP                                                        1
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_HANNING                                                         2
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_HAMMING                                                         3
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_GAUSSIAN                                                        4
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_BLACKMAN                                                        5
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_KAISER_BESSEL                                                   7
+
+// Values for RFMXSPECAN_ATTR_SEM_AMPLITUDE_CORRECTION_TYPE
+#define RFMXSPECAN_VAL_SEM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
+#define RFMXSPECAN_VAL_SEM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+
+// Values for RFMXSPECAN_ATTR_SEM_RESULTS_COMPOSITE_MEASUREMENT_STATUS
+#define RFMXSPECAN_VAL_SEM_COMPOSITE_MEASUREMENT_STATUS_FAIL                                          0
+#define RFMXSPECAN_VAL_SEM_COMPOSITE_MEASUREMENT_STATUS_PASS                                          1
+
+// Values for RFMXSPECAN_ATTR_SEM_RESULTS_LOWER_OFFSET_MEASUREMENT_STATUS
+#define RFMXSPECAN_VAL_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL                                       0
+#define RFMXSPECAN_VAL_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS                                       1
+
+// Values for RFMXSPECAN_ATTR_SEM_RESULTS_UPPER_OFFSET_MEASUREMENT_STATUS
+#define RFMXSPECAN_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL                                       0
+#define RFMXSPECAN_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS                                       1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_POWER_UNITS
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBM                                                       0
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBM_PER_HZ                                                1
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBW                                                       2
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBV                                                       3
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBMV                                                      4
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBUV                                                      5
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_WATTS                                                     6
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_VOLTS                                                     7
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_VOLTS_SQUARED                                             8
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_AUTO_FALSE                                                        0
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_AUTO_TRUE                                                         1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_FFT_BASED                                             0
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN                                              1
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_FLAT                                                  2
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                   0
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_6DB                                   1
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                             2
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_ENBW                                  3
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                       0
+#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                        1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_SWEEP_TIME_AUTO
+#define RFMXSPECAN_VAL_SPECTRUM_SWEEP_TIME_AUTO_FALSE                                                 0
+#define RFMXSPECAN_VAL_SPECTRUM_SWEEP_TIME_AUTO_TRUE                                                  1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_DETECTOR_TYPE
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NONE                                                    0
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_SAMPLE                                                  1
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NORMAL                                                  2
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_PEAK                                                    3
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NEGATIVE_PEAK                                           4
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_RMS                                             5
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_VOLTAGE                                         6
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_LOG                                             7
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_MODE
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_MODE_MANUAL                                         0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_MODE_AUTO                                           1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                 1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_COMPENSATION_ENABLED
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_ENABLED_FALSE                                      0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_ENABLED_TRUE                                       1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_COMPENSATION_TYPE
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                      0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                 1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_ENABLED_FALSE                                               0
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_ENABLED_TRUE                                                1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_AVERAGING_TYPE
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_RMS                                                    0
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_LOG                                                    1
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_SCALAR                                                 2
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_MAXIMUM                                                3
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_MINIMUM                                                4
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_MEASUREMENT_MODE
+#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_MODE_MEASURE                                              0
+#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_FFT_WINDOW
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_NONE                                                       0
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_FLAT_TOP                                                   1
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_HANNING                                                    2
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_HAMMING                                                    3
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_GAUSSIAN                                                   4
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN                                                   5
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN_HARRIS                                            6
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_KAISER_BESSEL                                              7
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_AMPLITUDE_CORRECTION_TYPE
+#define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                         0
+#define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                      1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_ANALYSIS_INPUT
+#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_IQ                                                     0
+#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_I_ONLY                                                 1
+#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_Q_ONLY                                                 2
+
+// Values for RFMXSPECAN_ATTR_SPUR_RANGE_ENABLED
+#define RFMXSPECAN_VAL_SPUR_RANGE_ENABLED_FALSE                                                       0
+#define RFMXSPECAN_VAL_SPUR_RANGE_ENABLED_TRUE                                                        1
+
+// Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_SPUR_RBW_AUTO_FALSE                                                            0
+#define RFMXSPECAN_VAL_SPUR_RBW_AUTO_TRUE                                                             1
+
+// Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_FFT_BASED                                                 0
+#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_GAUSSIAN                                                  1
+#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_FLAT                                                      2
+
+// Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION
+#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                 0
+#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                           2
+#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_ENBW                                3
+
+// Values for RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                     0
+#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                      1
+
+// Values for RFMXSPECAN_ATTR_SPUR_RANGE_SWEEP_TIME_AUTO
+#define RFMXSPECAN_VAL_SPUR_SWEEP_TIME_AUTO_FALSE                                                     0
+#define RFMXSPECAN_VAL_SPUR_SWEEP_TIME_AUTO_TRUE                                                      1
+
+// Values for RFMXSPECAN_ATTR_SPUR_RANGE_DETECTOR_TYPE
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NONE                                                  0
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_SAMPLE                                                1
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NORMAL                                                2
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_PEAK                                                  3
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NEGATIVE_PEAK                                         4
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_RMS                                           5
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_VOLTAGE                                       6
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_LOG                                           7
+
+// Values for RFMXSPECAN_ATTR_SPUR_RANGE_ABSOLUTE_LIMIT_MODE
+#define RFMXSPECAN_VAL_SPUR_ABSOLUTE_LIMIT_MODE_MANUAL                                                0
+#define RFMXSPECAN_VAL_SPUR_ABSOLUTE_LIMIT_MODE_COUPLE                                                1
+
+// Values for RFMXSPECAN_ATTR_SPUR_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_ENABLED_TRUE                                                    1
+
+// Values for RFMXSPECAN_ATTR_SPUR_AVERAGING_TYPE
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_RMS                                                        0
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_LOG                                                        1
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_SCALAR                                                     2
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_MAXIMUM                                                    3
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_MINIMUM                                                    4
+
+// Values for RFMXSPECAN_ATTR_SPUR_FFT_WINDOW
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_NONE                                                           0
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_FLAT_TOP                                                       1
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_HANNING                                                        2
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_HAMMING                                                        3
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_GAUSSIAN                                                       4
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_BLACKMAN                                                       5
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_BLACKMAN_HARRIS                                                6
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_KAISER_BESSEL                                                  7
+
+// Values for RFMXSPECAN_ATTR_SPUR_AMPLITUDE_CORRECTION_TYPE
+#define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                             0
+#define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                          1
+
+// Values for RFMXSPECAN_ATTR_SPUR_RESULTS_MEASUREMENT_STATUS
+#define RFMXSPECAN_VAL_SPUR_MEASUREMENT_STATUS_FAIL                                                   0
+#define RFMXSPECAN_VAL_SPUR_MEASUREMENT_STATUS_PASS                                                   1
+
+// Values for RFMXSPECAN_ATTR_SPUR_RESULTS_RANGE_MEASUREMENT_STATUS
+#define RFMXSPECAN_VAL_SPUR_RANGE_STATUS_FAIL                                                         0
+#define RFMXSPECAN_VAL_SPUR_RANGE_STATUS_PASS                                                         1
+
+// Values for RFMXSPECAN_ATTR_TXP_RBW_FILTER_TYPE
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_FLAT                                                       2
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_NONE                                                       5
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_RRC                                                        6
+
+// Values for RFMXSPECAN_ATTR_TXP_VBW_FILTER_AUTO_BANDWIDTH
+#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                            0
+#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                             1
+
+// Values for RFMXSPECAN_ATTR_TXP_THRESHOLD_ENABLED
+#define RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_TRUE                                                     1
+
+// Values for RFMXSPECAN_ATTR_TXP_THRESHOLD_TYPE
+#define RFMXSPECAN_VAL_TXP_THRESHOLD_TYPE_RELATIVE                                                    0
+#define RFMXSPECAN_VAL_TXP_THRESHOLD_TYPE_ABSOLUTE                                                    1
+
+// Values for RFMXSPECAN_ATTR_TXP_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_TXP_AVERAGING_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_TXP_AVERAGING_ENABLED_TRUE                                                     1
+
+// Values for RFMXSPECAN_ATTR_TXP_AVERAGING_TYPE
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_RMS                                                         0
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_LOG                                                         1
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_SCALAR                                                      2
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MAXIMUM                                                     3
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MINIMUM                                                     4
 
 // Values for RFMXSPECAN_ATTR_AMPM_MEASUREMENT_SAMPLE_RATE_MODE
 #define RFMXSPECAN_VAL_AMPM_MEASUREMENT_SAMPLE_RATE_MODE_USER                                         0
@@ -870,6 +1380,14 @@
 // Values for RFMXSPECAN_ATTR_AMPM_SIGNAL_TYPE
 #define RFMXSPECAN_VAL_AMPM_SIGNAL_TYPE_MODULATED                                                     0
 #define RFMXSPECAN_VAL_AMPM_SIGNAL_TYPE_TONES                                                         1
+
+// Values for RFMXSPECAN_ATTR_AMPM_SYNCHRONIZATION_METHOD
+#define RFMXSPECAN_VAL_AMPM_SYNCHRONIZATION_METHOD_DIRECT                                             1
+#define RFMXSPECAN_VAL_AMPM_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED                                    2
+
+// Values for RFMXSPECAN_ATTR_AMPM_AUTO_CARRIER_DETECTION_ENABLED
+#define RFMXSPECAN_VAL_AMPM_AUTO_CARRIER_DETECTION_ENABLED_FALSE                                      0
+#define RFMXSPECAN_VAL_AMPM_AUTO_CARRIER_DETECTION_ENABLED_TRUE                                       1
 
 // Values for RFMXSPECAN_ATTR_AMPM_AM_TO_AM_CURVE_FIT_TYPE
 #define RFMXSPECAN_VAL_AMPM_AM_TO_AM_CURVE_FIT_TYPE_LEAST_SQUARE                                      0
@@ -889,23 +1407,47 @@
 #define RFMXSPECAN_VAL_AMPM_THRESHOLD_TYPE_RELATIVE                                                   0
 #define RFMXSPECAN_VAL_AMPM_THRESHOLD_TYPE_ABSOLUTE                                                   1
 
+// Values for RFMXSPECAN_ATTR_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED
+#define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                 0
+#define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                  1
+
+// Values for RFMXSPECAN_ATTR_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED
+#define RFMXSPECAN_VAL_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                 0
+#define RFMXSPECAN_VAL_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                  1
+
+// Values for RFMXSPECAN_ATTR_AMPM_AM_TO_AM_ENABLED
+#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_ENABLED_TRUE                                                     1
+
+// Values for RFMXSPECAN_ATTR_AMPM_AM_TO_PM_ENABLED
+#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_ENABLED_TRUE                                                     1
+
+// Values for RFMXSPECAN_ATTR_AMPM_EVM_ENABLED
+#define RFMXSPECAN_VAL_AMPM_EVM_ENABLED_FALSE                                                         0
+#define RFMXSPECAN_VAL_AMPM_EVM_ENABLED_TRUE                                                          1
+
+// Values for RFMXSPECAN_ATTR_AMPM_EQUALIZER_MODE
+#define RFMXSPECAN_VAL_AMPM_EQUALIZER_MODE_OFF                                                        0
+#define RFMXSPECAN_VAL_AMPM_EQUALIZER_MODE_TRAIN                                                      1
+
 // Values for RFMXSPECAN_ATTR_AMPM_AVERAGING_ENABLED
 #define RFMXSPECAN_VAL_AMPM_AVERAGING_ENABLED_FALSE                                                   0
 #define RFMXSPECAN_VAL_AMPM_AVERAGING_ENABLED_TRUE                                                    1
 
-// Values for RFMXSPECAN_ATTR_CCDF_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_GAUSSIAN                                                  1
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_FLAT                                                      2
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_NONE                                                      5
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_RRC                                                       6
+// Values for RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_ENABLED
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_ENABLED_FALSE                                           0
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_ENABLED_TRUE                                            1
 
-// Values for RFMXSPECAN_ATTR_CCDF_THRESHOLD_TYPE
-#define RFMXSPECAN_VAL_CCDF_THRESHOLD_TYPE_RELATIVE                                                   0
-#define RFMXSPECAN_VAL_CCDF_THRESHOLD_TYPE_ABSOLUTE                                                   1
+// Values for RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_AUTO                                     0
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_REFERENCE_POWER                          1
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_MAX_GAIN                                 2
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_USER_DEFINED                             3
 
-// Values for RFMXSPECAN_ATTR_CCDF_THRESHOLD_ENABLED
-#define RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_TRUE                                                    1
+// Values for RFMXSPECAN_ATTR_AMPM_REFERENCE_POWER_TYPE
+#define RFMXSPECAN_VAL_AMPM_REFERENCE_POWER_TYPE_INPUT                                                0
+#define RFMXSPECAN_VAL_AMPM_REFERENCE_POWER_TYPE_OUTPUT                                               1
 
 // Values for RFMXSPECAN_ATTR_DPD_MEASUREMENT_SAMPLE_RATE_MODE
 #define RFMXSPECAN_VAL_DPD_MEASUREMENT_SAMPLE_RATE_MODE_USER                                          0
@@ -914,6 +1456,14 @@
 // Values for RFMXSPECAN_ATTR_DPD_SIGNAL_TYPE
 #define RFMXSPECAN_VAL_DPD_SIGNAL_TYPE_MODULATED                                                      0
 #define RFMXSPECAN_VAL_DPD_SIGNAL_TYPE_TONES                                                          1
+
+// Values for RFMXSPECAN_ATTR_DPD_SYNCHRONIZATION_METHOD
+#define RFMXSPECAN_VAL_DPD_SYNCHRONIZATION_METHOD_DIRECT                                              1
+#define RFMXSPECAN_VAL_DPD_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED                                     2
+
+// Values for RFMXSPECAN_ATTR_DPD_AUTO_CARRIER_DETECTION_ENABLED
+#define RFMXSPECAN_VAL_DPD_AUTO_CARRIER_DETECTION_ENABLED_FALSE                                       0
+#define RFMXSPECAN_VAL_DPD_AUTO_CARRIER_DETECTION_ENABLED_TRUE                                        1
 
 // Values for RFMXSPECAN_ATTR_DPD_MODEL
 #define RFMXSPECAN_VAL_DPD_MODEL_LOOKUP_TABLE                                                         0
@@ -924,6 +1474,10 @@
 #define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_AVERAGE_GAIN                                              0
 #define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_LINEAR_REGION_GAIN                                        1
 #define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_PEAK_INPUT_POWER_GAIN                                     2
+
+// Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_TYPE
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_TYPE_LOG                                                      0
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_TYPE_LINEAR                                                   1
 
 // Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE
 #define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE_LEAST_SQUARE                          0
@@ -962,290 +1516,129 @@
 #define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_FALSE                                                0
 #define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_TRUE                                                 1
 
+// Values for RFMXSPECAN_ATTR_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED
+#define RFMXSPECAN_VAL_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                  0
+#define RFMXSPECAN_VAL_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                   1
+
+// Values for RFMXSPECAN_ATTR_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED
+#define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                  0
+#define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                   1
+
 // Values for RFMXSPECAN_ATTR_DPD_AVERAGING_ENABLED
 #define RFMXSPECAN_VAL_DPD_AVERAGING_ENABLED_FALSE                                                    0
 #define RFMXSPECAN_VAL_DPD_AVERAGING_ENABLED_TRUE                                                     1
 
+// Values for RFMXSPECAN_ATTR_DPD_NMSE_ENABLED
+#define RFMXSPECAN_VAL_DPD_NMSE_ENABLED_FALSE                                                         0
+#define RFMXSPECAN_VAL_DPD_NMSE_ENABLED_TRUE                                                          1
+
+// Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_ENABLED
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_ENABLED_FALSE                                                  0
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_ENABLED_TRUE                                                   1
+
+// Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_METHOD
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_CLIPPING                                                0
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_PEAK_WINDOWING                                          1
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_SIGMOID                                                 2
+
+// Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_WINDOW_TYPE
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_FLAT_TOP                                           1
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_HANNING                                            2
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_HAMMING                                            3
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_GAUSSIAN                                           4
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_BLACKMAN                                           5
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_BLACKMAN_HARRIS                                    6
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_KAISER_BESSEL                                      7
+
+// Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_FILTER_ENABLED
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_FILTER_ENABLED_FALSE                                           0
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_FILTER_ENABLED_TRUE                                            1
+
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CONFIGURATION_INPUT
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_CONFIGURATION_INPUT_MEASUREMENT                                  0
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_CONFIGURATION_INPUT_USER                                         1
-
-// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_MAGNITUDE_AND_PHASE                 0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_MAGNITUDE_ONLY                      1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_PHASE_ONLY                          2
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_AND_PHASE                 0
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_ONLY                      1
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_PHASE_ONLY                          2
 
+// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_MAGNITUDE_AND_PHASE                 0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_MAGNITUDE_ONLY                      1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_PHASE_ONLY                          2
+
+// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_ENABLED
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_ENABLED_FALSE                                                0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_ENABLED_TRUE                                                 1
+
+// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_METHOD
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_CLIPPING                                              0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_PEAK_WINDOWING                                        1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_SIGMOID                                               2
+
+// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE_INPUT_PAPR                                  0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE_CUSTOM                                      1
+
+// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_WINDOW_TYPE
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_FLAT_TOP                                         1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_HANNING                                          2
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_HAMMING                                          3
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_GAUSSIAN                                         4
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_BLACKMAN                                         5
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_BLACKMAN_HARRIS                                  6
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_KAISER_BESSEL                                    7
+
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_DPD_MODEL
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_LOOKUP_TABLE                                      0
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_MEMORY_POLYNOMIAL                                 1
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL                     2
 
-// Values for RFMXSPECAN_ATTR_FCNT_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_TRUE                                                    1
-
-// Values for RFMXSPECAN_ATTR_FCNT_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MAXIMUM                                                    3
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINIMUM                                                    4
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MEAN                                                       6
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINMAX                                                     7
-
-// Values for RFMXSPECAN_ATTR_FCNT_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_GAUSSIAN                                                  1
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_FLAT                                                      2
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_NONE                                                      5
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_RRC                                                       6
-
-// Values for RFMXSPECAN_ATTR_FCNT_THRESHOLD_ENABLED
-#define RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_TRUE                                                    1
-
-// Values for RFMXSPECAN_ATTR_FCNT_THRESHOLD_TYPE
-#define RFMXSPECAN_VAL_FCNT_THRESHOLD_TYPE_RELATIVE                                                   0
-#define RFMXSPECAN_VAL_FCNT_THRESHOLD_TYPE_ABSOLUTE                                                   1
-
-// Values for RFMXSPECAN_ATTR_HARM_AUTO_SETUP_ENABLED
-#define RFMXSPECAN_VAL_HARM_AUTO_HARMONICS_SETUP_ENABLED_FALSE                                        0
-#define RFMXSPECAN_VAL_HARM_AUTO_HARMONICS_SETUP_ENABLED_TRUE                                         1
-
-// Values for RFMXSPECAN_ATTR_HARM_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_HARM_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_HARM_AVERAGING_ENABLED_TRUE                                                    1
-
-// Values for RFMXSPECAN_ATTR_HARM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_RMS                                                        0
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_LOG                                                        1
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_SCALAR                                                     2
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MAXIMUM                                                    3
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MINIMUM                                                    4
-
-// Values for RFMXSPECAN_ATTR_HARM_FUNDAMENTAL_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_GAUSSIAN                                                  1
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_FLAT                                                      2
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_NONE                                                      5
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_RRC                                                       6
-
-// Values for RFMXSPECAN_ATTR_HARM_HARMONIC_ENABLED
-#define RFMXSPECAN_VAL_HARM_HARMONIC_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_HARM_HARMONIC_ENABLED_TRUE                                                     1
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK
-#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_AND_RELATIVE                               0
-#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_OR_RELATIVE                                1
-#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE                                            2
-#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_RELATIVE                                            3
-
-// Values for RFMXSPECAN_ATTR_SEM_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_SEM_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_SEM_AVERAGING_ENABLED_TRUE                                                     1
-
-// Values for RFMXSPECAN_ATTR_SEM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_MINIMUM                                                     4
-
-// Values for RFMXSPECAN_ATTR_SEM_CARRIER_ENABLED
-#define RFMXSPECAN_VAL_SEM_ENABLED_FALSE                                                              0
-#define RFMXSPECAN_VAL_SEM_ENABLED_TRUE                                                               1
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SEM_RBW_AUTO_FALSE                                                             0
-#define RFMXSPECAN_VAL_SEM_RBW_AUTO_TRUE                                                              1
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_FFT_BASED                                                  0
-#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_FLAT                                                       2
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                 0
-#define RFMXSPECAN_VAL_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                           2
-
-// Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                0
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                          2
-
-// Values for RFMXSPECAN_ATTR_SEM_CARRIER_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_SEM_RRC_FILTER_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_SEM_RRC_FILTER_ENABLED_TRUE                                                    1
-
-// Values for RFMXSPECAN_ATTR_SEM_FFT_WINDOW
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_NONE                                                            0
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_FLAT_TOP                                                        1
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_HANNING                                                         2
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_HAMMING                                                         3
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_GAUSSIAN                                                        4
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_BLACKMAN                                                        5
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_KAISER_BESSEL                                                   7
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_ABSOLUTE_LIMIT_MODE
-#define RFMXSPECAN_VAL_SEM_OFFSET_ABSOLUTE_LIMIT_MODE_MANUAL                                          0
-#define RFMXSPECAN_VAL_SEM_OFFSET_ABSOLUTE_LIMIT_MODE_COUPLE                                          1
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_SIDEBAND
-#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_NEGATIVE                                                   0
-#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_POSITIVE                                                   1
-#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_BOTH                                                       2
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_ENABLED
-#define RFMXSPECAN_VAL_SEM_OFFSET_ENABLED_FALSE                                                       0
-#define RFMXSPECAN_VAL_SEM_OFFSET_ENABLED_TRUE                                                        1
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_RELATIVE_LIMIT_MODE
-#define RFMXSPECAN_VAL_SEM_OFFSET_RELATIVE_LIMIT_MODE_MANUAL                                          0
-#define RFMXSPECAN_VAL_SEM_OFFSET_RELATIVE_LIMIT_MODE_COUPLE                                          1
-
-// Values for RFMXSPECAN_ATTR_SEM_OFFSET_FREQUENCY_DEFINITION
-#define RFMXSPECAN_VAL_SEM_CARRIER_CENTER_TO_MEASUREMENT_BANDWIDTH_CENTER                             0
-#define RFMXSPECAN_VAL_SEM_CARRIER_CENTER_TO_MEASUREMENT_BANDWIDTH_EDGE                               1
-#define RFMXSPECAN_VAL_SEM_CARRIER_EDGE_TO_MEASUREMENT_BANDWIDTH_CENTER                               2
-#define RFMXSPECAN_VAL_SEM_CARRIER_EDGE_TO_MEASUREMENT_BANDWIDTH_EDGE                                 3
-
-// Values for RFMXSPECAN_ATTR_SEM_POWER_UNITS
-#define RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM                                                            0
-#define RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ                                                     1
-
-// Values for RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE
-#define RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_INTEGRATION                                                 0
-#define RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_PEAK                                                        1
-
-// Values for RFMXSPECAN_ATTR_SEM_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_SEM_SWEEP_TIME_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_SEM_SWEEP_TIME_AUTO_TRUE                                                       1
-
-// Values for RFMXSPECAN_ATTR_SEM_RESULTS_COMPOSITE_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SEM_COMPOSITE_MEASUREMENT_STATUS_FAIL                                          0
-#define RFMXSPECAN_VAL_SEM_COMPOSITE_MEASUREMENT_STATUS_PASS                                          1
-
-// Values for RFMXSPECAN_ATTR_SEM_RESULTS_UPPER_OFFSET_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL                                       0
-#define RFMXSPECAN_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS                                       1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_RMS                                                    0
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_LOG                                                    1
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_SCALAR                                                 2
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_MAXIMUM                                                3
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_MINIMUM                                                4
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_MEASUREMENT_MODE
-#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_MODE_MEASURE                                              0
-#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_ENABLED_FALSE                                               0
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_ENABLED_TRUE                                                1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_FFT_WINDOW
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_NONE                                                       0
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_FLAT_TOP                                                   1
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_HANNING                                                    2
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_HAMMING                                                    3
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_GAUSSIAN                                                   4
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN                                                   5
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN_HARRIS                                            6
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_KAISER_BESSEL                                              7
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_FFT_BASED                                             0
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN                                              1
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_FLAT                                                  2
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                   0
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_6DB                                   1
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                             2
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_ENBW                                  3
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_POWER_UNITS
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBM                                                       0
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBM_PER_HZ                                                1
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBW                                                       2
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBV                                                       3
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBMV                                                      4
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBUV                                                      5
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_WATTS                                                     6
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_VOLTS                                                     7
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_VOLTS_SQUARED                                             8
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_AUTO_FALSE                                                        0
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_AUTO_TRUE                                                         1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_SPECTRUM_SWEEP_TIME_AUTO_FALSE                                                 0
-#define RFMXSPECAN_VAL_SPECTRUM_SWEEP_TIME_AUTO_TRUE                                                  1
-
-// Values for RFMXSPECAN_ATTR_SPUR_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_ENABLED_TRUE                                                    1
-
-// Values for RFMXSPECAN_ATTR_SPUR_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_RMS                                                        0
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_LOG                                                        1
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_SCALAR                                                     2
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_MAXIMUM                                                    3
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_MINIMUM                                                    4
-
-// Values for RFMXSPECAN_ATTR_SPUR_FFT_WINDOW
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_NONE                                                           0
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_FLAT_TOP                                                       1
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_HANNING                                                        2
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_HAMMING                                                        3
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_GAUSSIAN                                                       4
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_BLACKMAN                                                       5
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_BLACKMAN_HARRIS                                                6
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_KAISER_BESSEL                                                  7
-
-// Values for RFMXSPECAN_ATTR_SPUR_RANGE_ABSOLUTE_LIMIT_MODE
-#define RFMXSPECAN_VAL_SPUR_ABSOLUTE_LIMIT_MODE_MANUAL                                                0
-#define RFMXSPECAN_VAL_SPUR_ABSOLUTE_LIMIT_MODE_COUPLE                                                1
-
-// Values for RFMXSPECAN_ATTR_SPUR_RANGE_ENABLED
-#define RFMXSPECAN_VAL_SPUR_RANGE_ENABLED_FALSE                                                       0
-#define RFMXSPECAN_VAL_SPUR_RANGE_ENABLED_TRUE                                                        1
-
-// Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPUR_RBW_AUTO_FALSE                                                            0
-#define RFMXSPECAN_VAL_SPUR_RBW_AUTO_TRUE                                                             1
-
-// Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_FFT_BASED                                                 0
-#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_GAUSSIAN                                                  1
-#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_FLAT                                                      2
-
-// Values for RFMXSPECAN_ATTR_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                  0
-#define RFMXSPECAN_VAL_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                   1
-
-// Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                 0
-#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                           2
-#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_ENBW                                3
-
-// Values for RFMXSPECAN_ATTR_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                 0
-#define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                  1
-
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_LOOKUP_TABLE_TYPE
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_LOOKUP_TABLE_TYPE_LOG                                       0
 #define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_LOOKUP_TABLE_TYPE_LINEAR                                    1
 
+// Values for RFMXSPECAN_ATTR_IDPD_EQUALIZER_MODE
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_OFF                                                        0
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_TRAIN                                                      1
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_HOLD                                                       2
+
+// Values for RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE_MODE
+#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_USER                                         0
+#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                           1
+
+// Values for RFMXSPECAN_ATTR_IDPD_SIGNAL_TYPE
+#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_MODULATED                                                     0
+#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_TONES                                                         1
+
+// Values for RFMXSPECAN_ATTR_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT
+#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                            0
+#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                             1
+
+// Values for RFMXSPECAN_ATTR_IDPD_AVERAGING_ENABLED
+#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_TRUE                                                    1
+
+// Values for RFMXSPECAN_ATTR_IDPD_EVM_ENABLED
+#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_FALSE                                                         0
+#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_TRUE                                                          1
+
+// Values for RFMXSPECAN_ATTR_IDPD_EVM_UNIT
+#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_PERCENTAGE                                                       0
+#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_DB                                                               1
+
+// Values for RFMXSPECAN_ATTR_IQ_BANDWIDTH_AUTO
+#define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_FALSE                                                        0
+#define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_TRUE                                                         1
+
+// Values for RFMXSPECAN_ATTR_IQ_DELETE_RECORD_ON_FETCH
+#define RFMXSPECAN_VAL_IQ_DELETE_RECORD_ON_FETCH_FALSE                                                0
+#define RFMXSPECAN_VAL_IQ_DELETE_RECORD_ON_FETCH_TRUE                                                 1
+
 // Values for RFMXSPECAN_ATTR_IM_FREQUENCY_DEFINITION
 #define RFMXSPECAN_VAL_IM_FREQUENCY_DEFINITION_RELATIVE                                               0
 #define RFMXSPECAN_VAL_IM_FREQUENCY_DEFINITION_ABSOLUTE                                               1
-
-// Values for RFMXSPECAN_ATTR_AMPM_REFERENCE_POWER_TYPE
-#define RFMXSPECAN_VAL_AMPM_REFERENCE_POWER_TYPE_INPUT                                                0
-#define RFMXSPECAN_VAL_AMPM_REFERENCE_POWER_TYPE_OUTPUT                                               1
 
 // Values for RFMXSPECAN_ATTR_IM_AUTO_INTERMODS_SETUP_ENABLED
 #define RFMXSPECAN_VAL_IM_AUTO_INTERMODS_SETUP_ENABLED_FALSE                                          0
@@ -1307,6 +1700,23 @@
 #define RFMXSPECAN_VAL_IM_IF_OUTPUT_POWER_OFFSET_AUTO_FALSE                                           0
 #define RFMXSPECAN_VAL_IM_IF_OUTPUT_POWER_OFFSET_AUTO_TRUE                                            1
 
+// Values for RFMXSPECAN_ATTR_IM_AMPLITUDE_CORRECTION_TYPE
+#define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                               0
+#define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                            1
+
+// Values for RFMXSPECAN_ATTR_NF_DUT_TYPE
+#define RFMXSPECAN_VAL_NF_DUT_TYPE_AMPLIFIER                                                          0
+#define RFMXSPECAN_VAL_NF_DUT_TYPE_DOWNCONVERTER                                                      1
+#define RFMXSPECAN_VAL_NF_DUT_TYPE_UPCONVERTER                                                        2
+
+// Values for RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT
+#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT_RF                                    0
+#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT_IF                                    1
+
+// Values for RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_SIDEBAND
+#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_SIDEBAND_LSB                                            0
+#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_SIDEBAND_USB                                            1
+
 // Values for RFMXSPECAN_ATTR_NF_AVERAGING_ENABLED
 #define RFMXSPECAN_VAL_NF_AVERAGING_ENABLED_FALSE                                                     0
 #define RFMXSPECAN_VAL_NF_AVERAGING_ENABLED_TRUE                                                      1
@@ -1347,380 +1757,6 @@
 #define RFMXSPECAN_VAL_NF_COLD_SOURCE_MODE_MEASURE                                                    0
 #define RFMXSPECAN_VAL_NF_COLD_SOURCE_MODE_CALIBRATE                                                  1
 
-// Values for RFMXSPECAN_ATTR_LIMITED_CONFIGURATION_CHANGE
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                         1
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY                                         2
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL                                   3
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
-
-// Values for RFMXSPECAN_ATTR_SPUR_RANGE_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_SPUR_SWEEP_TIME_AUTO_FALSE                                                     0
-#define RFMXSPECAN_VAL_SPUR_SWEEP_TIME_AUTO_TRUE                                                      1
-
-// Values for RFMXSPECAN_ATTR_SPUR_RESULTS_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SPUR_MEASUREMENT_STATUS_FAIL                                                   0
-#define RFMXSPECAN_VAL_SPUR_MEASUREMENT_STATUS_PASS                                                   1
-
-// Values for RFMXSPECAN_ATTR_SPUR_RESULTS_RANGE_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SPUR_RANGE_STATUS_FAIL                                                         0
-#define RFMXSPECAN_VAL_SPUR_RANGE_STATUS_PASS                                                         1
-
-// Values for MarkerThresholdEnabled
-#define RFMXSPECAN_VAL_MARKER_THRESHOLD_ENABLED_FALSE                                                 0
-#define RFMXSPECAN_VAL_MARKER_THRESHOLD_ENABLED_TRUE                                                  1
-
-// Values for MarkerTrace
-#define RFMXSPECAN_VAL_MARKER_TRACE_ACP_SPECTRUM                                                      0
-#define RFMXSPECAN_VAL_MARKER_TRACE_CCDF_GAUSSIAN_PROBABILITIES_TRACE                                 1
-#define RFMXSPECAN_VAL_MARKER_TRACE_CCDF_PROBABILITIES_TRACE                                          2
-#define RFMXSPECAN_VAL_MARKER_TRACE_CHP_SPECTRUM                                                      3
-#define RFMXSPECAN_VAL_MARKER_TRACE_FCNT_POWER_TRACE                                                  4
-#define RFMXSPECAN_VAL_MARKER_TRACE_OBW_SPECTRUM                                                      5
-#define RFMXSPECAN_VAL_MARKER_TRACE_SEM_SPECTRUM                                                      6
-#define RFMXSPECAN_VAL_MARKER_TRACE_SPECTRUM                                                          7
-#define RFMXSPECAN_VAL_MARKER_TRACE_TXP_POWER_TRACE                                                   8
-
-// Values for MarkerType
-#define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_OFF                                                         0
-#define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_NORMAL                                                      1
-#define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_DELTA                                                       3
-#define RFMXSPECAN_VAL_MARKER_MARKER_TYPE_FIXED                                                       4
-
-// Values for MarkerNextPeak
-#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_HIGHEST                                                  0
-#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_LEFT                                                     1
-#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_RIGHT                                                    2
-
-// Values for RFMXSPECAN_ATTR_OBW_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_OBW_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_OBW_AVERAGING_ENABLED_TRUE                                                     1
-
-// Values for RFMXSPECAN_ATTR_OBW_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_MINIMUM                                                     4
-
-// Values for RFMXSPECAN_ATTR_OBW_FFT_WINDOW
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_NONE                                                            0
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_FLAT_TOP                                                        1
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_HANNING                                                         2
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_HAMMING                                                         3
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_GAUSSIAN                                                        4
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_BLACKMAN                                                        5
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_KAISER_BESSEL                                                   7
-
-// Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_OBW_RBW_AUTO_FALSE                                                             0
-#define RFMXSPECAN_VAL_OBW_RBW_AUTO_TRUE                                                              1
-
-// Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_FFT_BASED                                                  0
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_FLAT                                                       2
-
-// Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
-
-// Values for RFMXSPECAN_ATTR_OBW_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_OBW_SWEEP_TIME_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_OBW_SWEEP_TIME_AUTO_TRUE                                                       1
-
-// Values for RFMXSPECAN_ATTR_OBW_POWER_UNITS
-#define RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM                                                            0
-#define RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM_PER_HZ                                                     1
-
-// Values for RFMXSPECAN_ATTR_TXP_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_TXP_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_TXP_AVERAGING_ENABLED_TRUE                                                     1
-
-// Values for RFMXSPECAN_ATTR_TXP_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MINIMUM                                                     4
-
-// Values for RFMXSPECAN_ATTR_TXP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_FLAT                                                       2
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_NONE                                                       5
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_RRC                                                        6
-
-// Values for RFMXSPECAN_ATTR_TXP_THRESHOLD_ENABLED
-#define RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_TRUE                                                     1
-
-// Values for RFMXSPECAN_ATTR_TXP_THRESHOLD_TYPE
-#define RFMXSPECAN_VAL_TXP_THRESHOLD_TYPE_RELATIVE                                                    0
-#define RFMXSPECAN_VAL_TXP_THRESHOLD_TYPE_ABSOLUTE                                                    1
-
-// Values for RFMXSPECAN_ATTR_CHP_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_CHP_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_CHP_AVERAGING_ENABLED_TRUE                                                     1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_MODE
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_MODE_MANUAL                                         0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_MODE_AUTO                                           1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                 1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_ENABLED_FALSE                                      0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_ENABLED_TRUE                                       1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_COMPENSATION_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                      0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                 1
-
-// Values for RFMXSPECAN_ATTR_CHP_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_MINIMUM                                                     4
-
-// Values for RFMXSPECAN_ATTR_CHP_MEASUREMENT_MODE
-#define RFMXSPECAN_VAL_CHP_MEASUREMENT_MODE_MEASURE                                                   0
-#define RFMXSPECAN_VAL_CHP_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                     1
-
-// Values for RFMXSPECAN_ATTR_CHP_FFT_WINDOW
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_NONE                                                            0
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_FLAT_TOP                                                        1
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_HANNING                                                         2
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_HAMMING                                                         3
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_GAUSSIAN                                                        4
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_BLACKMAN                                                        5
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_KAISER_BESSEL                                                   7
-
-// Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_CHP_RBW_AUTO_FALSE                                                             0
-#define RFMXSPECAN_VAL_CHP_RBW_AUTO_TRUE                                                              1
-
-// Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_FFT_BASED                                                  0
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_FLAT                                                       2
-
-// Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
-
-// Values for RFMXSPECAN_ATTR_CHP_DETECTOR_TYPE
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NONE                                                         0
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_SAMPLE                                                       1
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NORMAL                                                       2
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_PEAK                                                         3
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NEGATIVE_PEAK                                                4
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_RMS                                                  5
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_VOLTAGE                                              6
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_LOG                                                  7
-
-// Values for RFMXSPECAN_ATTR_CHP_CARRIER_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_TRUE                                            1
-
-// Values for RFMXSPECAN_ATTR_CHP_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_CHP_SWEEP_TIME_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_CHP_SWEEP_TIME_AUTO_TRUE                                                       1
-
-// Values for RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_MODE
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_MODE_MANUAL                                              0
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_MODE_AUTO                                                1
-
-// Values for RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_AVERAGING_AUTO
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                     0
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                      1
-
-// Values for RFMXSPECAN_ATTR_CHP_NOISE_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_ENABLED_TRUE                                            1
-
-// Values for RFMXSPECAN_ATTR_CHP_NOISE_COMPENSATION_TYPE
-#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                           0
-#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                      1
-
-// Values for RFMXSPECAN_ATTR_IQ_BANDWIDTH_AUTO
-#define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_FALSE                                                        0
-#define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_TRUE                                                         1
-
-// Values for RFMXSPECAN_ATTR_IQ_DELETE_RECORD_ON_FETCH
-#define RFMXSPECAN_VAL_IQ_DELETE_RECORD_ON_FETCH_FALSE                                                0
-#define RFMXSPECAN_VAL_IQ_DELETE_RECORD_ON_FETCH_TRUE                                                 1
-
-// Values for Boolean
-#define RFMXSPECAN_VAL_FALSE                                                                          0
-#define RFMXSPECAN_VAL_TRUE                                                                           1
-
-// Values for RFMXSPECAN_ATTR_IDPD_EQUALIZER_MODE
-#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_OFF                                                        0
-#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_TRAIN                                                      1
-#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_HOLD                                                       2
-
-// Values for RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE_MODE
-#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_USER                                         0
-#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                           1
-
-// Values for RFMXSPECAN_ATTR_IDPD_SIGNAL_TYPE
-#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_MODULATED                                                     0
-#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_TONES                                                         1
-
-// Values for RFMXSPECAN_ATTR_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT
-#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                            0
-#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                             1
-
-// Values for RFMXSPECAN_ATTR_IDPD_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_TRUE                                                    1
-
-// Values for RFMXSPECAN_ATTR_IDPD_EVM_ENABLED
-#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_FALSE                                                         0
-#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_TRUE                                                          1
-
-// Values for RFMXSPECAN_ATTR_IDPD_EVM_UNIT
-#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_PERCENTAGE                                                       0
-#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_DB                                                               1
-
-// Values for MeasurementTypes
-#define RFMXSPECAN_VAL_ACP                                                                            1 << 0
-#define RFMXSPECAN_VAL_CCDF                                                                           1 << 1
-#define RFMXSPECAN_VAL_CHP                                                                            1 << 2
-#define RFMXSPECAN_VAL_FCNT                                                                           1 << 3
-#define RFMXSPECAN_VAL_HARMONICS                                                                      1 << 4
-#define RFMXSPECAN_VAL_OBW                                                                            1 << 5
-#define RFMXSPECAN_VAL_SEM                                                                            1 << 6
-#define RFMXSPECAN_VAL_SPECTRUM                                                                       1 << 7
-#define RFMXSPECAN_VAL_SPUR                                                                           1 << 8
-#define RFMXSPECAN_VAL_TXP                                                                            1 << 9
-#define RFMXSPECAN_VAL_AMPM                                                                           1 << 10
-#define RFMXSPECAN_VAL_DPD                                                                            1 << 11
-#define RFMXSPECAN_VAL_IQ                                                                             1 << 12
-#define RFMXSPECAN_VAL_IM                                                                             1 << 13
-#define RFMXSPECAN_VAL_NF                                                                             1 << 14
-#define RFMXSPECAN_VAL_PHASENOISE                                                                     1 << 15
-#define RFMXSPECAN_VAL_PAVT                                                                           1 << 16
-#define RFMXSPECAN_VAL_IDPD                                                                           1 << 17
-
-// Values for FrequencyReferenceSource
-#define RFMXSPECAN_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
-#define RFMXSPECAN_VAL_REF_IN_STR                                                                     "RefIn"
-#define RFMXSPECAN_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
-#define RFMXSPECAN_VAL_CLK_IN_STR                                                                     "ClkIn"
-
-// Values for RFAttenuationAuto
-#define RFMXSPECAN_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
-
-// Values for MechanicalAttenuationAuto
-#define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
-#define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
-
-// Values for MarkerPeakExcursionEnabled
-#define RFMXSPECAN_VAL_MARKER_PEAK_EXCURSION_ENABLED_FALSE                                            0
-#define RFMXSPECAN_VAL_MARKER_PEAK_EXCURSION_ENABLED_TRUE                                             1
-
-// Values for DpdReferenceWaveformIdleDurationPresent
-#define RFMXSPECAN_VAL_DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                             0
-#define RFMXSPECAN_VAL_DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                              1
-
-// Values for DpdApplyDpdIdleDurationPresent
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_IDLE_DURATION_PRESENT_FALSE                                      0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_IDLE_DURATION_PRESENT_TRUE                                       1
-
-// Values for AmpmReferenceWaveformIdleDurationPresent
-#define RFMXSPECAN_VAL_AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                            0
-#define RFMXSPECAN_VAL_AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                             1
-
-// Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_FFT_BASED                                          0
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_GAUSSIAN                                           1
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_FLAT                                               2
-
-// Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_AUTO_FALSE                                                     0
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_AUTO_TRUE                                                      1
-
-// Values for RFMXSPECAN_ATTR_ACP_CARRIER_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_ACP_CARRIER_RRC_FILTER_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_ACP_CARRIER_RRC_FILTER_ENABLED_TRUE                                            1
-
-// Values for RFMXSPECAN_ATTR_SEM_RESULTS_LOWER_OFFSET_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL                                       0
-#define RFMXSPECAN_VAL_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS                                       1
-
-// Values for RFMXSPECAN_ATTR_ACP_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_ACP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
-#define RFMXSPECAN_VAL_ACP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_ANALYSIS_INPUT
-#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_IQ                                                     0
-#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_I_ONLY                                                 1
-#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_Q_ONLY                                                 2
-
-// Values for RFMXSPECAN_ATTR_CHP_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
-#define RFMXSPECAN_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
-
-// Values for RFMXSPECAN_ATTR_OBW_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_OBW_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
-#define RFMXSPECAN_VAL_OBW_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
-
-// Values for RFMXSPECAN_ATTR_SEM_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_SEM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
-#define RFMXSPECAN_VAL_SEM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_DETECTOR_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NONE                                                    0
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_SAMPLE                                                  1
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NORMAL                                                  2
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_PEAK                                                    3
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NEGATIVE_PEAK                                           4
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_RMS                                             5
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_VOLTAGE                                         6
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_LOG                                             7
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                       0
-#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                        1
-
-// Values for RFMXSPECAN_ATTR_SPECTRUM_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                         0
-#define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                      1
-
-// Values for RFMXSPECAN_ATTR_SPUR_RANGE_DETECTOR_TYPE
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NONE                                                  0
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_SAMPLE                                                1
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NORMAL                                                2
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_PEAK                                                  3
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NEGATIVE_PEAK                                         4
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_RMS                                           5
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_VOLTAGE                                       6
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_LOG                                           7
-
-// Values for RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                     0
-#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                      1
-
-// Values for RFMXSPECAN_ATTR_SPUR_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                             0
-#define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                          1
-
-// Values for RFMXSPECAN_ATTR_TXP_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                            0
-#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                             1
-
-// Values for RFMXSPECAN_ATTR_IM_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                               0
-#define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                            1
-
 // Values for RFMXSPECAN_ATTR_PHASENOISE_RANGE_DEFINITION
 #define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_MANUAL                                             0
 #define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_AUTO                                               1
@@ -1741,6 +1777,11 @@
 #define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_LOGARITHMIC                                          2
 #define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_MEDIAN                                               3
 
+// Values for RFMXSPECAN_ATTR_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION
+#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_NONE                              0
+#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_MEASUREMENT                       1
+#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_CUSTOM                            2
+
 // Values for RFMXSPECAN_ATTR_PHASENOISE_SPUR_REMOVAL_ENABLED
 #define RFMXSPECAN_VAL_PHASENOISE_SPUR_REMOVAL_ENABLED_FALSE                                          0
 #define RFMXSPECAN_VAL_PHASENOISE_SPUR_REMOVAL_ENABLED_TRUE                                           1
@@ -1748,118 +1789,6 @@
 // Values for RFMXSPECAN_ATTR_PHASENOISE_CANCELLATION_ENABLED
 #define RFMXSPECAN_VAL_PHASENOISE_CANCELLATION_ENABLED_FALSE                                          0
 #define RFMXSPECAN_VAL_PHASENOISE_CANCELLATION_ENABLED_TRUE                                           1
-
-// Values for RFMXSPECAN_ATTR_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION
-#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_NONE                              0
-#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_MEASUREMENT                       1
-#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_CUSTOM                            2
-
-// Values for RFMXSPECAN_ATTR_DPD_NMSE_ENABLED
-#define RFMXSPECAN_VAL_DPD_NMSE_ENABLED_FALSE                                                         0
-#define RFMXSPECAN_VAL_DPD_NMSE_ENABLED_TRUE                                                          1
-
-// Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_ENABLED
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_ENABLED_FALSE                                                  0
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_ENABLED_TRUE                                                   1
-
-// Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_METHOD
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_CLIPPING                                                0
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_PEAK_WINDOWING                                          1
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_SIGMOID                                                 2
-
-// Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_WINDOW_TYPE
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_FLAT_TOP                                           1
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_HANNING                                            2
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_HAMMING                                            3
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_GAUSSIAN                                           4
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_BLACKMAN                                           5
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_BLACKMAN_HARRIS                                    6
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_KAISER_BESSEL                                      7
-
-// Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_FILTER_ENABLED
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_FILTER_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_FILTER_ENABLED_TRUE                                            1
-
-// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_ENABLED
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_ENABLED_FALSE                                                0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_ENABLED_TRUE                                                 1
-
-// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_METHOD
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_CLIPPING                                              0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_PEAK_WINDOWING                                        1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_SIGMOID                                               2
-
-// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE_INPUT_PAPR                                  0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE_CUSTOM                                      1
-
-// Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_WINDOW_TYPE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_FLAT_TOP                                         1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_HANNING                                          2
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_HAMMING                                          3
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_GAUSSIAN                                         4
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_BLACKMAN                                         5
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_BLACKMAN_HARRIS                                  6
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_KAISER_BESSEL                                    7
-
-// Values for RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_ENABLED
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_ENABLED_TRUE                                            1
-
-// Values for RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_AUTO                                     0
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_REFERENCE_POWER                          1
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_MAX_GAIN                                 2
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_USER_DEFINED                             3
-
-// Values for RFMXSPECAN_ATTR_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                  0
-#define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                   1
-
-// Values for RFMXSPECAN_ATTR_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                 0
-#define RFMXSPECAN_VAL_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                  1
-
-// Values for NFCalibrationDataValid
-#define RFMXSPECAN_VAL_NF_CALIBRATION_DATA_VALID_FALSE                                                0
-#define RFMXSPECAN_VAL_NF_CALIBRATION_DATA_VALID_TRUE                                                 1
-
-// Values for RFMXSPECAN_ATTR_AMPM_SYNCHRONIZATION_METHOD
-#define RFMXSPECAN_VAL_AMPM_SYNCHRONIZATION_METHOD_DIRECT                                             1
-#define RFMXSPECAN_VAL_AMPM_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED                                    2
-
-// Values for RFMXSPECAN_ATTR_AMPM_AUTO_CARRIER_DETECTION_ENABLED
-#define RFMXSPECAN_VAL_AMPM_AUTO_CARRIER_DETECTION_ENABLED_FALSE                                      0
-#define RFMXSPECAN_VAL_AMPM_AUTO_CARRIER_DETECTION_ENABLED_TRUE                                       1
-
-// Values for RFMXSPECAN_ATTR_DPD_SYNCHRONIZATION_METHOD
-#define RFMXSPECAN_VAL_DPD_SYNCHRONIZATION_METHOD_DIRECT                                              1
-#define RFMXSPECAN_VAL_DPD_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED                                     2
-
-// Values for RFMXSPECAN_ATTR_DPD_AUTO_CARRIER_DETECTION_ENABLED
-#define RFMXSPECAN_VAL_DPD_AUTO_CARRIER_DETECTION_ENABLED_FALSE                                       0
-#define RFMXSPECAN_VAL_DPD_AUTO_CARRIER_DETECTION_ENABLED_TRUE                                        1
-
-// Values for RFMXSPECAN_ATTR_NF_DUT_TYPE
-#define RFMXSPECAN_VAL_NF_DUT_TYPE_AMPLIFIER                                                          0
-#define RFMXSPECAN_VAL_NF_DUT_TYPE_DOWNCONVERTER                                                      1
-#define RFMXSPECAN_VAL_NF_DUT_TYPE_UPCONVERTER                                                        2
-
-// Values for RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT
-#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT_RF                                    0
-#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT_IF                                    1
-
-// Values for RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_SIDEBAND
-#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_SIDEBAND_LSB                                            0
-#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_SIDEBAND_USB                                            1
-
-// Values for RFMXSPECAN_ATTR_HARM_MEASUREMENT_METHOD
-#define RFMXSPECAN_VAL_HARM_MEASUREMENT_METHOD_TIME_DOMAIN                                            0
-#define RFMXSPECAN_VAL_HARM_MEASUREMENT_METHOD_DYNAMIC_RANGE                                          2
-
-// Values for RFMXSPECAN_ATTR_HARM_NOISE_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_HARM_NOISE_COMPENSATION_ENABLED_FALSE                                          0
-#define RFMXSPECAN_VAL_HARM_NOISE_COMPENSATION_ENABLED_TRUE                                           1
 
 // Values for RFMXSPECAN_ATTR_PAVT_MEASUREMENT_LOCATION_TYPE
 #define RFMXSPECAN_VAL_PAVT_MEASUREMENT_LOCATION_TYPE_TIME                                            0
@@ -1886,38 +1815,109 @@
 #define RFMXSPECAN_VAL_PAVT_FREQUENCY_TRACKING_ENABLED_FALSE                                          0
 #define RFMXSPECAN_VAL_PAVT_FREQUENCY_TRACKING_ENABLED_TRUE                                           1
 
-// Values for RFMXSPECAN_ATTR_AMPM_EQUALIZER_MODE
-#define RFMXSPECAN_VAL_AMPM_EQUALIZER_MODE_OFF                                                        0
-#define RFMXSPECAN_VAL_AMPM_EQUALIZER_MODE_TRAIN                                                      1
+// Values for RFMXSPECAN_ATTR_LIMITED_CONFIGURATION_CHANGE
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                         1
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY                                         2
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL                                   3
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
 
-// Values for RFMXSPECAN_ATTR_ACP_FFT_OVERLAP_MODE
-#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_DISABLED                                                  0
-#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_AUTOMATIC                                                 1
-#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_USER_DEFINED                                              2
+// Values for AmpmReferenceWaveformIdleDurationPresent
+#define RFMXSPECAN_VAL_AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                            0
+#define RFMXSPECAN_VAL_AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                             1
 
-// Values for AcpNoiseCalibrationDataValid
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
+// Values for DpdReferenceWaveformIdleDurationPresent
+#define RFMXSPECAN_VAL_DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                             0
+#define RFMXSPECAN_VAL_DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                              1
 
-// Values for ChpNoiseCalibrationDataValid
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
+// Values for MarkerNextPeak
+#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_HIGHEST                                                  0
+#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_LEFT                                                     1
+#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_RIGHT                                                    2
+
+// Values for MeasurementTypes
+#define RFMXSPECAN_VAL_ACP                                                                            1<<0
+#define RFMXSPECAN_VAL_CCDF                                                                           1<<1
+#define RFMXSPECAN_VAL_CHP                                                                            1<<2
+#define RFMXSPECAN_VAL_FCNT                                                                           1<<3
+#define RFMXSPECAN_VAL_HARMONICS                                                                      1<<4
+#define RFMXSPECAN_VAL_OBW                                                                            1<<5
+#define RFMXSPECAN_VAL_SEM                                                                            1<<6
+#define RFMXSPECAN_VAL_SPECTRUM                                                                       1<<7
+#define RFMXSPECAN_VAL_SPUR                                                                           1<<8
+#define RFMXSPECAN_VAL_TXP                                                                            1<<9
+#define RFMXSPECAN_VAL_AMPM                                                                           1<<10
+#define RFMXSPECAN_VAL_DPD                                                                            1<<11
+#define RFMXSPECAN_VAL_IQ                                                                             1<<12
+#define RFMXSPECAN_VAL_IM                                                                             1<<13
+#define RFMXSPECAN_VAL_NF                                                                             1<<14
+#define RFMXSPECAN_VAL_PHASENOISE                                                                     1<<15
+#define RFMXSPECAN_VAL_PAVT                                                                           1<<16
+#define RFMXSPECAN_VAL_IDPD                                                                           1<<17
 
 // Values for SpectrumNoiseCalibrationDataValid
 #define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_DATA_VALID_FALSE                                    0
 #define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_DATA_VALID_TRUE                                     1
 
-// Values for RFMXSPECAN_ATTR_AMPM_AM_TO_AM_ENABLED
-#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_ENABLED_TRUE                                                     1
+// Values for ChpNoiseCalibrationDataValid
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
 
-// Values for RFMXSPECAN_ATTR_AMPM_AM_TO_PM_ENABLED
-#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_ENABLED_TRUE                                                     1
+// Values for AcpNoiseCalibrationDataValid
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
 
-// Values for RFMXSPECAN_ATTR_AMPM_EVM_ENABLED
-#define RFMXSPECAN_VAL_AMPM_EVM_ENABLED_FALSE                                                         0
-#define RFMXSPECAN_VAL_AMPM_EVM_ENABLED_TRUE                                                          1
+// Values for NFCalibrationDataValid
+#define RFMXSPECAN_VAL_NF_CALIBRATION_DATA_VALID_FALSE                                                0
+#define RFMXSPECAN_VAL_NF_CALIBRATION_DATA_VALID_TRUE                                                 1
+
+// Values for DpdApplyDpdIdleDurationPresent
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_IDLE_DURATION_PRESENT_FALSE                                      0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_IDLE_DURATION_PRESENT_TRUE                                       1
+
+// Values for MarkerPeakExcursionEnabled
+#define RFMXSPECAN_VAL_MARKER_PEAK_EXCURSION_ENABLED_FALSE                                            0
+#define RFMXSPECAN_VAL_MARKER_PEAK_EXCURSION_ENABLED_TRUE                                             1
+
+// Values for MarkerType
+#define RFMXSPECAN_VAL_MARKER_TYPE_OFF                                                                0
+#define RFMXSPECAN_VAL_MARKER_TYPE_NORMAL                                                             1
+#define RFMXSPECAN_VAL_MARKER_TYPE_DELTA                                                              3
+#define RFMXSPECAN_VAL_MARKER_TYPE_FIXED                                                              4
+
+// Values for MarkerTrace
+#define RFMXSPECAN_VAL_MARKER_TRACE_ACP_SPECTRUM                                                      0
+#define RFMXSPECAN_VAL_MARKER_TRACE_CCDF_GAUSSIAN_PROBABILITIES_TRACE                                 1
+#define RFMXSPECAN_VAL_MARKER_TRACE_CCDF_PROBABILITIES_TRACE                                          2
+#define RFMXSPECAN_VAL_MARKER_TRACE_CHP_SPECTRUM                                                      3
+#define RFMXSPECAN_VAL_MARKER_TRACE_FCNT_POWER_TRACE                                                  4
+#define RFMXSPECAN_VAL_MARKER_TRACE_OBW_SPECTRUM                                                      5
+#define RFMXSPECAN_VAL_MARKER_TRACE_SEM_SPECTRUM                                                      6
+#define RFMXSPECAN_VAL_MARKER_TRACE_SPECTRUM                                                          7
+#define RFMXSPECAN_VAL_MARKER_TRACE_TXP_POWER_TRACE                                                   8
+
+// Values for MarkerThresholdEnabled
+#define RFMXSPECAN_VAL_MARKER_THRESHOLD_ENABLED_FALSE                                                 0
+#define RFMXSPECAN_VAL_MARKER_THRESHOLD_ENABLED_TRUE                                                  1
+
+// Values for Boolean
+#define RFMXSPECAN_VAL_FALSE                                                                          0
+#define RFMXSPECAN_VAL_TRUE                                                                           1
+
+// Values for RFAttenuationAuto
+#define RFMXSPECAN_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
+#define RFMXSPECAN_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
+
+// Values for MechanicalAttenuationAuto
+#define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
+#define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
+
+// Values for FrequencyReferenceSource
+#define RFMXSPECAN_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
+#define RFMXSPECAN_VAL_REF_IN_STR                                                                     "RefIn"
+#define RFMXSPECAN_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
+#define RFMXSPECAN_VAL_CLK_IN_STR                                                                     "ClkIn"
 
 /* ---------------- RFmxSpecAn APIs ------------------ */
 
@@ -2021,27 +2021,6 @@ int32 __stdcall RFmxSpecAn_BuildCarrierString2(
    char selectorStringOut[]
 );
 
-int32 __stdcall RFmxSpecAn_BuildOffsetString2(
-   char selectorString[],
-   int32 offsetNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
-int32 __stdcall RFmxSpecAn_BuildRangeString2(
-   char selectorString[],
-   int32 rangeNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
-int32 __stdcall RFmxSpecAn_BuildMarkerString2(
-   char selectorString[],
-   int32 markerNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
 int32 __stdcall RFmxSpecAn_BuildHarmonicString2(
    char selectorString[],
    int32 harmonicNumber,
@@ -2056,9 +2035,23 @@ int32 __stdcall RFmxSpecAn_BuildIntermodString(
    char selectorStringOut[]
 );
 
-int32 __stdcall RFmxSpecAn_BuildSpurString2(
+int32 __stdcall RFmxSpecAn_BuildMarkerString2(
    char selectorString[],
-   int32 spurNumber,
+   int32 markerNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxSpecAn_BuildOffsetString2(
+   char selectorString[],
+   int32 offsetNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxSpecAn_BuildRangeString2(
+   char selectorString[],
+   int32 rangeNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -2070,10 +2063,33 @@ int32 __stdcall RFmxSpecAn_BuildSegmentString(
    char selectorStringOut[]
 );
 
+int32 __stdcall RFmxSpecAn_BuildSpurString2(
+   char selectorString[],
+   int32 spurNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
 int32 __stdcall RFmxSpecAn_BuildCarrierString(
    char signalName[],
    char resultName[],
    int32 carrierNumber,
+   int32 selectorStringLength,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxSpecAn_BuildHarmonicString(
+   char signalName[],
+   char resultName[],
+   int32 harmonicNumber,
+   int32 selectorStringLength,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxSpecAn_BuildMarkerString(
+   char signalName[],
+   char resultName[],
+   int32 markerNumber,
    int32 selectorStringLength,
    char selectorString[]
 );
@@ -2090,22 +2106,6 @@ int32 __stdcall RFmxSpecAn_BuildRangeString(
    char signalName[],
    char resultName[],
    int32 rangeNumber,
-   int32 selectorStringLength,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxSpecAn_BuildMarkerString(
-   char signalName[],
-   char resultName[],
-   int32 markerNumber,
-   int32 selectorStringLength,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxSpecAn_BuildHarmonicString(
-   char signalName[],
-   char resultName[],
-   int32 harmonicNumber,
    int32 selectorStringLength,
    char selectorString[]
 );
@@ -2432,54 +2432,95 @@ int32 __stdcall RFmxSpecAn_GetAttributeString(
    char attrVal[]
 );
 
-int32 __stdcall RFmxSpecAn_MarkerCfgNumberOfMarkers(
+int32 __stdcall RFmxSpecAn_NFCfgFrequencyList_StartStopPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 numberOfMarkers
+   float64 startFrequency,
+   float64 stopFrequency,
+   int32 numberOfPoints
 );
 
-int32 __stdcall RFmxSpecAn_MarkerCfgReferenceMarker(
+int32 __stdcall RFmxSpecAn_NFCfgFrequencyList_StartStopStep(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 referenceMarker
+   float64 startFrequency,
+   float64 stopFrequency,
+   float64 stepSize
 );
 
-int32 __stdcall RFmxSpecAn_MarkerCfgThreshold(
+int32 __stdcall RFmxSpecAn_NFRecommendReferenceLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 thresholdEnabled,
-   float64 threshold
+   float64 DUTMaxGain,
+   float64 DUTMaxNoiseFigure,
+   float64* referenceLevel
 );
 
-int32 __stdcall RFmxSpecAn_MarkerCfgPeakExcursion(
+int32 __stdcall RFmxSpecAn_NFValidateCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 peakExcursionEnabled,
-   float64 peakExcursion
+   int32* calibrationDataValid
 );
 
-int32 __stdcall RFmxSpecAn_MarkerCfgTrace(
+int32 __stdcall RFmxSpecAn_SpectrumValidateNoiseCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 trace
+   int32* noiseCalibrationDataValid
 );
 
-int32 __stdcall RFmxSpecAn_MarkerCfgType(
+int32 __stdcall RFmxSpecAn_AMPMCfgReferenceWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 markerType
+   float64 x0,
+   float64 dx,
+   NIComplexSingle referenceWaveform[],
+   int32 arraySize,
+   int32 idleDurationPresent,
+   int32 signalType
 );
 
-int32 __stdcall RFmxSpecAn_MarkerCfgXLocation(
+int32 __stdcall RFmxSpecAn_AMPMCfgReferenceWaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 markerXLocation
+   float64 x0,
+   float64 dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32 idleDurationPresent,
+   int32 signalType
 );
 
-int32 __stdcall RFmxSpecAn_MarkerCfgYLocation(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 markerYLocation
+   NIComplexSingle DPDPolynomial[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float32 I[],
+   float32 Q[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float32 LUTInputPowers[],
+   NIComplexSingle LUTComplexGains[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float32 LUTInputPowers[],
+   float32 I[],
+   float32 Q[],
+   int32 arraySize
 );
 
 int32 __stdcall RFmxSpecAn_DPDCfgPreviousDPDPolynomial(
@@ -2520,78 +2561,74 @@ int32 __stdcall RFmxSpecAn_DPDCfgReferenceWaveformSplit(
    int32 signalType
 );
 
-int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(
+int32 __stdcall RFmxSpecAn_ACPValidateNoiseCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float32 LUTInputPowers[],
-   NIComplexSingle LUTComplexGains[],
-   int32 arraySize
+   int32* noiseCalibrationDataValid
 );
 
-int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit(
+int32 __stdcall RFmxSpecAn_CHPValidateNoiseCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float32 LUTInputPowers[],
-   float32 I[],
-   float32 Q[],
-   int32 arraySize
+   int32* noiseCalibrationDataValid
 );
 
-int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(
+int32 __stdcall RFmxSpecAn_MarkerCfgNumberOfMarkers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   NIComplexSingle DPDPolynomial[],
-   int32 arraySize
+   int32 numberOfMarkers
 );
 
-int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit(
+int32 __stdcall RFmxSpecAn_MarkerCfgPeakExcursion(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float32 I[],
-   float32 Q[],
-   int32 arraySize
+   int32 peakExcursionEnabled,
+   float64 peakExcursion
 );
 
-int32 __stdcall RFmxSpecAn_AMPMCfgReferenceWaveform(
+int32 __stdcall RFmxSpecAn_MarkerCfgReferenceMarker(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 x0,
-   float64 dx,
-   NIComplexSingle referenceWaveform[],
-   int32 arraySize,
-   int32 idleDurationPresent,
-   int32 signalType
+   int32 referenceMarker
 );
 
-int32 __stdcall RFmxSpecAn_AMPMCfgReferenceWaveformSplit(
+int32 __stdcall RFmxSpecAn_MarkerCfgThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 x0,
-   float64 dx,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32 idleDurationPresent,
-   int32 signalType
+   int32 thresholdEnabled,
+   float64 threshold
 );
 
-int32 __stdcall RFmxSpecAn_IDPDCfgEqualizerCoefficients(
+int32 __stdcall RFmxSpecAn_MarkerCfgTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 x0,
-   float64 dx,
-   NIComplexSingle equalizerCoefficients[],
-   int32 arraySize
+   int32 trace
 );
 
-int32 __stdcall RFmxSpecAn_IDPDCfgEqualizerCoefficientsSplit(
+int32 __stdcall RFmxSpecAn_MarkerCfgType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 x0,
-   float64 dx,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize
+   int32 markerType
+);
+
+int32 __stdcall RFmxSpecAn_MarkerCfgXLocation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 markerXLocation
+);
+
+int32 __stdcall RFmxSpecAn_MarkerCfgYLocation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 markerYLocation
+);
+
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentStartTimeStep(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 numberOfSegments,
+   float64 segment0StartTime,
+   float64 segmentInterval
 );
 
 int32 __stdcall RFmxSpecAn_IDPDCfgReferenceWaveform(
@@ -2638,50 +2675,23 @@ int32 __stdcall RFmxSpecAn_IDPDCfgPredistortedWaveformSplit(
    float64 targetGain
 );
 
-int32 __stdcall RFmxSpecAn_AutoLevel(
+int32 __stdcall RFmxSpecAn_IDPDCfgEqualizerCoefficients(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 bandwidth,
-   float64 measurementInterval,
-   float64* referenceLevel
+   float64 x0,
+   float64 dx,
+   NIComplexSingle equalizerCoefficients[],
+   int32 arraySize
 );
 
-int32 __stdcall RFmxSpecAn_ClearAllNamedResults(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxSpecAn_ClearNamedResult(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxSpecAn_Commit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxSpecAn_ResetToDefault(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxSpecAn_CheckMeasurementStatus(
+int32 __stdcall RFmxSpecAn_IDPDCfgEqualizerCoefficientsSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32* isDone
-);
-
-int32 __stdcall RFmxSpecAn_WaitForMeasurementComplete(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout
-);
-
-int32 __stdcall RFmxSpecAn_Initiate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char resultName[]
+   float64 x0,
+   float64 dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize
 );
 
 int32 __stdcall RFmxSpecAn_AnalyzeIQ1Waveform(
@@ -2721,8 +2731,33 @@ int32 __stdcall RFmxSpecAn_AnalyzeSpectrum1Waveform(
    int64 reserved
 );
 
-int32 __stdcall RFmxSpecAn_SendSoftwareEdgeTrigger(
-   niRFmxInstrHandle instrumentHandle
+int32 __stdcall RFmxSpecAn_AutoLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 bandwidth,
+   float64 measurementInterval,
+   float64* referenceLevel
+);
+
+int32 __stdcall RFmxSpecAn_CheckMeasurementStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32* isDone
+);
+
+int32 __stdcall RFmxSpecAn_ClearAllNamedResults(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxSpecAn_ClearNamedResult(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxSpecAn_ClearNoiseCalibrationDatabase(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
 );
 
 int32 __stdcall RFmxSpecAn_CloneSignalConfiguration(
@@ -2731,17 +2766,7 @@ int32 __stdcall RFmxSpecAn_CloneSignalConfiguration(
    char newSignalName[]
 );
 
-int32 __stdcall RFmxSpecAn_CreateSignalConfiguration(
-   niRFmxInstrHandle instrumentHandle,
-   char signalName[]
-);
-
-int32 __stdcall RFmxSpecAn_DeleteSignalConfiguration(
-   niRFmxInstrHandle instrumentHandle,
-   char signalName[]
-);
-
-int32 __stdcall RFmxSpecAn_ClearNoiseCalibrationDatabase(
+int32 __stdcall RFmxSpecAn_Commit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
@@ -2757,65 +2782,123 @@ int32 __stdcall RFmxSpecAn_CreateListStep(
    int32* createdStepIndex
 );
 
+int32 __stdcall RFmxSpecAn_CreateSignalConfiguration(
+   niRFmxInstrHandle instrumentHandle,
+   char signalName[]
+);
+
 int32 __stdcall RFmxSpecAn_DeleteList(
    niRFmxInstrHandle instrumentHandle,
    char listName[]
 );
 
-int32 __stdcall RFmxSpecAn_NFCfgFrequencyList_StartStopStep(
+int32 __stdcall RFmxSpecAn_DeleteSignalConfiguration(
    niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 startFrequency,
-   float64 stopFrequency,
-   float64 stepSize
+   char signalName[]
 );
 
-int32 __stdcall RFmxSpecAn_NFCfgFrequencyList_StartStopPoints(
+int32 __stdcall RFmxSpecAn_Initiate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 startFrequency,
-   float64 stopFrequency,
-   int32 numberOfPoints
+   char resultName[]
 );
 
-int32 __stdcall RFmxSpecAn_NFRecommendReferenceLevel(
+int32 __stdcall RFmxSpecAn_ResetToDefault(
    niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 DUTMaxGain,
-   float64 DUTMaxNoiseFigure,
-   float64* referenceLevel
+   char selectorString[]
 );
 
-int32 __stdcall RFmxSpecAn_NFValidateCalibrationData(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32* calibrationDataValid
+int32 __stdcall RFmxSpecAn_SendSoftwareEdgeTrigger(
+   niRFmxInstrHandle instrumentHandle
 );
 
-int32 __stdcall RFmxSpecAn_PAVTCfgSegmentStartTimeStep(
+int32 __stdcall RFmxSpecAn_WaitForMeasurementComplete(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 numberOfSegments,
-   float64 segment0StartTime,
-   float64 segmentInterval
+   float64 timeout
 );
 
-int32 __stdcall RFmxSpecAn_ACPValidateNoiseCalibrationData(
+int32 __stdcall RFmxSpecAn_IMCfgAutoIntermodsSetup(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32* noiseCalibrationDataValid
+   int32 autoIntermodsSetupEnabled,
+   int32 maximumIntermodOrder
 );
 
-int32 __stdcall RFmxSpecAn_CHPValidateNoiseCalibrationData(
+int32 __stdcall RFmxSpecAn_IMCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32* noiseCalibrationDataValid
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
 );
 
-int32 __stdcall RFmxSpecAn_SpectrumValidateNoiseCalibrationData(
+int32 __stdcall RFmxSpecAn_IMCfgFFT(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32* noiseCalibrationDataValid
+   int32 FFTWindow,
+   float64 FFTPadding
+);
+
+int32 __stdcall RFmxSpecAn_IMCfgFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 frequencyDefinition
+);
+
+int32 __stdcall RFmxSpecAn_IMCfgFundamentalTones(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 lowerToneFrequency,
+   float64 upperToneFrequency
+);
+
+int32 __stdcall RFmxSpecAn_IMCfgIntermod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 intermodOrder,
+   float64 lowerIntermodFrequency,
+   float64 upperIntermodFrequency,
+   int32 intermodSide,
+   int32 intermodEnabled
+);
+
+int32 __stdcall RFmxSpecAn_IMCfgMeasurementMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 measurementMethod
+);
+
+int32 __stdcall RFmxSpecAn_IMCfgNumberOfIntermods(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 numberOfIntermods
+);
+
+int32 __stdcall RFmxSpecAn_IMCfgRBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RBWAuto,
+   float64 RBW,
+   int32 RBWFilterType
+);
+
+int32 __stdcall RFmxSpecAn_IMCfgSweepTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
+);
+
+int32 __stdcall RFmxSpecAn_IMCfgIntermodArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 intermodOrder[],
+   float64 lowerIntermodFrequency[],
+   float64 upperIntermodFrequency[],
+   int32 intermodSide[],
+   int32 intermodEnabled[],
+   int32 numberOfElements
 );
 
 int32 __stdcall RFmxSpecAn_SpurCfgAveraging(
@@ -2846,6 +2929,13 @@ int32 __stdcall RFmxSpecAn_SpurCfgRangeAbsoluteLimit(
    float64 absoluteLimitStop
 );
 
+int32 __stdcall RFmxSpecAn_SpurCfgRangeDetector(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 detectorType,
+   int32 detectorPoints
+);
+
 int32 __stdcall RFmxSpecAn_SpurCfgRangeFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2858,6 +2948,13 @@ int32 __stdcall RFmxSpecAn_SpurCfgRangeNumberOfSpursToReport(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfSpursToReport
+);
+
+int32 __stdcall RFmxSpecAn_SpurCfgRangePeakCriteria(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 threshold,
+   float64 excursion
 );
 
 int32 __stdcall RFmxSpecAn_SpurCfgRangeRBWFilter(
@@ -2881,26 +2978,6 @@ int32 __stdcall RFmxSpecAn_SpurCfgRangeSweepTime(
    float64 sweepTimeInterval
 );
 
-int32 __stdcall RFmxSpecAn_SpurCfgTraceRangeIndex(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 traceRangeIndex
-);
-
-int32 __stdcall RFmxSpecAn_SpurCfgRangePeakCriteria(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 threshold,
-   float64 excursion
-);
-
-int32 __stdcall RFmxSpecAn_SpurCfgRangeDetector(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 detectorType,
-   int32 detectorPoints
-);
-
 int32 __stdcall RFmxSpecAn_SpurCfgRangeVBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2909,12 +2986,26 @@ int32 __stdcall RFmxSpecAn_SpurCfgRangeVBWFilter(
    float64 VBWToRBWRatio
 );
 
+int32 __stdcall RFmxSpecAn_SpurCfgTraceRangeIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 traceRangeIndex
+);
+
 int32 __stdcall RFmxSpecAn_SpurCfgRangeAbsoluteLimitArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 absoluteLimitMode[],
    float64 absoluteLimitStart[],
    float64 absoluteLimitStop[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_SpurCfgRangeDetectorArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 detectorType[],
+   int32 detectorPoints[],
    int32 numberOfElements
 );
 
@@ -2931,6 +3022,14 @@ int32 __stdcall RFmxSpecAn_SpurCfgRangeNumberOfSpursToReportArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfSpursToReport[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_SpurCfgRangePeakCriteriaArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 threshold[],
+   float64 excursion[],
    int32 numberOfElements
 );
 
@@ -2958,22 +3057,6 @@ int32 __stdcall RFmxSpecAn_SpurCfgRangeSweepTimeArray(
    int32 numberOfElements
 );
 
-int32 __stdcall RFmxSpecAn_SpurCfgRangePeakCriteriaArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 threshold[],
-   float64 excursion[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxSpecAn_SpurCfgRangeDetectorArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 detectorType[],
-   int32 detectorPoints[],
-   int32 numberOfElements
-);
-
 int32 __stdcall RFmxSpecAn_SpurCfgRangeVBWFilterArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2983,64 +3066,7 @@ int32 __stdcall RFmxSpecAn_SpurCfgRangeVBWFilterArray(
    int32 numberOfElements
 );
 
-int32 __stdcall RFmxSpecAn_IMCfgFrequencyDefinition(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 frequencyDefinition
-);
-
-int32 __stdcall RFmxSpecAn_IMCfgFundamentalTones(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 lowerToneFrequency,
-   float64 upperToneFrequency
-);
-
-int32 __stdcall RFmxSpecAn_IMCfgAutoIntermodsSetup(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 autoIntermodsSetupEnabled,
-   int32 maximumIntermodOrder
-);
-
-int32 __stdcall RFmxSpecAn_IMCfgMeasurementMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 measurementMethod
-);
-
-int32 __stdcall RFmxSpecAn_IMCfgNumberOfIntermods(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 numberOfIntermods
-);
-
-int32 __stdcall RFmxSpecAn_IMCfgIntermod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 intermodOrder,
-   float64 lowerIntermodFrequency,
-   float64 upperIntermodFrequency,
-   int32 intermodSide,
-   int32 intermodEnabled
-);
-
-int32 __stdcall RFmxSpecAn_IMCfgRBWFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 RBWAuto,
-   float64 RBW,
-   int32 RBWFilterType
-);
-
-int32 __stdcall RFmxSpecAn_IMCfgSweepTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
-);
-
-int32 __stdcall RFmxSpecAn_IMCfgAveraging(
+int32 __stdcall RFmxSpecAn_ACPCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -3048,21 +3074,219 @@ int32 __stdcall RFmxSpecAn_IMCfgAveraging(
    int32 averagingType
 );
 
-int32 __stdcall RFmxSpecAn_IMCfgFFT(
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierIntegrationBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 integrationBandwidth
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 carrierMode
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 carrierFrequency
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierRRCFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RRCFilterEnabled,
+   float64 RRCAlpha
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgFFT(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 FFTWindow,
    float64 FFTPadding
 );
 
-int32 __stdcall RFmxSpecAn_IMCfgIntermodArray(
+int32 __stdcall RFmxSpecAn_ACPCfgMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 intermodOrder[],
-   float64 lowerIntermodFrequency[],
-   float64 upperIntermodFrequency[],
-   int32 intermodSide[],
-   int32 intermodEnabled[],
+   int32 measurementMethod
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgNoiseCompensationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 noiseCompensationEnabled
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgNumberOfCarriers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 numberOfCarriers
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgNumberOfOffsets(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 numberOfOffsets
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 offsetFrequencyDefinition
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetIntegrationBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 integrationBandwidth
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetPowerReference(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 offsetReferenceCarrier,
+   int32 offsetReferenceSpecific
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetRelativeAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 relativeAttenuation
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetRRCFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RRCFilterEnabled,
+   float64 RRCAlpha
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 offsetFrequency,
+   int32 offsetSideband,
+   int32 offsetEnabled
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgPowerUnits(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 powerUnits
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgRBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RBWAuto,
+   float64 RBW,
+   int32 RBWFilterType
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgSweepTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgDetector(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 detectorType,
+   int32 detectorPoints
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 offsetFrequency[],
+   int32 offsetSideband[],
+   int32 offsetEnabled[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetIntegrationBandwidthArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 integrationBandwidth[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetPowerReferenceArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 offsetPowerReferenceCarrier[],
+   int32 offsetPowerReferenceSpecific[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetRelativeAttenuationArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 relativeAttenuation[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetRRCFilterArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RRCFilterEnabled[],
+   float64 RRCAlpha[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_HarmCfgAutoHarmonics(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 autoHarmonicsSetupEnabled
+);
+
+int32 __stdcall RFmxSpecAn_HarmCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
+int32 __stdcall RFmxSpecAn_HarmCfgFundamentalMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 measurementInterval
+);
+
+int32 __stdcall RFmxSpecAn_HarmCfgFundamentalRBW(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 RBW,
+   int32 RBWFilterType,
+   float64 RRCAlpha
+);
+
+int32 __stdcall RFmxSpecAn_HarmCfgHarmonic(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 harmonicOrder,
+   float64 harmonicBandwidth,
+   int32 harmonicEnabled,
+   float64 harmonicMeasurementInterval
+);
+
+int32 __stdcall RFmxSpecAn_HarmCfgNumberOfHarmonics(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 numberOfHarmonics
+);
+
+int32 __stdcall RFmxSpecAn_HarmCfgHarmonicArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 harmonicOrder[],
+   float64 harmonicBandwidth[],
+   int32 harmonicEnabled[],
+   float64 harmonicMeasurementInterval[],
    int32 numberOfElements
 );
 
@@ -3072,6 +3296,12 @@ int32 __stdcall RFmxSpecAn_SEMCfgAveraging(
    int32 averagingEnabled,
    int32 averagingCount,
    int32 averagingType
+);
+
+int32 __stdcall RFmxSpecAn_SEMCfgCarrierChannelBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 carrierChannelBandwidth
 );
 
 int32 __stdcall RFmxSpecAn_SEMCfgCarrierEnabled(
@@ -3140,6 +3370,12 @@ int32 __stdcall RFmxSpecAn_SEMCfgOffsetBandwidthIntegral(
    int32 bandwidthIntegral
 );
 
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 offsetFrequencyDefinition
+);
+
 int32 __stdcall RFmxSpecAn_SEMCfgOffsetFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3196,18 +3432,6 @@ int32 __stdcall RFmxSpecAn_SEMCfgSweepTime(
    float64 sweepTimeInterval
 );
 
-int32 __stdcall RFmxSpecAn_SEMCfgCarrierChannelBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 carrierChannelBandwidth
-);
-
-int32 __stdcall RFmxSpecAn_SEMCfgOffsetFrequencyDefinition(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 offsetFrequencyDefinition
-);
-
 int32 __stdcall RFmxSpecAn_SEMCfgOffsetAbsoluteLimitArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3252,236 +3476,6 @@ int32 __stdcall RFmxSpecAn_SEMCfgOffsetRelativeLimitArray(
    int32 numberOfElements
 );
 
-int32 __stdcall RFmxSpecAn_HarmCfgAutoHarmonics(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 autoHarmonicsSetupEnabled
-);
-
-int32 __stdcall RFmxSpecAn_HarmCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxSpecAn_HarmCfgFundamentalMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 measurementInterval
-);
-
-int32 __stdcall RFmxSpecAn_HarmCfgFundamentalRBW(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 RBW,
-   int32 RBWFilterType,
-   float64 RRCAlpha
-);
-
-int32 __stdcall RFmxSpecAn_HarmCfgHarmonic(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 harmonicOrder,
-   float64 harmonicBandwidth,
-   int32 harmonicEnabled,
-   float64 harmonicMeasurementInterval
-);
-
-int32 __stdcall RFmxSpecAn_HarmCfgNumberOfHarmonics(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 numberOfHarmonics
-);
-
-int32 __stdcall RFmxSpecAn_HarmCfgHarmonicArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 harmonicOrder[],
-   float64 harmonicBandwidth[],
-   int32 harmonicEnabled[],
-   float64 harmonicMeasurementInterval[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgDetector(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 detectorType,
-   int32 detectorPoints
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgCarrierIntegrationBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 integrationBandwidth
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgCarrierMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 carrierMode
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgCarrierFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 carrierFrequency
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgCarrierRRCFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 RRCFilterEnabled,
-   float64 RRCAlpha
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgFFT(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 FFTWindow,
-   float64 FFTPadding
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgMeasurementMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 measurementMethod
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgNoiseCompensationEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 noiseCompensationEnabled
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgNumberOfCarriers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 numberOfCarriers
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgNumberOfOffsets(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 numberOfOffsets
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetIntegrationBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 integrationBandwidth
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetPowerReference(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 offsetReferenceCarrier,
-   int32 offsetReferenceSpecific
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetRelativeAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 relativeAttenuation
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetRRCFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 RRCFilterEnabled,
-   float64 RRCAlpha
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 offsetFrequency,
-   int32 offsetSideband,
-   int32 offsetEnabled
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgPowerUnits(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 powerUnits
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgRBWFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 RBWAuto,
-   float64 RBW,
-   int32 RBWFilterType
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgSweepTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetFrequencyDefinition(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 offsetFrequencyDefinition
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 offsetFrequency[],
-   int32 offsetSideband[],
-   int32 offsetEnabled[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetIntegrationBandwidthArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 integrationBandwidth[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetPowerReferenceArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 offsetPowerReferenceCarrier[],
-   int32 offsetPowerReferenceSpecific[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetRelativeAttenuationArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 relativeAttenuation[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgOffsetRRCFilterArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 RRCFilterEnabled[],
-   float64 RRCAlpha[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxSpecAn_PhaseNoiseCfgRangeDefinition(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 rangeDefinition
-);
-
 int32 __stdcall RFmxSpecAn_PhaseNoiseCfgAutoRange(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3490,16 +3484,41 @@ int32 __stdcall RFmxSpecAn_PhaseNoiseCfgAutoRange(
    float64 RBWPercentage
 );
 
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgAveragingMultiplier(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingMultiplier
+);
+
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgCancellation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 cancellationEnabled,
+   float64 cancellationThreshold,
+   float32 frequency[],
+   float32 referencePhaseNoise[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgIntegratedNoise(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 integratedNoiseRangeDefinition,
+   float64 integratedNoiseStartFrequency[],
+   float64 integratedNoiseStopFrequency[],
+   int32 arraySize
+);
+
 int32 __stdcall RFmxSpecAn_PhaseNoiseCfgNumberOfRanges(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfRanges
 );
 
-int32 __stdcall RFmxSpecAn_PhaseNoiseCfgAveragingMultiplier(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgRangeDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 averagingMultiplier
+   int32 rangeDefinition
 );
 
 int32 __stdcall RFmxSpecAn_PhaseNoiseCfgSmoothing(
@@ -3523,25 +3542,6 @@ int32 __stdcall RFmxSpecAn_PhaseNoiseCfgSpurRemoval(
    float64 peakExcursion
 );
 
-int32 __stdcall RFmxSpecAn_PhaseNoiseCfgCancellation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 cancellationEnabled,
-   float64 cancellationThreshold,
-   float32 frequency[],
-   float32 referencePhaseNoise[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_PhaseNoiseCfgIntegratedNoise(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 integratedNoiseRangeDefinition,
-   float64 integratedNoiseStartFrequency[],
-   float64 integratedNoiseStopFrequency[],
-   int32 arraySize
-);
-
 int32 __stdcall RFmxSpecAn_PhaseNoiseCfgRangeArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3552,34 +3552,16 @@ int32 __stdcall RFmxSpecAn_PhaseNoiseCfgRangeArray(
    int32 numberOfElements
 );
 
-int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementLocationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 measurementLocationType
-);
-
-int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementIntervalMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 measurementIntervalMode
-);
-
-int32 __stdcall RFmxSpecAn_PAVTCfgNumberOfSegments(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 numberOfSegments
-);
-
 int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementBandwidth
 );
 
-int32 __stdcall RFmxSpecAn_PAVTCfgSegmentType(
+int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementIntervalMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 segmentType
+   int32 measurementIntervalMode
 );
 
 int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementInterval(
@@ -3589,6 +3571,18 @@ int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementInterval(
    float64 measurementLength
 );
 
+int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementLocationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 measurementLocationType
+);
+
+int32 __stdcall RFmxSpecAn_PAVTCfgNumberOfSegments(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 numberOfSegments
+);
+
 int32 __stdcall RFmxSpecAn_PAVTCfgSegmentMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3596,18 +3590,10 @@ int32 __stdcall RFmxSpecAn_PAVTCfgSegmentMeasurementInterval(
    float64 segmentMeasurementLength
 );
 
-int32 __stdcall RFmxSpecAn_PAVTCfgSegmentTypeArray(
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 segmentType[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxSpecAn_PAVTCfgSegmentStartTimeList(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 segmentStartTime[],
-   int32 numberOfElements
+   int32 segmentType
 );
 
 int32 __stdcall RFmxSpecAn_PAVTCfgSegmentMeasurementIntervalArray(
@@ -3618,7 +3604,141 @@ int32 __stdcall RFmxSpecAn_PAVTCfgSegmentMeasurementIntervalArray(
    int32 numberOfElements
 );
 
-int32 __stdcall RFmxSpecAn_TXPCfgAveraging(
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentStartTimeList(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 segmentStartTime[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentTypeArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 segmentType[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgCalibrationLoss(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 calibrationLossCompensationEnabled,
+   float64 calibrationLossFrequency[],
+   float64 calibrationLoss[],
+   float64 calibrationLossTemperature,
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgColdSourceDUTSParameters(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 DUTSParametersFrequency[],
+   float64 DUTS21[],
+   float64 DUTS12[],
+   float64 DUTS11[],
+   float64 DUTS22[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgColdSourceInputTermination(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 terminationVSWR[],
+   float64 terminationVSWRFrequency[],
+   float64 terminationTemperature,
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgColdSourceMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 coldSourceMode
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgDUTInputLoss(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 DUTInputLossCompensationEnabled,
+   float64 DUTInputLossFrequency[],
+   float64 DUTInputLoss[],
+   float64 DUTInputLossTemperature,
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgDUTOutputLoss(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 DUTOutputLossCompensationEnabled,
+   float64 DUTOutputLossFrequency[],
+   float64 DUTOutputLoss[],
+   float64 DUTOutputLossTemperature,
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgFrequencyList(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 frequencyList[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgMeasurementBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 measurementBandwidth
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 measurementInterval
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgMeasurementMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 measurementMethod
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgYFactorMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 yFactorMode
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceENR(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 ENRFrequency[],
+   float64 ENR[],
+   float64 coldTemperature,
+   float64 offTemperature,
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceLoss(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 noiseSourceLossCompensationEnabled,
+   float64 noiseSourceLossFrequency[],
+   float64 noiseSourceLoss[],
+   float64 noiseSourceLossTemperature,
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceSettlingTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 settlingTime
+);
+
+int32 __stdcall RFmxSpecAn_FCntCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -3626,13 +3746,13 @@ int32 __stdcall RFmxSpecAn_TXPCfgAveraging(
    int32 averagingType
 );
 
-int32 __stdcall RFmxSpecAn_TXPCfgMeasurementInterval(
+int32 __stdcall RFmxSpecAn_FCntCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 __stdcall RFmxSpecAn_TXPCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_FCntCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 RBW,
@@ -3640,7 +3760,7 @@ int32 __stdcall RFmxSpecAn_TXPCfgRBWFilter(
    float64 RRCAlpha
 );
 
-int32 __stdcall RFmxSpecAn_TXPCfgThreshold(
+int32 __stdcall RFmxSpecAn_FCntCfgThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 thresholdEnabled,
@@ -3648,12 +3768,153 @@ int32 __stdcall RFmxSpecAn_TXPCfgThreshold(
    int32 thresholdType
 );
 
-int32 __stdcall RFmxSpecAn_TXPCfgVBWFilter(
+int32 __stdcall RFmxSpecAn_SpectrumCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumCfgDetector(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 detectorType,
+   int32 detectorPoints
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumCfgFFT(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 FFTWindow,
+   float64 FFTPadding
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumCfgNoiseCompensationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 noiseCompensationEnabled
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumCfgPowerUnits(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 spectrumPowerUnits
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumCfgRBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RBWAuto,
+   float64 RBW,
+   int32 RBWFilterType
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumCfgSpan(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 span
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumCfgSweepTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumCfgVBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 VBWAuto,
    float64 VBW,
    float64 VBWToRBWRatio
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgAMToAMCurveFit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 AMToAMCurveFitOrder,
+   int32 AMToAMCurveFitType
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgAMToPMCurveFit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 AMToPMCurveFitOrder,
+   int32 AMToPMCurveFitType
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgCompressionPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 compressionPointEnabled,
+   float64 compressionLevel[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgDUTAverageInputPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 DUTAverageInputPower
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 measurementInterval
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgMeasurementSampleRate(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sampleRateMode,
+   float64 sampleRate
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgReferencePowerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 referencePowerType
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgSynchronizationMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 synchronizationMethod
+);
+
+int32 __stdcall RFmxSpecAn_AMPMCfgThreshold(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 thresholdEnabled,
+   float64 thresholdLevel,
+   int32 thresholdType
+);
+
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDConfigurationInput(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 configurationInput
+);
+
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDLookupTableCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 LUTCorrectionType
+);
+
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDMemoryModelCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 memoryModelCorrectionType
 );
 
 int32 __stdcall RFmxSpecAn_DPDCfgAveraging(
@@ -3720,6 +3981,12 @@ int32 __stdcall RFmxSpecAn_DPDCfgLookupTableThreshold(
    int32 thresholdType
 );
 
+int32 __stdcall RFmxSpecAn_DPDCfgLookupTableType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 lookupTableType
+);
+
 int32 __stdcall RFmxSpecAn_DPDCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3738,30 +4005,6 @@ int32 __stdcall RFmxSpecAn_DPDCfgMemoryPolynomial(
    char selectorString[],
    int32 memoryPolynomialOrder,
    int32 memoryPolynomialMemoryDepth
-);
-
-int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDConfigurationInput(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 configurationInput
-);
-
-int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDLookupTableCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 LUTCorrectionType
-);
-
-int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDMemoryModelCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 memoryModelCorrectionType
-);
-
-int32 __stdcall RFmxSpecAn_DPDCfgLookupTableType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 lookupTableType
 );
 
 int32 __stdcall RFmxSpecAn_DPDCfgSynchronizationMethod(
@@ -3798,335 +4041,18 @@ int32 __stdcall RFmxSpecAn_CCDFCfgThreshold(
    int32 thresholdType
 );
 
-int32 __stdcall RFmxSpecAn_IQCfgAcquisition(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 sampleRate,
-   int32 numberOfRecords,
-   float64 acquisitionTime,
-   float64 pretriggerTime
-);
-
-int32 __stdcall RFmxSpecAn_IQCfgBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 bandwidthAuto,
-   float64 bandwidth
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgAMToAMCurveFit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 AMToAMCurveFitOrder,
-   int32 AMToAMCurveFitType
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgAMToPMCurveFit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 AMToPMCurveFitOrder,
-   int32 AMToPMCurveFitType
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgDUTAverageInputPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 DUTAverageInputPower
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 measurementInterval
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgMeasurementSampleRate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sampleRateMode,
-   float64 sampleRate
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgThreshold(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 thresholdEnabled,
-   float64 thresholdLevel,
-   int32 thresholdType
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgReferencePowerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 referencePowerType
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgCompressionPoints(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 compressionPointEnabled,
-   float64 compressionLevel[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_AMPMCfgSynchronizationMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 synchronizationMethod
-);
-
-int32 __stdcall RFmxSpecAn_FCntCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxSpecAn_FCntCfgMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 measurementInterval
-);
-
-int32 __stdcall RFmxSpecAn_FCntCfgRBWFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 RBW,
-   int32 RBWFilterType,
-   float64 RRCAlpha
-);
-
-int32 __stdcall RFmxSpecAn_FCntCfgThreshold(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 thresholdEnabled,
-   float64 thresholdLevel,
-   int32 thresholdType
-);
-
-int32 __stdcall RFmxSpecAn_CfgRF(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 centerFrequency,
-   float64 referenceLevel,
-   float64 externalAttenuation
-);
-
-int32 __stdcall RFmxSpecAn_CfgReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 referenceLevel
-);
-
-int32 __stdcall RFmxSpecAn_CfgExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 externalAttenuation
-);
-
-int32 __stdcall RFmxSpecAn_CfgFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 centerFrequency
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgFFT(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 FFTWindow,
-   float64 FFTPadding
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgPowerUnits(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 spectrumPowerUnits
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgRBWFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 RBWAuto,
-   float64 RBW,
-   int32 RBWFilterType
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgSpan(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 span
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgSweepTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgNoiseCompensationEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 noiseCompensationEnabled
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgDetector(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 detectorType,
-   int32 detectorPoints
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumCfgVBWFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 VBWAuto,
-   float64 VBW,
-   float64 VBWToRBWRatio
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgFrequencyList(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 frequencyList[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgMeasurementBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 measurementBandwidth
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 measurementInterval
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgMeasurementMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 measurementMethod
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgYFactorMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 yFactorMode
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceENR(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 ENRFrequency[],
-   float64 ENR[],
-   float64 coldTemperature,
-   float64 offTemperature,
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceLoss(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 noiseSourceLossCompensationEnabled,
-   float64 noiseSourceLossFrequency[],
-   float64 noiseSourceLoss[],
-   float64 noiseSourceLossTemperature,
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceSettlingTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 settlingTime
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgDUTInputLoss(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 DUTInputLossCompensationEnabled,
-   float64 DUTInputLossFrequency[],
-   float64 DUTInputLoss[],
-   float64 DUTInputLossTemperature,
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgDUTOutputLoss(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 DUTOutputLossCompensationEnabled,
-   float64 DUTOutputLossFrequency[],
-   float64 DUTOutputLoss[],
-   float64 DUTOutputLossTemperature,
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgCalibrationLoss(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 calibrationLossCompensationEnabled,
-   float64 calibrationLossFrequency[],
-   float64 calibrationLoss[],
-   float64 calibrationLossTemperature,
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgColdSourceMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 coldSourceMode
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgColdSourceInputTermination(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 terminationVSWR[],
-   float64 terminationVSWRFrequency[],
-   float64 terminationTemperature,
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFCfgColdSourceDUTSParameters(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 DUTSParametersFrequency[],
-   float64 DUTS21[],
-   float64 DUTS12[],
-   float64 DUTS11[],
-   float64 DUTS22[],
-   int32 arraySize
-);
-
 int32 __stdcall RFmxSpecAn_CHPCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
    int32 averagingCount,
    int32 averagingType
+);
+
+int32 __stdcall RFmxSpecAn_CHPCfgCarrierOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 carrierFrequency
 );
 
 int32 __stdcall RFmxSpecAn_CHPCfgFFT(
@@ -4140,6 +4066,12 @@ int32 __stdcall RFmxSpecAn_CHPCfgIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 integrationBandwidth
+);
+
+int32 __stdcall RFmxSpecAn_CHPCfgNumberOfCarriers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 numberOfCarriers
 );
 
 int32 __stdcall RFmxSpecAn_CHPCfgRBWFilter(
@@ -4177,18 +4109,6 @@ int32 __stdcall RFmxSpecAn_CHPCfgDetector(
    int32 detectorPoints
 );
 
-int32 __stdcall RFmxSpecAn_CHPCfgNumberOfCarriers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 numberOfCarriers
-);
-
-int32 __stdcall RFmxSpecAn_CHPCfgCarrierOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 carrierFrequency
-);
-
 int32 __stdcall RFmxSpecAn_OBWCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4208,6 +4128,12 @@ int32 __stdcall RFmxSpecAn_OBWCfgFFT(
    char selectorString[],
    int32 FFTWindow,
    float64 FFTPadding
+);
+
+int32 __stdcall RFmxSpecAn_OBWCfgPowerUnits(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 powerUnits
 );
 
 int32 __stdcall RFmxSpecAn_OBWCfgRBWFilter(
@@ -4231,10 +4157,84 @@ int32 __stdcall RFmxSpecAn_OBWCfgSweepTime(
    float64 sweepTimeInterval
 );
 
-int32 __stdcall RFmxSpecAn_OBWCfgPowerUnits(
+int32 __stdcall RFmxSpecAn_TXPCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 powerUnits
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
+int32 __stdcall RFmxSpecAn_TXPCfgMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 measurementInterval
+);
+
+int32 __stdcall RFmxSpecAn_TXPCfgRBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 RBW,
+   int32 RBWFilterType,
+   float64 RRCAlpha
+);
+
+int32 __stdcall RFmxSpecAn_TXPCfgThreshold(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 thresholdEnabled,
+   float64 thresholdLevel,
+   int32 thresholdType
+);
+
+int32 __stdcall RFmxSpecAn_TXPCfgVBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 VBWAuto,
+   float64 VBW,
+   float64 VBWToRBWRatio
+);
+
+int32 __stdcall RFmxSpecAn_IQCfgAcquisition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 sampleRate,
+   int32 numberOfRecords,
+   float64 acquisitionTime,
+   float64 pretriggerTime
+);
+
+int32 __stdcall RFmxSpecAn_IQCfgBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 bandwidthAuto,
+   float64 bandwidth
+);
+
+int32 __stdcall RFmxSpecAn_CfgExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 externalAttenuation
+);
+
+int32 __stdcall RFmxSpecAn_CfgFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 centerFrequency
+);
+
+int32 __stdcall RFmxSpecAn_CfgReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 referenceLevel
+);
+
+int32 __stdcall RFmxSpecAn_CfgRF(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 centerFrequency,
+   float64 referenceLevel,
+   float64 externalAttenuation
 );
 
 int32 __stdcall RFmxSpecAn_NFGetCalibrationSetupId(
@@ -4354,54 +4354,9 @@ int32 __stdcall RFmxSpecAn_MarkerPeakSearch(
    int32 *numberOfPeaks
 );
 
-int32 __stdcall RFmxSpecAn_AbortMeasurements(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxSpecAn_SelectMeasurements(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   uInt32 measurements,
-   int32 enableAllTraces
-);
-
 int32 __stdcall RFmxSpecAn_NFClearCalibrationDatabase(
    niRFmxInstrHandle instrumentHandle,
    char calibrationSetupID[]
-);
-
-int32 __stdcall RFmxSpecAn_DisableTrigger(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxSpecAn_CfgSoftwareEdgeTrigger(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 triggerDelay,
-   int32 enableTrigger
-);
-
-int32 __stdcall RFmxSpecAn_CfgIQPowerEdgeTrigger(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char IQPowerEdgeSource[],
-   float64 IQPowerEdgeLevel,
-   int32 IQPowerEdgeSlope,
-   float64 triggerDelay,
-   int32 triggerMinQuietTimeMode,
-   float64 triggerMinQuietTimeDuration,
-   int32 enableTrigger
-);
-
-int32 __stdcall RFmxSpecAn_CfgDigitalEdgeTrigger(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char digitalEdgeSource[],
-   int32 digitalEdge,
-   float64 triggerDelay,
-   int32 enableTrigger
 );
 
 int32 __stdcall RFmxSpecAn_SpectrumCfgFrequencyStartStop(
@@ -4409,14 +4364,6 @@ int32 __stdcall RFmxSpecAn_SpectrumCfgFrequencyStartStop(
    char selectorString[],
    float64 startFrequency,
    float64 stopFrequency
-);
-
-int32 __stdcall RFmxSpecAn_ACPCfgCarrierAndOffsets(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 integrationBandwidth,
-   int32 numberOfOffsets,
-   float64 channelSpacing
 );
 
 int32 __stdcall RFmxSpecAn_DPDApplyDigitalPredistortion(
@@ -4457,15 +4404,6 @@ int32 __stdcall RFmxSpecAn_DPDApplyDigitalPredistortionSplit(
    float64* powerOffset
 );
 
-int32 __stdcall RFmxSpecAn_GetAllNamedResultNames(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char resultNames[],
-   int32 resultNamesBufferSize,
-   int32* actualResultNamesSize,
-   int32* defaultResultExists
-);
-
 int32 __stdcall RFmxSpecAn_DPDApplyPreDPDSignalConditioning(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4500,15 +4438,66 @@ int32 __stdcall RFmxSpecAn_DPDApplyPreDPDSignalConditioningSplit(
    float64* PAPR
 );
 
-int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurementArray(
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierAndOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   int32 intermodOrder[],
-   float64 lowerIntermodAbsolutePower[],
-   float64 upperIntermodAbsolutePower[],
-   int32 arraySize,
-   int32* actualArraySize
+   float64 integrationBandwidth,
+   int32 numberOfOffsets,
+   float64 channelSpacing
+);
+
+int32 __stdcall RFmxSpecAn_AbortMeasurements(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxSpecAn_CfgDigitalEdgeTrigger(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char digitalEdgeSource[],
+   int32 digitalEdge,
+   float64 triggerDelay,
+   int32 enableTrigger
+);
+
+int32 __stdcall RFmxSpecAn_CfgIQPowerEdgeTrigger(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char IQPowerEdgeSource[],
+   float64 IQPowerEdgeLevel,
+   int32 IQPowerEdgeSlope,
+   float64 triggerDelay,
+   int32 triggerMinQuietTimeMode,
+   float64 triggerMinQuietTimeDuration,
+   int32 enableTrigger
+);
+
+int32 __stdcall RFmxSpecAn_CfgSoftwareEdgeTrigger(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 triggerDelay,
+   int32 enableTrigger
+);
+
+int32 __stdcall RFmxSpecAn_DisableTrigger(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxSpecAn_GetAllNamedResultNames(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char resultNames[],
+   int32 resultNamesBufferSize,
+   int32* actualResultNamesSize,
+   int32* defaultResultExists
+);
+
+int32 __stdcall RFmxSpecAn_SelectMeasurements(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   uInt32 measurements,
+   int32 enableAllTraces
 );
 
 int32 __stdcall RFmxSpecAn_IMFetchInterceptPowerArray(
@@ -4519,6 +4508,17 @@ int32 __stdcall RFmxSpecAn_IMFetchInterceptPowerArray(
    float64 worstCaseOutputInterceptPower[],
    float64 lowerOutputInterceptPower[],
    float64 upperOutputInterceptPower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurementArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 intermodOrder[],
+   float64 lowerIntermodAbsolutePower[],
+   float64 upperIntermodAbsolutePower[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -4543,15 +4543,6 @@ int32 __stdcall RFmxSpecAn_IMFetchFundamentalMeasurement(
    float64* upperTonePower
 );
 
-int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* intermodOrder,
-   float64* lowerIntermodAbsolutePower,
-   float64* upperIntermodAbsolutePower
-);
-
 int32 __stdcall RFmxSpecAn_IMFetchInterceptPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4562,7 +4553,134 @@ int32 __stdcall RFmxSpecAn_IMFetchInterceptPower(
    float64* upperOutputInterceptPower
 );
 
-int32 __stdcall RFmxSpecAn_ACPFetchSpectrum(
+int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* intermodOrder,
+   float64* lowerIntermodAbsolutePower,
+   float64* upperIntermodAbsolutePower
+);
+
+int32 __stdcall RFmxSpecAn_NFFetchAnalyzerNoiseFigure(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 analyzerNoiseFigure[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFFetchColdSourcePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 coldSourcePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFFetchDUTNoiseFigureAndGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 DUTNoiseFigure[],
+   float64 DUTNoiseTemperature[],
+   float64 DUTGain[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFFetchYFactorPowers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 hotPower[],
+   float64 coldPower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_NFFetchYFactors(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 measurementYFactor[],
+   float64 calibrationYFactor[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_FCntFetchFrequencyTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 frequencyTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_FCntFetchPhaseTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 phaseTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_FCntFetchPowerTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 powerTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_FCntFetchAllanDeviation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* allanDeviation
+);
+
+int32 __stdcall RFmxSpecAn_FCntFetchMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* averageRelativeFrequency,
+   float64* averageAbsoluteFrequency,
+   float64* meanPhase
+);
+
+int32 __stdcall RFmxSpecAn_FCntRead(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* averageRelativeFrequency,
+   float64* averageAbsoluteFrequency,
+   float64* meanPhase
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumFetchPowerTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 power[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumFetchSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4573,120 +4691,37 @@ int32 __stdcall RFmxSpecAn_ACPFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxSpecAn_ACPFetchOffsetMeasurementArray(
+int32 __stdcall RFmxSpecAn_SpectrumRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64 lowerRelativePower[],
-   float64 upperRelativePower[],
-   float64 lowerAbsolutePower[],
-   float64 upperAbsolutePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_ACPFetchAbsolutePowersTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 traceIndex,
    float64* x0,
    float64* dx,
-   float32 absolutePowersTrace[],
+   float32 spectrum[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxSpecAn_ACPFetchRelativePowersTrace(
+int32 __stdcall RFmxSpecAn_SpectrumFetchMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 traceIndex,
-   float64* x0,
-   float64* dx,
-   float32 relativePowersTrace[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_ACPFetchCarrierMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* absolutePower,
-   float64* totalRelativePower,
-   float64* carrierOffset,
-   float64* integrationBandwidth
-);
-
-int32 __stdcall RFmxSpecAn_ACPFetchFrequencyResolution(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
+   float64* peakAmplitude,
+   float64* peakFrequency,
    float64* frequencyResolution
 );
 
-int32 __stdcall RFmxSpecAn_ACPFetchOffsetMeasurement(
+int32 __stdcall RFmxSpecAn_SpurFetchAllSpurs(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* lowerRelativePower,
-   float64* upperRelativePower,
-   float64* lowerAbsolutePower,
-   float64* upperAbsolutePower
-);
-
-int32 __stdcall RFmxSpecAn_ACPFetchTotalCarrierPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* totalCarrierPower
-);
-
-int32 __stdcall RFmxSpecAn_ACPRead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* carrierAbsolutePower,
-   float64* offsetCh0LowerRelativePower,
-   float64* offsetCh0UpperRelativePower,
-   float64* offsetCh1LowerRelativePower,
-   float64* offsetCh1UpperRelativePower
-);
-
-int32 __stdcall RFmxSpecAn_CHPFetchSpectrum(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
+   float64 spurFrequency[],
+   float64 spurAmplitude[],
+   float64 spurMargin[],
+   float64 spurAbsoluteLimit[],
+   int32 spurRangeIndex[],
    int32 arraySize,
    int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_CHPFetchCarrierMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* absolutePower,
-   float64* PSD,
-   float64* relativePower
-);
-
-int32 __stdcall RFmxSpecAn_CHPFetchTotalCarrierPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* totalCarrierPower
-);
-
-int32 __stdcall RFmxSpecAn_CHPRead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* absolutePower,
-   float64* PSD
 );
 
 int32 __stdcall RFmxSpecAn_SpurFetchRangeAbsoluteLimitTrace(
@@ -4733,19 +4768,6 @@ int32 __stdcall RFmxSpecAn_SpurFetchSpurMeasurementArray(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxSpecAn_SpurFetchAllSpurs(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 spurFrequency[],
-   float64 spurAmplitude[],
-   float64 spurMargin[],
-   float64 spurAbsoluteLimit[],
-   int32 spurRangeIndex[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
 int32 __stdcall RFmxSpecAn_SpurFetchMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4771,253 +4793,6 @@ int32 __stdcall RFmxSpecAn_SpurFetchSpurMeasurement(
    float64* spurAbsoluteLimit
 );
 
-int32 __stdcall RFmxSpecAn_OBWFetchSpectrumTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_OBWFetchMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* occupiedBandwidth,
-   float64* averagePower,
-   float64* frequencyResolution,
-   float64* startFrequency,
-   float64* stopFrequency
-);
-
-int32 __stdcall RFmxSpecAn_OBWRead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* occupiedBandwidth,
-   float64* averagePower,
-   float64* frequencyResolution,
-   float64* startFrequency,
-   float64* stopFrequency
-);
-
-int32 __stdcall RFmxSpecAn_CCDFFetchGaussianProbabilitiesTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 gaussianProbabilities[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_CCDFFetchProbabilitiesTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 probabilities[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_CCDFFetchBasicPowerProbabilities(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* tenPercentPower,
-   float64* onePercentPower,
-   float64* oneTenthPercentPower,
-   float64* oneHundredthPercentPower,
-   float64* oneThousandthPercentPower,
-   float64* oneTenThousandthPercentPower
-);
-
-int32 __stdcall RFmxSpecAn_CCDFFetchPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* meanPower,
-   float64* meanPowerPercentile,
-   float64* peakPower,
-   int32* measuredSamplesCount
-);
-
-int32 __stdcall RFmxSpecAn_CCDFRead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* meanPower,
-   float64* meanPowerPercentile,
-   float64* peakPower,
-   int32* measuredSamplesCount
-);
-
-int32 __stdcall RFmxSpecAn_TXPFetchPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 power[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_TXPFetchMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* averageMeanPower,
-   float64* peakToAverageRatio,
-   float64* maximumPower,
-   float64* minimumPower
-);
-
-int32 __stdcall RFmxSpecAn_TXPRead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* averageMeanPower,
-   float64* peakToAverageRatio,
-   float64* maximumPower,
-   float64* minimumPower
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumFetchPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 power[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumFetchSpectrum(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumRead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumFetchMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* peakAmplitude,
-   float64* peakFrequency,
-   float64* frequencyResolution
-);
-
-int32 __stdcall RFmxSpecAn_HarmFetchHarmonicPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 power[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_HarmFetchHarmonicMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* averageRelativePower,
-   float64* averageAbsolutePower,
-   float64* RBW,
-   float64* frequency
-);
-
-int32 __stdcall RFmxSpecAn_HarmFetchTHD(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* totalHarmonicDistortion,
-   float64* averageFundamentalPower,
-   float64* fundamentalFrequency
-);
-
-int32 __stdcall RFmxSpecAn_HarmRead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* totalHarmonicDistortion,
-   float64* averageFundamentalPower
-);
-
-int32 __stdcall RFmxSpecAn_NFFetchDUTNoiseFigureAndGain(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 DUTNoiseFigure[],
-   float64 DUTNoiseTemperature[],
-   float64 DUTGain[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFFetchYFactors(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 measurementYFactor[],
-   float64 calibrationYFactor[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFFetchYFactorPowers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 hotPower[],
-   float64 coldPower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFFetchAnalyzerNoiseFigure(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 analyzerNoiseFigure[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFFetchColdSourcePower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 coldSourcePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
 int32 __stdcall RFmxSpecAn_AMPMFetchAMToAMTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5036,6 +4811,16 @@ int32 __stdcall RFmxSpecAn_AMPMFetchAMToPMTrace(
    float32 referencePowers[],
    float32 measuredAMToPM[],
    float32 curveFitAMToPM[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_AMPMFetchCompressionPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 inputCompressionPoint[],
+   float64 outputCompressionPoint[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5118,16 +4903,6 @@ int32 __stdcall RFmxSpecAn_AMPMFetchRelativePowerTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxSpecAn_AMPMFetchCompressionPoints(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 inputCompressionPoint[],
-   float64 outputCompressionPoint[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
 int32 __stdcall RFmxSpecAn_AMPMFetchCurveFitResidual(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5154,6 +4929,332 @@ int32 __stdcall RFmxSpecAn_AMPMFetchError(
    float64* meanPhaseError
 );
 
+int32 __stdcall RFmxSpecAn_DPDFetchDPDPolynomial(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle DPDPolynomial[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchDPDPolynomialSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchLookupTable(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 inputPowers[],
+   NIComplexSingle complexGains[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchLookupTableSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 inputPowers[],
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   NIComplexSingle processedMeanAcquiredWaveform[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchProcessedReferenceWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   NIComplexSingle processedReferenceWaveform[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* preCFRPAPR
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchAverageGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* averageGain
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchNMSE(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* NMSE
+);
+
+int32 __stdcall RFmxSpecAn_ACPFetchAbsolutePowersTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 traceIndex,
+   float64* x0,
+   float64* dx,
+   float32 absolutePowersTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_ACPFetchOffsetMeasurementArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 lowerRelativePower[],
+   float64 upperRelativePower[],
+   float64 lowerAbsolutePower[],
+   float64 upperAbsolutePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_ACPFetchRelativePowersTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 traceIndex,
+   float64* x0,
+   float64* dx,
+   float32 relativePowersTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_ACPFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_ACPFetchCarrierMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* absolutePower,
+   float64* totalRelativePower,
+   float64* carrierOffset,
+   float64* integrationBandwidth
+);
+
+int32 __stdcall RFmxSpecAn_ACPFetchFrequencyResolution(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* frequencyResolution
+);
+
+int32 __stdcall RFmxSpecAn_ACPFetchOffsetMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* lowerRelativePower,
+   float64* upperRelativePower,
+   float64* lowerAbsolutePower,
+   float64* upperAbsolutePower
+);
+
+int32 __stdcall RFmxSpecAn_ACPFetchTotalCarrierPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* totalCarrierPower
+);
+
+int32 __stdcall RFmxSpecAn_ACPRead(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* carrierAbsolutePower,
+   float64* offsetCh0LowerRelativePower,
+   float64* offsetCh0UpperRelativePower,
+   float64* offsetCh1LowerRelativePower,
+   float64* offsetCh1UpperRelativePower
+);
+
+int32 __stdcall RFmxSpecAn_CCDFFetchGaussianProbabilitiesTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 gaussianProbabilities[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_CCDFFetchProbabilitiesTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 probabilities[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_CCDFFetchBasicPowerProbabilities(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* tenPercentPower,
+   float64* onePercentPower,
+   float64* oneTenthPercentPower,
+   float64* oneHundredthPercentPower,
+   float64* oneThousandthPercentPower,
+   float64* oneTenThousandthPercentPower
+);
+
+int32 __stdcall RFmxSpecAn_CCDFFetchPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanPower,
+   float64* meanPowerPercentile,
+   float64* peakPower,
+   int32* measuredSamplesCount
+);
+
+int32 __stdcall RFmxSpecAn_CCDFRead(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanPower,
+   float64* meanPowerPercentile,
+   float64* peakPower,
+   int32* measuredSamplesCount
+);
+
+int32 __stdcall RFmxSpecAn_CHPFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_CHPFetchTotalCarrierPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* totalCarrierPower
+);
+
+int32 __stdcall RFmxSpecAn_CHPRead(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* absolutePower,
+   float64* PSD
+);
+
+int32 __stdcall RFmxSpecAn_CHPFetchCarrierMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* absolutePower,
+   float64* PSD,
+   float64* relativePower
+);
+
+int32 __stdcall RFmxSpecAn_HarmFetchHarmonicPowerTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 power[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_HarmFetchHarmonicMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* averageRelativePower,
+   float64* averageAbsolutePower,
+   float64* RBW,
+   float64* frequency
+);
+
+int32 __stdcall RFmxSpecAn_HarmFetchTHD(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* totalHarmonicDistortion,
+   float64* averageFundamentalPower,
+   float64* fundamentalFrequency
+);
+
+int32 __stdcall RFmxSpecAn_HarmRead(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* totalHarmonicDistortion,
+   float64* averageFundamentalPower
+);
+
 int32 __stdcall RFmxSpecAn_SEMFetchAbsoluteMaskTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5161,28 +5262,6 @@ int32 __stdcall RFmxSpecAn_SEMFetchAbsoluteMaskTrace(
    float64* x0,
    float64* dx,
    float32 absoluteMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_SEMFetchRelativeMaskTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 relativeMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_SEMFetchSpectrum(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5209,6 +5288,28 @@ int32 __stdcall RFmxSpecAn_SEMFetchLowerOffsetPowerArray(
    float64 peakAbsolutePower[],
    float64 peakFrequency[],
    float64 peakRelativePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_SEMFetchRelativeMaskTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 relativeMask[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_SEMFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5314,178 +5415,68 @@ int32 __stdcall RFmxSpecAn_SEMFetchUpperOffsetPower(
    float64* peakRelativePower
 );
 
-int32 __stdcall RFmxSpecAn_FCntFetchFrequencyTrace(
+int32 __stdcall RFmxSpecAn_OBWFetchSpectrumTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 frequencyTrace[],
+   float32 spectrum[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxSpecAn_FCntFetchPhaseTrace(
+int32 __stdcall RFmxSpecAn_OBWFetchMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* occupiedBandwidth,
+   float64* averagePower,
+   float64* frequencyResolution,
+   float64* startFrequency,
+   float64* stopFrequency
+);
+
+int32 __stdcall RFmxSpecAn_OBWRead(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* occupiedBandwidth,
+   float64* averagePower,
+   float64* frequencyResolution,
+   float64* startFrequency,
+   float64* stopFrequency
+);
+
+int32 __stdcall RFmxSpecAn_TXPFetchPowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 phaseTrace[],
+   float32 power[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxSpecAn_FCntFetchPowerTrace(
+int32 __stdcall RFmxSpecAn_TXPFetchMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 powerTrace[],
-   int32 arraySize,
-   int32* actualArraySize
+   float64* averageMeanPower,
+   float64* peakToAverageRatio,
+   float64* maximumPower,
+   float64* minimumPower
 );
 
-int32 __stdcall RFmxSpecAn_FCntFetchMeasurement(
+int32 __stdcall RFmxSpecAn_TXPRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* averageRelativeFrequency,
-   float64* averageAbsoluteFrequency,
-   float64* meanPhase
-);
-
-int32 __stdcall RFmxSpecAn_FCntRead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* averageRelativeFrequency,
-   float64* averageAbsoluteFrequency,
-   float64* meanPhase
-);
-
-int32 __stdcall RFmxSpecAn_FCntFetchAllanDeviation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* allanDeviation
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchDPDPolynomial(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle DPDPolynomial[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchDPDPolynomialSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchLookupTable(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 inputPowers[],
-   NIComplexSingle complexGains[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchLookupTableSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 inputPowers[],
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   NIComplexSingle processedMeanAcquiredWaveform[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchProcessedReferenceWaveform(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   NIComplexSingle processedReferenceWaveform[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchAverageGain(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* averageGain
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchNMSE(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* NMSE
-);
-
-int32 __stdcall RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* preCFRPAPR
-);
-
-int32 __stdcall RFmxSpecAn_PhaseNoiseFetchSpotNoise(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 spotPhaseNoise[],
-   int32 arraySize,
-   int32* actualArraySize
+   float64* averageMeanPower,
+   float64* peakToAverageRatio,
+   float64* maximumPower,
+   float64* minimumPower
 );
 
 int32 __stdcall RFmxSpecAn_PhaseNoiseFetchIntegratedNoise(
@@ -5521,12 +5512,33 @@ int32 __stdcall RFmxSpecAn_PhaseNoiseFetchSmoothedLogPlotTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxSpecAn_PhaseNoiseFetchSpotNoise(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 spotPhaseNoise[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxSpecAn_PhaseNoiseFetchCarrierMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* carrierFrequency,
    float64* carrierPower
+);
+
+int32 __stdcall RFmxSpecAn_PAVTFetchAmplitudeTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 traceIndex,
+   float64* x0,
+   float64* dx,
+   float32 amplitude[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
 int32 __stdcall RFmxSpecAn_PAVTFetchPhaseAndAmplitudeArray(
@@ -5549,18 +5561,6 @@ int32 __stdcall RFmxSpecAn_PAVTFetchPhaseTrace(
    float64* x0,
    float64* dx,
    float32 phase[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_PAVTFetchAmplitudeTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 traceIndex,
-   float64* x0,
-   float64* dx,
-   float32 amplitude[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5655,6 +5655,274 @@ int32 __stdcall RFmxSpecAn_IQGetRecordsDone(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32* recordsDone
+);
+
+int32 __stdcall RFmxSpecAn_GetSelectedPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_SetSelectedPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_GetCenterFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetCenterFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetReferenceLevelHeadroom(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetReferenceLevelHeadroom(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetDigitalEdgeTriggerSource(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_SetDigitalEdgeTriggerSource(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_GetDigitalEdgeTriggerEdge(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetDigitalEdgeTriggerEdge(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerSource(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerSource(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerLevelType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerLevelType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerSlope(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerSlope(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetTriggerDelay(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetTriggerDelay(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetTriggerMinimumQuietTimeMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetTriggerMinimumQuietTimeMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetTriggerMinimumQuietTimeDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetTriggerMinimumQuietTimeDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetNumberOfSteps(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetNumberOfSteps(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetListStepTimerDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetListStepTimerDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetListStepTimerOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetListStepTimerOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetAutoLevelInitialReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetAutoLevelInitialReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetLimitedConfigurationChange(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetLimitedConfigurationChange(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_GetSelectedPath(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_SetSelectedPath(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxSpecAn_GetResultFetchTimeout(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SetResultFetchTimeout(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_ACPGetMeasurementEnabled(
@@ -5993,18 +6261,6 @@ int32 __stdcall RFmxSpecAn_ACPSetMeasurementMethod(
    int32 attrVal
 );
 
-int32 __stdcall RFmxSpecAn_ACPGetSequentialFFTSize(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_ACPSetSequentialFFTSize(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxSpecAn_ACPGetNoiseCalibrationMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -6137,6 +6393,30 @@ int32 __stdcall RFmxSpecAn_ACPSetFFTPadding(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_ACPGetFFTOverlapMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPSetFFTOverlapMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPGetFFTOverlap(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPSetFFTOverlap(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_ACPGetIFOutputPowerOffsetAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -6171,6 +6451,30 @@ int32 __stdcall RFmxSpecAn_ACPSetFarIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPGetSequentialFFTSize(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPSetSequentialFFTSize(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPGetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_ACPSetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_ACPGetAllTracesEnabled(
@@ -6303,42 +6607,6 @@ int32 __stdcall RFmxSpecAn_ACPGetResultsUpperOffsetRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_ACPGetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_ACPSetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_ACPGetFFTOverlapMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_ACPSetFFTOverlapMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_ACPGetFFTOverlap(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_ACPSetFFTOverlap(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_CCDFGetMeasurementEnabled(
@@ -6845,6 +7113,18 @@ int32 __stdcall RFmxSpecAn_CHPSetFFTPadding(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_CHPGetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_CHPSetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_CHPGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -6909,18 +7189,6 @@ int32 __stdcall RFmxSpecAn_CHPGetResultsCarrierRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_CHPGetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_CHPSetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_FCntGetMeasurementEnabled(
@@ -7235,6 +7503,30 @@ int32 __stdcall RFmxSpecAn_HarmSetHarmonicMeasurementInterval(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_HarmGetMeasurementMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_HarmSetMeasurementMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_HarmGetNoiseCompensationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_HarmSetNoiseCompensationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_HarmGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -7335,30 +7627,6 @@ int32 __stdcall RFmxSpecAn_HarmGetResultsHarmonicRBW(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_HarmGetMeasurementMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_HarmSetMeasurementMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_HarmGetNoiseCompensationEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_HarmSetNoiseCompensationEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_OBWGetMeasurementEnabled(
@@ -7541,6 +7809,18 @@ int32 __stdcall RFmxSpecAn_OBWSetFFTPadding(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_OBWGetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_OBWSetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_OBWGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -7593,18 +7873,6 @@ int32 __stdcall RFmxSpecAn_OBWGetResultsFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_OBWGetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_OBWSetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_SEMGetMeasurementEnabled(
@@ -8087,6 +8355,18 @@ int32 __stdcall RFmxSpecAn_SEMSetFFTPadding(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_SEMGetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SEMSetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_SEMGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -8321,18 +8601,6 @@ int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetPowerReferenceCarrier(
    int32 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_SEMGetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SEMSetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxSpecAn_SpectrumGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -8417,6 +8685,42 @@ int32 __stdcall RFmxSpecAn_SpectrumSetRBWFilterBandwidthDefinition(
    int32 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterAutoBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterAutoBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterVBWToRBWRatio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterVBWToRBWRatio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_SpectrumGetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -8439,6 +8743,30 @@ int32 __stdcall RFmxSpecAn_SpectrumSetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetDetectorType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetDetectorType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetDetectorPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetDetectorPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_SpectrumGetNoiseCalibrationMode(
@@ -8573,6 +8901,30 @@ int32 __stdcall RFmxSpecAn_SpectrumSetFFTPadding(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_SpectrumGetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetAnalysisInput(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetAnalysisInput(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_SpectrumGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -8601,90 +8953,6 @@ int32 __stdcall RFmxSpecAn_SpectrumGetResultsFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumGetDetectorType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumSetDetectorType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumGetDetectorPoints(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumSetDetectorPoints(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterAutoBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterAutoBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterVBWToRBWRatio(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterVBWToRBWRatio(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumGetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumSetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumGetAnalysisInput(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpectrumSetAnalysisInput(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_SpurGetMeasurementEnabled(
@@ -8795,6 +9063,42 @@ int32 __stdcall RFmxSpecAn_SpurSetRangeRBWFilterBandwidthDefinition(
    int32 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterAutoBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterAutoBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterVBWToRBWRatio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterVBWToRBWRatio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_SpurGetRangeSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -8817,6 +9121,30 @@ int32 __stdcall RFmxSpecAn_SpurSetRangeSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurGetRangeDetectorType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurSetRangeDetectorType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurGetRangeDetectorPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurSetRangeDetectorPoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_SpurGetRangeAbsoluteLimitMode(
@@ -8963,6 +9291,18 @@ int32 __stdcall RFmxSpecAn_SpurSetTraceRangeIndex(
    int32 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_SpurGetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpurSetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_SpurGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -9029,78 +9369,6 @@ int32 __stdcall RFmxSpecAn_SpurGetResultsRangeAbsoluteLimit(
    float64 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_SpurGetRangeDetectorType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurSetRangeDetectorType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurGetRangeDetectorPoints(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurSetRangeDetectorPoints(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterAutoBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterAutoBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterVBWToRBWRatio(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterVBWToRBWRatio(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurGetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SpurSetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxSpecAn_TXPGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -9156,6 +9424,42 @@ int32 __stdcall RFmxSpecAn_TXPGetRBWFilterAlpha(
 );
 
 int32 __stdcall RFmxSpecAn_TXPSetRBWFilterAlpha(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_TXPGetVBWFilterAutoBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_TXPSetVBWFilterAutoBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_TXPGetVBWFilterBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_TXPSetVBWFilterBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_TXPGetVBWFilterVBWToRBWRatio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_TXPSetVBWFilterVBWToRBWRatio(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
@@ -9281,42 +9585,6 @@ int32 __stdcall RFmxSpecAn_TXPGetResultsMinimumPower(
    float64 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_TXPGetVBWFilterAutoBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_TXPSetVBWFilterAutoBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_TXPGetVBWFilterBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_TXPSetVBWFilterBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_TXPGetVBWFilterVBWToRBWRatio(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_TXPSetVBWFilterVBWToRBWRatio(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
 int32 __stdcall RFmxSpecAn_AMPMGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -9375,6 +9643,66 @@ int32 __stdcall RFmxSpecAn_AMPMSetSignalType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetSynchronizationMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetSynchronizationMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetAutoCarrierDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetAutoCarrierDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetNumberOfCarriers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetNumberOfCarriers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetCarrierOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetCarrierOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetCarrierBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetCarrierBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_AMPMGetDUTAverageInputPower(
@@ -9485,6 +9813,78 @@ int32 __stdcall RFmxSpecAn_AMPMSetFrequencyOffsetCorrectionEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_AMPMGetIQOriginOffsetCorrectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetIQOriginOffsetCorrectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetAMToAMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetAMToAMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetAMToPMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetAMToPMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetEVMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetEVMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetEqualizerMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetEqualizerMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetEqualizerFilterLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetEqualizerFilterLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_AMPMGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -9504,6 +9904,93 @@ int32 __stdcall RFmxSpecAn_AMPMGetAveragingCount(
 );
 
 int32 __stdcall RFmxSpecAn_AMPMSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointGainReference(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointGainReference(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointGainReferencePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointGainReferencePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointUserGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointUserGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetMaximumTimingError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetMaximumTimingError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetReferencePowerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetReferencePowerType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -9543,6 +10030,22 @@ int32 __stdcall RFmxSpecAn_AMPMGetResults1dBCompressionPoint(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetResultsInputCompressionPoint(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetResultsOutputCompressionPoint(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
 );
 
 int32 __stdcall RFmxSpecAn_AMPMGetResultsCompressionPointGainReference(
@@ -9615,241 +10118,6 @@ int32 __stdcall RFmxSpecAn_AMPMGetResultsAMToPMCurveFitCoefficients(
    int32 *actualArraySize
 );
 
-int32 __stdcall RFmxSpecAn_AMPMGetReferencePowerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetReferencePowerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetMaximumTimingError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetMaximumTimingError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal[],
-   int32 arraySize,
-   int32 *actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointGainReference(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointGainReference(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointGainReferencePower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointGainReferencePower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointUserGain(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointUserGain(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetResultsInputCompressionPoint(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal[],
-   int32 arraySize,
-   int32 *actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetResultsOutputCompressionPoint(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal[],
-   int32 arraySize,
-   int32 *actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetIQOriginOffsetCorrectionEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetIQOriginOffsetCorrectionEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetSynchronizationMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetSynchronizationMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetAutoCarrierDetectionEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetAutoCarrierDetectionEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetNumberOfCarriers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetNumberOfCarriers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetCarrierOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetCarrierOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetCarrierBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetCarrierBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetEqualizerMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetEqualizerMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetEqualizerFilterLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetEqualizerFilterLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetAMToAMEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetAMToAMEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetAMToPMEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetAMToPMEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMGetEVMEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_AMPMSetEVMEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxSpecAn_DPDGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -9908,6 +10176,66 @@ int32 __stdcall RFmxSpecAn_DPDSetSignalType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetSynchronizationMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetSynchronizationMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetAutoCarrierDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetAutoCarrierDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetNumberOfCarriers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetNumberOfCarriers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetCarrierOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetCarrierOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetCarrierBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetCarrierBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_DPDGetDUTAverageInputPower(
@@ -10210,6 +10538,18 @@ int32 __stdcall RFmxSpecAn_DPDSetFrequencyOffsetCorrectionEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_DPDGetIQOriginOffsetCorrectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetIQOriginOffsetCorrectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_DPDGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -10232,231 +10572,6 @@ int32 __stdcall RFmxSpecAn_DPDSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetAllTracesEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetAllTracesEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetNumberofAnalysisThreads(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetNumberofAnalysisThreads(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDConfigurationInput(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDConfigurationInput(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDLookupTableCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDLookupTableCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDMemoryModelCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDMemoryModelCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserDUTAverageInputPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserDUTAverageInputPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserDPDModel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserDPDModel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMeasurementSampleRate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMeasurementSampleRate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserLookupTableType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserLookupTableType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserLookupTableInputPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float32 attrVal[],
-   int32 arraySize,
-   int32 *actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserLookupTableInputPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float32 attrVal[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialOrder(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialOrder(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLeadOrder(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLeadOrder(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLagOrder(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLagOrder(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLeadMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLeadMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLagMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLagMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMaximumLead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMaximumLead(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMaximumLag(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMaximumLag(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetResultsAverageGain(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
 );
 
 int32 __stdcall RFmxSpecAn_DPDGetMaximumTimingError(
@@ -10627,6 +10742,66 @@ int32 __stdcall RFmxSpecAn_DPDSetPreDPDCarrierBandwidth(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_DPDGetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetNumberofAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetNumberofAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDConfigurationInput(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDConfigurationInput(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDLookupTableCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDLookupTableCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDMemoryModelCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDMemoryModelCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFREnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -10735,82 +10910,439 @@ int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRShapingThreshold(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserDUTAverageInputPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserDUTAverageInputPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserDPDModel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserDPDModel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMeasurementSampleRate(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMeasurementSampleRate(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserLookupTableType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserLookupTableType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserLookupTableInputPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float32 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserLookupTableInputPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float32 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialOrder(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialOrder(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLeadOrder(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLeadOrder(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLagOrder(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLagOrder(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLeadMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLeadMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLagMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLagMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMaximumLead(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMaximumLead(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMaximumLag(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMaximumLag(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetResultsAverageGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxSpecAn_DPDGetResultsNMSE(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDGetIQOriginOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_IDPDGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDSetIQOriginOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_IDPDSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDGetSynchronizationMethod(
+int32 __stdcall RFmxSpecAn_IDPDGetEqualizerMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDSetSynchronizationMethod(
+int32 __stdcall RFmxSpecAn_IDPDSetEqualizerMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDGetAutoCarrierDetectionEnabled(
+int32 __stdcall RFmxSpecAn_IDPDGetEqualizerFilterLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDSetAutoCarrierDetectionEnabled(
+int32 __stdcall RFmxSpecAn_IDPDSetEqualizerFilterLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDGetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_IDPDGetMeasurementSampleRateMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDSetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_IDPDSetMeasurementSampleRateMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDGetCarrierOffset(
+int32 __stdcall RFmxSpecAn_IDPDGetMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDSetCarrierOffset(
+int32 __stdcall RFmxSpecAn_IDPDSetMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDGetCarrierBandwidth(
+int32 __stdcall RFmxSpecAn_IDPDGetSignalType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetSignalType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetReferenceWaveformIdleDurationPresent(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetReferenceWaveformIdleDurationPresent(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDSetCarrierBandwidth(
+int32 __stdcall RFmxSpecAn_IDPDSetDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEVMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetEVMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEVMUnit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetEVMUnit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetImpairmentEstimationStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetImpairmentEstimationStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetImpairmentEstimationStop(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetImpairmentEstimationStop(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetSynchronizationEstimationStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetSynchronizationEstimationStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetSynchronizationEstimationStop(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetSynchronizationEstimationStop(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetGainExpansion(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetGainExpansion(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetTargetGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetTargetGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetPowerLinearityTradeoff(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetPowerLinearityTradeoff(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetResultsGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetResultsMeanRMSEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetNumberofAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IDPDSetNumberofAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_IQGetMeasurementEnabled(
@@ -11233,6 +11765,18 @@ int32 __stdcall RFmxSpecAn_IMSetFarIFOutputPowerOffset(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_IMGetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IMSetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_IMGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -11329,18 +11873,6 @@ int32 __stdcall RFmxSpecAn_IMGetResultsWorstCaseOutputInterceptPower(
    float64 *attrVal
 );
 
-int32 __stdcall RFmxSpecAn_IMGetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IMSetAmplitudeCorrectionType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxSpecAn_NFGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -11351,6 +11883,66 @@ int32 __stdcall RFmxSpecAn_NFSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFGetDUTType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFSetDUTType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterLOFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterLOFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterFrequencyContext(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterFrequencyContext(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterSideband(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterSideband(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterImageRejection(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterImageRejection(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_NFGetFrequencyList(
@@ -11918,6 +12510,18 @@ int32 __stdcall RFmxSpecAn_NFSetColdSourceDUTS22(
    int32 arraySize
 );
 
+int32 __stdcall RFmxSpecAn_NFGetDeviceTemperatureTolerance(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_NFSetDeviceTemperatureTolerance(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_NFGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -12000,597 +12604,6 @@ int32 __stdcall RFmxSpecAn_NFGetResultsColdSourcePower(
    float64 attrVal[],
    int32 arraySize,
    int32 *actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_NFGetDeviceTemperatureTolerance(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFSetDeviceTemperatureTolerance(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFGetDUTType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFSetDUTType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterLOFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterLOFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterFrequencyContext(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterFrequencyContext(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterSideband(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterSideband(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterImageRejection(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterImageRejection(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetAutoLevelInitialReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetAutoLevelInitialReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetLimitedConfigurationChange(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetLimitedConfigurationChange(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetResultFetchTimeout(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetResultFetchTimeout(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetCenterFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetCenterFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetTriggerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetTriggerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetDigitalEdgeTriggerSource(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxSpecAn_SetDigitalEdgeTriggerSource(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
-int32 __stdcall RFmxSpecAn_GetDigitalEdgeTriggerEdge(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetDigitalEdgeTriggerEdge(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerSource(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerSource(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
-int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerLevelType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerLevelType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerSlope(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerSlope(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetTriggerDelay(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetTriggerDelay(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetTriggerMinimumQuietTimeMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetTriggerMinimumQuietTimeMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetTriggerMinimumQuietTimeDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetTriggerMinimumQuietTimeDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetSelectedPorts(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxSpecAn_SetSelectedPorts(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
-int32 __stdcall RFmxSpecAn_GetReferenceLevelHeadroom(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetReferenceLevelHeadroom(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetNumberOfSteps(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetNumberOfSteps(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetListStepTimerDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetListStepTimerDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_GetListStepTimerOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_SetListStepTimerOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetMeasurementEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetMeasurementEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetEqualizerMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetEqualizerMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetEqualizerFilterLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetEqualizerFilterLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetMeasurementSampleRateMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetMeasurementSampleRateMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetMeasurementSampleRate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetMeasurementSampleRate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetSignalType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetSignalType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetReferenceWaveformIdleDurationPresent(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetReferenceWaveformIdleDurationPresent(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetDUTAverageInputPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetDUTAverageInputPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetAveragingEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetAveragingEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetAveragingCount(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetAveragingCount(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetEVMEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetEVMEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetEVMUnit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetEVMUnit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetImpairmentEstimationStart(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetImpairmentEstimationStart(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetImpairmentEstimationStop(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetImpairmentEstimationStop(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetSynchronizationEstimationStart(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetSynchronizationEstimationStart(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetSynchronizationEstimationStop(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetSynchronizationEstimationStop(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetGainExpansion(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetGainExpansion(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetTargetGain(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetTargetGain(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetPowerLinearityTradeoff(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetPowerLinearityTradeoff(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetResultsGain(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetResultsMeanRMSEVM(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetAllTracesEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetAllTracesEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetNumberofAnalysisThreads(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_IDPDSetNumberofAnalysisThreads(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_PhaseNoiseGetMeasurementEnabled(
@@ -12818,18 +12831,6 @@ int32 __stdcall RFmxSpecAn_PhaseNoiseSetIntegratedNoiseStopFrequency(
    int32 arraySize
 );
 
-int32 __stdcall RFmxSpecAn_PhaseNoiseGetAllTracesEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_PhaseNoiseSetAllTracesEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxSpecAn_PhaseNoiseGetSpurRemovalEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -12906,6 +12907,18 @@ int32 __stdcall RFmxSpecAn_PhaseNoiseSetCancellationReferencePhaseNoise(
    char selectorString[],
    float32 attrVal[],
    int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsCarrierPower(
@@ -12990,18 +13003,6 @@ int32 __stdcall RFmxSpecAn_PAVTSetMeasurementLocationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_PAVTGetMeasurementBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_PAVTSetMeasurementBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_PAVTGetMeasurementIntervalMode(

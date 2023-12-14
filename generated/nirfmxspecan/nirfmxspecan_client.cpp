@@ -4375,7 +4375,7 @@ idpd_cfg_predistorted_waveform(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 IDPDCfgReferenceWaveformResponse
-idpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const pb::int32& idle_duration_present, const pb::int32& signal_type)
+idpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const simple_variant<IdpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<IdpdSignalType, pb::int32>& signal_type)
 {
   ::grpc::ClientContext context;
 
@@ -4385,8 +4385,22 @@ idpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& i
   request.set_x0(x0);
   request.set_dx(dx);
   copy_array(reference_waveform, request.mutable_reference_waveform());
-  request.set_idle_duration_present(idle_duration_present);
-  request.set_signal_type(signal_type);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<IdpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<IdpdSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
 
   auto response = IDPDCfgReferenceWaveformResponse{};
 
