@@ -459,6 +459,7 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_DURATION = 1048588;
   NIRFMXSPECAN_ATTRIBUTE_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL = 1048589;
   NIRFMXSPECAN_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 1048590;
+  NIRFMXSPECAN_ATTRIBUTE_SELECTED_PATH = 1048591;
   NIRFMXSPECAN_ATTRIBUTE_LIST_STEP_TIMER_OFFSET = 1052663;
   NIRFMXSPECAN_ATTRIBUTE_NUMBER_OF_STEPS = 1052664;
   NIRFMXSPECAN_ATTRIBUTE_LIST_STEP_TIMER_DURATION = 1052665;
@@ -1641,6 +1642,16 @@ enum IQBandwidthAuto {
 enum IQPowerEdgeTriggerSlope {
   IQ_POWER_EDGE_TRIGGER_SLOPE_RISING = 0;
   IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING = 1;
+}
+
+enum IdpdReferenceWaveformIdleDurationPresent {
+  IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE = 0;
+  IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE = 1;
+}
+
+enum IdpdSignalType {
+  IDPD_SIGNAL_TYPE_MODULATED = 0;
+  IDPD_SIGNAL_TYPE_TONES = 1;
 }
 
 enum MarkerNextPeak {
@@ -5330,8 +5341,14 @@ message IDPDCfgReferenceWaveformRequest {
   double x0 = 3;
   double dx = 4;
   repeated nidevice_grpc.NIComplexNumberF32 reference_waveform = 5;
-  int32 idle_duration_present = 6;
-  int32 signal_type = 7;
+  oneof idle_duration_present_enum {
+    IdpdReferenceWaveformIdleDurationPresent idle_duration_present = 6;
+    int32 idle_duration_present_raw = 7;
+  }
+  oneof signal_type_enum {
+    IdpdSignalType signal_type = 8;
+    int32 signal_type_raw = 9;
+  }
 }
 
 message IDPDCfgReferenceWaveformResponse {
