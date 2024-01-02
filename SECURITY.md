@@ -6,7 +6,7 @@ NI supports the latest release of grpc-device with security updates.
 
 ## Reporting a Vulnerability
 
-NI is committed to resolving major security vulnerabilities discovered grpc-device.
+NI is committed to resolving major security vulnerabilities discovered in grpc-device.
 
 The development team regularly monitors the NIST National Vulnerability Database for published vulnerabilities, and uses that information to audit the grpc-device software. When a vulnerability is discovered, the team evaluates its impact to our products and our customers’ supported workflows. The team then decides to address major vulnerabilities depending on its impact to supported workflows. 
 
