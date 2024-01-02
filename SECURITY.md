@@ -16,7 +16,7 @@ We encourage you to report security vulnerabilities to us privately so that we c
 
 To report security issues in our products or on ni.com, email security@ni.com with sufficient details about how to reproduce the issue. You may use the [NI PGP key](https://www.ni.com/en/support/security/pgp.html) to encrypt any sensitive communications you send to us. When you notify us of a potential security issue, our remediation process includes acknowledging receipt and coordinating any necessary response activities with you.
 
-If you are interested in reporting a security issue in an NI product other than NI LinuxRT, reference the company security page [here](https://ni.com/security).
+If you are interested in reporting a security issue in an NI product other than grpc-device, reference the company security page [here](https://ni.com/security).
 
 ## Requesting CVE Exposure information
 Vulnerabilities in community software packages are frequently fixed by patching the source code, without changing the package’s final version number. Because of this, vulnerability scanners sometimes erroneously flag a package as being vulnerable to exploits which have already been patched. To request a disposition about whether your deployed version of grpc-device is exposed to a vulnerability, send an email to product-security@ni.com with information about your deployed system and the discrete set of interesting CVEs.
