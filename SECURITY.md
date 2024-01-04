@@ -1,22 +1,19 @@
-# Security Policy
+<!-- Begin NI SECURITY.md V1.0 -->
 
-## Supported Versions
+# Security
 
-NI supports the latest release of grpc-device with security updates. 
+NI views the security of our software products as an important part of our commitment to our users.  This includes source code repositories managed through the [NI](https://github.com/ni) GitHub organization.
 
-## Reporting a Vulnerability
+## Reporting Security Issues
 
-NI is committed to resolving major security vulnerabilities discovered in grpc-device.
+We encourage you to report security vulnerabilities to us privately so we can follow the principle of [Coordinated Vulnerability Disclosure (CVD)](https://vuls.cert.org/confluence/display/CVD).  This allows us time to thoroughly investigate security issues and publicly disclose them when appropriate.
 
-The development team regularly monitors the NIST National Vulnerability Database for published vulnerabilities, and uses that information to audit the grpc-device software. When a vulnerability is discovered, the team evaluates its impact to our products and our customers’ supported workflows. The team then decides to address major vulnerabilities depending on its impact to supported workflows. 
+**Please do not report security vulnerabilities through public GitHub issues.**
 
-Vulnerabilities which the team assesses as being high-severity will be patched or otherwise fixed in the following release of the software. Critical-severity vulnerabilities may have their fixes applied to the current release, as well. To ensure that your deployments remain free of vulnerabilities, it is best to schedule regular upgrades of your deployments’ firmware and base system images.
+Instead, please report them by sending an email to [security@ni.com](mailto:security@ni.com) with sufficient details about the type of issue, the impact of the issue, and how to reproduce the issue.  You may use the [NI PGP key](https://www.ni.com/en/support/security/pgp.html) to encrypt any sensitive communications you send to us. When you notify us of a potential security issue, our remediation process includes acknowledging receipt and coordinating any necessary response activities with you.
 
-We encourage you to report security vulnerabilities to us privately so that we can follow a coordinated disclosure process, allowing us time to thoroughly investigate security issues and publicly disclose them when appropriate.
+## Learn More
 
-To report security issues in our products or on ni.com, email security@ni.com with sufficient details about how to reproduce the issue. You may use the [NI PGP key](https://www.ni.com/en/support/security/pgp.html) to encrypt any sensitive communications you send to us. When you notify us of a potential security issue, our remediation process includes acknowledging receipt and coordinating any necessary response activities with you.
+To learn more about NI Security, please see [https://ni.com/security](https://ni.com/security)
 
-If you are interested in reporting a security issue in an NI product other than grpc-device, reference the company security page [here](https://ni.com/security).
-
-## Requesting CVE Exposure information
-Vulnerabilities in community software packages are frequently fixed by patching the source code, without changing the package’s final version number. Because of this, vulnerability scanners sometimes erroneously flag a package as being vulnerable to exploits which have already been patched. To request a disposition about whether your deployed version of grpc-device is exposed to a vulnerability, send an email to product-security@ni.com with information about your deployed system and the discrete set of interesting CVEs.
+<!-- End NI SECURITY.md -->
