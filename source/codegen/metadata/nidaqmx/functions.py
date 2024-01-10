@@ -12518,13 +12518,23 @@ functions = {
         'calling_convention': 'StdCall',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
+                'is_optional_in_python': False,
                 'name': 'deviceName',
+                'python_data_type': 'str',
+                'python_description': '',
+                'python_type_annotation': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'c_bool32',
                 'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'calSupported',
+                'python_data_type': 'bool',
+                'python_description': '',
+                'python_type_annotation': 'bool',
                 'type': 'bool32'
             }
         ],
@@ -15391,33 +15401,63 @@ functions = {
         'calling_convention': 'StdCall',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
+                'is_optional_in_python': False,
                 'name': 'deviceName',
+                'python_data_type': 'str',
+                'python_description': '',
+                'python_type_annotation': 'str',
                 'type': 'const char[]'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'year',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
                 'type': 'uInt32'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'month',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
                 'type': 'uInt32'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'day',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
                 'type': 'uInt32'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'hour',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
                 'type': 'uInt32'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'minute',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
                 'type': 'uInt32'
             }
         ],
@@ -17051,6 +17091,188 @@ functions = {
             }
         ],
         'python_class_name': 'PersistedTask',
+        'python_codegen_method': 'CustomCode',
+        'returns': 'int32'
+    },
+    'PerformBridgeShuntCalEx': {
+        'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
+        'parameters': [
+            {
+                'ctypes_data_type': 'ctypes.TaskHandle',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'task',
+                'python_data_type': 'TaskHandle',
+                'python_description': '',
+                'python_type_annotation': 'TaskHandle',
+                'type': 'TaskHandle'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_char_p',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'channel',
+                'python_data_type': 'str',
+                'python_description': '',
+                'python_type_annotation': 'str',
+                'type': 'const char[]'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_double',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'shuntResistorValue',
+                'python_data_type': 'float',
+                'python_description': '',
+                'python_type_annotation': 'float',
+                'type': 'float64'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'ShuntElementLocation',
+                'is_optional_in_python': False,
+                'name': 'shuntResistorLocation',
+                'python_data_type': 'ShuntElementLocation',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.ShuntElementLocation',
+                'type': 'int32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'ShuntCalSelect',
+                'is_optional_in_python': False,
+                'name': 'shuntResistorSelect',
+                'python_data_type': 'ShuntCalSelect',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.ShuntCalSelect',
+                'type': 'int32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'ShuntCalSource',
+                'is_optional_in_python': False,
+                'name': 'shuntResistorSource',
+                'python_data_type': 'ShuntCalSource',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.ShuntCalSource',
+                'type': 'int32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_double',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'bridgeResistance',
+                'python_data_type': 'float',
+                'python_description': '',
+                'python_type_annotation': 'float',
+                'type': 'float64'
+            },
+            {
+                'ctypes_data_type': 'c_bool32',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'skipUnsupportedChannels',
+                'python_data_type': 'bool',
+                'python_description': '',
+                'python_type_annotation': 'bool',
+                'type': 'bool32'
+            }
+        ],
+        'python_class_name': 'Task',
+        'python_codegen_method': 'CustomCode',
+        'returns': 'int32'
+    },
+    'PerformStrainShuntCalEx': {
+        'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'lib_importer.task_handle',
+            'cvi_name': 'taskHandle',
+            'python_accessor': 'self._handle'
+        },
+        'parameters': [
+            {
+                'ctypes_data_type': 'ctypes.TaskHandle',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'task',
+                'python_data_type': 'TaskHandle',
+                'python_description': '',
+                'python_type_annotation': 'TaskHandle',
+                'type': 'TaskHandle'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_char_p',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'channel',
+                'python_data_type': 'str',
+                'python_description': '',
+                'python_type_annotation': 'str',
+                'type': 'const char[]'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_double',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'shuntResistorValue',
+                'python_data_type': 'float',
+                'python_description': '',
+                'python_type_annotation': 'float',
+                'type': 'float64'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'ShuntElementLocation',
+                'is_optional_in_python': False,
+                'name': 'shuntResistorLocation',
+                'python_data_type': 'ShuntElementLocation',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.ShuntElementLocation',
+                'type': 'int32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'ShuntCalSelect',
+                'is_optional_in_python': False,
+                'name': 'shuntResistorSelect',
+                'python_data_type': 'ShuntCalSelect',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.ShuntCalSelect',
+                'type': 'int32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'ShuntCalSource',
+                'is_optional_in_python': False,
+                'name': 'shuntResistorSource',
+                'python_data_type': 'ShuntCalSource',
+                'python_description': '',
+                'python_type_annotation': 'nidaqmx.constants.ShuntCalSource',
+                'type': 'int32'
+            },
+            {
+                'ctypes_data_type': 'c_bool32',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'skipUnsupportedChannels',
+                'python_data_type': 'bool',
+                'python_description': '',
+                'python_type_annotation': 'bool',
+                'type': 'bool32'
+            }
+        ],
+        'python_class_name': 'Task',
         'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
@@ -20088,14 +20310,26 @@ functions = {
     },
     'SelfCal': {
         'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'ctypes.c_char_p',
+            'cvi_name': 'deviceName',
+            'python_accessor': 'self._name'
+        },
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.c_char_p',
                 'direction': 'in',
+                'is_optional_in_python': False,
                 'name': 'deviceName',
-                'type': 'const char[]'
+                'python_data_type': 'str',
+                'python_description': '',
+                'python_type_annotation': 'str',
+                'type': 'const char[]',
+                'use_in_python_api': False
             }
         ],
-        'python_codegen_method': 'no',
+        'python_class_name': 'Device',
+        'python_description': 'Measures the onboard reference voltage of the device and adjusts the self-calibration constants to account for any errors caused by short-term fluctuations in the operating environment. When you self-calibrate a device, no external signal connections are necessary.',
         'returns': 'int32'
     },
     'SelfTestDevice': {
