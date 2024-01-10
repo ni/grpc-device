@@ -252,6 +252,8 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value) = 0;
   virtual int32 IsTaskDone(TaskHandle task, bool32* isTaskDone) = 0;
   virtual int32 LoadTask(const char sessionName[], TaskHandle* task) = 0;
+  virtual int32 PerformBridgeShuntCalEx(TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, float64 bridgeResistance, bool32 skipUnsupportedChannels) = 0;
+  virtual int32 PerformStrainShuntCalEx(TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, bool32 skipUnsupportedChannels) = 0;
   virtual int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
   virtual int32 ReadAnalogScalarF64(TaskHandle task, float64 timeout, float64* value, bool32* reserved) = 0;
   virtual int32 ReadBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
