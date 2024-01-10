@@ -269,8 +269,10 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.GetWriteAttributeUInt64 = reinterpret_cast<GetWriteAttributeUInt64Ptr>(shared_library_->get_function_pointer("DAQmxGetWriteAttribute"));
   function_pointers_.IsTaskDone = reinterpret_cast<IsTaskDonePtr>(shared_library_->get_function_pointer("DAQmxIsTaskDone"));
   function_pointers_.LoadTask = reinterpret_cast<LoadTaskPtr>(shared_library_->get_function_pointer("DAQmxLoadTask"));
+  function_pointers_.PerformBridgeOffsetNullingCalEx = reinterpret_cast<PerformBridgeOffsetNullingCalExPtr>(shared_library_->get_function_pointer("DAQmxPerformBridgeOffsetNullingCalEx"));
   function_pointers_.PerformBridgeShuntCalEx = reinterpret_cast<PerformBridgeShuntCalExPtr>(shared_library_->get_function_pointer("DAQmxPerformBridgeShuntCalEx"));
   function_pointers_.PerformStrainShuntCalEx = reinterpret_cast<PerformStrainShuntCalExPtr>(shared_library_->get_function_pointer("DAQmxPerformStrainShuntCalEx"));
+  function_pointers_.PerformThrmcplLeadOffsetNullingCal = reinterpret_cast<PerformThrmcplLeadOffsetNullingCalPtr>(shared_library_->get_function_pointer("DAQmxPerformThrmcplLeadOffsetNullingCal"));
   function_pointers_.ReadAnalogF64 = reinterpret_cast<ReadAnalogF64Ptr>(shared_library_->get_function_pointer("DAQmxReadAnalogF64"));
   function_pointers_.ReadAnalogScalarF64 = reinterpret_cast<ReadAnalogScalarF64Ptr>(shared_library_->get_function_pointer("DAQmxReadAnalogScalarF64"));
   function_pointers_.ReadBinaryI16 = reinterpret_cast<ReadBinaryI16Ptr>(shared_library_->get_function_pointer("DAQmxReadBinaryI16"));
@@ -2373,6 +2375,14 @@ int32 NiDAQmxLibrary::LoadTask(const char sessionName[], TaskHandle* task)
   return function_pointers_.LoadTask(sessionName, task);
 }
 
+int32 NiDAQmxLibrary::PerformBridgeOffsetNullingCalEx(TaskHandle task, const char channel[], bool32 skipUnsupportedChannels)
+{
+  if (!function_pointers_.PerformBridgeOffsetNullingCalEx) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxPerformBridgeOffsetNullingCalEx.");
+  }
+  return function_pointers_.PerformBridgeOffsetNullingCalEx(task, channel, skipUnsupportedChannels);
+}
+
 int32 NiDAQmxLibrary::PerformBridgeShuntCalEx(TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, float64 bridgeResistance, bool32 skipUnsupportedChannels)
 {
   if (!function_pointers_.PerformBridgeShuntCalEx) {
@@ -2387,6 +2397,14 @@ int32 NiDAQmxLibrary::PerformStrainShuntCalEx(TaskHandle task, const char channe
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxPerformStrainShuntCalEx.");
   }
   return function_pointers_.PerformStrainShuntCalEx(task, channel, shuntResistorValue, shuntResistorLocation, shuntResistorSelect, shuntResistorSource, skipUnsupportedChannels);
+}
+
+int32 NiDAQmxLibrary::PerformThrmcplLeadOffsetNullingCal(TaskHandle task, const char channel[], bool32 skipUnsupportedChannels)
+{
+  if (!function_pointers_.PerformThrmcplLeadOffsetNullingCal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxPerformThrmcplLeadOffsetNullingCal.");
+  }
+  return function_pointers_.PerformThrmcplLeadOffsetNullingCal(task, channel, skipUnsupportedChannels);
 }
 
 int32 NiDAQmxLibrary::ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)

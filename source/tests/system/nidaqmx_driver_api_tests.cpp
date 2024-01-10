@@ -929,6 +929,15 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
+  ::grpc::Status perform_bridge_offset_nulling_cal_ex(PerformBridgeOffsetNullingCalExResponse& response)
+  {
+    ::grpc::ClientContext context;
+    PerformBridgeOffsetNullingCalExRequest request;
+    auto status = stub()->PerformBridgeOffsetNullingCalEx(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
   ::grpc::Status perform_bridge_shunt_cal_ex(PerformBridgeShuntCalExResponse & response)
   {
     ::grpc::ClientContext context;
@@ -958,6 +967,15 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_shunt_resistor_source(ShuntCalSource::SHUNT_CAL_SOURCE_DEFAULT);
     request.set_skip_unsupported_channels(false);
     auto status = stub()->PerformStrainShuntCalEx(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status perform_thrmcpl_lead_offset_nulling_cal(PerformThrmcplLeadOffsetNullingCalResponse& response)
+  {
+    ::grpc::ClientContext context;
+    PerformThrmcplLeadOffsetNullingCalRequest request;
+    auto status = stub()->PerformThrmcplLeadOffsetNullingCal(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
   }

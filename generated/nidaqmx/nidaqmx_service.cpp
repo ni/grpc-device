@@ -12939,6 +12939,31 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::PerformBridgeOffsetNullingCalEx(::grpc::ServerContext* context, const PerformBridgeOffsetNullingCalExRequest* request, PerformBridgeOffsetNullingCalExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      auto channel_mbcs = convert_from_grpc<std::string>(request->channel());
+      auto channel = channel_mbcs.c_str();
+      bool32 skip_unsupported_channels = request->skip_unsupported_channels();
+      auto status = library_->PerformBridgeOffsetNullingCalEx(task, channel, skip_unsupported_channels);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::PerformBridgeShuntCalEx(::grpc::ServerContext* context, const PerformBridgeShuntCalExRequest* request, PerformBridgeShuntCalExResponse* response)
   {
     if (context->IsCancelled()) {
@@ -13075,6 +13100,31 @@ namespace nidaqmx_grpc {
 
       bool32 skip_unsupported_channels = request->skip_unsupported_channels();
       auto status = library_->PerformStrainShuntCalEx(task, channel, shunt_resistor_value, shunt_resistor_location, shunt_resistor_select, shunt_resistor_source, skip_unsupported_channels);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::PerformThrmcplLeadOffsetNullingCal(::grpc::ServerContext* context, const PerformThrmcplLeadOffsetNullingCalRequest* request, PerformThrmcplLeadOffsetNullingCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      auto channel_mbcs = convert_from_grpc<std::string>(request->channel());
+      auto channel = channel_mbcs.c_str();
+      bool32 skip_unsupported_channels = request->skip_unsupported_channels();
+      auto status = library_->PerformThrmcplLeadOffsetNullingCal(task, channel, skip_unsupported_channels);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }

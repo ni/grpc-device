@@ -7337,6 +7337,25 @@ load_task(const StubPtr& stub, const std::string& session_name, const nidevice_g
   return response;
 }
 
+PerformBridgeOffsetNullingCalExResponse
+perform_bridge_offset_nulling_cal_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const bool& skip_unsupported_channels)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformBridgeOffsetNullingCalExRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_channel(channel);
+  request.set_skip_unsupported_channels(skip_unsupported_channels);
+
+  auto response = PerformBridgeOffsetNullingCalExResponse{};
+
+  raise_if_error(
+      stub->PerformBridgeOffsetNullingCalEx(&context, request, &response),
+      context);
+
+  return response;
+}
+
 PerformBridgeShuntCalExResponse
 perform_bridge_shunt_cal_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const double& shunt_resistor_value, const simple_variant<ShuntElementLocation, pb::int32>& shunt_resistor_location, const simple_variant<ShuntCalSelect, pb::int32>& shunt_resistor_select, const simple_variant<ShuntCalSource, pb::int32>& shunt_resistor_source, const double& bridge_resistance, const bool& skip_unsupported_channels)
 {
@@ -7421,6 +7440,25 @@ perform_strain_shunt_cal_ex(const StubPtr& stub, const nidevice_grpc::Session& t
 
   raise_if_error(
       stub->PerformStrainShuntCalEx(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PerformThrmcplLeadOffsetNullingCalResponse
+perform_thrmcpl_lead_offset_nulling_cal(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const bool& skip_unsupported_channels)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformThrmcplLeadOffsetNullingCalRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_channel(channel);
+  request.set_skip_unsupported_channels(skip_unsupported_channels);
+
+  auto response = PerformThrmcplLeadOffsetNullingCalResponse{};
+
+  raise_if_error(
+      stub->PerformThrmcplLeadOffsetNullingCal(&context, request, &response),
       context);
 
   return response;
