@@ -2158,6 +2158,14 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
 }
 
+TEST_F(NiDAQmxDriverApiTests, BridgeOffsetNullingCal_Succeeds)
+{
+  auto response = PerformBridgeOffsetNullingCalExResponse{};
+  auto status = perform_bridge_offset_nulling_cal_ex(response);
+
+  EXPECT_SUCCESS(status, response);
+}
+
 // AI Voltage Channel doesn't support Bridge Shunt Calibration
 TEST_F(NiDAQmxDriverApiTests, UnsupportedChannelType_PerformBridgeShuntCalEx_ReturnsError)
 {
@@ -2182,6 +2190,14 @@ TEST_F(NiDAQmxDriverApiTests, UnsupportedDevice_PerformStrainShuntCalEx_ReturnsE
     auto response = PerformStrainShuntCalExResponse{};
     auto status = perform_strain_shunt_cal_ex(response);
   }, STRAIN_SHUNT_CAL_NOT_SUPPORTED_ERROR);
+}
+
+TEST_F(NiDAQmxDriverApiTests, ThrmcplLeadOffsetNullingCal_Succeeds)
+{
+  auto response = PerformThrmcplLeadOffsetNullingCalResponse{};
+  auto status = perform_thrmcpl_lead_offset_nulling_cal(response);
+
+  EXPECT_SUCCESS(status, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
