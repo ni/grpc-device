@@ -175,6 +175,82 @@ class NiDAQmxDriverApiTests : public Test {
     return create_ai_voltage_chan(request, response);
   }
 
+CreateAIStrainGageChanRequest create_ai_strain_gage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
+  {
+    CreateAIStrainGageChanRequest request;
+    set_request_session_name(request);
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
+    request.set_name_to_assign_to_channel("ai0");
+    request.set_min_val(min_val);
+    request.set_max_val(max_val);
+    if (custom_scale_name.empty()) {
+      request.set_units(StrainUnits1::STRAIN_UNITS1_STRAIN);
+    }
+    else {
+      request.set_custom_scale_name(custom_scale_name);
+      request.set_units(StrainUnits1::STRAIN_UNITS1_FROM_CUSTOM_SCALE);
+    }
+    request.set_strain_config(StrainGageBridgeType1::STRAIN_GAGE_BRIDGE_TYPE1_FULL_BRIDGE_I);
+    request.set_initial_bridge_voltage(0.00);
+    request.set_lead_wire_resistance(0.00);
+    request.set_voltage_excit_source(ExcitationSource::EXCITATION_SOURCE_INTERNAL);
+    request.set_voltage_excit_val(2.50);
+    request.set_gage_factor(2.00);
+    request.set_poisson_ratio(0.30);
+    request.set_nominal_gage_resistance(350.00);
+    return request;
+  }
+
+  ::grpc::Status create_ai_strain_gage_chan(const CreateAIStrainGageChanRequest& request, CreateAIStrainGageChanResponse& response = ThrowawayResponse<CreateAIStrainGageChanResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    auto status = stub()->CreateAIStrainGageChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status create_ai_strain_gage_chan(double min_val, double max_val, CreateAIStrainGageChanResponse& response = ThrowawayResponse<CreateAIStrainGageChanResponse>::response())
+  {
+    auto request = create_ai_strain_gage_request(min_val, max_val);
+    return create_ai_strain_gage_chan(request, response);
+  }
+
+CreateAIBridgeChanRequest create_ai_bridge_request(double min_val, double max_val, const std::string& custom_scale_name = "")
+  {
+    CreateAIBridgeChanRequest request;
+    set_request_session_name(request);
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
+    request.set_name_to_assign_to_channel("ai0");
+    request.set_min_val(min_val);
+    request.set_max_val(max_val);
+    if (custom_scale_name.empty()) {
+      request.set_units(BridgeUnits::BRIDGE_UNITS_VOLTS_PER_VOLT);
+    }
+    else {
+      request.set_custom_scale_name(custom_scale_name);
+      request.set_units(BridgeUnits::BRIDGE_UNITS_FROM_CUSTOM_SCALE);
+    }
+    request.set_bridge_config(BridgeConfiguration1::BRIDGE_CONFIGURATION1_FULL_BRIDGE);
+    request.set_voltage_excit_source(ExcitationSource::EXCITATION_SOURCE_INTERNAL);
+    request.set_voltage_excit_val(2.50);
+    request.set_nominal_bridge_resistance(350.00);
+    return request;
+  }
+
+  ::grpc::Status create_ai_bridge_chan(const CreateAIBridgeChanRequest& request, CreateAIBridgeChanResponse& response = ThrowawayResponse<CreateAIBridgeChanResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    auto status = stub()->CreateAIBridgeChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status create_ai_bridge_chan(double min_val, double max_val, CreateAIBridgeChanResponse& response = ThrowawayResponse<CreateAIBridgeChanResponse>::response())
+  {
+    auto request = create_ai_bridge_request(min_val, max_val);
+    return create_ai_bridge_chan(request, response);
+  }
+
   CreateAOVoltageChanRequest create_ao_voltage_chan_request(double min_val, double max_val, const std::string& name = "ao0")
   {
     CreateAOVoltageChanRequest request;
@@ -883,6 +959,24 @@ class NiDAQmxDriverApiTests : public Test {
       EXPECT_NE(driver_session_->name(), response.task().name());
       driver_session_ = std::make_unique<nidevice_grpc::Session>(response.task());
     }
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+::grpc::Status perform_bridge_shunt_cal_ex(PerformBridgeShuntCalExResponse & response)
+  {
+    ::grpc::ClientContext context;
+    PerformBridgeShuntCalExRequest request;
+    auto status = stub()->PerformBridgeShuntCalEx(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status perform_strain_shunt_cal_ex(PerformStrainShuntCalExResponse& response)
+  {
+    ::grpc::ClientContext context;
+    PerformStrainShuntCalExRequest request;
+    auto status = stub()->PerformStrainShuntCalEx(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
   }
@@ -2063,6 +2157,34 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
 
   EXPECT_SUCCESS(status, read_response);
   EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
+}
+
+TEST_F(NiDAQmxDriverApiTests, PerformBridgeShuntCalEx_Succeeds)
+{
+  const auto AI_MIN = -0.002;
+  const auto AI_MAX = 0.002;
+  create_ai_bridge_chan(AI_MIN, AI_MAX);
+  auto save_response = SaveTaskResponse{};
+  auto status = save_task(save_response);
+  EXPECT_SUCCESS(status, save_response);
+
+  auto response = PerformBridgeShuntCalExResponse{};
+  status =perform_bridge_shunt_cal_ex(response);
+  EXPECT_SUCCESS(status, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, PerformStrainShuntCalEx_Succeeds)
+{
+  const auto AI_MIN = -0.001;
+  const auto AI_MAX = 0.001;
+  create_ai_strain_gage_chan(AI_MIN, AI_MAX);
+  auto save_response = SaveTaskResponse{};
+  auto status = save_task(save_response);
+  EXPECT_SUCCESS(status, save_response);
+
+  auto response = PerformStrainShuntCalExResponse{};
+  status =perform_strain_shunt_cal_ex(response);
+  EXPECT_SUCCESS(status, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
