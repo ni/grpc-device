@@ -177,6 +177,42 @@ class NiDAQmxDriverApiTests : public Test {
     return create_ai_voltage_chan(request, response);
   }
 
+  CreateAIBridgeChanRequest create_ai_bridge_request(double min_val, double max_val, const std::string& custom_scale_name = "")
+  {
+    CreateAIBridgeChanRequest request;
+    set_request_session_name(request);
+    request.set_physical_channel("bridgeTester/ai0");
+    request.set_name_to_assign_to_channel("ai0");
+    request.set_min_val(min_val);
+    request.set_max_val(max_val);
+    if (custom_scale_name.empty()) {
+      request.set_units(BridgeUnits::BRIDGE_UNITS_VOLTS_PER_VOLT);
+    }
+    else {
+      request.set_custom_scale_name(custom_scale_name);
+      request.set_units(BridgeUnits::BRIDGE_UNITS_FROM_CUSTOM_SCALE);
+    }
+    request.set_bridge_config(BridgeConfiguration1::BRIDGE_CONFIGURATION1_FULL_BRIDGE);
+    request.set_voltage_excit_source(ExcitationSource::EXCITATION_SOURCE_INTERNAL);
+    request.set_voltage_excit_val(2.50);
+    request.set_nominal_bridge_resistance(350.00);
+    return request;
+  }
+
+  ::grpc::Status create_ai_bridge_chan(const CreateAIBridgeChanRequest& request, CreateAIBridgeChanResponse& response = ThrowawayResponse<CreateAIBridgeChanResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    auto status = stub()->CreateAIBridgeChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status create_ai_bridge_chan(double min_val, double max_val, CreateAIBridgeChanResponse& response = ThrowawayResponse<CreateAIBridgeChanResponse>::response())
+  {
+    auto request = create_ai_bridge_request(min_val, max_val);
+    return create_ai_bridge_chan(request, response);
+  }
+
   CreateAIStrainGageChanRequest create_ai_strain_gage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
   {
     CreateAIStrainGageChanRequest request;
@@ -215,6 +251,36 @@ class NiDAQmxDriverApiTests : public Test {
   {
     auto request = create_ai_strain_gage_request(min_val, max_val);
     return create_ai_strain_gage_chan(request, response);
+  }
+
+  CreateAIThrmcplChanRequest create_ai_thrmcpl_request(double min_val, double max_val, const std::string& custom_scale_name = "")
+  {
+    CreateAIThrmcplChanRequest request;
+    set_request_session_name(request);
+    request.set_physical_channel("cDAQ1Mod2/ai0");
+    request.set_name_to_assign_to_channel("ai0");
+    request.set_min_val(min_val);
+    request.set_max_val(max_val);
+    request.set_units(TemperatureUnits::TEMPERATURE_UNITS_DEG_C);
+    request.set_thermocouple_type(ThermocoupleType1::THERMOCOUPLE_TYPE1_J_TYPE_TC);
+    request.set_cjc_val(25.0);
+    request.set_cjc_channel("");
+    request.set_cjc_source(CJCSource1::CJC_SOURCE1_CONST_VAL);
+    return request;
+  }
+
+  ::grpc::Status create_ai_thrmcpl_chan(const CreateAIThrmcplChanRequest& request, CreateAIThrmcplChanResponse& response = ThrowawayResponse<CreateAIThrmcplChanResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    auto status = stub()->CreateAIThrmcplChan(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status create_ai_thrmcpl_chan(double min_val, double max_val, CreateAIThrmcplChanResponse& response = ThrowawayResponse<CreateAIThrmcplChanResponse>::response())
+  {
+    auto request = create_ai_thrmcpl_request(min_val, max_val);
+    return create_ai_thrmcpl_chan(request, response);
   }
 
   CreateAOVoltageChanRequest create_ao_voltage_chan_request(double min_val, double max_val, const std::string& name = "ao0")
@@ -929,10 +995,13 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
-  ::grpc::Status perform_bridge_offset_nulling_cal_ex(PerformBridgeOffsetNullingCalExResponse& response)
+  ::grpc::Status perform_bridge_offset_nulling_cal_ex(std::string channel, bool skipUnsupportedChannels, PerformBridgeOffsetNullingCalExResponse& response)
   {
     ::grpc::ClientContext context;
     PerformBridgeOffsetNullingCalExRequest request;
+    set_request_session_name(request);
+    request.set_channel(channel);
+    request.set_skip_unsupported_channels(skip_unsupported_channels);
     auto status = stub()->PerformBridgeOffsetNullingCalEx(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
@@ -971,10 +1040,13 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
-  ::grpc::Status perform_thrmcpl_lead_offset_nulling_cal(PerformThrmcplLeadOffsetNullingCalResponse& response)
+  ::grpc::Status perform_thrmcpl_lead_offset_nulling_cal(std::string channel, bool skipUnsupportedChannels, PerformThrmcplLeadOffsetNullingCalResponse& response)
   {
     ::grpc::ClientContext context;
     PerformThrmcplLeadOffsetNullingCalRequest request;
+    set_request_session_name(request);
+    request.set_channel(channel);
+    request.set_skip_unsupported_channels(skip_unsupported_channels);
     auto status = stub()->PerformThrmcplLeadOffsetNullingCal(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
@@ -2160,9 +2232,14 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
 
 TEST_F(NiDAQmxDriverApiTests, BridgeOffsetNullingCal_Succeeds)
 {
-  auto response = PerformBridgeOffsetNullingCalExResponse{};
-  auto status = perform_bridge_offset_nulling_cal_ex(response);
+  const auto AI_MIN = 0.0;
+  const auto AI_MAX = 1.0;
+  create_ai_bridge_chan(AI_MIN, AI_MAX);
 
+  std::string channel = "";
+  bool skip_unsupported_channels = false;
+  auto response = PerformBridgeOffsetNullingCalExResponse{};
+  auto status = perform_bridge_offset_nulling_cal_ex(channel, skip_unsupported_channels, response);
   EXPECT_SUCCESS(status, response);
 }
 
@@ -2194,6 +2271,12 @@ TEST_F(NiDAQmxDriverApiTests, UnsupportedDevice_PerformStrainShuntCalEx_ReturnsE
 
 TEST_F(NiDAQmxDriverApiTests, ThrmcplLeadOffsetNullingCal_Succeeds)
 {
+  const auto AI_MIN = 0.0;
+  const auto AI_MAX = 1.0;
+  create_ai_thrmcpl_chan(AI_MIN, AI_MAX);
+
+  std::string channel = "";
+  bool skip_unsupported_channels = false;
   auto response = PerformThrmcplLeadOffsetNullingCalResponse{};
   auto status = perform_thrmcpl_lead_offset_nulling_cal(response);
 
