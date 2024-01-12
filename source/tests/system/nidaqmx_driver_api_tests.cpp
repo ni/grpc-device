@@ -175,7 +175,7 @@ class NiDAQmxDriverApiTests : public Test {
     return create_ai_voltage_chan(request, response);
   }
 
-CreateAIStrainGageChanRequest create_ai_strain_gage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
+  CreateAIStrainGageChanRequest create_ai_strain_gage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
   {
     CreateAIStrainGageChanRequest request;
     set_request_session_name(request);
@@ -215,7 +215,7 @@ CreateAIStrainGageChanRequest create_ai_strain_gage_request(double min_val, doub
     return create_ai_strain_gage_chan(request, response);
   }
 
-CreateAIBridgeChanRequest create_ai_bridge_request(double min_val, double max_val, const std::string& custom_scale_name = "")
+  CreateAIBridgeChanRequest create_ai_bridge_request(double min_val, double max_val, const std::string& custom_scale_name = "")
   {
     CreateAIBridgeChanRequest request;
     set_request_session_name(request);
@@ -963,7 +963,7 @@ CreateAIBridgeChanRequest create_ai_bridge_request(double min_val, double max_va
     return status;
   }
 
-::grpc::Status perform_bridge_shunt_cal_ex(PerformBridgeShuntCalExResponse & response)
+  ::grpc::Status perform_bridge_shunt_cal_ex(PerformBridgeShuntCalExResponse & response)
   {
     ::grpc::ClientContext context;
     PerformBridgeShuntCalExRequest request;
