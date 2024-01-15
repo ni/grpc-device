@@ -48,6 +48,8 @@ constexpr auto EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVI
 constexpr auto CANNOT_UNREGISTER_DAQMX_SOFTWARE_EVENT_WHILE_TASK_IS_RUNNING_ERROR = -200986;
 constexpr auto STRAIN_SHUNT_CAL_NOT_SUPPORTED_ERROR = -201203;
 constexpr auto BRIDGE_SHUNT_CAL_NOT_SUPPORTED_ERROR = -201204;
+constexpr auto THRMCPL_LEAD_OFFSET_NULLING_CAL_NOT_SUPPORTED_ERROR = -201375;
+constexpr auto BRIDGE_OFFSET_NULLING_CAL_NOT_SUPPORTED_ERROR = -200696;
 
 // Creates a static TResponse instance that can be used as a default/in-line value (because it's not a temporary).
 template <typename TResponse>
@@ -865,23 +867,6 @@ class NiDAQmxDriverApiTests : public Test {
 
     request.set_pre_scaled_units(UnitsPreScaled::UNITS_PRE_SCALED_VOLTS);
     auto status = stub()->CreatePolynomialScale(&context, request, &response);
-    client::raise_if_error(status, context);
-    return status;
-  }
-
-  ::grpc::Status create_ai_thrmcpl_chan(double min_val, double max_val, CreateAIThrmcplChanResponse& response)
-  {
-    ::grpc::ClientContext context;
-    CreateAIThrmcplChanRequest request;
-    set_request_session_name(request);
-    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
-    request.set_units(TemperatureUnits::TEMPERATURE_UNITS_DEG_C);
-    request.set_min_val(min_val);
-    request.set_max_val(max_val);
-    request.set_thermocouple_type(ThermocoupleType1::THERMOCOUPLE_TYPE1_J_TYPE_TC);
-    request.set_cjc_source(CJCSource1::CJC_SOURCE1_CONST_VAL);
-    request.set_cjc_val(25.0);
-    auto status = stub()->CreateAIThrmcplChan(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
   }
@@ -2230,17 +2215,18 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
 }
 
-TEST_F(NiDAQmxDriverApiTests, BridgeOffsetNullingCal_Succeeds)
+TEST_F(NiDAQmxDriverApiTests, UnsupportedChannelType_BridgeOffsetNullingCal_ReturnsError)
 {
   const auto AI_MIN = 0.0;
   const auto AI_MAX = 1.0;
-  create_ai_bridge_chan(AI_MIN, AI_MAX);
+  create_ai_voltage_chan(AI_MIN, AI_MAX);
 
   std::string channel = "";
   bool skip_unsupported_channels = false;
-  auto response = PerformBridgeOffsetNullingCalExResponse{};
-  auto status = perform_bridge_offset_nulling_cal_ex(channel, skip_unsupported_channels, response);
-  EXPECT_SUCCESS(status, response);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto response = PerformBridgeOffsetNullingCalExResponse{};
+    auto status = perform_bridge_offset_nulling_cal_ex(channel, skip_unsupported_channels, response);
+  }, BRIDGE_OFFSET_NULLING_CAL_NOT_SUPPORTED_ERROR);
 }
 
 // AI Voltage Channel doesn't support Bridge Shunt Calibration
@@ -2269,18 +2255,19 @@ TEST_F(NiDAQmxDriverApiTests, UnsupportedDevice_PerformStrainShuntCalEx_ReturnsE
   }, STRAIN_SHUNT_CAL_NOT_SUPPORTED_ERROR);
 }
 
-TEST_F(NiDAQmxDriverApiTests, ThrmcplLeadOffsetNullingCal_Succeeds)
+// X Series doesn't support thermocouple offset nulling
+TEST_F(NiDAQmxDriverApiTests, UnsupportedDevice_ThrmcplLeadOffsetNullingCal_ReturnsError)
 {
   const auto AI_MIN = 0.0;
-  const auto AI_MAX = 1.0;
+  const auto AI_MAX = 100.0;
   create_ai_thrmcpl_chan(AI_MIN, AI_MAX);
 
   std::string channel = "";
   bool skip_unsupported_channels = false;
-  auto response = PerformThrmcplLeadOffsetNullingCalResponse{};
-  auto status = perform_thrmcpl_lead_offset_nulling_cal(response);
-
-  EXPECT_SUCCESS(status, response);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto response = PerformThrmcplLeadOffsetNullingCalResponse{};
+    auto status = perform_thrmcpl_lead_offset_nulling_cal(channel, skip_unsupported_channels, response);
+  }, THRMCPL_LEAD_OFFSET_NULLING_CAL_NOT_SUPPORTED_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
