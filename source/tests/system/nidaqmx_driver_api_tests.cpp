@@ -986,7 +986,7 @@ class NiDAQmxDriverApiTests : public Test {
     PerformBridgeOffsetNullingCalExRequest request;
     set_request_session_name(request);
     request.set_channel(channel);
-    request.set_skip_unsupported_channels(skip_unsupported_channels);
+    request.set_skip_unsupported_channels(skipUnsupportedChannels);
     auto status = stub()->PerformBridgeOffsetNullingCalEx(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
@@ -1031,7 +1031,7 @@ class NiDAQmxDriverApiTests : public Test {
     PerformThrmcplLeadOffsetNullingCalRequest request;
     set_request_session_name(request);
     request.set_channel(channel);
-    request.set_skip_unsupported_channels(skip_unsupported_channels);
+    request.set_skip_unsupported_channels(skipUnsupportedChannels);
     auto status = stub()->PerformThrmcplLeadOffsetNullingCal(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
