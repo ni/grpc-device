@@ -183,7 +183,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     CreateAIBridgeChanRequest request;
     set_request_session_name(request);
-    request.set_physical_channel("bridgeTester/ai0");
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
     request.set_name_to_assign_to_channel("ai0");
     request.set_min_val(min_val);
     request.set_max_val(max_val);
@@ -259,7 +259,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     CreateAIThrmcplChanRequest request;
     set_request_session_name(request);
-    request.set_physical_channel("cDAQ1Mod2/ai0");
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
     request.set_name_to_assign_to_channel("ai0");
     request.set_min_val(min_val);
     request.set_max_val(max_val);
