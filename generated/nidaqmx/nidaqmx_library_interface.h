@@ -174,6 +174,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value) = 0;
   virtual int32 GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value) = 0;
+  virtual int32 GetExtCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
   virtual int32 GetExtendedErrorInfo(char errorString[], uInt32 bufferSize) = 0;
   virtual int32 GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetFirstSampTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
@@ -295,6 +296,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ResetTrigAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetWatchdogAttribute(TaskHandle task, const char lines[], int32 attribute) = 0;
   virtual int32 ResetWriteAttribute(TaskHandle task, int32 attribute) = 0;
+  virtual int32 RestoreLastExtCalConst(const char deviceName[]) = 0;
   virtual int32 SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options) = 0;
   virtual int32 SaveScale(const char scaleName[], const char saveAs[], const char author[], uInt32 options) = 0;
   virtual int32 SaveTask(TaskHandle task, const char saveAs[], const char author[], uInt32 options) = 0;

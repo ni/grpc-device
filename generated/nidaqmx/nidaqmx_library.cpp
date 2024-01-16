@@ -190,6 +190,7 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.GetExportedSignalAttributeInt32 = reinterpret_cast<GetExportedSignalAttributeInt32Ptr>(shared_library_->get_function_pointer("DAQmxGetExportedSignalAttribute"));
   function_pointers_.GetExportedSignalAttributeString = reinterpret_cast<GetExportedSignalAttributeStringPtr>(shared_library_->get_function_pointer("DAQmxGetExportedSignalAttribute"));
   function_pointers_.GetExportedSignalAttributeUInt32 = reinterpret_cast<GetExportedSignalAttributeUInt32Ptr>(shared_library_->get_function_pointer("DAQmxGetExportedSignalAttribute"));
+  function_pointers_.GetExtCalLastDateAndTime = reinterpret_cast<GetExtCalLastDateAndTimePtr>(shared_library_->get_function_pointer("DAQmxGetExtCalLastDateAndTime"));
   function_pointers_.GetExtendedErrorInfo = reinterpret_cast<GetExtendedErrorInfoPtr>(shared_library_->get_function_pointer("DAQmxGetExtendedErrorInfo"));
   function_pointers_.GetFirstSampClkWhen = reinterpret_cast<GetFirstSampClkWhenPtr>(shared_library_->get_function_pointer("DAQmxGetFirstSampClkWhen"));
   function_pointers_.GetFirstSampTimestampVal = reinterpret_cast<GetFirstSampTimestampValPtr>(shared_library_->get_function_pointer("DAQmxGetFirstSampTimestampVal"));
@@ -311,6 +312,7 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.ResetTrigAttribute = reinterpret_cast<ResetTrigAttributePtr>(shared_library_->get_function_pointer("DAQmxResetTrigAttribute"));
   function_pointers_.ResetWatchdogAttribute = reinterpret_cast<ResetWatchdogAttributePtr>(shared_library_->get_function_pointer("DAQmxResetWatchdogAttribute"));
   function_pointers_.ResetWriteAttribute = reinterpret_cast<ResetWriteAttributePtr>(shared_library_->get_function_pointer("DAQmxResetWriteAttribute"));
+  function_pointers_.RestoreLastExtCalConst = reinterpret_cast<RestoreLastExtCalConstPtr>(shared_library_->get_function_pointer("DAQmxRestoreLastExtCalConst"));
   function_pointers_.SaveGlobalChan = reinterpret_cast<SaveGlobalChanPtr>(shared_library_->get_function_pointer("DAQmxSaveGlobalChan"));
   function_pointers_.SaveScale = reinterpret_cast<SaveScalePtr>(shared_library_->get_function_pointer("DAQmxSaveScale"));
   function_pointers_.SaveTask = reinterpret_cast<SaveTaskPtr>(shared_library_->get_function_pointer("DAQmxSaveTask"));
@@ -1737,6 +1739,14 @@ int32 NiDAQmxLibrary::GetExportedSignalAttributeUInt32(TaskHandle task, int32 at
   return function_pointers_.GetExportedSignalAttributeUInt32(task, attribute, value);
 }
 
+int32 NiDAQmxLibrary::GetExtCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute)
+{
+  if (!function_pointers_.GetExtCalLastDateAndTime) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExtCalLastDateAndTime.");
+  }
+  return function_pointers_.GetExtCalLastDateAndTime(deviceName, year, month, day, hour, minute);
+}
+
 int32 NiDAQmxLibrary::GetExtendedErrorInfo(char errorString[], uInt32 bufferSize)
 {
   if (!function_pointers_.GetExtendedErrorInfo) {
@@ -2703,6 +2713,14 @@ int32 NiDAQmxLibrary::ResetWriteAttribute(TaskHandle task, int32 attribute)
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetWriteAttribute.");
   }
   return function_pointers_.ResetWriteAttribute(task, attribute);
+}
+
+int32 NiDAQmxLibrary::RestoreLastExtCalConst(const char deviceName[])
+{
+  if (!function_pointers_.RestoreLastExtCalConst) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxRestoreLastExtCalConst.");
+  }
+  return function_pointers_.RestoreLastExtCalConst(deviceName);
 }
 
 int32 NiDAQmxLibrary::SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options)

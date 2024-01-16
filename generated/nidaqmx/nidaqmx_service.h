@@ -206,6 +206,7 @@ public:
   ::grpc::Status GetExportedSignalAttributeInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeInt32Request* request, GetExportedSignalAttributeInt32Response* response) override;
   ::grpc::Status GetExportedSignalAttributeString(::grpc::ServerContext* context, const GetExportedSignalAttributeStringRequest* request, GetExportedSignalAttributeStringResponse* response) override;
   ::grpc::Status GetExportedSignalAttributeUInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeUInt32Request* request, GetExportedSignalAttributeUInt32Response* response) override;
+  ::grpc::Status GetExtCalLastDateAndTime(::grpc::ServerContext* context, const GetExtCalLastDateAndTimeRequest* request, GetExtCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetFirstSampClkWhen(::grpc::ServerContext* context, const GetFirstSampClkWhenRequest* request, GetFirstSampClkWhenResponse* response) override;
   ::grpc::Status GetFirstSampTimestampVal(::grpc::ServerContext* context, const GetFirstSampTimestampValRequest* request, GetFirstSampTimestampValResponse* response) override;
   ::grpc::Status GetNthTaskChannel(::grpc::ServerContext* context, const GetNthTaskChannelRequest* request, GetNthTaskChannelResponse* response) override;
@@ -326,6 +327,7 @@ public:
   ::grpc::Status ResetTrigAttribute(::grpc::ServerContext* context, const ResetTrigAttributeRequest* request, ResetTrigAttributeResponse* response) override;
   ::grpc::Status ResetWatchdogAttribute(::grpc::ServerContext* context, const ResetWatchdogAttributeRequest* request, ResetWatchdogAttributeResponse* response) override;
   ::grpc::Status ResetWriteAttribute(::grpc::ServerContext* context, const ResetWriteAttributeRequest* request, ResetWriteAttributeResponse* response) override;
+  ::grpc::Status RestoreLastExtCalConst(::grpc::ServerContext* context, const RestoreLastExtCalConstRequest* request, RestoreLastExtCalConstResponse* response) override;
   ::grpc::Status SaveGlobalChan(::grpc::ServerContext* context, const SaveGlobalChanRequest* request, SaveGlobalChanResponse* response) override;
   ::grpc::Status SaveScale(::grpc::ServerContext* context, const SaveScaleRequest* request, SaveScaleResponse* response) override;
   ::grpc::Status SaveTask(::grpc::ServerContext* context, const SaveTaskRequest* request, SaveTaskResponse* response) override;

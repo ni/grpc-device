@@ -185,6 +185,7 @@ GetExportedSignalAttributeDoubleResponse get_exported_signal_attribute_double(co
 GetExportedSignalAttributeInt32Response get_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalInt32Attribute, pb::int32>& attribute);
 GetExportedSignalAttributeStringResponse get_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalStringAttribute, pb::int32>& attribute);
 GetExportedSignalAttributeUInt32Response get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalUInt32Attribute, pb::int32>& attribute);
+GetExtCalLastDateAndTimeResponse get_ext_cal_last_date_and_time(const StubPtr& stub, const std::string& device_name);
 GetFirstSampClkWhenResponse get_first_samp_clk_when(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetFirstSampTimestampValResponse get_first_samp_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetNthTaskChannelResponse get_nth_task_channel(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::uint32& index);
@@ -305,6 +306,7 @@ ResetTimingAttributeExResponse reset_timing_attribute_ex(const StubPtr& stub, co
 ResetTrigAttributeResponse reset_trig_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerResetAttribute, pb::int32>& attribute);
 ResetWatchdogAttributeResponse reset_watchdog_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& lines, const simple_variant<WatchdogResetAttribute, pb::int32>& attribute);
 ResetWriteAttributeResponse reset_write_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteResetAttribute, pb::int32>& attribute);
+RestoreLastExtCalConstResponse restore_last_ext_cal_const(const StubPtr& stub, const std::string& device_name);
 SaveGlobalChanResponse save_global_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel_name, const std::string& save_as, const std::string& author, const simple_variant<SaveOptions, pb::uint32>& options);
 SaveScaleResponse save_scale(const StubPtr& stub, const std::string& scale_name, const std::string& save_as, const std::string& author, const simple_variant<SaveOptions, pb::uint32>& options);
 SaveTaskResponse save_task(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& save_as, const std::string& author, const simple_variant<SaveOptions, pb::uint32>& options);

@@ -5478,6 +5478,23 @@ get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::S
   return response;
 }
 
+GetExtCalLastDateAndTimeResponse
+get_ext_cal_last_date_and_time(const StubPtr& stub, const std::string& device_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetExtCalLastDateAndTimeRequest{};
+  request.set_device_name(device_name);
+
+  auto response = GetExtCalLastDateAndTimeResponse{};
+
+  raise_if_error(
+      stub->GetExtCalLastDateAndTime(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetFirstSampClkWhenResponse
 get_first_samp_clk_when(const StubPtr& stub, const nidevice_grpc::Session& task)
 {
@@ -8316,6 +8333,23 @@ reset_write_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, c
 
   raise_if_error(
       stub->ResetWriteAttribute(&context, request, &response),
+      context);
+
+  return response;
+}
+
+RestoreLastExtCalConstResponse
+restore_last_ext_cal_const(const StubPtr& stub, const std::string& device_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RestoreLastExtCalConstRequest{};
+  request.set_device_name(device_name);
+
+  auto response = RestoreLastExtCalConstResponse{};
+
+  raise_if_error(
+      stub->RestoreLastExtCalConst(&context, request, &response),
       context);
 
   return response;

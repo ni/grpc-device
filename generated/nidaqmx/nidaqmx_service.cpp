@@ -9306,6 +9306,38 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetExtCalLastDateAndTime(::grpc::ServerContext* context, const GetExtCalLastDateAndTimeRequest* request, GetExtCalLastDateAndTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto device_name_mbcs = convert_from_grpc<std::string>(request->device_name());
+      auto device_name = device_name_mbcs.c_str();
+      uInt32 year {};
+      uInt32 month {};
+      uInt32 day {};
+      uInt32 hour {};
+      uInt32 minute {};
+      auto status = library_->GetExtCalLastDateAndTime(device_name, &year, &month, &day, &hour, &minute);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetFirstSampClkWhen(::grpc::ServerContext* context, const GetFirstSampClkWhenRequest* request, GetFirstSampClkWhenResponse* response)
   {
     if (context->IsCancelled()) {
@@ -14691,6 +14723,28 @@ namespace nidaqmx_grpc {
       auto status = library_->ResetWriteAttribute(task, attribute);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::RestoreLastExtCalConst(::grpc::ServerContext* context, const RestoreLastExtCalConstRequest* request, RestoreLastExtCalConstResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto device_name_mbcs = convert_from_grpc<std::string>(request->device_name());
+      auto device_name = device_name_mbcs.c_str();
+      auto status = library_->RestoreLastExtCalConst(device_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
