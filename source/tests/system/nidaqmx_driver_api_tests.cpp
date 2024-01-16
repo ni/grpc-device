@@ -46,6 +46,8 @@ constexpr auto DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR = -201450;
 constexpr auto EVERY_N_SAMPLES_EVENT_NOT_SUPPORTED_FOR_NON_BUFFERED_TASKS = -200848;
 constexpr auto EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR = -200980;
 constexpr auto CANNOT_UNREGISTER_DAQMX_SOFTWARE_EVENT_WHILE_TASK_IS_RUNNING_ERROR = -200986;
+constexpr auto MEASUREMENT_TYPE_NOT_SUPPORTED_BY_SELECTED_PHYSICAL_CHANNEL_ERROR = -200431;
+constexpr auto TASK_SPECIFIED_INVALID_ERROR = -200088;
 
 // Creates a static TResponse instance that can be used as a default/in-line value (because it's not a temporary).
 template <typename TResponse>
@@ -193,7 +195,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_strain_config(StrainGageBridgeType1::STRAIN_GAGE_BRIDGE_TYPE1_FULL_BRIDGE_I);
     request.set_initial_bridge_voltage(0.00);
     request.set_lead_wire_resistance(0.00);
-    request.set_voltage_excit_source(ExcitationSource::EXCITATION_SOURCE_INTERNAL);
+    request.set_voltage_excit_source(ExcitationSource::EXCITATION_SOURCE_EXTERNAL);
     request.set_voltage_excit_val(2.50);
     request.set_gage_factor(2.00);
     request.set_poisson_ratio(0.30);
@@ -967,6 +969,13 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     PerformBridgeShuntCalExRequest request;
+    request.set_channel("");
+    request.set_shunt_resistor_value(100000);
+    request.set_shunt_resistor_location(ShuntElementLocation::SHUNT_ELEMENT_LOCATION_R3);
+    request.set_shunt_resistor_select(ShuntCalSelect::SHUNT_CAL_SELECT_A);
+    request.set_shunt_resistor_source(ShuntCalSource::SHUNT_CAL_SOURCE_DEFAULT);
+    request.set_bridge_resistance(120);
+    request.set_skip_unsupported_channels(true);
     auto status = stub()->PerformBridgeShuntCalEx(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
@@ -976,6 +985,12 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     PerformStrainShuntCalExRequest request;
+    request.set_channel("");
+    request.set_shunt_resistor_value(100000);
+    request.set_shunt_resistor_location(ShuntElementLocation::SHUNT_ELEMENT_LOCATION_R3);
+    request.set_shunt_resistor_select(ShuntCalSelect::SHUNT_CAL_SELECT_A);
+    request.set_shunt_resistor_source(ShuntCalSource::SHUNT_CAL_SOURCE_DEFAULT);
+    request.set_skip_unsupported_channels(true);
     auto status = stub()->PerformStrainShuntCalEx(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
@@ -2161,16 +2176,18 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
 
 TEST_F(NiDAQmxDriverApiTests, PerformBridgeShuntCalEx_Succeeds)
 {
-  const auto AI_MIN = -0.002;
-  const auto AI_MAX = 0.002;
-  create_ai_bridge_chan(AI_MIN, AI_MAX);
-  auto save_response = SaveTaskResponse{};
-  auto status = save_task(save_response);
-  EXPECT_SUCCESS(status, save_response);
+  EXPECT_THROW_DRIVER_ERROR({
+    const auto AI_MIN = -0.002;
+    const auto AI_MAX = 0.002;
+    create_ai_bridge_chan(AI_MIN, AI_MAX);
+    auto save_response = SaveTaskResponse{};
+    auto status = save_task(save_response);
+  }, MEASUREMENT_TYPE_NOT_SUPPORTED_BY_SELECTED_PHYSICAL_CHANNEL_ERROR);
 
-  auto response = PerformBridgeShuntCalExResponse{};
-  status =perform_bridge_shunt_cal_ex(response);
-  EXPECT_SUCCESS(status, response);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto response = PerformBridgeShuntCalExResponse{};
+    auto status = perform_bridge_shunt_cal_ex(response);
+  }, TASK_SPECIFIED_INVALID_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, PerformStrainShuntCalEx_Succeeds)
@@ -2182,9 +2199,10 @@ TEST_F(NiDAQmxDriverApiTests, PerformStrainShuntCalEx_Succeeds)
   auto status = save_task(save_response);
   EXPECT_SUCCESS(status, save_response);
 
-  auto response = PerformStrainShuntCalExResponse{};
-  status =perform_strain_shunt_cal_ex(response);
-  EXPECT_SUCCESS(status, response);
+  EXPECT_THROW_DRIVER_ERROR({
+    auto response = PerformStrainShuntCalExResponse{};
+    status = perform_strain_shunt_cal_ex(response);
+  }, TASK_SPECIFIED_INVALID_ERROR);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
