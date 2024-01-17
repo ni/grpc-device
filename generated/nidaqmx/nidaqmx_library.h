@@ -184,6 +184,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value) override;
   int32 GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) override;
   int32 GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value) override;
+  int32 GetExtCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) override;
   int32 GetExtendedErrorInfo(char errorString[], uInt32 bufferSize) override;
   int32 GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data) override;
   int32 GetFirstSampTimestampVal(TaskHandle task, CVIAbsoluteTime* data) override;
@@ -305,6 +306,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ResetTrigAttribute(TaskHandle task, int32 attribute) override;
   int32 ResetWatchdogAttribute(TaskHandle task, const char lines[], int32 attribute) override;
   int32 ResetWriteAttribute(TaskHandle task, int32 attribute) override;
+  int32 RestoreLastExtCalConst(const char deviceName[]) override;
   int32 SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options) override;
   int32 SaveScale(const char scaleName[], const char saveAs[], const char author[], uInt32 options) override;
   int32 SaveTask(TaskHandle task, const char saveAs[], const char author[], uInt32 options) override;
@@ -579,6 +581,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetExportedSignalAttributeInt32Ptr = decltype(&DAQmxGetExportedSignalAttribute);
   using GetExportedSignalAttributeStringPtr = decltype(&DAQmxGetExportedSignalAttribute);
   using GetExportedSignalAttributeUInt32Ptr = decltype(&DAQmxGetExportedSignalAttribute);
+  using GetExtCalLastDateAndTimePtr = decltype(&DAQmxGetExtCalLastDateAndTime);
   using GetExtendedErrorInfoPtr = int32 (*)(char errorString[], uInt32 bufferSize);
   using GetFirstSampClkWhenPtr = decltype(&DAQmxGetFirstSampClkWhen);
   using GetFirstSampTimestampValPtr = decltype(&DAQmxGetFirstSampTimestampVal);
@@ -700,6 +703,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ResetTrigAttributePtr = decltype(&DAQmxResetTrigAttribute);
   using ResetWatchdogAttributePtr = decltype(&DAQmxResetWatchdogAttribute);
   using ResetWriteAttributePtr = decltype(&DAQmxResetWriteAttribute);
+  using RestoreLastExtCalConstPtr = decltype(&DAQmxRestoreLastExtCalConst);
   using SaveGlobalChanPtr = decltype(&DAQmxSaveGlobalChan);
   using SaveScalePtr = decltype(&DAQmxSaveScale);
   using SaveTaskPtr = decltype(&DAQmxSaveTask);
@@ -974,6 +978,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetExportedSignalAttributeInt32Ptr GetExportedSignalAttributeInt32;
     GetExportedSignalAttributeStringPtr GetExportedSignalAttributeString;
     GetExportedSignalAttributeUInt32Ptr GetExportedSignalAttributeUInt32;
+    GetExtCalLastDateAndTimePtr GetExtCalLastDateAndTime;
     GetExtendedErrorInfoPtr GetExtendedErrorInfo;
     GetFirstSampClkWhenPtr GetFirstSampClkWhen;
     GetFirstSampTimestampValPtr GetFirstSampTimestampVal;
@@ -1095,6 +1100,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ResetTrigAttributePtr ResetTrigAttribute;
     ResetWatchdogAttributePtr ResetWatchdogAttribute;
     ResetWriteAttributePtr ResetWriteAttribute;
+    RestoreLastExtCalConstPtr RestoreLastExtCalConst;
     SaveGlobalChanPtr SaveGlobalChan;
     SaveScalePtr SaveScale;
     SaveTaskPtr SaveTask;

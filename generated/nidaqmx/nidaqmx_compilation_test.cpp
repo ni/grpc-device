@@ -822,6 +822,11 @@ int32 GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32*
   return DAQmxGetExportedSignalAttribute(task, attribute, value);
 }
 
+int32 GetExtCalLastDateAndTime(const char deviceName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute)
+{
+  return DAQmxGetExtCalLastDateAndTime(deviceName, year, month, day, hour, minute);
+}
+
 int32 GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data)
 {
   return DAQmxGetFirstSampClkWhen(task, data);
@@ -1420,6 +1425,11 @@ int32 ResetWatchdogAttribute(TaskHandle task, const char lines[], int32 attribut
 int32 ResetWriteAttribute(TaskHandle task, int32 attribute)
 {
   return DAQmxResetWriteAttribute(task, attribute);
+}
+
+int32 RestoreLastExtCalConst(const char deviceName[])
+{
+  return DAQmxRestoreLastExtCalConst(deviceName);
 }
 
 int32 SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options)
