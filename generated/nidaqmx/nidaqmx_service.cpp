@@ -12939,6 +12939,155 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::PerformBridgeShuntCalEx(::grpc::ServerContext* context, const PerformBridgeShuntCalExRequest* request, PerformBridgeShuntCalExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      auto channel_mbcs = convert_from_grpc<std::string>(request->channel());
+      auto channel = channel_mbcs.c_str();
+      float64 shunt_resistor_value = request->shunt_resistor_value();
+      int32 shunt_resistor_location;
+      switch (request->shunt_resistor_location_enum_case()) {
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorLocationEnumCase::kShuntResistorLocation: {
+          shunt_resistor_location = static_cast<int32>(request->shunt_resistor_location());
+          break;
+        }
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorLocationEnumCase::kShuntResistorLocationRaw: {
+          shunt_resistor_location = static_cast<int32>(request->shunt_resistor_location_raw());
+          break;
+        }
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorLocationEnumCase::SHUNT_RESISTOR_LOCATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for shunt_resistor_location was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 shunt_resistor_select;
+      switch (request->shunt_resistor_select_enum_case()) {
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorSelectEnumCase::kShuntResistorSelect: {
+          shunt_resistor_select = static_cast<int32>(request->shunt_resistor_select());
+          break;
+        }
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorSelectEnumCase::kShuntResistorSelectRaw: {
+          shunt_resistor_select = static_cast<int32>(request->shunt_resistor_select_raw());
+          break;
+        }
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorSelectEnumCase::SHUNT_RESISTOR_SELECT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for shunt_resistor_select was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 shunt_resistor_source;
+      switch (request->shunt_resistor_source_enum_case()) {
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorSourceEnumCase::kShuntResistorSource: {
+          shunt_resistor_source = static_cast<int32>(request->shunt_resistor_source());
+          break;
+        }
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorSourceEnumCase::kShuntResistorSourceRaw: {
+          shunt_resistor_source = static_cast<int32>(request->shunt_resistor_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::PerformBridgeShuntCalExRequest::ShuntResistorSourceEnumCase::SHUNT_RESISTOR_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for shunt_resistor_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 bridge_resistance = request->bridge_resistance();
+      bool32 skip_unsupported_channels = request->skip_unsupported_channels();
+      auto status = library_->PerformBridgeShuntCalEx(task, channel, shunt_resistor_value, shunt_resistor_location, shunt_resistor_select, shunt_resistor_source, bridge_resistance, skip_unsupported_channels);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::PerformStrainShuntCalEx(::grpc::ServerContext* context, const PerformStrainShuntCalExRequest* request, PerformStrainShuntCalExResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      auto channel_mbcs = convert_from_grpc<std::string>(request->channel());
+      auto channel = channel_mbcs.c_str();
+      float64 shunt_resistor_value = request->shunt_resistor_value();
+      int32 shunt_resistor_location;
+      switch (request->shunt_resistor_location_enum_case()) {
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorLocationEnumCase::kShuntResistorLocation: {
+          shunt_resistor_location = static_cast<int32>(request->shunt_resistor_location());
+          break;
+        }
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorLocationEnumCase::kShuntResistorLocationRaw: {
+          shunt_resistor_location = static_cast<int32>(request->shunt_resistor_location_raw());
+          break;
+        }
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorLocationEnumCase::SHUNT_RESISTOR_LOCATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for shunt_resistor_location was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 shunt_resistor_select;
+      switch (request->shunt_resistor_select_enum_case()) {
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorSelectEnumCase::kShuntResistorSelect: {
+          shunt_resistor_select = static_cast<int32>(request->shunt_resistor_select());
+          break;
+        }
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorSelectEnumCase::kShuntResistorSelectRaw: {
+          shunt_resistor_select = static_cast<int32>(request->shunt_resistor_select_raw());
+          break;
+        }
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorSelectEnumCase::SHUNT_RESISTOR_SELECT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for shunt_resistor_select was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 shunt_resistor_source;
+      switch (request->shunt_resistor_source_enum_case()) {
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorSourceEnumCase::kShuntResistorSource: {
+          shunt_resistor_source = static_cast<int32>(request->shunt_resistor_source());
+          break;
+        }
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorSourceEnumCase::kShuntResistorSourceRaw: {
+          shunt_resistor_source = static_cast<int32>(request->shunt_resistor_source_raw());
+          break;
+        }
+        case nidaqmx_grpc::PerformStrainShuntCalExRequest::ShuntResistorSourceEnumCase::SHUNT_RESISTOR_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for shunt_resistor_source was not specified or out of range");
+          break;
+        }
+      }
+
+      bool32 skip_unsupported_channels = request->skip_unsupported_channels();
+      auto status = library_->PerformStrainShuntCalEx(task, channel, shunt_resistor_value, shunt_resistor_location, shunt_resistor_select, shunt_resistor_source, skip_unsupported_channels);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ReadAnalogF64(::grpc::ServerContext* context, const ReadAnalogF64Request* request, ReadAnalogF64Response* response)
   {
     if (context->IsCancelled()) {

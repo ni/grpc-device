@@ -7337,6 +7337,95 @@ load_task(const StubPtr& stub, const std::string& session_name, const nidevice_g
   return response;
 }
 
+PerformBridgeShuntCalExResponse
+perform_bridge_shunt_cal_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const double& shunt_resistor_value, const simple_variant<ShuntElementLocation, pb::int32>& shunt_resistor_location, const simple_variant<ShuntCalSelect, pb::int32>& shunt_resistor_select, const simple_variant<ShuntCalSource, pb::int32>& shunt_resistor_source, const double& bridge_resistance, const bool& skip_unsupported_channels)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformBridgeShuntCalExRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_channel(channel);
+  request.set_shunt_resistor_value(shunt_resistor_value);
+  const auto shunt_resistor_location_ptr = shunt_resistor_location.get_if<ShuntElementLocation>();
+  const auto shunt_resistor_location_raw_ptr = shunt_resistor_location.get_if<pb::int32>();
+  if (shunt_resistor_location_ptr) {
+    request.set_shunt_resistor_location(*shunt_resistor_location_ptr);
+  }
+  else if (shunt_resistor_location_raw_ptr) {
+    request.set_shunt_resistor_location_raw(*shunt_resistor_location_raw_ptr);
+  }
+  const auto shunt_resistor_select_ptr = shunt_resistor_select.get_if<ShuntCalSelect>();
+  const auto shunt_resistor_select_raw_ptr = shunt_resistor_select.get_if<pb::int32>();
+  if (shunt_resistor_select_ptr) {
+    request.set_shunt_resistor_select(*shunt_resistor_select_ptr);
+  }
+  else if (shunt_resistor_select_raw_ptr) {
+    request.set_shunt_resistor_select_raw(*shunt_resistor_select_raw_ptr);
+  }
+  const auto shunt_resistor_source_ptr = shunt_resistor_source.get_if<ShuntCalSource>();
+  const auto shunt_resistor_source_raw_ptr = shunt_resistor_source.get_if<pb::int32>();
+  if (shunt_resistor_source_ptr) {
+    request.set_shunt_resistor_source(*shunt_resistor_source_ptr);
+  }
+  else if (shunt_resistor_source_raw_ptr) {
+    request.set_shunt_resistor_source_raw(*shunt_resistor_source_raw_ptr);
+  }
+  request.set_bridge_resistance(bridge_resistance);
+  request.set_skip_unsupported_channels(skip_unsupported_channels);
+
+  auto response = PerformBridgeShuntCalExResponse{};
+
+  raise_if_error(
+      stub->PerformBridgeShuntCalEx(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PerformStrainShuntCalExResponse
+perform_strain_shunt_cal_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const double& shunt_resistor_value, const simple_variant<ShuntElementLocation, pb::int32>& shunt_resistor_location, const simple_variant<ShuntCalSelect, pb::int32>& shunt_resistor_select, const simple_variant<ShuntCalSource, pb::int32>& shunt_resistor_source, const bool& skip_unsupported_channels)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformStrainShuntCalExRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_channel(channel);
+  request.set_shunt_resistor_value(shunt_resistor_value);
+  const auto shunt_resistor_location_ptr = shunt_resistor_location.get_if<ShuntElementLocation>();
+  const auto shunt_resistor_location_raw_ptr = shunt_resistor_location.get_if<pb::int32>();
+  if (shunt_resistor_location_ptr) {
+    request.set_shunt_resistor_location(*shunt_resistor_location_ptr);
+  }
+  else if (shunt_resistor_location_raw_ptr) {
+    request.set_shunt_resistor_location_raw(*shunt_resistor_location_raw_ptr);
+  }
+  const auto shunt_resistor_select_ptr = shunt_resistor_select.get_if<ShuntCalSelect>();
+  const auto shunt_resistor_select_raw_ptr = shunt_resistor_select.get_if<pb::int32>();
+  if (shunt_resistor_select_ptr) {
+    request.set_shunt_resistor_select(*shunt_resistor_select_ptr);
+  }
+  else if (shunt_resistor_select_raw_ptr) {
+    request.set_shunt_resistor_select_raw(*shunt_resistor_select_raw_ptr);
+  }
+  const auto shunt_resistor_source_ptr = shunt_resistor_source.get_if<ShuntCalSource>();
+  const auto shunt_resistor_source_raw_ptr = shunt_resistor_source.get_if<pb::int32>();
+  if (shunt_resistor_source_ptr) {
+    request.set_shunt_resistor_source(*shunt_resistor_source_ptr);
+  }
+  else if (shunt_resistor_source_raw_ptr) {
+    request.set_shunt_resistor_source_raw(*shunt_resistor_source_raw_ptr);
+  }
+  request.set_skip_unsupported_channels(skip_unsupported_channels);
+
+  auto response = PerformStrainShuntCalExResponse{};
+
+  raise_if_error(
+      stub->PerformStrainShuntCalEx(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadAnalogF64Response
 read_analog_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
 {

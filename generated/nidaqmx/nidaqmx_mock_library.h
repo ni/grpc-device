@@ -255,6 +255,8 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetWriteAttributeUInt64, (TaskHandle task, int32 attribute, uInt64* value), (override));
   MOCK_METHOD(int32, IsTaskDone, (TaskHandle task, bool32* isTaskDone), (override));
   MOCK_METHOD(int32, LoadTask, (const char sessionName[], TaskHandle* task), (override));
+  MOCK_METHOD(int32, PerformBridgeShuntCalEx, (TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, float64 bridgeResistance, bool32 skipUnsupportedChannels), (override));
+  MOCK_METHOD(int32, PerformStrainShuntCalEx, (TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, bool32 skipUnsupportedChannels), (override));
   MOCK_METHOD(int32, ReadAnalogF64, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadAnalogScalarF64, (TaskHandle task, float64 timeout, float64* value, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadBinaryI16, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
