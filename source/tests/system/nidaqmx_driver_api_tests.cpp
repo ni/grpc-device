@@ -2153,7 +2153,7 @@ TEST_F(NiDAQmxDriverApiTests, PerformBridgeShuntCalEx_ReturnsError)
   }, BRIDGE_SHUNT_CAL_NOT_SUPPORTED_ERROR);
 }
 
-//X Series doesn't support Strain Shunt Calibration
+// X Series doesn't support Strain Shunt Calibration
 TEST_F(NiDAQmxDriverApiTests, PerformStrainShuntCalEx_ReturnsError)
 {
   const auto AI_MIN = -0.001;
