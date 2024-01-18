@@ -2141,7 +2141,7 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
 }
 
 // AI Voltage Channel doesn't support Bridge Shunt Calibration
-TEST_F(NiDAQmxDriverApiTests, PerformBridgeShuntCalEx_ReturnsError)
+TEST_F(NiDAQmxDriverApiTests, UnsupportedChannelType_PerformBridgeShuntCalEx_ReturnsError)
 {
   const auto AI_MIN = -5;
   const auto AI_MAX = 5;
@@ -2154,7 +2154,7 @@ TEST_F(NiDAQmxDriverApiTests, PerformBridgeShuntCalEx_ReturnsError)
 }
 
 // X Series doesn't support Strain Shunt Calibration
-TEST_F(NiDAQmxDriverApiTests, PerformStrainShuntCalEx_ReturnsError)
+TEST_F(NiDAQmxDriverApiTests, UnsupportedDevice_PerformStrainShuntCalEx_ReturnsError)
 {
   const auto AI_MIN = -0.001;
   const auto AI_MAX = 0.001;
@@ -2164,7 +2164,6 @@ TEST_F(NiDAQmxDriverApiTests, PerformStrainShuntCalEx_ReturnsError)
     auto response = PerformStrainShuntCalExResponse{};
     auto status = perform_strain_shunt_cal_ex(response);
   }, STRAIN_SHUNT_CAL_NOT_SUPPORTED_ERROR);
-  
 }
 
 TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
