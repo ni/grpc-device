@@ -46,8 +46,8 @@ constexpr auto DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR = -201450;
 constexpr auto EVERY_N_SAMPLES_EVENT_NOT_SUPPORTED_FOR_NON_BUFFERED_TASKS = -200848;
 constexpr auto EVERY_N_SAMPS_TRANSFERRED_FROM_BUFFER_EVENT_NOT_SUPPORTED_BY_DEVICE_ERROR = -200980;
 constexpr auto CANNOT_UNREGISTER_DAQMX_SOFTWARE_EVENT_WHILE_TASK_IS_RUNNING_ERROR = -200986;
-constexpr auto MEASUREMENT_TYPE_NOT_SUPPORTED_BY_SELECTED_PHYSICAL_CHANNEL_ERROR = -200431;
-constexpr auto TASK_SPECIFIED_INVALID_ERROR = -200088;
+constexpr auto STRAIN_SHUNT_CAL_NOT_SUPPORTED_ERROR = -201203;
+constexpr auto BRIDGE_SHUNT_CAL_NOT_SUPPORTED_ERROR = -201204;
 
 // Creates a static TResponse instance that can be used as a default/in-line value (because it's not a temporary).
 template <typename TResponse>
@@ -215,42 +215,6 @@ class NiDAQmxDriverApiTests : public Test {
   {
     auto request = create_ai_strain_gage_request(min_val, max_val);
     return create_ai_strain_gage_chan(request, response);
-  }
-
-  CreateAIBridgeChanRequest create_ai_bridge_request(double min_val, double max_val, const std::string& custom_scale_name = "")
-  {
-    CreateAIBridgeChanRequest request;
-    set_request_session_name(request);
-    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
-    request.set_name_to_assign_to_channel("ai0");
-    request.set_min_val(min_val);
-    request.set_max_val(max_val);
-    if (custom_scale_name.empty()) {
-      request.set_units(BridgeUnits::BRIDGE_UNITS_VOLTS_PER_VOLT);
-    }
-    else {
-      request.set_custom_scale_name(custom_scale_name);
-      request.set_units(BridgeUnits::BRIDGE_UNITS_FROM_CUSTOM_SCALE);
-    }
-    request.set_bridge_config(BridgeConfiguration1::BRIDGE_CONFIGURATION1_FULL_BRIDGE);
-    request.set_voltage_excit_source(ExcitationSource::EXCITATION_SOURCE_INTERNAL);
-    request.set_voltage_excit_val(2.50);
-    request.set_nominal_bridge_resistance(350.00);
-    return request;
-  }
-
-  ::grpc::Status create_ai_bridge_chan(const CreateAIBridgeChanRequest& request, CreateAIBridgeChanResponse& response = ThrowawayResponse<CreateAIBridgeChanResponse>::response())
-  {
-    ::grpc::ClientContext context;
-    auto status = stub()->CreateAIBridgeChan(&context, request, &response);
-    client::raise_if_error(status, context);
-    return status;
-  }
-
-  ::grpc::Status create_ai_bridge_chan(double min_val, double max_val, CreateAIBridgeChanResponse& response = ThrowawayResponse<CreateAIBridgeChanResponse>::response())
-  {
-    auto request = create_ai_bridge_request(min_val, max_val);
-    return create_ai_bridge_chan(request, response);
   }
 
   CreateAOVoltageChanRequest create_ao_voltage_chan_request(double min_val, double max_val, const std::string& name = "ao0")
@@ -969,13 +933,14 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     PerformBridgeShuntCalExRequest request;
+    set_request_session_name(request);
     request.set_channel("");
     request.set_shunt_resistor_value(100000);
     request.set_shunt_resistor_location(ShuntElementLocation::SHUNT_ELEMENT_LOCATION_R3);
     request.set_shunt_resistor_select(ShuntCalSelect::SHUNT_CAL_SELECT_A);
     request.set_shunt_resistor_source(ShuntCalSource::SHUNT_CAL_SOURCE_DEFAULT);
     request.set_bridge_resistance(120);
-    request.set_skip_unsupported_channels(true);
+    request.set_skip_unsupported_channels(false);
     auto status = stub()->PerformBridgeShuntCalEx(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
@@ -985,12 +950,13 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     PerformStrainShuntCalExRequest request;
+    set_request_session_name(request);
     request.set_channel("");
     request.set_shunt_resistor_value(100000);
     request.set_shunt_resistor_location(ShuntElementLocation::SHUNT_ELEMENT_LOCATION_R3);
     request.set_shunt_resistor_select(ShuntCalSelect::SHUNT_CAL_SELECT_A);
     request.set_shunt_resistor_source(ShuntCalSource::SHUNT_CAL_SOURCE_DEFAULT);
-    request.set_skip_unsupported_channels(true);
+    request.set_skip_unsupported_channels(false);
     auto status = stub()->PerformStrainShuntCalEx(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
@@ -2174,35 +2140,31 @@ TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpected
   EXPECT_DATA_IN_RANGE(read_response.read_array(), AI_MIN, AI_MAX);
 }
 
-TEST_F(NiDAQmxDriverApiTests, PerformBridgeShuntCalEx_Succeeds)
+// AI Voltage Channel doesn't support Bridge Shunt Calibration
+TEST_F(NiDAQmxDriverApiTests, PerformBridgeShuntCalEx_ReturnsError)
 {
-  EXPECT_THROW_DRIVER_ERROR({
-    const auto AI_MIN = -0.002;
-    const auto AI_MAX = 0.002;
-    create_ai_bridge_chan(AI_MIN, AI_MAX);
-    auto save_response = SaveTaskResponse{};
-    auto status = save_task(save_response);
-  }, MEASUREMENT_TYPE_NOT_SUPPORTED_BY_SELECTED_PHYSICAL_CHANNEL_ERROR);
+  const auto AI_MIN = -5;
+  const auto AI_MAX = 5;
+  create_ai_voltage_chan(AI_MIN, AI_MAX);
 
   EXPECT_THROW_DRIVER_ERROR({
     auto response = PerformBridgeShuntCalExResponse{};
     auto status = perform_bridge_shunt_cal_ex(response);
-  }, TASK_SPECIFIED_INVALID_ERROR);
+  }, BRIDGE_SHUNT_CAL_NOT_SUPPORTED_ERROR);
 }
 
-TEST_F(NiDAQmxDriverApiTests, PerformStrainShuntCalEx_Succeeds)
+//X Series doesn't support Strain Shunt Calibration
+TEST_F(NiDAQmxDriverApiTests, PerformStrainShuntCalEx_ReturnsError)
 {
   const auto AI_MIN = -0.001;
   const auto AI_MAX = 0.001;
   create_ai_strain_gage_chan(AI_MIN, AI_MAX);
-  auto save_response = SaveTaskResponse{};
-  auto status = save_task(save_response);
-  EXPECT_SUCCESS(status, save_response);
 
   EXPECT_THROW_DRIVER_ERROR({
     auto response = PerformStrainShuntCalExResponse{};
-    status = perform_strain_shunt_cal_ex(response);
-  }, TASK_SPECIFIED_INVALID_ERROR);
+    auto status = perform_strain_shunt_cal_ex(response);
+  }, STRAIN_SHUNT_CAL_NOT_SUPPORTED_ERROR);
+  
 }
 
 TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
