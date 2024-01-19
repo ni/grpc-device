@@ -37,17 +37,7 @@ jobs:
         git submodule update --init --recursive
         echo "::set-output name=grpc-commit::$(git rev-parse --short @:./third_party/grpc)"
 
-    - name: Cache Host OS gRPC Support
-      uses: actions/cache@v2
-      id: hostgrpccache
-      env:
-        cache-name: hostgrpccache
-      with:
-        path: third_party/grpc/build/
-        key: ${{ github.repository }}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
-
     - name: Configure Host OS gRPC Support
-      if: steps.hostgrpccache.outputs.cache-hit != 'true'
       shell: cmake -P {0}
       run: |
         set(path_separator ":")
@@ -66,7 +56,6 @@ jobs:
         endif()
 
     - name: Build Host OS gRPC Support
-      if: steps.hostgrpccache.outputs.cache-hit != 'true'
       shell: cmake -P {0}
       run: |
         execute_process(
