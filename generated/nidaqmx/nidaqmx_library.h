@@ -263,8 +263,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value) override;
   int32 IsTaskDone(TaskHandle task, bool32* isTaskDone) override;
   int32 LoadTask(const char sessionName[], TaskHandle* task) override;
+  int32 PerformBridgeOffsetNullingCalEx(TaskHandle task, const char channel[], bool32 skipUnsupportedChannels) override;
   int32 PerformBridgeShuntCalEx(TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, float64 bridgeResistance, bool32 skipUnsupportedChannels) override;
   int32 PerformStrainShuntCalEx(TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, bool32 skipUnsupportedChannels) override;
+  int32 PerformThrmcplLeadOffsetNullingCal(TaskHandle task, const char channel[], bool32 skipUnsupportedChannels) override;
   int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) override;
   int32 ReadAnalogScalarF64(TaskHandle task, float64 timeout, float64* value, bool32* reserved) override;
   int32 ReadBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) override;
@@ -662,8 +664,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetWriteAttributeUInt64Ptr = decltype(&DAQmxGetWriteAttribute);
   using IsTaskDonePtr = decltype(&DAQmxIsTaskDone);
   using LoadTaskPtr = decltype(&DAQmxLoadTask);
+  using PerformBridgeOffsetNullingCalExPtr = decltype(&DAQmxPerformBridgeOffsetNullingCalEx);
   using PerformBridgeShuntCalExPtr = decltype(&DAQmxPerformBridgeShuntCalEx);
   using PerformStrainShuntCalExPtr = decltype(&DAQmxPerformStrainShuntCalEx);
+  using PerformThrmcplLeadOffsetNullingCalPtr = decltype(&DAQmxPerformThrmcplLeadOffsetNullingCal);
   using ReadAnalogF64Ptr = decltype(&DAQmxReadAnalogF64);
   using ReadAnalogScalarF64Ptr = decltype(&DAQmxReadAnalogScalarF64);
   using ReadBinaryI16Ptr = decltype(&DAQmxReadBinaryI16);
@@ -1061,8 +1065,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetWriteAttributeUInt64Ptr GetWriteAttributeUInt64;
     IsTaskDonePtr IsTaskDone;
     LoadTaskPtr LoadTask;
+    PerformBridgeOffsetNullingCalExPtr PerformBridgeOffsetNullingCalEx;
     PerformBridgeShuntCalExPtr PerformBridgeShuntCalEx;
     PerformStrainShuntCalExPtr PerformStrainShuntCalEx;
+    PerformThrmcplLeadOffsetNullingCalPtr PerformThrmcplLeadOffsetNullingCal;
     ReadAnalogF64Ptr ReadAnalogF64;
     ReadAnalogScalarF64Ptr ReadAnalogScalarF64;
     ReadBinaryI16Ptr ReadBinaryI16;

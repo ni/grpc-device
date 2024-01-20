@@ -1212,6 +1212,11 @@ int32 LoadTask(const char sessionName[], TaskHandle* task)
   return DAQmxLoadTask(sessionName, task);
 }
 
+int32 PerformBridgeOffsetNullingCalEx(TaskHandle task, const char channel[], bool32 skipUnsupportedChannels)
+{
+  return DAQmxPerformBridgeOffsetNullingCalEx(task, channel, skipUnsupportedChannels);
+}
+
 int32 PerformBridgeShuntCalEx(TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, float64 bridgeResistance, bool32 skipUnsupportedChannels)
 {
   return DAQmxPerformBridgeShuntCalEx(task, channel, shuntResistorValue, shuntResistorLocation, shuntResistorSelect, shuntResistorSource, bridgeResistance, skipUnsupportedChannels);
@@ -1220,6 +1225,11 @@ int32 PerformBridgeShuntCalEx(TaskHandle task, const char channel[], float64 shu
 int32 PerformStrainShuntCalEx(TaskHandle task, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, bool32 skipUnsupportedChannels)
 {
   return DAQmxPerformStrainShuntCalEx(task, channel, shuntResistorValue, shuntResistorLocation, shuntResistorSelect, shuntResistorSource, skipUnsupportedChannels);
+}
+
+int32 PerformThrmcplLeadOffsetNullingCal(TaskHandle task, const char channel[], bool32 skipUnsupportedChannels)
+{
+  return DAQmxPerformThrmcplLeadOffsetNullingCal(task, channel, skipUnsupportedChannels);
 }
 
 int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
