@@ -642,16 +642,16 @@ enums = {
     'CcdfRbwFilterType': {
         'values': [
             {
+                'name': 'NONE',
+                'value': 5
+            },
+            {
                 'name': 'GAUSSIAN',
                 'value': 1
             },
             {
                 'name': 'FLAT',
                 'value': 2
-            },
-            {
-                'name': 'NONE',
-                'value': 5
             },
             {
                 'name': 'RRC',

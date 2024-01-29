@@ -692,6 +692,7 @@
 #define RFMXSPECAN_ATTR_PHASENOISE_RESULTS_INTEGRATED_NOISE_JITTER                     0x0013001c
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_ENABLED                                       0x00107000
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_LOCATION_TYPE                                 0x00107002
+#define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_BANDWIDTH                                     0x0010700d
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_INTERVAL_MODE                                 0x00107015
 #define RFMXSPECAN_ATTR_PAVT_NUMBER_OF_SEGMENTS                                        0x00107003
 #define RFMXSPECAN_ATTR_PAVT_SEGMENT_TYPE                                              0x00107010
@@ -13003,6 +13004,18 @@ int32 __stdcall RFmxSpecAn_PAVTSetMeasurementLocationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_PAVTGetMeasurementIntervalMode(

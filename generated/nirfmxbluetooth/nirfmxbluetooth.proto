@@ -113,6 +113,9 @@ service NiRFmxBluetooth {
   rpc ModAccFetchFrequencyErrorWiPlusW0TraceEDR(ModAccFetchFrequencyErrorWiPlusW0TraceEDRRequest) returns (ModAccFetchFrequencyErrorWiPlusW0TraceEDRResponse);
   rpc ModAccFetchFrequencyTrace(ModAccFetchFrequencyTraceRequest) returns (ModAccFetchFrequencyTraceResponse);
   rpc ModAccFetchRMSDEVMTrace(ModAccFetchRMSDEVMTraceRequest) returns (ModAccFetchRMSDEVMTraceResponse);
+  rpc ModSpectrumCfgAveraging(ModSpectrumCfgAveragingRequest) returns (ModSpectrumCfgAveragingResponse);
+  rpc ModSpectrumCfgBurstSynchronizationType(ModSpectrumCfgBurstSynchronizationTypeRequest) returns (ModSpectrumCfgBurstSynchronizationTypeResponse);
+  rpc ModSpectrumFetchSpectrum(ModSpectrumFetchSpectrumRequest) returns (ModSpectrumFetchSpectrumResponse);
   rpc PowerRampCfgAveraging(PowerRampCfgAveragingRequest) returns (PowerRampCfgAveragingResponse);
   rpc PowerRampCfgBurstSynchronizationType(PowerRampCfgBurstSynchronizationTypeRequest) returns (PowerRampCfgBurstSynchronizationTypeResponse);
   rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
@@ -297,6 +300,15 @@ enum NiRFmxBluetoothAttribute {
   NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_RESULTS_RISE_TIME_MEAN = 11591689;
   NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_RESULTS_FALL_TIME_MEAN = 11591690;
   NIRFMXBLUETOOTH_ATTRIBUTE_POWERRAMP_RESULTS_40DB_FALL_TIME_MEAN = 11591691;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_MEASUREMENT_ENABLED = 11595776;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_BURST_SYNCHRONIZATION_TYPE = 11595778;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_AVERAGING_ENABLED = 11595779;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_AVERAGING_COUNT = 11595780;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_ALL_TRACES_ENABLED = 11595781;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_NUMBER_OF_ANALYSIS_THREADS = 11595782;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_RESULTS_BANDWIDTH = 11595784;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_RESULTS_HIGH_FREQUENCY = 11595785;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODSPECTRUM_RESULTS_LOW_FREQUENCY = 11595786;
 }
 
 enum AcpAveragingEnabled {
@@ -363,6 +375,7 @@ enum MeasurementTypes {
   MEASUREMENT_TYPES_FREQUENCY_RANGE = 8;
   MEASUREMENT_TYPES_ACP = 16;
   MEASUREMENT_TYPES_POWERRAMP = 32;
+  MEASUREMENT_TYPES_MODSPECTRUM = 64;
 }
 
 enum MechanicalAttenuationAuto {
@@ -379,6 +392,17 @@ enum ModAccBurstSynchronizationType {
   MODACC_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
   MODACC_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
   MODACC_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+}
+
+enum ModSpectrumAveragingEnabled {
+  MOD_SPECTRUM_AVERAGING_ENABLED_FALSE = 0;
+  MOD_SPECTRUM_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum ModSpectrumBurstSynchronizationType {
+  MOD_SPECTRUM_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  MOD_SPECTRUM_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  MOD_SPECTRUM_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
 }
 
 enum PacketType {
@@ -480,6 +504,7 @@ enum NiRFmxBluetoothInt32AttributeValues {
   NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_SYNC_SEQUENCE_NONE = 0;
   NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_32_BIT = 1;
   NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_96_BIT = 2;
+  NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_SYNC_SEQUENCE_PAYLOAD_PATTERN = 3;
   NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_DISABLED = 0;
   NIRFMXBLUETOOTH_INT32_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_ENABLED = 1;
   NIRFMXBLUETOOTH_INT32_DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
@@ -506,6 +531,11 @@ enum NiRFmxBluetoothInt32AttributeValues {
   NIRFMXBLUETOOTH_INT32_MODACC_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
   NIRFMXBLUETOOTH_INT32_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE = 0;
   NIRFMXBLUETOOTH_INT32_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_MOD_SPECTRUM_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTH_INT32_MOD_SPECTRUM_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_MOD_SPECTRUM_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  NIRFMXBLUETOOTH_INT32_MOD_SPECTRUM_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  NIRFMXBLUETOOTH_INT32_MOD_SPECTRUM_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_DH1 = 0;
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_UNKNOWN = -1;
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_DH3 = 1;
@@ -1733,6 +1763,47 @@ message ModAccFetchRMSDEVMTraceResponse {
   int32 status = 1;
   repeated float rms_devm = 2;
   int32 actual_array_size = 3;
+}
+
+message ModSpectrumCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    ModSpectrumAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message ModSpectrumCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message ModSpectrumCfgBurstSynchronizationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof burst_synchronization_type_enum {
+    ModSpectrumBurstSynchronizationType burst_synchronization_type = 3;
+    int32 burst_synchronization_type_raw = 4;
+  }
+}
+
+message ModSpectrumCfgBurstSynchronizationTypeResponse {
+  int32 status = 1;
+}
+
+message ModSpectrumFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModSpectrumFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  int32 actual_array_size = 5;
 }
 
 message PowerRampCfgAveragingRequest {
