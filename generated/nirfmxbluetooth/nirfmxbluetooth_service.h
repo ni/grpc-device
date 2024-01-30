@@ -140,6 +140,9 @@ public:
   ::grpc::Status ModAccFetchFrequencyErrorWiPlusW0TraceEDR(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorWiPlusW0TraceEDRRequest* request, ModAccFetchFrequencyErrorWiPlusW0TraceEDRResponse* response) override;
   ::grpc::Status ModAccFetchFrequencyTrace(::grpc::ServerContext* context, const ModAccFetchFrequencyTraceRequest* request, ModAccFetchFrequencyTraceResponse* response) override;
   ::grpc::Status ModAccFetchRMSDEVMTrace(::grpc::ServerContext* context, const ModAccFetchRMSDEVMTraceRequest* request, ModAccFetchRMSDEVMTraceResponse* response) override;
+  ::grpc::Status ModSpectrumCfgAveraging(::grpc::ServerContext* context, const ModSpectrumCfgAveragingRequest* request, ModSpectrumCfgAveragingResponse* response) override;
+  ::grpc::Status ModSpectrumCfgBurstSynchronizationType(::grpc::ServerContext* context, const ModSpectrumCfgBurstSynchronizationTypeRequest* request, ModSpectrumCfgBurstSynchronizationTypeResponse* response) override;
+  ::grpc::Status ModSpectrumFetchSpectrum(::grpc::ServerContext* context, const ModSpectrumFetchSpectrumRequest* request, ModSpectrumFetchSpectrumResponse* response) override;
   ::grpc::Status PowerRampCfgAveraging(::grpc::ServerContext* context, const PowerRampCfgAveragingRequest* request, PowerRampCfgAveragingResponse* response) override;
   ::grpc::Status PowerRampCfgBurstSynchronizationType(::grpc::ServerContext* context, const PowerRampCfgBurstSynchronizationTypeRequest* request, PowerRampCfgBurstSynchronizationTypeResponse* response) override;
   ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;

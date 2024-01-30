@@ -131,6 +131,15 @@
 #define RFMXBT_ATTR_FREQUENCY_RANGE_NUMBER_OF_ANALYSIS_THREADS                                     0x00b03006
 #define RFMXBT_ATTR_FREQUENCY_RANGE_RESULTS_HIGH_FREQUENCY                                         0x00b03008
 #define RFMXBT_ATTR_FREQUENCY_RANGE_RESULTS_LOW_FREQUENCY                                          0x00b03009
+#define RFMXBT_ATTR_MODSPECTRUM_MEASUREMENT_ENABLED                                                0x00b0f000
+#define RFMXBT_ATTR_MODSPECTRUM_BURST_SYNCHRONIZATION_TYPE                                         0x00b0f002
+#define RFMXBT_ATTR_MODSPECTRUM_AVERAGING_ENABLED                                                  0x00b0f003
+#define RFMXBT_ATTR_MODSPECTRUM_AVERAGING_COUNT                                                    0x00b0f004
+#define RFMXBT_ATTR_MODSPECTRUM_ALL_TRACES_ENABLED                                                 0x00b0f005
+#define RFMXBT_ATTR_MODSPECTRUM_NUMBER_OF_ANALYSIS_THREADS                                         0x00b0f006
+#define RFMXBT_ATTR_MODSPECTRUM_RESULTS_BANDWIDTH                                                  0x00b0f008
+#define RFMXBT_ATTR_MODSPECTRUM_RESULTS_HIGH_FREQUENCY                                             0x00b0f009
+#define RFMXBT_ATTR_MODSPECTRUM_RESULTS_LOW_FREQUENCY                                              0x00b0f00a
 #define RFMXBT_ATTR_TXP_MEASUREMENT_ENABLED                                                        0x00b01000
 #define RFMXBT_ATTR_TXP_BURST_SYNCHRONIZATION_TYPE                                                 0x00b01010
 #define RFMXBT_ATTR_TXP_AVERAGING_ENABLED                                                          0x00b01002
@@ -243,6 +252,7 @@
 #define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_NONE                                            0
 #define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_32_BIT                        1
 #define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_SOUNDING_SEQUENCE_96_BIT                        2
+#define RFMXBT_VAL_CHANNEL_SOUNDING_SYNC_SEQUENCE_PAYLOAD_PATTERN                                 3
 
 // Values for RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT
 #define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_DISABLED                                  0
@@ -291,6 +301,15 @@
 #define RFMXBT_VAL_FREQUENCY_RANGE_AVERAGING_ENABLED_FALSE                                        0
 #define RFMXBT_VAL_FREQUENCY_RANGE_AVERAGING_ENABLED_TRUE                                         1
 
+// Values for RFMXBT_ATTR_MODSPECTRUM_BURST_SYNCHRONIZATION_TYPE
+#define RFMXBT_VAL_MODSPECTRUM_BURST_SYNCHRONIZATION_TYPE_NONE                                    0
+#define RFMXBT_VAL_MODSPECTRUM_BURST_SYNCHRONIZATION_TYPE_PREAMBLE                                1
+#define RFMXBT_VAL_MODSPECTRUM_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD                               2
+
+// Values for RFMXBT_ATTR_MODSPECTRUM_AVERAGING_ENABLED
+#define RFMXBT_VAL_MODSPECTRUM_AVERAGING_ENABLED_FALSE                                            0
+#define RFMXBT_VAL_MODSPECTRUM_AVERAGING_ENABLED_TRUE                                             1
+
 // Values for RFMXBT_ATTR_TXP_BURST_SYNCHRONIZATION_TYPE
 #define RFMXBT_VAL_TXP_BURST_SYNCHRONIZATION_TYPE_NONE                                            0
 #define RFMXBT_VAL_TXP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE                                        1
@@ -333,6 +352,7 @@
 #define RFMXBT_VAL_FREQUENCY_RANGE                                                                1<<3
 #define RFMXBT_VAL_ACP                                                                            1<<4
 #define RFMXBT_VAL_POWERRAMP                                                                      1<<5
+#define RFMXBT_VAL_MODSPECTRUM                                                                    1<<6
 
 // Values for FrequencyReferenceSource
 #define RFMXBT_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
@@ -933,6 +953,19 @@ int32 __stdcall RFmxBT_PowerRampCfgBurstSynchronizationType(
    int32 burstSynchronizationType
 );
 
+int32 __stdcall RFmxBT_ModSpectrumCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount
+);
+
+int32 __stdcall RFmxBT_ModSpectrumCfgBurstSynchronizationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 burstSynchronizationType
+);
+
 int32 __stdcall RFmxBT_CfgChannelNumber(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1420,6 +1453,17 @@ int32 __stdcall RFmxBT_ACPFetchReferenceChannelPower(
    char selectorString[],
    float64 timeout,
    float64* referenceChannelPower
+);
+
+int32 __stdcall RFmxBT_ModSpectrumFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
 int32 __stdcall RFmxBT_GetSelectedPorts(
@@ -2476,6 +2520,96 @@ int32 __stdcall RFmxBT_FrequencyRangeGetResultsHighFrequency(
 );
 
 int32 __stdcall RFmxBT_FrequencyRangeGetResultsLowFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumSetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetBurstSynchronizationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumSetBurstSynchronizationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumSetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumSetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetNumberOfAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumSetNumberOfAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetResultsBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetResultsHighFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModSpectrumGetResultsLowFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

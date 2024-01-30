@@ -123,6 +123,9 @@ NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary(std::shared_ptr<nidevice_grpc::Sh
   function_pointers_.ModAccFetchFrequencyErrorWiPlusW0TraceEDR = reinterpret_cast<ModAccFetchFrequencyErrorWiPlusW0TraceEDRPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR"));
   function_pointers_.ModAccFetchFrequencyTrace = reinterpret_cast<ModAccFetchFrequencyTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchFrequencyTrace"));
   function_pointers_.ModAccFetchRMSDEVMTrace = reinterpret_cast<ModAccFetchRMSDEVMTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchRMSDEVMTrace"));
+  function_pointers_.ModSpectrumCfgAveraging = reinterpret_cast<ModSpectrumCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxBT_ModSpectrumCfgAveraging"));
+  function_pointers_.ModSpectrumCfgBurstSynchronizationType = reinterpret_cast<ModSpectrumCfgBurstSynchronizationTypePtr>(shared_library_->get_function_pointer("RFmxBT_ModSpectrumCfgBurstSynchronizationType"));
+  function_pointers_.ModSpectrumFetchSpectrum = reinterpret_cast<ModSpectrumFetchSpectrumPtr>(shared_library_->get_function_pointer("RFmxBT_ModSpectrumFetchSpectrum"));
   function_pointers_.PowerRampCfgAveraging = reinterpret_cast<PowerRampCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxBT_PowerRampCfgAveraging"));
   function_pointers_.PowerRampCfgBurstSynchronizationType = reinterpret_cast<PowerRampCfgBurstSynchronizationTypePtr>(shared_library_->get_function_pointer("RFmxBT_PowerRampCfgBurstSynchronizationType"));
   function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("RFmxBT_ResetAttribute"));
@@ -941,6 +944,30 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchRMSDEVMTrace(niRFmxInstrHandle instrume
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchRMSDEVMTrace.");
   }
   return function_pointers_.ModAccFetchRMSDEVMTrace(instrumentHandle, selectorString, timeout, rmsdevm, arraySize, actualArraySize);
+}
+
+int32 NiRFmxBluetoothLibrary::ModSpectrumCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.ModSpectrumCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModSpectrumCfgAveraging.");
+  }
+  return function_pointers_.ModSpectrumCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 NiRFmxBluetoothLibrary::ModSpectrumCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
+{
+  if (!function_pointers_.ModSpectrumCfgBurstSynchronizationType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModSpectrumCfgBurstSynchronizationType.");
+  }
+  return function_pointers_.ModSpectrumCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+}
+
+int32 NiRFmxBluetoothLibrary::ModSpectrumFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModSpectrumFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModSpectrumFetchSpectrum.");
+  }
+  return function_pointers_.ModSpectrumFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
 }
 
 int32 NiRFmxBluetoothLibrary::PowerRampCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
