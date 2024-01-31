@@ -425,6 +425,13 @@ if(WIN32)
   )
 endif()
 
+execute_process(
+  COMMAND git rev-parse --abbrev-ref HEAD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_BRANCH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
 # Generate version header file
 # This file requires product name and version info that mako does not know, but CMake does
 configure_file(
