@@ -62,7 +62,7 @@ def _validate_examples(
         _system("poetry new .")
         _system("poetry add grpcio")
         _system("poetry add --dev grpcio-tools mypy mypy-protobuf types-protobuf grpc-stubs")
-        _system("poetry add --dev black")
+        _system("poetry add --dev black==23.3.0")
         _system("poetry install")
 
         _stage_client_files(artifact_location, staging_dir)
