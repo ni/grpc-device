@@ -18,3 +18,4 @@ gens
 .vscode
 __pycache__/
 .venv
+/generated/version.h
