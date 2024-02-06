@@ -6,7 +6,7 @@ on:
 
 env:
   CMAKE_VERSION: 3.18.3
-  BUILD_TYPE: Release
+  BUILD_TYPE: RelWithDebInfo
 
 jobs:
   build:
@@ -195,4 +195,13 @@ jobs:
           build/Release/UnitTestsRunner.exe
           LICENSE
           ThirdPartyNotices.txt
+        retention-days: 5
+
+    - name: Upload Windows Server Debug Symbols Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
+      with:
+        name: ni-grpc-device-server-windows-x64-debug-symbols
+        path: |
+          build/Debug/ni_grpc_device_server.pdb
         retention-days: 5
