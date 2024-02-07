@@ -51,6 +51,11 @@ jobs:
         files: downloads/ni-grpc-device-server-windows-x64
         dest: downloads/artifacts/ni-grpc-device-server-windows-x64.zip
 
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-server-windows-x64-debug-symbols
+        path: downloads/artifacts
+
     - name: "Get previous tag"
       id: previoustag
       run: >-
