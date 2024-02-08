@@ -82,7 +82,6 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE("", response.vi().name());
-  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -93,7 +92,6 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE("", response.vi().name());
-  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiFgenSessionTest, InitializedSession_CloseSession_ClosesDriverSession)

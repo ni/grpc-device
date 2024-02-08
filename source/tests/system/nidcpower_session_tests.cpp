@@ -101,7 +101,6 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDr
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE("", response.vi().name());
-  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -113,7 +112,6 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE("", response.vi().name());
-  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)

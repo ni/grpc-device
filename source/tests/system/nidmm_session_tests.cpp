@@ -57,23 +57,6 @@ class NiDmmSessionTest : public ::testing::Test {
     return status;
   }
 
-  std::string get_error_message(int error_status)
-  {
-    dmm::InitWithOptionsResponse init_response;
-    call_init_with_options(kResourceName, kDmmOptionsString, kSessionName, &init_response);
-    nidevice_grpc::Session session = init_response.vi();
-
-    ::grpc::ClientContext context;
-    dmm::GetErrorMessageRequest error_request;
-    error_request.mutable_vi()->set_name(session.name());
-    error_request.set_error_code(error_status);
-    dmm::GetErrorMessageResponse error_response;
-
-    ::grpc::Status status = GetStub()->GetErrorMessage(&context, error_request, &error_response);
-    EXPECT_TRUE(status.ok());
-    return error_response.error_message();
-  }
-
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
@@ -88,7 +71,6 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriver
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE("", response.vi().name());
-  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -99,7 +81,6 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriv
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE("", response.vi().name());
-  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDmmSessionTest, InitializedSession_CloseSession_ClosesDriverSession)

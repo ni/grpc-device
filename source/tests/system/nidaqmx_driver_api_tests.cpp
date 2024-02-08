@@ -1388,7 +1388,6 @@ TEST_F(NiDAQmxDriverApiTests, SetYInterceptAttribute_GetYInterceptAttribute_Retu
 TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribute)
 {
   const auto SCALE_NAME = std::string("TestScale");
-  const auto Y_INTERCEPT = -3.0;
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
   auto set_response = client::set_scale_attribute_int32(
       stub(),

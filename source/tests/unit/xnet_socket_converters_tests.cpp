@@ -616,7 +616,7 @@ TEST(XnetSocketConvertersTests, StringSockOptData_GetSize_FetchesSizeFromLibrary
   auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BINDTODEVICE);
   EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.string_length);
 
-  nxSOCKET SOCKET = NULL;
+  nxSOCKET SOCKET = nxINVALID_SOCKET;
   const int LEVEL = 3;
   nxsocklen_t actual_length;
 
@@ -686,6 +686,8 @@ TEST(XnetSocketConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsTo
   constexpr auto NEXT_ADDR = 1234568;
   nxsockaddr_in next_addr{nxAF_INET, NEXT_PORT, {NEXT_ADDR}};
   nxsockaddr_in addr{nxAF_INET, PORT, {ADDR}};
+  std::string nextAddrHostName("NextAddrHostName");
+  std::string addrHostName("AddrHostName");
   nxaddrinfo addr_info_next{
       nxAI_PASSIVE | nxAI_ADDRCONFIG,
       nxAF_INET,
@@ -693,7 +695,7 @@ TEST(XnetSocketConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsTo
       nxIPPROTO_UDP,
       (nxsocklen_t)sizeof(next_addr),
       reinterpret_cast<nxsockaddr*>(&next_addr),
-      "NextAddrHostName",
+      &nextAddrHostName[0],
       nullptr};
   nxaddrinfo addr_info{
       nxAI_ALL,
@@ -702,7 +704,7 @@ TEST(XnetSocketConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsTo
       nxIPPROTO_TCP,
       (nxsocklen_t)sizeof(addr),
       reinterpret_cast<nxsockaddr*>(&addr),
-      "AddrHostName",
+      &addrHostName[0],
       &addr_info_next};
   NiXnetSocketMockLibrary library;
   auto converter = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(&library);

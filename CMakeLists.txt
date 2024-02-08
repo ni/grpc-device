@@ -410,6 +410,24 @@ add_executable(ni_grpc_device_server
    ${calibrationoperations_restricted_grpc_srcs}
    ${nidriver_service_srcs})
 
+# Enable warnings only on source that we own, not generated code or dependencies
+file(GLOB_RECURSE SOURCE_TO_ENABLE_WARNINGS "source/*.cpp")
+if(WIN32)
+  set_source_files_properties(
+    ${SOURCE_TO_ENABLE_WARNINGS}
+    APPEND
+    PROPERTIES
+    COMPILE_OPTIONS "/WX"
+  )
+else()
+  set_source_files_properties(
+    ${SOURCE_TO_ENABLE_WARNINGS}
+    APPEND
+    PROPERTIES
+    COMPILE_OPTIONS "-Werror"
+  )
+endif()
+
 if(WIN32)
   set(version_generated_dir "${CMAKE_CURRENT_BINARY_DIR}/version")
   file(MAKE_DIRECTORY ${version_generated_dir})
