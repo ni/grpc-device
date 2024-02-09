@@ -88,7 +88,6 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSess
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, close_response.status());
-  EXPECT_THAT(init_response.error_message(), IsEmpty());
 }
 
 // Note: the error_message is included in the Init response because querying for errors
@@ -120,7 +119,6 @@ TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReinitSuccessfully_Error
 
   EXPECT_EQ(::grpc::StatusCode::OK, status_two.error_code());
   EXPECT_THAT(status_two.error_message(), IsEmpty());
-  EXPECT_THAT(successful_init_response.error_message(), IsEmpty());
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)

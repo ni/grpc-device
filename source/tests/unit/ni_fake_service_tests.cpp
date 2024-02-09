@@ -1,7 +1,12 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
 #include <nifake/nifake_mock_library.h>
+#pragma warning(push)
+#pragma warning(disable : 4616)
+#pragma warning(disable : 4146)
+#pragma warning(disable : 4244)
 #include <nifake/nifake_service.h>
+#pragma warning(pop)
 #include <nifake_extension/nifake_extension_mock_library.h>
 #include <nifake_extension/nifake_extension_service.h>
 #include <server/session_repository.h>

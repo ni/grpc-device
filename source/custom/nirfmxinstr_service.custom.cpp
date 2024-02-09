@@ -89,7 +89,7 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
       if (status < 0) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
-      int32 selector_string_out_length = status + std::to_string(channel_number).length();  // AB#1835966: RFmx Instr BuildPortString2 Bug.
+      int32 selector_string_out_length = static_cast<int32>(status + std::to_string(channel_number).length());  // AB#1835966: RFmx Instr BuildPortString2 Bug.
 
       std::string selector_string_out;
       if (selector_string_out_length > 0) {
