@@ -20,9 +20,9 @@ jobs:
         name: ni-grpc-device-tests-windows-x64
 
     - run: ls -R
-      working-directory: ./build/Release
+      working-directory: ./build/RelWithDebInfo
 
     - name: Run System Tests
       run: .\SystemTestsRunner.exe
-      working-directory: ./build/Release
+      working-directory: ./build/RelWithDebInfo
       timeout-minutes: 50
