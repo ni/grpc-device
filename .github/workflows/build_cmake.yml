@@ -6,7 +6,7 @@ on:
 
 env:
   CMAKE_VERSION: 3.18.3
-  BUILD_TYPE: Release
+  BUILD_TYPE: RelWithDebInfo
 
 jobs:
   build:
@@ -171,9 +171,9 @@ jobs:
       with:
         name: ni-grpc-device-server-windows-x64
         path: |
-          build/Release/ni_grpc_device_server.exe
-          build/Release/server_config.json
-          build/Release/server_capabilities.json
+          build/RelWithDebInfo/ni_grpc_device_server.exe
+          build/RelWithDebInfo/server_config.json
+          build/RelWithDebInfo/server_capabilities.json
         retention-days: 5
 
     - name: Upload Windows Test Binaries Artifact
@@ -182,17 +182,26 @@ jobs:
       with:
         name: ni-grpc-device-tests-windows-x64
         path: |
-          build/Release/certs/
-          build/Release/IntegrationTestsRunner.exe
-          build/Release/TestApi.dll
-          build/Release/SystemTestsRunner.exe
-          build/Release/LTE20MHz Waveform (Two Subframes).json
-          build/Release/NR_FR2_UL_SISO_CC-1_BW-50MHz_SCS-120kHz.json
-          build/Release/WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json
-          build/Release/test_create_capture_waveform_serial/
-          build/Release/test_localhost_config.json
-          build/Release/test_mutual_tls_config.json
-          build/Release/UnitTestsRunner.exe
+          build/RelWithDebInfo/certs/
+          build/RelWithDebInfo/IntegrationTestsRunner.exe
+          build/RelWithDebInfo/TestApi.dll
+          build/RelWithDebInfo/SystemTestsRunner.exe
+          build/RelWithDebInfo/LTE20MHz Waveform (Two Subframes).json
+          build/RelWithDebInfo/NR_FR2_UL_SISO_CC-1_BW-50MHz_SCS-120kHz.json
+          build/RelWithDebInfo/WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json
+          build/RelWithDebInfo/test_create_capture_waveform_serial/
+          build/RelWithDebInfo/test_localhost_config.json
+          build/RelWithDebInfo/test_mutual_tls_config.json
+          build/RelWithDebInfo/UnitTestsRunner.exe
           LICENSE
           ThirdPartyNotices.txt
+        retention-days: 5
+
+    - name: Upload Windows Server Debug Symbols Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
+      with:
+        name: ni-grpc-device-server-windows-x64-debug-symbols
+        path: |
+          build/RelWithDebInfo/ni_grpc_device_server.pdb
         retention-days: 5
