@@ -59,9 +59,9 @@ int create_pidfile(const std::string& identity) {
     exit(EXIT_FAILURE);
   }
 
-  size = snprintf(NULL, 0, "%ld\n", getpid());
+  size = snprintf(NULL, 0, "%d\n", getpid());
   std::string pid_str(size, ' ');
-  if (snprintf(&pid_str[0], size + 1, "%ld\n", getpid()) > size) {
+  if (snprintf(&pid_str[0], size + 1, "%d\n", getpid()) > size) {
     logging::log(logging::Level_Error, "creating pid string failed");
     exit(EXIT_FAILURE);
   }
@@ -76,7 +76,7 @@ int create_pidfile(const std::string& identity) {
     close(fd);
     exit(EXIT_FAILURE);
   }
-  if (write(fd, pid_str.c_str(), size) != pid_str.length()) {
+  if (write(fd, pid_str.c_str(), size) != static_cast<ssize_t>(pid_str.length())) {
     logging::log(logging::Level_Error, "writing pid file failed: %d (%s)", errno, strerror(errno));
     close(fd);
     exit(EXIT_FAILURE);

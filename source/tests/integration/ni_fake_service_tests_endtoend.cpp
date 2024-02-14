@@ -1,7 +1,12 @@
 #include <gtest/gtest.h>
 #include <nifake/nifake_client.h>
 #include <nifake/nifake_mock_library.h>
+#pragma warning(push)
+#pragma warning(disable : 4616)
+#pragma warning(disable : 4146)
+#pragma warning(disable : 4244)
 #include <nifake/nifake_service.h>
+#pragma warning(pop)
 
 #include <atomic>
 #include <memory>

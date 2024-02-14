@@ -410,6 +410,24 @@ add_executable(ni_grpc_device_server
    ${calibrationoperations_restricted_grpc_srcs}
    ${nidriver_service_srcs})
 
+# Enable warnings only on source that we own, not generated code or dependencies
+file(GLOB_RECURSE SOURCE_TO_ENABLE_WARNINGS "source/*.cpp")
+if(WIN32)
+  set_source_files_properties(
+    ${SOURCE_TO_ENABLE_WARNINGS}
+    APPEND
+    PROPERTIES
+    COMPILE_OPTIONS "/WX"
+  )
+else()
+  set_source_files_properties(
+    ${SOURCE_TO_ENABLE_WARNINGS}
+    APPEND
+    PROPERTIES
+    COMPILE_OPTIONS "-Werror"
+  )
+endif()
+
 if(WIN32)
   set(version_generated_dir "${CMAKE_CURRENT_BINARY_DIR}/version")
   file(MAKE_DIRECTORY ${version_generated_dir})
@@ -557,9 +575,17 @@ target_link_libraries(IntegrationTestsRunner
     Threads::Threads
     nlohmann_json::nlohmann_json)
 
+# Ignore the use of deprecated functions in test code
+target_compile_definitions(IntegrationTestsRunner
+    PRIVATE _CRT_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS)
+
 add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
 add_compile_definitions(TestApi TEST_API_BUILDING)
+
+# Ignore the use of deprecated functions in test code
+target_compile_definitions(TestApi
+    PRIVATE _CRT_SECURE_NO_WARNINGS)
 
 add_executable(UnitTestsRunner
     "imports/include/nierr_Status.cpp"
@@ -634,6 +660,10 @@ add_executable(UnitTestsRunner
 if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /D_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING")
 endif(MSVC)
+
+# Ignore the use of deprecated functions in test code
+target_compile_definitions(UnitTestsRunner
+    PRIVATE _CRT_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS)
 
 target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}"
@@ -777,6 +807,10 @@ target_link_libraries(SystemTestsRunner
     ${CMAKE_DL_LIBS}
     nlohmann_json::nlohmann_json
 )
+
+# Ignore the use of deprecated functions in test code
+target_compile_definitions(SystemTestsRunner
+    PRIVATE _CRT_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS)
 
 add_custom_command(
   TARGET SystemTestsRunner POST_BUILD

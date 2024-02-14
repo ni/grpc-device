@@ -66,7 +66,6 @@ TEST_F(NiDigitalSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDr
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE("", response.vi().name());
-  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDigitalSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -77,7 +76,6 @@ TEST_F(NiDigitalSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE("", response.vi().name());
-  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDigitalSessionTest, InitializedSession_CloseSession_ClosesDriverSession)

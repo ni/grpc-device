@@ -113,17 +113,17 @@ inline bool status_ok(int32 status)
       convert_to_grpc(signal_names, &signal_names_utf8);
       response->set_signal_names(signal_names_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_names()));
-      signal_names_actual_size = signal_names_utf8.length() + 1;
+      signal_names_actual_size = static_cast<int32>(signal_names_utf8.length() + 1);
       std::string result_names_utf8;
       convert_to_grpc(result_names, &result_names_utf8);
       response->set_result_names(result_names_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
-      result_names_actual_size = result_names_utf8.length() + 1;
+      result_names_actual_size = static_cast<int32>(result_names_utf8.length() + 1);
       std::string snapshot_identifiers_utf8;
       convert_to_grpc(snapshot_identifiers, &snapshot_identifiers_utf8);
       response->set_snapshot_identifiers(snapshot_identifiers_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_snapshot_identifiers()));
-      snapshot_identifiers_actual_size = snapshot_identifiers_utf8.length() + 1;
+      snapshot_identifiers_actual_size = static_cast<int32>(snapshot_identifiers_utf8.length() + 1);
       response->mutable_snapshot_timestamp_array()->Resize(snapshot_timestamp_array_actual_size, 0);
     }
     response->set_status(status);
@@ -209,12 +209,12 @@ inline bool status_ok(int32 status)
       convert_to_grpc(signal_name, &signal_name_utf8);
       response->set_signal_name(signal_name_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_name()));
-      signal_name_actual_size = signal_name_utf8.length() + 1;
+      signal_name_actual_size = static_cast<int32>(signal_name_utf8.length() + 1);
       std::string snapshot_identifier_utf8;
       convert_to_grpc(snapshot_identifier, &snapshot_identifier_utf8);
       response->set_snapshot_identifier(snapshot_identifier_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_snapshot_identifier()));
-      snapshot_identifier_actual_size = snapshot_identifier_utf8.length() + 1;
+      snapshot_identifier_actual_size = static_cast<int32>(snapshot_identifier_utf8.length() + 1);
     }
     response->set_status(status);
     response->set_personality_id(personality_id);

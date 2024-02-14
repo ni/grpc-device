@@ -31,7 +31,7 @@ class MockServerContext {
 void initialize_status(nierr_Status *status, int32_t code, std::string description)
 {
   status->code = code;
-  status->reallocJson(status, description.length() + JSONZ_TERMINATOR_SIZE);
+  status->reallocJson(status, static_cast<uint32_t>(description.length() + JSONZ_TERMINATOR_SIZE));
   strcpy(status->json, description.c_str());
 }
 

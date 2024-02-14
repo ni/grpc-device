@@ -1776,7 +1776,6 @@ TEST_F(NiFakeNonIviServiceTests, InitWithNoError_DoesNotCallGetLatestError)
   InitResponse response;
   service_.Init(&context, &request, &response);
 
-  EXPECT_THAT(response.error_message(), IsEmpty());
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 

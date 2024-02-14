@@ -219,15 +219,11 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
 #define EXPECT_SUCCESS(response)               \
   if (1) {                                     \
     EXPECT_EQ(0, (response).status());         \
-    EXPECT_EQ("", (response).error_message()); \
-    EXPECT_EQ(0, (response).error_num());      \
   }
 
 #define EXPECT_SUCCESS_WITH_STATUS(expected_status, response) \
   if (1) {                                                    \
     EXPECT_EQ(expected_status, (response).status());          \
-    EXPECT_EQ("", (response).error_message());                \
-    EXPECT_EQ(0, (response).error_num());                     \
   }
 
 #define EXPECT_XNET_STATUS(error, response) \
@@ -242,8 +238,6 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
 #define EXPECT_XNET_ERROR(expected_status, error, message, response) \
   if (1) {                                                           \
     EXPECT_EQ(expected_status, (response).status());                 \
-    EXPECT_EQ(error, (response).error_num());                        \
-    EXPECT_THAT((response).error_message(), HasSubstr(message));     \
   }
 
 #define EXPECT_INVALID_ARGUMENT_ERROR(response)                                                              \

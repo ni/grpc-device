@@ -880,7 +880,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
       case string_: {
         auto property_value_mbcs = convert_from_grpc<std::string>(request->str());
-        u32 property_size = property_value_mbcs.size();
+        u32 property_size = static_cast<u32>(property_value_mbcs.size());
         status = library_->SetProperty(session, property_id, property_size, const_cast<char*>(property_value_mbcs.c_str()));
         break;
       }
@@ -978,7 +978,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
       case string_: {
         auto property_value_mbcs = convert_from_grpc<std::string>(request->str());
-        u32 property_size = property_value_mbcs.size();
+        u32 property_size = static_cast<u32>(property_value_mbcs.size());
         status = library_->SetSubProperty(session, active_index, property_id, property_size, const_cast<char*>(property_value_mbcs.c_str()));
         break;
       }
@@ -1053,7 +1053,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
       case string_: {
         auto property_value_mbcs = convert_from_grpc<std::string>(request->str());
-        u32 property_size = property_value_mbcs.size();
+        u32 property_size = static_cast<u32>(property_value_mbcs.size());
         status = library_->DbSetProperty(dbobject, property_id, property_size, const_cast<char*>(property_value_mbcs.c_str()));
         break;
       }

@@ -160,7 +160,7 @@ TEST(XnetConvertersTests, FrameBufferArray_ConvertToGrpc_FrameBufferResponse)
   }
 
   pb::RepeatedPtrField<nixnet_grpc::FrameBufferResponse> output;
-  nixnet_grpc::convert_to_grpc(buffer, &output, buffer.size(), nixnet_grpc::Protocol::PROTOCOL_LIN, std::map<int32_t, int32_t>());
+  nixnet_grpc::convert_to_grpc(buffer, &output, static_cast<u32>(buffer.size()), nixnet_grpc::Protocol::PROTOCOL_LIN, std::map<int32_t, int32_t>());
 
   pFrame = (nxFrameVar_t*)buffer.data();
   assert_frames_are_equal(pFrame, output[0].lin());

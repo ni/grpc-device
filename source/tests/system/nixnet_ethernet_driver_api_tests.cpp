@@ -116,7 +116,7 @@ TEST_F(NiXnetEthernetDriverApiTestsWithHardware, WriteFrameData_ReadFrameData_Va
   auto frame_out = read_frame_response.buffer()[0];
   // The frame that is read will contain mac address of the source on which the test is being run. For comparison purposes, we will be masking it.
   for (int i = 6; i < 12; i++) {
-    const_cast<char*>(frame_out.mutable_enet()->mutable_frame_data()->data())[i] = 0xFF;
+    const_cast<char*>(frame_out.mutable_enet()->mutable_frame_data()->data())[i] = 0xFFU;
   }
 
   EXPECT_EQ(frame->type(), frame_out.enet().type());
