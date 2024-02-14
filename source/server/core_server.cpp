@@ -17,6 +17,8 @@
   #include "windows/console_ctrl_handler.h"
 #endif
 
+#include "version.h"
+
 using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
 
 struct ServerConfiguration {
@@ -183,6 +185,17 @@ Options parse_options(int argc, char** argv)
 #endif
     if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
       nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, usage);
+      exit(EXIT_SUCCESS);
+    }
+    else if (strcmp("--version", argv[i]) == 0) {
+      std::string string_kNiDeviceGrpcBranchName(nidevice_grpc::kNiDeviceGrpcBranchName);
+      if (string_kNiDeviceGrpcBranchName.rfind("releases", 0) == 0) {
+        nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, nidevice_grpc::kNiDeviceGrpcFileVersion);
+      }
+      else {
+        nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, nidevice_grpc::kNiDeviceGrpcFileVersion);
+        nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, "dev");
+      }
       exit(EXIT_SUCCESS);
     }
     else if (i == argc - 1) {
