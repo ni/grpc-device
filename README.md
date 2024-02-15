@@ -31,6 +31,7 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-SCOPE                  | 2023 Q2       | 2023 Q2       | 2023 Q2       |
 | NI-SWITCH                 | 2023 Q1       | 2023 Q1       | 2023 Q1       |
 | NI-TClk                   | 2023 Q1       | 2023 Q1       | 2023 Q1       |
+| NI-VISA                   | 2024 Q1       | Not Supported | Not Supported |
 | NI-XNET                   | 21.5.0        | 21.5.0        | 21.5.0        |
 
 ## Build Status
