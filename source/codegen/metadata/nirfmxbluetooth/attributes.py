@@ -731,5 +731,52 @@ attributes = {
         'access': 'read-write',
         'name': 'POWERRAMP_RESULTS_40DB_FALL_TIME_MEAN',
         'type': 'float64'
+    },
+    11595776: {
+        'access': 'read-write',
+        'name': 'MODSPECTRUM_MEASUREMENT_ENABLED',
+        'type': 'int32'
+    },
+    11595778: {
+        'access': 'read-write',
+        'enum': 'ModSpectrumBurstSynchronizationType',
+        'name': 'MODSPECTRUM_BURST_SYNCHRONIZATION_TYPE',
+        'type': 'int32'
+    },
+    11595779: {
+        'access': 'read-write',
+        'enum': 'ModSpectrumAveragingEnabled',
+        'name': 'MODSPECTRUM_AVERAGING_ENABLED',
+        'type': 'int32'
+    },
+    11595780: {
+        'access': 'read-write',
+        'name': 'MODSPECTRUM_AVERAGING_COUNT',
+        'type': 'int32'
+    },
+    11595781: {
+        'access': 'read-write',
+        'name': 'MODSPECTRUM_ALL_TRACES_ENABLED',
+        'type': 'int32'
+    },
+    11595782: {
+        'access': 'read-write',
+        'name': 'MODSPECTRUM_NUMBER_OF_ANALYSIS_THREADS',
+        'type': 'int32'
+    },
+    11595784: {
+        'access': 'read-write',
+        'name': 'MODSPECTRUM_RESULTS_BANDWIDTH',
+        'type': 'float64'
+    },
+    11595785: {
+        'access': 'read-write',
+        'name': 'MODSPECTRUM_RESULTS_HIGH_FREQUENCY',
+        'type': 'float64'
+    },
+    11595786: {
+        'access': 'read-write',
+        'name': 'MODSPECTRUM_RESULTS_LOW_FREQUENCY',
+        'type': 'float64'
     }
 }

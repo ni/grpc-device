@@ -487,6 +487,21 @@ int32 ModAccFetchRMSDEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorS
   return RFmxBT_ModAccFetchRMSDEVMTrace(instrumentHandle, selectorString, timeout, rmsdevm, arraySize, actualArraySize);
 }
 
+int32 ModSpectrumCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  return RFmxBT_ModSpectrumCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 ModSpectrumCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
+{
+  return RFmxBT_ModSpectrumCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+}
+
+int32 ModSpectrumFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxBT_ModSpectrumFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+}
+
 int32 PowerRampCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
 {
   return RFmxBT_PowerRampCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);

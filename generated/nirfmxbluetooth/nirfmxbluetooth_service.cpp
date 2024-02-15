@@ -3551,6 +3551,132 @@ namespace nirfmxbluetooth_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::ModSpectrumCfgAveraging(::grpc::ServerContext* context, const ModSpectrumCfgAveragingRequest* request, ModSpectrumCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxbluetooth_grpc::ModSpectrumCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxbluetooth_grpc::ModSpectrumCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxbluetooth_grpc::ModSpectrumCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->ModSpectrumCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::ModSpectrumCfgBurstSynchronizationType(::grpc::ServerContext* context, const ModSpectrumCfgBurstSynchronizationTypeRequest* request, ModSpectrumCfgBurstSynchronizationTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 burst_synchronization_type;
+      switch (request->burst_synchronization_type_enum_case()) {
+        case nirfmxbluetooth_grpc::ModSpectrumCfgBurstSynchronizationTypeRequest::BurstSynchronizationTypeEnumCase::kBurstSynchronizationType: {
+          burst_synchronization_type = static_cast<int32>(request->burst_synchronization_type());
+          break;
+        }
+        case nirfmxbluetooth_grpc::ModSpectrumCfgBurstSynchronizationTypeRequest::BurstSynchronizationTypeEnumCase::kBurstSynchronizationTypeRaw: {
+          burst_synchronization_type = static_cast<int32>(request->burst_synchronization_type_raw());
+          break;
+        }
+        case nirfmxbluetooth_grpc::ModSpectrumCfgBurstSynchronizationTypeRequest::BurstSynchronizationTypeEnumCase::BURST_SYNCHRONIZATION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for burst_synchronization_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ModSpectrumCfgBurstSynchronizationType(instrument, selector_string, burst_synchronization_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::ModSpectrumFetchSpectrum(::grpc::ServerContext* context, const ModSpectrumFetchSpectrumRequest* request, ModSpectrumFetchSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModSpectrumFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_spectrum()->Resize(actual_array_size, 0);
+        float32* spectrum = response->mutable_spectrum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModSpectrumFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_spectrum()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxBluetoothService::PowerRampCfgAveraging(::grpc::ServerContext* context, const PowerRampCfgAveragingRequest* request, PowerRampCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {

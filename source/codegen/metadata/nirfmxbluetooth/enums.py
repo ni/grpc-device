@@ -100,6 +100,10 @@ enums = {
             {
                 'name': 'SOUNDING_SEQUENCE_96_BIT',
                 'value': 2
+            },
+            {
+                'name': 'PAYLOAD_PATTERN',
+                'value': 3
             }
         ]
     },
@@ -310,6 +314,10 @@ enums = {
             {
                 'name': 'POWERRAMP',
                 'value': 32
+            },
+            {
+                'name': 'MODSPECTRUM',
+                'value': 64
             }
         ]
     },
@@ -365,6 +373,34 @@ enums = {
             {
                 'name': 'TRUE',
                 'value': 1
+            }
+        ]
+    },
+    'ModSpectrumAveragingEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'ModSpectrumBurstSynchronizationType': {
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'PREAMBLE',
+                'value': 1
+            },
+            {
+                'name': 'SYNC_WORD',
+                'value': 2
             }
         ]
     },

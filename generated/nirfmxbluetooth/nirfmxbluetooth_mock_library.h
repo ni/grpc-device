@@ -113,6 +113,9 @@ class NiRFmxBluetoothMockLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothL
   MOCK_METHOD(int32, ModAccFetchFrequencyErrorWiPlusW0TraceEDR, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 frequencyErrorWiPlusW0[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, ModAccFetchFrequencyTrace, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequency[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, ModAccFetchRMSDEVMTrace, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 rmsdevm[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, ModSpectrumCfgAveraging, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount), (override));
+  MOCK_METHOD(int32, ModSpectrumCfgBurstSynchronizationType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType), (override));
+  MOCK_METHOD(int32, ModSpectrumFetchSpectrum, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, PowerRampCfgAveraging, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount), (override));
   MOCK_METHOD(int32, PowerRampCfgBurstSynchronizationType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType), (override));
   MOCK_METHOD(int32, ResetAttribute, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID), (override));
