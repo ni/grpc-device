@@ -86,6 +86,16 @@ else()
   set(PYTHON_EXE ${Python3_EXECUTABLE})
 endif()
 
+
+# Statically link all libraries when using MSVC.
+if(MSVC)
+  add_compile_options(
+    $<$<CONFIG:>:/MT>
+    $<$<CONFIG:Debug>:/MTd>
+    $<$<CONFIG:Release>:/MT>
+  )
+endif()
+
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
