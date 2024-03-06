@@ -93,7 +93,7 @@ endif()
 # Dynamically link all libraries when using MSVC.
 if(CMAKE_LINKER MATCHES "MSVC")
   add_compile_options(
-    $<$<CONFIG:>:/MT>
+    $<$<CONFIG:>:/MTd>
     $<$<CONFIG:Debug>:/MTd>
     $<$<CONFIG:Release>:/MTd>
   )
