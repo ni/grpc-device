@@ -91,7 +91,8 @@ endif()
 
 
 # Statically link all libraries when using MSVC.
-if(MSVC)
+if(CMAKE_LINKER MATCHES "MSVC")
+  message("AMS: Setting MSVC compile options.")
   add_compile_options(
     $<$<CONFIG:>:/MT>
     $<$<CONFIG:Debug>:/MTd>
