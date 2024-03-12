@@ -1975,13 +1975,13 @@ functions = {
     'LoadConfigurations': {
         'parameters': [
             {
-                'direction': 'out',
+                'direction': 'in',
                 'grpc_name': 'instrument',
                 'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
-                'direction': 'out',
+                'direction': 'in',
                 'name': 'filePath',
                 'type': 'char[]'
             }

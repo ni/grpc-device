@@ -312,6 +312,11 @@ int32 LoadAllConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[],
   return RFmxInstr_LoadAllConfigurations(instrumentHandle, filePath, loadRFInstrConfiguration);
 }
 
+int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[])
+{
+  return RFmxInstr_LoadConfigurations(instrumentHandle, filePath);
+}
+
 int32 LoadSParameterExternalAttenuationTableFromS2PFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char s2PFilePath[], int32 sParameterOrientation)
 {
   return RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile(instrumentHandle, selectorString, tableName, s2PFilePath, sParameterOrientation);
@@ -480,11 +485,6 @@ int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, fl
 int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
 {
   return RFmxInstr_WaitForAcquisitionComplete(instrumentHandle, timeout);
-}
-
-int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[])
-{
-  return RFmxInstr_LoadConfigurations(instrumentHandle, filePath);
 }
 
 }  // namespace nirfmxinstr_grpc

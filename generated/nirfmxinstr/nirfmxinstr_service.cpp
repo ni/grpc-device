@@ -2317,6 +2317,30 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::LoadConfigurations(::grpc::ServerContext* context, const LoadConfigurationsRequest* request, LoadConfigurationsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
+      auto status = library_->LoadConfigurations(instrument, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::LoadSParameterExternalAttenuationTableFromS2PFile(::grpc::ServerContext* context, const LoadSParameterExternalAttenuationTableFromS2PFileRequest* request, LoadSParameterExternalAttenuationTableFromS2PFileResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3307,30 +3331,6 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrService::LoadConfigurations(::grpc::ServerContext* context, const LoadConfigurationsRequest* request, LoadConfigurationsResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
-      char* file_path = (char*)file_path_mbcs.c_str();
-      auto status = library_->LoadConfigurations(instrument, file_path);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

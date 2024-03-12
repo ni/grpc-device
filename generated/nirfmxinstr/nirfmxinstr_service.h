@@ -105,6 +105,7 @@ public:
   ::grpc::Status InitializeFromNIRFSASessionArray(::grpc::ServerContext* context, const InitializeFromNIRFSASessionArrayRequest* request, InitializeFromNIRFSASessionArrayResponse* response) override;
   ::grpc::Status IsSelfCalibrateValid(::grpc::ServerContext* context, const IsSelfCalibrateValidRequest* request, IsSelfCalibrateValidResponse* response) override;
   ::grpc::Status LoadAllConfigurations(::grpc::ServerContext* context, const LoadAllConfigurationsRequest* request, LoadAllConfigurationsResponse* response) override;
+  ::grpc::Status LoadConfigurations(::grpc::ServerContext* context, const LoadConfigurationsRequest* request, LoadConfigurationsResponse* response) override;
   ::grpc::Status LoadSParameterExternalAttenuationTableFromS2PFile(::grpc::ServerContext* context, const LoadSParameterExternalAttenuationTableFromS2PFileRequest* request, LoadSParameterExternalAttenuationTableFromS2PFileResponse* response) override;
   ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;
   ::grpc::Status ResetDriver(::grpc::ServerContext* context, const ResetDriverRequest* request, ResetDriverResponse* response) override;
@@ -139,7 +140,6 @@ public:
   ::grpc::Status TimestampFromValues(::grpc::ServerContext* context, const TimestampFromValuesRequest* request, TimestampFromValuesResponse* response) override;
   ::grpc::Status ValuesFromTimestamp(::grpc::ServerContext* context, const ValuesFromTimestampRequest* request, ValuesFromTimestampResponse* response) override;
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
-  ::grpc::Status LoadConfigurations(::grpc::ServerContext* context, const LoadConfigurationsRequest* request, LoadConfigurationsResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

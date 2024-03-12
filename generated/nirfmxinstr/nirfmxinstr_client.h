@@ -83,6 +83,7 @@ InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr
 InitializeFromNIRFSASessionArrayResponse initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& nirfsa_sessions, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 IsSelfCalibrateValidResponse is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 LoadAllConfigurationsResponse load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path, const pb::int32& load_rf_instr_configuration);
+LoadConfigurationsResponse load_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path);
 LoadSParameterExternalAttenuationTableFromS2PFileResponse load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation);
 ResetAttributeResponse reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
 ResetDriverResponse reset_driver(const StubPtr& stub, const nidevice_grpc::Session& instrument);
@@ -117,7 +118,6 @@ SetAttributeU8ArrayResponse set_attribute_u8_array(const StubPtr& stub, const ni
 TimestampFromValuesResponse timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since_1970, const double& fractional_seconds);
 ValuesFromTimestampResponse values_from_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& timestamp);
 WaitForAcquisitionCompleteResponse wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout);
-LoadConfigurationsResponse load_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path);
 
 } // namespace nirfmxinstr_grpc::experimental::client
 

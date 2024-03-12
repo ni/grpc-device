@@ -78,6 +78,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, InitializeFromNIRFSASessionArray, (uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* handleOut), (override));
   MOCK_METHOD(int32, IsSelfCalibrateValid, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* selfCalibrateValid, int32* validSteps), (override));
   MOCK_METHOD(int32, LoadAllConfigurations, (niRFmxInstrHandle instrumentHandle, char filePath[], int32 loadRFInstrConfiguration), (override));
+  MOCK_METHOD(int32, LoadConfigurations, (niRFmxInstrHandle instrumentHandle, char filePath[]), (override));
   MOCK_METHOD(int32, LoadSParameterExternalAttenuationTableFromS2PFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char s2PFilePath[], int32 sParameterOrientation), (override));
   MOCK_METHOD(int32, ResetAttribute, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID), (override));
   MOCK_METHOD(int32, ResetDriver, (niRFmxInstrHandle instrumentHandle), (override));
@@ -112,7 +113,6 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, TimestampFromValues, (int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp), (override));
   MOCK_METHOD(int32, ValuesFromTimestamp, (CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds), (override));
   MOCK_METHOD(int32, WaitForAcquisitionComplete, (niRFmxInstrHandle instrumentHandle, float64 timeout), (override));
-  MOCK_METHOD(int32, LoadConfigurations, (niRFmxInstrHandle instrumentHandle, char filePath[]), (override));
 };
 
 }  // namespace unit

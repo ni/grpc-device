@@ -76,6 +76,7 @@ class NiRFmxInstrLibraryInterface {
   virtual int32 InitializeFromNIRFSASessionArray(uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* handleOut) = 0;
   virtual int32 IsSelfCalibrateValid(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* selfCalibrateValid, int32* validSteps) = 0;
   virtual int32 LoadAllConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[], int32 loadRFInstrConfiguration) = 0;
+  virtual int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[]) = 0;
   virtual int32 LoadSParameterExternalAttenuationTableFromS2PFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char s2PFilePath[], int32 sParameterOrientation) = 0;
   virtual int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID) = 0;
   virtual int32 ResetDriver(niRFmxInstrHandle instrumentHandle) = 0;
@@ -110,7 +111,6 @@ class NiRFmxInstrLibraryInterface {
   virtual int32 TimestampFromValues(int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp) = 0;
   virtual int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds) = 0;
   virtual int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout) = 0;
-  virtual int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[]) = 0;
 };
 
 }  // namespace nirfmxinstr_grpc

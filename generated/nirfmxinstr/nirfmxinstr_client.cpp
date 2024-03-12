@@ -1246,6 +1246,24 @@ load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instr
   return response;
 }
 
+LoadConfigurationsResponse
+load_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = LoadConfigurationsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_file_path(file_path);
+
+  auto response = LoadConfigurationsResponse{};
+
+  raise_if_error(
+      stub->LoadConfigurations(&context, request, &response),
+      context);
+
+  return response;
+}
+
 LoadSParameterExternalAttenuationTableFromS2PFileResponse
 load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
 {
@@ -1933,24 +1951,6 @@ wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session&
 
   raise_if_error(
       stub->WaitForAcquisitionComplete(&context, request, &response),
-      context);
-
-  return response;
-}
-
-LoadConfigurationsResponse
-load_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LoadConfigurationsRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_file_path(file_path);
-
-  auto response = LoadConfigurationsResponse{};
-
-  raise_if_error(
-      stub->LoadConfigurations(&context, request, &response),
       context);
 
   return response;

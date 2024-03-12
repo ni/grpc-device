@@ -88,6 +88,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.InitializeFromNIRFSASessionArray = reinterpret_cast<InitializeFromNIRFSASessionArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_InitializeFromNIRFSASessionArray"));
   function_pointers_.IsSelfCalibrateValid = reinterpret_cast<IsSelfCalibrateValidPtr>(shared_library_->get_function_pointer("RFmxInstr_IsSelfCalibrateValid"));
   function_pointers_.LoadAllConfigurations = reinterpret_cast<LoadAllConfigurationsPtr>(shared_library_->get_function_pointer("RFmxInstr_LoadAllConfigurations"));
+  function_pointers_.LoadConfigurations = reinterpret_cast<LoadConfigurationsPtr>(shared_library_->get_function_pointer("RFmxInstr_LoadConfigurations"));
   function_pointers_.LoadSParameterExternalAttenuationTableFromS2PFile = reinterpret_cast<LoadSParameterExternalAttenuationTableFromS2PFilePtr>(shared_library_->get_function_pointer("RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile"));
   function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("RFmxInstr_ResetAttribute"));
   function_pointers_.ResetDriver = reinterpret_cast<ResetDriverPtr>(shared_library_->get_function_pointer("RFmxInstr_ResetDriver"));
@@ -122,7 +123,6 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.TimestampFromValues = reinterpret_cast<TimestampFromValuesPtr>(shared_library_->get_function_pointer("RFmxInstr_TimestampFromValues"));
   function_pointers_.ValuesFromTimestamp = reinterpret_cast<ValuesFromTimestampPtr>(shared_library_->get_function_pointer("RFmxInstr_ValuesFromTimestamp"));
   function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxInstr_WaitForAcquisitionComplete"));
-  function_pointers_.LoadConfigurations = reinterpret_cast<LoadConfigurationsPtr>(shared_library_->get_function_pointer("RFmxInstr_LoadConfigurations"));
 }
 
 NiRFmxInstrLibrary::~NiRFmxInstrLibrary()
@@ -624,6 +624,14 @@ int32 NiRFmxInstrLibrary::LoadAllConfigurations(niRFmxInstrHandle instrumentHand
   return function_pointers_.LoadAllConfigurations(instrumentHandle, filePath, loadRFInstrConfiguration);
 }
 
+int32 NiRFmxInstrLibrary::LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[])
+{
+  if (!function_pointers_.LoadConfigurations) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_LoadConfigurations.");
+  }
+  return function_pointers_.LoadConfigurations(instrumentHandle, filePath);
+}
+
 int32 NiRFmxInstrLibrary::LoadSParameterExternalAttenuationTableFromS2PFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char s2PFilePath[], int32 sParameterOrientation)
 {
   if (!function_pointers_.LoadSParameterExternalAttenuationTableFromS2PFile) {
@@ -894,14 +902,6 @@ int32 NiRFmxInstrLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumen
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_WaitForAcquisitionComplete.");
   }
   return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
-}
-
-int32 NiRFmxInstrLibrary::LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[])
-{
-  if (!function_pointers_.LoadConfigurations) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_LoadConfigurations.");
-  }
-  return function_pointers_.LoadConfigurations(instrumentHandle, filePath);
 }
 
 }  // namespace nirfmxinstr_grpc

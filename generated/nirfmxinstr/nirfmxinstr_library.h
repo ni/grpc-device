@@ -82,6 +82,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 InitializeFromNIRFSASessionArray(uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* handleOut) override;
   int32 IsSelfCalibrateValid(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* selfCalibrateValid, int32* validSteps) override;
   int32 LoadAllConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[], int32 loadRFInstrConfiguration) override;
+  int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[]) override;
   int32 LoadSParameterExternalAttenuationTableFromS2PFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char s2PFilePath[], int32 sParameterOrientation) override;
   int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID) override;
   int32 ResetDriver(niRFmxInstrHandle instrumentHandle) override;
@@ -116,7 +117,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 TimestampFromValues(int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp) override;
   int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds) override;
   int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout) override;
-  int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[]) override;
 
  private:
   using BuildCalibrationPlaneStringPtr = decltype(&RFmxInstr_BuildCalibrationPlaneString);
@@ -180,6 +180,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using InitializeFromNIRFSASessionArrayPtr = decltype(&RFmxInstr_InitializeFromNIRFSASessionArray);
   using IsSelfCalibrateValidPtr = decltype(&RFmxInstr_IsSelfCalibrateValid);
   using LoadAllConfigurationsPtr = decltype(&RFmxInstr_LoadAllConfigurations);
+  using LoadConfigurationsPtr = decltype(&RFmxInstr_LoadConfigurations);
   using LoadSParameterExternalAttenuationTableFromS2PFilePtr = decltype(&RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile);
   using ResetAttributePtr = decltype(&RFmxInstr_ResetAttribute);
   using ResetDriverPtr = decltype(&RFmxInstr_ResetDriver);
@@ -214,7 +215,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using TimestampFromValuesPtr = decltype(&RFmxInstr_TimestampFromValues);
   using ValuesFromTimestampPtr = decltype(&RFmxInstr_ValuesFromTimestamp);
   using WaitForAcquisitionCompletePtr = decltype(&RFmxInstr_WaitForAcquisitionComplete);
-  using LoadConfigurationsPtr = decltype(&RFmxInstr_LoadConfigurations);
 
   typedef struct FunctionPointers {
     BuildCalibrationPlaneStringPtr BuildCalibrationPlaneString;
@@ -278,6 +278,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     InitializeFromNIRFSASessionArrayPtr InitializeFromNIRFSASessionArray;
     IsSelfCalibrateValidPtr IsSelfCalibrateValid;
     LoadAllConfigurationsPtr LoadAllConfigurations;
+    LoadConfigurationsPtr LoadConfigurations;
     LoadSParameterExternalAttenuationTableFromS2PFilePtr LoadSParameterExternalAttenuationTableFromS2PFile;
     ResetAttributePtr ResetAttribute;
     ResetDriverPtr ResetDriver;
@@ -312,7 +313,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     TimestampFromValuesPtr TimestampFromValues;
     ValuesFromTimestampPtr ValuesFromTimestamp;
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
-    LoadConfigurationsPtr LoadConfigurations;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
