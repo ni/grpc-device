@@ -40,6 +40,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, DisableCalibrationPlane, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, EnableCalibrationPlane, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, ExportSignal, (niRFmxInstrHandle instrumentHandle, int32 exportSignalSource, char exportSignalOutputTerminal[]), (override));
+  MOCK_METHOD(int32, FetchRawIQData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved), (override));
   MOCK_METHOD(int32, GetAttributeF32, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal), (override));
   MOCK_METHOD(int32, GetAttributeF32Array, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, GetAttributeF64, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64* attrVal), (override));
@@ -111,7 +112,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, TimestampFromValues, (int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp), (override));
   MOCK_METHOD(int32, ValuesFromTimestamp, (CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds), (override));
   MOCK_METHOD(int32, WaitForAcquisitionComplete, (niRFmxInstrHandle instrumentHandle, float64 timeout), (override));
-  MOCK_METHOD(int32, FetchRawIQData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved), (override));
+  MOCK_METHOD(int32, LoadConfigurations, (niRFmxInstrHandle instrumentHandle, char filePath[]), (override));
 };
 
 }  // namespace unit

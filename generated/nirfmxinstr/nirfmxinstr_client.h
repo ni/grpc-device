@@ -45,6 +45,7 @@ DeleteExternalAttenuationTableResponse delete_external_attenuation_table(const S
 DisableCalibrationPlaneResponse disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 EnableCalibrationPlaneResponse enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<ExportSignalSource, pb::int32>& export_signal_source, const simple_variant<OutputTerminal, std::string>& export_signal_output_terminal);
+FetchRawIQDataResponse fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read);
 GetAttributeF32Response get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
 GetAttributeF32ArrayResponse get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
 GetAttributeF64Response get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
@@ -116,7 +117,7 @@ SetAttributeU8ArrayResponse set_attribute_u8_array(const StubPtr& stub, const ni
 TimestampFromValuesResponse timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since_1970, const double& fractional_seconds);
 ValuesFromTimestampResponse values_from_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& timestamp);
 WaitForAcquisitionCompleteResponse wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout);
-FetchRawIQDataResponse fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read);
+LoadConfigurationsResponse load_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path);
 
 } // namespace nirfmxinstr_grpc::experimental::client
 

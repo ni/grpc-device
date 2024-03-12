@@ -50,6 +50,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.DisableCalibrationPlane = reinterpret_cast<DisableCalibrationPlanePtr>(shared_library_->get_function_pointer("RFmxInstr_DisableCalibrationPlane"));
   function_pointers_.EnableCalibrationPlane = reinterpret_cast<EnableCalibrationPlanePtr>(shared_library_->get_function_pointer("RFmxInstr_EnableCalibrationPlane"));
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("RFmxInstr_ExportSignal"));
+  function_pointers_.FetchRawIQData = reinterpret_cast<FetchRawIQDataPtr>(shared_library_->get_function_pointer("RFmxInstr_FetchRawIQData"));
   function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF32"));
   function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF32Array"));
   function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF64"));
@@ -121,7 +122,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.TimestampFromValues = reinterpret_cast<TimestampFromValuesPtr>(shared_library_->get_function_pointer("RFmxInstr_TimestampFromValues"));
   function_pointers_.ValuesFromTimestamp = reinterpret_cast<ValuesFromTimestampPtr>(shared_library_->get_function_pointer("RFmxInstr_ValuesFromTimestamp"));
   function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxInstr_WaitForAcquisitionComplete"));
-  function_pointers_.FetchRawIQData = reinterpret_cast<FetchRawIQDataPtr>(shared_library_->get_function_pointer("RFmxInstr_FetchRawIQData"));
+  function_pointers_.LoadConfigurations = reinterpret_cast<LoadConfigurationsPtr>(shared_library_->get_function_pointer("RFmxInstr_LoadConfigurations"));
 }
 
 NiRFmxInstrLibrary::~NiRFmxInstrLibrary()
@@ -317,6 +318,14 @@ int32 NiRFmxInstrLibrary::ExportSignal(niRFmxInstrHandle instrumentHandle, int32
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_ExportSignal.");
   }
   return function_pointers_.ExportSignal(instrumentHandle, exportSignalSource, exportSignalOutputTerminal);
+}
+
+int32 NiRFmxInstrLibrary::FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved)
+{
+  if (!function_pointers_.FetchRawIQData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_FetchRawIQData.");
+  }
+  return function_pointers_.FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, data, arraySize, actualArraySize, reserved);
 }
 
 int32 NiRFmxInstrLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal)
@@ -887,12 +896,12 @@ int32 NiRFmxInstrLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumen
   return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
 }
 
-int32 NiRFmxInstrLibrary::FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved)
+int32 NiRFmxInstrLibrary::LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[])
 {
-  if (!function_pointers_.FetchRawIQData) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_FetchRawIQData.");
+  if (!function_pointers_.LoadConfigurations) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_LoadConfigurations.");
   }
-  return function_pointers_.FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, data, arraySize, actualArraySize, reserved);
+  return function_pointers_.LoadConfigurations(instrumentHandle, filePath);
 }
 
 }  // namespace nirfmxinstr_grpc

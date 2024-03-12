@@ -67,6 +67,7 @@ public:
   ::grpc::Status DisableCalibrationPlane(::grpc::ServerContext* context, const DisableCalibrationPlaneRequest* request, DisableCalibrationPlaneResponse* response) override;
   ::grpc::Status EnableCalibrationPlane(::grpc::ServerContext* context, const EnableCalibrationPlaneRequest* request, EnableCalibrationPlaneResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
+  ::grpc::Status FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response) override;
   ::grpc::Status GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response) override;
   ::grpc::Status GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response) override;
   ::grpc::Status GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response) override;
@@ -138,7 +139,7 @@ public:
   ::grpc::Status TimestampFromValues(::grpc::ServerContext* context, const TimestampFromValuesRequest* request, TimestampFromValuesResponse* response) override;
   ::grpc::Status ValuesFromTimestamp(::grpc::ServerContext* context, const ValuesFromTimestampRequest* request, ValuesFromTimestampResponse* response) override;
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
-  ::grpc::Status FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response) override;
+  ::grpc::Status LoadConfigurations(::grpc::ServerContext* context, const LoadConfigurationsRequest* request, LoadConfigurationsResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

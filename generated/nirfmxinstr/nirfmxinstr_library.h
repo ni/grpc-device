@@ -44,6 +44,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 DisableCalibrationPlane(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 EnableCalibrationPlane(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 ExportSignal(niRFmxInstrHandle instrumentHandle, int32 exportSignalSource, char exportSignalOutputTerminal[]) override;
+  int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved) override;
   int32 GetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal) override;
   int32 GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize) override;
   int32 GetAttributeF64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64* attrVal) override;
@@ -115,7 +116,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 TimestampFromValues(int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp) override;
   int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds) override;
   int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout) override;
-  int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved) override;
+  int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[]) override;
 
  private:
   using BuildCalibrationPlaneStringPtr = decltype(&RFmxInstr_BuildCalibrationPlaneString);
@@ -141,6 +142,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using DisableCalibrationPlanePtr = decltype(&RFmxInstr_DisableCalibrationPlane);
   using EnableCalibrationPlanePtr = decltype(&RFmxInstr_EnableCalibrationPlane);
   using ExportSignalPtr = decltype(&RFmxInstr_ExportSignal);
+  using FetchRawIQDataPtr = decltype(&RFmxInstr_FetchRawIQData);
   using GetAttributeF32Ptr = decltype(&RFmxInstr_GetAttributeF32);
   using GetAttributeF32ArrayPtr = decltype(&RFmxInstr_GetAttributeF32Array);
   using GetAttributeF64Ptr = decltype(&RFmxInstr_GetAttributeF64);
@@ -212,7 +214,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using TimestampFromValuesPtr = decltype(&RFmxInstr_TimestampFromValues);
   using ValuesFromTimestampPtr = decltype(&RFmxInstr_ValuesFromTimestamp);
   using WaitForAcquisitionCompletePtr = decltype(&RFmxInstr_WaitForAcquisitionComplete);
-  using FetchRawIQDataPtr = decltype(&RFmxInstr_FetchRawIQData);
+  using LoadConfigurationsPtr = decltype(&RFmxInstr_LoadConfigurations);
 
   typedef struct FunctionPointers {
     BuildCalibrationPlaneStringPtr BuildCalibrationPlaneString;
@@ -238,6 +240,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     DisableCalibrationPlanePtr DisableCalibrationPlane;
     EnableCalibrationPlanePtr EnableCalibrationPlane;
     ExportSignalPtr ExportSignal;
+    FetchRawIQDataPtr FetchRawIQData;
     GetAttributeF32Ptr GetAttributeF32;
     GetAttributeF32ArrayPtr GetAttributeF32Array;
     GetAttributeF64Ptr GetAttributeF64;
@@ -309,7 +312,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     TimestampFromValuesPtr TimestampFromValues;
     ValuesFromTimestampPtr ValuesFromTimestamp;
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
-    FetchRawIQDataPtr FetchRawIQData;
+    LoadConfigurationsPtr LoadConfigurations;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

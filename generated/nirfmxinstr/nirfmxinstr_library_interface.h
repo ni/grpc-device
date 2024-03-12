@@ -38,6 +38,7 @@ class NiRFmxInstrLibraryInterface {
   virtual int32 DisableCalibrationPlane(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
   virtual int32 EnableCalibrationPlane(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
   virtual int32 ExportSignal(niRFmxInstrHandle instrumentHandle, int32 exportSignalSource, char exportSignalOutputTerminal[]) = 0;
+  virtual int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved) = 0;
   virtual int32 GetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal) = 0;
   virtual int32 GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 GetAttributeF64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64* attrVal) = 0;
@@ -109,7 +110,7 @@ class NiRFmxInstrLibraryInterface {
   virtual int32 TimestampFromValues(int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp) = 0;
   virtual int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds) = 0;
   virtual int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout) = 0;
-  virtual int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved) = 0;
+  virtual int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[]) = 0;
 };
 
 }  // namespace nirfmxinstr_grpc

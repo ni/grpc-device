@@ -375,6 +375,18 @@ enums = {
             }
         ]
     },
+    'LoadOptions': {
+        'values': [
+            {
+                'name': 'SKIP_NONE',
+                'value': 0
+            },
+            {
+                'name': 'SKIP_RFINSTR',
+                'value': 1
+            }
+        ]
+    },
     'MechanicalAttenuationAuto': {
         'values': [
             {
@@ -537,6 +549,10 @@ enums = {
             {
                 'name': 'TDSCDMA',
                 'value': 64
+            },
+            {
+                'name': 'UWB',
+                'value': 8192
             },
             {
                 'name': 'VNA',
