@@ -692,6 +692,7 @@
 #define RFMXSPECAN_ATTR_PHASENOISE_RESULTS_INTEGRATED_NOISE_JITTER                     0x0013001c
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_ENABLED                                       0x00107000
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_LOCATION_TYPE                                 0x00107002
+#define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_BANDWIDTH                                     0x0010700d
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_INTERVAL_MODE                                 0x00107015
 #define RFMXSPECAN_ATTR_PAVT_NUMBER_OF_SEGMENTS                                        0x00107003
 #define RFMXSPECAN_ATTR_PAVT_SEGMENT_TYPE                                              0x00107010
@@ -1913,6 +1914,10 @@
 #define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
 #define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
 
+// Values for RFMXSPECAN_ATTR_MARKER_FUNCTION_TYPE
+#define RFMXSPECAN_VAL_MARKER_FUNCTION_TYPE_OFF                                                       0
+#define RFMXSPECAN_VAL_MARKER_FUNCTION_TYPE_BAND_POWER                                                1
+
 // Values for FrequencyReferenceSource
 #define RFMXSPECAN_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
 #define RFMXSPECAN_VAL_REF_IN_STR                                                                     "RefIn"
@@ -2484,8 +2489,8 @@ int32 __stdcall RFmxSpecAn_AMPMCfgReferenceWaveformSplit(
    char selectorString[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
    int32 arraySize,
    int32 idleDurationPresent,
    int32 signalType
@@ -2501,8 +2506,8 @@ int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(
 int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float32 I[],
-   float32 Q[],
+   float32 DPDPolynomialI[],
+   float32 DPDPolynomialQ[],
    int32 arraySize
 );
 
@@ -2518,8 +2523,8 @@ int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 LUTInputPowers[],
-   float32 I[],
-   float32 Q[],
+   float32 LUTComplexGainsI[],
+   float32 LUTComplexGainsQ[],
    int32 arraySize
 );
 
@@ -2533,8 +2538,8 @@ int32 __stdcall RFmxSpecAn_DPDCfgPreviousDPDPolynomial(
 int32 __stdcall RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float32 I[],
-   float32 Q[],
+   float32 previousDPDPolynomialI[],
+   float32 previousDPDPolynomialQ[],
    int32 arraySize
 );
 
@@ -2554,8 +2559,8 @@ int32 __stdcall RFmxSpecAn_DPDCfgReferenceWaveformSplit(
    char selectorString[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
    int32 arraySize,
    int32 idleDurationPresent,
    int32 signalType
@@ -2623,6 +2628,18 @@ int32 __stdcall RFmxSpecAn_MarkerCfgYLocation(
    float64 markerYLocation
 );
 
+int32 __stdcall RFmxSpecAn_MarkerCfgFunctionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 functionType
+);
+
+int32 __stdcall RFmxSpecAn_MarkerCfgBandSpan(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 span
+);
+
 int32 __stdcall RFmxSpecAn_PAVTCfgSegmentStartTimeStep(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2647,8 +2664,8 @@ int32 __stdcall RFmxSpecAn_IDPDCfgReferenceWaveformSplit(
    char selectorString[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
    int32 arraySize,
    int32 idleDurationPresent,
    int32 signalType
@@ -2669,8 +2686,8 @@ int32 __stdcall RFmxSpecAn_IDPDCfgPredistortedWaveformSplit(
    char selectorString[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 predistortedWaveformI[],
+   float32 predistortedWaveformQ[],
    int32 arraySize,
    float64 targetGain
 );
@@ -2689,8 +2706,8 @@ int32 __stdcall RFmxSpecAn_IDPDCfgEqualizerCoefficientsSplit(
    char selectorString[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 equalizerCoefficientsI[],
+   float32 equalizerCoefficientsQ[],
    int32 arraySize
 );
 
@@ -2712,8 +2729,8 @@ int32 __stdcall RFmxSpecAn_AnalyzeIQ1WaveformSplit(
    char resultName[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 arraySize,
    int32 reset,
    int64 reserved
@@ -4289,58 +4306,6 @@ int32 __stdcall RFmxSpecAn_IQFetchDataSplit(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxSpecAn_IDPDFetchPredistortedWaveform(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   NIComplexSingle predistortedWaveform[],
-   float64* PAPR,
-   float64* powerOffset,
-   float64* gain,
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_IDPDFetchPredistortedWaveformSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 I[],
-   float32 Q[],
-   float64* PAPR,
-   float64* powerOffset,
-   float64* gain,
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetEqualizerReferenceWaveform(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64* x0,
-   float64* dx,
-   NIComplexSingle equalizerReferenceWaveform[],
-   float64* PAPR,
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxSpecAn_IDPDGetEqualizerReferenceWaveformSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64* x0,
-   float64* dx,
-   float32 I[],
-   float32 Q[],
-   float64* PAPR,
-   int32 arraySize,
-   int32* actualArraySize
-);
-
 int32 __stdcall RFmxSpecAn_MarkerNextPeak(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4852,8 +4817,8 @@ int32 __stdcall RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 processedMeanAcquiredWaveformI[],
+   float32 processedMeanAcquiredWaveformQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -4875,8 +4840,8 @@ int32 __stdcall RFmxSpecAn_AMPMFetchProcessedReferenceWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 processedReferenceWaveformI[],
+   float32 processedReferenceWaveformQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -4942,8 +4907,8 @@ int32 __stdcall RFmxSpecAn_DPDFetchDPDPolynomialSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 DPDPolynomialI[],
+   float32 DPDPolynomialQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -4963,8 +4928,8 @@ int32 __stdcall RFmxSpecAn_DPDFetchLookupTableSplit(
    char selectorString[],
    float64 timeout,
    float32 inputPowers[],
-   float32 I[],
-   float32 Q[],
+   float32 complexGainsI[],
+   float32 complexGainsQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -4986,8 +4951,8 @@ int32 __stdcall RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 processedMeanAcquiredWaveformI[],
+   float32 processedMeanAcquiredWaveformQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5009,8 +4974,8 @@ int32 __stdcall RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 processedReferenceWaveformI[],
+   float32 processedReferenceWaveformQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5592,8 +5557,8 @@ int32 __stdcall RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 processedMeanAcquiredWaveformI[],
+   float32 processedMeanAcquiredWaveformQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5615,8 +5580,37 @@ int32 __stdcall RFmxSpecAn_IDPDFetchProcessedReferenceWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 processedReferenceWaveformI[],
+   float32 processedReferenceWaveformQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchPredistortedWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   NIComplexSingle predistortedWaveform[],
+   float64* PAPR,
+   float64* powerOffset,
+   float64* gain,
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDFetchPredistortedWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 predistortedWaveformI[],
+   float32 predistortedWaveformQ[],
+   float64* PAPR,
+   float64* powerOffset,
+   float64* gain,
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5638,8 +5632,31 @@ int32 __stdcall RFmxSpecAn_IDPDFetchEqualizerCoefficientsSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 equalizerCoefficientsI[],
+   float32 equalizerCoefficientsQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEqualizerReferenceWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64* x0,
+   float64* dx,
+   NIComplexSingle equalizerReferenceWaveform[],
+   float64* PAPR,
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_IDPDGetEqualizerReferenceWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64* x0,
+   float64* dx,
+   float32 equalizerReferenceWaveformI[],
+   float32 equalizerReferenceWaveformQ[],
+   float64* PAPR,
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5649,6 +5666,13 @@ int32 __stdcall RFmxSpecAn_MarkerFetchXY(
    char selectorString[],
    float64* markerXLocation,
    float64* markerYLocation
+);
+
+int32 __stdcall RFmxSpecAn_MarkerFetchFunctionValue(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* functionValue
 );
 
 int32 __stdcall RFmxSpecAn_IQGetRecordsDone(
@@ -13003,6 +13027,18 @@ int32 __stdcall RFmxSpecAn_PAVTSetMeasurementLocationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_PAVTGetMeasurementIntervalMode(

@@ -255,6 +255,8 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxSpecAn_Initialize"));
   function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxSpecAn_InitializeFromNIRFSASession"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("RFmxSpecAn_Initiate"));
+  function_pointers_.MarkerCfgBandSpan = reinterpret_cast<MarkerCfgBandSpanPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgBandSpan"));
+  function_pointers_.MarkerCfgFunctionType = reinterpret_cast<MarkerCfgFunctionTypePtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgFunctionType"));
   function_pointers_.MarkerCfgNumberOfMarkers = reinterpret_cast<MarkerCfgNumberOfMarkersPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgNumberOfMarkers"));
   function_pointers_.MarkerCfgPeakExcursion = reinterpret_cast<MarkerCfgPeakExcursionPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgPeakExcursion"));
   function_pointers_.MarkerCfgReferenceMarker = reinterpret_cast<MarkerCfgReferenceMarkerPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgReferenceMarker"));
@@ -263,6 +265,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.MarkerCfgType = reinterpret_cast<MarkerCfgTypePtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgType"));
   function_pointers_.MarkerCfgXLocation = reinterpret_cast<MarkerCfgXLocationPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgXLocation"));
   function_pointers_.MarkerCfgYLocation = reinterpret_cast<MarkerCfgYLocationPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerCfgYLocation"));
+  function_pointers_.MarkerFetchFunctionValue = reinterpret_cast<MarkerFetchFunctionValuePtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerFetchFunctionValue"));
   function_pointers_.MarkerFetchXY = reinterpret_cast<MarkerFetchXYPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerFetchXY"));
   function_pointers_.MarkerNextPeak = reinterpret_cast<MarkerNextPeakPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerNextPeak"));
   function_pointers_.MarkerPeakSearch = reinterpret_cast<MarkerPeakSearchPtr>(shared_library_->get_function_pointer("RFmxSpecAn_MarkerPeakSearch"));
@@ -2288,6 +2291,22 @@ int32 NiRFmxSpecAnLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char sel
   return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
 }
 
+int32 NiRFmxSpecAnLibrary::MarkerCfgBandSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span)
+{
+  if (!function_pointers_.MarkerCfgBandSpan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgBandSpan.");
+  }
+  return function_pointers_.MarkerCfgBandSpan(instrumentHandle, selectorString, span);
+}
+
+int32 NiRFmxSpecAnLibrary::MarkerCfgFunctionType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 functionType)
+{
+  if (!function_pointers_.MarkerCfgFunctionType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgFunctionType.");
+  }
+  return function_pointers_.MarkerCfgFunctionType(instrumentHandle, selectorString, functionType);
+}
+
 int32 NiRFmxSpecAnLibrary::MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers)
 {
   if (!function_pointers_.MarkerCfgNumberOfMarkers) {
@@ -2350,6 +2369,14 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerCfgYLocation.");
   }
   return function_pointers_.MarkerCfgYLocation(instrumentHandle, selectorString, markerYLocation);
+}
+
+int32 NiRFmxSpecAnLibrary::MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue)
+{
+  if (!function_pointers_.MarkerFetchFunctionValue) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerFetchFunctionValue.");
+  }
+  return function_pointers_.MarkerFetchFunctionValue(instrumentHandle, selectorString, timeout, functionValue);
 }
 
 int32 NiRFmxSpecAnLibrary::MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation)

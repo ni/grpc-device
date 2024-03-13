@@ -272,6 +272,8 @@ public:
   ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
+  ::grpc::Status MarkerCfgBandSpan(::grpc::ServerContext* context, const MarkerCfgBandSpanRequest* request, MarkerCfgBandSpanResponse* response) override;
+  ::grpc::Status MarkerCfgFunctionType(::grpc::ServerContext* context, const MarkerCfgFunctionTypeRequest* request, MarkerCfgFunctionTypeResponse* response) override;
   ::grpc::Status MarkerCfgNumberOfMarkers(::grpc::ServerContext* context, const MarkerCfgNumberOfMarkersRequest* request, MarkerCfgNumberOfMarkersResponse* response) override;
   ::grpc::Status MarkerCfgPeakExcursion(::grpc::ServerContext* context, const MarkerCfgPeakExcursionRequest* request, MarkerCfgPeakExcursionResponse* response) override;
   ::grpc::Status MarkerCfgReferenceMarker(::grpc::ServerContext* context, const MarkerCfgReferenceMarkerRequest* request, MarkerCfgReferenceMarkerResponse* response) override;
@@ -280,6 +282,7 @@ public:
   ::grpc::Status MarkerCfgType(::grpc::ServerContext* context, const MarkerCfgTypeRequest* request, MarkerCfgTypeResponse* response) override;
   ::grpc::Status MarkerCfgXLocation(::grpc::ServerContext* context, const MarkerCfgXLocationRequest* request, MarkerCfgXLocationResponse* response) override;
   ::grpc::Status MarkerCfgYLocation(::grpc::ServerContext* context, const MarkerCfgYLocationRequest* request, MarkerCfgYLocationResponse* response) override;
+  ::grpc::Status MarkerFetchFunctionValue(::grpc::ServerContext* context, const MarkerFetchFunctionValueRequest* request, MarkerFetchFunctionValueResponse* response) override;
   ::grpc::Status MarkerFetchXY(::grpc::ServerContext* context, const MarkerFetchXYRequest* request, MarkerFetchXYResponse* response) override;
   ::grpc::Status MarkerNextPeak(::grpc::ServerContext* context, const MarkerNextPeakRequest* request, MarkerNextPeakResponse* response) override;
   ::grpc::Status MarkerPeakSearch(::grpc::ServerContext* context, const MarkerPeakSearchRequest* request, MarkerPeakSearchResponse* response) override;

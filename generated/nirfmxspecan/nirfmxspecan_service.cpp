@@ -8908,6 +8908,71 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::MarkerCfgBandSpan(::grpc::ServerContext* context, const MarkerCfgBandSpanRequest* request, MarkerCfgBandSpanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 span = request->span();
+      auto status = library_->MarkerCfgBandSpan(instrument, selector_string, span);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::MarkerCfgFunctionType(::grpc::ServerContext* context, const MarkerCfgFunctionTypeRequest* request, MarkerCfgFunctionTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 function_type;
+      switch (request->function_type_enum_case()) {
+        case nirfmxspecan_grpc::MarkerCfgFunctionTypeRequest::FunctionTypeEnumCase::kFunctionType: {
+          function_type = static_cast<int32>(request->function_type());
+          break;
+        }
+        case nirfmxspecan_grpc::MarkerCfgFunctionTypeRequest::FunctionTypeEnumCase::kFunctionTypeRaw: {
+          function_type = static_cast<int32>(request->function_type_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::MarkerCfgFunctionTypeRequest::FunctionTypeEnumCase::FUNCTION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for function_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->MarkerCfgFunctionType(instrument, selector_string, function_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::MarkerCfgNumberOfMarkers(::grpc::ServerContext* context, const MarkerCfgNumberOfMarkersRequest* request, MarkerCfgNumberOfMarkersResponse* response)
   {
     if (context->IsCancelled()) {
@@ -9161,6 +9226,33 @@ namespace nirfmxspecan_grpc {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::MarkerFetchFunctionValue(::grpc::ServerContext* context, const MarkerFetchFunctionValueRequest* request, MarkerFetchFunctionValueResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 function_value {};
+      auto status = library_->MarkerFetchFunctionValue(instrument, selector_string, timeout, &function_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_function_value(function_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

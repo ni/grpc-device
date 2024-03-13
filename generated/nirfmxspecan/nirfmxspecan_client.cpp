@@ -5066,6 +5066,51 @@ initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const st
   return response;
 }
 
+MarkerCfgBandSpanResponse
+marker_cfg_band_span(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& span)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgBandSpanRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_span(span);
+
+  auto response = MarkerCfgBandSpanResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgBandSpan(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgFunctionTypeResponse
+marker_cfg_function_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerFunctionType, pb::int32>& function_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgFunctionTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto function_type_ptr = function_type.get_if<MarkerFunctionType>();
+  const auto function_type_raw_ptr = function_type.get_if<pb::int32>();
+  if (function_type_ptr) {
+    request.set_function_type(*function_type_ptr);
+  }
+  else if (function_type_raw_ptr) {
+    request.set_function_type_raw(*function_type_raw_ptr);
+  }
+
+  auto response = MarkerCfgFunctionTypeResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgFunctionType(&context, request, &response),
+      context);
+
+  return response;
+}
+
 MarkerCfgNumberOfMarkersResponse
 marker_cfg_number_of_markers(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_markers)
 {
@@ -5243,6 +5288,25 @@ marker_cfg_y_location(const StubPtr& stub, const nidevice_grpc::Session& instrum
 
   raise_if_error(
       stub->MarkerCfgYLocation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerFetchFunctionValueResponse
+marker_fetch_function_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerFetchFunctionValueRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = MarkerFetchFunctionValueResponse{};
+
+  raise_if_error(
+      stub->MarkerFetchFunctionValue(&context, request, &response),
       context);
 
   return response;
