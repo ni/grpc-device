@@ -90,18 +90,6 @@ else()
 endif()
 
 
-# Dynamically link all libraries when using MSVC.
-if(CMAKE_LINKER MATCHES "MSVC")
-  add_compile_options(
-    $<$<CONFIG:>:/MTd>
-    $<$<CONFIG:Debug>:/MTd>
-    $<$<CONFIG:Release>:/MT>
-  )
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-  message("Set MSVC flags.")
-endif()
-
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
@@ -614,11 +602,16 @@ add_executable(IntegrationTestsRunner
 
 target_link_libraries(IntegrationTestsRunner
     ${server_lib_deps}
+    Threads::Threads
+)
+
+if(NOT grpc_device_USE_SUBMODULE_DEPS)
+  target_link_libraries(UnitTestsRunner
     gmock
     grpc
     gtest
-    Threads::Threads
-)
+  )
+endif()
 
 # Ignore the use of deprecated functions in test code
 target_compile_definitions(IntegrationTestsRunner
@@ -719,12 +712,17 @@ target_include_directories(UnitTestsRunner
 
 target_link_libraries(UnitTestsRunner
     ${CMAKE_DL_LIBS}
-    ${server_lib_deps}
+    ${server_lib_deps}  
+    Threads::Threads
+)
+
+if(NOT grpc_device_USE_SUBMODULE_DEPS)
+  target_link_libraries(UnitTestsRunner
     gmock
     grpc
     gtest
-    Threads::Threads
-)
+  )
+endif()
 
 #----------------------------------------------------------------------
 # Copy test asset certificates to binary output certs sub-directory
@@ -851,9 +849,14 @@ add_executable(SystemTestsRunner ${system_test_runner_sources})
 target_link_libraries(SystemTestsRunner
     ${CMAKE_DL_LIBS}
     ${server_lib_deps}
+)
+
+if(NOT grpc_device_USE_SUBMODULE_DEPS)
+  target_link_libraries(SystemTestsRunner
     gmock
     gtest
-)
+  )
+endif()
 
 # Ignore the use of deprecated functions in test code
 target_compile_definitions(SystemTestsRunner
