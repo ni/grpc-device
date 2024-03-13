@@ -97,6 +97,9 @@ if(CMAKE_LINKER MATCHES "MSVC")
     $<$<CONFIG:Debug>:/MTd>
     $<$<CONFIG:Release>:/MT>
   )
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+  message("Set MSVC flags.")
 endif()
 
 enable_testing()
