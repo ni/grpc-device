@@ -126,7 +126,10 @@ NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxLTE_CloneSignalConfiguration"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("RFmxLTE_Close"));
   function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("RFmxLTE_Commit"));
+  function_pointers_.CreateList = reinterpret_cast<CreateListPtr>(shared_library_->get_function_pointer("RFmxLTE_CreateList"));
+  function_pointers_.CreateListStep = reinterpret_cast<CreateListStepPtr>(shared_library_->get_function_pointer("RFmxLTE_CreateListStep"));
   function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxLTE_CreateSignalConfiguration"));
+  function_pointers_.DeleteList = reinterpret_cast<DeleteListPtr>(shared_library_->get_function_pointer("RFmxLTE_DeleteList"));
   function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxLTE_DeleteSignalConfiguration"));
   function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_->get_function_pointer("RFmxLTE_DisableTrigger"));
   function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_->get_function_pointer("RFmxLTE_GetAllNamedResultNames"));
@@ -1118,12 +1121,36 @@ int32 NiRFmxLTELibrary::Commit(niRFmxInstrHandle instrumentHandle, char selector
   return function_pointers_.Commit(instrumentHandle, selectorString);
 }
 
+int32 NiRFmxLTELibrary::CreateList(niRFmxInstrHandle instrumentHandle, char listName[])
+{
+  if (!function_pointers_.CreateList) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_CreateList.");
+  }
+  return function_pointers_.CreateList(instrumentHandle, listName);
+}
+
+int32 NiRFmxLTELibrary::CreateListStep(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* createdStepIndex)
+{
+  if (!function_pointers_.CreateListStep) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_CreateListStep.");
+  }
+  return function_pointers_.CreateListStep(instrumentHandle, selectorString, createdStepIndex);
+}
+
 int32 NiRFmxLTELibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
 {
   if (!function_pointers_.CreateSignalConfiguration) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_CreateSignalConfiguration.");
   }
   return function_pointers_.CreateSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxLTELibrary::DeleteList(niRFmxInstrHandle instrumentHandle, char listName[])
+{
+  if (!function_pointers_.DeleteList) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_DeleteList.");
+  }
+  return function_pointers_.DeleteList(instrumentHandle, listName);
 }
 
 int32 NiRFmxLTELibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])

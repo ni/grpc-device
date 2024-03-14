@@ -3203,7 +3203,22 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      int32 modulation_type = request->modulation_type();
+      int32 modulation_type;
+      switch (request->modulation_type_enum_case()) {
+        case nirfmxlte_grpc::CfgPSSCHModulationTypeRequest::ModulationTypeEnumCase::kModulationType: {
+          modulation_type = static_cast<int32>(request->modulation_type());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPSSCHModulationTypeRequest::ModulationTypeEnumCase::kModulationTypeRaw: {
+          modulation_type = static_cast<int32>(request->modulation_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPSSCHModulationTypeRequest::ModulationTypeEnumCase::MODULATION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for modulation_type was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CfgPSSCHModulationType(instrument, selector_string, modulation_type);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3666,6 +3681,56 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CreateList(::grpc::ServerContext* context, const CreateListRequest* request, CreateListResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto list_name_mbcs = convert_from_grpc<std::string>(request->list_name());
+      char* list_name = (char*)list_name_mbcs.c_str();
+      auto status = library_->CreateList(instrument, list_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CreateListStep(::grpc::ServerContext* context, const CreateListStepRequest* request, CreateListStepResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 created_step_index {};
+      auto status = library_->CreateListStep(instrument, selector_string, &created_step_index);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_created_step_index(created_step_index);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3677,6 +3742,30 @@ namespace nirfmxlte_grpc {
       auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
       char* signal_name = (char*)signal_name_mbcs.c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::DeleteList(::grpc::ServerContext* context, const DeleteListRequest* request, DeleteListResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto list_name_mbcs = convert_from_grpc<std::string>(request->list_name());
+      char* list_name = (char*)list_name_mbcs.c_str();
+      auto status = library_->DeleteList(instrument, list_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

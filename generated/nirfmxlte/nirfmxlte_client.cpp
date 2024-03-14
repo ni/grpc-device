@@ -1937,14 +1937,21 @@ cfg_phich(const StubPtr& stub, const nidevice_grpc::Session& instrument, const s
 }
 
 CfgPSSCHModulationTypeResponse
-cfg_pssch_modulation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& modulation_type)
+cfg_pssch_modulation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PsschModulationType, pb::int32>& modulation_type)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgPSSCHModulationTypeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_modulation_type(modulation_type);
+  const auto modulation_type_ptr = modulation_type.get_if<PsschModulationType>();
+  const auto modulation_type_raw_ptr = modulation_type.get_if<pb::int32>();
+  if (modulation_type_ptr) {
+    request.set_modulation_type(*modulation_type_ptr);
+  }
+  else if (modulation_type_raw_ptr) {
+    request.set_modulation_type_raw(*modulation_type_raw_ptr);
+  }
 
   auto response = CfgPSSCHModulationTypeResponse{};
 
@@ -2280,6 +2287,42 @@ commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std:
   return response;
 }
 
+CreateListResponse
+create_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& list_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateListRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_list_name(list_name);
+
+  auto response = CreateListResponse{};
+
+  raise_if_error(
+      stub->CreateList(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CreateListStepResponse
+create_list_step(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateListStepRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CreateListStepResponse{};
+
+  raise_if_error(
+      stub->CreateListStep(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CreateSignalConfigurationResponse
 create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name)
 {
@@ -2293,6 +2336,24 @@ create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& i
 
   raise_if_error(
       stub->CreateSignalConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DeleteListResponse
+delete_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& list_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DeleteListRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_list_name(list_name);
+
+  auto response = DeleteListResponse{};
+
+  raise_if_error(
+      stub->DeleteList(&context, request, &response),
       context);
 
   return response;

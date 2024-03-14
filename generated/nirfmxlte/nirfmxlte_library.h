@@ -120,7 +120,10 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   int32 CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[]) override;
   int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy) override;
   int32 Commit(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
+  int32 CreateList(niRFmxInstrHandle instrumentHandle, char listName[]) override;
+  int32 CreateListStep(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* createdStepIndex) override;
   int32 CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[]) override;
+  int32 DeleteList(niRFmxInstrHandle instrumentHandle, char listName[]) override;
   int32 DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[]) override;
   int32 DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists) override;
@@ -408,7 +411,10 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   using CloneSignalConfigurationPtr = decltype(&RFmxLTE_CloneSignalConfiguration);
   using ClosePtr = decltype(&RFmxLTE_Close);
   using CommitPtr = decltype(&RFmxLTE_Commit);
+  using CreateListPtr = decltype(&RFmxLTE_CreateList);
+  using CreateListStepPtr = decltype(&RFmxLTE_CreateListStep);
   using CreateSignalConfigurationPtr = decltype(&RFmxLTE_CreateSignalConfiguration);
+  using DeleteListPtr = decltype(&RFmxLTE_DeleteList);
   using DeleteSignalConfigurationPtr = decltype(&RFmxLTE_DeleteSignalConfiguration);
   using DisableTriggerPtr = decltype(&RFmxLTE_DisableTrigger);
   using GetAllNamedResultNamesPtr = decltype(&RFmxLTE_GetAllNamedResultNames);
@@ -696,7 +702,10 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     CloneSignalConfigurationPtr CloneSignalConfiguration;
     ClosePtr Close;
     CommitPtr Commit;
+    CreateListPtr CreateList;
+    CreateListStepPtr CreateListStep;
     CreateSignalConfigurationPtr CreateSignalConfiguration;
+    DeleteListPtr DeleteList;
     DeleteSignalConfigurationPtr DeleteSignalConfiguration;
     DisableTriggerPtr DisableTrigger;
     GetAllNamedResultNamesPtr GetAllNamedResultNames;

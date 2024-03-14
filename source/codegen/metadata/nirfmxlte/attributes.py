@@ -422,6 +422,27 @@ attributes = {
         'name': 'SUBBLOCK_FREQUENCY',
         'type': 'float64'
     },
+    3149814: {
+        'access': 'read-write',
+        'enum': 'ListStepTimerUnit',
+        'name': 'LIST_STEP_TIMER_UNIT',
+        'type': 'int32'
+    },
+    3149815: {
+        'access': 'read-write',
+        'name': 'LIST_STEP_TIMER_OFFSET',
+        'type': 'float64'
+    },
+    3149816: {
+        'access': 'read-write',
+        'name': 'NUMBER_OF_STEPS',
+        'type': 'int32'
+    },
+    3149817: {
+        'access': 'read-write',
+        'name': 'LIST_STEP_TIMER_DURATION',
+        'type': 'float64'
+    },
     3149820: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',

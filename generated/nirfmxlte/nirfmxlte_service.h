@@ -143,7 +143,10 @@ public:
   ::grpc::Status CloneSignalConfiguration(::grpc::ServerContext* context, const CloneSignalConfigurationRequest* request, CloneSignalConfigurationResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response) override;
+  ::grpc::Status CreateList(::grpc::ServerContext* context, const CreateListRequest* request, CreateListResponse* response) override;
+  ::grpc::Status CreateListStep(::grpc::ServerContext* context, const CreateListStepRequest* request, CreateListStepResponse* response) override;
   ::grpc::Status CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response) override;
+  ::grpc::Status DeleteList(::grpc::ServerContext* context, const DeleteListRequest* request, DeleteListResponse* response) override;
   ::grpc::Status DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response) override;
   ::grpc::Status DisableTrigger(::grpc::ServerContext* context, const DisableTriggerRequest* request, DisableTriggerResponse* response) override;
   ::grpc::Status GetAllNamedResultNames(::grpc::ServerContext* context, const GetAllNamedResultNamesRequest* request, GetAllNamedResultNamesResponse* response) override;

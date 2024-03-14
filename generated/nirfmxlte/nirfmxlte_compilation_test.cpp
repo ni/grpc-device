@@ -502,9 +502,24 @@ int32 Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
   return RFmxLTE_Commit(instrumentHandle, selectorString);
 }
 
+int32 CreateList(niRFmxInstrHandle instrumentHandle, char listName[])
+{
+  return RFmxLTE_CreateList(instrumentHandle, listName);
+}
+
+int32 CreateListStep(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* createdStepIndex)
+{
+  return RFmxLTE_CreateListStep(instrumentHandle, selectorString, createdStepIndex);
+}
+
 int32 CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
 {
   return RFmxLTE_CreateSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 DeleteList(niRFmxInstrHandle instrumentHandle, char listName[])
+{
+  return RFmxLTE_DeleteList(instrumentHandle, listName);
 }
 
 int32 DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])

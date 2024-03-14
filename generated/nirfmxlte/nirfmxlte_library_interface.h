@@ -114,7 +114,10 @@ class NiRFmxLTELibraryInterface {
   virtual int32 CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[]) = 0;
   virtual int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy) = 0;
   virtual int32 Commit(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
+  virtual int32 CreateList(niRFmxInstrHandle instrumentHandle, char listName[]) = 0;
+  virtual int32 CreateListStep(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* createdStepIndex) = 0;
   virtual int32 CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[]) = 0;
+  virtual int32 DeleteList(niRFmxInstrHandle instrumentHandle, char listName[]) = 0;
   virtual int32 DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[]) = 0;
   virtual int32 DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
   virtual int32 GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists) = 0;

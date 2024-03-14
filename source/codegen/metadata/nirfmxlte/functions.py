@@ -2510,6 +2510,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'PsschModulationType',
                 'name': 'modulationType',
                 'type': 'int32'
             }
@@ -2863,6 +2864,43 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CreateList': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'listName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CreateListStep': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'createdStepIndex',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateSignalConfiguration': {
         'parameters': [
             {
@@ -2874,6 +2912,22 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'signalName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DeleteList': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'listName',
                 'type': 'char[]'
             }
         ],
