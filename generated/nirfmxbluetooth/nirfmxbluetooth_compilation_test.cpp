@@ -447,6 +447,11 @@ int32 ModAccFetchDf2maxTrace(niRFmxInstrHandle instrumentHandle, char selectorSt
   return RFmxBT_ModAccFetchDf2maxTrace(instrumentHandle, selectorString, timeout, time, df2max, arraySize, actualArraySize);
 }
 
+int32 ModAccFetchDf4avgTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 df4avg[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxBT_ModAccFetchDf4avgTrace(instrumentHandle, selectorString, timeout, time, df4avg, arraySize, actualArraySize);
+}
+
 int32 ModAccFetchFrequencyErrorBR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* initialFrequencyErrorMaximum, float64* peakFrequencyDriftMaximum, float64* peakFrequencyDriftRateMaximum)
 {
   return RFmxBT_ModAccFetchFrequencyErrorBR(instrumentHandle, selectorString, timeout, initialFrequencyErrorMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);

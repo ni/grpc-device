@@ -3238,6 +3238,50 @@ namespace nirfmxbluetooth_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::ModAccFetchDf4avgTrace(::grpc::ServerContext* context, const ModAccFetchDf4avgTraceRequest* request, ModAccFetchDf4avgTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDf4avgTrace(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_time()->Resize(actual_array_size, 0);
+        float32* time = response->mutable_time()->mutable_data();
+        response->mutable_df4avg()->Resize(actual_array_size, 0);
+        float32* df4avg = response->mutable_df4avg()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDf4avgTrace(instrument, selector_string, timeout, time, df4avg, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_time()->Resize(actual_array_size, 0);
+        response->mutable_df4avg()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchFrequencyErrorBR(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorBRRequest* request, ModAccFetchFrequencyErrorBRResponse* response)
   {
     if (context->IsCancelled()) {

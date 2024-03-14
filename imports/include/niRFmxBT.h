@@ -36,6 +36,7 @@
 #define RFMXBT_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                                            0x00b0000c
 #define RFMXBT_ATTR_PACKET_TYPE                                                                    0x00b0000d
 #define RFMXBT_ATTR_DATA_RATE                                                                      0x00b0000e
+#define RFMXBT_ATTR_BANDWIDTH_BIT_PERIOD_PRODUCT                                                   0x00b00034
 #define RFMXBT_ATTR_BD_ADDRESS_LAP                                                                 0x00b0000f
 #define RFMXBT_ATTR_ACCESS_ADDRESS                                                                 0x00b00011
 #define RFMXBT_ATTR_PAYLOAD_BIT_PATTERN                                                            0x00b00012
@@ -49,6 +50,8 @@
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_SYNC_SEQUENCE                                                 0x00b00031
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_PHASE_MEASUREMENT_PERIOD                                      0x00b00032
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT                                           0x00b00033
+#define RFMXBT_ATTR_CHANNEL_SOUNDING_NUMBER_OF_ANTENNA_PATH                                        0x00b00036
+#define RFMXBT_ATTR_CHANNEL_SOUNDING_ANTENNA_SWITCH_TIME                                           0x00b00035
 #define RFMXBT_ATTR_CHANNEL_NUMBER                                                                 0x00b00017
 #define RFMXBT_ATTR_DETECTED_PACKET_TYPE                                                           0x00b00019
 #define RFMXBT_ATTR_DETECTED_DATA_RATE                                                             0x00b0002a
@@ -72,6 +75,8 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_PEAK_DF2MAX_MAXIMUM                                             0x00b04011
 #define RFMXBT_ATTR_MODACC_RESULTS_MINIMUM_DF2MAX_MINIMUM                                          0x00b04012
 #define RFMXBT_ATTR_MODACC_RESULTS_PERCENTAGE_OF_SYMBOLS_ABOVE_DF2MAX_THRESHOLD                    0x00b04013
+#define RFMXBT_ATTR_MODACC_RESULTS_DF3AVG_MEAN                                                     0x00b04034
+#define RFMXBT_ATTR_MODACC_RESULTS_PERCENTAGE_OF_SYMBOLS_ABOVE_DF4AVG_THRESHOLD                    0x00b04035
 #define RFMXBT_ATTR_MODACC_RESULTS_BR_INITIAL_FREQUENCY_ERROR_MAXIMUM                              0x00b04014
 #define RFMXBT_ATTR_MODACC_RESULTS_BR_PEAK_FREQUENCY_DRIFT_MAXIMUM                                 0x00b04015
 #define RFMXBT_ATTR_MODACC_RESULTS_BR_PEAK_FREQUENCY_DRIFT_RATE_MAXIMUM                            0x00b04016
@@ -158,6 +163,7 @@
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CTE_REFERENCE_PERIOD_PEAK_ABSOLUTE_POWER_DEVIATION_MAXIMUM      0x00b01015
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_AVERAGE_POWER_MEAN                            0x00b01016
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_PEAK_ABSOLUTE_POWER_DEVIATION_MAXIMUM         0x00b01017
+#define RFMXBT_ATTR_TXP_RESULTS_LE_CS_PHASE_MEASUREMENT_PERIOD_AVERAGE_POWER_MEAN                  0x00b01018
 #define RFMXBT_ATTR_POWERRAMP_MEASUREMENT_ENABLED                                                  0x00b0e000
 #define RFMXBT_ATTR_POWERRAMP_BURST_SYNCHRONIZATION_TYPE                                           0x00b0e002
 #define RFMXBT_ATTR_POWERRAMP_AVERAGING_ENABLED                                                    0x00b0e005
@@ -784,8 +790,8 @@ int32 __stdcall RFmxBT_AnalyzeIQ1WaveformSplit(
    char resultName[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 arraySize,
    int32 reset,
    int64 reserved
@@ -1155,8 +1161,8 @@ int32 __stdcall RFmxBT_ModAccFetchConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 constellationI[],
+   float32 constellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1218,6 +1224,16 @@ int32 __stdcall RFmxBT_ModAccFetchDf2maxTrace(
    float64 timeout,
    float32 time[],
    float32 df2max[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxBT_ModAccFetchDf4avgTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 time[],
+   float32 df4avg[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1673,6 +1689,18 @@ int32 __stdcall RFmxBT_SetDataRate(
    int32 attrVal
 );
 
+int32 __stdcall RFmxBT_GetBandwidthBitPeriodProduct(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetBandwidthBitPeriodProduct(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxBT_GetBDAddressLAP(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1821,6 +1849,30 @@ int32 __stdcall RFmxBT_SetChannelSoundingToneExtensionSlot(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxBT_GetChannelSoundingNumberOfAntennaPath(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetChannelSoundingNumberOfAntennaPath(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_GetChannelSoundingAntennaSwitchTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetChannelSoundingAntennaSwitchTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxBT_GetChannelNumber(
@@ -2040,6 +2092,18 @@ int32 __stdcall RFmxBT_ModAccGetResultsMinimumDf2maxMinimum(
 );
 
 int32 __stdcall RFmxBT_ModAccGetResultsPercentageOfSymbolsAboveDf2maxThreshold(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsDf3avgMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsPercentageOfSymbolsAboveDf4avgThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -2754,6 +2818,12 @@ int32 __stdcall RFmxBT_TXPGetResultsLECTETransmitSlotAveragePowerMean(
 );
 
 int32 __stdcall RFmxBT_TXPGetResultsLECTETransmitSlotPeakAbsolutePowerDeviationMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_TXPGetResultsLECSPhaseMeasurementPeriodAveragePowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

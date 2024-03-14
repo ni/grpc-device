@@ -109,6 +109,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   int32 ModAccFetchDf1maxTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 df1max[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchDf2(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* df2avgMinimum, float64* percentageOfSymbolsAboveDf2maxThreshold) override;
   int32 ModAccFetchDf2maxTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 df2max[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchDf4avgTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 df4avg[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchFrequencyErrorBR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* initialFrequencyErrorMaximum, float64* peakFrequencyDriftMaximum, float64* peakFrequencyDriftRateMaximum) override;
   int32 ModAccFetchFrequencyErrorEDR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* headerFrequencyErrorWiMaximum, float64* peakFrequencyErrorWiPlusW0Maximum, float64* peakFrequencyErrorW0Maximum) override;
   int32 ModAccFetchFrequencyErrorLE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakFrequencyErrorMaximum, float64* initialFrequencyDriftMaximum, float64* peakFrequencyDriftMaximum, float64* peakFrequencyDriftRateMaximum) override;
@@ -249,6 +250,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   using ModAccFetchDf1maxTracePtr = decltype(&RFmxBT_ModAccFetchDf1maxTrace);
   using ModAccFetchDf2Ptr = decltype(&RFmxBT_ModAccFetchDf2);
   using ModAccFetchDf2maxTracePtr = decltype(&RFmxBT_ModAccFetchDf2maxTrace);
+  using ModAccFetchDf4avgTracePtr = decltype(&RFmxBT_ModAccFetchDf4avgTrace);
   using ModAccFetchFrequencyErrorBRPtr = decltype(&RFmxBT_ModAccFetchFrequencyErrorBR);
   using ModAccFetchFrequencyErrorEDRPtr = decltype(&RFmxBT_ModAccFetchFrequencyErrorEDR);
   using ModAccFetchFrequencyErrorLEPtr = decltype(&RFmxBT_ModAccFetchFrequencyErrorLE);
@@ -389,6 +391,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
     ModAccFetchDf1maxTracePtr ModAccFetchDf1maxTrace;
     ModAccFetchDf2Ptr ModAccFetchDf2;
     ModAccFetchDf2maxTracePtr ModAccFetchDf2maxTrace;
+    ModAccFetchDf4avgTracePtr ModAccFetchDf4avgTrace;
     ModAccFetchFrequencyErrorBRPtr ModAccFetchFrequencyErrorBR;
     ModAccFetchFrequencyErrorEDRPtr ModAccFetchFrequencyErrorEDR;
     ModAccFetchFrequencyErrorLEPtr ModAccFetchFrequencyErrorLE;
