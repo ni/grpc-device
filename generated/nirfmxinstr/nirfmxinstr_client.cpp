@@ -508,6 +508,27 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, con
   return response;
 }
 
+FetchRawIQDataResponse
+fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchRawIQDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+  request.set_records_to_fetch(records_to_fetch);
+  request.set_samples_to_read(samples_to_read);
+
+  auto response = FetchRawIQDataResponse{};
+
+  raise_if_error(
+      stub->FetchRawIQData(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetAttributeF32Response
 get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
@@ -1225,6 +1246,24 @@ load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instr
   return response;
 }
 
+LoadConfigurationsResponse
+load_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = LoadConfigurationsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_file_path(file_path);
+
+  auto response = LoadConfigurationsResponse{};
+
+  raise_if_error(
+      stub->LoadConfigurations(&context, request, &response),
+      context);
+
+  return response;
+}
+
 LoadSParameterExternalAttenuationTableFromS2PFileResponse
 load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
 {
@@ -1912,27 +1951,6 @@ wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session&
 
   raise_if_error(
       stub->WaitForAcquisitionComplete(&context, request, &response),
-      context);
-
-  return response;
-}
-
-FetchRawIQDataResponse
-fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read)
-{
-  ::grpc::ClientContext context;
-
-  auto request = FetchRawIQDataRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-  request.set_timeout(timeout);
-  request.set_records_to_fetch(records_to_fetch);
-  request.set_samples_to_read(samples_to_read);
-
-  auto response = FetchRawIQDataResponse{};
-
-  raise_if_error(
-      stub->FetchRawIQData(&context, request, &response),
       context);
 
   return response;

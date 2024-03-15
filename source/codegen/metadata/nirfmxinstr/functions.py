@@ -615,6 +615,75 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'FetchRawIQData': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordsToFetch',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'samplesToRead',
+                'type': 'int64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pointer': True,
+                'type': 'void'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetAttributeF32': {
         'parameters': [
             {
@@ -1903,6 +1972,22 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'LoadConfigurations': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'LoadSParameterExternalAttenuationTableFromS2PFile': {
         'parameters': [
             {
@@ -2798,74 +2883,6 @@ functions = {
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'float64'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'FetchRawIQData': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'timeout',
-                'type': 'float64'
-            },
-            {
-                'direction': 'in',
-                'name': 'recordsToFetch',
-                'type': 'int32'
-            },
-            {
-                'direction': 'in',
-                'name': 'samplesToRead',
-                'type': 'int64'
-            },
-            {
-                'direction': 'out',
-                'name': 'x0',
-                'type': 'float64'
-            },
-            {
-                'direction': 'out',
-                'name': 'dx',
-                'type': 'float64'
-            },
-            {
-                'direction': 'out',
-                'name': 'data',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
-                },
-                'type': 'NIComplexSingle[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'actualArraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'hardcoded_value': 'nullptr',
-                'include_in_proto': False,
-                'name': 'reserved',
-                'type': 'void'
             }
         ],
         'returns': 'int32'

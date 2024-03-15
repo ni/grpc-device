@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXINSTR API metadata version 23.8.0
+// This file is generated from NI-RFMXINSTR API metadata version 24.3.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXINSTR Metadata
 //---------------------------------------------------------------------
@@ -41,6 +41,7 @@ service NiRFmxInstr {
   rpc DisableCalibrationPlane(DisableCalibrationPlaneRequest) returns (DisableCalibrationPlaneResponse);
   rpc EnableCalibrationPlane(EnableCalibrationPlaneRequest) returns (EnableCalibrationPlaneResponse);
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
+  rpc FetchRawIQData(FetchRawIQDataRequest) returns (FetchRawIQDataResponse);
   rpc GetAttributeF32(GetAttributeF32Request) returns (GetAttributeF32Response);
   rpc GetAttributeF32Array(GetAttributeF32ArrayRequest) returns (GetAttributeF32ArrayResponse);
   rpc GetAttributeF64(GetAttributeF64Request) returns (GetAttributeF64Response);
@@ -78,6 +79,7 @@ service NiRFmxInstr {
   rpc InitializeFromNIRFSASessionArray(InitializeFromNIRFSASessionArrayRequest) returns (InitializeFromNIRFSASessionArrayResponse);
   rpc IsSelfCalibrateValid(IsSelfCalibrateValidRequest) returns (IsSelfCalibrateValidResponse);
   rpc LoadAllConfigurations(LoadAllConfigurationsRequest) returns (LoadAllConfigurationsResponse);
+  rpc LoadConfigurations(LoadConfigurationsRequest) returns (LoadConfigurationsResponse);
   rpc LoadSParameterExternalAttenuationTableFromS2PFile(LoadSParameterExternalAttenuationTableFromS2PFileRequest) returns (LoadSParameterExternalAttenuationTableFromS2PFileResponse);
   rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
   rpc ResetDriver(ResetDriverRequest) returns (ResetDriverResponse);
@@ -112,7 +114,6 @@ service NiRFmxInstr {
   rpc TimestampFromValues(TimestampFromValuesRequest) returns (TimestampFromValuesResponse);
   rpc ValuesFromTimestamp(ValuesFromTimestampRequest) returns (ValuesFromTimestampResponse);
   rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
-  rpc FetchRawIQData(FetchRawIQDataRequest) returns (FetchRawIQDataResponse);
 }
 
 enum NiRFmxInstrAttribute {
@@ -213,6 +214,7 @@ enum NiRFmxInstrAttribute {
   NIRFMXINSTR_ATTRIBUTE_TEMPERATURE_READ_INTERVAL = 119;
   NIRFMXINSTR_ATTRIBUTE_THERMAL_CORRECTION_TEMPERATURE_RESOLUTION = 120;
   NIRFMXINSTR_ATTRIBUTE_NUMBER_OF_RAW_IQ_RECORDS = 128;
+  NIRFMXINSTR_ATTRIBUTE_LOAD_OPTIONS = 163;
 }
 
 enum ExportSignalSource {
@@ -279,6 +281,7 @@ enum Personality {
   PERSONALITY_PULSE = 2048;
   PERSONALITY_SPECAN = 1;
   PERSONALITY_TDSCDMA = 64;
+  PERSONALITY_UWB = 8192;
   PERSONALITY_VNA = 4096;
   PERSONALITY_WCDMA = 16;
   PERSONALITY_WLAN = 512;
@@ -396,6 +399,8 @@ enum NiRFmxInstrInt32AttributeValues {
   NIRFMXINSTR_INT32_LO_SHARING_MODE_DISABLED = 0;
   NIRFMXINSTR_INT32_LO_SHARING_MODE_EXTERNAL_DAISY_CHAIN = 4;
   NIRFMXINSTR_INT32_LO_SHARING_MODE_EXTERNAL_STAR = 3;
+  NIRFMXINSTR_INT32_LOAD_OPTIONS_SKIP_NONE = 0;
+  NIRFMXINSTR_INT32_LOAD_OPTIONS_SKIP_RFINSTR = 1;
   NIRFMXINSTR_INT32_MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
   NIRFMXINSTR_INT32_MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
   NIRFMXINSTR_INT32_OPTIMIZE_PATH_FOR_SIGNAL_BANDWIDTH_DISABLED = 0;
@@ -692,6 +697,22 @@ message ExportSignalRequest {
 
 message ExportSignalResponse {
   int32 status = 1;
+}
+
+message FetchRawIQDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 records_to_fetch = 4;
+  int64 samples_to_read = 5;
+}
+
+message FetchRawIQDataResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 data = 4;
+  int32 actual_array_size = 5;
 }
 
 message GetAttributeF32Request {
@@ -1134,6 +1155,15 @@ message LoadAllConfigurationsResponse {
   int32 status = 1;
 }
 
+message LoadConfigurationsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string file_path = 2;
+}
+
+message LoadConfigurationsResponse {
+  int32 status = 1;
+}
+
 message LoadSParameterExternalAttenuationTableFromS2PFileRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1501,21 +1531,5 @@ message WaitForAcquisitionCompleteRequest {
 
 message WaitForAcquisitionCompleteResponse {
   int32 status = 1;
-}
-
-message FetchRawIQDataRequest {
-  nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
-  double timeout = 3;
-  int32 records_to_fetch = 4;
-  int64 samples_to_read = 5;
-}
-
-message FetchRawIQDataResponse {
-  int32 status = 1;
-  double x0 = 2;
-  double dx = 3;
-  repeated nidevice_grpc.NIComplexNumberF32 data = 4;
-  int32 actual_array_size = 5;
 }
 
