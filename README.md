@@ -25,7 +25,7 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-RFmx SpecAn            | 2024 Q1       | Not Supported | Not Supported |
 | NI-RFmx TD-SCDMA          | 2023 Q1       | Not Supported | Not Supported |
 | NI-RFmx WCDMA             | 2023 Q1       | Not Supported | Not Supported |
-| NI-RFmx WLAN              | 2023 Q3       | Not Supported | Not Supported |
+| NI-RFmx WLAN              | 2024 Q1       | Not Supported | Not Supported |
 | NI-RFSA                   | 21.0.0        | 21.0.0        | Not Supported |
 | NI-RFSG                   | 21.0.0        | 21.0.0        | Not Supported |
 | NI-SCOPE                  | 2023 Q2       | 2023 Q2       | 2023 Q2       |

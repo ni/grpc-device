@@ -2,7 +2,7 @@
 /****************************************************************************************************
 *          National Instruments RFmx WLAN
 *----------------------------------------------------------------------------------------------------
-*   Copyright(c) National Instruments 2021.  All Rights Reserved.
+*   Copyright(c) National Instruments 2024.  All Rights Reserved.
 *----------------------------------------------------------------------------------------------------
 *
 * Title:    niRFmxWLAN.h
@@ -147,6 +147,7 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_BURST_START_DETECTION_ENABLED                          0x00a04085
 #define RFMXWLAN_ATTR_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD                      0x00a0407e
 #define RFMXWLAN_ATTR_OFDMMODACC_COMMON_CLOCK_SOURCE_ENABLED                            0x00a0400d
+#define RFMXWLAN_ATTR_OFDMMODACC_COMMON_PILOT_ERROR_SCALING_REFERENCE                   0x00a040d1
 #define RFMXWLAN_ATTR_OFDMMODACC_AMPLITUDE_TRACKING_ENABLED                             0x00a0400e
 #define RFMXWLAN_ATTR_OFDMMODACC_PHASE_TRACKING_ENABLED                                 0x00a0400f
 #define RFMXWLAN_ATTR_OFDMMODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED                  0x00a04010
@@ -220,9 +221,9 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_VHT_SIG_B_PEAK_POWER_MAXIMUM             0x00a04049
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HE_SIG_B_AVERAGE_POWER_MEAN              0x00a0404a
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HE_SIG_B_PEAK_POWER_MAXIMUM              0x00a0404b
-#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_STF_AVERAGE_POWER_MEAN                0x00a0404c
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_EHT_SIG_AVERAGE_POWER_MEAN               0x00a040c2
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_EHT_SIG_PEAK_POWER_MAXIMUM               0x00a040c3
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_STF_AVERAGE_POWER_MEAN                0x00a0404c
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_STF_PEAK_POWER_MAXIMUM                0x00a0404d
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_GF_STF_AVERAGE_POWER_MEAN             0x00a0404e
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_GF_STF_PEAK_POWER_MAXIMUM             0x00a0404f
@@ -470,10 +471,10 @@
 #define RFMXWLAN_VAL_OFDM_GUARD_INTERVAL_TYPE_1_16                                                  2
 
 // Values for RFMXWLAN_ATTR_OFDM_LTF_SIZE
-#define RFMXWLAN_VAL_OFDM_LTF_SIZE_NOT_APPLICABLE                                                   -1
 #define RFMXWLAN_VAL_OFDM_LTF_SIZE_4X                                                               0
 #define RFMXWLAN_VAL_OFDM_LTF_SIZE_2X                                                               1
 #define RFMXWLAN_VAL_OFDM_LTF_SIZE_1X                                                               2
+#define RFMXWLAN_VAL_OFDM_LTF_SIZE_NOT_APPLICABLE                                                   -1
 
 // Values for RFMXWLAN_ATTR_OFDM_STBC_ENABLED
 #define RFMXWLAN_VAL_OFDM_STBC_ENABLED_FALSE                                                        0
@@ -629,6 +630,10 @@
 // Values for RFMXWLAN_ATTR_OFDMMODACC_COMMON_CLOCK_SOURCE_ENABLED
 #define RFMXWLAN_VAL_OFDMMODACC_COMMON_CLOCK_SOURCE_ENABLED_FALSE                                   0
 #define RFMXWLAN_VAL_OFDMMODACC_COMMON_CLOCK_SOURCE_ENABLED_TRUE                                    1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_COMMON_PILOT_ERROR_SCALING_REFERENCE
+#define RFMXWLAN_VAL_OFDMMODACC_COMMON_PILOT_ERROR_SCALING_REFERENCE_NONE                           0
+#define RFMXWLAN_VAL_OFDMMODACC_COMMON_PILOT_ERROR_SCALING_REFERENCE_AVERAGE_CPE                    1
 
 // Values for RFMXWLAN_ATTR_OFDMMODACC_AMPLITUDE_TRACKING_ENABLED
 #define RFMXWLAN_VAL_OFDMMODACC_AMPLITUDE_TRACKING_ENABLED_FALSE                                    0
@@ -832,13 +837,6 @@
 #define RFMXWLAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
 #define RFMXWLAN_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
 
-// Values for MeasurementTypes
-#define RFMXWLAN_VAL_TXP                                                                            1<<0
-#define RFMXWLAN_VAL_POWERRAMP                                                                      1<<1
-#define RFMXWLAN_VAL_DSSSMODACC                                                                     1<<2
-#define RFMXWLAN_VAL_OFDMMODACC                                                                     1<<3
-#define RFMXWLAN_VAL_SEM                                                                            1<<4
-
 // Values for FrequencyReferenceSource
 #define RFMXWLAN_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
 #define RFMXWLAN_VAL_REF_IN_STR                                                                     "RefIn"
@@ -848,6 +846,13 @@
 // Values for Boolean
 #define RFMXWLAN_VAL_FALSE                                                                          0
 #define RFMXWLAN_VAL_TRUE                                                                           1
+
+// Values for MeasurementTypes
+#define RFMXWLAN_VAL_TXP                                                                            1<<0
+#define RFMXWLAN_VAL_POWERRAMP                                                                      1<<1
+#define RFMXWLAN_VAL_DSSSMODACC                                                                     1<<2
+#define RFMXWLAN_VAL_OFDMMODACC                                                                     1<<3
+#define RFMXWLAN_VAL_SEM                                                                            1<<4
 
 // Values for OfdmModAccCalibrationDataValid
 #define RFMXWLAN_VAL_OFDMMODACC_CALIBRATION_DATA_VALID_FALSE                                        0
@@ -933,13 +938,6 @@ int32 __stdcall RFmxWLAN_BuildSignalString(
    char selectorString[]
 );
 
-int32 __stdcall RFmxWLAN_BuildSegmentString(
-   char selectorString[],
-   int32 segmentNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
 int32 __stdcall RFmxWLAN_BuildChainString(
    char selectorString[],
    int32 chainNumber,
@@ -961,9 +959,9 @@ int32 __stdcall RFmxWLAN_BuildOffsetString(
    char selectorStringOut[]
 );
 
-int32 __stdcall RFmxWLAN_BuildUserString(
+int32 __stdcall RFmxWLAN_BuildSegmentString(
    char selectorString[],
-   int32 userNumber,
+   int32 segmentNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -971,6 +969,13 @@ int32 __stdcall RFmxWLAN_BuildUserString(
 int32 __stdcall RFmxWLAN_BuildStreamString(
    char selectorString[],
    int32 streamNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxWLAN_BuildUserString(
+   char selectorString[],
+   int32 userNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -1287,61 +1292,39 @@ int32 __stdcall RFmxWLAN_GetAttributeString(
    char attrVal[]
 );
 
-int32 __stdcall RFmxWLAN_Initiate(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char resultName[]
+int32 __stdcall RFmxWLAN_OFDMModAccClearNoiseCalibrationDatabase(
+   niRFmxInstrHandle instrumentHandle
 );
 
-int32 __stdcall RFmxWLAN_WaitForMeasurementComplete(
+int32 __stdcall RFmxWLAN_OFDMModAccCfg1ReferenceWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   NIComplexSingle referenceWaveform[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccCfg1ReferenceWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccAutoLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout
 );
 
-int32 __stdcall RFmxWLAN_Commit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxWLAN_AutoDetectSignalAnalysisOnly(
+int32 __stdcall RFmxWLAN_OFDMModAccValidateCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 x0,
-   float64 dx,
-   NIComplexSingle IQ[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxWLAN_AutoDetectSignalAnalysisOnlySplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 x0,
-   float64 dx,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxWLAN_ClearNamedResult(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxWLAN_ClearAllNamedResults(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxWLAN_ResetToDefault(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxWLAN_CheckMeasurementStatus(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32* isDone
+   int32* calibrationDataValid
 );
 
 int32 __stdcall RFmxWLAN_AnalyzeIQ1Waveform(
@@ -1362,8 +1345,8 @@ int32 __stdcall RFmxWLAN_AnalyzeIQ1WaveformSplit(
    char resultName[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 arraySize,
    int32 reset,
    int64 reserved
@@ -1381,19 +1364,32 @@ int32 __stdcall RFmxWLAN_AnalyzeSpectrum1Waveform(
    int64 reserved
 );
 
+int32 __stdcall RFmxWLAN_AutoDetectSignal(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout
+);
+
 int32 __stdcall RFmxWLAN_AutoLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 __stdcall RFmxWLAN_SendSoftwareEdgeTrigger(
-   niRFmxInstrHandle instrumentHandle
+int32 __stdcall RFmxWLAN_CheckMeasurementStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32* isDone
 );
 
-int32 __stdcall RFmxWLAN_CreateSignalConfiguration(
+int32 __stdcall RFmxWLAN_ClearAllNamedResults(
    niRFmxInstrHandle instrumentHandle,
-   char signalName[]
+   char selectorString[]
+);
+
+int32 __stdcall RFmxWLAN_ClearNamedResult(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
 );
 
 int32 __stdcall RFmxWLAN_CloneSignalConfiguration(
@@ -1402,15 +1398,9 @@ int32 __stdcall RFmxWLAN_CloneSignalConfiguration(
    char newSignalName[]
 );
 
-int32 __stdcall RFmxWLAN_DeleteSignalConfiguration(
+int32 __stdcall RFmxWLAN_Commit(
    niRFmxInstrHandle instrumentHandle,
-   char signalName[]
-);
-
-int32 __stdcall RFmxWLAN_AutoDetectSignal(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout
+   char selectorString[]
 );
 
 int32 __stdcall RFmxWLAN_CfgSelectedPortsMultiple(
@@ -1419,83 +1409,54 @@ int32 __stdcall RFmxWLAN_CfgSelectedPortsMultiple(
    char selectedPorts[]
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccClearNoiseCalibrationDatabase(
+int32 __stdcall RFmxWLAN_CreateSignalConfiguration(
+   niRFmxInstrHandle instrumentHandle,
+   char signalName[]
+);
+
+int32 __stdcall RFmxWLAN_DeleteSignalConfiguration(
+   niRFmxInstrHandle instrumentHandle,
+   char signalName[]
+);
+
+int32 __stdcall RFmxWLAN_Initiate(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char resultName[]
+);
+
+int32 __stdcall RFmxWLAN_ResetToDefault(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxWLAN_SendSoftwareEdgeTrigger(
    niRFmxInstrHandle instrumentHandle
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccValidateCalibrationData(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32* calibrationDataValid
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccCfg1ReferenceWaveform(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 x0,
-   float64 dx,
-   NIComplexSingle referenceWaveform[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccCfg1ReferenceWaveformSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 x0,
-   float64 dx,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccAutoLevel(
+int32 __stdcall RFmxWLAN_WaitForMeasurementComplete(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout
 );
 
-int32 __stdcall RFmxWLAN_CfgFrequency(
+int32 __stdcall RFmxWLAN_AutoDetectSignalAnalysisOnly(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 centerFrequency
+   float64 x0,
+   float64 dx,
+   NIComplexSingle IQ[],
+   int32 arraySize
 );
 
-int32 __stdcall RFmxWLAN_CfgReferenceLevel(
+int32 __stdcall RFmxWLAN_AutoDetectSignalAnalysisOnlySplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 referenceLevel
-);
-
-int32 __stdcall RFmxWLAN_CfgExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 externalAttenuation
-);
-
-int32 __stdcall RFmxWLAN_CfgStandard(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 standard
-);
-
-int32 __stdcall RFmxWLAN_CfgChannelBandwidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 channelBandwidth
-);
-
-int32 __stdcall RFmxWLAN_CfgNumberOfFrequencySegmentsAndReceiveChains(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 numberOfFrequencySegments,
-   int32 numberOfReceiveChains
-);
-
-int32 __stdcall RFmxWLAN_CfgFrequencyArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 centerFrequency[],
-   int32 numberOfElements
+   float64 x0,
+   float64 dx,
+   float32 IQI[],
+   float32 IQQ[],
+   int32 arraySize
 );
 
 int32 __stdcall RFmxWLAN_DSSSModAccCfgAcquisitionLength(
@@ -1503,13 +1464,6 @@ int32 __stdcall RFmxWLAN_DSSSModAccCfgAcquisitionLength(
    char selectorString[],
    int32 acquisitionLengthMode,
    float64 acquisitionLength
-);
-
-int32 __stdcall RFmxWLAN_DSSSModAccCfgMeasurementLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 measurementOffset,
-   int32 maximumMeasurementLength
 );
 
 int32 __stdcall RFmxWLAN_DSSSModAccCfgAveraging(
@@ -1523,6 +1477,13 @@ int32 __stdcall RFmxWLAN_DSSSModAccCfgEVMUnit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 EVMUnit
+);
+
+int32 __stdcall RFmxWLAN_DSSSModAccCfgMeasurementLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 measurementOffset,
+   int32 maximumMeasurementLength
 );
 
 int32 __stdcall RFmxWLAN_DSSSModAccCfgPowerMeasurementEnabled(
@@ -1545,20 +1506,6 @@ int32 __stdcall RFmxWLAN_DSSSModAccCfgPowerMeasurementCustomGateArray(
    int32 numberOfElements
 );
 
-int32 __stdcall RFmxWLAN_SEMCfgSpan(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 spanAuto,
-   float64 span
-);
-
-int32 __stdcall RFmxWLAN_SEMCfgSweepTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
-);
-
 int32 __stdcall RFmxWLAN_SEMCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1579,6 +1526,20 @@ int32 __stdcall RFmxWLAN_SEMCfgNumberOfOffsets(
    int32 numberOfOffsets
 );
 
+int32 __stdcall RFmxWLAN_SEMCfgSpan(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 spanAuto,
+   float64 span
+);
+
+int32 __stdcall RFmxWLAN_SEMCfgSweepTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
+);
+
 int32 __stdcall RFmxWLAN_SEMCfgOffsetFrequencyArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1596,10 +1557,55 @@ int32 __stdcall RFmxWLAN_SEMCfgOffsetRelativeLimitArray(
    int32 numberOfElements
 );
 
-int32 __stdcall RFmxWLAN_TXPCfgMaximumMeasurementInterval(
+int32 __stdcall RFmxWLAN_CfgChannelBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 maximumMeasurementInterval
+   float64 channelBandwidth
+);
+
+int32 __stdcall RFmxWLAN_CfgExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 externalAttenuation
+);
+
+int32 __stdcall RFmxWLAN_CfgFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 centerFrequency
+);
+
+int32 __stdcall RFmxWLAN_CfgNumberOfFrequencySegmentsAndReceiveChains(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 numberOfFrequencySegments,
+   int32 numberOfReceiveChains
+);
+
+int32 __stdcall RFmxWLAN_CfgReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 referenceLevel
+);
+
+int32 __stdcall RFmxWLAN_CfgStandard(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 standard
+);
+
+int32 __stdcall RFmxWLAN_CfgFrequencyArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 centerFrequency[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxWLAN_TXPCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount
 );
 
 int32 __stdcall RFmxWLAN_TXPCfgBurstDetectionEnabled(
@@ -1608,11 +1614,10 @@ int32 __stdcall RFmxWLAN_TXPCfgBurstDetectionEnabled(
    int32 burstDetectionEnabled
 );
 
-int32 __stdcall RFmxWLAN_TXPCfgAveraging(
+int32 __stdcall RFmxWLAN_TXPCfgMaximumMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount
+   float64 maximumMeasurementInterval
 );
 
 int32 __stdcall RFmxWLAN_PowerRampCfgAcquisitionLength(
@@ -1635,11 +1640,10 @@ int32 __stdcall RFmxWLAN_OFDMModAccCfgAcquisitionLength(
    float64 acquisitionLength
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccCfgMeasurementLength(
+int32 __stdcall RFmxWLAN_OFDMModAccCfgAmplitudeTrackingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 measurementOffset,
-   int32 maximumMeasurementLength
+   int32 amplitudeTrackingEnabled
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccCfgAveraging(
@@ -1649,46 +1653,16 @@ int32 __stdcall RFmxWLAN_OFDMModAccCfgAveraging(
    int32 averagingCount
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccCfgMeasurementMode(
+int32 __stdcall RFmxWLAN_OFDMModAccCfgChannelEstimationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 measurementMode
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccCfgNoiseCompensationEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 noiseCompensationEnabled
+   int32 channelEstimationType
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccCfgCommonClockSourceEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 commonClockSourceEnabled
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccCfgAmplitudeTrackingEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 amplitudeTrackingEnabled
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccCfgPhaseTrackingEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 phaseTrackingEnabled
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccCfgSymbolClockErrorCorrectionEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 symbolClockErrorCorrectionEnabled
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccCfgChannelEstimationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 channelEstimationType
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccCfgEVMUnit(
@@ -1703,6 +1677,25 @@ int32 __stdcall RFmxWLAN_OFDMModAccCfgFrequencyErrorEstimationMethod(
    int32 frequencyErrorEstimationMethod
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccCfgMeasurementLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 measurementOffset,
+   int32 maximumMeasurementLength
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccCfgMeasurementMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 measurementMode
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccCfgNoiseCompensationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 noiseCompensationEnabled
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccCfgOptimizeDynamicRangeForEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1710,16 +1703,42 @@ int32 __stdcall RFmxWLAN_OFDMModAccCfgOptimizeDynamicRangeForEVM(
    float64 optimizeDynamicRangeForEVMMargin
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccCfgPhaseTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 phaseTrackingEnabled
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccCfgSymbolClockErrorCorrectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 symbolClockErrorCorrectionEnabled
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccCfgNReferenceWaveforms(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0[],
+   float64 dx[],
+   NIComplexSingle referenceWaveform[],
+   int32 referenceWaveformSize[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccCfgNReferenceWaveformsSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0[],
+   float64 dx[],
+   float32 I[],
+   float32 Q[],
+   int32 referenceWaveformSize[],
+   int32 arraySize
+);
+
 int32 __stdcall RFmxWLAN_AbortMeasurements(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
-);
-
-int32 __stdcall RFmxWLAN_SelectMeasurements(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   uInt32 measurements,
-   int32 enableAllTraces
 );
 
 int32 __stdcall RFmxWLAN_AnalyzeNWaveformsIQ(
@@ -1759,11 +1778,6 @@ int32 __stdcall RFmxWLAN_AnalyzeNWaveformsSpectrum(
    int32 reset
 );
 
-int32 __stdcall RFmxWLAN_DisableTrigger(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
 int32 __stdcall RFmxWLAN_CfgDigitalEdgeTrigger(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1793,6 +1807,11 @@ int32 __stdcall RFmxWLAN_CfgSoftwareEdgeTrigger(
    int32 enableTrigger
 );
 
+int32 __stdcall RFmxWLAN_DisableTrigger(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
 int32 __stdcall RFmxWLAN_GetAllNamedResultNames(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1802,25 +1821,11 @@ int32 __stdcall RFmxWLAN_GetAllNamedResultNames(
    int32* defaultResultExists
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccCfgNReferenceWaveforms(
+int32 __stdcall RFmxWLAN_SelectMeasurements(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 x0[],
-   float64 dx[],
-   NIComplexSingle referenceWaveform[],
-   int32 referenceWaveformSize[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccCfgNReferenceWaveformsSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 x0[],
-   float64 dx[],
-   float32 I[],
-   float32 Q[],
-   int32 referenceWaveformSize[],
-   int32 arraySize
+   uInt32 measurements,
+   int32 enableAllTraces
 );
 
 int32 __stdcall RFmxWLAN_TXPFetchPowerTrace(
@@ -1842,16 +1847,6 @@ int32 __stdcall RFmxWLAN_TXPFetchMeasurement(
    float64* peakPowerMaximum
 );
 
-int32 __stdcall RFmxWLAN_DSSSModAccFetchCustomGatePowersArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 averagePowerMean[],
-   float64 peakPowerMaximum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
 int32 __stdcall RFmxWLAN_DSSSModAccFetchConstellationTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1865,8 +1860,36 @@ int32 __stdcall RFmxWLAN_DSSSModAccFetchConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 constellationI[],
+   float32 constellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_DSSSModAccFetchCustomGatePowersArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 averagePowerMean[],
+   float64 peakPowerMaximum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_DSSSModAccFetchDecodedHeaderBitsTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 decodedHeaderBits[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_DSSSModAccFetchDecodedPSDUBitsTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 decodedPSDUBits[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1882,34 +1905,14 @@ int32 __stdcall RFmxWLAN_DSSSModAccFetchEVMPerChipMeanTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_DSSSModAccFetchDecodedPSDUBitsTrace(
+int32 __stdcall RFmxWLAN_DSSSModAccFetchAveragePowers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 decodedPSDUBits[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_DSSSModAccFetchDecodedHeaderBitsTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 decodedHeaderBits[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_DSSSModAccFetchPPDUInformation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* dataModulationFormat,
-   int32* payloadLength,
-   int32* preambleType,
-   int32* lockedClocksBit,
-   int32* headerCRCStatus,
-   int32* PSDUCRCStatus
+   float64* preambleAveragePowerMean,
+   float64* headerAveragePowerMean,
+   float64* dataAveragePowerMean,
+   float64* PPDUAveragePowerMean
 );
 
 int32 __stdcall RFmxWLAN_DSSSModAccFetchEVM(
@@ -1934,16 +1937,6 @@ int32 __stdcall RFmxWLAN_DSSSModAccFetchIQImpairments(
    float64* IQQuadratureErrorMean
 );
 
-int32 __stdcall RFmxWLAN_DSSSModAccFetchAveragePowers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* preambleAveragePowerMean,
-   float64* headerAveragePowerMean,
-   float64* dataAveragePowerMean,
-   float64* PPDUAveragePowerMean
-);
-
 int32 __stdcall RFmxWLAN_DSSSModAccFetchPeakPowers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1954,7 +1947,19 @@ int32 __stdcall RFmxWLAN_DSSSModAccFetchPeakPowers(
    float64* PPDUPeakPowerMaximum
 );
 
-int32 __stdcall RFmxWLAN_PowerRampFetchRiseTrace(
+int32 __stdcall RFmxWLAN_DSSSModAccFetchPPDUInformation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* dataModulationFormat,
+   int32* payloadLength,
+   int32* preambleType,
+   int32* lockedClocksBit,
+   int32* headerCRCStatus,
+   int32* PSDUCRCStatus
+);
+
+int32 __stdcall RFmxWLAN_PowerRampFetchFallTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -1968,7 +1973,7 @@ int32 __stdcall RFmxWLAN_PowerRampFetchRiseTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_PowerRampFetchFallTrace(
+int32 __stdcall RFmxWLAN_PowerRampFetchRiseTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -1988,68 +1993,6 @@ int32 __stdcall RFmxWLAN_PowerRampFetchMeasurement(
    float64 timeout,
    float64* riseTimeMean,
    float64* fallTimeMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchEVMSubcarrierIndices(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 subcarrierIndices[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUnusedToneErrorMarginPerRU(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 unusedToneErrorMarginPerRU[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 streamRMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 streamDataRMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 streamPilotRMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 chainRMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(
@@ -2074,61 +2017,6 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 userStreamRMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 userStreamDataRMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 userStreamPilotRMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 streamRMSEVMPerSubcarrierMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 userStreamRMSEVMPerSubcarrierMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
 int32 __stdcall RFmxWLAN_OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2140,74 +2028,13 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 subcarrierIndex,
-   float64* x0,
-   float64* dx,
-   float32 subcarrierStreamEVMPerSymbol[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 subcarrierIndex,
-   float64* x0,
-   float64* dx,
-   float32 subcarrierChainEVMPerSymbol[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 symbolIndex,
-   float64* x0,
-   float64* dx,
-   float32 symbolStreamEVMPerSubcarrier[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 symbolIndex,
-   float64* x0,
-   float64* dx,
-   float32 symbolChainEVMPerSubcarrier[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchSpectralFlatnessMeanTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 spectralFlatnessMean[],
-   float32 spectralFlatnessLowerMask[],
-   float32 spectralFlatnessUpperMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleFrequencyErrorTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 preambleFrequencyError[],
+   float32 chainRMSEVMPerSymbolMean[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2247,6 +2074,16 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchCommonPilotErrorTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccFetchCustomGatePowersArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 averagePowerMean[],
+   float64 peakPowerMaximum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccFetchDataConstellationTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2260,77 +2097,99 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchDataConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 dataConstellationI[],
+   float32 dataConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPilotConstellationTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   NIComplexSingle pilotConstellation[],
+   NIComplexSingle referenceDataConstellation[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPilotConstellationTraceSplit(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 referenceDataConstellationI[],
+   float32 referenceDataConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserDataConstellationTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   NIComplexSingle userDataConstellation[],
+   int32 decodedLSIGBits[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserDataConstellationTraceSplit(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedPSDUBitsTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   int32 decodedPSDUBits[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserPilotConstellationTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedServiceBitsTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   NIComplexSingle userPilotConstellation[],
+   int32 decodedServiceBits[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserPilotConstellationTraceSplit(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedSIGBitsTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   int32 decodedSIGBits[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUnusedToneErrorMeanTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedSIGBBitsTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 unusedToneError[],
-   float32 unusedToneErrorMask[],
+   int32 decodedSIGBBits[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedUSIGBitsTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 decodedUSIGBits[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 decodedEHTSIGBits[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchEVMSubcarrierIndices(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 subcarrierIndices[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2357,94 +2216,240 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchCustomGatePowersArray(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPilotConstellationTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64 averagePowerMean[],
-   float64 peakPowerMaximum[],
+   NIComplexSingle pilotConstellation[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedUSIGBitsTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPilotConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 decodedUSIGBits[],
+   float32 pilotConstellationI[],
+   float32 pilotConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleFrequencyErrorTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 decodedEHTSIGBits[],
+   float64* x0,
+   float64* dx,
+   float32 preambleFrequencyError[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedPSDUBitsTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchSpectralFlatnessMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 decodedPSDUBits[],
+   float64* x0,
+   float64* dx,
+   float32 spectralFlatnessMean[],
+   float32 spectralFlatnessLowerMask[],
+   float32 spectralFlatnessUpperMask[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedServiceBitsTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 decodedServiceBits[],
+   float64* x0,
+   float64* dx,
+   float32 streamDataRMSEVMPerSymbolMean[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   NIComplexSingle referenceDataConstellation[],
+   float64* x0,
+   float64* dx,
+   float32 streamPilotRMSEVMPerSymbolMean[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTraceSplit(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float64* x0,
+   float64* dx,
+   float32 streamRMSEVMPerSubcarrierMean[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 decodedLSIGBits[],
+   float64* x0,
+   float64* dx,
+   float32 streamRMSEVMPerSymbolMean[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedSIGBitsTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 decodedSIGBits[],
+   int32 subcarrierIndex,
+   float64* x0,
+   float64* dx,
+   float32 subcarrierChainEVMPerSymbol[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedSIGBBitsTrace(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32 decodedSIGBBits[],
+   int32 subcarrierIndex,
+   float64* x0,
+   float64* dx,
+   float32 subcarrierStreamEVMPerSymbol[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 symbolIndex,
+   float64* x0,
+   float64* dx,
+   float32 symbolChainEVMPerSubcarrier[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 symbolIndex,
+   float64* x0,
+   float64* dx,
+   float32 symbolStreamEVMPerSubcarrier[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUnusedToneErrorMarginPerRU(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 unusedToneErrorMarginPerRU[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUnusedToneErrorMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 unusedToneError[],
+   float32 unusedToneErrorMask[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserDataConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle userDataConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserDataConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 userDataConstellationI[],
+   float32 userDataConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserPilotConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle userPilotConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserPilotConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 userPilotConstellationI[],
+   float32 userPilotConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 userStreamDataRMSEVMPerSymbolMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 userStreamPilotRMSEVMPerSymbolMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 userStreamRMSEVMPerSubcarrierMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 userStreamRMSEVMPerSymbolMean[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2460,15 +2465,6 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchPhaseNoisePSDMeanTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchCompositeRMSEVM(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* compositeRMSEVMMean,
-   float64* compositeDataRMSEVMMean,
-   float64* compositePilotRMSEVMMean
-);
-
 int32 __stdcall RFmxWLAN_OFDMModAccFetchChainRMSEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2478,179 +2474,20 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchChainRMSEVM(
    float64* chainPilotRMSEVMMean
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamRMSEVM(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchCompositeRMSEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* streamRMSEVMMean,
-   float64* streamDataRMSEVMMean,
-   float64* streamPilotRMSEVMMean
+   float64* compositeRMSEVMMean,
+   float64* compositeDataRMSEVMMean,
+   float64* compositePilotRMSEVMMean
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamRMSEVM(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchCrossPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* userStreamRMSEVMMean,
-   float64* userStreamDataRMSEVMMean,
-   float64* userStreamPilotRMSEVMMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchNumberofSymbolsUsed(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* numberOfSymbolsUsed
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchFrequencyErrorMean(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* frequencyErrorMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchFrequencyErrorCCDF10Percent(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* frequencyErrorCCDF10Percent
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchSymbolClockErrorMean(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* symbolClockErrorMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchIQImpairments(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* relativeIQOriginOffsetMean,
-   float64* IQGainImbalanceMean,
-   float64* IQQuadratureErrorMean,
-   float64* absoluteIQOriginOffsetMean,
-   float64* IQTimingSkewMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchSpectralFlatness(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* spectralFlatnessMargin,
-   int32* spectralFlatnessMarginSubcarrierIndex
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUnusedToneError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* unusedToneErrorMargin,
-   int32* unusedToneErrorMarginRUIndex
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowersCommon(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* LSTFAveragePowerMean,
-   float64* LLTFAveragePowerMean,
-   float64* LSIGAveragePowerMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowersCommon(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* LSTFPeakPowerMaximum,
-   float64* LLTFPeakPowerMaximum,
-   float64* LSIGPeakPowerMaximum
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11n(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* HTSIGAveragePowerMean,
-   float64* HTSTFAveragePowerMean,
-   float64* HTDLTFAveragePowerMean,
-   float64* HTELTFAveragePowerMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11n(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* HTSIGPeakPowerMaximum,
-   float64* HTSTFPeakPowerMaximum,
-   float64* HTDLTFPeakPowerMaximum,
-   float64* HTELTFPeakPowerMaximum
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ac(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* VHTSIGAAveragePowerMean,
-   float64* VHTSTFAveragePowerMean,
-   float64* VHTLTFAveragePowerMean,
-   float64* VHTSIGBAveragePowerMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ac(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* VHTSIGAPeakPowerMaximum,
-   float64* VHTSTFPeakPowerMaximum,
-   float64* VHTLTFPeakPowerMaximum,
-   float64* VHTSIGBPeakPowerMaximum
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ax(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* RLSIGAveragePowerMean,
-   float64* HESIGAAveragePowerMean,
-   float64* HESIGBAveragePowerMean,
-   float64* HESTFAveragePowerMean,
-   float64* HELTFAveragePowerMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11be(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* RLSIGAveragePowerMean,
-   float64* USIGAveragePowerMean,
-   float64* EHTSIGAveragePowerMean,
-   float64* EHTSTFAveragePowerMean,
-   float64* EHTLTFAveragePowerMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ax(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* RLSIGPeakPowerMaximum,
-   float64* HESIGAPeakPowerMaximum,
-   float64* HESIGBPeakPowerMaximum,
-   float64* HESTFPeakPowerMaximum,
-   float64* HELTFPeakPowerMaximum
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11be(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* RLSIGPeakPowerMaximum,
-   float64* USIGPeakPowerMaximum,
-   float64* EHTSIGPeakPowerMaximum,
-   float64* EHTSTFPeakPowerMaximum,
-   float64* EHTLTFPeakPowerMaximum
+   float64* crossPowerMean
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccFetchDataAveragePower(
@@ -2665,6 +2502,87 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchDataPeakPower(
    char selectorString[],
    float64 timeout,
    float64* dataPeakPowerMaximum
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchFrequencyErrorCCDF10Percent(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* frequencyErrorCCDF10Percent
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchFrequencyErrorMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* frequencyErrorMean
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchGuardIntervalType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* guardIntervalType
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchLTFSize(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* LTFSize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchIQImpairments(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* relativeIQOriginOffsetMean,
+   float64* IQGainImbalanceMean,
+   float64* IQQuadratureErrorMean,
+   float64* absoluteIQOriginOffsetMean,
+   float64* IQTimingSkewMean
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchLSIGParityCheckStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* LSIGParityCheckStatus
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchMCSIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* MCSIndex
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchNumberOfHESIGBSymbols(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* numberOfHESIGBSymbols
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchNumberOfSpaceTimeStreams(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* numberOfSpaceTimeStreams
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchNumberofSymbolsUsed(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* numberOfSymbolsUsed
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchNumberOfUsers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* numberOfUsers
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccFetchPEAveragePower(
@@ -2695,20 +2613,6 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchPPDUPeakPower(
    float64* PPDUPeakPowerMaximum
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchCrossPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* crossPowerMean
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchUserPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* userPowerMean
-);
-
 int32 __stdcall RFmxWLAN_OFDMModAccFetchPPDUType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2716,32 +2620,120 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchPPDUType(
    int32* PPDUType
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchMCSIndex(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ac(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32* MCSIndex
+   float64* VHTSIGAAveragePowerMean,
+   float64* VHTSTFAveragePowerMean,
+   float64* VHTLTFAveragePowerMean,
+   float64* VHTSIGBAveragePowerMean
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchGuardIntervalType(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ax(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32* guardIntervalType
+   float64* RLSIGAveragePowerMean,
+   float64* HESIGAAveragePowerMean,
+   float64* HESIGBAveragePowerMean,
+   float64* HESTFAveragePowerMean,
+   float64* HELTFAveragePowerMean
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchNumberOfSpaceTimeStreams(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11be(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32* numberOfSpaceTimeStreams
+   float64* RLSIGAveragePowerMean,
+   float64* USIGAveragePowerMean,
+   float64* EHTSIGAveragePowerMean,
+   float64* EHTSTFAveragePowerMean,
+   float64* EHTLTFAveragePowerMean
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchNumberOfUsers(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11n(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32* numberOfUsers
+   float64* HTSIGAveragePowerMean,
+   float64* HTSTFAveragePowerMean,
+   float64* HTDLTFAveragePowerMean,
+   float64* HTELTFAveragePowerMean
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreambleAveragePowersCommon(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* LSTFAveragePowerMean,
+   float64* LLTFAveragePowerMean,
+   float64* LSIGAveragePowerMean
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ac(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* VHTSIGAPeakPowerMaximum,
+   float64* VHTSTFPeakPowerMaximum,
+   float64* VHTLTFPeakPowerMaximum,
+   float64* VHTSIGBPeakPowerMaximum
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11ax(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* RLSIGPeakPowerMaximum,
+   float64* HESIGAPeakPowerMaximum,
+   float64* HESIGBPeakPowerMaximum,
+   float64* HESTFPeakPowerMaximum,
+   float64* HELTFPeakPowerMaximum
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11be(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* RLSIGPeakPowerMaximum,
+   float64* USIGPeakPowerMaximum,
+   float64* EHTSIGPeakPowerMaximum,
+   float64* EHTSTFPeakPowerMaximum,
+   float64* EHTLTFPeakPowerMaximum
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11n(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* HTSIGPeakPowerMaximum,
+   float64* HTSTFPeakPowerMaximum,
+   float64* HTDLTFPeakPowerMaximum,
+   float64* HTELTFPeakPowerMaximum
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPreamblePeakPowersCommon(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* LSTFPeakPowerMaximum,
+   float64* LLTFPeakPowerMaximum,
+   float64* LSIGPeakPowerMaximum
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPSDUCRCStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* PSDUCRCStatus
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPEDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* PEDuration
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccFetchRUOffsetAndSize(
@@ -2750,27 +2742,6 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchRUOffsetAndSize(
    float64 timeout,
    int32* RUOffset,
    int32* RUSize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchNumberOfHESIGBSymbols(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* numberOfHESIGBSymbols
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchLTFSize(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* LTFSize
-);
-
-int32 __stdcall RFmxWLAN_OFDMModAccFetchLSIGParityCheckStatus(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* LSIGParityCheckStatus
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccFetchSIGCRCStatus(
@@ -2787,18 +2758,52 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchSIGBCRCStatus(
    int32* SIGBCRCStatus
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPSDUCRCStatus(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchSpectralFlatness(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   int32* PSDUCRCStatus
+   float64* spectralFlatnessMargin,
+   int32* spectralFlatnessMarginSubcarrierIndex
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccFetchPEDuration(
+int32 __stdcall RFmxWLAN_OFDMModAccFetchStreamRMSEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* PEDuration
+   float64* streamRMSEVMMean,
+   float64* streamDataRMSEVMMean,
+   float64* streamPilotRMSEVMMean
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchSymbolClockErrorMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* symbolClockErrorMean
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUnusedToneError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* unusedToneErrorMargin,
+   int32* unusedToneErrorMarginRUIndex
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* userPowerMean
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchUserStreamRMSEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* userStreamRMSEVMMean,
+   float64* userStreamDataRMSEVMMean,
+   float64* userStreamPilotRMSEVMMean
 );
 
 int32 __stdcall RFmxWLAN_SEMFetchLowerOffsetMarginArray(
@@ -2823,6 +2828,18 @@ int32 __stdcall RFmxWLAN_SEMFetchLowerOffsetPowerArray(
    float64 peakAbsolutePower[],
    float64 peakFrequency[],
    float64 peakRelativePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_SEMFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
+   float32 compositeMask[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2853,25 +2870,6 @@ int32 __stdcall RFmxWLAN_SEMFetchUpperOffsetPowerArray(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxWLAN_SEMFetchSpectrum(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
-   float32 compositeMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxWLAN_SEMFetchMeasurementStatus(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* measurementStatus
-);
-
 int32 __stdcall RFmxWLAN_SEMFetchCarrierMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2900,6 +2898,13 @@ int32 __stdcall RFmxWLAN_SEMFetchLowerOffsetPower(
    float64* peakAbsolutePower,
    float64* peakFrequency,
    float64* peakRelativePower
+);
+
+int32 __stdcall RFmxWLAN_SEMFetchMeasurementStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* measurementStatus
 );
 
 int32 __stdcall RFmxWLAN_SEMFetchUpperOffsetMargin(
@@ -4308,6 +4313,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccSetCommonClockSourceEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccGetCommonPilotErrorScalingReference(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccSetCommonPilotErrorScalingReference(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccGetAmplitudeTrackingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4926,12 +4943,6 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsHESIGBPeakPowerMaximum(
    float64 *attrVal
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccGetResultsHTSTFAveragePowerMean(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTSIGAveragePowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4939,6 +4950,12 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTSIGAveragePowerMean(
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTSIGPeakPowerMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsHTSTFAveragePowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

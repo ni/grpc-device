@@ -1658,6 +1658,12 @@ attributes = {
         'name': 'OFDMMODACC_RESULTS_STREAM_POWER_MEAN',
         'type': 'float64'
     },
+    10502353: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccCommonPilotErrorScalingReference',
+        'name': 'OFDMMODACC_COMMON_PILOT_ERROR_SCALING_REFERENCE',
+        'type': 'int32'
+    },
     10506240: {
         'access': 'read-write',
         'name': 'SEM_MEASUREMENT_ENABLED',
