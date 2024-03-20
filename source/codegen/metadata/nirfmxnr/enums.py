@@ -2064,6 +2064,18 @@ enums = {
             }
         ]
     },
+    'SatelliteAccessNodeClass': {
+        'values': [
+            {
+                'name': 'GEO',
+                'value': 0
+            },
+            {
+                'name': 'LEO',
+                'value': 1
+            }
+        ]
+    },
     'SchDetectedModulationType': {
         'values': [
             {
@@ -2341,6 +2353,14 @@ enums = {
             {
                 'name': 'NS21_REL_17_ONWARDS',
                 'value': 10
+            },
+            {
+                'name': 'NS04N',
+                'value': 11
+            },
+            {
+                'name': 'NS05N',
+                'value': 12
             }
         ]
     },

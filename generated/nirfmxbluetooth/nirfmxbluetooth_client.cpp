@@ -1825,6 +1825,25 @@ mod_acc_fetch_df2max_trace(const StubPtr& stub, const nidevice_grpc::Session& in
   return response;
 }
 
+ModAccFetchDf4avgTraceResponse
+mod_acc_fetch_df4avg_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchDf4avgTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchDf4avgTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchDf4avgTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchFrequencyErrorBRResponse
 mod_acc_fetch_frequency_error_br(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

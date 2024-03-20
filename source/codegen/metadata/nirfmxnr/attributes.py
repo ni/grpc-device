@@ -656,6 +656,12 @@ attributes = {
         'name': 'RATED_EIRP',
         'type': 'float64'
     },
+    9437347: {
+        'access': 'read-write',
+        'enum': 'SatelliteAccessNodeClass',
+        'name': 'SATELLITE_ACCESS_NODE_CLASS',
+        'type': 'int32'
+    },
     9437440: {
         'access': 'read-write',
         'enum': 'DownlinkTestModel',

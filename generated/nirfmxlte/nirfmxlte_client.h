@@ -104,7 +104,7 @@ CfgPCFICHResponse cfg_pcfich(const StubPtr& stub, const nidevice_grpc::Session& 
 CfgPDCCHResponse cfg_pdcch(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& pdcch_power);
 CfgPDSCHResponse cfg_pdsch(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<UserDefinedPdschCW0ModulationType, pb::int32>& cw0_modulation_type, const std::string& resource_block_allocation, const double& power);
 CfgPHICHResponse cfg_phich(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DownlinkUserDefinedPhichResource, pb::int32>& resource, const simple_variant<DownlinkUserDefinedPhichDuration, pb::int32>& duration, const double& power);
-CfgPSSCHModulationTypeResponse cfg_pssch_modulation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& modulation_type);
+CfgPSSCHModulationTypeResponse cfg_pssch_modulation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PsschModulationType, pb::int32>& modulation_type);
 CfgPSSCHResourceBlocksResponse cfg_pssch_resource_blocks(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& resource_block_offset, const pb::int32& number_of_resource_blocks);
 CfgPUSCHModulationTypeResponse cfg_pusch_modulation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PuschModulationType, pb::int32>& modulation_type);
 CfgPUSCHResourceBlocksResponse cfg_pusch_resource_blocks(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& resource_block_offset, const pb::int32& number_of_resource_blocks);
@@ -121,7 +121,10 @@ ClearNoiseCalibrationDatabaseResponse clear_noise_calibration_database(const Stu
 CloneSignalConfigurationResponse clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& old_signal_name, const std::string& new_signal_name);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy);
 CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
+CreateListResponse create_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& list_name);
+CreateListStepResponse create_list_step(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 CreateSignalConfigurationResponse create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name);
+DeleteListResponse delete_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& list_name);
 DeleteSignalConfigurationResponse delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name);
 DisableTriggerResponse disable_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 GetAllNamedResultNamesResponse get_all_named_result_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '21.0.0',
+    'api_version': '24.3.0',
     'c_header': 'niRFmxLTE.h',
     'c_function_prefix': 'RFmxLTE_',
     'service_class_prefix': 'NiRFmxLTE',

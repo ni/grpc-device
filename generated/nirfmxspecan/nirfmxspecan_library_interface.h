@@ -243,6 +243,8 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) = 0;
   virtual int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut) = 0;
   virtual int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]) = 0;
+  virtual int32 MarkerCfgBandSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span) = 0;
+  virtual int32 MarkerCfgFunctionType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 functionType) = 0;
   virtual int32 MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers) = 0;
   virtual int32 MarkerCfgPeakExcursion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 peakExcursionEnabled, float64 peakExcursion) = 0;
   virtual int32 MarkerCfgReferenceMarker(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceMarker) = 0;
@@ -251,6 +253,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType) = 0;
   virtual int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation) = 0;
   virtual int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation) = 0;
+  virtual int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue) = 0;
   virtual int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation) = 0;
   virtual int32 MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound) = 0;
   virtual int32 MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks) = 0;

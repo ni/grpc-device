@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXSPECAN API metadata version 23.8.0
+// This file is generated from NI-RFMXSPECAN API metadata version 24.3.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXSPECAN Metadata
 //---------------------------------------------------------------------
@@ -245,6 +245,8 @@ service NiRFmxSpecAn {
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
   rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc MarkerCfgBandSpan(MarkerCfgBandSpanRequest) returns (MarkerCfgBandSpanResponse);
+  rpc MarkerCfgFunctionType(MarkerCfgFunctionTypeRequest) returns (MarkerCfgFunctionTypeResponse);
   rpc MarkerCfgNumberOfMarkers(MarkerCfgNumberOfMarkersRequest) returns (MarkerCfgNumberOfMarkersResponse);
   rpc MarkerCfgPeakExcursion(MarkerCfgPeakExcursionRequest) returns (MarkerCfgPeakExcursionResponse);
   rpc MarkerCfgReferenceMarker(MarkerCfgReferenceMarkerRequest) returns (MarkerCfgReferenceMarkerResponse);
@@ -253,6 +255,7 @@ service NiRFmxSpecAn {
   rpc MarkerCfgType(MarkerCfgTypeRequest) returns (MarkerCfgTypeResponse);
   rpc MarkerCfgXLocation(MarkerCfgXLocationRequest) returns (MarkerCfgXLocationResponse);
   rpc MarkerCfgYLocation(MarkerCfgYLocationRequest) returns (MarkerCfgYLocationResponse);
+  rpc MarkerFetchFunctionValue(MarkerFetchFunctionValueRequest) returns (MarkerFetchFunctionValueResponse);
   rpc MarkerFetchXY(MarkerFetchXYRequest) returns (MarkerFetchXYResponse);
   rpc MarkerNextPeak(MarkerNextPeakRequest) returns (MarkerNextPeakResponse);
   rpc MarkerPeakSearch(MarkerPeakSearchRequest) returns (MarkerPeakSearchResponse);
@@ -1312,9 +1315,9 @@ enum AmpmThresholdType {
 
 enum CcdfRbwFilterType {
   CCDF_RBW_FILTER_TYPE_UNSPECIFIED = 0;
+  CCDF_RBW_FILTER_TYPE_NONE = 5;
   CCDF_RBW_FILTER_TYPE_GAUSSIAN = 1;
   CCDF_RBW_FILTER_TYPE_FLAT = 2;
-  CCDF_RBW_FILTER_TYPE_NONE = 5;
   CCDF_RBW_FILTER_TYPE_RRC = 6;
 }
 
@@ -1652,6 +1655,11 @@ enum IdpdReferenceWaveformIdleDurationPresent {
 enum IdpdSignalType {
   IDPD_SIGNAL_TYPE_MODULATED = 0;
   IDPD_SIGNAL_TYPE_TONES = 1;
+}
+
+enum MarkerFunctionType {
+  MARKER_FUNCTION_TYPE_OFF = 0;
+  MARKER_FUNCTION_TYPE_BAND_POWER = 1;
 }
 
 enum MarkerNextPeak {
@@ -2285,9 +2293,9 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_AMPM_THRESHOLD_ENABLED_TRUE = 1;
   NIRFMXSPECAN_INT32_AMPM_THRESHOLD_TYPE_RELATIVE = 0;
   NIRFMXSPECAN_INT32_AMPM_THRESHOLD_TYPE_ABSOLUTE = 1;
+  NIRFMXSPECAN_INT32_CCDF_RBW_FILTER_TYPE_NONE = 5;
   NIRFMXSPECAN_INT32_CCDF_RBW_FILTER_TYPE_GAUSSIAN = 1;
   NIRFMXSPECAN_INT32_CCDF_RBW_FILTER_TYPE_FLAT = 2;
-  NIRFMXSPECAN_INT32_CCDF_RBW_FILTER_TYPE_NONE = 5;
   NIRFMXSPECAN_INT32_CCDF_RBW_FILTER_TYPE_RRC = 6;
   NIRFMXSPECAN_INT32_CCDF_THRESHOLD_ENABLED_FALSE = 0;
   NIRFMXSPECAN_INT32_CCDF_THRESHOLD_ENABLED_TRUE = 1;
@@ -5761,6 +5769,29 @@ message InitiateResponse {
   int32 status = 1;
 }
 
+message MarkerCfgBandSpanRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double span = 3;
+}
+
+message MarkerCfgBandSpanResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgFunctionTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof function_type_enum {
+    MarkerFunctionType function_type = 3;
+    int32 function_type_raw = 4;
+  }
+}
+
+message MarkerCfgFunctionTypeResponse {
+  int32 status = 1;
+}
+
 message MarkerCfgNumberOfMarkersRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -5853,6 +5884,17 @@ message MarkerCfgYLocationRequest {
 
 message MarkerCfgYLocationResponse {
   int32 status = 1;
+}
+
+message MarkerFetchFunctionValueRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message MarkerFetchFunctionValueResponse {
+  int32 status = 1;
+  double function_value = 2;
 }
 
 message MarkerFetchXYRequest {

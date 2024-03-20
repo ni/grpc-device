@@ -37,6 +37,7 @@
 #define RFMXNR_ATTR_LINK_DIRECTION                                                         0x0090000e
 #define RFMXNR_ATTR_GNODEB_CATEGORY                                                        0x0090005f
 #define RFMXNR_ATTR_GNODEB_TYPE                                                            0x009000a0
+#define RFMXNR_ATTR_SATELLITE_ACCESS_NODE_CLASS                                            0x009000a3
 #define RFMXNR_ATTR_TRANSMIT_ANTENNA_TO_ANALYZE                                            0x0090009b
 #define RFMXNR_ATTR_POWER_CLASS                                                            0x0090009c
 #define RFMXNR_ATTR_PIBY2BPSK_POWER_BOOST_ENABLED                                          0x0090009e
@@ -172,11 +173,15 @@
 #define RFMXNR_ATTR_PBCH_DMRS_POWER                                                        0x00900089
 #define RFMXNR_ATTR_SSB_HRF_INDEX                                                          0x00900120
 #define RFMXNR_ATTR_NUMBER_OF_STEPS                                                        0x00900ff8
-#define RFMXNR_ATTR_LIST_STEP_TIMER_DURATION                                               0x00900ff9
 #define RFMXNR_ATTR_LIST_STEP_TIMER_UNIT                                                   0x00900ff6
+#define RFMXNR_ATTR_LIST_STEP_TIMER_DURATION                                               0x00900ff9
 #define RFMXNR_ATTR_LIST_STEP_TIMER_OFFSET                                                 0x00900ff7
 #define RFMXNR_ATTR_MODACC_MEASUREMENT_ENABLED                                             0x00904000
 #define RFMXNR_ATTR_MODACC_MULTICARRIER_FILTER_ENABLED                                     0x00904002
+#define RFMXNR_ATTR_MODACC_SYNCHRONIZATION_MODE                                            0x00904004
+#define RFMXNR_ATTR_MODACC_MEASUREMENT_LENGTH_UNIT                                         0x00904005
+#define RFMXNR_ATTR_MODACC_MEASUREMENT_OFFSET                                              0x00904006
+#define RFMXNR_ATTR_MODACC_MEASUREMENT_LENGTH                                              0x00904007
 #define RFMXNR_ATTR_MODACC_FREQUENCY_ERROR_ESTIMATION                                      0x00904071
 #define RFMXNR_ATTR_MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED                           0x00904075
 #define RFMXNR_ATTR_MODACC_IQ_IMPAIRMENTS_MODEL                                            0x00904082
@@ -188,10 +193,6 @@
 #define RFMXNR_ATTR_MODACC_IQ_IMPAIRMENTS_PER_SUBCARRIER_ENABLED                           0x00904086
 #define RFMXNR_ATTR_MODACC_MAGNITUDE_AND_PHASE_ERROR_ENABLED                               0x00904078
 #define RFMXNR_ATTR_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE                                 0x00904081
-#define RFMXNR_ATTR_MODACC_SYNCHRONIZATION_MODE                                            0x00904004
-#define RFMXNR_ATTR_MODACC_MEASUREMENT_LENGTH_UNIT                                         0x00904005
-#define RFMXNR_ATTR_MODACC_MEASUREMENT_OFFSET                                              0x00904006
-#define RFMXNR_ATTR_MODACC_MEASUREMENT_LENGTH                                              0x00904007
 #define RFMXNR_ATTR_MODACC_SPECTRUM_INVERTED                                               0x00904008
 #define RFMXNR_ATTR_MODACC_CHANNEL_ESTIMATION_TYPE                                         0x00904009
 #define RFMXNR_ATTR_MODACC_PHASE_TRACKING_MODE                                             0x00904051
@@ -288,8 +289,8 @@
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN                  0x0090402d
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SLOT_FREQUENCY_ERROR_MAXIMUM          0x009040a1
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SYMBOL_CLOCK_ERROR_MEAN               0x00904033
-#define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SLOT_IQ_ORIGIN_OFFSET_MAXIMUM         0x009040a2
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN                 0x0090402e
+#define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SLOT_IQ_ORIGIN_OFFSET_MAXIMUM         0x009040a2
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN                0x0090402f
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN                 0x00904030
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_IQ_TIMING_SKEW_MEAN                   0x00904031
@@ -406,8 +407,8 @@
 #define RFMXNR_ATTR_SEM_OFFSET_RBW_FILTER_TYPE                                             0x0090800b
 #define RFMXNR_ATTR_SEM_OFFSET_BANDWIDTH_INTEGRAL                                          0x0090800c
 #define RFMXNR_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK                                             0x0090800d
-#define RFMXNR_ATTR_SEM_OFFSET_ABSOLUTE_LIMIT_START                                        0x0090800e
 #define RFMXNR_ATTR_SEM_OFFSET_FREQUENCY_DEFINITION                                        0x00908042
+#define RFMXNR_ATTR_SEM_OFFSET_ABSOLUTE_LIMIT_START                                        0x0090800e
 #define RFMXNR_ATTR_SEM_OFFSET_ABSOLUTE_LIMIT_STOP                                         0x0090800f
 #define RFMXNR_ATTR_SEM_OFFSET_RELATIVE_LIMIT_START                                        0x00908010
 #define RFMXNR_ATTR_SEM_OFFSET_RELATIVE_LIMIT_STOP                                         0x00908011
@@ -538,6 +539,10 @@
 #define RFMXNR_VAL_GNODEB_TYPE_1H                                                                 1
 #define RFMXNR_VAL_GNODEB_TYPE_1O                                                                 2
 #define RFMXNR_VAL_GNODEB_TYPE_2O                                                                 3
+
+// Values for RFMXNR_ATTR_SATELLITE_ACCESS_NODE_CLASS
+#define RFMXNR_VAL_SATELLITE_ACCESS_NODE_CLASS_GEO                                                0
+#define RFMXNR_VAL_SATELLITE_ACCESS_NODE_CLASS_LEO                                                1
 
 // Values for RFMXNR_ATTR_PIBY2BPSK_POWER_BOOST_ENABLED
 #define RFMXNR_VAL_PIBY2BPSK_POWER_BOOST_ENABLED_FALSE                                            0
@@ -739,9 +744,15 @@
 #define RFMXNR_VAL_MODACC_MULTICARRIER_FILTER_ENABLED_FALSE                                       0
 #define RFMXNR_VAL_MODACC_MULTICARRIER_FILTER_ENABLED_TRUE                                        1
 
-// Values for ModAccCalibrationDataValid
-#define RFMXNR_VAL_MODACC_CALIBRATION_DATA_VALID_FALSE                                            0
-#define RFMXNR_VAL_MODACC_CALIBRATION_DATA_VALID_TRUE                                             1
+// Values for RFMXNR_ATTR_MODACC_SYNCHRONIZATION_MODE
+#define RFMXNR_VAL_MODACC_SYNCHRONIZATION_MODE_SLOT                                               1
+#define RFMXNR_VAL_MODACC_SYNCHRONIZATION_MODE_FRAME                                              5
+#define RFMXNR_VAL_MODACC_SYNCHRONIZATION_MODE_SSB_START_FRAME                                    7
+
+// Values for RFMXNR_ATTR_MODACC_MEASUREMENT_LENGTH_UNIT
+#define RFMXNR_VAL_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT                                            1
+#define RFMXNR_VAL_MODACC_MEASUREMENT_LENGTH_UNIT_SUBFRAME                                        3
+#define RFMXNR_VAL_MODACC_MEASUREMENT_LENGTH_UNIT_TIME                                            6
 
 // Values for RFMXNR_ATTR_MODACC_FREQUENCY_ERROR_ESTIMATION
 #define RFMXNR_VAL_MODACC_FREQUENCY_ERROR_ESTIMATION_DISABLED                                     0
@@ -752,6 +763,10 @@
 #define RFMXNR_VAL_MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED_FALSE                             0
 #define RFMXNR_VAL_MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED_TRUE                              1
 
+// Values for RFMXNR_ATTR_MODACC_IQ_IMPAIRMENTS_MODEL
+#define RFMXNR_VAL_MODACC_IQ_IMPAIRMENTS_MODEL_TX                                                 0
+#define RFMXNR_VAL_MODACC_IQ_IMPAIRMENTS_MODEL_RX                                                 1
+
 // Values for RFMXNR_ATTR_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED
 #define RFMXNR_VAL_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED_FALSE                               0
 #define RFMXNR_VAL_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED_TRUE                                1
@@ -759,10 +774,6 @@
 // Values for RFMXNR_ATTR_MODACC_IQ_MISMATCH_ESTIMATION_ENABLED
 #define RFMXNR_VAL_MODACC_IQ_MISMATCH_ESTIMATION_ENABLED_FALSE                                    0
 #define RFMXNR_VAL_MODACC_IQ_MISMATCH_ESTIMATION_ENABLED_TRUE                                     1
-
-// Values for RFMXNR_ATTR_MODACC_IQ_IMPAIRMENTS_MODEL
-#define RFMXNR_VAL_MODACC_IQ_IMPAIRMENTS_MODEL_TX                                                 0
-#define RFMXNR_VAL_MODACC_IQ_IMPAIRMENTS_MODEL_RX                                                 1
 
 // Values for RFMXNR_ATTR_MODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED
 #define RFMXNR_VAL_MODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED_FALSE                              0
@@ -787,16 +798,6 @@
 // Values for RFMXNR_ATTR_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE
 #define RFMXNR_VAL_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_ACQUIRED_WAVEFORM                       0
 #define RFMXNR_VAL_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_REFERENCE_WAVEFORM                      1
-
-// Values for RFMXNR_ATTR_MODACC_SYNCHRONIZATION_MODE
-#define RFMXNR_VAL_MODACC_SYNCHRONIZATION_MODE_SLOT                                               1
-#define RFMXNR_VAL_MODACC_SYNCHRONIZATION_MODE_FRAME                                              5
-#define RFMXNR_VAL_MODACC_SYNCHRONIZATION_MODE_SSB_START_FRAME                                    7
-
-// Values for RFMXNR_ATTR_MODACC_MEASUREMENT_LENGTH_UNIT
-#define RFMXNR_VAL_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT                                            1
-#define RFMXNR_VAL_MODACC_MEASUREMENT_LENGTH_UNIT_SUBFRAME                                        3
-#define RFMXNR_VAL_MODACC_MEASUREMENT_LENGTH_UNIT_TIME                                            6
 
 // Values for RFMXNR_ATTR_MODACC_SPECTRUM_INVERTED
 #define RFMXNR_VAL_MODACC_SPECTRUM_INVERTED_FALSE                                                 0
@@ -867,15 +868,6 @@
 #define RFMXNR_VAL_MODACC_ATUO_LEVEL_ALLOW_OVERFLOW_FALSE                                         0
 #define RFMXNR_VAL_MODACC_ATUO_LEVEL_ALLOW_OVERFLOW_TRUE                                          1
 
-// Values for RFMXNR_ATTR_MODACC_RESULTS_NOISE_COMPENSATION_APPLIED
-#define RFMXNR_VAL_MODACC_RESULTS_NOISE_COMPENSATION_APPLIED_FALSE                                0
-#define RFMXNR_VAL_MODACC_RESULTS_NOISE_COMPENSATION_APPLIED_TRUE                                 1
-
-// Values for RFMXNR_ATTR_ACP_CHANNEL_CONFIGURATION_TYPE
-#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_STANDARD                                        0
-#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_CUSTOM                                          1
-#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_NS_29                                           2
-
 // Values for RFMXNR_ATTR_MODACC_SHORT_FRAME_ENABLED
 #define RFMXNR_VAL_MODACC_SHORT_FRAME_ENABLED_FALSE                                               0
 #define RFMXNR_VAL_MODACC_SHORT_FRAME_ENABLED_TRUE                                                1
@@ -898,6 +890,15 @@
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_QAM256                             4
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_QAM1024                            5
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_PSK8                               100
+
+// Values for RFMXNR_ATTR_MODACC_RESULTS_NOISE_COMPENSATION_APPLIED
+#define RFMXNR_VAL_MODACC_RESULTS_NOISE_COMPENSATION_APPLIED_FALSE                                0
+#define RFMXNR_VAL_MODACC_RESULTS_NOISE_COMPENSATION_APPLIED_TRUE                                 1
+
+// Values for RFMXNR_ATTR_ACP_CHANNEL_CONFIGURATION_TYPE
+#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_STANDARD                                        0
+#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_CUSTOM                                          1
+#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_NS_29                                           2
 
 // Values for RFMXNR_ATTR_ACP_OFFSET_SIDEBAND
 #define RFMXNR_VAL_ACP_OFFSET_SIDEBAND_NEGATIVE                                                   0
@@ -1096,6 +1097,8 @@
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS07                                                      8
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS03U                                                     9
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS21_REL_17_ONWARDS                                       10
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS04N                                                     11
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS05N                                                     12
 
 // Values for RFMXNR_ATTR_SEM_DOWNLINK_MASK_TYPE
 #define RFMXNR_VAL_SEM_DOWNLINK_MASK_TYPE_STANDARD                                                0
@@ -1216,6 +1219,26 @@
 #define RFMXNR_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
 #define RFMXNR_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
 
+// Values for ChpNoiseCalibrationDataValid
+#define RFMXNR_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
+#define RFMXNR_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
+
+// Values for AcpNoiseCalibrationDataValid
+#define RFMXNR_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
+#define RFMXNR_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
+
+// Values for ModAccCalibrationDataValid
+#define RFMXNR_VAL_MODACC_CALIBRATION_DATA_VALID_FALSE                                            0
+#define RFMXNR_VAL_MODACC_CALIBRATION_DATA_VALID_TRUE                                             1
+
+// Values for Boolean
+#define RFMXNR_VAL_FALSE                                                                          0
+#define RFMXNR_VAL_TRUE                                                                           1
+
+// Values for RFAttenuationAuto
+#define RFMXNR_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
+#define RFMXNR_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
+
 // Values for MeasurementTypes
 #define RFMXNR_VAL_MODACC                                                                         1<<0
 #define RFMXNR_VAL_SEM                                                                            1<<1
@@ -1225,10 +1248,6 @@
 #define RFMXNR_VAL_PVT                                                                            1<<5
 #define RFMXNR_VAL_TXP                                                                            1<<6
 
-// Values for RFAttenuationAuto
-#define RFMXNR_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
-#define RFMXNR_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
-
 // Values for FrequencyReferenceSource
 #define RFMXNR_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
 #define RFMXNR_VAL_REF_IN_STR                                                                     "RefIn"
@@ -1236,18 +1255,6 @@
 #define RFMXNR_VAL_CLK_IN_STR                                                                     "ClkIn"
 #define RFMXNR_VAL_REF_IN2_STR                                                                    "RefIn2"
 #define RFMXNR_VAL_PXI_CLK_MASTER_STR                                                             "PXI_Clk_Master"
-
-// Values for Boolean
-#define RFMXNR_VAL_FALSE                                                                          0
-#define RFMXNR_VAL_TRUE                                                                           1
-
-// Values for AcpNoiseCalibrationDataValid
-#define RFMXNR_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
-#define RFMXNR_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
-
-// Values for ChpNoiseCalibrationDataValid
-#define RFMXNR_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
-#define RFMXNR_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
 
 /* ---------------- RFmxNR APIs ------------------ */
 
@@ -1344,9 +1351,9 @@ int32 __stdcall RFmxNR_BuildListStepString(
    char selectorString[]
 );
 
-int32 __stdcall RFmxNR_BuildSubblockString(
+int32 __stdcall RFmxNR_BuildBandwidthPartString(
    char selectorString[],
-   int32 subblockNumber,
+   int32 bandwidthPartNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -1358,51 +1365,9 @@ int32 __stdcall RFmxNR_BuildCarrierString(
    char selectorStringOut[]
 );
 
-int32 __stdcall RFmxNR_BuildOffsetString(
+int32 __stdcall RFmxNR_BuildCORESETClusterString(
    char selectorString[],
-   int32 offsetNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
-int32 __stdcall RFmxNR_BuildBandwidthPartString(
-   char selectorString[],
-   int32 bandwidthPartNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
-int32 __stdcall RFmxNR_BuildUserString(
-   char selectorString[],
-   int32 userNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
-int32 __stdcall RFmxNR_BuildPUSCHString(
-   char selectorString[],
-   int32 PUSCHNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
-int32 __stdcall RFmxNR_BuildPUSCHClusterString(
-   char selectorString[],
-   int32 PUSCHClusterNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
-int32 __stdcall RFmxNR_BuildPDSCHString(
-   char selectorString[],
-   int32 PDSCHNumber,
-   int32 selectorStringOutLength,
-   char selectorStringOut[]
-);
-
-int32 __stdcall RFmxNR_BuildPDSCHClusterString(
-   char selectorString[],
-   int32 PDSCHClusterNumber,
+   int32 CORESETClusterNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -1414,9 +1379,9 @@ int32 __stdcall RFmxNR_BuildCORESETString(
    char selectorStringOut[]
 );
 
-int32 __stdcall RFmxNR_BuildCORESETClusterString(
+int32 __stdcall RFmxNR_BuildOffsetString(
    char selectorString[],
-   int32 CORESETClusterNumber,
+   int32 offsetNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -1424,6 +1389,48 @@ int32 __stdcall RFmxNR_BuildCORESETClusterString(
 int32 __stdcall RFmxNR_BuildPDCCHString(
    char selectorString[],
    int32 PDCCHNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxNR_BuildPDSCHClusterString(
+   char selectorString[],
+   int32 PDSCHClusterNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxNR_BuildPDSCHString(
+   char selectorString[],
+   int32 PDSCHNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxNR_BuildPUSCHClusterString(
+   char selectorString[],
+   int32 PUSCHClusterNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxNR_BuildPUSCHString(
+   char selectorString[],
+   int32 PUSCHNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxNR_BuildSubblockString(
+   char selectorString[],
+   int32 subblockNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxNR_BuildUserString(
+   char selectorString[],
+   int32 userNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -1740,42 +1747,51 @@ int32 __stdcall RFmxNR_GetAttributeString(
    char attrVal[]
 );
 
-int32 __stdcall RFmxNR_Initiate(
+int32 __stdcall RFmxNR_ModAccCfgReferenceWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   char resultName[]
+   float64 x0,
+   float64 dx,
+   NIComplexSingle referenceWaveform[],
+   int32 arraySize
 );
 
-int32 __stdcall RFmxNR_WaitForMeasurementComplete(
+int32 __stdcall RFmxNR_ModAccCfgReferenceWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxNR_ModAccAutoLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout
 );
 
-int32 __stdcall RFmxNR_Commit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxNR_ClearNamedResult(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxNR_ClearAllNamedResults(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxNR_ResetToDefault(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxNR_CheckMeasurementStatus(
+int32 __stdcall RFmxNR_ModAccValidateCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32* isDone
+   int32* calibrationDataValid
+);
+
+int32 __stdcall RFmxNR_ModAccClearNoiseCalibrationDatabase(
+   niRFmxInstrHandle instrumentHandle
+);
+
+int32 __stdcall RFmxNR_ACPValidateNoiseCalibrationData(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32* noiseCalibrationDataValid
+);
+
+int32 __stdcall RFmxNR_CHPValidateNoiseCalibrationData(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32* noiseCalibrationDataValid
 );
 
 int32 __stdcall RFmxNR_AnalyzeIQ1Waveform(
@@ -1796,8 +1812,8 @@ int32 __stdcall RFmxNR_AnalyzeIQ1WaveformSplit(
    char resultName[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 arraySize,
    int32 reset,
    int64 reserved
@@ -1822,13 +1838,25 @@ int32 __stdcall RFmxNR_AutoLevel(
    float64* referenceLevel
 );
 
-int32 __stdcall RFmxNR_SendSoftwareEdgeTrigger(
-   niRFmxInstrHandle instrumentHandle
+int32 __stdcall RFmxNR_CheckMeasurementStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32* isDone
 );
 
-int32 __stdcall RFmxNR_CreateSignalConfiguration(
+int32 __stdcall RFmxNR_ClearAllNamedResults(
    niRFmxInstrHandle instrumentHandle,
-   char signalName[]
+   char selectorString[]
+);
+
+int32 __stdcall RFmxNR_ClearNamedResult(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxNR_ClearNoiseCalibrationDatabase(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
 );
 
 int32 __stdcall RFmxNR_CloneSignalConfiguration(
@@ -1837,12 +1865,7 @@ int32 __stdcall RFmxNR_CloneSignalConfiguration(
    char newSignalName[]
 );
 
-int32 __stdcall RFmxNR_DeleteSignalConfiguration(
-   niRFmxInstrHandle instrumentHandle,
-   char signalName[]
-);
-
-int32 __stdcall RFmxNR_ClearNoiseCalibrationDatabase(
+int32 __stdcall RFmxNR_Commit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
@@ -1858,69 +1881,40 @@ int32 __stdcall RFmxNR_CreateListStep(
    int32* createdStepIndex
 );
 
+int32 __stdcall RFmxNR_CreateSignalConfiguration(
+   niRFmxInstrHandle instrumentHandle,
+   char signalName[]
+);
+
 int32 __stdcall RFmxNR_DeleteList(
    niRFmxInstrHandle instrumentHandle,
    char listName[]
 );
 
-int32 __stdcall RFmxNR_ACPValidateNoiseCalibrationData(
+int32 __stdcall RFmxNR_DeleteSignalConfiguration(
    niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32* noiseCalibrationDataValid
+   char signalName[]
 );
 
-int32 __stdcall RFmxNR_CHPValidateNoiseCalibrationData(
+int32 __stdcall RFmxNR_Initiate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32* noiseCalibrationDataValid
+   char resultName[]
 );
 
-int32 __stdcall RFmxNR_ModAccCfgReferenceWaveform(
+int32 __stdcall RFmxNR_ResetToDefault(
    niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 x0,
-   float64 dx,
-   NIComplexSingle referenceWaveform[],
-   int32 arraySize
+   char selectorString[]
 );
 
-int32 __stdcall RFmxNR_ModAccCfgReferenceWaveformSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 x0,
-   float64 dx,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxNR_ModAccAutoLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout
-);
-
-int32 __stdcall RFmxNR_ModAccValidateCalibrationData(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32* calibrationDataValid
-);
-
-int32 __stdcall RFmxNR_ModAccClearNoiseCalibrationDatabase(
+int32 __stdcall RFmxNR_SendSoftwareEdgeTrigger(
    niRFmxInstrHandle instrumentHandle
 );
 
-int32 __stdcall RFmxNR_SEMCfgUplinkMaskType(
+int32 __stdcall RFmxNR_WaitForMeasurementComplete(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 uplinkMaskType
-);
-
-int32 __stdcall RFmxNR_SEMCfgSweepTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
+   float64 timeout
 );
 
 int32 __stdcall RFmxNR_SEMCfgAveraging(
@@ -1931,10 +1925,29 @@ int32 __stdcall RFmxNR_SEMCfgAveraging(
    int32 averagingType
 );
 
+int32 __stdcall RFmxNR_SEMCfgComponentCarrierRatedOutputPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 componentCarrierRatedOutputPower
+);
+
 int32 __stdcall RFmxNR_SEMCfgNumberOfOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfOffsets
+);
+
+int32 __stdcall RFmxNR_SEMCfgOffsetAbsoluteLimit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 absoluteLimitStart,
+   float64 absoluteLimitStop
+);
+
+int32 __stdcall RFmxNR_SEMCfgOffsetBandwidthIntegral(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 bandwidthIntegral
 );
 
 int32 __stdcall RFmxNR_SEMCfgOffsetFrequency(
@@ -1945,30 +1958,17 @@ int32 __stdcall RFmxNR_SEMCfgOffsetFrequency(
    int32 offsetSideband
 );
 
+int32 __stdcall RFmxNR_SEMCfgOffsetLimitFailMask(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 limitFailMask
+);
+
 int32 __stdcall RFmxNR_SEMCfgOffsetRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 offsetRBW,
    int32 offsetRBWFilterType
-);
-
-int32 __stdcall RFmxNR_SEMCfgOffsetBandwidthIntegral(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 bandwidthIntegral
-);
-
-int32 __stdcall RFmxNR_SEMCfgOffsetAbsoluteLimit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 absoluteLimitStart,
-   float64 absoluteLimitStop
-);
-
-int32 __stdcall RFmxNR_SEMCfgOffsetLimitFailMask(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 limitFailMask
 );
 
 int32 __stdcall RFmxNR_SEMCfgOffsetRelativeLimit(
@@ -1978,33 +1978,23 @@ int32 __stdcall RFmxNR_SEMCfgOffsetRelativeLimit(
    float64 relativeLimitStop
 );
 
-int32 __stdcall RFmxNR_SEMCfgComponentCarrierRatedOutputPower(
+int32 __stdcall RFmxNR_SEMCfgSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 componentCarrierRatedOutputPower
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
 );
 
-int32 __stdcall RFmxNR_SEMCfgOffsetFrequencyArray(
+int32 __stdcall RFmxNR_SEMCfgUplinkMaskType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 offsetStartFrequency[],
-   float64 offsetStopFrequency[],
-   int32 offsetSideband[],
-   int32 numberOfElements
+   int32 uplinkMaskType
 );
 
-int32 __stdcall RFmxNR_SEMCfgOffsetRBWFilterArray(
+int32 __stdcall RFmxNR_SEMCfgComponentCarrierRatedOutputPowerArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 offsetRBW[],
-   int32 offsetRBWFilterType[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxNR_SEMCfgOffsetBandwidthIntegralArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 bandwidthIntegral[],
+   float64 componentCarrierRatedOutputPower[],
    int32 numberOfElements
 );
 
@@ -2016,10 +2006,34 @@ int32 __stdcall RFmxNR_SEMCfgOffsetAbsoluteLimitArray(
    int32 numberOfElements
 );
 
+int32 __stdcall RFmxNR_SEMCfgOffsetBandwidthIntegralArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 bandwidthIntegral[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxNR_SEMCfgOffsetFrequencyArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 offsetStartFrequency[],
+   float64 offsetStopFrequency[],
+   int32 offsetSideband[],
+   int32 numberOfElements
+);
+
 int32 __stdcall RFmxNR_SEMCfgOffsetLimitFailMaskArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 limitFailMask[],
+   int32 numberOfElements
+);
+
+int32 __stdcall RFmxNR_SEMCfgOffsetRBWFilterArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 offsetRBW[],
+   int32 offsetRBWFilterType[],
    int32 numberOfElements
 );
 
@@ -2028,13 +2042,6 @@ int32 __stdcall RFmxNR_SEMCfgOffsetRelativeLimitArray(
    char selectorString[],
    float64 relativeLimitStart[],
    float64 relativeLimitStop[],
-   int32 numberOfElements
-);
-
-int32 __stdcall RFmxNR_SEMCfgComponentCarrierRatedOutputPowerArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 componentCarrierRatedOutputPower[],
    int32 numberOfElements
 );
 
@@ -2050,42 +2057,30 @@ int32 __stdcall RFmxNR_ModAccCfgNoiseCompensationEnabled(
    int32 noiseCompensationEnabled
 );
 
-int32 __stdcall RFmxNR_CfgRF(
+int32 __stdcall RFmxNR_ACPCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 centerFrequency,
-   float64 referenceLevel,
-   float64 externalAttenuation
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
 );
 
-int32 __stdcall RFmxNR_CfgFrequency(
+int32 __stdcall RFmxNR_ACPCfgMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 centerFrequency
+   int32 measurementMethod
 );
 
-int32 __stdcall RFmxNR_CfgReferenceLevel(
+int32 __stdcall RFmxNR_ACPCfgNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 referenceLevel
+   int32 noiseCompensationEnabled
 );
 
-int32 __stdcall RFmxNR_CfgExternalAttenuation(
+int32 __stdcall RFmxNR_ACPCfgNumberOfENDCOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 externalAttenuation
-);
-
-int32 __stdcall RFmxNR_CfggNodeBCategory(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 gNodeBCategory
-);
-
-int32 __stdcall RFmxNR_ACPCfgNumberOfUTRAOffsets(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 numberOfUTRAOffsets
+   int32 numberOfENDCOffsets
 );
 
 int32 __stdcall RFmxNR_ACPCfgNumberOfEUTRAOffsets(
@@ -2100,22 +2095,10 @@ int32 __stdcall RFmxNR_ACPCfgNumberOfNROffsets(
    int32 numberOfNROffsets
 );
 
-int32 __stdcall RFmxNR_ACPCfgNumberOfENDCOffsets(
+int32 __stdcall RFmxNR_ACPCfgNumberOfUTRAOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 numberOfENDCOffsets
-);
-
-int32 __stdcall RFmxNR_ACPCfgMeasurementMethod(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 measurementMethod
-);
-
-int32 __stdcall RFmxNR_ACPCfgNoiseCompensationEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 noiseCompensationEnabled
+   int32 numberOfUTRAOffsets
 );
 
 int32 __stdcall RFmxNR_ACPCfgRBWFilter(
@@ -2133,7 +2116,13 @@ int32 __stdcall RFmxNR_ACPCfgSweepTime(
    float64 sweepTimeInterval
 );
 
-int32 __stdcall RFmxNR_ACPCfgAveraging(
+int32 __stdcall RFmxNR_ACPCfgPowerUnits(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 powerUnits
+);
+
+int32 __stdcall RFmxNR_PVTCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -2141,10 +2130,48 @@ int32 __stdcall RFmxNR_ACPCfgAveraging(
    int32 averagingType
 );
 
-int32 __stdcall RFmxNR_ACPCfgPowerUnits(
+int32 __stdcall RFmxNR_PVTCfgMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 powerUnits
+   int32 measurementMethod
+);
+
+int32 __stdcall RFmxNR_PVTCfgOFFPowerExclusionPeriods(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 OFFPowerExclusionBefore,
+   float64 OFFPowerExclusionAfter
+);
+
+int32 __stdcall RFmxNR_OBWCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
+int32 __stdcall RFmxNR_OBWCfgRBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RBWAuto,
+   float64 RBW,
+   int32 RBWFilterType
+);
+
+int32 __stdcall RFmxNR_OBWCfgSweepTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
+);
+
+int32 __stdcall RFmxNR_CHPCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
 );
 
 int32 __stdcall RFmxNR_CHPCfgRBWFilter(
@@ -2162,71 +2189,39 @@ int32 __stdcall RFmxNR_CHPCfgSweepTime(
    float64 sweepTimeInterval
 );
 
-int32 __stdcall RFmxNR_CHPCfgAveraging(
+int32 __stdcall RFmxNR_CfgExternalAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
+   float64 externalAttenuation
 );
 
-int32 __stdcall RFmxNR_OBWCfgRBWFilter(
+int32 __stdcall RFmxNR_CfgFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 RBWAuto,
-   float64 RBW,
-   int32 RBWFilterType
+   float64 centerFrequency
 );
 
-int32 __stdcall RFmxNR_OBWCfgAveraging(
+int32 __stdcall RFmxNR_CfggNodeBCategory(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
+   int32 gNodeBCategory
 );
 
-int32 __stdcall RFmxNR_OBWCfgSweepTime(
+int32 __stdcall RFmxNR_CfgReferenceLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
+   float64 referenceLevel
 );
 
-int32 __stdcall RFmxNR_PVTCfgMeasurementMethod(
+int32 __stdcall RFmxNR_CfgRF(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 measurementMethod
-);
-
-int32 __stdcall RFmxNR_PVTCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxNR_PVTCfgOFFPowerExclusionPeriods(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 OFFPowerExclusionBefore,
-   float64 OFFPowerExclusionAfter
+   float64 centerFrequency,
+   float64 referenceLevel,
+   float64 externalAttenuation
 );
 
 int32 __stdcall RFmxNR_AbortMeasurements(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
-int32 __stdcall RFmxNR_SelectMeasurements(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   uInt32 measurements,
-   int32 enableAllTraces
-);
-
-int32 __stdcall RFmxNR_DisableTrigger(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
@@ -2260,6 +2255,11 @@ int32 __stdcall RFmxNR_CfgSoftwareEdgeTrigger(
    int32 enableTrigger
 );
 
+int32 __stdcall RFmxNR_DisableTrigger(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
 int32 __stdcall RFmxNR_GetAllNamedResultNames(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2269,6 +2269,13 @@ int32 __stdcall RFmxNR_GetAllNamedResultNames(
    int32* defaultResultExists
 );
 
+int32 __stdcall RFmxNR_SelectMeasurements(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   uInt32 measurements,
+   int32 enableAllTraces
+);
+
 int32 __stdcall RFmxNR_LoadFromGenerationConfigurationFile(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2276,11 +2283,350 @@ int32 __stdcall RFmxNR_LoadFromGenerationConfigurationFile(
    int32 configurationIndex
 );
 
-int32 __stdcall RFmxNR_ModAccFetchPUSCHDemodulatedBits(
+int32 __stdcall RFmxNR_ModAccFetchInBandEmissionTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 inBandEmission[],
+   float32 inBandEmissionMask[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPBCHDataConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle PBCHDataConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPBCHDataConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 PBCHDataConstellationI[],
+   float32 PBCHDataConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 PBCHDataRMSEVMPerSubcarrierMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPBCHDataRMSEVMPerSymbolMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 PBCHDataRMSEVMPerSymbolMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle PBCHDMRSConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 PBCHDMRSConstellationI[],
+   float32 PBCHDMRSConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 PBCHDMRSRMSEVMPerSubcarrierMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 PBCHDMRSRMSEVMPerSymbolMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH8PSKConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle PSK8Constellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH8PSKConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 PSK8ConstellationI[],
+   float32 PSK8ConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH1024QAMConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle QAM1024Constellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH1024QAMConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 QAM1024ConstellationI[],
+   float32 QAM1024ConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH16QAMConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle QAM16Constellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH16QAMConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 QAM16ConstellationI[],
+   float32 QAM16ConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH256QAMConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle QAM256Constellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH256QAMConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 QAM256ConstellationI[],
+   float32 QAM256ConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH64QAMConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle QAM64Constellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH64QAMConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 QAM64ConstellationI[],
+   float32 QAM64ConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHDataConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle PDSCHDataConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHDataConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 PDSCHDataConstellationI[],
+   float32 PDSCHDataConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHDemodulatedBits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    int8 bits[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHDMRSConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle PDSCHDMRSConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHDMRSConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 PDSCHDMRSConstellationI[],
+   float32 PDSCHDMRSConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHPTRSConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle PDSCHPTRSConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHPTRSConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 PDSCHPTRSConstellationI[],
+   float32 PDSCHPTRSConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHQPSKConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle QPSKConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCHQPSKConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 QPSKConstellationI[],
+   float32 QPSKConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPeakEVMPerSlotMaximumTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 peakEVMPerSlotMaximum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPeakEVMPerSubcarrierMaximumTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 peakEVMPerSubcarrierMaximum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPeakEVMPerSymbolMaximumTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 peakEVMPerSymbolMaximum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPSSConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle PSSConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPSSConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 PSSConstellationI[],
+   float32 PSSConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPSSRMSEVMPerSubcarrierMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 PSSRMSEVMPerSubcarrierMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPSSRMSEVMPerSymbolMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 PSSRMSEVMPerSymbolMean[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2298,8 +2644,17 @@ int32 __stdcall RFmxNR_ModAccFetchPUSCHDataConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 PUSCHDataConstellationI[],
+   float32 PUSCHDataConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPUSCHDemodulatedBits(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int8 bits[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2317,8 +2672,8 @@ int32 __stdcall RFmxNR_ModAccFetchPUSCHDMRSConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 PUSCHDMRSConstellationI[],
+   float32 PUSCHDMRSConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2336,19 +2691,8 @@ int32 __stdcall RFmxNR_ModAccFetchPUSCHPTRSConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchRMSEVMPerSubcarrierMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 RMSEVMPerSubcarrierMean[],
+   float32 PUSCHPTRSConstellationI[],
+   float32 PUSCHPTRSConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2364,6 +2708,17 @@ int32 __stdcall RFmxNR_ModAccFetchRMSEVMPerSlotMeanTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxNR_ModAccFetchRMSEVMPerSubcarrierMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 RMSEVMPerSubcarrierMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxNR_ModAccFetchRMSEVMPerSymbolMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2371,39 +2726,6 @@ int32 __stdcall RFmxNR_ModAccFetchRMSEVMPerSymbolMeanTrace(
    float64* x0,
    float64* dx,
    float32 RMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPeakEVMPerSubcarrierMaximumTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 peakEVMPerSubcarrierMaximum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPeakEVMPerSlotMaximumTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 peakEVMPerSlotMaximum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPeakEVMPerSymbolMaximumTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 peakEVMPerSymbolMaximum[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2441,298 +2763,6 @@ int32 __stdcall RFmxNR_ModAccFetchTransientPeriodLocationsTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxNR_ModAccFetchInBandEmissionTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 inBandEmission[],
-   float32 inBandEmissionMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchSubblockInBandEmissionTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 subblockInBandEmission[],
-   float64 subblockInBandEmissionMask[],
-   float64 subblockInBandEmissionRBIndices[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchSpectralFlatnessTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectralFlatness[],
-   float32 spectralFlatnessLowerMask[],
-   float32 spectralFlatnessUpperMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHDemodulatedBits(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int8 bits[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHDMRSConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle PDSCHDMRSConstellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHDMRSConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHPTRSConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle PDSCHPTRSConstellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHPTRSConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHQPSKConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle QPSKConstellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHQPSKConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH16QAMConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle QAM16Constellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH16QAMConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH64QAMConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle QAM64Constellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH64QAMConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH256QAMConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle QAM256Constellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH256QAMConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH1024QAMConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle QAM1024Constellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH1024QAMConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH8PSKConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle PSK8Constellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCH8PSKConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPSSConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle PSSConstellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPSSConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchSSSConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle SSSConstellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchSSSConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPBCHDataConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle PBCHDataConstellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPBCHDataConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle PBCHDMRSConstellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHDataConstellationTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle PDSCHDataConstellation[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPDSCHDataConstellationTraceSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 I[],
-   float32 Q[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
 int32 __stdcall RFmxNR_ModAccFetchPUSCHPhaseOffsetTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2755,24 +2785,34 @@ int32 __stdcall RFmxNR_ModAccFetchFrequencyErrorPerSlotMaximumTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxNR_ModAccFetchPSSRMSEVMPerSubcarrierMeanTrace(
+int32 __stdcall RFmxNR_ModAccFetchSpectralFlatnessTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 PSSRMSEVMPerSubcarrierMean[],
+   float32 spectralFlatness[],
+   float32 spectralFlatnessLowerMask[],
+   float32 spectralFlatnessUpperMask[],
    int32 arraySize,
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxNR_ModAccFetchPSSRMSEVMPerSymbolMeanTrace(
+int32 __stdcall RFmxNR_ModAccFetchSSSConstellationTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 PSSRMSEVMPerSymbolMean[],
+   NIComplexSingle SSSConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchSSSConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 SSSConstellationI[],
+   float32 SSSConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2799,46 +2839,13 @@ int32 __stdcall RFmxNR_ModAccFetchSSSRMSEVMPerSymbolMeanTrace(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxNR_ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTrace(
+int32 __stdcall RFmxNR_ModAccFetchSubblockInBandEmissionTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 PBCHDataRMSEVMPerSubcarrierMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPBCHDataRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 PBCHDataRMSEVMPerSymbolMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 PBCHDMRSRMSEVMPerSubcarrierMean[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 PBCHDMRSRMSEVMPerSymbolMean[],
+   float64 subblockInBandEmission[],
+   float64 subblockInBandEmissionMask[],
+   float64 subblockInBandEmissionRBIndices[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2880,6 +2887,184 @@ int32 __stdcall RFmxNR_ModAccFetchFrequencyErrorMean(
    float64* frequencyErrorMean
 );
 
+int32 __stdcall RFmxNR_ACPFetchAbsolutePowersTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 traceIndex,
+   float64* x0,
+   float64* dx,
+   float32 absolutePowersTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ACPFetchComponentCarrierMeasurementArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 absolutePower[],
+   float64 relativePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ACPFetchOffsetMeasurementArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 lowerRelativePower[],
+   float64 upperRelativePower[],
+   float64 lowerAbsolutePower[],
+   float64 upperAbsolutePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ACPFetchRelativePowersTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 traceIndex,
+   float64* x0,
+   float64* dx,
+   float32 relativePowersTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ACPFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ACPFetchComponentCarrierMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* absolutePower,
+   float64* relativePower
+);
+
+int32 __stdcall RFmxNR_ACPFetchOffsetMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* lowerRelativePower,
+   float64* upperRelativePower,
+   float64* lowerAbsolutePower,
+   float64* upperAbsolutePower
+);
+
+int32 __stdcall RFmxNR_ACPFetchTotalAggregatedPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* totalAggregatedPower
+);
+
+int32 __stdcall RFmxNR_ACPFetchSubblockMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* subblockPower,
+   float64* integrationBandwidth,
+   float64* frequency
+);
+
+int32 __stdcall RFmxNR_TXPFetchPowerTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 power[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_TXPFetchMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* averagePowerMean,
+   float64* peakPowerMaximum
+);
+
+int32 __stdcall RFmxNR_PVTFetchMeasurementArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 measurementStatus[],
+   float64 absoluteOFFPowerBefore[],
+   float64 absoluteOFFPowerAfter[],
+   float64 absoluteONPower[],
+   float64 burstWidth[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_PVTFetchSignalPowerTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 signalPower[],
+   float32 absoluteLimit[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_PVTFetchWindowedSignalPowerTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 windowedSignalPower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_PVTFetchMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* measurementStatus,
+   float64* absoluteOFFPowerBefore,
+   float64* absoluteOFFPowerAfter,
+   float64* absoluteONPower,
+   float64* burstWidth
+);
+
+int32 __stdcall RFmxNR_OBWFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_OBWFetchMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* occupiedBandwidth,
+   float64* absolutePower,
+   float64* startFrequency,
+   float64* stopFrequency
+);
+
 int32 __stdcall RFmxNR_SEMFetchComponentCarrierMeasurementArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2918,6 +3103,18 @@ int32 __stdcall RFmxNR_SEMFetchLowerOffsetPowerArray(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxNR_SEMFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
+   float32 compositeMask[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxNR_SEMFetchUpperOffsetMarginArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2942,41 +3139,6 @@ int32 __stdcall RFmxNR_SEMFetchUpperOffsetPowerArray(
    float64 peakRelativePower[],
    int32 arraySize,
    int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_SEMFetchSpectrum(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
-   float32 compositeMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_SEMFetchTotalAggregatedPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* totalAggregatedPower
-);
-
-int32 __stdcall RFmxNR_SEMFetchMeasurementStatus(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* measurementStatus
-);
-
-int32 __stdcall RFmxNR_SEMFetchSubblockMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* subblockPower,
-   float64* integrationBandwidth,
-   float64* frequency
 );
 
 int32 __stdcall RFmxNR_SEMFetchComponentCarrierMeasurement(
@@ -3011,6 +3173,20 @@ int32 __stdcall RFmxNR_SEMFetchLowerOffsetPower(
    float64* peakRelativePower
 );
 
+int32 __stdcall RFmxNR_SEMFetchMeasurementStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32* measurementStatus
+);
+
+int32 __stdcall RFmxNR_SEMFetchTotalAggregatedPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* totalAggregatedPower
+);
+
 int32 __stdcall RFmxNR_SEMFetchUpperOffsetMargin(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3033,95 +3209,13 @@ int32 __stdcall RFmxNR_SEMFetchUpperOffsetPower(
    float64* peakRelativePower
 );
 
-int32 __stdcall RFmxNR_ACPFetchComponentCarrierMeasurementArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 absolutePower[],
-   float64 relativePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ACPFetchOffsetMeasurementArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 lowerRelativePower[],
-   float64 upperRelativePower[],
-   float64 lowerAbsolutePower[],
-   float64 upperAbsolutePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ACPFetchSpectrum(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ACPFetchAbsolutePowersTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 traceIndex,
-   float64* x0,
-   float64* dx,
-   float32 absolutePowersTrace[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ACPFetchRelativePowersTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 traceIndex,
-   float64* x0,
-   float64* dx,
-   float32 relativePowersTrace[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_ACPFetchTotalAggregatedPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* totalAggregatedPower
-);
-
-int32 __stdcall RFmxNR_ACPFetchSubblockMeasurement(
+int32 __stdcall RFmxNR_SEMFetchSubblockMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* subblockPower,
    float64* integrationBandwidth,
    float64* frequency
-);
-
-int32 __stdcall RFmxNR_ACPFetchComponentCarrierMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* absolutePower,
-   float64* relativePower
-);
-
-int32 __stdcall RFmxNR_ACPFetchOffsetMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* lowerRelativePower,
-   float64* upperRelativePower,
-   float64* lowerAbsolutePower,
-   float64* upperAbsolutePower
 );
 
 int32 __stdcall RFmxNR_CHPFetchComponentCarrierMeasurementArray(
@@ -3145,11 +3239,12 @@ int32 __stdcall RFmxNR_CHPFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxNR_CHPFetchTotalAggregatedPower(
+int32 __stdcall RFmxNR_CHPFetchComponentCarrierMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* totalAggregatedPower
+   float64* absolutePower,
+   float64* relativePower
 );
 
 int32 __stdcall RFmxNR_CHPFetchSubblockPower(
@@ -3159,99 +3254,11 @@ int32 __stdcall RFmxNR_CHPFetchSubblockPower(
    float64* subblockPower
 );
 
-int32 __stdcall RFmxNR_CHPFetchComponentCarrierMeasurement(
+int32 __stdcall RFmxNR_CHPFetchTotalAggregatedPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* absolutePower,
-   float64* relativePower
-);
-
-int32 __stdcall RFmxNR_PVTFetchWindowedSignalPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 windowedSignalPower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_PVTFetchMeasurementArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 measurementStatus[],
-   float64 absoluteOFFPowerBefore[],
-   float64 absoluteOFFPowerAfter[],
-   float64 absoluteONPower[],
-   float64 burstWidth[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_PVTFetchSignalPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 signalPower[],
-   float32 absoluteLimit[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_PVTFetchMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* measurementStatus,
-   float64* absoluteOFFPowerBefore,
-   float64* absoluteOFFPowerAfter,
-   float64* absoluteONPower,
-   float64* burstWidth
-);
-
-int32 __stdcall RFmxNR_OBWFetchSpectrum(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_OBWFetchMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* occupiedBandwidth,
-   float64* absolutePower,
-   float64* startFrequency,
-   float64* stopFrequency
-);
-
-int32 __stdcall RFmxNR_TXPFetchPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 power[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxNR_TXPFetchMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* averagePowerMean,
-   float64* peakPowerMaximum
+   float64* totalAggregatedPower
 );
 
 int32 __stdcall RFmxNR_GetSelectedPorts(
@@ -3468,6 +3475,18 @@ int32 __stdcall RFmxNR_GetgNodeBType(
 );
 
 int32 __stdcall RFmxNR_SetgNodeBType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_GetSatelliteAccessNodeClass(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetSatelliteAccessNodeClass(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -5104,18 +5123,6 @@ int32 __stdcall RFmxNR_SetNumberOfSteps(
    int32 attrVal
 );
 
-int32 __stdcall RFmxNR_GetListStepTimerDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxNR_SetListStepTimerDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
 int32 __stdcall RFmxNR_GetListStepTimerUnit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5126,6 +5133,18 @@ int32 __stdcall RFmxNR_SetListStepTimerUnit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxNR_GetListStepTimerDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetListStepTimerDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxNR_GetListStepTimerOffset(
@@ -5246,6 +5265,54 @@ int32 __stdcall RFmxNR_ModAccSetMulticarrierFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetSynchronizationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetSynchronizationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetMeasurementLengthUnit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetMeasurementLengthUnit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetMeasurementLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetMeasurementLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxNR_ModAccGetFrequencyErrorEstimation(
@@ -5378,54 +5445,6 @@ int32 __stdcall RFmxNR_ModAccSetEVMReferenceDataSymbolsMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
-);
-
-int32 __stdcall RFmxNR_ModAccGetSynchronizationMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxNR_ModAccSetSynchronizationMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxNR_ModAccGetMeasurementLengthUnit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxNR_ModAccSetMeasurementLengthUnit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxNR_ModAccGetMeasurementOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxNR_ModAccSetMeasurementOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxNR_ModAccGetMeasurementLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxNR_ModAccSetMeasurementLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
 );
 
 int32 __stdcall RFmxNR_ModAccGetSpectrumInverted(
@@ -6178,13 +6197,13 @@ int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierSymbolClockErrorMean(
    float64 *attrVal
 );
 
-int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierSlotIQOriginOffsetMaximum(
+int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierIQOriginOffsetMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierIQOriginOffsetMean(
+int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierSlotIQOriginOffsetMaximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -7414,18 +7433,6 @@ int32 __stdcall RFmxNR_SEMSetOffsetLimitFailMask(
    int32 attrVal
 );
 
-int32 __stdcall RFmxNR_SEMGetOffsetAbsoluteLimitStart(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxNR_SEMSetOffsetAbsoluteLimitStart(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
 int32 __stdcall RFmxNR_SEMGetOffsetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -7436,6 +7443,18 @@ int32 __stdcall RFmxNR_SEMSetOffsetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxNR_SEMGetOffsetAbsoluteLimitStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_SEMSetOffsetAbsoluteLimitStart(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxNR_SEMGetOffsetAbsoluteLimitStop(

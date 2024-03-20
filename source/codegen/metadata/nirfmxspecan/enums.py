@@ -642,16 +642,16 @@ enums = {
     'CcdfRbwFilterType': {
         'values': [
             {
+                'name': 'NONE',
+                'value': 5
+            },
+            {
                 'name': 'GAUSSIAN',
                 'value': 1
             },
             {
                 'name': 'FLAT',
                 'value': 2
-            },
-            {
-                'name': 'NONE',
-                'value': 5
             },
             {
                 'name': 'RRC',
@@ -2083,6 +2083,18 @@ enums = {
             {
                 'name': 'SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL',
                 'value': 5
+            }
+        ]
+    },
+    'MarkerFunctionType': {
+        'values': [
+            {
+                'name': 'OFF',
+                'value': 0
+            },
+            {
+                'name': 'BAND_POWER',
+                'value': 1
             }
         ]
     },

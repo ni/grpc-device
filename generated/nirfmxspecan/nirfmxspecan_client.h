@@ -250,6 +250,8 @@ IQGetRecordsDoneResponse iq_get_records_done(const StubPtr& stub, const nidevice
 InitializeResponse initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name);
+MarkerCfgBandSpanResponse marker_cfg_band_span(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& span);
+MarkerCfgFunctionTypeResponse marker_cfg_function_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerFunctionType, pb::int32>& function_type);
 MarkerCfgNumberOfMarkersResponse marker_cfg_number_of_markers(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_markers);
 MarkerCfgPeakExcursionResponse marker_cfg_peak_excursion(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerPeakExcursionEnabled, pb::int32>& peak_excursion_enabled, const double& peak_excursion);
 MarkerCfgReferenceMarkerResponse marker_cfg_reference_marker(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& reference_marker);
@@ -258,6 +260,7 @@ MarkerCfgTraceResponse marker_cfg_trace(const StubPtr& stub, const nidevice_grpc
 MarkerCfgTypeResponse marker_cfg_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerType, pb::int32>& marker_type);
 MarkerCfgXLocationResponse marker_cfg_x_location(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_x_location);
 MarkerCfgYLocationResponse marker_cfg_y_location(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_y_location);
+MarkerFetchFunctionValueResponse marker_fetch_function_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 MarkerFetchXYResponse marker_fetch_xy(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 MarkerNextPeakResponse marker_next_peak(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerNextPeak, pb::int32>& next_peak);
 MarkerPeakSearchResponse marker_peak_search(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);

@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXLTE API metadata version 21.0.0
+// This file is generated from NI-RFMXLTE API metadata version 24.3.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXLTE Metadata
 //---------------------------------------------------------------------
@@ -116,7 +116,10 @@ service NiRFmxLTE {
   rpc CloneSignalConfiguration(CloneSignalConfigurationRequest) returns (CloneSignalConfigurationResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
+  rpc CreateList(CreateListRequest) returns (CreateListResponse);
+  rpc CreateListStep(CreateListStepRequest) returns (CreateListStepResponse);
   rpc CreateSignalConfiguration(CreateSignalConfigurationRequest) returns (CreateSignalConfigurationResponse);
+  rpc DeleteList(DeleteListRequest) returns (DeleteListResponse);
   rpc DeleteSignalConfiguration(DeleteSignalConfigurationRequest) returns (DeleteSignalConfigurationResponse);
   rpc DisableTrigger(DisableTriggerRequest) returns (DisableTriggerResponse);
   rpc GetAllNamedResultNames(GetAllNamedResultNamesRequest) returns (GetAllNamedResultNamesResponse);
@@ -386,6 +389,10 @@ enum NiRFmxLTEAttribute {
   NIRFMXLTE_ATTRIBUTE_PSSCH_NUMBER_OF_RESOURCE_BLOCKS = 3145815;
   NIRFMXLTE_ATTRIBUTE_PSSCH_POWER = 3145816;
   NIRFMXLTE_ATTRIBUTE_SUBBLOCK_FREQUENCY = 3145817;
+  NIRFMXLTE_ATTRIBUTE_LIST_STEP_TIMER_UNIT = 3149814;
+  NIRFMXLTE_ATTRIBUTE_LIST_STEP_TIMER_OFFSET = 3149815;
+  NIRFMXLTE_ATTRIBUTE_NUMBER_OF_STEPS = 3149816;
+  NIRFMXLTE_ATTRIBUTE_LIST_STEP_TIMER_DURATION = 3149817;
   NIRFMXLTE_ATTRIBUTE_REFERENCE_LEVEL_HEADROOM = 3149820;
   NIRFMXLTE_ATTRIBUTE_SELECTED_PORTS = 3149821;
   NIRFMXLTE_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE = 3149823;
@@ -1024,6 +1031,12 @@ enum ObwSweepTimeAuto {
   OBW_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
+enum PsschModulationType {
+  PSSCH_MODULATION_TYPE_QPSK = 0;
+  PSSCH_MODULATION_TYPE_QAM16 = 1;
+  PSSCH_MODULATION_TYPE_QAM64 = 2;
+}
+
 enum PuschModulationType {
   PUSCH_MODULATION_TYPE_QPSK = 0;
   PUSCH_MODULATION_TYPE_16_QAM = 1;
@@ -1316,6 +1329,8 @@ enum NiRFmxLTEInt32AttributeValues {
   NIRFMXLTE_INT32_LINK_DIRECTION_DOWNLINK = 0;
   NIRFMXLTE_INT32_LINK_DIRECTION_UPLINK = 1;
   NIRFMXLTE_INT32_LINK_DIRECTION_SIDELINK = 2;
+  NIRFMXLTE_INT32_LIST_STEP_TIMER_UNIT_SLOT = 1;
+  NIRFMXLTE_INT32_LIST_STEP_TIMER_UNIT_TIME = 6;
   NIRFMXLTE_INT32_MI_CONFIGURATION_TEST_MODEL = 0;
   NIRFMXLTE_INT32_MI_CONFIGURATION_STANDARD = 1;
   NIRFMXLTE_INT32_MODACC_AVERAGING_ENABLED_FALSE = 0;
@@ -2566,7 +2581,10 @@ message CfgPHICHResponse {
 message CfgPSSCHModulationTypeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 modulation_type = 3;
+  oneof modulation_type_enum {
+    PsschModulationType modulation_type = 3;
+    int32 modulation_type_raw = 4;
+  }
 }
 
 message CfgPSSCHModulationTypeResponse {
@@ -2743,12 +2761,40 @@ message CommitResponse {
   int32 status = 1;
 }
 
+message CreateListRequest {
+  nidevice_grpc.Session instrument = 1;
+  string list_name = 2;
+}
+
+message CreateListResponse {
+  int32 status = 1;
+}
+
+message CreateListStepRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CreateListStepResponse {
+  int32 status = 1;
+  int32 created_step_index = 2;
+}
+
 message CreateSignalConfigurationRequest {
   nidevice_grpc.Session instrument = 1;
   string signal_name = 2;
 }
 
 message CreateSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DeleteListRequest {
+  nidevice_grpc.Session instrument = 1;
+  string list_name = 2;
+}
+
+message DeleteListResponse {
   int32 status = 1;
 }
 

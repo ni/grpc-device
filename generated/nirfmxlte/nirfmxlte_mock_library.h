@@ -116,7 +116,10 @@ class NiRFmxLTEMockLibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   MOCK_METHOD(int32, CloneSignalConfiguration, (niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[]), (override));
   MOCK_METHOD(int32, Close, (niRFmxInstrHandle instrumentHandle, int32 forceDestroy), (override));
   MOCK_METHOD(int32, Commit, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
+  MOCK_METHOD(int32, CreateList, (niRFmxInstrHandle instrumentHandle, char listName[]), (override));
+  MOCK_METHOD(int32, CreateListStep, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* createdStepIndex), (override));
   MOCK_METHOD(int32, CreateSignalConfiguration, (niRFmxInstrHandle instrumentHandle, char signalName[]), (override));
+  MOCK_METHOD(int32, DeleteList, (niRFmxInstrHandle instrumentHandle, char listName[]), (override));
   MOCK_METHOD(int32, DeleteSignalConfiguration, (niRFmxInstrHandle instrumentHandle, char signalName[]), (override));
   MOCK_METHOD(int32, DisableTrigger, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, GetAllNamedResultNames, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists), (override));

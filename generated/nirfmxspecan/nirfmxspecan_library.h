@@ -249,6 +249,8 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) override;
   int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut) override;
   int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]) override;
+  int32 MarkerCfgBandSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span) override;
+  int32 MarkerCfgFunctionType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 functionType) override;
   int32 MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers) override;
   int32 MarkerCfgPeakExcursion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 peakExcursionEnabled, float64 peakExcursion) override;
   int32 MarkerCfgReferenceMarker(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceMarker) override;
@@ -257,6 +259,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType) override;
   int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation) override;
   int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation) override;
+  int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue) override;
   int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation) override;
   int32 MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound) override;
   int32 MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks) override;
@@ -675,6 +678,8 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using InitializePtr = decltype(&RFmxSpecAn_Initialize);
   using InitializeFromNIRFSASessionPtr = decltype(&RFmxSpecAn_InitializeFromNIRFSASession);
   using InitiatePtr = decltype(&RFmxSpecAn_Initiate);
+  using MarkerCfgBandSpanPtr = decltype(&RFmxSpecAn_MarkerCfgBandSpan);
+  using MarkerCfgFunctionTypePtr = decltype(&RFmxSpecAn_MarkerCfgFunctionType);
   using MarkerCfgNumberOfMarkersPtr = decltype(&RFmxSpecAn_MarkerCfgNumberOfMarkers);
   using MarkerCfgPeakExcursionPtr = decltype(&RFmxSpecAn_MarkerCfgPeakExcursion);
   using MarkerCfgReferenceMarkerPtr = decltype(&RFmxSpecAn_MarkerCfgReferenceMarker);
@@ -683,6 +688,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using MarkerCfgTypePtr = decltype(&RFmxSpecAn_MarkerCfgType);
   using MarkerCfgXLocationPtr = decltype(&RFmxSpecAn_MarkerCfgXLocation);
   using MarkerCfgYLocationPtr = decltype(&RFmxSpecAn_MarkerCfgYLocation);
+  using MarkerFetchFunctionValuePtr = decltype(&RFmxSpecAn_MarkerFetchFunctionValue);
   using MarkerFetchXYPtr = decltype(&RFmxSpecAn_MarkerFetchXY);
   using MarkerNextPeakPtr = decltype(&RFmxSpecAn_MarkerNextPeak);
   using MarkerPeakSearchPtr = decltype(&RFmxSpecAn_MarkerPeakSearch);
@@ -1101,6 +1107,8 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     InitializePtr Initialize;
     InitializeFromNIRFSASessionPtr InitializeFromNIRFSASession;
     InitiatePtr Initiate;
+    MarkerCfgBandSpanPtr MarkerCfgBandSpan;
+    MarkerCfgFunctionTypePtr MarkerCfgFunctionType;
     MarkerCfgNumberOfMarkersPtr MarkerCfgNumberOfMarkers;
     MarkerCfgPeakExcursionPtr MarkerCfgPeakExcursion;
     MarkerCfgReferenceMarkerPtr MarkerCfgReferenceMarker;
@@ -1109,6 +1117,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     MarkerCfgTypePtr MarkerCfgType;
     MarkerCfgXLocationPtr MarkerCfgXLocation;
     MarkerCfgYLocationPtr MarkerCfgYLocation;
+    MarkerFetchFunctionValuePtr MarkerFetchFunctionValue;
     MarkerFetchXYPtr MarkerFetchXY;
     MarkerNextPeakPtr MarkerNextPeak;
     MarkerPeakSearchPtr MarkerPeakSearch;

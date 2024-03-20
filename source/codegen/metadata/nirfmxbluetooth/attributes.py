@@ -166,6 +166,21 @@ attributes = {
         'name': 'CHANNEL_SOUNDING_TONE_EXTENSION_SLOT',
         'type': 'int32'
     },
+    11534388: {
+        'access': 'read-write',
+        'name': 'BANDWIDTH_BIT_PERIOD_PRODUCT',
+        'type': 'float64'
+    },
+    11534389: {
+        'access': 'read-write',
+        'name': 'CHANNEL_SOUNDING_ANTENNA_SWITCH_TIME',
+        'type': 'float64'
+    },
+    11534390: {
+        'access': 'read-write',
+        'name': 'CHANNEL_SOUNDING_NUMBER_OF_ANTENNA_PATH',
+        'type': 'int32'
+    },
     11538428: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',
@@ -272,6 +287,11 @@ attributes = {
     11538455: {
         'access': 'read-write',
         'name': 'TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_PEAK_ABSOLUTE_POWER_DEVIATION_MAXIMUM',
+        'type': 'float64'
+    },
+    11538456: {
+        'access': 'read-write',
+        'name': 'TXP_RESULTS_LE_CS_PHASE_MEASUREMENT_PERIOD_AVERAGE_POWER_MEAN',
         'type': 'float64'
     },
     11542528: {
@@ -572,6 +592,16 @@ attributes = {
     11550771: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_PREAMBLE_START_TIME_MEAN',
+        'type': 'float64'
+    },
+    11550772: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_DF3AVG_MEAN',
+        'type': 'float64'
+    },
+    11550773: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PERCENTAGE_OF_SYMBOLS_ABOVE_DF4AVG_THRESHOLD',
         'type': 'float64'
     },
     11554816: {

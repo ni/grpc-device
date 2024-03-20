@@ -245,6 +245,8 @@ class NiRFmxSpecAnMockLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInt
   MOCK_METHOD(int32, Initialize, (char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession), (override));
   MOCK_METHOD(int32, InitializeFromNIRFSASession, (uInt32 nirfsaSession, niRFmxInstrHandle* handleOut), (override));
   MOCK_METHOD(int32, Initiate, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]), (override));
+  MOCK_METHOD(int32, MarkerCfgBandSpan, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span), (override));
+  MOCK_METHOD(int32, MarkerCfgFunctionType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 functionType), (override));
   MOCK_METHOD(int32, MarkerCfgNumberOfMarkers, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers), (override));
   MOCK_METHOD(int32, MarkerCfgPeakExcursion, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 peakExcursionEnabled, float64 peakExcursion), (override));
   MOCK_METHOD(int32, MarkerCfgReferenceMarker, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceMarker), (override));
@@ -253,6 +255,7 @@ class NiRFmxSpecAnMockLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInt
   MOCK_METHOD(int32, MarkerCfgType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType), (override));
   MOCK_METHOD(int32, MarkerCfgXLocation, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation), (override));
   MOCK_METHOD(int32, MarkerCfgYLocation, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation), (override));
+  MOCK_METHOD(int32, MarkerFetchFunctionValue, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue), (override));
   MOCK_METHOD(int32, MarkerFetchXY, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation), (override));
   MOCK_METHOD(int32, MarkerNextPeak, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound), (override));
   MOCK_METHOD(int32, MarkerPeakSearch, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks), (override));

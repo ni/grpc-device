@@ -1147,6 +1147,16 @@ int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char r
   return RFmxSpecAn_Initiate(instrumentHandle, selectorString, resultName);
 }
 
+int32 MarkerCfgBandSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span)
+{
+  return RFmxSpecAn_MarkerCfgBandSpan(instrumentHandle, selectorString, span);
+}
+
+int32 MarkerCfgFunctionType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 functionType)
+{
+  return RFmxSpecAn_MarkerCfgFunctionType(instrumentHandle, selectorString, functionType);
+}
+
 int32 MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers)
 {
   return RFmxSpecAn_MarkerCfgNumberOfMarkers(instrumentHandle, selectorString, numberOfMarkers);
@@ -1185,6 +1195,11 @@ int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString
 int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation)
 {
   return RFmxSpecAn_MarkerCfgYLocation(instrumentHandle, selectorString, markerYLocation);
+}
+
+int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue)
+{
+  return RFmxSpecAn_MarkerFetchFunctionValue(instrumentHandle, selectorString, timeout, functionValue);
 }
 
 int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation)

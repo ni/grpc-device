@@ -520,10 +520,6 @@ enums = {
     'OfdmLtfSize': {
         'values': [
             {
-                'name': 'NOT_APPLICABLE',
-                'value': -1
-            },
-            {
                 'name': '4X',
                 'value': 0
             },
@@ -534,6 +530,10 @@ enums = {
             {
                 'name': '1X',
                 'value': 2
+            },
+            {
+                'name': 'NOT_APPLICABLE',
+                'value': -1
             }
         ]
     },
@@ -718,6 +718,19 @@ enums = {
             },
             {
                 'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmModAccCommonPilotErrorScalingReference': {
+        'enum-value-prefix': 'OFDMMODACC_COMMON_PILOT_ERROR_SCALING_REFERENCE',
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'AVERAGE_CPE',
                 'value': 1
             }
         ]

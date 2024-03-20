@@ -7828,6 +7828,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'MarkerCfgBandSpan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'span',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'MarkerCfgFunctionType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'MarkerFunctionType',
+                'name': 'functionType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'MarkerCfgNumberOfMarkers': {
         'parameters': [
             {
@@ -8005,6 +8048,32 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'markerYLocation',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'MarkerFetchFunctionValue': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'functionValue',
                 'type': 'float64'
             }
         ],

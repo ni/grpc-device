@@ -947,6 +947,18 @@ enums = {
             }
         ]
     },
+    'ListStepTimerUnit': {
+        'values': [
+            {
+                'name': 'SLOT',
+                'value': 1
+            },
+            {
+                'name': 'TIME',
+                'value': 6
+            }
+        ]
+    },
     'MeasurementTypes': {
         'values': [
             {
