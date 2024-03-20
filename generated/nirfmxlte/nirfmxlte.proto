@@ -2582,8 +2582,8 @@ message CfgPSSCHModulationTypeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof modulation_type_enum {
-    PsschModulationType modulation_type = 3;
-    int32 modulation_type_raw = 4;
+    int32 modulation_type_raw = 3;
+    PsschModulationType modulation_type = 4;
   }
 }
 
