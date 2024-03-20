@@ -2511,6 +2511,8 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'PsschModulationType',
+                'grpc_field_number': '4',
+                'grpc_raw_field_number': '3',
                 'name': 'modulationType',
                 'type': 'int32'
             }
