@@ -844,6 +844,60 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 records_to_fetch = request->records_to_fetch();
+      int64 samples_to_read = request->samples_to_read();
+      auto reserved = nullptr;
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchRawIQData(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, nullptr, 0, &actual_array_size, reserved);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> data(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->FetchRawIQData(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, data.data(), array_size, &actual_array_size, reserved);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        convert_to_grpc(data, response->mutable_data());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_data()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_data()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response)
   {
     if (context->IsCancelled()) {
@@ -2263,6 +2317,30 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::LoadConfigurations(::grpc::ServerContext* context, const LoadConfigurationsRequest* request, LoadConfigurationsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
+      auto status = library_->LoadConfigurations(instrument, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::LoadSParameterExternalAttenuationTableFromS2PFile(::grpc::ServerContext* context, const LoadSParameterExternalAttenuationTableFromS2PFileRequest* request, LoadSParameterExternalAttenuationTableFromS2PFileResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3258,60 +3336,6 @@ namespace nirfmxinstr_grpc {
       }
       response->set_status(status);
       return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrService::FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
-      char* selector_string = (char*)selector_string_mbcs.c_str();
-      float64 timeout = request->timeout();
-      int32 records_to_fetch = request->records_to_fetch();
-      int64 samples_to_read = request->samples_to_read();
-      float64 x0 {};
-      float64 dx {};
-      int32 actual_array_size {};
-      auto reserved = nullptr;
-      while (true) {
-        auto status = library_->FetchRawIQData(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, nullptr, 0, &actual_array_size, &reserved);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
-        }
-        std::vector<NIComplexSingle> data(actual_array_size, NIComplexSingle());
-        auto array_size = actual_array_size;
-        status = library_->FetchRawIQData(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, data.data(), array_size, &actual_array_size, &reserved);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
-        }
-        response->set_status(status);
-        response->set_x0(x0);
-        response->set_dx(dx);
-        convert_to_grpc(data, response->mutable_data());
-        {
-          auto shrunk_size = actual_array_size;
-          auto current_size = response->mutable_data()->size();
-          if (shrunk_size != current_size) {
-            response->mutable_data()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-          }
-        }
-        response->set_actual_array_size(actual_array_size);
-        return ::grpc::Status::OK;
-      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();

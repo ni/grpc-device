@@ -214,6 +214,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_ATTR_NUMBER_OF_RAW_IQ_RECORDS                            0x00000080
 #define RFMXINSTR_ATTR_LO_SHARING_MODE                                     0x00000044
 #define RFMXINSTR_ATTR_NUMBER_OF_LO_SHARING_GROUPS                         0x00000061
+#define RFMXINSTR_ATTR_LOAD_OPTIONS                                        0x000000A3
 
 
 /* -- Values for binary attributes -- */
@@ -390,6 +391,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_PERSONALITY_WLAN                                     (1 << 9)
 #define RFMXINSTR_VAL_PERSONALITY_VNA                                      (1 << 12)
 #define RFMXINSTR_VAL_PERSONALITY_PULSE                                    (1 << 11)
+#define RFMXINSTR_VAL_PERSONALITY_UWB                                      (1 << 13)
 #define RFMXINSTR_VAL_PERSONALITY_ALL                                      0x7FFFFFFF
 
 /* -- Values for Overflow Error Reporting -- */
@@ -444,6 +446,10 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_LO_SHARING_MODE_DISABLED                             0
 #define RFMXINSTR_VAL_LO_SHARING_MODE_EXTERNAL_STAR                        3
 #define RFMXINSTR_VAL_LO_SHARING_MODE_EXTERNAL_DAISY_CHAIN                 4
+
+// Values for RFMXINSTR_ATTR_LOAD_OPTIONS
+#define RFMXINSTR_VAL_LOAD_OPTIONS_SKIP_NONE                               0
+#define RFMXINSTR_VAL_LOAD_OPTIONS_SKIP_RFINSTR                            1
 
 /*****************************************************************************/
 /*= Macros for checking for errors.                                 ======== */
@@ -639,10 +645,9 @@ extern "C"
       niRFmxInstrHandle instrumentHandle,
       char filePath[]);
 
-   int32 __stdcall RFmxInstr_LoadAllConfigurations(
+   int32 __stdcall RFmxInstr_LoadConfigurations(
       niRFmxInstrHandle instrumentHandle,
-      char filePath[],
-      int32 loadRFInstrConfiguration);
+      char filePath[]);
 
    int32 __stdcall RFmxInstr_ResetEntireSession(
       niRFmxInstrHandle instrumentHandle);
@@ -2036,7 +2041,22 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
       char selectorString[],
       int32 attrVal
    );
-   
+
+   int32 __stdcall RFmxInstr_GetLoadOptions(
+       niRFmxInstrHandle instrumentHandle,
+       char selectorString[],
+       int32 attrVal[],
+       int32 arraySize,
+       int32* actualArraySize
+   );
+
+   int32 __stdcall RFmxInstr_SetLoadOptions(
+       niRFmxInstrHandle instrumentHandle,
+       char selectorString[],
+       int32 attrVal[],
+       int32 arraySize
+   );
+
 #ifdef __cplusplus
 }
 #endif
@@ -2085,6 +2105,12 @@ extern "C"
        niRFmxInstrHandle instrumentHandle,
        char channelName[],
        int32 attrVal
+   );
+
+   int32 __stdcall RFmxInstr_LoadAllConfigurations(
+      niRFmxInstrHandle instrumentHandle,
+      char filePath[],
+      int32 loadRFInstrConfiguration
    );
   
 #ifdef __cplusplus

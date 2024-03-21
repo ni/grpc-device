@@ -67,6 +67,7 @@ public:
   ::grpc::Status DisableCalibrationPlane(::grpc::ServerContext* context, const DisableCalibrationPlaneRequest* request, DisableCalibrationPlaneResponse* response) override;
   ::grpc::Status EnableCalibrationPlane(::grpc::ServerContext* context, const EnableCalibrationPlaneRequest* request, EnableCalibrationPlaneResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
+  ::grpc::Status FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response) override;
   ::grpc::Status GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response) override;
   ::grpc::Status GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response) override;
   ::grpc::Status GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response) override;
@@ -104,6 +105,7 @@ public:
   ::grpc::Status InitializeFromNIRFSASessionArray(::grpc::ServerContext* context, const InitializeFromNIRFSASessionArrayRequest* request, InitializeFromNIRFSASessionArrayResponse* response) override;
   ::grpc::Status IsSelfCalibrateValid(::grpc::ServerContext* context, const IsSelfCalibrateValidRequest* request, IsSelfCalibrateValidResponse* response) override;
   ::grpc::Status LoadAllConfigurations(::grpc::ServerContext* context, const LoadAllConfigurationsRequest* request, LoadAllConfigurationsResponse* response) override;
+  ::grpc::Status LoadConfigurations(::grpc::ServerContext* context, const LoadConfigurationsRequest* request, LoadConfigurationsResponse* response) override;
   ::grpc::Status LoadSParameterExternalAttenuationTableFromS2PFile(::grpc::ServerContext* context, const LoadSParameterExternalAttenuationTableFromS2PFileRequest* request, LoadSParameterExternalAttenuationTableFromS2PFileResponse* response) override;
   ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;
   ::grpc::Status ResetDriver(::grpc::ServerContext* context, const ResetDriverRequest* request, ResetDriverResponse* response) override;
@@ -138,7 +140,6 @@ public:
   ::grpc::Status TimestampFromValues(::grpc::ServerContext* context, const TimestampFromValuesRequest* request, TimestampFromValuesResponse* response) override;
   ::grpc::Status ValuesFromTimestamp(::grpc::ServerContext* context, const ValuesFromTimestampRequest* request, ValuesFromTimestampResponse* response) override;
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
-  ::grpc::Status FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

@@ -516,5 +516,11 @@ attributes = {
         'access': 'read-write',
         'name': 'NUMBER_OF_RAW_IQ_RECORDS',
         'type': 'int32'
+    },
+    163: {
+        'access': 'read-write',
+        'enum': 'LoadOptions',
+        'name': 'LOAD_OPTIONS',
+        'type': 'int32[]'
     }
 }

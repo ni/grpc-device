@@ -122,6 +122,11 @@ int32 ExportSignal(niRFmxInstrHandle instrumentHandle, int32 exportSignalSource,
   return RFmxInstr_ExportSignal(instrumentHandle, exportSignalSource, exportSignalOutputTerminal);
 }
 
+int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved)
+{
+  return RFmxInstr_FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, data, arraySize, actualArraySize, reserved);
+}
+
 int32 GetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal)
 {
   return RFmxInstr_GetAttributeF32(instrumentHandle, channelName, attributeID, attrVal);
@@ -307,6 +312,11 @@ int32 LoadAllConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[],
   return RFmxInstr_LoadAllConfigurations(instrumentHandle, filePath, loadRFInstrConfiguration);
 }
 
+int32 LoadConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[])
+{
+  return RFmxInstr_LoadConfigurations(instrumentHandle, filePath);
+}
+
 int32 LoadSParameterExternalAttenuationTableFromS2PFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char s2PFilePath[], int32 sParameterOrientation)
 {
   return RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile(instrumentHandle, selectorString, tableName, s2PFilePath, sParameterOrientation);
@@ -475,11 +485,6 @@ int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, fl
 int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
 {
   return RFmxInstr_WaitForAcquisitionComplete(instrumentHandle, timeout);
-}
-
-int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved)
-{
-  return RFmxInstr_FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, data, arraySize, actualArraySize, reserved);
 }
 
 }  // namespace nirfmxinstr_grpc
