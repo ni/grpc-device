@@ -5350,12 +5350,12 @@ message IDPDCfgReferenceWaveformRequest {
   double dx = 4;
   repeated nidevice_grpc.NIComplexNumberF32 reference_waveform = 5;
   oneof idle_duration_present_enum {
-    IdpdReferenceWaveformIdleDurationPresent idle_duration_present = 6;
-    int32 idle_duration_present_raw = 7;
+    int32 idle_duration_present_raw = 6;
+    IdpdReferenceWaveformIdleDurationPresent idle_duration_present = 8;
   }
   oneof signal_type_enum {
-    IdpdSignalType signal_type = 8;
-    int32 signal_type_raw = 9;
+    int32 signal_type_raw = 7;
+    IdpdSignalType signal_type = 9;
   }
 }
 
