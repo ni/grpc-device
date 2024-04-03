@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiRFmxInstrRestricted";
 
 package nirfmxinstr_restricted_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiRFmxInstrRestricted {
@@ -52,6 +53,11 @@ service NiRFmxInstrRestricted {
   rpc UnregisterSpecialClientSnapshotInterest(UnregisterSpecialClientSnapshotInterestRequest) returns (UnregisterSpecialClientSnapshotInterestResponse);
   rpc GetSFPSessionAccessEnabled(GetSFPSessionAccessEnabledRequest) returns (GetSFPSessionAccessEnabledResponse);
   rpc CreateDefaultSignalConfiguration(CreateDefaultSignalConfigurationRequest) returns (CreateDefaultSignalConfigurationResponse);
+  rpc LoadExternalAttenuationTable(LoadExternalAttenuationTableRequest) returns (LoadExternalAttenuationTableResponse);
+  rpc DefineExternalAttenuationTable(DefineExternalAttenuationTableRequest) returns (DefineExternalAttenuationTableResponse);
+  rpc CfgSParameterExternalAttenuationTableFrequencies(CfgSParameterExternalAttenuationTableFrequenciesRequest) returns (CfgSParameterExternalAttenuationTableFrequenciesResponse);
+  rpc CfgSParameterExternalAttenuationTableSParameter(CfgSParameterExternalAttenuationTableSParameterRequest) returns (CfgSParameterExternalAttenuationTableSParameterResponse);
+  rpc DefineSParameterExternalAttenuationTable(DefineSParameterExternalAttenuationTableRequest) returns (DefineSParameterExternalAttenuationTableResponse);
 }
 
 message ConvertForPowerUnitsUtilityRequest {
@@ -433,6 +439,63 @@ message CreateDefaultSignalConfigurationRequest {
 }
 
 message CreateDefaultSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message LoadExternalAttenuationTableRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  string file_path = 4;
+}
+
+message LoadExternalAttenuationTableResponse {
+  int32 status = 1;
+}
+
+message DefineExternalAttenuationTableRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  int32 number_of_points = 4;
+}
+
+message DefineExternalAttenuationTableResponse {
+  int32 status = 1;
+}
+
+message CfgSParameterExternalAttenuationTableFrequenciesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  repeated double s_parameter_frequencies = 4;
+}
+
+message CfgSParameterExternalAttenuationTableFrequenciesResponse {
+  int32 status = 1;
+}
+
+message CfgSParameterExternalAttenuationTableSParameterRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  repeated nidevice_grpc.NIComplexNumber s_parameters = 4;
+  int32 s_parameter_orientation = 5;
+}
+
+message CfgSParameterExternalAttenuationTableSParameterResponse {
+  int32 status = 1;
+}
+
+message DefineSParameterExternalAttenuationTableRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  int32 number_of_frequency_points = 4;
+  int32 number_of_ports = 5;
+}
+
+message DefineSParameterExternalAttenuationTableResponse {
   int32 status = 1;
 }
 

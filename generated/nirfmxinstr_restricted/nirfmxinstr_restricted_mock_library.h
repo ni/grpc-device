@@ -56,6 +56,11 @@ class NiRFmxInstrRestrictedMockLibrary : public nirfmxinstr_restricted_grpc::NiR
   MOCK_METHOD(int32, UnregisterSpecialClientSnapshotInterest, (char resourceName[]), (override));
   MOCK_METHOD(int32, GetSFPSessionAccessEnabled, (char optionString[], int32* isSFPSessionAccessEnabled), (override));
   MOCK_METHOD(int32, CreateDefaultSignalConfiguration, (niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID), (override));
+  MOCK_METHOD(int32, LoadExternalAttenuationTable, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char filePath[]), (override));
+  MOCK_METHOD(int32, DefineExternalAttenuationTable, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfPoints), (override));
+  MOCK_METHOD(int32, CfgSParameterExternalAttenuationTableFrequencies, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 sParameterFrequencies[], int32 sParameterFrequenciesArraySize), (override));
+  MOCK_METHOD(int32, CfgSParameterExternalAttenuationTableSParameter, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], NIComplexDouble sParameters[], int32 sParameterTableSize, int32 sParameterOrientation), (override));
+  MOCK_METHOD(int32, DefineSParameterExternalAttenuationTable, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfFrequencyPoints, int32 numberOfPorts), (override));
 };
 
 }  // namespace unit

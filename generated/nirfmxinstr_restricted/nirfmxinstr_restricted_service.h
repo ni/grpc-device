@@ -78,6 +78,11 @@ public:
   ::grpc::Status UnregisterSpecialClientSnapshotInterest(::grpc::ServerContext* context, const UnregisterSpecialClientSnapshotInterestRequest* request, UnregisterSpecialClientSnapshotInterestResponse* response) override;
   ::grpc::Status GetSFPSessionAccessEnabled(::grpc::ServerContext* context, const GetSFPSessionAccessEnabledRequest* request, GetSFPSessionAccessEnabledResponse* response) override;
   ::grpc::Status CreateDefaultSignalConfiguration(::grpc::ServerContext* context, const CreateDefaultSignalConfigurationRequest* request, CreateDefaultSignalConfigurationResponse* response) override;
+  ::grpc::Status LoadExternalAttenuationTable(::grpc::ServerContext* context, const LoadExternalAttenuationTableRequest* request, LoadExternalAttenuationTableResponse* response) override;
+  ::grpc::Status DefineExternalAttenuationTable(::grpc::ServerContext* context, const DefineExternalAttenuationTableRequest* request, DefineExternalAttenuationTableResponse* response) override;
+  ::grpc::Status CfgSParameterExternalAttenuationTableFrequencies(::grpc::ServerContext* context, const CfgSParameterExternalAttenuationTableFrequenciesRequest* request, CfgSParameterExternalAttenuationTableFrequenciesResponse* response) override;
+  ::grpc::Status CfgSParameterExternalAttenuationTableSParameter(::grpc::ServerContext* context, const CfgSParameterExternalAttenuationTableSParameterRequest* request, CfgSParameterExternalAttenuationTableSParameterResponse* response) override;
+  ::grpc::Status DefineSParameterExternalAttenuationTable(::grpc::ServerContext* context, const DefineSParameterExternalAttenuationTableRequest* request, DefineSParameterExternalAttenuationTableResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

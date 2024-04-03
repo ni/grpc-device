@@ -675,5 +675,107 @@ create_default_signal_configuration(const StubPtr& stub, const nidevice_grpc::Se
   return response;
 }
 
+LoadExternalAttenuationTableResponse
+load_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::string& file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = LoadExternalAttenuationTableRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_table_name(table_name);
+  request.set_file_path(file_path);
+
+  auto response = LoadExternalAttenuationTableResponse{};
+
+  raise_if_error(
+      stub->LoadExternalAttenuationTable(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DefineExternalAttenuationTableResponse
+define_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const pb::int32& number_of_points)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DefineExternalAttenuationTableRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_table_name(table_name);
+  request.set_number_of_points(number_of_points);
+
+  auto response = DefineExternalAttenuationTableResponse{};
+
+  raise_if_error(
+      stub->DefineExternalAttenuationTable(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgSParameterExternalAttenuationTableFrequenciesResponse
+cfg_s_parameter_external_attenuation_table_frequencies(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& s_parameter_frequencies)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgSParameterExternalAttenuationTableFrequenciesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_table_name(table_name);
+  copy_array(s_parameter_frequencies, request.mutable_s_parameter_frequencies());
+
+  auto response = CfgSParameterExternalAttenuationTableFrequenciesResponse{};
+
+  raise_if_error(
+      stub->CfgSParameterExternalAttenuationTableFrequencies(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgSParameterExternalAttenuationTableSParameterResponse
+cfg_s_parameter_external_attenuation_table_s_parameter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& s_parameter_orientation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgSParameterExternalAttenuationTableSParameterRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_table_name(table_name);
+  copy_array(s_parameters, request.mutable_s_parameters());
+  request.set_s_parameter_orientation(s_parameter_orientation);
+
+  auto response = CfgSParameterExternalAttenuationTableSParameterResponse{};
+
+  raise_if_error(
+      stub->CfgSParameterExternalAttenuationTableSParameter(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DefineSParameterExternalAttenuationTableResponse
+define_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const pb::int32& number_of_frequency_points, const pb::int32& number_of_ports)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DefineSParameterExternalAttenuationTableRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_table_name(table_name);
+  request.set_number_of_frequency_points(number_of_frequency_points);
+  request.set_number_of_ports(number_of_ports);
+
+  auto response = DefineSParameterExternalAttenuationTableResponse{};
+
+  raise_if_error(
+      stub->DefineSParameterExternalAttenuationTable(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client

@@ -54,6 +54,11 @@ class NiRFmxInstrRestrictedLibraryInterface {
   virtual int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]) = 0;
   virtual int32 GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled) = 0;
   virtual int32 CreateDefaultSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID) = 0;
+  virtual int32 LoadExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char filePath[]) = 0;
+  virtual int32 DefineExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfPoints) = 0;
+  virtual int32 CfgSParameterExternalAttenuationTableFrequencies(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 sParameterFrequencies[], int32 sParameterFrequenciesArraySize) = 0;
+  virtual int32 CfgSParameterExternalAttenuationTableSParameter(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], NIComplexDouble sParameters[], int32 sParameterTableSize, int32 sParameterOrientation) = 0;
+  virtual int32 DefineSParameterExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfFrequencyPoints, int32 numberOfPorts) = 0;
 };
 
 }  // namespace nirfmxinstr_restricted_grpc

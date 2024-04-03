@@ -1233,5 +1233,163 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'LoadExternalAttenuationTable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DefineExternalAttenuationTable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfPoints',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgSParameterExternalAttenuationTableFrequencies': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameterFrequencies',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'sParameterFrequenciesArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameterFrequenciesArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgSParameterExternalAttenuationTableSParameter': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameters',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'sParameterTableSize'
+                },
+                'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameterTableSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameterOrientation',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DefineSParameterExternalAttenuationTable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfFrequencyPoints',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfPorts',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
     }
 }
