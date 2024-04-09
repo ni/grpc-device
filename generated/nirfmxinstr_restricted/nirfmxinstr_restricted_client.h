@@ -58,6 +58,11 @@ SetIOTraceStatusResponse set_io_trace_status(const StubPtr& stub, const nidevice
 UnregisterSpecialClientSnapshotInterestResponse unregister_special_client_snapshot_interest(const StubPtr& stub, const std::string& resource_name);
 GetSFPSessionAccessEnabledResponse get_sfp_session_access_enabled(const StubPtr& stub, const std::string& option_string);
 CreateDefaultSignalConfigurationResponse create_default_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name, const pb::int32& personality_id);
+LoadExternalAttenuationTableResponse load_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::string& file_path);
+DefineExternalAttenuationTableResponse define_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const pb::int32& number_of_points);
+CfgSParameterExternalAttenuationTableFrequenciesResponse cfg_s_parameter_external_attenuation_table_frequencies(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& s_parameter_frequencies);
+CfgSParameterExternalAttenuationTableSParameterResponse cfg_s_parameter_external_attenuation_table_s_parameter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& s_parameter_orientation);
+DefineSParameterExternalAttenuationTableResponse define_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const pb::int32& number_of_frequency_points, const pb::int32& number_of_ports);
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client
 

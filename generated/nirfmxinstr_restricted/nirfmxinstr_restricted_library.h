@@ -60,6 +60,11 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 UnregisterSpecialClientSnapshotInterest(char resourceName[]) override;
   int32 GetSFPSessionAccessEnabled(char optionString[], int32* isSFPSessionAccessEnabled) override;
   int32 CreateDefaultSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID) override;
+  int32 LoadExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char filePath[]) override;
+  int32 DefineExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfPoints) override;
+  int32 CfgSParameterExternalAttenuationTableFrequencies(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 sParameterFrequencies[], int32 sParameterFrequenciesArraySize) override;
+  int32 CfgSParameterExternalAttenuationTableSParameter(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], NIComplexDouble sParameters[], int32 sParameterTableSize, int32 sParameterOrientation) override;
+  int32 DefineSParameterExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfFrequencyPoints, int32 numberOfPorts) override;
 
  private:
   using ConvertForPowerUnitsUtilityPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut);
@@ -101,6 +106,11 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using UnregisterSpecialClientSnapshotInterestPtr = int32 (*)(char resourceName[]);
   using GetSFPSessionAccessEnabledPtr = int32 (*)(char optionString[], int32* isSFPSessionAccessEnabled);
   using CreateDefaultSignalConfigurationPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char signalName[], int32 personalityID);
+  using LoadExternalAttenuationTablePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char filePath[]);
+  using DefineExternalAttenuationTablePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfPoints);
+  using CfgSParameterExternalAttenuationTableFrequenciesPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 sParameterFrequencies[], int32 sParameterFrequenciesArraySize);
+  using CfgSParameterExternalAttenuationTableSParameterPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], NIComplexDouble sParameters[], int32 sParameterTableSize, int32 sParameterOrientation);
+  using DefineSParameterExternalAttenuationTablePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfFrequencyPoints, int32 numberOfPorts);
 
   typedef struct FunctionPointers {
     ConvertForPowerUnitsUtilityPtr ConvertForPowerUnitsUtility;
@@ -142,6 +152,11 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     UnregisterSpecialClientSnapshotInterestPtr UnregisterSpecialClientSnapshotInterest;
     GetSFPSessionAccessEnabledPtr GetSFPSessionAccessEnabled;
     CreateDefaultSignalConfigurationPtr CreateDefaultSignalConfiguration;
+    LoadExternalAttenuationTablePtr LoadExternalAttenuationTable;
+    DefineExternalAttenuationTablePtr DefineExternalAttenuationTable;
+    CfgSParameterExternalAttenuationTableFrequenciesPtr CfgSParameterExternalAttenuationTableFrequencies;
+    CfgSParameterExternalAttenuationTableSParameterPtr CfgSParameterExternalAttenuationTableSParameter;
+    DefineSParameterExternalAttenuationTablePtr DefineSParameterExternalAttenuationTable;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
