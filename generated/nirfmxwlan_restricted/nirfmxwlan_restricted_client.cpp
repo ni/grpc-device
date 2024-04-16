@@ -56,12 +56,12 @@ ofdm_mod_acc_fetch_common_pilot_error_trace_ind_b(const StubPtr& stub, const nid
 }
 
 OFDMModAccLoad1ReferenceWaveformFromTDMSFileResponse
-ofdm_mod_acc_load1_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const pb::int32& waveform_index)
+ofdm_mod_acc_load1_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& waveform_file_path, const pb::int32& waveform_index)
 {
   ::grpc::ClientContext context;
 
   auto request = OFDMModAccLoad1ReferenceWaveformFromTDMSFileRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_waveform_file_path(waveform_file_path);
   request.set_waveform_index(waveform_index);

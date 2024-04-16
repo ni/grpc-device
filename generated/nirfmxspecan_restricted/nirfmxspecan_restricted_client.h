@@ -22,7 +22,7 @@ using StubPtr = std::unique_ptr<NiRFmxSpecAnRestricted::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-AMPMLoadReferenceWaveformFromTDMSFileResponse ampm_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type, const pb::int32& waveform_index);
+AMPMLoadReferenceWaveformFromTDMSFileResponse ampm_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type, const pb::int32& waveform_index);
 CacheResultResponse cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& selector_string_out_size);
 IQFetchDataOverrideBehaviorResponse iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& record_to_fetch, const pb::int64& samples_to_read, const simple_variant<IQDeleteOnFetch, pb::int32>& delete_on_fetch);
 
