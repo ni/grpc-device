@@ -18,12 +18,12 @@
 namespace nirfmxspecan_restricted_grpc::experimental::client {
 
 AMPMLoadReferenceWaveformFromTDMSFileResponse
-ampm_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
+ampm_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
 {
   ::grpc::ClientContext context;
 
   auto request = AMPMLoadReferenceWaveformFromTDMSFileRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_waveform_file_path(waveform_file_path);
   const auto idle_duration_present_ptr = idle_duration_present.get_if<AmpmReferenceWaveformIdleDurationPresent>();

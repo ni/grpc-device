@@ -39,7 +39,7 @@ enum AmpmSignalType {
 }
 
 message AMPMLoadReferenceWaveformFromTDMSFileRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string waveform_file_path = 3;
   oneof idle_duration_present_enum {

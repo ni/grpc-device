@@ -3,6 +3,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_name': 'instrument',
                 'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },

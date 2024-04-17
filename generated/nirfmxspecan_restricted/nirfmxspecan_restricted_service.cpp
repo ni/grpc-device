@@ -52,8 +52,8 @@ namespace nirfmxspecan_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
@@ -91,9 +91,9 @@ namespace nirfmxspecan_restricted_grpc {
       }
 
       int32 waveform_index = request->waveform_index();
-      auto status = library_->AMPMLoadReferenceWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
+      auto status = library_->AMPMLoadReferenceWaveformFromTDMSFile(instrument, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
