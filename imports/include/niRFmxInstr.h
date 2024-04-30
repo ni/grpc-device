@@ -215,6 +215,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_ATTR_LO_SHARING_MODE                                     0x00000044
 #define RFMXINSTR_ATTR_NUMBER_OF_LO_SHARING_GROUPS                         0x00000061
 #define RFMXINSTR_ATTR_LOAD_OPTIONS                                        0x000000A3
+#define RFMXINSTR_ATTR_DIGITAL_GAIN                                        0x00000054
 
 
 /* -- Values for binary attributes -- */
@@ -2055,6 +2056,18 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
        char selectorString[],
        int32 attrVal[],
        int32 arraySize
+   );
+
+   int32 __stdcall RFmxInstr_GetDigitalGain(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      float64 *attrVal
+   );
+
+   int32 __stdcall RFmxInstr_SetDigitalGain(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      float64 attrVal
    );
 
 #ifdef __cplusplus

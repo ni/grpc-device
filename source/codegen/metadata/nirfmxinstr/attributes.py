@@ -351,6 +351,11 @@ attributes = {
         'name': 'LO_VCO_FREQUENCY_STEP_SIZE',
         'type': 'float64'
     },
+    84: {
+        'access': 'read-write',
+        'name': 'DIGITAL_GAIN',
+        'type': 'float64'
+    },
     90: {
         'access': 'read-write',
         'enum': 'LOPllFractionalModeEnabled',
