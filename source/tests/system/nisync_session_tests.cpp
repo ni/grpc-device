@@ -10,10 +10,17 @@ namespace system {
 
 namespace nisync = nisync_grpc;
 
+constexpr auto NISYNC_ERROR_DEVICE_NOT_FOUND_MESSAGE = "The specified device was not found.";
 static const int kSyncDeviceNotFound = -1074118634;
 static const char* kTestSessionName = "TestSession";
 static const char* kEmptySessionName = "";
 static const char* kInvalidRsrcName = "InvalidName";
+
+inline static void EXPECT_SYNC_ERROR(const std::string& error_message, const ::grpc::Status& status)
+{
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  EXPECT_EQ(error_message, status.error_message());
+}
 
 class NiSyncSessionTest : public ::testing::Test {
  protected:
@@ -89,8 +96,7 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   nisync::InitResponse response;
   ::grpc::Status status = call_init(kInvalidRsrcName, kEmptySessionName, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kSyncDeviceNotFound, response.status());
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_DEVICE_NOT_FOUND_MESSAGE, status);
   EXPECT_EQ("", response.vi().name());
 }
 

@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "enumerate_devices.h"
@@ -23,9 +24,9 @@ constexpr auto INVALID_RESOURCE_NAME = "InvalidName";
 constexpr auto INVALID_TERMINAL = "Invalid";
 constexpr auto NISYNC_VAL_OSCILLATOR = "Oscillator";
 constexpr auto NISYNC_VAL_CLKOUT = "ClkOut";
-constexpr auto NISYNC_ERROR_SRC_TERMINAL_INVALID = 0xBFFA4032;
+constexpr auto NISYNC_ERROR_SRC_TERMINAL_INVALID_MESSAGE = "The specified source terminal is invalid for this operation.";
 constexpr auto NISYNC_VAL_CLKIN = "ClkIn";
-constexpr auto NISYNC_VAL_SWTRIG_GLOBAL = "GlobalSorftwareTrigger";
+constexpr auto NISYNC_VAL_SWTRIG_GLOBAL = "GlobalSoftwareTrigger";
 constexpr auto NISYNC_VAL_PXIEDSTARC = "PXIe_DStarC";
 constexpr auto NISYNC_VAL_SYNC_CLK_FULLSPEED = "SyncClkFullSpeed";
 constexpr auto NISYNC_VAL_CLK100 = "PXIe_Clk100";
@@ -36,14 +37,21 @@ constexpr auto NISYNC_VAL_1588_CLK_ACCURACY_WITHIN_1_USEC = 4;
 constexpr auto NISYNC_VAL_CLK10 = "PXI_Clk10";
 constexpr auto NISYNC_VAL_IRIG_TYPE_IRIGB_DC = 0;
 constexpr auto NISYNC_VAL_GND = "Ground";
-constexpr auto NISYNC_ERROR_TERMINAL_INVALID = 0xBFFA4036;
-constexpr auto NISYNC_ERROR_RSRC_NOT_RESERVED = 0xBFFA4048;
+constexpr auto NISYNC_ERROR_TERMINAL_INVALID_MESSAGE = "Terminal for the device is invalid.";
+constexpr auto NISYNC_ERROR_RSRC_NOT_RESERVED_MESSAGE = "A resource necessary to complete the specified operation is not reserved and should have already been; therefore, the operation cannot be completed";
 constexpr auto NISYNC_VAL_EDGE_RISING = 0;
 constexpr auto NISYNC_ERROR_DRIVER_TIMEOUT = 0xBFFA400B;
+constexpr auto NISYNC_ERROR_DRIVER_TIMEOUT_MESSAGE = "The driver timed out while performing an operation.";
 constexpr auto NISYNC_VAL_LEVEL_LOW = 0;
 constexpr auto NISYNC_VAL_LEVEL_HIGH = 1;
-constexpr auto NISYNC_ERROR_FEATURE_NOT_SUPPORTED = 0xBFFA4003;
-constexpr auto NISYNC_ERROR_DEST_TERMINAL_INVALID = 0xBFFA4033;
+constexpr auto NISYNC_ERROR_FEATURE_NOT_SUPPORTED_MESSAGE = "This operation requires a feature that is not supported.";
+constexpr auto NISYNC_ERROR_DEST_TERMINAL_INVALID_MESSAGE = "The specified destination terminal is invalid for this operation.";
+
+inline static void EXPECT_SYNC_ERROR(const std::string& error_message, const ::grpc::Status& status)
+{
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  EXPECT_EQ(error_message, status.error_message());
+}
 
 class NiSyncDriverApiTest : public ::testing::Test {
  protected:
@@ -696,9 +704,9 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return timeSeconds;
   }
 
+  std::unique_ptr<::nidevice_grpc::Session> driver_session_;
  private:
   DeviceServerInterface* device_server_;
-  std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<nisync::NiSync::Stub> nisync_stub_;
 };
 
@@ -742,8 +750,8 @@ TEST_F(NiSyncDriver6674Test, ConnectInvalidClkTerminals_ReturnsInvalidSrcTermina
   auto srcTerminal = INVALID_TERMINAL, destTerminal = NISYNC_VAL_CLKOUT;
   auto grpcStatus = call_ConnectClkTerminals(srcTerminal, destTerminal, &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(NISYNC_ERROR_SRC_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_SRC_TERMINAL_INVALID_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6674Test, ConnectedClkTerminals_DisconnectClkTerminals_ReturnsSuccess)
@@ -813,8 +821,8 @@ TEST_F(NiSyncDriver6674Test, ConnectInvalidSWTrigToTerminal_ReturnsInvalidSrcTer
       delay,
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(INVALID_SOURCE_TERMINAL, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_SRC_TERMINAL_INVALID_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6674Test, ConnectedSWTrigToTerminal_DisconnectSWTrigFromTerminal_ReturnsSuccess)
@@ -883,8 +891,8 @@ TEST_F(NiSyncDriver6674Test, SendSoftwareTriggerOnInvalidTerminal_ReturnsInvalid
   auto srcTerminal = INVALID_TERMINAL;
   auto grpcStatus = call_SendSoftwareTrigger(srcTerminal, &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(NISYNC_ERROR_SRC_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_SRC_TERMINAL_INVALID_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6674Test, ConnectTrigTerminals_ReturnsSuccess)
@@ -920,8 +928,8 @@ TEST_F(NiSyncDriver6674Test, ConnectInvalidTrigTerminals_ReturnsInvalidSrcTermin
       updateEdge,
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(INVALID_SOURCE_TERMINAL, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_SRC_TERMINAL_INVALID_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6674Test, ConnectedTrigTerminals_DisconnectTrigTerminals_ReturnsSuccess)
@@ -1144,8 +1152,8 @@ TEST_F(NiSyncDriver6683Test, SetTimeReferenceIRIGWithInvalidTerminal_ReturnsErro
       NISYNC_VAL_GND,                 // terminalName
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_TERMINAL_INVALID_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, SetTimeReferencePPS_ReturnsSuccess)
@@ -1183,8 +1191,8 @@ TEST_F(NiSyncDriver6683Test, SetTimeReferencePPSWithInvalidTerminal_ReturnsError
       0,  // initialTimeFractionalNanoseconds, ignored
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_TERMINAL_INVALID_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, SetTimeReference1588OrdinaryClock_ReturnsSuccess)
@@ -1202,13 +1210,13 @@ TEST_F(NiSyncDriver6683Test, SetTimeReference8021AS_ReturnsSuccess)
   int32 viStatus;
   auto grpcStatus = call_SetTimeReference8021AS(&viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
 #if defined(_MSC_VER)
   // SetTimeReference8021AS is only supported on Linux RT targets.
-  EXPECT_EQ(NISYNC_ERROR_FEATURE_NOT_SUPPORTED, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_FEATURE_NOT_SUPPORTED_MESSAGE, grpcStatus);
 #else
-  EXPECT_EQ(VI_SUCCESS, viStatus);
+  EXPECT_TRUE(grpcStatus.ok());
 #endif
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, CreateClearFutureTimeEvent_ReturnsSuccess)
@@ -1245,13 +1253,13 @@ TEST_F(NiSyncDriver6683Test, CreateFutureTimeEventWithInvalidTerminal_ReturnsErr
       0,  // timeFractionalNanoseconds, ignored
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
 // Bug 1462752: 6683 CreateFutureTimeEvent has different error behavior on Linux RT
 #if defined(_MSC_VER)
-  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_TERMINAL_INVALID_MESSAGE, grpcStatus);
 #else
-  EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_DEST_TERMINAL_INVALID_MESSAGE, grpcStatus);
 #endif
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, ClearFutureTimeEventsNotReserved_ReturnsError)
@@ -1261,8 +1269,8 @@ TEST_F(NiSyncDriver6683Test, ClearFutureTimeEventsNotReserved_ReturnsError)
       NISYNC_VAL_PFI1,  // terminalName
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_RSRC_NOT_RESERVED_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, CreateClearClock_ReturnsSuccess)
@@ -1311,13 +1319,13 @@ TEST_F(NiSyncDriver6683Test, CreateClockWithInvalidTerminal_ReturnsError)
       0,  // stopTimeFractionalNanoseconds, ignored
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
 // Bug 1462754: 6683 CreateClock has different error behavior on Linux RT
 #if defined(_MSC_VER)
-  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_TERMINAL_INVALID_MESSAGE, grpcStatus);
 #else
-  EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_DEST_TERMINAL_INVALID_MESSAGE, grpcStatus);
 #endif
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, ClearClockNotReserved_ReturnsError)
@@ -1327,8 +1335,8 @@ TEST_F(NiSyncDriver6683Test, ClearClockNotReserved_ReturnsError)
       NISYNC_VAL_PFI1,  // terminalName
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_RSRC_NOT_RESERVED_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, GetTimeReferenceNames_ReturnsSuccess)
@@ -1370,8 +1378,8 @@ TEST_F(NiSyncDriver6683Test, EnableTimeStampTriggerWithInvalidTerminal_ReturnsEr
       NISYNC_VAL_EDGE_RISING,  // activeEdge
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_TERMINAL_INVALID_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, DisableTimeStampTriggerNotReserved_ReturnsError)
@@ -1381,8 +1389,8 @@ TEST_F(NiSyncDriver6683Test, DisableTimeStampTriggerNotReserved_ReturnsError)
       NISYNC_VAL_PFI1,  // terminalName
       &viStatus);
 
-  EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_RSRC_NOT_RESERVED_MESSAGE, grpcStatus);
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, GivenNoTrigger_ReadTriggerTimeStamp_ReturnsTimeoutError)
@@ -1404,8 +1412,8 @@ TEST_F(NiSyncDriver6683Test, GivenNoTrigger_ReadTriggerTimeStamp_ReturnsTimeoutE
       &detectedEdge,
       &viStatusRead);
 
-  EXPECT_TRUE(grpcStatusRead.ok());
-  EXPECT_EQ(NISYNC_ERROR_DRIVER_TIMEOUT, viStatusRead);
+  EXPECT_SYNC_ERROR(NISYNC_ERROR_DRIVER_TIMEOUT_MESSAGE, grpcStatusRead);
+  EXPECT_EQ(VI_SUCCESS, viStatusRead);
 }
 
 TEST_F(NiSyncDriver6683Test, GivenNoTrigger_ReadMultipleTriggerTimeStamp_ReturnsTimeoutError)
