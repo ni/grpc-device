@@ -420,6 +420,7 @@ public:
   ::grpc::Status SpectrumCfgDetector(::grpc::ServerContext* context, const SpectrumCfgDetectorRequest* request, SpectrumCfgDetectorResponse* response) override;
   ::grpc::Status SpectrumCfgFFT(::grpc::ServerContext* context, const SpectrumCfgFFTRequest* request, SpectrumCfgFFTResponse* response) override;
   ::grpc::Status SpectrumCfgFrequencyStartStop(::grpc::ServerContext* context, const SpectrumCfgFrequencyStartStopRequest* request, SpectrumCfgFrequencyStartStopResponse* response) override;
+  ::grpc::Status SpectrumCfgMeasurementMethod(::grpc::ServerContext* context, const SpectrumCfgMeasurementMethodRequest* request, SpectrumCfgMeasurementMethodResponse* response) override;
   ::grpc::Status SpectrumCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const SpectrumCfgNoiseCompensationEnabledRequest* request, SpectrumCfgNoiseCompensationEnabledResponse* response) override;
   ::grpc::Status SpectrumCfgPowerUnits(::grpc::ServerContext* context, const SpectrumCfgPowerUnitsRequest* request, SpectrumCfgPowerUnitsResponse* response) override;
   ::grpc::Status SpectrumCfgRBWFilter(::grpc::ServerContext* context, const SpectrumCfgRBWFilterRequest* request, SpectrumCfgRBWFilterResponse* response) override;

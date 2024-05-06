@@ -5294,14 +5294,13 @@ marker_cfg_y_location(const StubPtr& stub, const nidevice_grpc::Session& instrum
 }
 
 MarkerFetchFunctionValueResponse
-marker_fetch_function_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+marker_fetch_function_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
   ::grpc::ClientContext context;
 
   auto request = MarkerFetchFunctionValueRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_timeout(timeout);
 
   auto response = MarkerFetchFunctionValueResponse{};
 
@@ -8349,6 +8348,32 @@ spectrum_cfg_frequency_start_stop(const StubPtr& stub, const nidevice_grpc::Sess
 
   raise_if_error(
       stub->SpectrumCfgFrequencyStartStop(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SpectrumCfgMeasurementMethodResponse
+spectrum_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SpectrumMeasurementMethod, pb::int32>& measurement_method)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SpectrumCfgMeasurementMethodRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto measurement_method_ptr = measurement_method.get_if<SpectrumMeasurementMethod>();
+  const auto measurement_method_raw_ptr = measurement_method.get_if<pb::int32>();
+  if (measurement_method_ptr) {
+    request.set_measurement_method(*measurement_method_ptr);
+  }
+  else if (measurement_method_raw_ptr) {
+    request.set_measurement_method_raw(*measurement_method_raw_ptr);
+  }
+
+  auto response = SpectrumCfgMeasurementMethodResponse{};
+
+  raise_if_error(
+      stub->SpectrumCfgMeasurementMethod(&context, request, &response),
       context);
 
   return response;

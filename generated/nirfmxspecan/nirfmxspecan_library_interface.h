@@ -253,7 +253,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType) = 0;
   virtual int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation) = 0;
   virtual int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation) = 0;
-  virtual int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue) = 0;
+  virtual int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* functionValue) = 0;
   virtual int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation) = 0;
   virtual int32 MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound) = 0;
   virtual int32 MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks) = 0;
@@ -391,6 +391,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 SpectrumCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints) = 0;
   virtual int32 SpectrumCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding) = 0;
   virtual int32 SpectrumCfgFrequencyStartStop(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency) = 0;
+  virtual int32 SpectrumCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod) = 0;
   virtual int32 SpectrumCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled) = 0;
   virtual int32 SpectrumCfgPowerUnits(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spectrumPowerUnits) = 0;
   virtual int32 SpectrumCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType) = 0;

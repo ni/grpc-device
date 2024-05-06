@@ -233,6 +233,7 @@
 #define RFMXBT_VAL_PACKET_TYPE_3_EV5                                                              15
 #define RFMXBT_VAL_PACKET_TYPE_LE                                                                 16
 #define RFMXBT_VAL_PACKET_TYPE_LE_CS                                                              17
+#define RFMXBT_VAL_PACKET_TYPE_LE_HDT                                                             18
 
 // Values for RFMXBT_ATTR_PAYLOAD_BIT_PATTERN
 #define RFMXBT_VAL_PAYLOAD_BIT_PATTERN_STANDARD_DEFINED                                           0

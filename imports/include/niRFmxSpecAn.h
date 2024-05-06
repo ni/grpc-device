@@ -328,7 +328,12 @@
 #define RFMXSPECAN_ATTR_SPECTRUM_MEASUREMENT_MODE                                      0x0010901e
 #define RFMXSPECAN_ATTR_SPECTRUM_FFT_WINDOW                                            0x00109009
 #define RFMXSPECAN_ATTR_SPECTRUM_FFT_PADDING                                           0x0010900a
+#define RFMXSPECAN_ATTR_SPECTRUM_FFT_OVERLAP_MODE                                      0x00109024
+#define RFMXSPECAN_ATTR_SPECTRUM_FFT_OVERLAP                                           0x00109025
+#define RFMXSPECAN_ATTR_SPECTRUM_FFT_OVERLAP_TYPE                                      0x00109026
 #define RFMXSPECAN_ATTR_SPECTRUM_AMPLITUDE_CORRECTION_TYPE                             0x00109017
+#define RFMXSPECAN_ATTR_SPECTRUM_MEASUREMENT_METHOD                                    0x00109027
+#define RFMXSPECAN_ATTR_SPECTRUM_SEQUENTIAL_FFT_SIZE                                   0x00109028
 #define RFMXSPECAN_ATTR_SPECTRUM_ANALYSIS_INPUT                                        0x00109023
 #define RFMXSPECAN_ATTR_SPECTRUM_NUMBER_OF_ANALYSIS_THREADS                            0x00109002
 #define RFMXSPECAN_ATTR_SPECTRUM_RESULTS_PEAK_AMPLITUDE                                0x00109012
@@ -1263,9 +1268,22 @@
 #define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN_HARRIS                                            6
 #define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_KAISER_BESSEL                                              7
 
+// Values for RFMXSPECAN_ATTR_SPECTRUM_FFT_OVERLAP_MODE
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_DISABLED                                             0
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_AUTOMATIC                                            1
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_USER_DEFINED                                         2
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_FFT_OVERLAP_TYPE
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_TYPE_RMS                                                  0
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_TYPE_MAX                                                  3
+
 // Values for RFMXSPECAN_ATTR_SPECTRUM_AMPLITUDE_CORRECTION_TYPE
 #define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                         0
 #define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                      1
+
+// Values for RFMXSPECAN_ATTR_SPECTRUM_MEASUREMENT_METHOD
+#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_METHOD_NORMAL                                             0
+#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_METHOD_SEQUENTIAL_FFT                                     2
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_ANALYSIS_INPUT
 #define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_IQ                                                     0
@@ -3848,6 +3866,12 @@ int32 __stdcall RFmxSpecAn_SpectrumCfgVBWFilter(
    float64 VBWToRBWRatio
 );
 
+int32 __stdcall RFmxSpecAn_SpectrumCfgMeasurementMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 measurementMethod
+);
+
 int32 __stdcall RFmxSpecAn_AMPMCfgAMToAMCurveFit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4300,8 +4324,8 @@ int32 __stdcall RFmxSpecAn_IQFetchDataSplit(
    int64 samplesToRead,
    float64* t0,
    float64* dt,
-   float32 I[],
-   float32 Q[],
+   float32 dataI[],
+   float32 dataQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -5671,7 +5695,6 @@ int32 __stdcall RFmxSpecAn_MarkerFetchXY(
 int32 __stdcall RFmxSpecAn_MarkerFetchFunctionValue(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
    float64* functionValue
 );
 
@@ -8925,6 +8948,42 @@ int32 __stdcall RFmxSpecAn_SpectrumSetFFTPadding(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_SpectrumGetFFTOverlapMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetFFTOverlapMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetFFTOverlap(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetFFTOverlap(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetFFTOverlapType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetFFTOverlapType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_SpectrumGetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -8932,6 +8991,30 @@ int32 __stdcall RFmxSpecAn_SpectrumGetAmplitudeCorrectionType(
 );
 
 int32 __stdcall RFmxSpecAn_SpectrumSetAmplitudeCorrectionType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetMeasurementMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetMeasurementMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumGetSequentialFFTSize(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_SpectrumSetSequentialFFTSize(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

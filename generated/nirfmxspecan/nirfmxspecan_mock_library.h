@@ -255,7 +255,7 @@ class NiRFmxSpecAnMockLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInt
   MOCK_METHOD(int32, MarkerCfgType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType), (override));
   MOCK_METHOD(int32, MarkerCfgXLocation, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation), (override));
   MOCK_METHOD(int32, MarkerCfgYLocation, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation), (override));
-  MOCK_METHOD(int32, MarkerFetchFunctionValue, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue), (override));
+  MOCK_METHOD(int32, MarkerFetchFunctionValue, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64* functionValue), (override));
   MOCK_METHOD(int32, MarkerFetchXY, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation), (override));
   MOCK_METHOD(int32, MarkerNextPeak, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound), (override));
   MOCK_METHOD(int32, MarkerPeakSearch, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks), (override));
@@ -393,6 +393,7 @@ class NiRFmxSpecAnMockLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInt
   MOCK_METHOD(int32, SpectrumCfgDetector, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints), (override));
   MOCK_METHOD(int32, SpectrumCfgFFT, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding), (override));
   MOCK_METHOD(int32, SpectrumCfgFrequencyStartStop, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency), (override));
+  MOCK_METHOD(int32, SpectrumCfgMeasurementMethod, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod), (override));
   MOCK_METHOD(int32, SpectrumCfgNoiseCompensationEnabled, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled), (override));
   MOCK_METHOD(int32, SpectrumCfgPowerUnits, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spectrumPowerUnits), (override));
   MOCK_METHOD(int32, SpectrumCfgRBWFilter, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType), (override));

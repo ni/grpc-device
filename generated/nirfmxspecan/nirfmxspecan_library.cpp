@@ -403,6 +403,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.SpectrumCfgDetector = reinterpret_cast<SpectrumCfgDetectorPtr>(shared_library_->get_function_pointer("RFmxSpecAn_SpectrumCfgDetector"));
   function_pointers_.SpectrumCfgFFT = reinterpret_cast<SpectrumCfgFFTPtr>(shared_library_->get_function_pointer("RFmxSpecAn_SpectrumCfgFFT"));
   function_pointers_.SpectrumCfgFrequencyStartStop = reinterpret_cast<SpectrumCfgFrequencyStartStopPtr>(shared_library_->get_function_pointer("RFmxSpecAn_SpectrumCfgFrequencyStartStop"));
+  function_pointers_.SpectrumCfgMeasurementMethod = reinterpret_cast<SpectrumCfgMeasurementMethodPtr>(shared_library_->get_function_pointer("RFmxSpecAn_SpectrumCfgMeasurementMethod"));
   function_pointers_.SpectrumCfgNoiseCompensationEnabled = reinterpret_cast<SpectrumCfgNoiseCompensationEnabledPtr>(shared_library_->get_function_pointer("RFmxSpecAn_SpectrumCfgNoiseCompensationEnabled"));
   function_pointers_.SpectrumCfgPowerUnits = reinterpret_cast<SpectrumCfgPowerUnitsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_SpectrumCfgPowerUnits"));
   function_pointers_.SpectrumCfgRBWFilter = reinterpret_cast<SpectrumCfgRBWFilterPtr>(shared_library_->get_function_pointer("RFmxSpecAn_SpectrumCfgRBWFilter"));
@@ -2371,12 +2372,12 @@ int32 NiRFmxSpecAnLibrary::MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle
   return function_pointers_.MarkerCfgYLocation(instrumentHandle, selectorString, markerYLocation);
 }
 
-int32 NiRFmxSpecAnLibrary::MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue)
+int32 NiRFmxSpecAnLibrary::MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* functionValue)
 {
   if (!function_pointers_.MarkerFetchFunctionValue) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_MarkerFetchFunctionValue.");
   }
-  return function_pointers_.MarkerFetchFunctionValue(instrumentHandle, selectorString, timeout, functionValue);
+  return function_pointers_.MarkerFetchFunctionValue(instrumentHandle, selectorString, functionValue);
 }
 
 int32 NiRFmxSpecAnLibrary::MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation)
@@ -3473,6 +3474,14 @@ int32 NiRFmxSpecAnLibrary::SpectrumCfgFrequencyStartStop(niRFmxInstrHandle instr
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgFrequencyStartStop.");
   }
   return function_pointers_.SpectrumCfgFrequencyStartStop(instrumentHandle, selectorString, startFrequency, stopFrequency);
+}
+
+int32 NiRFmxSpecAnLibrary::SpectrumCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
+{
+  if (!function_pointers_.SpectrumCfgMeasurementMethod) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SpectrumCfgMeasurementMethod.");
+  }
+  return function_pointers_.SpectrumCfgMeasurementMethod(instrumentHandle, selectorString, measurementMethod);
 }
 
 int32 NiRFmxSpecAnLibrary::SpectrumCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)

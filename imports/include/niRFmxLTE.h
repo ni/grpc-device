@@ -397,6 +397,15 @@
 #define RFMXLTE_ATTR_SLOTPOWER_COMMON_CLOCK_SOURCE_ENABLED                                  0x0030b005
 #define RFMXLTE_ATTR_SLOTPOWER_SPECTRUM_INVERTED                                            0x0030b006
 #define RFMXLTE_ATTR_SLOTPOWER_ALL_TRACES_ENABLED                                           0x0030b00a
+#define RFMXLTE_ATTR_TXP_MEASUREMENT_ENABLED                                                0x0030e000
+#define RFMXLTE_ATTR_TXP_MEASUREMENT_OFFSET                                                 0x0030e002
+#define RFMXLTE_ATTR_TXP_MEASUREMENT_INTERVAL                                               0x0030e003
+#define RFMXLTE_ATTR_TXP_AVERAGING_ENABLED                                                  0x0030e004
+#define RFMXLTE_ATTR_TXP_AVERAGING_COUNT                                                    0x0030e005
+#define RFMXLTE_ATTR_TXP_ALL_TRACES_ENABLED                                                 0x0030e007
+#define RFMXLTE_ATTR_TXP_NUMBER_OF_ANALYSIS_THREADS                                         0x0030e008
+#define RFMXLTE_ATTR_TXP_RESULTS_AVERAGE_POWER_MEAN                                         0x0030e00a
+#define RFMXLTE_ATTR_TXP_RESULTS_PEAK_POWER_MAXIMUM                                         0x0030e00b
 #define RFMXLTE_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                                     0x0030d000
 #define RFMXLTE_ATTR_ACQUISITION_BANDWIDTH_OPTIMIZATION_ENABLED                             0x0030d001
 #define RFMXLTE_ATTR_TRANSMITTER_ARCHITECTURE                                               0x0030d002
@@ -979,6 +988,10 @@
 #define RFMXLTE_VAL_SLOTPOWER_SPECTRUM_INVERTED_FALSE                                              0
 #define RFMXLTE_VAL_SLOTPOWER_SPECTRUM_INVERTED_TRUE                                               1
 
+// Values for RFMXLTE_ATTR_TXP_AVERAGING_ENABLED
+#define RFMXLTE_VAL_TXP_AVERAGING_ENABLED_FALSE                                                    0
+#define RFMXLTE_VAL_TXP_AVERAGING_ENABLED_TRUE                                                     1
+
 // Values for RFMXLTE_ATTR_ACQUISITION_BANDWIDTH_OPTIMIZATION_ENABLED
 #define RFMXLTE_VAL_ACQUISITION_BANDWIDTH_OPTIMIZATION_ENABLED_FALSE                               0
 #define RFMXLTE_VAL_ACQUISITION_BANDWIDTH_OPTIMIZATION_ENABLED_TRUE                                1
@@ -1022,6 +1035,7 @@
 #define RFMXLTE_VAL_PVT                                                                            1<<5
 #define RFMXLTE_VAL_SLOTPHASE                                                                      1<<6
 #define RFMXLTE_VAL_SLOTPOWER                                                                      1<<7
+#define RFMXLTE_VAL_TXP                                                                            1<<8
 
 // Values for AcpNoiseCalibrationDataValid
 #define RFMXLTE_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
@@ -2241,6 +2255,20 @@ int32 __stdcall RFmxLTE_SlotPowerCfgMeasurementInterval(
    char selectorString[],
    int32 measurementOffset,
    int32 measurementLength
+);
+
+int32 __stdcall RFmxLTE_TXPCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount
+);
+
+int32 __stdcall RFmxLTE_TXPCfgMeasurementOffsetAndInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 measurementOffset,
+   float64 measurementInterval
 );
 
 int32 __stdcall RFmxLTE_ModAccFetchNPUSCHConstellationTrace(
@@ -3585,6 +3613,25 @@ int32 __stdcall RFmxLTE_SlotPowerFetchPowers(
    float64 subframePowerDelta[],
    int32 arraySize,
    int32* actualArraySize
+);
+
+int32 __stdcall RFmxLTE_TXPFetchPowerTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 power[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxLTE_TXPFetchMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* averagePowerMean,
+   float64* peakPowerMaximum
 );
 
 int32 __stdcall RFmxLTE_GetSelectedPorts(
@@ -7429,6 +7476,102 @@ int32 __stdcall RFmxLTE_SlotPowerSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPSetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPSetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPSetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPSetAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPSetAllTracesEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetNumberOfAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPSetNumberOfAnalysisThreads(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetResultsAveragePowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_TXPGetResultsPeakPowerMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
 );
 
 #ifdef __cplusplus

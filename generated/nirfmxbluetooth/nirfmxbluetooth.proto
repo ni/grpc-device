@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXBLUETOOTH API metadata version 24.3.0
+// This file is generated from NI-RFMXBLUETOOTH API metadata version 24.5.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXBLUETOOTH Metadata
 //---------------------------------------------------------------------
@@ -432,6 +432,7 @@ enum PacketType {
   PACKET_TYPE_3_EV5 = 15;
   PACKET_TYPE_LE = 16;
   PACKET_TYPE_LE_CS = 17;
+  PACKET_TYPE_LE_HDT = 18;
 }
 
 enum PayloadBitPattern {
@@ -562,6 +563,7 @@ enum NiRFmxBluetoothInt32AttributeValues {
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_3_EV5 = 15;
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_LE = 16;
   NIRFMXBLUETOOTH_INT32_PACKET_TYPE_LE_CS = 17;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_LE_HDT = 18;
   NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_STANDARD_DEFINED = 0;
   NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_11110000 = 1;
   NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_10101010 = 2;
