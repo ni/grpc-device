@@ -58,6 +58,9 @@ service NiRFmxInstrRestricted {
   rpc CfgSParameterExternalAttenuationTableFrequencies(CfgSParameterExternalAttenuationTableFrequenciesRequest) returns (CfgSParameterExternalAttenuationTableFrequenciesResponse);
   rpc CfgSParameterExternalAttenuationTableSParameter(CfgSParameterExternalAttenuationTableSParameterRequest) returns (CfgSParameterExternalAttenuationTableSParameterResponse);
   rpc DefineSParameterExternalAttenuationTable(DefineSParameterExternalAttenuationTableRequest) returns (DefineSParameterExternalAttenuationTableResponse);
+  rpc SaveExternalAttenuationTable(SaveExternalAttenuationTableRequest) returns (SaveExternalAttenuationTableResponse);
+  rpc CfgExternalAttenuationTableFrequencies(CfgExternalAttenuationTableFrequenciesRequest) returns (CfgExternalAttenuationTableFrequenciesResponse);
+  rpc CfgExternalAttenuationTable(CfgExternalAttenuationTableRequest) returns (CfgExternalAttenuationTableResponse);
 }
 
 message ConvertForPowerUnitsUtilityRequest {
@@ -496,6 +499,41 @@ message DefineSParameterExternalAttenuationTableRequest {
 }
 
 message DefineSParameterExternalAttenuationTableResponse {
+  int32 status = 1;
+}
+
+message SaveExternalAttenuationTableRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  string file_path = 4;
+  string description = 5;
+}
+
+message SaveExternalAttenuationTableResponse {
+  int32 status = 1;
+}
+
+message CfgExternalAttenuationTableFrequenciesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  repeated double frequency = 4;
+}
+
+message CfgExternalAttenuationTableFrequenciesResponse {
+  int32 status = 1;
+}
+
+message CfgExternalAttenuationTableRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  repeated double frequency = 4;
+  repeated double external_attenuation = 5;
+}
+
+message CfgExternalAttenuationTableResponse {
   int32 status = 1;
 }
 

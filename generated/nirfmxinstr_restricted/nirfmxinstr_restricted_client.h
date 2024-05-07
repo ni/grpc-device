@@ -63,6 +63,9 @@ DefineExternalAttenuationTableResponse define_external_attenuation_table(const S
 CfgSParameterExternalAttenuationTableFrequenciesResponse cfg_s_parameter_external_attenuation_table_frequencies(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& s_parameter_frequencies);
 CfgSParameterExternalAttenuationTableSParameterResponse cfg_s_parameter_external_attenuation_table_s_parameter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& s_parameter_orientation);
 DefineSParameterExternalAttenuationTableResponse define_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const pb::int32& number_of_frequency_points, const pb::int32& number_of_ports);
+SaveExternalAttenuationTableResponse save_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::string& file_path, const std::string& description);
+CfgExternalAttenuationTableFrequenciesResponse cfg_external_attenuation_table_frequencies(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency);
+CfgExternalAttenuationTableResponse cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency, const std::vector<double>& external_attenuation);
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client
 

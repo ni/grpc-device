@@ -1257,6 +1257,104 @@ namespace nirfmxinstr_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::SaveExternalAttenuationTable(::grpc::ServerContext* context, const SaveExternalAttenuationTableRequest* request, SaveExternalAttenuationTableResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
+      auto description_mbcs = convert_from_grpc<std::string>(request->description());
+      char* description = (char*)description_mbcs.c_str();
+      auto status = library_->SaveExternalAttenuationTable(instrument, selector_string, table_name, file_path, description);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::CfgExternalAttenuationTableFrequencies(::grpc::ServerContext* context, const CfgExternalAttenuationTableFrequenciesRequest* request, CfgExternalAttenuationTableFrequenciesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
+      auto frequency = const_cast<float64*>(request->frequency().data());
+      int32 array_size = static_cast<int32>(request->frequency().size());
+      auto status = library_->CfgExternalAttenuationTableFrequencies(instrument, selector_string, table_name, frequency, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::CfgExternalAttenuationTable(::grpc::ServerContext* context, const CfgExternalAttenuationTableRequest* request, CfgExternalAttenuationTableResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
+      auto frequency = const_cast<float64*>(request->frequency().data());
+      auto external_attenuation = const_cast<float64*>(request->external_attenuation().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->frequency_size(),
+        request->external_attenuation_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, external_attenuation] do not match");
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->CfgExternalAttenuationTable(instrument, selector_string, table_name, frequency, external_attenuation, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiRFmxInstrRestrictedFeatureToggles::NiRFmxInstrRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

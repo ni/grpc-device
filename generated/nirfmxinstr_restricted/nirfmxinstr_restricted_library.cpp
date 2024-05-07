@@ -71,6 +71,9 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidev
   function_pointers_.CfgSParameterExternalAttenuationTableFrequencies = reinterpret_cast<CfgSParameterExternalAttenuationTableFrequenciesPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationTableFrequencies"));
   function_pointers_.CfgSParameterExternalAttenuationTableSParameter = reinterpret_cast<CfgSParameterExternalAttenuationTableSParameterPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationTableSParameter"));
   function_pointers_.DefineSParameterExternalAttenuationTable = reinterpret_cast<DefineSParameterExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_DefineSParameterExternalAttenuationTable"));
+  function_pointers_.SaveExternalAttenuationTable = reinterpret_cast<SaveExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_SaveExternalAttenuationTable"));
+  function_pointers_.CfgExternalAttenuationTableFrequencies = reinterpret_cast<CfgExternalAttenuationTableFrequenciesPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgExternalAttenuationTableFrequencies"));
+  function_pointers_.CfgExternalAttenuationTable = reinterpret_cast<CfgExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_CfgExternalAttenuationTable"));
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -434,6 +437,30 @@ int32 NiRFmxInstrRestrictedLibrary::DefineSParameterExternalAttenuationTable(niR
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_DefineSParameterExternalAttenuationTable.");
   }
   return function_pointers_.DefineSParameterExternalAttenuationTable(instrumentHandle, selectorString, tableName, numberOfFrequencyPoints, numberOfPorts);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::SaveExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char filePath[], char description[])
+{
+  if (!function_pointers_.SaveExternalAttenuationTable) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SaveExternalAttenuationTable.");
+  }
+  return function_pointers_.SaveExternalAttenuationTable(instrumentHandle, selectorString, tableName, filePath, description);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::CfgExternalAttenuationTableFrequencies(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 arraySize)
+{
+  if (!function_pointers_.CfgExternalAttenuationTableFrequencies) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgExternalAttenuationTableFrequencies.");
+  }
+  return function_pointers_.CfgExternalAttenuationTableFrequencies(instrumentHandle, selectorString, tableName, frequency, arraySize);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::CfgExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], float64 externalAttenuation[], int32 arraySize)
+{
+  if (!function_pointers_.CfgExternalAttenuationTable) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgExternalAttenuationTable.");
+  }
+  return function_pointers_.CfgExternalAttenuationTable(instrumentHandle, selectorString, tableName, frequency, externalAttenuation, arraySize);
 }
 
 }  // namespace nirfmxinstr_restricted_grpc
