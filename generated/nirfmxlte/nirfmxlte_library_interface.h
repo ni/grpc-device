@@ -302,6 +302,10 @@ class NiRFmxLTELibraryInterface {
   virtual int32 SlotPhaseFetchSamplePhaseErrorLinearFitTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 samplePhaseErrorLinearFit[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 SlotPowerCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementOffset, int32 measurementLength) = 0;
   virtual int32 SlotPowerFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 subframePower[], float64 subframePowerDelta[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) = 0;
+  virtual int32 TXPCfgMeasurementOffsetAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementInterval) = 0;
+  virtual int32 TXPFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* peakPowerMaximum) = 0;
+  virtual int32 TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout) = 0;
   virtual int32 WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout) = 0;
 };

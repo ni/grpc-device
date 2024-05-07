@@ -304,6 +304,10 @@ class NiRFmxLTEMockLibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   MOCK_METHOD(int32, SlotPhaseFetchSamplePhaseErrorLinearFitTrace, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 samplePhaseErrorLinearFit[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, SlotPowerCfgMeasurementInterval, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementOffset, int32 measurementLength), (override));
   MOCK_METHOD(int32, SlotPowerFetchPowers, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 subframePower[], float64 subframePowerDelta[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, TXPCfgAveraging, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount), (override));
+  MOCK_METHOD(int32, TXPCfgMeasurementOffsetAndInterval, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementInterval), (override));
+  MOCK_METHOD(int32, TXPFetchMeasurement, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* peakPowerMaximum), (override));
+  MOCK_METHOD(int32, TXPFetchPowerTrace, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, WaitForAcquisitionComplete, (niRFmxInstrHandle instrumentHandle, float64 timeout), (override));
   MOCK_METHOD(int32, WaitForMeasurementComplete, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout), (override));
 };

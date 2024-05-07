@@ -6079,6 +6079,91 @@ slot_power_fetch_powers(const StubPtr& stub, const nidevice_grpc::Session& instr
   return response;
 }
 
+TXPCfgAveragingResponse
+txp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<TxpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TXPCfgAveragingRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<TxpAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
+  request.set_averaging_count(averaging_count);
+
+  auto response = TXPCfgAveragingResponse{};
+
+  raise_if_error(
+      stub->TXPCfgAveraging(&context, request, &response),
+      context);
+
+  return response;
+}
+
+TXPCfgMeasurementOffsetAndIntervalResponse
+txp_cfg_measurement_offset_and_interval(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_offset, const double& measurement_interval)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TXPCfgMeasurementOffsetAndIntervalRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_measurement_offset(measurement_offset);
+  request.set_measurement_interval(measurement_interval);
+
+  auto response = TXPCfgMeasurementOffsetAndIntervalResponse{};
+
+  raise_if_error(
+      stub->TXPCfgMeasurementOffsetAndInterval(&context, request, &response),
+      context);
+
+  return response;
+}
+
+TXPFetchMeasurementResponse
+txp_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TXPFetchMeasurementRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = TXPFetchMeasurementResponse{};
+
+  raise_if_error(
+      stub->TXPFetchMeasurement(&context, request, &response),
+      context);
+
+  return response;
+}
+
+TXPFetchPowerTraceResponse
+txp_fetch_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TXPFetchPowerTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = TXPFetchPowerTraceResponse{};
+
+  raise_if_error(
+      stub->TXPFetchPowerTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WaitForAcquisitionCompleteResponse
 wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout)
 {

@@ -10936,6 +10936,147 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::TXPCfgAveraging(::grpc::ServerContext* context, const TXPCfgAveragingRequest* request, TXPCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxlte_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->TXPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::TXPCfgMeasurementOffsetAndInterval(::grpc::ServerContext* context, const TXPCfgMeasurementOffsetAndIntervalRequest* request, TXPCfgMeasurementOffsetAndIntervalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 measurement_offset = request->measurement_offset();
+      float64 measurement_interval = request->measurement_interval();
+      auto status = library_->TXPCfgMeasurementOffsetAndInterval(instrument, selector_string, measurement_offset, measurement_interval);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::TXPFetchMeasurement(::grpc::ServerContext* context, const TXPFetchMeasurementRequest* request, TXPFetchMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 average_power_mean {};
+      float64 peak_power_maximum {};
+      auto status = library_->TXPFetchMeasurement(instrument, selector_string, timeout, &average_power_mean, &peak_power_maximum);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_average_power_mean(average_power_mean);
+      response->set_peak_power_maximum(peak_power_maximum);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::TXPFetchPowerTrace(::grpc::ServerContext* context, const TXPFetchPowerTraceRequest* request, TXPFetchPowerTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_power()->Resize(actual_array_size, 0);
+        float32* power = response->mutable_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_power()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response)
   {
     if (context->IsCancelled()) {

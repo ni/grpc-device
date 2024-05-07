@@ -314,6 +314,10 @@ NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.SlotPhaseFetchSamplePhaseErrorLinearFitTrace = reinterpret_cast<SlotPhaseFetchSamplePhaseErrorLinearFitTracePtr>(shared_library_->get_function_pointer("RFmxLTE_SlotPhaseFetchSamplePhaseErrorLinearFitTrace"));
   function_pointers_.SlotPowerCfgMeasurementInterval = reinterpret_cast<SlotPowerCfgMeasurementIntervalPtr>(shared_library_->get_function_pointer("RFmxLTE_SlotPowerCfgMeasurementInterval"));
   function_pointers_.SlotPowerFetchPowers = reinterpret_cast<SlotPowerFetchPowersPtr>(shared_library_->get_function_pointer("RFmxLTE_SlotPowerFetchPowers"));
+  function_pointers_.TXPCfgAveraging = reinterpret_cast<TXPCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxLTE_TXPCfgAveraging"));
+  function_pointers_.TXPCfgMeasurementOffsetAndInterval = reinterpret_cast<TXPCfgMeasurementOffsetAndIntervalPtr>(shared_library_->get_function_pointer("RFmxLTE_TXPCfgMeasurementOffsetAndInterval"));
+  function_pointers_.TXPFetchMeasurement = reinterpret_cast<TXPFetchMeasurementPtr>(shared_library_->get_function_pointer("RFmxLTE_TXPFetchMeasurement"));
+  function_pointers_.TXPFetchPowerTrace = reinterpret_cast<TXPFetchPowerTracePtr>(shared_library_->get_function_pointer("RFmxLTE_TXPFetchPowerTrace"));
   function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxLTE_WaitForAcquisitionComplete"));
   function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_->get_function_pointer("RFmxLTE_WaitForMeasurementComplete"));
 }
@@ -2623,6 +2627,38 @@ int32 NiRFmxLTELibrary::SlotPowerFetchPowers(niRFmxInstrHandle instrumentHandle,
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_SlotPowerFetchPowers.");
   }
   return function_pointers_.SlotPowerFetchPowers(instrumentHandle, selectorString, timeout, subframePower, subframePowerDelta, arraySize, actualArraySize);
+}
+
+int32 NiRFmxLTELibrary::TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.TXPCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_TXPCfgAveraging.");
+  }
+  return function_pointers_.TXPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 NiRFmxLTELibrary::TXPCfgMeasurementOffsetAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementInterval)
+{
+  if (!function_pointers_.TXPCfgMeasurementOffsetAndInterval) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_TXPCfgMeasurementOffsetAndInterval.");
+  }
+  return function_pointers_.TXPCfgMeasurementOffsetAndInterval(instrumentHandle, selectorString, measurementOffset, measurementInterval);
+}
+
+int32 NiRFmxLTELibrary::TXPFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* peakPowerMaximum)
+{
+  if (!function_pointers_.TXPFetchMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_TXPFetchMeasurement.");
+  }
+  return function_pointers_.TXPFetchMeasurement(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum);
+}
+
+int32 NiRFmxLTELibrary::TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.TXPFetchPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_TXPFetchPowerTrace.");
+  }
+  return function_pointers_.TXPFetchPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, power, arraySize, actualArraySize);
 }
 
 int32 NiRFmxLTELibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
