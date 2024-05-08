@@ -2511,8 +2511,6 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'PsschModulationType',
-                'grpc_field_number': '4',
-                'grpc_raw_field_number': '3',
                 'name': 'modulationType',
                 'type': 'int32'
             }
@@ -10283,6 +10281,141 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TXPCfgAveraging': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TxpAveragingEnabled',
+                'name': 'averagingEnabled',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'averagingCount',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TXPCfgMeasurementOffsetAndInterval': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementOffset',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementInterval',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TXPFetchMeasurement': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'averagePowerMean',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'peakPowerMaximum',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TXPFetchPowerTrace': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'power',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',

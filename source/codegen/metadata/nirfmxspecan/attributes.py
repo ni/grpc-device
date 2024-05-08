@@ -1807,6 +1807,34 @@ attributes = {
         'name': 'SPECTRUM_ANALYSIS_INPUT',
         'type': 'int32'
     },
+    1085476: {
+        'access': 'read-write',
+        'enum': 'SpectrumFftOverlapMode',
+        'name': 'SPECTRUM_FFT_OVERLAP_MODE',
+        'type': 'int32'
+    },
+    1085477: {
+        'access': 'read-write',
+        'name': 'SPECTRUM_FFT_OVERLAP',
+        'type': 'float64'
+    },
+    1085478: {
+        'access': 'read-write',
+        'enum': 'SpectrumFftOverlapType',
+        'name': 'SPECTRUM_FFT_OVERLAP_TYPE',
+        'type': 'int32'
+    },
+    1085479: {
+        'access': 'read-write',
+        'enum': 'SpectrumMeasurementMethod',
+        'name': 'SPECTRUM_MEASUREMENT_METHOD',
+        'type': 'int32'
+    },
+    1085480: {
+        'access': 'read-write',
+        'name': 'SPECTRUM_SEQUENTIAL_FFT_SIZE',
+        'type': 'int32'
+    },
     1089536: {
         'access': 'read-write',
         'name': 'SPUR_MEASUREMENT_ENABLED',

@@ -481,6 +481,10 @@ enums = {
             {
                 'name': 'LE_CS',
                 'value': 17
+            },
+            {
+                'name': 'LE_HDT',
+                'value': 18
             }
         ]
     },

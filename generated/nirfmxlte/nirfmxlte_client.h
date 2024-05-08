@@ -309,6 +309,10 @@ SlotPhaseFetchSamplePhaseErrorResponse slot_phase_fetch_sample_phase_error(const
 SlotPhaseFetchSamplePhaseErrorLinearFitTraceResponse slot_phase_fetch_sample_phase_error_linear_fit_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 SlotPowerCfgMeasurementIntervalResponse slot_power_cfg_measurement_interval(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& measurement_offset, const pb::int32& measurement_length);
 SlotPowerFetchPowersResponse slot_power_fetch_powers(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+TXPCfgAveragingResponse txp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<TxpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count);
+TXPCfgMeasurementOffsetAndIntervalResponse txp_cfg_measurement_offset_and_interval(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_offset, const double& measurement_interval);
+TXPFetchMeasurementResponse txp_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+TXPFetchPowerTraceResponse txp_fetch_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 WaitForAcquisitionCompleteResponse wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout);
 WaitForMeasurementCompleteResponse wait_for_measurement_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 

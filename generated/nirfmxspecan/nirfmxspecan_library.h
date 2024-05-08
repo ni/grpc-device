@@ -259,7 +259,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType) override;
   int32 MarkerCfgXLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerXLocation) override;
   int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerYLocation) override;
-  int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue) override;
+  int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* functionValue) override;
   int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation) override;
   int32 MarkerNextPeak(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 nextPeak, int32* nextPeakFound) override;
   int32 MarkerPeakSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* numberOfPeaks) override;
@@ -397,6 +397,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 SpectrumCfgDetector(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 detectorType, int32 detectorPoints) override;
   int32 SpectrumCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 fftWindow, float64 fftPadding) override;
   int32 SpectrumCfgFrequencyStartStop(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency) override;
+  int32 SpectrumCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod) override;
   int32 SpectrumCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled) override;
   int32 SpectrumCfgPowerUnits(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 spectrumPowerUnits) override;
   int32 SpectrumCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType) override;
@@ -826,6 +827,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using SpectrumCfgDetectorPtr = decltype(&RFmxSpecAn_SpectrumCfgDetector);
   using SpectrumCfgFFTPtr = decltype(&RFmxSpecAn_SpectrumCfgFFT);
   using SpectrumCfgFrequencyStartStopPtr = decltype(&RFmxSpecAn_SpectrumCfgFrequencyStartStop);
+  using SpectrumCfgMeasurementMethodPtr = decltype(&RFmxSpecAn_SpectrumCfgMeasurementMethod);
   using SpectrumCfgNoiseCompensationEnabledPtr = decltype(&RFmxSpecAn_SpectrumCfgNoiseCompensationEnabled);
   using SpectrumCfgPowerUnitsPtr = decltype(&RFmxSpecAn_SpectrumCfgPowerUnits);
   using SpectrumCfgRBWFilterPtr = decltype(&RFmxSpecAn_SpectrumCfgRBWFilter);
@@ -1255,6 +1257,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     SpectrumCfgDetectorPtr SpectrumCfgDetector;
     SpectrumCfgFFTPtr SpectrumCfgFFT;
     SpectrumCfgFrequencyStartStopPtr SpectrumCfgFrequencyStartStop;
+    SpectrumCfgMeasurementMethodPtr SpectrumCfgMeasurementMethod;
     SpectrumCfgNoiseCompensationEnabledPtr SpectrumCfgNoiseCompensationEnabled;
     SpectrumCfgPowerUnitsPtr SpectrumCfgPowerUnits;
     SpectrumCfgRBWFilterPtr SpectrumCfgRBWFilter;

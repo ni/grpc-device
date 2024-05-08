@@ -9245,9 +9245,8 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      float64 timeout = request->timeout();
       float64 function_value {};
-      auto status = library_->MarkerFetchFunctionValue(instrument, selector_string, timeout, &function_value);
+      auto status = library_->MarkerFetchFunctionValue(instrument, selector_string, &function_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -14459,6 +14458,46 @@ namespace nirfmxspecan_grpc {
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
       auto status = library_->SpectrumCfgFrequencyStartStop(instrument, selector_string, start_frequency, stop_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::SpectrumCfgMeasurementMethod(::grpc::ServerContext* context, const SpectrumCfgMeasurementMethodRequest* request, SpectrumCfgMeasurementMethodResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 measurement_method;
+      switch (request->measurement_method_enum_case()) {
+        case nirfmxspecan_grpc::SpectrumCfgMeasurementMethodRequest::MeasurementMethodEnumCase::kMeasurementMethod: {
+          measurement_method = static_cast<int32>(request->measurement_method());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgMeasurementMethodRequest::MeasurementMethodEnumCase::kMeasurementMethodRaw: {
+          measurement_method = static_cast<int32>(request->measurement_method_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgMeasurementMethodRequest::MeasurementMethodEnumCase::MEASUREMENT_METHOD_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurement_method was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SpectrumCfgMeasurementMethod(instrument, selector_string, measurement_method);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

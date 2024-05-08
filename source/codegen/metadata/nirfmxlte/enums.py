@@ -992,6 +992,10 @@ enums = {
             {
                 'name': 'SLOTPOWER',
                 'value': 128
+            },
+            {
+                'name': 'TXP',
+                'value': 256
             }
         ]
     },
@@ -1913,6 +1917,18 @@ enums = {
             {
                 'name': 'SOFTWARE',
                 'value': 3
+            }
+        ]
+    },
+    'TxpAveragingEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
             }
         ]
     },

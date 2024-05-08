@@ -260,7 +260,7 @@ MarkerCfgTraceResponse marker_cfg_trace(const StubPtr& stub, const nidevice_grpc
 MarkerCfgTypeResponse marker_cfg_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerType, pb::int32>& marker_type);
 MarkerCfgXLocationResponse marker_cfg_x_location(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_x_location);
 MarkerCfgYLocationResponse marker_cfg_y_location(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_y_location);
-MarkerFetchFunctionValueResponse marker_fetch_function_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+MarkerFetchFunctionValueResponse marker_fetch_function_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 MarkerFetchXYResponse marker_fetch_xy(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 MarkerNextPeakResponse marker_next_peak(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerNextPeak, pb::int32>& next_peak);
 MarkerPeakSearchResponse marker_peak_search(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
@@ -398,6 +398,7 @@ SpectrumCfgAveragingResponse spectrum_cfg_averaging(const StubPtr& stub, const n
 SpectrumCfgDetectorResponse spectrum_cfg_detector(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SpectrumDetectorType, pb::int32>& detector_type, const pb::int32& detector_points);
 SpectrumCfgFFTResponse spectrum_cfg_fft(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SpectrumFftWindow, pb::int32>& fft_window, const double& fft_padding);
 SpectrumCfgFrequencyStartStopResponse spectrum_cfg_frequency_start_stop(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& start_frequency, const double& stop_frequency);
+SpectrumCfgMeasurementMethodResponse spectrum_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SpectrumMeasurementMethod, pb::int32>& measurement_method);
 SpectrumCfgNoiseCompensationEnabledResponse spectrum_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SpectrumNoiseCompensationEnabled, pb::int32>& noise_compensation_enabled);
 SpectrumCfgPowerUnitsResponse spectrum_cfg_power_units(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SpectrumPowerUnits, pb::int32>& spectrum_power_units);
 SpectrumCfgRBWFilterResponse spectrum_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SpectrumRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<SpectrumRbwFilterType, pb::int32>& rbw_filter_type);

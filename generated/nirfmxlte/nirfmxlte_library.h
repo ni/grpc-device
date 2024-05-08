@@ -308,6 +308,10 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   int32 SlotPhaseFetchSamplePhaseErrorLinearFitTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 samplePhaseErrorLinearFit[], int32 arraySize, int32* actualArraySize) override;
   int32 SlotPowerCfgMeasurementInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementOffset, int32 measurementLength) override;
   int32 SlotPowerFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 subframePower[], float64 subframePowerDelta[], int32 arraySize, int32* actualArraySize) override;
+  int32 TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) override;
+  int32 TXPCfgMeasurementOffsetAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementInterval) override;
+  int32 TXPFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* peakPowerMaximum) override;
+  int32 TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize) override;
   int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout) override;
   int32 WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout) override;
 
@@ -599,6 +603,10 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   using SlotPhaseFetchSamplePhaseErrorLinearFitTracePtr = decltype(&RFmxLTE_SlotPhaseFetchSamplePhaseErrorLinearFitTrace);
   using SlotPowerCfgMeasurementIntervalPtr = decltype(&RFmxLTE_SlotPowerCfgMeasurementInterval);
   using SlotPowerFetchPowersPtr = decltype(&RFmxLTE_SlotPowerFetchPowers);
+  using TXPCfgAveragingPtr = decltype(&RFmxLTE_TXPCfgAveraging);
+  using TXPCfgMeasurementOffsetAndIntervalPtr = decltype(&RFmxLTE_TXPCfgMeasurementOffsetAndInterval);
+  using TXPFetchMeasurementPtr = decltype(&RFmxLTE_TXPFetchMeasurement);
+  using TXPFetchPowerTracePtr = decltype(&RFmxLTE_TXPFetchPowerTrace);
   using WaitForAcquisitionCompletePtr = decltype(&RFmxLTE_WaitForAcquisitionComplete);
   using WaitForMeasurementCompletePtr = decltype(&RFmxLTE_WaitForMeasurementComplete);
 
@@ -890,6 +898,10 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     SlotPhaseFetchSamplePhaseErrorLinearFitTracePtr SlotPhaseFetchSamplePhaseErrorLinearFitTrace;
     SlotPowerCfgMeasurementIntervalPtr SlotPowerCfgMeasurementInterval;
     SlotPowerFetchPowersPtr SlotPowerFetchPowers;
+    TXPCfgAveragingPtr TXPCfgAveraging;
+    TXPCfgMeasurementOffsetAndIntervalPtr TXPCfgMeasurementOffsetAndInterval;
+    TXPFetchMeasurementPtr TXPFetchMeasurement;
+    TXPFetchPowerTracePtr TXPFetchPowerTrace;
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;

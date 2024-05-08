@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXLTE API metadata version 24.3.0
+// This file is generated from NI-RFMXLTE API metadata version 24.5.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXLTE Metadata
 //---------------------------------------------------------------------
@@ -304,6 +304,10 @@ service NiRFmxLTE {
   rpc SlotPhaseFetchSamplePhaseErrorLinearFitTrace(SlotPhaseFetchSamplePhaseErrorLinearFitTraceRequest) returns (SlotPhaseFetchSamplePhaseErrorLinearFitTraceResponse);
   rpc SlotPowerCfgMeasurementInterval(SlotPowerCfgMeasurementIntervalRequest) returns (SlotPowerCfgMeasurementIntervalResponse);
   rpc SlotPowerFetchPowers(SlotPowerFetchPowersRequest) returns (SlotPowerFetchPowersResponse);
+  rpc TXPCfgAveraging(TXPCfgAveragingRequest) returns (TXPCfgAveragingResponse);
+  rpc TXPCfgMeasurementOffsetAndInterval(TXPCfgMeasurementOffsetAndIntervalRequest) returns (TXPCfgMeasurementOffsetAndIntervalResponse);
+  rpc TXPFetchMeasurement(TXPFetchMeasurementRequest) returns (TXPFetchMeasurementResponse);
+  rpc TXPFetchPowerTrace(TXPFetchPowerTraceRequest) returns (TXPFetchPowerTraceResponse);
   rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
   rpc WaitForMeasurementComplete(WaitForMeasurementCompleteRequest) returns (WaitForMeasurementCompleteResponse);
 }
@@ -694,6 +698,15 @@ enum NiRFmxLTEAttribute {
   NIRFMXLTE_ATTRIBUTE_TRANSMITTER_ARCHITECTURE = 3198978;
   NIRFMXLTE_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 3198979;
   NIRFMXLTE_ATTRIBUTE_CENTER_FREQUENCY_FOR_LIMITS = 3198980;
+  NIRFMXLTE_ATTRIBUTE_TXP_MEASUREMENT_ENABLED = 3203072;
+  NIRFMXLTE_ATTRIBUTE_TXP_MEASUREMENT_OFFSET = 3203074;
+  NIRFMXLTE_ATTRIBUTE_TXP_MEASUREMENT_INTERVAL = 3203075;
+  NIRFMXLTE_ATTRIBUTE_TXP_AVERAGING_ENABLED = 3203076;
+  NIRFMXLTE_ATTRIBUTE_TXP_AVERAGING_COUNT = 3203077;
+  NIRFMXLTE_ATTRIBUTE_TXP_ALL_TRACES_ENABLED = 3203079;
+  NIRFMXLTE_ATTRIBUTE_TXP_NUMBER_OF_ANALYSIS_THREADS = 3203080;
+  NIRFMXLTE_ATTRIBUTE_TXP_RESULTS_AVERAGE_POWER_MEAN = 3203082;
+  NIRFMXLTE_ATTRIBUTE_TXP_RESULTS_PEAK_POWER_MAXIMUM = 3203083;
 }
 
 enum AcpAveragingEnabled {
@@ -944,6 +957,7 @@ enum MeasurementTypes {
   MEASUREMENT_TYPES_PVT = 32;
   MEASUREMENT_TYPES_SLOTPHASE = 64;
   MEASUREMENT_TYPES_SLOTPOWER = 128;
+  MEASUREMENT_TYPES_TXP = 256;
 }
 
 enum MechanicalAttenuationAuto {
@@ -1152,6 +1166,11 @@ enum SlotPhaseSynchronizationMode {
 enum TriggerMinimumQuietTimeMode {
   TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
   TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+}
+
+enum TxpAveragingEnabled {
+  TXP_AVERAGING_ENABLED_FALSE = 0;
+  TXP_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum UplinkDownlinkConfiguration {
@@ -1487,6 +1506,8 @@ enum NiRFmxLTEInt32AttributeValues {
   NIRFMXLTE_INT32_TRIGGER_TYPE_DIGITAL_EDGE = 1;
   NIRFMXLTE_INT32_TRIGGER_TYPE_IQ_POWER_EDGE = 2;
   NIRFMXLTE_INT32_TRIGGER_TYPE_SOFTWARE = 3;
+  NIRFMXLTE_INT32_TXP_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXLTE_INT32_TXP_AVERAGING_ENABLED_TRUE = 1;
   NIRFMXLTE_INT32_UPLINK_DOWNLINK_CONFIGURATION_0 = 0;
   NIRFMXLTE_INT32_UPLINK_DOWNLINK_CONFIGURATION_1 = 1;
   NIRFMXLTE_INT32_UPLINK_DOWNLINK_CONFIGURATION_2 = 2;
@@ -5131,6 +5152,57 @@ message SlotPowerFetchPowersResponse {
   repeated double subframe_power = 2;
   repeated double subframe_power_delta = 3;
   int32 actual_array_size = 4;
+}
+
+message TXPCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    TxpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message TXPCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message TXPCfgMeasurementOffsetAndIntervalRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double measurement_offset = 3;
+  double measurement_interval = 4;
+}
+
+message TXPCfgMeasurementOffsetAndIntervalResponse {
+  int32 status = 1;
+}
+
+message TXPFetchMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchMeasurementResponse {
+  int32 status = 1;
+  double average_power_mean = 2;
+  double peak_power_maximum = 3;
+}
+
+message TXPFetchPowerTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchPowerTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float power = 4;
+  int32 actual_array_size = 5;
 }
 
 message WaitForAcquisitionCompleteRequest {

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '24.3.0',
+    'api_version': '24.5.0',
     'c_header': 'niRFmxSpecAn.h',
     'c_function_prefix': 'RFmxSpecAn_',
     'service_class_prefix': 'NiRFmxSpecAn',

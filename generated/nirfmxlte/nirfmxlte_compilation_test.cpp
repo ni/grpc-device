@@ -1442,6 +1442,26 @@ int32 SlotPowerFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorStri
   return RFmxLTE_SlotPowerFetchPowers(instrumentHandle, selectorString, timeout, subframePower, subframePowerDelta, arraySize, actualArraySize);
 }
 
+int32 TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  return RFmxLTE_TXPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+}
+
+int32 TXPCfgMeasurementOffsetAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementOffset, float64 measurementInterval)
+{
+  return RFmxLTE_TXPCfgMeasurementOffsetAndInterval(instrumentHandle, selectorString, measurementOffset, measurementInterval);
+}
+
+int32 TXPFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* peakPowerMaximum)
+{
+  return RFmxLTE_TXPFetchMeasurement(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum);
+}
+
+int32 TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxLTE_TXPFetchPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, power, arraySize, actualArraySize);
+}
+
 int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
 {
   return RFmxLTE_WaitForAcquisitionComplete(instrumentHandle, timeout);

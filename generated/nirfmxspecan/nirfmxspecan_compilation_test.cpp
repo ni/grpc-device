@@ -1197,9 +1197,9 @@ int32 MarkerCfgYLocation(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxSpecAn_MarkerCfgYLocation(instrumentHandle, selectorString, markerYLocation);
 }
 
-int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* functionValue)
+int32 MarkerFetchFunctionValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* functionValue)
 {
-  return RFmxSpecAn_MarkerFetchFunctionValue(instrumentHandle, selectorString, timeout, functionValue);
+  return RFmxSpecAn_MarkerFetchFunctionValue(instrumentHandle, selectorString, functionValue);
 }
 
 int32 MarkerFetchXY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerXLocation, float64* markerYLocation)
@@ -1885,6 +1885,11 @@ int32 SpectrumCfgFFT(niRFmxInstrHandle instrumentHandle, char selectorString[], 
 int32 SpectrumCfgFrequencyStartStop(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 startFrequency, float64 stopFrequency)
 {
   return RFmxSpecAn_SpectrumCfgFrequencyStartStop(instrumentHandle, selectorString, startFrequency, stopFrequency);
+}
+
+int32 SpectrumCfgMeasurementMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMethod)
+{
+  return RFmxSpecAn_SpectrumCfgMeasurementMethod(instrumentHandle, selectorString, measurementMethod);
 }
 
 int32 SpectrumCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)

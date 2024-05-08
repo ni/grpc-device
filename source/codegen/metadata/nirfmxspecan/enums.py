@@ -3257,6 +3257,34 @@ enums = {
             }
         ]
     },
+    'SpectrumFftOverlapMode': {
+        'values': [
+            {
+                'name': 'DISABLED',
+                'value': 0
+            },
+            {
+                'name': 'AUTOMATIC',
+                'value': 1
+            },
+            {
+                'name': 'USER_DEFINED',
+                'value': 2
+            }
+        ]
+    },
+    'SpectrumFftOverlapType': {
+        'values': [
+            {
+                'name': 'RMS',
+                'value': 0
+            },
+            {
+                'name': 'MAX',
+                'value': 3
+            }
+        ]
+    },
     'SpectrumFftWindow': {
         'values': [
             {
@@ -3290,6 +3318,18 @@ enums = {
             {
                 'name': 'KAISER_BESSEL',
                 'value': 7
+            }
+        ]
+    },
+    'SpectrumMeasurementMethod': {
+        'values': [
+            {
+                'name': 'NORMAL',
+                'value': 0
+            },
+            {
+                'name': 'SEQUENTIAL_FFT',
+                'value': 2
             }
         ]
     },

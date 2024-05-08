@@ -331,6 +331,10 @@ public:
   ::grpc::Status SlotPhaseFetchSamplePhaseErrorLinearFitTrace(::grpc::ServerContext* context, const SlotPhaseFetchSamplePhaseErrorLinearFitTraceRequest* request, SlotPhaseFetchSamplePhaseErrorLinearFitTraceResponse* response) override;
   ::grpc::Status SlotPowerCfgMeasurementInterval(::grpc::ServerContext* context, const SlotPowerCfgMeasurementIntervalRequest* request, SlotPowerCfgMeasurementIntervalResponse* response) override;
   ::grpc::Status SlotPowerFetchPowers(::grpc::ServerContext* context, const SlotPowerFetchPowersRequest* request, SlotPowerFetchPowersResponse* response) override;
+  ::grpc::Status TXPCfgAveraging(::grpc::ServerContext* context, const TXPCfgAveragingRequest* request, TXPCfgAveragingResponse* response) override;
+  ::grpc::Status TXPCfgMeasurementOffsetAndInterval(::grpc::ServerContext* context, const TXPCfgMeasurementOffsetAndIntervalRequest* request, TXPCfgMeasurementOffsetAndIntervalResponse* response) override;
+  ::grpc::Status TXPFetchMeasurement(::grpc::ServerContext* context, const TXPFetchMeasurementRequest* request, TXPFetchMeasurementResponse* response) override;
+  ::grpc::Status TXPFetchPowerTrace(::grpc::ServerContext* context, const TXPFetchPowerTraceRequest* request, TXPFetchPowerTraceResponse* response) override;
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
   ::grpc::Status WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response) override;
 private:

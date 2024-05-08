@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXSPECAN API metadata version 24.3.0
+// This file is generated from NI-RFMXSPECAN API metadata version 24.5.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXSPECAN Metadata
 //---------------------------------------------------------------------
@@ -393,6 +393,7 @@ service NiRFmxSpecAn {
   rpc SpectrumCfgDetector(SpectrumCfgDetectorRequest) returns (SpectrumCfgDetectorResponse);
   rpc SpectrumCfgFFT(SpectrumCfgFFTRequest) returns (SpectrumCfgFFTResponse);
   rpc SpectrumCfgFrequencyStartStop(SpectrumCfgFrequencyStartStopRequest) returns (SpectrumCfgFrequencyStartStopResponse);
+  rpc SpectrumCfgMeasurementMethod(SpectrumCfgMeasurementMethodRequest) returns (SpectrumCfgMeasurementMethodResponse);
   rpc SpectrumCfgNoiseCompensationEnabled(SpectrumCfgNoiseCompensationEnabledRequest) returns (SpectrumCfgNoiseCompensationEnabledResponse);
   rpc SpectrumCfgPowerUnits(SpectrumCfgPowerUnitsRequest) returns (SpectrumCfgPowerUnitsResponse);
   rpc SpectrumCfgRBWFilter(SpectrumCfgRBWFilterRequest) returns (SpectrumCfgRBWFilterResponse);
@@ -786,6 +787,11 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO = 1085473;
   NIRFMXSPECAN_ATTRIBUTE_SPECTRUM_NOISE_CALIBRATION_MODE = 1085474;
   NIRFMXSPECAN_ATTRIBUTE_SPECTRUM_ANALYSIS_INPUT = 1085475;
+  NIRFMXSPECAN_ATTRIBUTE_SPECTRUM_FFT_OVERLAP_MODE = 1085476;
+  NIRFMXSPECAN_ATTRIBUTE_SPECTRUM_FFT_OVERLAP = 1085477;
+  NIRFMXSPECAN_ATTRIBUTE_SPECTRUM_FFT_OVERLAP_TYPE = 1085478;
+  NIRFMXSPECAN_ATTRIBUTE_SPECTRUM_MEASUREMENT_METHOD = 1085479;
+  NIRFMXSPECAN_ATTRIBUTE_SPECTRUM_SEQUENTIAL_FFT_SIZE = 1085480;
   NIRFMXSPECAN_ATTRIBUTE_SPUR_MEASUREMENT_ENABLED = 1089536;
   NIRFMXSPECAN_ATTRIBUTE_SPUR_NUMBER_OF_ANALYSIS_THREADS = 1089539;
   NIRFMXSPECAN_ATTRIBUTE_SPUR_NUMBER_OF_RANGES = 1089540;
@@ -2019,6 +2025,11 @@ enum SpectrumFftWindow {
   SPECTRUM_FFT_WINDOW_KAISER_BESSEL = 7;
 }
 
+enum SpectrumMeasurementMethod {
+  SPECTRUM_MEASUREMENT_METHOD_NORMAL = 0;
+  SPECTRUM_MEASUREMENT_METHOD_SEQUENTIAL_FFT = 2;
+}
+
 enum SpectrumNoiseCalibrationDataValid {
   SPECTRUM_NOISE_CALIBRATION_DATA_VALID_FALSE = 0;
   SPECTRUM_NOISE_CALIBRATION_DATA_VALID_TRUE = 1;
@@ -2710,6 +2721,11 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_SPECTRUM_DETECTOR_TYPE_AVERAGE_RMS = 5;
   NIRFMXSPECAN_INT32_SPECTRUM_DETECTOR_TYPE_AVERAGE_VOLTAGE = 6;
   NIRFMXSPECAN_INT32_SPECTRUM_DETECTOR_TYPE_AVERAGE_LOG = 7;
+  NIRFMXSPECAN_INT32_SPECTRUM_FFT_OVERLAP_MODE_DISABLED = 0;
+  NIRFMXSPECAN_INT32_SPECTRUM_FFT_OVERLAP_MODE_AUTOMATIC = 1;
+  NIRFMXSPECAN_INT32_SPECTRUM_FFT_OVERLAP_MODE_USER_DEFINED = 2;
+  NIRFMXSPECAN_INT32_SPECTRUM_FFT_OVERLAP_TYPE_RMS = 0;
+  NIRFMXSPECAN_INT32_SPECTRUM_FFT_OVERLAP_TYPE_MAX = 3;
   NIRFMXSPECAN_INT32_SPECTRUM_FFT_WINDOW_NONE = 0;
   NIRFMXSPECAN_INT32_SPECTRUM_FFT_WINDOW_FLAT_TOP = 1;
   NIRFMXSPECAN_INT32_SPECTRUM_FFT_WINDOW_HANNING = 2;
@@ -2718,6 +2734,8 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_SPECTRUM_FFT_WINDOW_BLACKMAN = 5;
   NIRFMXSPECAN_INT32_SPECTRUM_FFT_WINDOW_BLACKMAN_HARRIS = 6;
   NIRFMXSPECAN_INT32_SPECTRUM_FFT_WINDOW_KAISER_BESSEL = 7;
+  NIRFMXSPECAN_INT32_SPECTRUM_MEASUREMENT_METHOD_NORMAL = 0;
+  NIRFMXSPECAN_INT32_SPECTRUM_MEASUREMENT_METHOD_SEQUENTIAL_FFT = 2;
   NIRFMXSPECAN_INT32_SPECTRUM_MEASUREMENT_MODE_MEASURE = 0;
   NIRFMXSPECAN_INT32_SPECTRUM_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR = 1;
   NIRFMXSPECAN_INT32_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE = 0;
@@ -5889,7 +5907,6 @@ message MarkerCfgYLocationResponse {
 message MarkerFetchFunctionValueRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  double timeout = 3;
 }
 
 message MarkerFetchFunctionValueResponse {
@@ -7643,6 +7660,19 @@ message SpectrumCfgFrequencyStartStopRequest {
 }
 
 message SpectrumCfgFrequencyStartStopResponse {
+  int32 status = 1;
+}
+
+message SpectrumCfgMeasurementMethodRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof measurement_method_enum {
+    SpectrumMeasurementMethod measurement_method = 3;
+    int32 measurement_method_raw = 4;
+  }
+}
+
+message SpectrumCfgMeasurementMethodResponse {
   int32 status = 1;
 }
 

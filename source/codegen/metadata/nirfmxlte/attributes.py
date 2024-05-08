@@ -2043,5 +2043,51 @@ attributes = {
         'access': 'read-write',
         'name': 'CENTER_FREQUENCY_FOR_LIMITS',
         'type': 'float64'
+    },
+    3203072: {
+        'access': 'read-write',
+        'name': 'TXP_MEASUREMENT_ENABLED',
+        'type': 'int32'
+    },
+    3203074: {
+        'access': 'read-write',
+        'name': 'TXP_MEASUREMENT_OFFSET',
+        'type': 'float64'
+    },
+    3203075: {
+        'access': 'read-write',
+        'name': 'TXP_MEASUREMENT_INTERVAL',
+        'type': 'float64'
+    },
+    3203076: {
+        'access': 'read-write',
+        'enum': 'TxpAveragingEnabled',
+        'name': 'TXP_AVERAGING_ENABLED',
+        'type': 'int32'
+    },
+    3203077: {
+        'access': 'read-write',
+        'name': 'TXP_AVERAGING_COUNT',
+        'type': 'int32'
+    },
+    3203079: {
+        'access': 'read-write',
+        'name': 'TXP_ALL_TRACES_ENABLED',
+        'type': 'int32'
+    },
+    3203080: {
+        'access': 'read-write',
+        'name': 'TXP_NUMBER_OF_ANALYSIS_THREADS',
+        'type': 'int32'
+    },
+    3203082: {
+        'access': 'read-write',
+        'name': 'TXP_RESULTS_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    3203083: {
+        'access': 'read-write',
+        'name': 'TXP_RESULTS_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
     }
 }
