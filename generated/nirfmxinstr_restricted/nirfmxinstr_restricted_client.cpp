@@ -818,26 +818,5 @@ cfg_external_attenuation_table_frequencies(const StubPtr& stub, const nidevice_g
   return response;
 }
 
-CfgExternalAttenuationTableResponse
-cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency, const std::vector<double>& external_attenuation)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CfgExternalAttenuationTableRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-  request.set_table_name(table_name);
-  copy_array(frequency, request.mutable_frequency());
-  copy_array(external_attenuation, request.mutable_external_attenuation());
-
-  auto response = CfgExternalAttenuationTableResponse{};
-
-  raise_if_error(
-      stub->CfgExternalAttenuationTable(&context, request, &response),
-      context);
-
-  return response;
-}
-
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client
