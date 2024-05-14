@@ -33,7 +33,7 @@ class SessionRepository {
       SessionInitializationBehavior initialization_behavior = SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
       bool* initialized_new_session = nullptr);
   std::string access_session(const std::string& session_name);
-  void remove_session(const std::string& name);
+  bool remove_session(const std::string& name);
 
   void register_dependent_session(const std::string& name, const std::string& dependent_session_name, std::function<void()> cleanup);
 
@@ -75,6 +75,8 @@ class SessionRepository {
     std::chrono::steady_clock::time_point last_access_time;
     SessionRepository::CleanupSessionFunc cleanup_func;
     std::vector<std::unique_ptr<RemoveAction>> dependent_sessions;
+    bool reference_counted;
+    unsigned int reference_count;
   };
 
   using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;

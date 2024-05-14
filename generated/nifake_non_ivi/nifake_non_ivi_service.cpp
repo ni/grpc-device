@@ -61,7 +61,7 @@ namespace nifake_non_ivi_grpc {
     try {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
-      session_repository_->remove_session(handle_grpc_session.name());
+      if (session_repository_->remove_session(handle_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->Close(handle);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, handle);
@@ -84,7 +84,7 @@ namespace nifake_non_ivi_grpc {
     try {
       auto secondary_session_handle_grpc_session = request->secondary_session_handle();
       SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.name());
-      secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.name());
+      if (secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->CloseSecondarySession(secondary_session_handle);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForSecondarySessionHandle(context, status, secondary_session_handle);

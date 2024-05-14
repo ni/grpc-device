@@ -36,7 +36,7 @@ class SessionResourceRepository {
   TResourceHandle access_session(const std::string& session_name) const;
   std::string resolve_session_name(TResourceHandle handle) const;
   int add_dependent_session(std::string& session_name, InitFunc init_func, std::string& initiating_session);
-  void remove_session(const std::string& session_name);
+  bool remove_session(const std::string& session_name);
 
  private:
   // Wraps init_func_ and caches the result as handle_.
@@ -162,13 +162,17 @@ std::string SessionResourceRepository<TResourceHandle>::resolve_session_name(TRe
 }
 
 template <typename TResourceHandle>
-void SessionResourceRepository<TResourceHandle>::remove_session(const std::string& session_name)
+bool SessionResourceRepository<TResourceHandle>::remove_session(const std::string& session_name)
 {
+  bool sessionRemoved = true;
   auto name = session_repository_->access_session(session_name);
   if (name.length()) {
-    resource_map_->remove_session_name(name);
-    session_repository_->remove_session(name);
+    sessionRemoved = session_repository_->remove_session(name);
+    if (sessionRemoved) {
+      resource_map_->remove_session_name(name);
+    }
   }
+  return sessionRemoved;
 }
 
 template <typename TResourceHandle>

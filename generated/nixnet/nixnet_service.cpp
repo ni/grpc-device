@@ -92,7 +92,7 @@ namespace nixnet_grpc {
     try {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
-      session_repository_->remove_session(session_grpc_session.name());
+      if (session_repository_->remove_session(session_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->Clear(session);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
@@ -546,7 +546,7 @@ namespace nixnet_grpc {
       auto database_grpc_session = request->database();
       nxDatabaseRef_t database = nx_database_ref_t_resource_repository_->access_session(database_grpc_session.name());
       u32 close_all_refs = request->close_all_refs();
-      nx_database_ref_t_resource_repository_->remove_session(database_grpc_session.name());
+      if (nx_database_ref_t_resource_repository_->remove_session(database_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->DbCloseDatabase(database, close_all_refs);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, database);
@@ -602,7 +602,7 @@ namespace nixnet_grpc {
     try {
       auto db_object_grpc_session = request->db_object();
       nxDatabaseRef_t db_object = nx_database_ref_t_resource_repository_->access_session(db_object_grpc_session.name());
-      nx_database_ref_t_resource_repository_->remove_session(db_object_grpc_session.name());
+      if (nx_database_ref_t_resource_repository_->remove_session(db_object_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->DbDeleteObject(db_object);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, db_object);
@@ -1468,7 +1468,7 @@ namespace nixnet_grpc {
     try {
       auto system_grpc_session = request->system();
       nxSessionRef_t system = session_repository_->access_session(system_grpc_session.name());
-      session_repository_->remove_session(system_grpc_session.name());
+      if (session_repository_->remove_session(system_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->SystemClose(system);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, system);

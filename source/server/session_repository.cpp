@@ -44,9 +44,18 @@ int SessionRepository::add_session(
   else if (initialization_behavior == SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING && it == named_sessions_.end()) {
     throw NonDriverException(::grpc::StatusCode::FAILED_PRECONDITION, "Cannot attach to '" + session_name + "' because a session has not been initialized.");
   }
+  else if (initialization_behavior == SESSION_INITIALIZATION_BEHAVIOR_REFERENCE_COUNTED && it != named_sessions_.end() && !it->second->reference_counted) {
+    throw NonDriverException(::grpc::StatusCode::ALREADY_EXISTS, "Cannot add a reference to '" + session_name + "' when a session already exists that was not initialized as reference counted.");
+  }
 
   if (it != named_sessions_.end()) {
     it->second->last_access_time = now;
+    if (it->second->reference_count < std::numeric_limits<unsigned int>::max()) {
+      it->second->reference_count++;
+    }
+    else {
+      throw NonDriverException(::grpc::StatusCode::RESOURCE_EXHAUSTED, "Max number of references to '" + session_name + "' has been reached.");
+    }
     return 0;
   }
   auto info = std::make_shared<SessionInfo>();
@@ -60,6 +69,8 @@ int SessionRepository::add_session(
   info->cleanup_func = cleanup_func;
   info->last_access_time = now;
   info->name = session_name;
+  info->reference_counted = initialization_behavior == SESSION_INITIALIZATION_BEHAVIOR_REFERENCE_COUNTED;
+  info->reference_count = 1;
   named_sessions_.emplace(session_name, info);
   if (initialized_new_session) {
     *initialized_new_session = true;
@@ -85,13 +96,20 @@ std::string SessionRepository::access_session(const std::string& session_name)
 
 // Removes a session by ID.
 // To remove a session by name, use access_session to get the session ID.
-void SessionRepository::remove_session(const std::string& name)
+bool SessionRepository::remove_session(const std::string& name)
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   auto named_it = named_sessions_.find(name);
   if (named_it != named_sessions_.end()) {
+    if (named_it->second->reference_counted) {
+      named_it->second->reference_count--;
+      if (named_it->second->reference_count > 0) {
+        return false;
+      }
+    }
     named_sessions_.erase(named_it);
   }
+  return true;
 }
 
 void SessionRepository::register_dependent_session(const std::string& name, const std::string& dependent_session_name, std::function<void()> cleanup)

@@ -260,7 +260,7 @@ ${initialize_output_params(output_parameters)}\
   session_param = common_helpers.get_first_session_param(parameters)
   session_param_name = f'{common_helpers.get_cpp_local_name(session_param)}_grpc_session'
 %>\
-      ${service_helpers.session_repository_field_name(session_param, config)}->remove_session(${session_param_name}.name());
+      if (${service_helpers.session_repository_field_name(session_param, config)}->remove_session(${session_param_name}.name()) == false) return ::grpc::Status::OK;
 % endif
 ${call_library_method(
   function_name=function_name,

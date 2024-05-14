@@ -118,7 +118,7 @@ namespace nixnetsocket_grpc {
     try {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
-      session_repository_->remove_session(socket_grpc_session.name());
+      if (session_repository_->remove_session(socket_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->Close(socket);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
@@ -527,7 +527,7 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
-      nx_ip_stack_ref_t_resource_repository_->remove_session(stack_ref_grpc_session.name());
+      if (nx_ip_stack_ref_t_resource_repository_->remove_session(stack_ref_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->IpStackClear(stack_ref);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);

@@ -90,7 +90,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     try {
       auto session_grpc_session = request->session();
       nimxlc_Session session = session_repository_->access_session(session_grpc_session.name());
-      session_repository_->remove_session(session_grpc_session.name());
+      if (session_repository_->remove_session(session_grpc_session.name()) == false) return ::grpc::Status::OK;
       library_->destroySession(session);
       auto status = 0;
       if (!status_ok(status)) {

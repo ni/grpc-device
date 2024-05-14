@@ -291,7 +291,7 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      session_repository_->remove_session(vi_grpc_session.name());
+      if (session_repository_->remove_session(vi_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->Close(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

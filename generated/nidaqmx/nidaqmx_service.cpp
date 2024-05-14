@@ -1275,7 +1275,7 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.name());
-      session_repository_->remove_session(task_grpc_session.name());
+      if (session_repository_->remove_session(task_grpc_session.name()) == false) return ::grpc::Status::OK;
       auto status = library_->ClearTask(task);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);

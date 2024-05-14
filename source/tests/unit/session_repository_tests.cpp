@@ -227,6 +227,88 @@ TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBot
   EXPECT_TRUE(is_server_reset);
 }
 
+TEST(SessionRepositoryTests, MultipleRefCountedSessions_RemoveSessions_LastOpenedSessionCloses)
+{
+  std::string session_name = "session_name";
+  nidevice_grpc::SessionRepository session_repository;
+  session_repository.add_session(
+      session_name,
+      []() { return 0; },
+      NULL,
+      nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_REFERENCE_COUNTED);
+  
+  const int number_of_sessions_to_test = 10;
+  
+  for (int i = 0; i < number_of_sessions_to_test; ++i) {
+    session_repository.add_session(
+        session_name,
+        []() { return 0; },
+        NULL,
+        nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_REFERENCE_COUNTED);
+  }
+  for (int i = 0; i < number_of_sessions_to_test; ++i) {
+    EXPECT_EQ(false, session_repository.remove_session(session_name));
+  }
+  
+  EXPECT_EQ(true, session_repository.remove_session(session_name));
+}
+
+TEST(SessionRepositoryTests, ExistingNonRefCountedSession_AddReferenceCountSession_ExceptionThrown)
+{
+  std::string session_name = "session_name";
+  nidevice_grpc::SessionRepository session_repository;
+  session_repository.add_session(
+      session_name,
+      []() { return 0; },
+      NULL);
+  EXPECT_THROW(session_repository.add_session(
+        session_name,
+        []() { return 0; },
+        NULL,
+        nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_REFERENCE_COUNTED),
+      nidevice_grpc::NonDriverException);
+}
+
+TEST(SessionRepositoryTests, OneRefCountedSessions_AddOneSession_NoException)
+{
+  // This behaviors allows a top level process to start a named session as reference coutned for every user of the session name
+  std::string session_name = "session_name";
+  nidevice_grpc::SessionRepository session_repository;
+  session_repository.add_session(
+      session_name,
+      []() { return 0; },
+      NULL,
+      nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_REFERENCE_COUNTED);
+  session_repository.add_session(
+      session_name,
+      []() { return 0; },
+      NULL);
+
+  EXPECT_EQ(false, session_repository.remove_session(session_name));
+  EXPECT_EQ(true, session_repository.remove_session(session_name));
+}
+
+TEST(SessionRepositoryTests, MuiltipleRefCountedSessions_ResetServer_RemovesSessions)
+{
+  std::string session_name = "session_name";
+  nidevice_grpc::SessionRepository session_repository;
+  session_repository.add_session(
+      session_name,
+      []() { return 0; },
+      NULL,
+      nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_REFERENCE_COUNTED);
+  session_repository.add_session(
+      session_name,
+      []() { return 0; },
+      NULL,
+      nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_REFERENCE_COUNTED);
+
+  bool is_server_reset = session_repository.reset_server();
+
+  EXPECT_EQ("", session_repository.access_session(session_name));
+  EXPECT_TRUE(is_server_reset);
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
