@@ -67,7 +67,6 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 DefineSParameterExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfFrequencyPoints, int32 numberOfPorts) override;
   int32 SaveExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char filePath[], char description[]) override;
   int32 CfgExternalAttenuationTableFrequencies(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 arraySize) override;
-  int32 CfgExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], float64 externalAttenuation[], int32 arraySize) override;
 
  private:
   using ConvertForPowerUnitsUtilityPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, float64 referenceOrTriggerLevelIn, int32 inputPowerUnits, int32 outputPowerUnits, int32 terminalConfiguration, float64 bandwidth, float64* referenceOrTriggerLevelOut);
@@ -116,7 +115,6 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using DefineSParameterExternalAttenuationTablePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfFrequencyPoints, int32 numberOfPorts);
   using SaveExternalAttenuationTablePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char filePath[], char description[]);
   using CfgExternalAttenuationTableFrequenciesPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 arraySize);
-  using CfgExternalAttenuationTablePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], float64 externalAttenuation[], int32 arraySize);
 
   typedef struct FunctionPointers {
     ConvertForPowerUnitsUtilityPtr ConvertForPowerUnitsUtility;
@@ -165,7 +163,6 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     DefineSParameterExternalAttenuationTablePtr DefineSParameterExternalAttenuationTable;
     SaveExternalAttenuationTablePtr SaveExternalAttenuationTable;
     CfgExternalAttenuationTableFrequenciesPtr CfgExternalAttenuationTableFrequencies;
-    CfgExternalAttenuationTablePtr CfgExternalAttenuationTable;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
