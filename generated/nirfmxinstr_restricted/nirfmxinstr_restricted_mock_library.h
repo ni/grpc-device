@@ -63,6 +63,7 @@ class NiRFmxInstrRestrictedMockLibrary : public nirfmxinstr_restricted_grpc::NiR
   MOCK_METHOD(int32, DefineSParameterExternalAttenuationTable, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 numberOfFrequencyPoints, int32 numberOfPorts), (override));
   MOCK_METHOD(int32, SaveExternalAttenuationTable, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char filePath[], char description[]), (override));
   MOCK_METHOD(int32, CfgExternalAttenuationTableFrequencies, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 arraySize), (override));
+  MOCK_METHOD(int32, ReleaseLicense, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
 };
 
 }  // namespace unit

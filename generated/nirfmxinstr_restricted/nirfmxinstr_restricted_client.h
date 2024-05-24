@@ -65,6 +65,7 @@ CfgSParameterExternalAttenuationTableSParameterResponse cfg_s_parameter_external
 DefineSParameterExternalAttenuationTableResponse define_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const pb::int32& number_of_frequency_points, const pb::int32& number_of_ports);
 SaveExternalAttenuationTableResponse save_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::string& file_path, const std::string& description);
 CfgExternalAttenuationTableFrequenciesResponse cfg_external_attenuation_table_frequencies(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency);
+ReleaseLicenseResponse release_license(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client
 

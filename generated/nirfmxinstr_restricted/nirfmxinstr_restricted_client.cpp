@@ -818,5 +818,23 @@ cfg_external_attenuation_table_frequencies(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+ReleaseLicenseResponse
+release_license(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReleaseLicenseRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = ReleaseLicenseResponse{};
+
+  raise_if_error(
+      stub->ReleaseLicense(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nirfmxinstr_restricted_grpc::experimental::client

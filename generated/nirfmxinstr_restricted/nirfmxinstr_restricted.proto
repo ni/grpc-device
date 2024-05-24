@@ -60,6 +60,7 @@ service NiRFmxInstrRestricted {
   rpc DefineSParameterExternalAttenuationTable(DefineSParameterExternalAttenuationTableRequest) returns (DefineSParameterExternalAttenuationTableResponse);
   rpc SaveExternalAttenuationTable(SaveExternalAttenuationTableRequest) returns (SaveExternalAttenuationTableResponse);
   rpc CfgExternalAttenuationTableFrequencies(CfgExternalAttenuationTableFrequenciesRequest) returns (CfgExternalAttenuationTableFrequenciesResponse);
+  rpc ReleaseLicense(ReleaseLicenseRequest) returns (ReleaseLicenseResponse);
 }
 
 message ConvertForPowerUnitsUtilityRequest {
@@ -521,6 +522,15 @@ message CfgExternalAttenuationTableFrequenciesRequest {
 }
 
 message CfgExternalAttenuationTableFrequenciesResponse {
+  int32 status = 1;
+}
+
+message ReleaseLicenseRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ReleaseLicenseResponse {
   int32 status = 1;
 }
 
