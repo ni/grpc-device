@@ -73,6 +73,7 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary(std::shared_ptr<nidev
   function_pointers_.DefineSParameterExternalAttenuationTable = reinterpret_cast<DefineSParameterExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_DefineSParameterExternalAttenuationTable"));
   function_pointers_.SaveExternalAttenuationTable = reinterpret_cast<SaveExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_SaveExternalAttenuationTable"));
   function_pointers_.CfgExternalAttenuationTableFrequencies = reinterpret_cast<CfgExternalAttenuationTableFrequenciesPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgExternalAttenuationTableFrequencies"));
+  function_pointers_.ReleaseLicense = reinterpret_cast<ReleaseLicensePtr>(shared_library_->get_function_pointer("RFmxInstr_ReleaseLicense"));
 }
 
 NiRFmxInstrRestrictedLibrary::~NiRFmxInstrRestrictedLibrary()
@@ -452,6 +453,14 @@ int32 NiRFmxInstrRestrictedLibrary::CfgExternalAttenuationTableFrequencies(niRFm
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgExternalAttenuationTableFrequencies.");
   }
   return function_pointers_.CfgExternalAttenuationTableFrequencies(instrumentHandle, selectorString, tableName, frequency, arraySize);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::ReleaseLicense(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ReleaseLicense) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_ReleaseLicense.");
+  }
+  return function_pointers_.ReleaseLicense(instrumentHandle, selectorString);
 }
 
 }  // namespace nirfmxinstr_restricted_grpc

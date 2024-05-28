@@ -1457,5 +1457,21 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'ReleaseLicense': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            }            
+        ],
+        'returns': 'int32'
     }
 }

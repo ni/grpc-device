@@ -1315,6 +1315,30 @@ namespace nirfmxinstr_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::ReleaseLicense(::grpc::ServerContext* context, const ReleaseLicenseRequest* request, ReleaseLicenseResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->ReleaseLicense(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiRFmxInstrRestrictedFeatureToggles::NiRFmxInstrRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
