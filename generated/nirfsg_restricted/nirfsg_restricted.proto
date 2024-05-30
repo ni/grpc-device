@@ -1,0 +1,90 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFSG-RESTRICTED API metadata version 23.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFSG-RESTRICTED Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.rfsgrestricted";
+option java_outer_classname = "NiRFSGRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFSGRestricted";
+
+package nirfsg_restricted_grpc;
+
+import "nidevice.proto";
+import "session.proto";
+
+service NiRFSGRestricted {
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
+  rpc CreateDeembeddingSparameterTable(CreateDeembeddingSparameterTableRequest) returns (CreateDeembeddingSparameterTableResponse);
+  rpc ConfigureSparameterTableFrequencies(ConfigureSparameterTableFrequenciesRequest) returns (ConfigureSparameterTableFrequenciesResponse);
+  rpc ConfigureSparameterTableSparameters(ConfigureSparameterTableSparametersRequest) returns (ConfigureSparameterTableSparametersResponse);
+}
+
+enum SParameterOrientation {
+  S_PARAMETER_ORIENTATION_UNSPECIFIED = 0;
+  S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 24000;
+  S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 24001;
+}
+
+message GetErrorRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  sint32 error_code = 2;
+  string error_description = 3;
+}
+
+message ErrorMessageRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
+}
+
+message CreateDeembeddingSparameterTableRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+  sint32 number_of_frequencies = 4;
+  sint32 number_of_ports = 5;
+}
+
+message CreateDeembeddingSparameterTableResponse {
+  int32 status = 1;
+}
+
+message ConfigureSparameterTableFrequenciesRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+  repeated double frequencies = 4;
+}
+
+message ConfigureSparameterTableFrequenciesResponse {
+  int32 status = 1;
+}
+
+message ConfigureSparameterTableSparametersRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+  repeated nidevice_grpc.NIComplexNumber sparameter_table = 4;
+  oneof sparameter_orientation_enum {
+    SParameterOrientation sparameter_orientation = 5;
+    sint32 sparameter_orientation_raw = 6;
+  }
+}
+
+message ConfigureSparameterTableSparametersResponse {
+  int32 status = 1;
+}
+
