@@ -85,6 +85,7 @@ public:
   ::grpc::Status DefineSParameterExternalAttenuationTable(::grpc::ServerContext* context, const DefineSParameterExternalAttenuationTableRequest* request, DefineSParameterExternalAttenuationTableResponse* response) override;
   ::grpc::Status SaveExternalAttenuationTable(::grpc::ServerContext* context, const SaveExternalAttenuationTableRequest* request, SaveExternalAttenuationTableResponse* response) override;
   ::grpc::Status CfgExternalAttenuationTableFrequencies(::grpc::ServerContext* context, const CfgExternalAttenuationTableFrequenciesRequest* request, CfgExternalAttenuationTableFrequenciesResponse* response) override;
+  ::grpc::Status CfgExternalAttenuationTableLosses(::grpc::ServerContext* context, const CfgExternalAttenuationTableLossesRequest* request, CfgExternalAttenuationTableLossesResponse* response) override;
   ::grpc::Status ReleaseLicense(::grpc::ServerContext* context, const ReleaseLicenseRequest* request, ReleaseLicenseResponse* response) override;
 private:
   LibrarySharedPtr library_;
