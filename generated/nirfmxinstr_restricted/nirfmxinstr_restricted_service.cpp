@@ -1317,6 +1317,34 @@ namespace nirfmxinstr_restricted_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::CfgExternalAttenuationTableLosses(::grpc::ServerContext* context, const CfgExternalAttenuationTableLossesRequest* request, CfgExternalAttenuationTableLossesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
+      auto external_attenuation = const_cast<float64*>(request->external_attenuation().data());
+      int32 array_size = static_cast<int32>(request->external_attenuation().size());
+      auto status = library_->CfgExternalAttenuationTableLosses(instrument, selector_string, table_name, external_attenuation, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrRestrictedService::ReleaseLicense(::grpc::ServerContext* context, const ReleaseLicenseRequest* request, ReleaseLicenseResponse* response)
   {
     if (context->IsCancelled()) {

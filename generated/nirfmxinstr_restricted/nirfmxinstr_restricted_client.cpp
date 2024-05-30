@@ -818,6 +818,26 @@ cfg_external_attenuation_table_frequencies(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+CfgExternalAttenuationTableLossesResponse
+cfg_external_attenuation_table_losses(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& external_attenuation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgExternalAttenuationTableLossesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_table_name(table_name);
+  copy_array(external_attenuation, request.mutable_external_attenuation());
+
+  auto response = CfgExternalAttenuationTableLossesResponse{};
+
+  raise_if_error(
+      stub->CfgExternalAttenuationTableLosses(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReleaseLicenseResponse
 release_license(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
