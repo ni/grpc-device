@@ -124,7 +124,7 @@ jobs:
         ThirdPartyNotices.txt
 
     - name: Upload Linux Server Binaries Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
         name: ni-grpc-device-server-linux-glibc${{ matrix.config.glibc_version }}-x64
@@ -148,36 +148,28 @@ jobs:
         ThirdPartyNotices.txt
 
     - name: Upload Linux Test Binaries Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ runner.os == 'Linux' }}
       with:
         name: ni-grpc-device-tests-linux-glibc${{ matrix.config.glibc_version }}-x64
         path: ni-grpc-device-tests-linux-glibc${{ matrix.config.glibc_version }}-x64.tar.gz
         retention-days: 5
 
-    - name: Upload Windows Server Information Artifact
-      uses: actions/upload-artifact@v2
+    - name: Upload Windows Server Artifact
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
       with:
         name: ni-grpc-device-server-windows-x64
         path: |
           LICENSE
           ThirdPartyNotices.txt
-        retention-days: 5
-
-    - name: Upload Windows Server Binaries Artifact
-      uses: actions/upload-artifact@v2
-      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
-      with:
-        name: ni-grpc-device-server-windows-x64
-        path: |
           build/RelWithDebInfo/ni_grpc_device_server.exe
           build/RelWithDebInfo/server_config.json
           build/RelWithDebInfo/server_capabilities.json
         retention-days: 5
 
     - name: Upload Windows Test Binaries Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ runner.os == 'Windows' }}
       with:
         name: ni-grpc-device-tests-windows-x64
@@ -198,7 +190,7 @@ jobs:
         retention-days: 5
 
     - name: Upload Windows Server Debug Symbols Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
       with:
         name: ni-grpc-device-server-windows-x64-debug-symbols
