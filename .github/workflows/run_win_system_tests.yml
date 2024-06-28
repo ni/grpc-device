@@ -23,11 +23,11 @@ jobs:
       working-directory: ./build/RelWithDebInfo
 
     - name: Run System Tests help
-      run: .\SystemTestsRunner.exe --help
+      run: SystemTestsRunner.exe --help
       working-directory: ./build/RelWithDebInfo
       timeout-minutes: 1
 
     - name: Run System Tests
-      run: .\SystemTestsRunner.exe
+      run: SystemTestsRunner.exe
       working-directory: ./build/RelWithDebInfo
       timeout-minutes: 50
