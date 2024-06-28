@@ -703,7 +703,7 @@ add_dependencies(CompilationTests generated_nidriver_service_library_hdrs)
 
 set(system_test_runner_sources
   "imports/include/nierr_Status.cpp"
-  "source/tests/utilities/run_all_tests.cpp"
+  "source/tests/utilities/run_all_system_tests.cpp"
   "source/server/core_services_registrar.cpp"
   "source/tests/system/device_server.cpp"
   "source/tests/system/enumerate_devices.cpp"
