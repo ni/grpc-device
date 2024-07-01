@@ -53,7 +53,7 @@ jobs:
       run: git submodule update --init --recursive --depth=1
 
     - name: Setup Ninja
-      uses: ashutoshvarma/setup-ninja@v1
+      uses: ashutoshvarma/setup-ninja@v1.1
       with:
           version: 1.12.1
 
