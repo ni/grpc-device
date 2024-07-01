@@ -21,9 +21,6 @@ jobs:
             os: windows-latest,
             cc: "cl", cxx: "cl",
             cmake_platform: "",
-            # On msvc, the -j flag does not help build times and causes intermittent
-            # file permission errors.
-            cmake_number_of_jobs: "",
             cmake_generator: '-G "Ninja Multi-Config"'
           }
         - {
@@ -32,8 +29,7 @@ jobs:
             cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "",
             glibc_version: "2_31",
-            cmake_number_of_jobs: "-j 2",
-            cmake_generator: ''
+            cmake_generator: '-G "Ninja"'
           }
 
     steps:
@@ -63,44 +59,65 @@ jobs:
       with:
           arch: x64
 
-    - name: Configure
-      shell: cmake -P {0}
-      run: |
-        set(ENV{CC} ${{ matrix.config.cc }})
-        set(ENV{CXX} ${{ matrix.config.cxx }})
-        set(path_separator ":")
-        if ("${{ runner.os }}" STREQUAL "Windows")
-          set(path_separator ";")
-        endif()
-        set(ENV{PATH} "$ENV{GITHUB_WORKSPACE}${path_separator}$ENV{PATH}")
-        execute_process(
-          COMMAND cmake
-            -S .
-            -B build
-            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
-            ${{ matrix.config.cmake_generator }}
-          RESULT_VARIABLE result
-        )
-        if (NOT result EQUAL 0)
-          message(FATAL_ERROR "Bad exit status")
-        endif()
+    - name: Get number of CPU cores
+      uses: SimenB/github-actions-cpu-cores@v2
+      id: cpu-cores
 
-    - name: Build
-      shell: cmake -P {0}
-      run: |
-        execute_process(
-          COMMAND cmake --build build --config $ENV{BUILD_TYPE} ${{ matrix.config.cmake_number_of_jobs }}
-          RESULT_VARIABLE result
-          OUTPUT_VARIABLE output
-          ERROR_VARIABLE output
-          ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
-        )
-        if (NOT result EQUAL 0)
-          string(REGEX MATCH "FAILED:.*$" error_message "${output}")
-          string(REPLACE "\n" "%0A" error_message "${error_message}")
-          message("::error::${error_message}")
-          message(FATAL_ERROR "Build failed")
-        endif()
+    - name: Build & Test
+      uses: ashutoshvarma/action-cmake-build@v1
+      with:
+          build-dir: ${{ github.workspace }}/build
+          cc: ${{ matrix.config.cc }}
+          cxx: ${{ matrix.config.cxx }}
+          build-type: $ENV{BUILD_TYPE}
+          configure-options: ${{ matrix.config.cmake_generator }}
+          build-options: --config $ENV{BUILD_TYPE}
+          run-test: true
+          ctest-options: -C $ENV{BUILD_TYPE} -E System --output-on-failure
+          parallel: ${{ steps.cpu-cores.outputs.count }}
+
+#    - name: Configure
+#      run: |
+#          cmake -S . -B build -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
+#      shell: cmake -P {0}
+#      run: |
+#        set(ENV{CC} ${{ matrix.config.cc }})
+#        set(ENV{CXX} ${{ matrix.config.cxx }})
+#        set(path_separator ":")
+#        if ("${{ runner.os }}" STREQUAL "Windows")
+#          set(path_separator ";")
+#        endif()
+#        set(ENV{PATH} "$ENV{GITHUB_WORKSPACE}${path_separator}$ENV{PATH}")
+#        execute_process(
+#          COMMAND cmake
+#            -S .
+#            -B build
+#            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
+#            ${{ matrix.config.cmake_generator }}
+#          RESULT_VARIABLE result
+#        )
+#        if (NOT result EQUAL 0)
+#          message(FATAL_ERROR "Bad exit status")
+#        endif()
+#
+#    - name: Build
+#      run: |
+#          cmake --build build --config $ENV{BUILD_TYPE} -j ${{ steps.cpu-cores.outputs.count }}
+#      # shell: cmake -P {0}
+#      # run: |
+#      #   execute_process(
+#      #     COMMAND cmake --build build --config $ENV{BUILD_TYPE} -j ${{ steps.cpu-cores.outputs.count }}
+#      #     RESULT_VARIABLE result
+#      #     OUTPUT_VARIABLE output
+#      #     ERROR_VARIABLE output
+#      #     ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
+#      #   )
+#      #   if (NOT result EQUAL 0)
+#      #     string(REGEX MATCH "FAILED:.*$" error_message "${output}")
+#      #     string(REPLACE "\n" "%0A" error_message "${error_message}")
+#      #     message("::error::${error_message}")
+#      #     message(FATAL_ERROR "Build failed")
+#      #   endif()
 
     # The generated source in git must match the output of workflow builds.
     # If this step fails, something is changing during build. Either:
@@ -109,20 +126,20 @@ jobs:
     - name: Check for files dirtied by codegen
       run: git diff --exit-code
 
-    - name: Run Tests
-      shell: cmake -P {0}
-      run: |
-        include(ProcessorCount)
-        ProcessorCount(N)
-
-        execute_process(
-          COMMAND ctest -j ${N} -C $ENV{BUILD_TYPE} -E System --output-on-failure
-          WORKING_DIRECTORY build
-          RESULT_VARIABLE result
-        )
-        if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Running tests failed!")
-        endif()
+#    - name: Run Tests
+#      shell: cmake -P {0}
+#      run: |
+#        include(ProcessorCount)
+#        ProcessorCount(N)
+#
+#        execute_process(
+#          COMMAND ctest -j ${N} -C $ENV{BUILD_TYPE} -E System --output-on-failure
+#          WORKING_DIRECTORY build
+#          RESULT_VARIABLE result
+#        )
+#        if (NOT result EQUAL 0)
+#            message(FATAL_ERROR "Running tests failed!")
+#        endif()
 
     - name: Tar Linux Server Binaries
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
