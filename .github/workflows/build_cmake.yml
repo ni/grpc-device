@@ -19,19 +19,21 @@ jobs:
         - {
             name: "Windows Build", artifact: "Windows.tar.xz",
             os: windows-latest,
-            build_type: "Release", cc: "gcc-9", cxx: "g++-9",
-            cmake_platform: "-A x64",
+            cc: "cl", cxx: "cl",
+            cmake_platform: "",
             # On msvc, the -j flag does not help build times and causes intermittent
             # file permission errors.
-            cmake_number_of_jobs: ""
+            cmake_number_of_jobs: "",
+            cmake_generator: '-G "Ninja Multi-Config"'
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
             os: ubuntu-20.04,
-            build_type: "Release", cc: "gcc-9", cxx: "g++-9",
+            cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "",
             glibc_version: "2_31",
             cmake_number_of_jobs: "-j 2"
+            cmake_generator: ''
           }
 
     steps:
@@ -50,6 +52,17 @@ jobs:
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
 
+    - name: Setup Ninja
+      uses: ashutoshvarma/setup-ninja@v1
+      with:
+          version: 1.12.1
+
+    - name: Setup MSVC for compilation
+      if: ${{ runner.os == 'Windows' }}
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+          arch: x64
+
     - name: Configure
       shell: cmake -P {0}
       run: |
@@ -65,7 +78,7 @@ jobs:
             -S .
             -B build
             -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
-            ${{ matrix.config.cmake_platform }}
+            ${{ matrix.config.cmake_generator }}
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)
