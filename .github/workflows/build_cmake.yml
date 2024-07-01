@@ -27,7 +27,7 @@ jobs:
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
-            os: ubuntu-20.04,
+            os: ubuntu-latest,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "",
             glibc_version: "2_31",
@@ -49,6 +49,12 @@ jobs:
 
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
+
+    - name: Print CMake Version
+      run: cmake --version
+
+    - name: Print ninja Version
+      run: ninja --version
 
     - name: Configure
       shell: cmake -P {0}
