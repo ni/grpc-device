@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup python3
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.8.x'
 
@@ -25,7 +25,7 @@ jobs:
         ni-python-styleguide lint source/codegen/*.py examples
 
     - name: Install poetry for validate_examples.py
-      uses: abatilo/actions-poetry@v2.0.0
+      uses: abatilo/actions-poetry@v3
       with:
         poetry-version: 1.2.2
 
