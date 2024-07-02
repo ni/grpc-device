@@ -63,7 +63,7 @@ jobs:
       env:
           CC: ${{ matrix.config.cc }}
           CXX: ${{ matrix.config.cxx }}
-      run: |
+      run: >
         cmake
         -S .
         -B build
@@ -71,7 +71,7 @@ jobs:
         ${{ matrix.config.cmake_generator }}
 
     - name: Build
-      run: |
+      run: >
         cmake
         --build build
         --config ${{ matrix.config.build_type }}
@@ -85,7 +85,7 @@ jobs:
       run: git diff --exit-code
 
     - name: Run Tests
-      run: |
+      run: >
         ctest
         --test-dir build
         -j ${{ steps.cpu-cores.outputs.count }}
