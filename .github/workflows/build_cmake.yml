@@ -65,11 +65,11 @@ jobs:
       env:
           CC: ${{ matrix.config.cc }}
           CXX: ${{ matrix.config.cxx }}
-      run: cmake -S . -B build -D CMAKE_BUILD_TYPE=${{ cmatrix.config.build_type }} ${{ cmatrix.config.cmake_generator }}
+      run: cmake -S . -B build -D CMAKE_BUILD_TYPE=${{ matrix.config.build_type }} ${{ matrix.config.cmake_generator }}
 
     - name: Build
       run: |
-          cmake --build build --config ${{ cmatrix.config.build_type }} -j ${{ steps.cpu-cores.outputs.count }}
+          cmake --build build --config ${{ matrix.config.build_type }} -j ${{ steps.cpu-cores.outputs.count }}
 
 #    - name: Build & Test
 #      uses: ashutoshvarma/action-cmake-build@v1
@@ -135,7 +135,7 @@ jobs:
       run: git diff --exit-code
 
     - name: Run Tests
-      run: ctest --test-dir build -j ${{ steps.cpu-cores.outputs.count }} -C ${{ cmatrix.config.build_type }} -E System --output-on-failure
+      run: ctest --test-dir build -j ${{ steps.cpu-cores.outputs.count }} -C ${{ matrix.config.build_type }} -E System --output-on-failure
 
 #    - name: Run Tests
 #      shell: cmake -P {0}
