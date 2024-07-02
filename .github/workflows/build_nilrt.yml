@@ -15,10 +15,10 @@ jobs:
 
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup python3
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
@@ -38,7 +38,7 @@ jobs:
         echo "::set-output name=grpc-commit::$(git rev-parse --short @:./third_party/grpc)"
 
     - name: Cache Host OS gRPC Support
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       id: hostgrpccache
       env:
         cache-name: hostgrpccache
@@ -140,7 +140,7 @@ jobs:
         ThirdPartyNotices.txt
 
     - name: Upload Server Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       with:
         name: ni-grpc-device-server-ni-linux-rt-x64
@@ -164,7 +164,7 @@ jobs:
         ThirdPartyNotices.txt
 
     - name: Upload Tests Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       with:
         name: ni-grpc-device-tests-ni-linux-rt-x64

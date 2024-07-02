@@ -23,10 +23,10 @@ jobs:
 
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup python3
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
@@ -47,7 +47,7 @@ jobs:
         tar -cvzf ni-grpc-device-client.tar.gz -C ${{ runner.temp }}/staging/ .
 
     - name: Upload Linux Client Files Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
         name: ni-grpc-device-client-Linux
@@ -55,7 +55,7 @@ jobs:
         retention-days: 5
 
     - name: Upload Windows Client Files Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
       with:
         name: ni-grpc-device-client
@@ -64,7 +64,7 @@ jobs:
         retention-days: 5
 
     - name: Upload Windows Restricted Client Files Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
       with:
         name: ni-grpc-device-client-restricted

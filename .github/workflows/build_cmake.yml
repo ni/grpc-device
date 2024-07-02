@@ -4,10 +4,6 @@ on:
   workflow_call:
   workflow_dispatch:
 
-env:
-  CMAKE_VERSION: 3.18.3
-  BUILD_TYPE: RelWithDebInfo
-
 jobs:
   build:
     name: ${{ matrix.config.name }}
@@ -19,27 +15,25 @@ jobs:
         - {
             name: "Windows Build", artifact: "Windows.tar.xz",
             os: windows-latest,
-            build_type: "Release", cc: "gcc-9", cxx: "g++-9",
-            cmake_platform: "-A x64",
-            # On msvc, the -j flag does not help build times and causes intermittent
-            # file permission errors.
-            cmake_number_of_jobs: ""
+            cc: "cl", cxx: "cl",
+            cmake_generator: '-G "Ninja Multi-Config"',
+            build_type: RelWithDebInfo
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
-            os: ubuntu-latest,
-            build_type: "Release", cc: "gcc-9", cxx: "g++-9",
-            cmake_platform: "",
+            os: ubuntu-20.04,
+            cc: "gcc-9", cxx: "g++-9",
             glibc_version: "2_31",
-            cmake_number_of_jobs: "-j 2"
+            cmake_generator: '-G "Ninja"',
+            build_type: RelWithDebInfo
           }
 
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup python3
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
@@ -50,50 +44,38 @@ jobs:
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
 
-    - name: Print CMake Version
-      run: cmake --version
+    - name: Setup Ninja
+      uses: ashutoshvarma/setup-ninja@v1.1
+      with:
+          version: 1.12.1
 
-    - name: Print ninja Version
-      run: ninja --version
+    - name: Setup MSVC for compilation
+      if: ${{ runner.os == 'Windows' }}
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+          arch: x64
+
+    - name: Get number of CPU cores
+      uses: SimenB/github-actions-cpu-cores@v2
+      id: cpu-cores
 
     - name: Configure
-      shell: cmake -P {0}
-      run: |
-        set(ENV{CC} ${{ matrix.config.cc }})
-        set(ENV{CXX} ${{ matrix.config.cxx }})
-        set(path_separator ":")
-        if ("${{ runner.os }}" STREQUAL "Windows")
-          set(path_separator ";")
-        endif()
-        set(ENV{PATH} "$ENV{GITHUB_WORKSPACE}${path_separator}$ENV{PATH}")
-        execute_process(
-          COMMAND cmake
-            -S .
-            -B build
-            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
-            ${{ matrix.config.cmake_platform }}
-          RESULT_VARIABLE result
-        )
-        if (NOT result EQUAL 0)
-          message(FATAL_ERROR "Bad exit status")
-        endif()
+      env:
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
+      run: >
+        cmake
+        -S .
+        -B build
+        -D CMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
+        ${{ matrix.config.cmake_generator }}
 
     - name: Build
-      shell: cmake -P {0}
-      run: |
-        execute_process(
-          COMMAND cmake --build build --config $ENV{BUILD_TYPE} ${{ matrix.config.cmake_number_of_jobs }}
-          RESULT_VARIABLE result
-          OUTPUT_VARIABLE output
-          ERROR_VARIABLE output
-          ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
-        )
-        if (NOT result EQUAL 0)
-          string(REGEX MATCH "FAILED:.*$" error_message "${output}")
-          string(REPLACE "\n" "%0A" error_message "${error_message}")
-          message("::error::${error_message}")
-          message(FATAL_ERROR "Build failed")
-        endif()
+      run: >
+        cmake
+        --build build
+        --config ${{ matrix.config.build_type }}
+        -j ${{ steps.cpu-cores.outputs.count }}
 
     # The generated source in git must match the output of workflow builds.
     # If this step fails, something is changing during build. Either:
@@ -103,19 +85,13 @@ jobs:
       run: git diff --exit-code
 
     - name: Run Tests
-      shell: cmake -P {0}
-      run: |
-        include(ProcessorCount)
-        ProcessorCount(N)
-
-        execute_process(
-          COMMAND ctest -j ${N} -C $ENV{BUILD_TYPE} -E System --output-on-failure
-          WORKING_DIRECTORY build
-          RESULT_VARIABLE result
-        )
-        if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Running tests failed!")
-        endif()
+      run: >
+        ctest
+        --test-dir build
+        -j ${{ steps.cpu-cores.outputs.count }}
+        -C ${{ matrix.config.build_type }}
+        -E System
+        --output-on-failure
 
     - name: Tar Linux Server Binaries
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
@@ -130,7 +106,7 @@ jobs:
         ThirdPartyNotices.txt
 
     - name: Upload Linux Server Binaries Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
         name: ni-grpc-device-server-linux-glibc${{ matrix.config.glibc_version }}-x64
@@ -154,36 +130,28 @@ jobs:
         ThirdPartyNotices.txt
 
     - name: Upload Linux Test Binaries Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ runner.os == 'Linux' }}
       with:
         name: ni-grpc-device-tests-linux-glibc${{ matrix.config.glibc_version }}-x64
         path: ni-grpc-device-tests-linux-glibc${{ matrix.config.glibc_version }}-x64.tar.gz
         retention-days: 5
 
-    - name: Upload Windows Server Information Artifact
-      uses: actions/upload-artifact@v2
+    - name: Upload Windows Server Artifact
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
       with:
         name: ni-grpc-device-server-windows-x64
         path: |
           LICENSE
           ThirdPartyNotices.txt
-        retention-days: 5
-
-    - name: Upload Windows Server Binaries Artifact
-      uses: actions/upload-artifact@v2
-      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
-      with:
-        name: ni-grpc-device-server-windows-x64
-        path: |
           build/RelWithDebInfo/ni_grpc_device_server.exe
           build/RelWithDebInfo/server_config.json
           build/RelWithDebInfo/server_capabilities.json
         retention-days: 5
 
     - name: Upload Windows Test Binaries Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ runner.os == 'Windows' }}
       with:
         name: ni-grpc-device-tests-windows-x64
@@ -204,7 +172,7 @@ jobs:
         retention-days: 5
 
     - name: Upload Windows Server Debug Symbols Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
       with:
         name: ni-grpc-device-server-windows-x64-debug-symbols
