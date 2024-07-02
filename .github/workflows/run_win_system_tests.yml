@@ -14,6 +14,9 @@ jobs:
     - grpcbot-win-10
 
     steps:
+    - name: Print System Information
+      run: systeminfo /fo csv | ConvertFrom-Csv | select OS*, System*, Hotfix* | Format-List 
+
     - name: Download Tests Artifact
       uses: actions/download-artifact@v2
       with:

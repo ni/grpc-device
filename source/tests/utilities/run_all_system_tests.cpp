@@ -1,8 +1,13 @@
 #include <gtest/gtest.h>
+#include <iostream>
 
 int main(int argc, char** argv)
 {
-  // setlocale(LC_ALL, "");
+  std::cout << "Before setlocale" << std::endl;
+  setlocale(LC_ALL, "");
+  std::cout << "After setlocale" << std::endl;
   ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  const int run_result = RUN_ALL_TESTS();
+  std::cout << "Run_result: " << run_result << std::endl;
+  return run_result; 
 }
