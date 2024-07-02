@@ -21,7 +21,7 @@ jobs:
             os: windows-latest,
             cc: "cl", cxx: "cl",
             cmake_platform: "",
-            cmake_generator: '-G "Ninja Multi-Config"'
+            cmake_generator: "Ninja Multi-Config"
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
@@ -29,7 +29,7 @@ jobs:
             cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "",
             glibc_version: "2_31",
-            cmake_generator: '-G "Ninja"'
+            cmake_generator: "Ninja"
           }
 
     steps:
@@ -63,18 +63,28 @@ jobs:
       uses: SimenB/github-actions-cpu-cores@v2
       id: cpu-cores
 
-    - name: Build & Test
-      uses: ashutoshvarma/action-cmake-build@v1
-      with:
-          build-dir: ${{ github.workspace }}/build
-          cc: ${{ matrix.config.cc }}
-          cxx: ${{ matrix.config.cxx }}
-          build-type: $ENV{BUILD_TYPE}
-          configure-options: ${{ matrix.config.cmake_generator }}
-          build-options: --config $ENV{BUILD_TYPE}
-          run-test: true
-          ctest-options: -C $ENV{BUILD_TYPE} -E System --output-on-failure
-          parallel: ${{ steps.cpu-cores.outputs.count }}
+    - name: Configure
+      env:
+          CC: ${{ matrix.config.cc }}
+          CXX: ${{ matrix.config.cxx }}
+      run: cmake -S . -B build -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
+
+    - name: Build
+      run: |
+          cmake --build build --config $ENV{BUILD_TYPE} -j ${{ steps.cpu-cores.outputs.count }}
+
+#    - name: Build & Test
+#      uses: ashutoshvarma/action-cmake-build@v1
+#      with:
+#          build-dir: ${{ github.workspace }}/build
+#          cc: ${{ matrix.config.cc }}
+#          cxx: ${{ matrix.config.cxx }}
+#          build-type: $ENV{BUILD_TYPE}
+#          configure-options: ${{ matrix.config.cmake_generator }}
+#          build-options: --config $ENV{BUILD_TYPE}
+#          run-test: true
+#          ctest-options: -C $ENV{BUILD_TYPE} -E System --output-on-failure
+#          parallel: ${{ steps.cpu-cores.outputs.count }}
 
 #    - name: Configure
 #      run: |
@@ -125,6 +135,9 @@ jobs:
     # 2. Build locally to ensure generated files are up-to-date.
     - name: Check for files dirtied by codegen
       run: git diff --exit-code
+
+    - name: Run Tests
+      run: ctest --test-dir build -j ${{ steps.cpu-cores.outputs.count }} -C $ENV{BUILD_TYPE} -E System --output-on-failure
 
 #    - name: Run Tests
 #      shell: cmake -P {0}
