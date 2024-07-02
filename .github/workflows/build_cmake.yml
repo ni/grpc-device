@@ -93,6 +93,11 @@ jobs:
         -E System
         --output-on-failure
 
+    - name: [Debug] Try running SystemTests
+      if: ${{ runner.os == 'Windows' }}
+      run: >
+          build/RelWithDebInfo/SystemTestsRunner.exe --help
+
     - name: Tar Linux Server Binaries
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       run: >-
