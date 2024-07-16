@@ -25,6 +25,18 @@ jobs:
     - run: ls -R
       working-directory: ./build/RelWithDebInfo
 
+    - name: Run Unit Tests help
+      run: .\UnitTestsRunner.exe --help
+      shell: cmd
+      working-directory: ./build/RelWithDebInfo
+      timeout-minutes: 1
+
+    - name: Run Integration Tests help
+      run: .\IntegrationTestsRunner.exe --help
+      shell: cmd
+      working-directory: ./build/RelWithDebInfo
+      timeout-minutes: 1
+
     - name: Run System Tests help
       run: .\SystemTestsRunner.exe --help
       shell: cmd
