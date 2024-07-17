@@ -16,6 +16,7 @@
 #include "nidigitalpattern/nidigitalpattern_service_registrar.h"
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
+#include "nifpga/nifpga_service_registrar.h"
 #if defined(_MSC_VER)
 #include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
@@ -87,6 +88,7 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
 
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository);
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository);
+  auto ni_fpga_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<NiFpga_Session>>(session_repository);
 #if defined(_MSC_VER)
   auto nimxlc_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nimxlc_Session>>(session_repository);
 #endif // defined(_MSC_VER)
@@ -123,6 +125,11 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
     nifgen_grpc::register_service(
       server_builder, 
       vi_session_repository,
+      feature_toggles));
+  service_vector->push_back(
+    nifpga_grpc::register_service(
+      server_builder, 
+      ni_fpga_session_repository,
       feature_toggles));
 #if defined(_MSC_VER)
   service_vector->push_back(

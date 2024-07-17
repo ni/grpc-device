@@ -91,7 +91,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "nirfsg_restricted" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket" "visa")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "nirfsg_restricted" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket" "visa" "nifpga")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
