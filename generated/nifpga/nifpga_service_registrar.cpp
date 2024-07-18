@@ -18,12 +18,12 @@ std::shared_ptr<void> register_service(
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<NiFpga_Session>>& resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
-  auto toggles = nifpgaFeatureToggles(feature_toggles);
+  auto toggles = NiFpgaFeatureToggles(feature_toggles);
 
   if (toggles.is_enabled)
   {
-    auto library = std::make_shared<nifpgaLibrary>();
-    auto service = std::make_shared<nifpgaService>(
+    auto library = std::make_shared<NiFpgaLibrary>();
+    auto service = std::make_shared<NiFpgaService>(
       library,
       resource_repository,
       toggles);

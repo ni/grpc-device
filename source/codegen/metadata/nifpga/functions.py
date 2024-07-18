@@ -1077,12 +1077,11 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'CloseHostMemoryBuffer': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
                 'name': 'session',
-                'type': 'const NiFpga_Session'
+                'type': 'NiFpga_Session'
             },
             {
                 'direction': 'in',
@@ -1093,12 +1092,11 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'CloseLowLatencyBuffer': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
                 'name': 'session',
-                'type': 'const NiFpga_Session'
+                'type': 'NiFpga_Session'
             },
             {
                 'direction': 'in',
@@ -1109,7 +1107,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'CommitFifoConfiguration': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1246,13 +1243,7 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'Finalize': {
-        'codegen_method': 'no',
         'parameters': [
-            {
-                'direction': 'in',
-                'name': '',
-                'type': 'void'
-            }
         ],
         'returns': 'NiFpga_Status'
     },
@@ -1487,13 +1478,7 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'Initialize': {
-        'codegen_method': 'no',
         'parameters': [
-            {
-                'direction': 'in',
-                'name': '',
-                'type': 'void'
-            }
         ],
         'returns': 'NiFpga_Status'
     },
@@ -1525,7 +1510,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'session',
-                'type': 'const NiFpga_Session'
+                'type': 'NiFpga_Session'
             },
             {
                 'direction': 'in',
@@ -1615,7 +1600,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'session',
-                'type': 'const NiFpga_Session'
+                'type': 'NiFpga_Session'
             },
             {
                 'direction': 'in',
@@ -1641,7 +1626,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'session',
-                'type': 'const NiFpga_Session'
+                'type': 'NiFpga_Session'
             },
             {
                 'direction': 'in',
@@ -2652,7 +2637,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReleaseFifoElements': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2865,7 +2849,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'StartFifo': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2881,7 +2864,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'StopFifo': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2902,7 +2884,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'session',
-                'type': 'const NiFpga_Session'
+                'type': 'NiFpga_Session'
             },
             {
                 'direction': 'in',
@@ -2913,7 +2895,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'UnreserveFifo': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',

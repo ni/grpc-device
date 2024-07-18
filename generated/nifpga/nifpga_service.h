@@ -23,37 +23,46 @@
 
 namespace nifpga_grpc {
 
-struct nifpgaFeatureToggles
+struct NiFpgaFeatureToggles
 {
   using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-  nifpgaFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+  NiFpgaFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
 
   bool is_enabled;
 };
 
-class nifpgaService final : public nifpga::Service {
+class NiFpgaService final : public NiFpga::Service {
 public:
-  using LibrarySharedPtr = std::shared_ptr<nifpgaLibraryInterface>;
+  using LibrarySharedPtr = std::shared_ptr<NiFpgaLibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<NiFpga_Session>>;
 
-  nifpgaService(
+  NiFpgaService(
     LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
-    const nifpgaFeatureToggles& feature_toggles = {});
-  virtual ~nifpgaService();
+    const NiFpgaFeatureToggles& feature_toggles = {});
+  virtual ~NiFpgaService();
 
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
+  ::grpc::Status CloseHostMemoryBuffer(::grpc::ServerContext* context, const CloseHostMemoryBufferRequest* request, CloseHostMemoryBufferResponse* response) override;
+  ::grpc::Status CloseLowLatencyBuffer(::grpc::ServerContext* context, const CloseLowLatencyBufferRequest* request, CloseLowLatencyBufferResponse* response) override;
+  ::grpc::Status CommitFifoConfiguration(::grpc::ServerContext* context, const CommitFifoConfigurationRequest* request, CommitFifoConfigurationResponse* response) override;
   ::grpc::Status Download(::grpc::ServerContext* context, const DownloadRequest* request, DownloadResponse* response) override;
+  ::grpc::Status Finalize(::grpc::ServerContext* context, const FinalizeRequest* request, FinalizeResponse* response) override;
+  ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
   ::grpc::Status Open(::grpc::ServerContext* context, const OpenRequest* request, OpenResponse* response) override;
+  ::grpc::Status ReleaseFifoElements(::grpc::ServerContext* context, const ReleaseFifoElementsRequest* request, ReleaseFifoElementsResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status Run(::grpc::ServerContext* context, const RunRequest* request, RunResponse* response) override;
+  ::grpc::Status StartFifo(::grpc::ServerContext* context, const StartFifoRequest* request, StartFifoResponse* response) override;
+  ::grpc::Status StopFifo(::grpc::ServerContext* context, const StopFifoRequest* request, StopFifoResponse* response) override;
+  ::grpc::Status UnreserveFifo(::grpc::ServerContext* context, const UnreserveFifoRequest* request, UnreserveFifoResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForNiFpga_Session(::grpc::ServerContextBase* context, int32_t status, NiFpga_Session session);
 
-  nifpgaFeatureToggles feature_toggles_;
+  NiFpgaFeatureToggles feature_toggles_;
 };
 
 } // namespace nifpga_grpc

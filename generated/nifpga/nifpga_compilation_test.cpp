@@ -17,14 +17,44 @@ NiFpga_Status Close(NiFpga_Session session, uint32_t attribute)
   return NiFpga_Close(session, attribute);
 }
 
+NiFpga_Status CloseHostMemoryBuffer(NiFpga_Session session, const char memoryName[])
+{
+  return NiFpga_CloseHostMemoryBuffer(session, memoryName);
+}
+
+NiFpga_Status CloseLowLatencyBuffer(NiFpga_Session session, const char memoryName[])
+{
+  return NiFpga_CloseLowLatencyBuffer(session, memoryName);
+}
+
+NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo)
+{
+  return NiFpga_CommitFifoConfiguration(session, fifo);
+}
+
 NiFpga_Status Download(NiFpga_Session session)
 {
   return NiFpga_Download(session);
 }
 
+NiFpga_Status Finalize()
+{
+  return NiFpga_Finalize();
+}
+
+NiFpga_Status Initialize()
+{
+  return NiFpga_Initialize();
+}
+
 NiFpga_Status Open(const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session)
 {
   return NiFpga_Open(bitfile, signature, resource, attribute, session);
+}
+
+NiFpga_Status ReleaseFifoElements(NiFpga_Session session, uint32_t fifo, size_t elements)
+{
+  return NiFpga_ReleaseFifoElements(session, fifo, elements);
 }
 
 NiFpga_Status Reset(NiFpga_Session session)
@@ -35,6 +65,21 @@ NiFpga_Status Reset(NiFpga_Session session)
 NiFpga_Status Run(NiFpga_Session session, uint32_t attribute)
 {
   return NiFpga_Run(session, attribute);
+}
+
+NiFpga_Status StartFifo(NiFpga_Session session, uint32_t fifo)
+{
+  return NiFpga_StartFifo(session, fifo);
+}
+
+NiFpga_Status StopFifo(NiFpga_Session session, uint32_t fifo)
+{
+  return NiFpga_StopFifo(session, fifo);
+}
+
+NiFpga_Status UnreserveFifo(NiFpga_Session session, uint32_t fifo)
+{
+  return NiFpga_UnreserveFifo(session, fifo);
 }
 
 }  // namespace nifpga_grpc

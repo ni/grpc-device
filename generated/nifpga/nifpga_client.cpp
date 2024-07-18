@@ -52,6 +52,60 @@ close(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint
   return response;
 }
 
+CloseHostMemoryBufferResponse
+close_host_memory_buffer(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& memory_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloseHostMemoryBufferRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_memory_name(memory_name);
+
+  auto response = CloseHostMemoryBufferResponse{};
+
+  raise_if_error(
+      stub->CloseHostMemoryBuffer(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CloseLowLatencyBufferResponse
+close_low_latency_buffer(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& memory_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloseLowLatencyBufferRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_memory_name(memory_name);
+
+  auto response = CloseLowLatencyBufferResponse{};
+
+  raise_if_error(
+      stub->CloseLowLatencyBuffer(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CommitFifoConfigurationResponse
+commit_fifo_configuration(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CommitFifoConfigurationRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+
+  auto response = CommitFifoConfigurationResponse{};
+
+  raise_if_error(
+      stub->CommitFifoConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DownloadResponse
 download(const StubPtr& stub, const nidevice_grpc::Session& session)
 {
@@ -64,6 +118,38 @@ download(const StubPtr& stub, const nidevice_grpc::Session& session)
 
   raise_if_error(
       stub->Download(&context, request, &response),
+      context);
+
+  return response;
+}
+
+FinalizeResponse
+finalize(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FinalizeRequest{};
+
+  auto response = FinalizeResponse{};
+
+  raise_if_error(
+      stub->Finalize(&context, request, &response),
+      context);
+
+  return response;
+}
+
+InitializeResponse
+initialize(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitializeRequest{};
+
+  auto response = InitializeResponse{};
+
+  raise_if_error(
+      stub->Initialize(&context, request, &response),
       context);
 
   return response;
@@ -85,6 +171,25 @@ open(const StubPtr& stub, const std::string& bitfile, const std::string& signatu
 
   raise_if_error(
       stub->Open(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReleaseFifoElementsResponse
+release_fifo_elements(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& elements)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReleaseFifoElementsRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_elements(elements);
+
+  auto response = ReleaseFifoElementsResponse{};
+
+  raise_if_error(
+      stub->ReleaseFifoElements(&context, request, &response),
       context);
 
   return response;
@@ -120,6 +225,60 @@ run(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32
 
   raise_if_error(
       stub->Run(&context, request, &response),
+      context);
+
+  return response;
+}
+
+StartFifoResponse
+start_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo)
+{
+  ::grpc::ClientContext context;
+
+  auto request = StartFifoRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+
+  auto response = StartFifoResponse{};
+
+  raise_if_error(
+      stub->StartFifo(&context, request, &response),
+      context);
+
+  return response;
+}
+
+StopFifoResponse
+stop_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo)
+{
+  ::grpc::ClientContext context;
+
+  auto request = StopFifoRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+
+  auto response = StopFifoResponse{};
+
+  raise_if_error(
+      stub->StopFifo(&context, request, &response),
+      context);
+
+  return response;
+}
+
+UnreserveFifoResponse
+unreserve_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo)
+{
+  ::grpc::ClientContext context;
+
+  auto request = UnreserveFifoRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+
+  auto response = UnreserveFifoResponse{};
+
+  raise_if_error(
+      stub->UnreserveFifo(&context, request, &response),
       context);
 
   return response;

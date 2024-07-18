@@ -16,9 +16,9 @@ static const char* kLibraryName = "libNiFpga.so";
 
 namespace nifpga_grpc {
 
-nifpgaLibrary::nifpgaLibrary() : nifpgaLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+NiFpgaLibrary::NiFpgaLibrary() : NiFpgaLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-nifpgaLibrary::nifpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
+NiFpgaLibrary::NiFpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
   shared_library_->set_library_name(kLibraryName);
   shared_library_->load();
@@ -29,24 +29,33 @@ nifpgaLibrary::nifpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   }
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("NiFpga_Abort"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("NiFpga_Close"));
+  function_pointers_.CloseHostMemoryBuffer = reinterpret_cast<CloseHostMemoryBufferPtr>(shared_library_->get_function_pointer("NiFpga_CloseHostMemoryBuffer"));
+  function_pointers_.CloseLowLatencyBuffer = reinterpret_cast<CloseLowLatencyBufferPtr>(shared_library_->get_function_pointer("NiFpga_CloseLowLatencyBuffer"));
+  function_pointers_.CommitFifoConfiguration = reinterpret_cast<CommitFifoConfigurationPtr>(shared_library_->get_function_pointer("NiFpga_CommitFifoConfiguration"));
   function_pointers_.Download = reinterpret_cast<DownloadPtr>(shared_library_->get_function_pointer("NiFpga_Download"));
+  function_pointers_.Finalize = reinterpret_cast<FinalizePtr>(shared_library_->get_function_pointer("NiFpga_Finalize"));
+  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("NiFpga_Initialize"));
   function_pointers_.Open = reinterpret_cast<OpenPtr>(shared_library_->get_function_pointer("NiFpga_Open"));
+  function_pointers_.ReleaseFifoElements = reinterpret_cast<ReleaseFifoElementsPtr>(shared_library_->get_function_pointer("NiFpga_ReleaseFifoElements"));
   function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("NiFpga_Reset"));
   function_pointers_.Run = reinterpret_cast<RunPtr>(shared_library_->get_function_pointer("NiFpga_Run"));
+  function_pointers_.StartFifo = reinterpret_cast<StartFifoPtr>(shared_library_->get_function_pointer("NiFpga_StartFifo"));
+  function_pointers_.StopFifo = reinterpret_cast<StopFifoPtr>(shared_library_->get_function_pointer("NiFpga_StopFifo"));
+  function_pointers_.UnreserveFifo = reinterpret_cast<UnreserveFifoPtr>(shared_library_->get_function_pointer("NiFpga_UnreserveFifo"));
 }
 
-nifpgaLibrary::~nifpgaLibrary()
+NiFpgaLibrary::~NiFpgaLibrary()
 {
 }
 
-::grpc::Status nifpgaLibrary::check_function_exists(std::string functionName)
+::grpc::Status NiFpgaLibrary::check_function_exists(std::string functionName)
 {
   return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
-NiFpga_Status nifpgaLibrary::Abort(NiFpga_Session session)
+NiFpga_Status NiFpgaLibrary::Abort(NiFpga_Session session)
 {
   if (!function_pointers_.Abort) {
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Abort.");
@@ -54,7 +63,7 @@ NiFpga_Status nifpgaLibrary::Abort(NiFpga_Session session)
   return function_pointers_.Abort(session);
 }
 
-NiFpga_Status nifpgaLibrary::Close(NiFpga_Session session, uint32_t attribute)
+NiFpga_Status NiFpgaLibrary::Close(NiFpga_Session session, uint32_t attribute)
 {
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Close.");
@@ -62,7 +71,31 @@ NiFpga_Status nifpgaLibrary::Close(NiFpga_Session session, uint32_t attribute)
   return function_pointers_.Close(session, attribute);
 }
 
-NiFpga_Status nifpgaLibrary::Download(NiFpga_Session session)
+NiFpga_Status NiFpgaLibrary::CloseHostMemoryBuffer(NiFpga_Session session, const char memoryName[])
+{
+  if (!function_pointers_.CloseHostMemoryBuffer) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_CloseHostMemoryBuffer.");
+  }
+  return function_pointers_.CloseHostMemoryBuffer(session, memoryName);
+}
+
+NiFpga_Status NiFpgaLibrary::CloseLowLatencyBuffer(NiFpga_Session session, const char memoryName[])
+{
+  if (!function_pointers_.CloseLowLatencyBuffer) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_CloseLowLatencyBuffer.");
+  }
+  return function_pointers_.CloseLowLatencyBuffer(session, memoryName);
+}
+
+NiFpga_Status NiFpgaLibrary::CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo)
+{
+  if (!function_pointers_.CommitFifoConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_CommitFifoConfiguration.");
+  }
+  return function_pointers_.CommitFifoConfiguration(session, fifo);
+}
+
+NiFpga_Status NiFpgaLibrary::Download(NiFpga_Session session)
 {
   if (!function_pointers_.Download) {
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Download.");
@@ -70,7 +103,23 @@ NiFpga_Status nifpgaLibrary::Download(NiFpga_Session session)
   return function_pointers_.Download(session);
 }
 
-NiFpga_Status nifpgaLibrary::Open(const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session)
+NiFpga_Status NiFpgaLibrary::Finalize()
+{
+  if (!function_pointers_.Finalize) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Finalize.");
+  }
+  return function_pointers_.Finalize();
+}
+
+NiFpga_Status NiFpgaLibrary::Initialize()
+{
+  if (!function_pointers_.Initialize) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Initialize.");
+  }
+  return function_pointers_.Initialize();
+}
+
+NiFpga_Status NiFpgaLibrary::Open(const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session)
 {
   if (!function_pointers_.Open) {
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Open.");
@@ -78,7 +127,15 @@ NiFpga_Status nifpgaLibrary::Open(const char bitfile[], const char signature[], 
   return function_pointers_.Open(bitfile, signature, resource, attribute, session);
 }
 
-NiFpga_Status nifpgaLibrary::Reset(NiFpga_Session session)
+NiFpga_Status NiFpgaLibrary::ReleaseFifoElements(NiFpga_Session session, uint32_t fifo, size_t elements)
+{
+  if (!function_pointers_.ReleaseFifoElements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_ReleaseFifoElements.");
+  }
+  return function_pointers_.ReleaseFifoElements(session, fifo, elements);
+}
+
+NiFpga_Status NiFpgaLibrary::Reset(NiFpga_Session session)
 {
   if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Reset.");
@@ -86,12 +143,36 @@ NiFpga_Status nifpgaLibrary::Reset(NiFpga_Session session)
   return function_pointers_.Reset(session);
 }
 
-NiFpga_Status nifpgaLibrary::Run(NiFpga_Session session, uint32_t attribute)
+NiFpga_Status NiFpgaLibrary::Run(NiFpga_Session session, uint32_t attribute)
 {
   if (!function_pointers_.Run) {
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Run.");
   }
   return function_pointers_.Run(session, attribute);
+}
+
+NiFpga_Status NiFpgaLibrary::StartFifo(NiFpga_Session session, uint32_t fifo)
+{
+  if (!function_pointers_.StartFifo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_StartFifo.");
+  }
+  return function_pointers_.StartFifo(session, fifo);
+}
+
+NiFpga_Status NiFpgaLibrary::StopFifo(NiFpga_Session session, uint32_t fifo)
+{
+  if (!function_pointers_.StopFifo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_StopFifo.");
+  }
+  return function_pointers_.StopFifo(session, fifo);
+}
+
+NiFpga_Status NiFpgaLibrary::UnreserveFifo(NiFpga_Session session, uint32_t fifo)
+{
+  if (!function_pointers_.UnreserveFifo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_UnreserveFifo.");
+  }
+  return function_pointers_.UnreserveFifo(session, fifo);
 }
 
 }  // namespace nifpga_grpc
