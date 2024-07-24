@@ -83,7 +83,7 @@ NiFpga_Status NiFpgaLibrary::Download(NiFpga_Session session)
   return function_pointers_.Download(session);
 }
 
-NiFpga_Status NiFpgaLibrary::Open(const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session)
+NiFpga_Status NiFpgaLibrary::Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session)
 {
   if (!function_pointers_.Open) {
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Open.");

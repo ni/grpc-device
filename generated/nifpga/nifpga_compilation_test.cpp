@@ -27,7 +27,7 @@ NiFpga_Status Download(NiFpga_Session session)
   return NiFpga_Download(session);
 }
 
-NiFpga_Status Open(const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session)
+NiFpga_Status Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session)
 {
   return NiFpga_Open(bitfile, signature, resource, attribute, session);
 }

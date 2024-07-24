@@ -18,7 +18,6 @@ config = {
         'NiFpga_Session': 'nidevice_grpc.Session',
         'uint32_t': 'uint32',
         'char[]': 'string',
-        'const char[]': 'string',
         'NiFpga_Status': 'int32',
         'size_t': 'uint32',
     },

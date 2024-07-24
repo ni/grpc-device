@@ -141,11 +141,11 @@ namespace nifpga_grpc {
     }
     try {
       auto bitfile_mbcs = convert_from_grpc<std::string>(request->bitfile());
-      auto bitfile = bitfile_mbcs.c_str();
+      char* bitfile = (char*)bitfile_mbcs.c_str();
       auto signature_mbcs = convert_from_grpc<std::string>(request->signature());
-      auto signature = signature_mbcs.c_str();
+      char* signature = (char*)signature_mbcs.c_str();
       auto resource_mbcs = convert_from_grpc<std::string>(request->resource());
-      auto resource = resource_mbcs.c_str();
+      char* resource = (char*)resource_mbcs.c_str();
       uint32_t attribute = request->attribute();
       auto initialization_behavior = request->initialization_behavior();
 

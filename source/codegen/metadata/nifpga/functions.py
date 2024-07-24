@@ -1045,7 +1045,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'typeInfo',
-                'type': 'const NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             }
         ],
         'returns': 'static'
@@ -1056,7 +1056,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'typeInfo',
-                'type': 'const NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             }
         ],
         'returns': 'static'
@@ -1087,7 +1087,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'memoryName',
-                'type': 'const char[]'
+                'type': 'char[]'
             }
         ],
         'returns': 'NiFpga_Status'
@@ -1103,7 +1103,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'memoryName',
-                'type': 'const char[]'
+                'type': 'char[]'
             }
         ],
         'returns': 'NiFpga_Status'
@@ -1176,7 +1176,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'typeInfo',
-                'type': 'const NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1192,7 +1192,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'typeInfo',
-                'type': 'const NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1208,7 +1208,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'typeInfo',
-                'type': 'const NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1224,7 +1224,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'typeInfo',
-                'type': 'const NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1261,7 +1261,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'fifoName',
-                'type': 'const char[]'
+                'type': 'char[]'
             },
             {
                 'direction': 'out',
@@ -1282,7 +1282,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'registerName',
-                'type': 'const char[]'
+                'type': 'char[]'
             },
             {
                 'direction': 'out',
@@ -1492,7 +1492,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'status',
-                'type': 'const NiFpga_Status'
+                'type': 'NiFpga_Status'
             }
         ],
         'returns': 'static'
@@ -1503,7 +1503,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'status',
-                'type': 'const NiFpga_Status'
+                'type': 'NiFpga_Status'
             }
         ],
         'returns': 'static'
@@ -1519,7 +1519,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'fifo',
-                'type': 'const uint32_t'
+                'type': 'uint32_t'
             },
             {
                 'direction': 'out',
@@ -1540,12 +1540,12 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'status',
-                'type': 'const NiFpga_Status * const'
+                'type': 'NiFpga_Status * const'
             },
             {
                 'direction': 'in',
                 'name': 'newStatus',
-                'type': 'const NiFpga_Status'
+                'type': 'NiFpga_Status'
             }
         ],
         'returns': 'static'
@@ -1557,17 +1557,17 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'bitfile',
-                'type': 'const char[]'
+                'type': 'char[]'
             },
             {
                 'direction': 'in',
                 'name': 'signature',
-                'type': 'const char[]'
+                'type': 'char[]'
             },
             {
                 'direction': 'in',
                 'name': 'resource',
-                'type': 'const char[]'
+                'type': 'char[]'
             },
             {
                 'direction': 'in',
@@ -1609,7 +1609,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'memoryName',
-                'type': 'const char[]'
+                'type': 'char[]'
             },
             {
                 'direction': 'out',
@@ -1635,7 +1635,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'memoryName',
-                'type': 'const char[]'
+                'type': 'char[]'
             },
             {
                 'direction': 'out',
@@ -2893,7 +2893,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'fifo',
-                'type': 'const uint32_t'
+                'type': 'uint32_t'
             }
         ],
         'returns': 'NiFpga_Status'
@@ -2981,7 +2981,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const NiFpga_Bool'
+                'type': 'NiFpga_Bool'
             },
             {
                 'direction': 'in',
@@ -3007,7 +3007,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const double'
+                'type': 'double'
             },
             {
                 'direction': 'in',
@@ -3033,7 +3033,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const int16_t'
+                'type': 'int16_t'
             },
             {
                 'direction': 'in',
@@ -3059,7 +3059,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const int32_t'
+                'type': 'int32_t'
             },
             {
                 'direction': 'in',
@@ -3085,7 +3085,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const int64_t'
+                'type': 'int64_t'
             },
             {
                 'direction': 'in',
@@ -3111,7 +3111,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const int8_t'
+                'type': 'int8_t'
             },
             {
                 'direction': 'in',
@@ -3137,7 +3137,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const float'
+                'type': 'float'
             },
             {
                 'direction': 'in',
@@ -3163,7 +3163,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const uint16_t'
+                'type': 'uint16_t'
             },
             {
                 'direction': 'in',
@@ -3189,7 +3189,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const uint32_t'
+                'type': 'uint32_t'
             },
             {
                 'direction': 'in',
@@ -3215,7 +3215,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const uint64_t'
+                'type': 'uint64_t'
             },
             {
                 'direction': 'in',
@@ -3241,7 +3241,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'const uint8_t'
+                'type': 'uint8_t'
             },
             {
                 'direction': 'in',
@@ -3309,7 +3309,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const NiFpga_Bool'
+                'type': 'NiFpga_Bool'
             },
             {
                 'direction': 'in',
@@ -3345,7 +3345,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const void'
+                'type': 'void'
             },
             {
                 'direction': 'in',
@@ -3386,7 +3386,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const double'
+                'type': 'double'
             },
             {
                 'direction': 'in',
@@ -3422,7 +3422,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const int16_t'
+                'type': 'int16_t'
             },
             {
                 'direction': 'in',
@@ -3458,7 +3458,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const int32_t'
+                'type': 'int32_t'
             },
             {
                 'direction': 'in',
@@ -3494,7 +3494,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const int64_t'
+                'type': 'int64_t'
             },
             {
                 'direction': 'in',
@@ -3530,7 +3530,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const int8_t'
+                'type': 'int8_t'
             },
             {
                 'direction': 'in',
@@ -3566,7 +3566,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const float'
+                'type': 'float'
             },
             {
                 'direction': 'in',
@@ -3602,7 +3602,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const uint16_t'
+                'type': 'uint16_t'
             },
             {
                 'direction': 'in',
@@ -3638,7 +3638,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const uint32_t'
+                'type': 'uint32_t'
             },
             {
                 'direction': 'in',
@@ -3674,7 +3674,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const uint64_t'
+                'type': 'uint64_t'
             },
             {
                 'direction': 'in',
@@ -3710,7 +3710,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'const uint8_t'
+                'type': 'uint8_t'
             },
             {
                 'direction': 'in',

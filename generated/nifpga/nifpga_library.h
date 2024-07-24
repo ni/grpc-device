@@ -25,7 +25,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   NiFpga_Status Close(NiFpga_Session session, uint32_t attribute) override;
   NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo) override;
   NiFpga_Status Download(NiFpga_Session session) override;
-  NiFpga_Status Open(const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session) override;
+  NiFpga_Status Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session) override;
   NiFpga_Status ReleaseFifoElements(NiFpga_Session session, uint32_t fifo, size_t elements) override;
   NiFpga_Status Reset(NiFpga_Session session) override;
   NiFpga_Status Run(NiFpga_Session session, uint32_t attribute) override;
