@@ -89,54 +89,6 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFpgaService::CloseHostMemoryBuffer(::grpc::ServerContext* context, const CloseHostMemoryBufferRequest* request, CloseHostMemoryBufferResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-      auto memory_name_mbcs = convert_from_grpc<std::string>(request->memory_name());
-      auto memory_name = memory_name_mbcs.c_str();
-      auto status = library_->CloseHostMemoryBuffer(session, memory_name);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFpgaService::CloseLowLatencyBuffer(::grpc::ServerContext* context, const CloseLowLatencyBufferRequest* request, CloseLowLatencyBufferResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-      auto memory_name_mbcs = convert_from_grpc<std::string>(request->memory_name());
-      auto memory_name = memory_name_mbcs.c_str();
-      auto status = library_->CloseLowLatencyBuffer(session, memory_name);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::CommitFifoConfiguration(::grpc::ServerContext* context, const CommitFifoConfigurationRequest* request, CommitFifoConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
@@ -171,46 +123,6 @@ namespace nifpga_grpc {
       auto status = library_->Download(session);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFpgaService::Finalize(::grpc::ServerContext* context, const FinalizeRequest* request, FinalizeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto status = library_->Finalize();
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, 0);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFpgaService::Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto status = library_->Initialize();
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, 0);
       }
       response->set_status(status);
       return ::grpc::Status::OK;

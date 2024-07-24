@@ -3,6 +3,7 @@ config = {
     'api_version': '24.8.0',
     'c_header': 'NiFpga.h',
     'c_function_prefix': 'NiFpga_',
+    'c_dll_function_prefix': 'NiFpgaDll_',
     'service_class_prefix': 'NiFpga',
     'java_package': 'com.ni.grpc.nifpga',
     'csharp_namespace': 'NationalInstruments.Grpc.NiFpga',

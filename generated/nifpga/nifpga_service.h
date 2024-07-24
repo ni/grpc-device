@@ -44,12 +44,8 @@ public:
 
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
-  ::grpc::Status CloseHostMemoryBuffer(::grpc::ServerContext* context, const CloseHostMemoryBufferRequest* request, CloseHostMemoryBufferResponse* response) override;
-  ::grpc::Status CloseLowLatencyBuffer(::grpc::ServerContext* context, const CloseLowLatencyBufferRequest* request, CloseLowLatencyBufferResponse* response) override;
   ::grpc::Status CommitFifoConfiguration(::grpc::ServerContext* context, const CommitFifoConfigurationRequest* request, CommitFifoConfigurationResponse* response) override;
   ::grpc::Status Download(::grpc::ServerContext* context, const DownloadRequest* request, DownloadResponse* response) override;
-  ::grpc::Status Finalize(::grpc::ServerContext* context, const FinalizeRequest* request, FinalizeResponse* response) override;
-  ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
   ::grpc::Status Open(::grpc::ServerContext* context, const OpenRequest* request, OpenResponse* response) override;
   ::grpc::Status ReleaseFifoElements(::grpc::ServerContext* context, const ReleaseFifoElementsRequest* request, ReleaseFifoElementsResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;

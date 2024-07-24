@@ -17,16 +17,6 @@ NiFpga_Status Close(NiFpga_Session session, uint32_t attribute)
   return NiFpga_Close(session, attribute);
 }
 
-NiFpga_Status CloseHostMemoryBuffer(NiFpga_Session session, const char memoryName[])
-{
-  return NiFpga_CloseHostMemoryBuffer(session, memoryName);
-}
-
-NiFpga_Status CloseLowLatencyBuffer(NiFpga_Session session, const char memoryName[])
-{
-  return NiFpga_CloseLowLatencyBuffer(session, memoryName);
-}
-
 NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo)
 {
   return NiFpga_CommitFifoConfiguration(session, fifo);
@@ -35,16 +25,6 @@ NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo)
 NiFpga_Status Download(NiFpga_Session session)
 {
   return NiFpga_Download(session);
-}
-
-NiFpga_Status Finalize()
-{
-  return NiFpga_Finalize();
-}
-
-NiFpga_Status Initialize()
-{
-  return NiFpga_Initialize();
 }
 
 NiFpga_Status Open(const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session)

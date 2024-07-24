@@ -27,21 +27,17 @@ NiFpgaLibrary::NiFpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   if (!loaded) {
     return;
   }
-  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("NiFpga_Abort"));
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("NiFpga_Close"));
-  function_pointers_.CloseHostMemoryBuffer = reinterpret_cast<CloseHostMemoryBufferPtr>(shared_library_->get_function_pointer("NiFpga_CloseHostMemoryBuffer"));
-  function_pointers_.CloseLowLatencyBuffer = reinterpret_cast<CloseLowLatencyBufferPtr>(shared_library_->get_function_pointer("NiFpga_CloseLowLatencyBuffer"));
-  function_pointers_.CommitFifoConfiguration = reinterpret_cast<CommitFifoConfigurationPtr>(shared_library_->get_function_pointer("NiFpga_CommitFifoConfiguration"));
-  function_pointers_.Download = reinterpret_cast<DownloadPtr>(shared_library_->get_function_pointer("NiFpga_Download"));
-  function_pointers_.Finalize = reinterpret_cast<FinalizePtr>(shared_library_->get_function_pointer("NiFpga_Finalize"));
-  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("NiFpga_Initialize"));
-  function_pointers_.Open = reinterpret_cast<OpenPtr>(shared_library_->get_function_pointer("NiFpga_Open"));
-  function_pointers_.ReleaseFifoElements = reinterpret_cast<ReleaseFifoElementsPtr>(shared_library_->get_function_pointer("NiFpga_ReleaseFifoElements"));
-  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("NiFpga_Reset"));
-  function_pointers_.Run = reinterpret_cast<RunPtr>(shared_library_->get_function_pointer("NiFpga_Run"));
-  function_pointers_.StartFifo = reinterpret_cast<StartFifoPtr>(shared_library_->get_function_pointer("NiFpga_StartFifo"));
-  function_pointers_.StopFifo = reinterpret_cast<StopFifoPtr>(shared_library_->get_function_pointer("NiFpga_StopFifo"));
-  function_pointers_.UnreserveFifo = reinterpret_cast<UnreserveFifoPtr>(shared_library_->get_function_pointer("NiFpga_UnreserveFifo"));
+  function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("NiFpgaDll_Abort"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("NiFpgaDll_Close"));
+  function_pointers_.CommitFifoConfiguration = reinterpret_cast<CommitFifoConfigurationPtr>(shared_library_->get_function_pointer("NiFpgaDll_CommitFifoConfiguration"));
+  function_pointers_.Download = reinterpret_cast<DownloadPtr>(shared_library_->get_function_pointer("NiFpgaDll_Download"));
+  function_pointers_.Open = reinterpret_cast<OpenPtr>(shared_library_->get_function_pointer("NiFpgaDll_Open"));
+  function_pointers_.ReleaseFifoElements = reinterpret_cast<ReleaseFifoElementsPtr>(shared_library_->get_function_pointer("NiFpgaDll_ReleaseFifoElements"));
+  function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("NiFpgaDll_Reset"));
+  function_pointers_.Run = reinterpret_cast<RunPtr>(shared_library_->get_function_pointer("NiFpgaDll_Run"));
+  function_pointers_.StartFifo = reinterpret_cast<StartFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_StartFifo"));
+  function_pointers_.StopFifo = reinterpret_cast<StopFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_StopFifo"));
+  function_pointers_.UnreserveFifo = reinterpret_cast<UnreserveFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_UnreserveFifo"));
 }
 
 NiFpgaLibrary::~NiFpgaLibrary()
@@ -71,22 +67,6 @@ NiFpga_Status NiFpgaLibrary::Close(NiFpga_Session session, uint32_t attribute)
   return function_pointers_.Close(session, attribute);
 }
 
-NiFpga_Status NiFpgaLibrary::CloseHostMemoryBuffer(NiFpga_Session session, const char memoryName[])
-{
-  if (!function_pointers_.CloseHostMemoryBuffer) {
-    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_CloseHostMemoryBuffer.");
-  }
-  return function_pointers_.CloseHostMemoryBuffer(session, memoryName);
-}
-
-NiFpga_Status NiFpgaLibrary::CloseLowLatencyBuffer(NiFpga_Session session, const char memoryName[])
-{
-  if (!function_pointers_.CloseLowLatencyBuffer) {
-    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_CloseLowLatencyBuffer.");
-  }
-  return function_pointers_.CloseLowLatencyBuffer(session, memoryName);
-}
-
 NiFpga_Status NiFpgaLibrary::CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo)
 {
   if (!function_pointers_.CommitFifoConfiguration) {
@@ -101,22 +81,6 @@ NiFpga_Status NiFpgaLibrary::Download(NiFpga_Session session)
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Download.");
   }
   return function_pointers_.Download(session);
-}
-
-NiFpga_Status NiFpgaLibrary::Finalize()
-{
-  if (!function_pointers_.Finalize) {
-    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Finalize.");
-  }
-  return function_pointers_.Finalize();
-}
-
-NiFpga_Status NiFpgaLibrary::Initialize()
-{
-  if (!function_pointers_.Initialize) {
-    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Initialize.");
-  }
-  return function_pointers_.Initialize();
 }
 
 NiFpga_Status NiFpgaLibrary::Open(const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session)

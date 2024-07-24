@@ -1077,6 +1077,7 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'CloseHostMemoryBuffer': {
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1092,6 +1093,7 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'CloseLowLatencyBuffer': {
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1243,6 +1245,7 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'Finalize': {
+        'codegen_method': 'no',
         'parameters': [
         ],
         'returns': 'NiFpga_Status'
@@ -1478,6 +1481,7 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'Initialize': {
+        'codegen_method': 'no',
         'parameters': [
         ],
         'returns': 'NiFpga_Status'

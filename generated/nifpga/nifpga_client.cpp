@@ -52,42 +52,6 @@ close(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint
   return response;
 }
 
-CloseHostMemoryBufferResponse
-close_host_memory_buffer(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& memory_name)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CloseHostMemoryBufferRequest{};
-  request.mutable_session()->CopyFrom(session);
-  request.set_memory_name(memory_name);
-
-  auto response = CloseHostMemoryBufferResponse{};
-
-  raise_if_error(
-      stub->CloseHostMemoryBuffer(&context, request, &response),
-      context);
-
-  return response;
-}
-
-CloseLowLatencyBufferResponse
-close_low_latency_buffer(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& memory_name)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CloseLowLatencyBufferRequest{};
-  request.mutable_session()->CopyFrom(session);
-  request.set_memory_name(memory_name);
-
-  auto response = CloseLowLatencyBufferResponse{};
-
-  raise_if_error(
-      stub->CloseLowLatencyBuffer(&context, request, &response),
-      context);
-
-  return response;
-}
-
 CommitFifoConfigurationResponse
 commit_fifo_configuration(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo)
 {
@@ -118,38 +82,6 @@ download(const StubPtr& stub, const nidevice_grpc::Session& session)
 
   raise_if_error(
       stub->Download(&context, request, &response),
-      context);
-
-  return response;
-}
-
-FinalizeResponse
-finalize(const StubPtr& stub)
-{
-  ::grpc::ClientContext context;
-
-  auto request = FinalizeRequest{};
-
-  auto response = FinalizeResponse{};
-
-  raise_if_error(
-      stub->Finalize(&context, request, &response),
-      context);
-
-  return response;
-}
-
-InitializeResponse
-initialize(const StubPtr& stub)
-{
-  ::grpc::ClientContext context;
-
-  auto request = InitializeRequest{};
-
-  auto response = InitializeResponse{};
-
-  raise_if_error(
-      stub->Initialize(&context, request, &response),
       context);
 
   return response;

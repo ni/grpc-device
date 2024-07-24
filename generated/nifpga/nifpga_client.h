@@ -24,12 +24,8 @@ using namespace nidevice_grpc::experimental::client;
 
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& session);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& attribute);
-CloseHostMemoryBufferResponse close_host_memory_buffer(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& memory_name);
-CloseLowLatencyBufferResponse close_low_latency_buffer(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& memory_name);
 CommitFifoConfigurationResponse commit_fifo_configuration(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
 DownloadResponse download(const StubPtr& stub, const nidevice_grpc::Session& session);
-FinalizeResponse finalize(const StubPtr& stub);
-InitializeResponse initialize(const StubPtr& stub);
 OpenResponse open(const StubPtr& stub, const std::string& bitfile, const std::string& signature, const std::string& resource, const pb::uint32& attribute, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 ReleaseFifoElementsResponse release_fifo_elements(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& elements);
 ResetResponse reset(const StubPtr& stub, const nidevice_grpc::Session& session);

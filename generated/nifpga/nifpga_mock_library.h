@@ -19,12 +19,8 @@ class NiFpgaMockLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
  public:
   MOCK_METHOD(NiFpga_Status, Abort, (NiFpga_Session session), (override));
   MOCK_METHOD(NiFpga_Status, Close, (NiFpga_Session session, uint32_t attribute), (override));
-  MOCK_METHOD(NiFpga_Status, CloseHostMemoryBuffer, (NiFpga_Session session, const char memoryName[]), (override));
-  MOCK_METHOD(NiFpga_Status, CloseLowLatencyBuffer, (NiFpga_Session session, const char memoryName[]), (override));
   MOCK_METHOD(NiFpga_Status, CommitFifoConfiguration, (NiFpga_Session session, uint32_t fifo), (override));
   MOCK_METHOD(NiFpga_Status, Download, (NiFpga_Session session), (override));
-  MOCK_METHOD(NiFpga_Status, Finalize, (), (override));
-  MOCK_METHOD(NiFpga_Status, Initialize, (), (override));
   MOCK_METHOD(NiFpga_Status, Open, (const char bitfile[], const char signature[], const char resource[], uint32_t attribute, NiFpga_Session* session), (override));
   MOCK_METHOD(NiFpga_Status, ReleaseFifoElements, (NiFpga_Session session, uint32_t fifo, size_t elements), (override));
   MOCK_METHOD(NiFpga_Status, Reset, (NiFpga_Session session), (override));
