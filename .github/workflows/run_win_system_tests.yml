@@ -14,32 +14,19 @@ jobs:
     - grpcbot-win-10
 
     steps:
-    - name: Print System Information
-      run: systeminfo /fo csv | ConvertFrom-Csv | select OS*, System*, Hotfix* | Format-List 
-
     - name: Download Tests Artifact
       uses: actions/download-artifact@v4
       with:
         name: ni-grpc-device-tests-windows-x64
 
+    - name: Install Latest Visual C++ Redistributable
+      run: >
+          mkdir C:\Temp\VcRedist
+          $VcRedists = Get-VcList | Save-VcRedist -Path C:\Temp\VcRedists
+          Install-VcRedist -VcList $VcRedists -Silent
+
     - run: ls -R
       working-directory: ./build/RelWithDebInfo
-
-    - name: Sleep for 60 minutes
-      run: Start-Sleep -s 3600
-
-    - name: Run System Tests help
-      run: .\SystemTestsRunner.exe --help
-      shell: cmd
-      working-directory: ./build/RelWithDebInfo
-      timeout-minutes: 1
-
-    - name: Run Unit Tests help
-      run: .\UnitTestsRunner.exe --help --gtest_color=no
-      shell: cmd
-      working-directory: ./build/RelWithDebInfo
-      timeout-minutes: 1
-
 
     - name: Run System Tests
       run: .\SystemTestsRunner.exe

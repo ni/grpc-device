@@ -701,10 +701,9 @@ target_link_libraries(CompilationTests
 add_custom_target(generated_nidriver_service_library_hdrs DEPENDS ${nidriver_service_library_hdrs})
 add_dependencies(CompilationTests generated_nidriver_service_library_hdrs)
 
-# TODO: Touch to kick off PR
 set(system_test_runner_sources
   "imports/include/nierr_Status.cpp"
-  "source/tests/utilities/run_all_system_tests.cpp"
+  "source/tests/utilities/run_all_tests.cpp"
   "source/server/core_services_registrar.cpp"
   "source/tests/system/device_server.cpp"
   "source/tests/system/enumerate_devices.cpp"
@@ -800,21 +799,15 @@ if(WIN32)
   )
 endif()
 
-# add_executable(SystemTestsRunner ${system_test_runner_sources})
-add_executable(SystemTestsRunner "source/tests/utilities/run_all_system_tests.cpp")
+add_executable(SystemTestsRunner ${system_test_runner_sources})
 
 target_link_libraries(SystemTestsRunner
     gtest
     gmock
+    ${_GRPC_GRPCPP}
+    ${CMAKE_DL_LIBS}
     nlohmann_json::nlohmann_json
 )
-# target_link_libraries(SystemTestsRunner
-#     gtest
-#     gmock
-#     ${_GRPC_GRPCPP}
-#     ${CMAKE_DL_LIBS}
-#     nlohmann_json::nlohmann_json
-# )
 
 # Ignore the use of deprecated functions in test code
 target_compile_definitions(SystemTestsRunner
