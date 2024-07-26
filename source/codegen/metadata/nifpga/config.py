@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '24.8.0',
+    'api_version': '24.3.0',
     'c_header': 'NiFpga.h',
     'c_function_prefix': 'NiFpga_',
     'c_dll_function_prefix': 'NiFpgaDll_',
