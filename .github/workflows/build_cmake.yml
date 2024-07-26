@@ -93,11 +93,6 @@ jobs:
         -E System
         --output-on-failure
 
-    - name: Debug Try running SystemTests
-      if: ${{ runner.os == 'Windows' }}
-      run: >
-          build/RelWithDebInfo/SystemTestsRunner.exe --help
-
     - name: Tar Linux Server Binaries
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       run: >-
@@ -150,9 +145,9 @@ jobs:
         path: |
           LICENSE
           ThirdPartyNotices.txt
-          build/RelWithDebInfo/ni_grpc_device_server.exe
-          build/RelWithDebInfo/server_config.json
-          build/RelWithDebInfo/server_capabilities.json
+          build/${{ matrix.config.build_type }}/ni_grpc_device_server.exe
+          build/${{ matrix.config.build_type }}/server_config.json
+          build/${{ matrix.config.build_type }}/server_capabilities.json
         retention-days: 5
 
     - name: Upload Windows Test Binaries Artifact
@@ -161,17 +156,17 @@ jobs:
       with:
         name: ni-grpc-device-tests-windows-x64
         path: |
-          build/RelWithDebInfo/certs/
-          build/RelWithDebInfo/IntegrationTestsRunner.exe
-          build/RelWithDebInfo/TestApi.dll
-          build/RelWithDebInfo/SystemTestsRunner.exe
-          build/RelWithDebInfo/LTE20MHz Waveform (Two Subframes).json
-          build/RelWithDebInfo/NR_FR2_UL_SISO_CC-1_BW-50MHz_SCS-120kHz.json
-          build/RelWithDebInfo/WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json
-          build/RelWithDebInfo/test_create_capture_waveform_serial/
-          build/RelWithDebInfo/test_localhost_config.json
-          build/RelWithDebInfo/test_mutual_tls_config.json
-          build/RelWithDebInfo/UnitTestsRunner.exe
+          build/${{ matrix.config.build_type }}/certs/
+          build/${{ matrix.config.build_type }}/IntegrationTestsRunner.exe
+          build/${{ matrix.config.build_type }}/TestApi.dll
+          build/${{ matrix.config.build_type }}/SystemTestsRunner.exe
+          build/${{ matrix.config.build_type }}/LTE20MHz Waveform (Two Subframes).json
+          build/${{ matrix.config.build_type }}/NR_FR2_UL_SISO_CC-1_BW-50MHz_SCS-120kHz.json
+          build/${{ matrix.config.build_type }}/WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json
+          build/${{ matrix.config.build_type }}/test_create_capture_waveform_serial/
+          build/${{ matrix.config.build_type }}/test_localhost_config.json
+          build/${{ matrix.config.build_type }}/test_mutual_tls_config.json
+          build/${{ matrix.config.build_type }}/UnitTestsRunner.exe
           LICENSE
           ThirdPartyNotices.txt
         retention-days: 5
@@ -182,5 +177,5 @@ jobs:
       with:
         name: ni-grpc-device-server-windows-x64-debug-symbols
         path: |
-          build/RelWithDebInfo/ni_grpc_device_server.pdb
+          build/${{ matrix.config.build_type }}/ni_grpc_device_server.pdb
         retention-days: 5

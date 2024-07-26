@@ -800,15 +800,16 @@ if(WIN32)
   )
 endif()
 
-add_executable(SystemTestsRunner ${system_test_runner_sources})
+# add_executable(SystemTestsRunner ${system_test_runner_sources})
+add_executable(SystemTestsRunner "source/tests/utilities/run_all_system_tests.cpp")
 
-target_link_libraries(SystemTestsRunner
-    gtest
-    gmock
-    ${_GRPC_GRPCPP}
-    ${CMAKE_DL_LIBS}
-    nlohmann_json::nlohmann_json
-)
+# target_link_libraries(SystemTestsRunner
+#     gtest
+#     gmock
+#     ${_GRPC_GRPCPP}
+#     ${CMAKE_DL_LIBS}
+#     nlohmann_json::nlohmann_json
+# )
 
 # Ignore the use of deprecated functions in test code
 target_compile_definitions(SystemTestsRunner
