@@ -803,6 +803,11 @@ endif()
 # add_executable(SystemTestsRunner ${system_test_runner_sources})
 add_executable(SystemTestsRunner "source/tests/utilities/run_all_system_tests.cpp")
 
+target_link_libraries(SystemTestsRunner
+    gtest
+    gmock
+    nlohmann_json::nlohmann_json
+)
 # target_link_libraries(SystemTestsRunner
 #     gtest
 #     gmock
