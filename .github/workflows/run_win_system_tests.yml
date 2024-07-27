@@ -22,6 +22,7 @@ jobs:
     - name: Install Latest Visual C++ Redistributable
       run: |
           mkdir C:\Temp\VcRedist
+          Install-Module -Name VcRedist -Force
           $VcRedists = Get-VcList | Save-VcRedist -Path C:\Temp\VcRedists
           Install-VcRedist -VcList $VcRedists -Silent
 
