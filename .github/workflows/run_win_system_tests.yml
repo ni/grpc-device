@@ -20,7 +20,7 @@ jobs:
         name: ni-grpc-device-tests-windows-x64
 
     - name: Install Latest Visual C++ Redistributable
-      run: >
+      run: |
           mkdir C:\Temp\VcRedist
           $VcRedists = Get-VcList | Save-VcRedist -Path C:\Temp\VcRedists
           Install-VcRedist -VcList $VcRedists -Silent
@@ -30,6 +30,5 @@ jobs:
 
     - name: Run System Tests
       run: .\SystemTestsRunner.exe
-      shell: cmd
       working-directory: ./build/RelWithDebInfo
       timeout-minutes: 50
