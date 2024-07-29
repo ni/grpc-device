@@ -1,0 +1,134 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-FPGA API metadata version 24.3.0
+//---------------------------------------------------------------------
+// Proto file for the NI-FPGA Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nifpga";
+option java_outer_classname = "NiFpga";
+option csharp_namespace = "NationalInstruments.Grpc.NiFpga";
+
+package nifpga_grpc;
+
+import "session.proto";
+
+service NiFpga {
+  rpc Abort(AbortRequest) returns (AbortResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc CommitFifoConfiguration(CommitFifoConfigurationRequest) returns (CommitFifoConfigurationResponse);
+  rpc Download(DownloadRequest) returns (DownloadResponse);
+  rpc Open(OpenRequest) returns (OpenResponse);
+  rpc ReleaseFifoElements(ReleaseFifoElementsRequest) returns (ReleaseFifoElementsResponse);
+  rpc Reset(ResetRequest) returns (ResetResponse);
+  rpc Run(RunRequest) returns (RunResponse);
+  rpc StartFifo(StartFifoRequest) returns (StartFifoResponse);
+  rpc StopFifo(StopFifoRequest) returns (StopFifoResponse);
+  rpc UnreserveFifo(UnreserveFifoRequest) returns (UnreserveFifoResponse);
+}
+
+message AbortRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message AbortResponse {
+  int32 status = 1;
+}
+
+message CloseRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 attribute = 2;
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
+message CommitFifoConfigurationRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+}
+
+message CommitFifoConfigurationResponse {
+  int32 status = 1;
+}
+
+message DownloadRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message DownloadResponse {
+  int32 status = 1;
+}
+
+message OpenRequest {
+  string session_name = 1;
+  string bitfile = 2;
+  string signature = 3;
+  string resource = 4;
+  uint32 attribute = 5;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 6;
+}
+
+message OpenResponse {
+  int32 status = 1;
+  nidevice_grpc.Session session = 2;
+  bool new_session_initialized = 3;
+}
+
+message ReleaseFifoElementsRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 elements = 3;
+}
+
+message ReleaseFifoElementsResponse {
+  int32 status = 1;
+}
+
+message ResetRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message ResetResponse {
+  int32 status = 1;
+}
+
+message RunRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 attribute = 2;
+}
+
+message RunResponse {
+  int32 status = 1;
+}
+
+message StartFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+}
+
+message StartFifoResponse {
+  int32 status = 1;
+}
+
+message StopFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+}
+
+message StopFifoResponse {
+  int32 status = 1;
+}
+
+message UnreserveFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+}
+
+message UnreserveFifoResponse {
+  int32 status = 1;
+}
+

@@ -8,6 +8,7 @@ functions = data['functions']
 service_class_prefix = config["service_class_prefix"]
 module_name = config["module_name"]
 c_function_prefix = config["c_function_prefix"]
+c_dll_function_prefix = config.get("c_dll_function_prefix", c_function_prefix)
 linux_library_info = config['library_info']['Linux']['64bit']
 linux_library_name = linux_library_info['name']
 linux_abi_version = linux_library_info.get('abi_version', None)
@@ -56,7 +57,7 @@ ${class_name}::${class_name}(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   }
 % for method_name in service_helpers.filter_api_functions(functions, only_mockable_functions=False):
 <%
-  c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
+  c_name = service_helpers.get_cname(functions, method_name, c_dll_function_prefix)
 %>\
   function_pointers_.${method_name} = reinterpret_cast<${method_name}Ptr>(shared_library_->get_function_pointer("${c_name}"));
 % endfor
