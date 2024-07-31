@@ -26,6 +26,9 @@ jobs:
           $VcRedists = Get-VcList | Save-VcRedist -Path C:\Temp\VcRedists
           Install-VcRedist -VcList $VcRedists -Silent
 
+    - name: Sleep for 60 minutes
+      run: Start-Sleep -s 3600
+
     - run: ls -R
       working-directory: ./build/RelWithDebInfo
 
