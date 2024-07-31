@@ -16,10 +16,18 @@ config = {
     'resource_handle_type': ['NiFpga_Session'],
     'type_to_grpc_type': {
         'NiFpga_Session': 'nidevice_grpc.Session',
-        'uint32_t': 'uint32',
         'char[]': 'string',
         'NiFpga_Status': 'int32',
         'size_t': 'uint32',
+        'int8_t': 'int32',
+        'int16_t': 'int32',
+        'int32_t': 'int32',
+        'int64_t': 'int64',       
+        'uint8_t':'uint32',
+        'uint16_t': 'uint32',
+        'uint32_t': 'uint32',
+        'uint64_t': 'uint64',  
+        'NiFpga_Bool': 'bool'     
     },
     'custom_types': [],
     'library_info': {

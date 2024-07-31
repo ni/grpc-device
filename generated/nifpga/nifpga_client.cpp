@@ -108,6 +108,633 @@ open(const StubPtr& stub, const std::string& bitfile, const std::string& signatu
   return response;
 }
 
+ReadArrayBoolResponse
+read_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayBoolResponse{};
+
+  raise_if_error(
+      stub->ReadArrayBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayDblResponse
+read_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayDblResponse{};
+
+  raise_if_error(
+      stub->ReadArrayDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayI16Response
+read_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayI16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayI16Response{};
+
+  raise_if_error(
+      stub->ReadArrayI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayI32Response
+read_array_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayI32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayI32Response{};
+
+  raise_if_error(
+      stub->ReadArrayI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayI64Response
+read_array_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayI64Response{};
+
+  raise_if_error(
+      stub->ReadArrayI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayI8Response
+read_array_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayI8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayI8Response{};
+
+  raise_if_error(
+      stub->ReadArrayI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArraySglResponse
+read_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArraySglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArraySglResponse{};
+
+  raise_if_error(
+      stub->ReadArraySgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayU16Response
+read_array_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayU16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayU16Response{};
+
+  raise_if_error(
+      stub->ReadArrayU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayU32Response
+read_array_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayU32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayU32Response{};
+
+  raise_if_error(
+      stub->ReadArrayU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayU64Response
+read_array_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayU64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayU64Response{};
+
+  raise_if_error(
+      stub->ReadArrayU64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadArrayU8Response
+read_array_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadArrayU8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = ReadArrayU8Response{};
+
+  raise_if_error(
+      stub->ReadArrayU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadBoolResponse
+read_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadBoolResponse{};
+
+  raise_if_error(
+      stub->ReadBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadDblResponse
+read_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadDblResponse{};
+
+  raise_if_error(
+      stub->ReadDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoBoolResponse
+read_fifo_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoBoolResponse{};
+
+  raise_if_error(
+      stub->ReadFifoBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoDblResponse
+read_fifo_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoDblResponse{};
+
+  raise_if_error(
+      stub->ReadFifoDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoI16Response
+read_fifo_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoI16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoI16Response{};
+
+  raise_if_error(
+      stub->ReadFifoI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoI32Response
+read_fifo_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoI32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoI32Response{};
+
+  raise_if_error(
+      stub->ReadFifoI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoI64Response
+read_fifo_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoI64Response{};
+
+  raise_if_error(
+      stub->ReadFifoI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoI8Response
+read_fifo_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoI8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoI8Response{};
+
+  raise_if_error(
+      stub->ReadFifoI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoSglResponse
+read_fifo_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoSglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoSglResponse{};
+
+  raise_if_error(
+      stub->ReadFifoSgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoU16Response
+read_fifo_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoU16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoU16Response{};
+
+  raise_if_error(
+      stub->ReadFifoU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoU32Response
+read_fifo_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoU32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoU32Response{};
+
+  raise_if_error(
+      stub->ReadFifoU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoU64Response
+read_fifo_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoU64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoU64Response{};
+
+  raise_if_error(
+      stub->ReadFifoU64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFifoU8Response
+read_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFifoU8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_number_of_elements(number_of_elements);
+  request.set_timeout(timeout);
+
+  auto response = ReadFifoU8Response{};
+
+  raise_if_error(
+      stub->ReadFifoU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadI16Response
+read_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadI16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadI16Response{};
+
+  raise_if_error(
+      stub->ReadI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadI32Response
+read_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadI32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadI32Response{};
+
+  raise_if_error(
+      stub->ReadI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadI64Response
+read_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadI64Response{};
+
+  raise_if_error(
+      stub->ReadI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadI8Response
+read_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadI8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadI8Response{};
+
+  raise_if_error(
+      stub->ReadI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadSglResponse
+read_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadSglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadSglResponse{};
+
+  raise_if_error(
+      stub->ReadSgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadU16Response
+read_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadU16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadU16Response{};
+
+  raise_if_error(
+      stub->ReadU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadU32Response
+read_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadU32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadU32Response{};
+
+  raise_if_error(
+      stub->ReadU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadU64Response
+read_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadU64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadU64Response{};
+
+  raise_if_error(
+      stub->ReadU64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadU8Response
+read_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadU8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = ReadU8Response{};
+
+  raise_if_error(
+      stub->ReadU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReleaseFifoElementsResponse
 release_fifo_elements(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& elements)
 {
@@ -211,6 +838,625 @@ unreserve_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const
 
   raise_if_error(
       stub->UnreserveFifo(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayBoolResponse
+write_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<bool>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayBoolResponse{};
+
+  raise_if_error(
+      stub->WriteArrayBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayDblResponse
+write_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<double>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayDblResponse{};
+
+  raise_if_error(
+      stub->WriteArrayDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayI16Response
+write_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int32>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayI16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayI16Response{};
+
+  raise_if_error(
+      stub->WriteArrayI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayI32Response
+write_array_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int32>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayI32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayI32Response{};
+
+  raise_if_error(
+      stub->WriteArrayI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayI64Response
+write_array_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int64>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayI64Response{};
+
+  raise_if_error(
+      stub->WriteArrayI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayI8Response
+write_array_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int32>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayI8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayI8Response{};
+
+  raise_if_error(
+      stub->WriteArrayI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArraySglResponse
+write_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<float>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArraySglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArraySglResponse{};
+
+  raise_if_error(
+      stub->WriteArraySgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayU16Response
+write_array_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::uint32>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayU16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayU16Response{};
+
+  raise_if_error(
+      stub->WriteArrayU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayU32Response
+write_array_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::uint32>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayU32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayU32Response{};
+
+  raise_if_error(
+      stub->WriteArrayU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayU64Response
+write_array_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::uint64>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayU64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayU64Response{};
+
+  raise_if_error(
+      stub->WriteArrayU64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteArrayU8Response
+write_array_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::uint32>& array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArrayU8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  copy_array(array, request.mutable_array());
+
+  auto response = WriteArrayU8Response{};
+
+  raise_if_error(
+      stub->WriteArrayU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteBoolResponse
+write_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const bool& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteBoolResponse{};
+
+  raise_if_error(
+      stub->WriteBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteDblResponse
+write_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const double& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteDblResponse{};
+
+  raise_if_error(
+      stub->WriteDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoBoolResponse
+write_fifo_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<bool>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoBoolResponse{};
+
+  raise_if_error(
+      stub->WriteFifoBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoDblResponse
+write_fifo_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<double>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoDblResponse{};
+
+  raise_if_error(
+      stub->WriteFifoDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoI16Response
+write_fifo_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::int32>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoI16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoI16Response{};
+
+  raise_if_error(
+      stub->WriteFifoI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoI32Response
+write_fifo_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::int32>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoI32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoI32Response{};
+
+  raise_if_error(
+      stub->WriteFifoI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoI64Response
+write_fifo_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::int64>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoI64Response{};
+
+  raise_if_error(
+      stub->WriteFifoI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoI8Response
+write_fifo_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::int32>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoI8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoI8Response{};
+
+  raise_if_error(
+      stub->WriteFifoI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoSglResponse
+write_fifo_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<float>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoSglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoSglResponse{};
+
+  raise_if_error(
+      stub->WriteFifoSgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoU16Response
+write_fifo_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint32>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoU16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoU16Response{};
+
+  raise_if_error(
+      stub->WriteFifoU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoU32Response
+write_fifo_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint32>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoU32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoU32Response{};
+
+  raise_if_error(
+      stub->WriteFifoU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoU64Response
+write_fifo_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint64>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoU64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoU64Response{};
+
+  raise_if_error(
+      stub->WriteFifoU64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteFifoU8Response
+write_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint32>& data, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFifoU8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  copy_array(data, request.mutable_data());
+  request.set_timeout(timeout);
+
+  auto response = WriteFifoU8Response{};
+
+  raise_if_error(
+      stub->WriteFifoU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteI16Response
+write_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteI16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteI16Response{};
+
+  raise_if_error(
+      stub->WriteI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteI32Response
+write_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteI32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteI32Response{};
+
+  raise_if_error(
+      stub->WriteI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteI8Response
+write_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteI8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteI8Response{};
+
+  raise_if_error(
+      stub->WriteI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteSglResponse
+write_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const float& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteSglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteSglResponse{};
+
+  raise_if_error(
+      stub->WriteSgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteU16Response
+write_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::uint32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteU16Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteU16Response{};
+
+  raise_if_error(
+      stub->WriteU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteU32Response
+write_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::uint32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteU32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteU32Response{};
+
+  raise_if_error(
+      stub->WriteU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteU64Response
+write_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::uint64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteU64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteU64Response{};
+
+  raise_if_error(
+      stub->WriteU64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteU8Response
+write_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::uint32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteU8Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteU8Response{};
+
+  raise_if_error(
+      stub->WriteU8(&context, request, &response),
       context);
 
   return response;

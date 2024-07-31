@@ -175,6 +175,950 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayBool(::grpc::ServerContext* context, const ReadArrayBoolRequest* request, ReadArrayBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      std::vector<NiFpga_Bool> array(size, NiFpga_Bool());
+      auto status = library_->ReadArrayBool(session, indicator, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      convert_to_grpc(array, response->mutable_array());
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayDbl(::grpc::ServerContext* context, const ReadArrayDblRequest* request, ReadArrayDblResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      response->mutable_array()->Resize(size, 0);
+      double* array = response->mutable_array()->mutable_data();
+      auto status = library_->ReadArrayDbl(session, indicator, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayI16(::grpc::ServerContext* context, const ReadArrayI16Request* request, ReadArrayI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      std::vector<int16_t> array(size);
+      auto status = library_->ReadArrayI16(session, indicator, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+        response->mutable_array()->Clear();
+        response->mutable_array()->Reserve(size);
+        std::transform(
+          array.begin(),
+          array.begin() + size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+          [&](auto x) {
+              return x;
+          });
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayI32(::grpc::ServerContext* context, const ReadArrayI32Request* request, ReadArrayI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      response->mutable_array()->Resize(size, 0);
+      int32_t* array = response->mutable_array()->mutable_data();
+      auto status = library_->ReadArrayI32(session, indicator, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayI64(::grpc::ServerContext* context, const ReadArrayI64Request* request, ReadArrayI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      response->mutable_array()->Resize(size, 0);
+      int64_t* array = response->mutable_array()->mutable_data();
+      auto status = library_->ReadArrayI64(session, indicator, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayI8(::grpc::ServerContext* context, const ReadArrayI8Request* request, ReadArrayI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      std::vector<int8_t> array(size);
+      auto status = library_->ReadArrayI8(session, indicator, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+        response->mutable_array()->Clear();
+        response->mutable_array()->Reserve(size);
+        std::transform(
+          array.begin(),
+          array.begin() + size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+          [&](auto x) {
+              return x;
+          });
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArraySgl(::grpc::ServerContext* context, const ReadArraySglRequest* request, ReadArraySglResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      response->mutable_array()->Resize(size, 0);
+      float* array = response->mutable_array()->mutable_data();
+      auto status = library_->ReadArraySgl(session, indicator, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayU16(::grpc::ServerContext* context, const ReadArrayU16Request* request, ReadArrayU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      std::vector<uint16_t> array(size);
+      auto status = library_->ReadArrayU16(session, indicator, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+        response->mutable_array()->Clear();
+        response->mutable_array()->Reserve(size);
+        std::transform(
+          array.begin(),
+          array.begin() + size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+          [&](auto x) {
+              return x;
+          });
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayU32(::grpc::ServerContext* context, const ReadArrayU32Request* request, ReadArrayU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      response->mutable_array()->Resize(size, 0);
+      uint32_t* array = response->mutable_array()->mutable_data();
+      auto status = library_->ReadArrayU32(session, indicator, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayU64(::grpc::ServerContext* context, const ReadArrayU64Request* request, ReadArrayU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      response->mutable_array()->Resize(size, 0);
+      uint64_t* array = response->mutable_array()->mutable_data();
+      auto status = library_->ReadArrayU64(session, indicator, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadArrayU8(::grpc::ServerContext* context, const ReadArrayU8Request* request, ReadArrayU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+      std::vector<uint8_t> array(size);
+      auto status = library_->ReadArrayU8(session, indicator, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+        response->mutable_array()->Clear();
+        response->mutable_array()->Reserve(size);
+        std::transform(
+          array.begin(),
+          array.begin() + size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+          [&](auto x) {
+              return x;
+          });
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadBool(::grpc::ServerContext* context, const ReadBoolRequest* request, ReadBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      NiFpga_Bool value {};
+      auto status = library_->ReadBool(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadDbl(::grpc::ServerContext* context, const ReadDblRequest* request, ReadDblResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      double value {};
+      auto status = library_->ReadDbl(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoBool(::grpc::ServerContext* context, const ReadFifoBoolRequest* request, ReadFifoBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      std::vector<NiFpga_Bool> data(number_of_elements, NiFpga_Bool());
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoBool(session, fifo, data.data(), number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      convert_to_grpc(data, response->mutable_data());
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoDbl(::grpc::ServerContext* context, const ReadFifoDblRequest* request, ReadFifoDblResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      response->mutable_data()->Resize(number_of_elements, 0);
+      double* data = response->mutable_data()->mutable_data();
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoDbl(session, fifo, data, number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoI16(::grpc::ServerContext* context, const ReadFifoI16Request* request, ReadFifoI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      std::vector<int16_t> data(number_of_elements);
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoI16(session, fifo, data.data(), number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+        response->mutable_data()->Clear();
+        response->mutable_data()->Reserve(number_of_elements);
+        std::transform(
+          data.begin(),
+          data.begin() + number_of_elements,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
+          [&](auto x) {
+              return x;
+          });
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoI32(::grpc::ServerContext* context, const ReadFifoI32Request* request, ReadFifoI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      response->mutable_data()->Resize(number_of_elements, 0);
+      int32_t* data = response->mutable_data()->mutable_data();
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoI32(session, fifo, data, number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoI64(::grpc::ServerContext* context, const ReadFifoI64Request* request, ReadFifoI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      response->mutable_data()->Resize(number_of_elements, 0);
+      int64_t* data = response->mutable_data()->mutable_data();
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoI64(session, fifo, data, number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoI8(::grpc::ServerContext* context, const ReadFifoI8Request* request, ReadFifoI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      std::vector<int8_t> data(number_of_elements);
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoI8(session, fifo, data.data(), number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+        response->mutable_data()->Clear();
+        response->mutable_data()->Reserve(number_of_elements);
+        std::transform(
+          data.begin(),
+          data.begin() + number_of_elements,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
+          [&](auto x) {
+              return x;
+          });
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoSgl(::grpc::ServerContext* context, const ReadFifoSglRequest* request, ReadFifoSglResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      response->mutable_data()->Resize(number_of_elements, 0);
+      float* data = response->mutable_data()->mutable_data();
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoSgl(session, fifo, data, number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoU16(::grpc::ServerContext* context, const ReadFifoU16Request* request, ReadFifoU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      std::vector<uint16_t> data(number_of_elements);
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoU16(session, fifo, data.data(), number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+        response->mutable_data()->Clear();
+        response->mutable_data()->Reserve(number_of_elements);
+        std::transform(
+          data.begin(),
+          data.begin() + number_of_elements,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
+          [&](auto x) {
+              return x;
+          });
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoU32(::grpc::ServerContext* context, const ReadFifoU32Request* request, ReadFifoU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      response->mutable_data()->Resize(number_of_elements, 0);
+      uint32_t* data = response->mutable_data()->mutable_data();
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoU32(session, fifo, data, number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoU64(::grpc::ServerContext* context, const ReadFifoU64Request* request, ReadFifoU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      response->mutable_data()->Resize(number_of_elements, 0);
+      uint64_t* data = response->mutable_data()->mutable_data();
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoU64(session, fifo, data, number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadFifoU8(::grpc::ServerContext* context, const ReadFifoU8Request* request, ReadFifoU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      size_t number_of_elements = request->number_of_elements();
+      uint32_t timeout = request->timeout();
+      std::vector<uint8_t> data(number_of_elements);
+      size_t elements_remaining {};
+      auto status = library_->ReadFifoU8(session, fifo, data.data(), number_of_elements, timeout, &elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+        response->mutable_data()->Clear();
+        response->mutable_data()->Reserve(number_of_elements);
+        std::transform(
+          data.begin(),
+          data.begin() + number_of_elements,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
+          [&](auto x) {
+              return x;
+          });
+      response->set_elements_remaining(elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadI16(::grpc::ServerContext* context, const ReadI16Request* request, ReadI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      int16_t value {};
+      auto status = library_->ReadI16(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadI32(::grpc::ServerContext* context, const ReadI32Request* request, ReadI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      int32_t value {};
+      auto status = library_->ReadI32(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadI64(::grpc::ServerContext* context, const ReadI64Request* request, ReadI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      int64_t value {};
+      auto status = library_->ReadI64(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadI8(::grpc::ServerContext* context, const ReadI8Request* request, ReadI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      int8_t value {};
+      auto status = library_->ReadI8(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadSgl(::grpc::ServerContext* context, const ReadSglRequest* request, ReadSglResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      float value {};
+      auto status = library_->ReadSgl(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadU16(::grpc::ServerContext* context, const ReadU16Request* request, ReadU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      uint16_t value {};
+      auto status = library_->ReadU16(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadU32(::grpc::ServerContext* context, const ReadU32Request* request, ReadU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      uint32_t value {};
+      auto status = library_->ReadU32(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadU64(::grpc::ServerContext* context, const ReadU64Request* request, ReadU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      uint64_t value {};
+      auto status = library_->ReadU64(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::ReadU8(::grpc::ServerContext* context, const ReadU8Request* request, ReadU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      uint8_t value {};
+      auto status = library_->ReadU8(session, indicator, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReleaseFifoElements(::grpc::ServerContext* context, const ReleaseFifoElementsRequest* request, ReleaseFifoElementsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -300,6 +1244,1001 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t fifo = request->fifo();
       auto status = library_->UnreserveFifo(session, fifo);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayBool(::grpc::ServerContext* context, const WriteArrayBoolRequest* request, WriteArrayBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array = convert_from_grpc<NiFpga_Bool>(request->array());
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayBool(session, control, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayDbl(::grpc::ServerContext* context, const WriteArrayDblRequest* request, WriteArrayDblResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array = const_cast<double*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayDbl(session, control, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayI16(::grpc::ServerContext* context, const WriteArrayI16Request* request, WriteArrayI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array_raw = request->array();
+      auto array = std::vector<int16_t>();
+      array.reserve(array_raw.size());
+      std::transform(
+        array_raw.begin(),
+        array_raw.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int16_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int16_t>(x);
+        });
+
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayI16(session, control, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayI32(::grpc::ServerContext* context, const WriteArrayI32Request* request, WriteArrayI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array = const_cast<int32_t*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayI32(session, control, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayI64(::grpc::ServerContext* context, const WriteArrayI64Request* request, WriteArrayI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array = const_cast<int64_t*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayI64(session, control, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayI8(::grpc::ServerContext* context, const WriteArrayI8Request* request, WriteArrayI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array_raw = request->array();
+      auto array = std::vector<int8_t>();
+      array.reserve(array_raw.size());
+      std::transform(
+        array_raw.begin(),
+        array_raw.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int8_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int8_t>(x);
+        });
+
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayI8(session, control, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArraySgl(::grpc::ServerContext* context, const WriteArraySglRequest* request, WriteArraySglResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array = const_cast<float*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArraySgl(session, control, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayU16(::grpc::ServerContext* context, const WriteArrayU16Request* request, WriteArrayU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array_raw = request->array();
+      auto array = std::vector<uint16_t>();
+      array.reserve(array_raw.size());
+      std::transform(
+        array_raw.begin(),
+        array_raw.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uint16_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uint16_t>(x);
+        });
+
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayU16(session, control, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayU32(::grpc::ServerContext* context, const WriteArrayU32Request* request, WriteArrayU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array = const_cast<uint32_t*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayU32(session, control, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayU64(::grpc::ServerContext* context, const WriteArrayU64Request* request, WriteArrayU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array = const_cast<uint64_t*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayU64(session, control, array, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteArrayU8(::grpc::ServerContext* context, const WriteArrayU8Request* request, WriteArrayU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto array_raw = request->array();
+      auto array = std::vector<uint8_t>();
+      array.reserve(array_raw.size());
+      std::transform(
+        array_raw.begin(),
+        array_raw.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uint8_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uint8_t>(x);
+        });
+
+      size_t size = static_cast<size_t>(request->array().size());
+      auto status = library_->WriteArrayU8(session, control, array.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteBool(::grpc::ServerContext* context, const WriteBoolRequest* request, WriteBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      NiFpga_Bool value = request->value();
+      auto status = library_->WriteBool(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteDbl(::grpc::ServerContext* context, const WriteDblRequest* request, WriteDblResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      double value = request->value();
+      auto status = library_->WriteDbl(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoBool(::grpc::ServerContext* context, const WriteFifoBoolRequest* request, WriteFifoBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data = convert_from_grpc<NiFpga_Bool>(request->data());
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoBool(session, fifo, data.data(), number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoDbl(::grpc::ServerContext* context, const WriteFifoDblRequest* request, WriteFifoDblResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data = const_cast<double*>(request->data().data());
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoDbl(session, fifo, data, number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoI16(::grpc::ServerContext* context, const WriteFifoI16Request* request, WriteFifoI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data_raw = request->data();
+      auto data = std::vector<int16_t>();
+      data.reserve(data_raw.size());
+      std::transform(
+        data_raw.begin(),
+        data_raw.end(),
+        std::back_inserter(data),
+        [](auto x) {
+              if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int16_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int16_t>(x);
+        });
+
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoI16(session, fifo, data.data(), number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoI32(::grpc::ServerContext* context, const WriteFifoI32Request* request, WriteFifoI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data = const_cast<int32_t*>(request->data().data());
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoI32(session, fifo, data, number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoI64(::grpc::ServerContext* context, const WriteFifoI64Request* request, WriteFifoI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data = const_cast<int64_t*>(request->data().data());
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoI64(session, fifo, data, number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoI8(::grpc::ServerContext* context, const WriteFifoI8Request* request, WriteFifoI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data_raw = request->data();
+      auto data = std::vector<int8_t>();
+      data.reserve(data_raw.size());
+      std::transform(
+        data_raw.begin(),
+        data_raw.end(),
+        std::back_inserter(data),
+        [](auto x) {
+              if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int8_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int8_t>(x);
+        });
+
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoI8(session, fifo, data.data(), number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoSgl(::grpc::ServerContext* context, const WriteFifoSglRequest* request, WriteFifoSglResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data = const_cast<float*>(request->data().data());
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoSgl(session, fifo, data, number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoU16(::grpc::ServerContext* context, const WriteFifoU16Request* request, WriteFifoU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data_raw = request->data();
+      auto data = std::vector<uint16_t>();
+      data.reserve(data_raw.size());
+      std::transform(
+        data_raw.begin(),
+        data_raw.end(),
+        std::back_inserter(data),
+        [](auto x) {
+              if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uint16_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uint16_t>(x);
+        });
+
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoU16(session, fifo, data.data(), number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoU32(::grpc::ServerContext* context, const WriteFifoU32Request* request, WriteFifoU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data = const_cast<uint32_t*>(request->data().data());
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoU32(session, fifo, data, number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoU64(::grpc::ServerContext* context, const WriteFifoU64Request* request, WriteFifoU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data = const_cast<uint64_t*>(request->data().data());
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoU64(session, fifo, data, number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteFifoU8(::grpc::ServerContext* context, const WriteFifoU8Request* request, WriteFifoU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      auto data_raw = request->data();
+      auto data = std::vector<uint8_t>();
+      data.reserve(data_raw.size());
+      std::transform(
+        data_raw.begin(),
+        data_raw.end(),
+        std::back_inserter(data),
+        [](auto x) {
+              if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uint8_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uint8_t>(x);
+        });
+
+      size_t number_of_elements = static_cast<size_t>(request->data().size());
+      uint32_t timeout = request->timeout();
+      size_t empty_elements_remaining {};
+      auto status = library_->WriteFifoU8(session, fifo, data.data(), number_of_elements, timeout, &empty_elements_remaining);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_empty_elements_remaining(empty_elements_remaining);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteI16(::grpc::ServerContext* context, const WriteI16Request* request, WriteI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto value_raw = request->value();
+      if (value_raw < std::numeric_limits<int16_t>::min() || value_raw > std::numeric_limits<int16_t>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(value_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int16_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto value = static_cast<int16_t>(value_raw);
+
+      auto status = library_->WriteI16(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteI32(::grpc::ServerContext* context, const WriteI32Request* request, WriteI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      int32_t value = request->value();
+      auto status = library_->WriteI32(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteI8(::grpc::ServerContext* context, const WriteI8Request* request, WriteI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto value_raw = request->value();
+      if (value_raw < std::numeric_limits<int8_t>::min() || value_raw > std::numeric_limits<int8_t>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(value_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int8_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto value = static_cast<int8_t>(value_raw);
+
+      auto status = library_->WriteI8(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteSgl(::grpc::ServerContext* context, const WriteSglRequest* request, WriteSglResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      float value = request->value();
+      auto status = library_->WriteSgl(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteU16(::grpc::ServerContext* context, const WriteU16Request* request, WriteU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto value_raw = request->value();
+      if (value_raw < std::numeric_limits<uint16_t>::min() || value_raw > std::numeric_limits<uint16_t>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(value_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uint16_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto value = static_cast<uint16_t>(value_raw);
+
+      auto status = library_->WriteU16(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteU32(::grpc::ServerContext* context, const WriteU32Request* request, WriteU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      uint32_t value = request->value();
+      auto status = library_->WriteU32(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteU64(::grpc::ServerContext* context, const WriteU64Request* request, WriteU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      uint64_t value = request->value();
+      auto status = library_->WriteU64(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteU8(::grpc::ServerContext* context, const WriteU8Request* request, WriteU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      auto value_raw = request->value();
+      if (value_raw < std::numeric_limits<uint8_t>::min() || value_raw > std::numeric_limits<uint8_t>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(value_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uint8_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto value = static_cast<uint8_t>(value_raw);
+
+      auto status = library_->WriteU8(session, control, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
