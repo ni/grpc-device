@@ -19,15 +19,19 @@ jobs:
       with:
         name: ni-grpc-device-tests-windows-x64
 
-    - name: Install Latest Visual C++ Redistributable
-      run: |
-          mkdir C:\Temp\VcRedist
-          Install-Module -Name VcRedist -Force
-          $VcRedists = Get-VcList | Save-VcRedist -Path C:\Temp\VcRedists
-          Install-VcRedist -VcList $VcRedists -Silent
-
     - name: Sleep for 60 minutes
       run: Start-Sleep -s 3600
+
+    - name: Install VcRedist module
+      run: Install-Module -Name VcRedist -Force
+
+    - name: Make directory to install VcRedist version
+      run: mkdir VcRedist
+
+    - name: Download & Install Latest Visual C++ Redistributable
+      run: |
+          $VcRedists = Get-VcList | Save-VcRedist -Path VcRedists
+          Install-VcRedist -VcList $VcRedists -Silent
 
     - run: ls -R
       working-directory: ./build/RelWithDebInfo
