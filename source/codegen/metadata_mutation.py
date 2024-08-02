@@ -89,7 +89,15 @@ RESERVED_WORDS = [
 # This will not account for other aliases of narrow numerics.
 # Note that params can also be marked coerced instead of updating this list.
 # uint8 is not included because it can be represented as a byte.
-KNOWN_COERCED_NARROW_NUMERIC_TYPES = ["int16", "uInt16", "int8", "int8_t", "int16_t", "uint8_t", "uint16_t"]
+KNOWN_COERCED_NARROW_NUMERIC_TYPES = [
+    "int16",
+    "uInt16",
+    "int8",
+    "int8_t",
+    "int16_t",
+    "uint8_t",
+    "uint16_t",
+]
 
 _ALREADY_MUTATED = (
     "NI-DCPower",
