@@ -22,9 +22,29 @@ NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo)
   return NiFpga_CommitFifoConfiguration(session, fifo);
 }
 
+NiFpga_Status ConfigureFifo(NiFpga_Session session, uint32_t fifo, size_t depth)
+{
+  return NiFpga_ConfigureFifo(session, fifo, depth);
+}
+
+NiFpga_Status ConfigureFifo2(NiFpga_Session session, uint32_t fifo, size_t requestedDepth, size_t* actualDepth)
+{
+  return NiFpga_ConfigureFifo2(session, fifo, requestedDepth, actualDepth);
+}
+
 NiFpga_Status Download(NiFpga_Session session)
 {
   return NiFpga_Download(session);
+}
+
+NiFpga_Status FindFifo(NiFpga_Session session, char fifoName[], uint32_t* fifoNumber)
+{
+  return NiFpga_FindFifo(session, fifoName, fifoNumber);
+}
+
+NiFpga_Status FindRegister(NiFpga_Session session, char registerName[], uint32_t* registerOffset)
+{
+  return NiFpga_FindRegister(session, registerName, registerOffset);
 }
 
 NiFpga_Status Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session)
@@ -150,6 +170,11 @@ NiFpga_Status ReadFifoU64(NiFpga_Session session, uint32_t fifo, uint64_t data[]
 NiFpga_Status ReadFifoU8(NiFpga_Session session, uint32_t fifo, uint8_t data[], size_t numberOfElements, uint32_t timeout, size_t* elementsRemaining)
 {
   return NiFpga_ReadFifoU8(session, fifo, data, numberOfElements, timeout, elementsRemaining);
+}
+
+NiFpga_Status ReadFxp64(NiFpga_Session session, uint32_t indicator, NiFpga_FxpTypeInfo typeInfo, uint64_t* value)
+{
+  return NiFpga_ReadFxp64(session, indicator, typeInfo, value);
 }
 
 NiFpga_Status ReadI16(NiFpga_Session session, uint32_t indicator, int16_t* value)
@@ -345,6 +370,11 @@ NiFpga_Status WriteFifoU64(NiFpga_Session session, uint32_t fifo, uint64_t data[
 NiFpga_Status WriteFifoU8(NiFpga_Session session, uint32_t fifo, uint8_t data[], size_t numberOfElements, uint32_t timeout, size_t* emptyElementsRemaining)
 {
   return NiFpga_WriteFifoU8(session, fifo, data, numberOfElements, timeout, emptyElementsRemaining);
+}
+
+NiFpga_Status WriteFxp64(NiFpga_Session session, uint32_t control, NiFpga_FxpTypeInfo typeInfo, uint64_t value)
+{
+  return NiFpga_WriteFxp64(session, control, typeInfo, value);
 }
 
 NiFpga_Status WriteI16(NiFpga_Session session, uint32_t control, int16_t value)

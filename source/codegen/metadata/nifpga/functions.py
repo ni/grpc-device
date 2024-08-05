@@ -1044,8 +1044,9 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'NiFpga_FxpTypeInfo'
+                'type': 'struct NiFpga_FxpTypeInfo'
             }
         ],
         'returns': 'static'
@@ -1055,8 +1056,9 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'NiFpga_FxpTypeInfo'
+                'type': 'struct NiFpga_FxpTypeInfo'
             }
         ],
         'returns': 'static'
@@ -1124,7 +1126,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ConfigureFifo': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1145,7 +1146,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ConfigureFifo2': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1175,8 +1175,9 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'NiFpga_FxpTypeInfo'
+                'type': 'struct NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1191,8 +1192,9 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'NiFpga_FxpTypeInfo'
+                'type': 'struct NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1207,8 +1209,9 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'NiFpga_FxpTypeInfo'
+                'type': 'struct NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1223,8 +1226,9 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'NiFpga_FxpTypeInfo'
+                'type': 'struct NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1251,7 +1255,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'FindFifo': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1272,7 +1275,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'FindRegister': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2494,7 +2496,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFxp64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2508,8 +2509,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'NiFpga_FxpTypeInfo'
+                'type': 'struct NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'out',
@@ -3854,7 +3856,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFxp64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3868,8 +3869,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'NiFpga_FxpTypeInfo'
+                'type': 'struct NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',

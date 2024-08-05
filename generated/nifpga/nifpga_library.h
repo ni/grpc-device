@@ -24,7 +24,11 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   NiFpga_Status Abort(NiFpga_Session session) override;
   NiFpga_Status Close(NiFpga_Session session, uint32_t attribute) override;
   NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo) override;
+  NiFpga_Status ConfigureFifo(NiFpga_Session session, uint32_t fifo, size_t depth) override;
+  NiFpga_Status ConfigureFifo2(NiFpga_Session session, uint32_t fifo, size_t requestedDepth, size_t* actualDepth) override;
   NiFpga_Status Download(NiFpga_Session session) override;
+  NiFpga_Status FindFifo(NiFpga_Session session, char fifoName[], uint32_t* fifoNumber) override;
+  NiFpga_Status FindRegister(NiFpga_Session session, char registerName[], uint32_t* registerOffset) override;
   NiFpga_Status Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session) override;
   NiFpga_Status ReadArrayBool(NiFpga_Session session, uint32_t indicator, NiFpga_Bool array[], size_t size) override;
   NiFpga_Status ReadArrayDbl(NiFpga_Session session, uint32_t indicator, double array[], size_t size) override;
@@ -50,6 +54,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   NiFpga_Status ReadFifoU32(NiFpga_Session session, uint32_t fifo, uint32_t data[], size_t numberOfElements, uint32_t timeout, size_t* elementsRemaining) override;
   NiFpga_Status ReadFifoU64(NiFpga_Session session, uint32_t fifo, uint64_t data[], size_t numberOfElements, uint32_t timeout, size_t* elementsRemaining) override;
   NiFpga_Status ReadFifoU8(NiFpga_Session session, uint32_t fifo, uint8_t data[], size_t numberOfElements, uint32_t timeout, size_t* elementsRemaining) override;
+  NiFpga_Status ReadFxp64(NiFpga_Session session, uint32_t indicator, NiFpga_FxpTypeInfo typeInfo, uint64_t* value) override;
   NiFpga_Status ReadI16(NiFpga_Session session, uint32_t indicator, int16_t* value) override;
   NiFpga_Status ReadI32(NiFpga_Session session, uint32_t indicator, int32_t* value) override;
   NiFpga_Status ReadI64(NiFpga_Session session, uint32_t indicator, int64_t* value) override;
@@ -89,6 +94,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   NiFpga_Status WriteFifoU32(NiFpga_Session session, uint32_t fifo, uint32_t data[], size_t numberOfElements, uint32_t timeout, size_t* emptyElementsRemaining) override;
   NiFpga_Status WriteFifoU64(NiFpga_Session session, uint32_t fifo, uint64_t data[], size_t numberOfElements, uint32_t timeout, size_t* emptyElementsRemaining) override;
   NiFpga_Status WriteFifoU8(NiFpga_Session session, uint32_t fifo, uint8_t data[], size_t numberOfElements, uint32_t timeout, size_t* emptyElementsRemaining) override;
+  NiFpga_Status WriteFxp64(NiFpga_Session session, uint32_t control, NiFpga_FxpTypeInfo typeInfo, uint64_t value) override;
   NiFpga_Status WriteI16(NiFpga_Session session, uint32_t control, int16_t value) override;
   NiFpga_Status WriteI32(NiFpga_Session session, uint32_t control, int32_t value) override;
   NiFpga_Status WriteI8(NiFpga_Session session, uint32_t control, int8_t value) override;
@@ -102,7 +108,11 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   using AbortPtr = decltype(&NiFpga_Abort);
   using ClosePtr = decltype(&NiFpga_Close);
   using CommitFifoConfigurationPtr = decltype(&NiFpga_CommitFifoConfiguration);
+  using ConfigureFifoPtr = decltype(&NiFpga_ConfigureFifo);
+  using ConfigureFifo2Ptr = decltype(&NiFpga_ConfigureFifo2);
   using DownloadPtr = decltype(&NiFpga_Download);
+  using FindFifoPtr = decltype(&NiFpga_FindFifo);
+  using FindRegisterPtr = decltype(&NiFpga_FindRegister);
   using OpenPtr = decltype(&NiFpga_Open);
   using ReadArrayBoolPtr = decltype(&NiFpga_ReadArrayBool);
   using ReadArrayDblPtr = decltype(&NiFpga_ReadArrayDbl);
@@ -128,6 +138,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   using ReadFifoU32Ptr = decltype(&NiFpga_ReadFifoU32);
   using ReadFifoU64Ptr = decltype(&NiFpga_ReadFifoU64);
   using ReadFifoU8Ptr = decltype(&NiFpga_ReadFifoU8);
+  using ReadFxp64Ptr = decltype(&NiFpga_ReadFxp64);
   using ReadI16Ptr = decltype(&NiFpga_ReadI16);
   using ReadI32Ptr = decltype(&NiFpga_ReadI32);
   using ReadI64Ptr = decltype(&NiFpga_ReadI64);
@@ -167,6 +178,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   using WriteFifoU32Ptr = decltype(&NiFpga_WriteFifoU32);
   using WriteFifoU64Ptr = decltype(&NiFpga_WriteFifoU64);
   using WriteFifoU8Ptr = decltype(&NiFpga_WriteFifoU8);
+  using WriteFxp64Ptr = decltype(&NiFpga_WriteFxp64);
   using WriteI16Ptr = decltype(&NiFpga_WriteI16);
   using WriteI32Ptr = decltype(&NiFpga_WriteI32);
   using WriteI8Ptr = decltype(&NiFpga_WriteI8);
@@ -180,7 +192,11 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
     AbortPtr Abort;
     ClosePtr Close;
     CommitFifoConfigurationPtr CommitFifoConfiguration;
+    ConfigureFifoPtr ConfigureFifo;
+    ConfigureFifo2Ptr ConfigureFifo2;
     DownloadPtr Download;
+    FindFifoPtr FindFifo;
+    FindRegisterPtr FindRegister;
     OpenPtr Open;
     ReadArrayBoolPtr ReadArrayBool;
     ReadArrayDblPtr ReadArrayDbl;
@@ -206,6 +222,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
     ReadFifoU32Ptr ReadFifoU32;
     ReadFifoU64Ptr ReadFifoU64;
     ReadFifoU8Ptr ReadFifoU8;
+    ReadFxp64Ptr ReadFxp64;
     ReadI16Ptr ReadI16;
     ReadI32Ptr ReadI32;
     ReadI64Ptr ReadI64;
@@ -245,6 +262,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
     WriteFifoU32Ptr WriteFifoU32;
     WriteFifoU64Ptr WriteFifoU64;
     WriteFifoU8Ptr WriteFifoU8;
+    WriteFxp64Ptr WriteFxp64;
     WriteI16Ptr WriteI16;
     WriteI32Ptr WriteI32;
     WriteI8Ptr WriteI8;

@@ -26,10 +26,32 @@ config = {
         'uint8_t':'uint32',
         'uint16_t': 'uint32',
         'uint32_t': 'uint32',
-        'uint64_t': 'uint64',  
+        'uint64_t': 'uint64',
         'NiFpga_Bool': 'bool'     
     },
-    'custom_types': [],
+    'custom_types': [
+        {
+            'name': 'NiFpga_FxpTypeInfo',
+            'grpc_name': 'FxpTypeInfo',
+            'fields': [
+                {
+                    'grpc_type': 'bool',
+                    'type': 'NiFpga_Bool', 
+                    'name': 'isSigned'
+                },
+                {
+                    'grpc_type': 'uint32',
+                    'type': 'uint8_t', 
+                    'name': 'wordLength'
+                },
+                {
+                    'grpc_type': 'int32',
+                    'type': 'int16_t', 
+                    'name': 'integerWordLength',
+                },
+            ]
+        }
+    ],
     'library_info': {
         'Linux': {
             '64bit': {

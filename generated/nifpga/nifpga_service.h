@@ -45,7 +45,11 @@ public:
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CommitFifoConfiguration(::grpc::ServerContext* context, const CommitFifoConfigurationRequest* request, CommitFifoConfigurationResponse* response) override;
+  ::grpc::Status ConfigureFifo(::grpc::ServerContext* context, const ConfigureFifoRequest* request, ConfigureFifoResponse* response) override;
+  ::grpc::Status ConfigureFifo2(::grpc::ServerContext* context, const ConfigureFifo2Request* request, ConfigureFifo2Response* response) override;
   ::grpc::Status Download(::grpc::ServerContext* context, const DownloadRequest* request, DownloadResponse* response) override;
+  ::grpc::Status FindFifo(::grpc::ServerContext* context, const FindFifoRequest* request, FindFifoResponse* response) override;
+  ::grpc::Status FindRegister(::grpc::ServerContext* context, const FindRegisterRequest* request, FindRegisterResponse* response) override;
   ::grpc::Status Open(::grpc::ServerContext* context, const OpenRequest* request, OpenResponse* response) override;
   ::grpc::Status ReadArrayBool(::grpc::ServerContext* context, const ReadArrayBoolRequest* request, ReadArrayBoolResponse* response) override;
   ::grpc::Status ReadArrayDbl(::grpc::ServerContext* context, const ReadArrayDblRequest* request, ReadArrayDblResponse* response) override;
@@ -71,6 +75,7 @@ public:
   ::grpc::Status ReadFifoU32(::grpc::ServerContext* context, const ReadFifoU32Request* request, ReadFifoU32Response* response) override;
   ::grpc::Status ReadFifoU64(::grpc::ServerContext* context, const ReadFifoU64Request* request, ReadFifoU64Response* response) override;
   ::grpc::Status ReadFifoU8(::grpc::ServerContext* context, const ReadFifoU8Request* request, ReadFifoU8Response* response) override;
+  ::grpc::Status ReadFxp64(::grpc::ServerContext* context, const ReadFxp64Request* request, ReadFxp64Response* response) override;
   ::grpc::Status ReadI16(::grpc::ServerContext* context, const ReadI16Request* request, ReadI16Response* response) override;
   ::grpc::Status ReadI32(::grpc::ServerContext* context, const ReadI32Request* request, ReadI32Response* response) override;
   ::grpc::Status ReadI64(::grpc::ServerContext* context, const ReadI64Request* request, ReadI64Response* response) override;
@@ -110,6 +115,7 @@ public:
   ::grpc::Status WriteFifoU32(::grpc::ServerContext* context, const WriteFifoU32Request* request, WriteFifoU32Response* response) override;
   ::grpc::Status WriteFifoU64(::grpc::ServerContext* context, const WriteFifoU64Request* request, WriteFifoU64Response* response) override;
   ::grpc::Status WriteFifoU8(::grpc::ServerContext* context, const WriteFifoU8Request* request, WriteFifoU8Response* response) override;
+  ::grpc::Status WriteFxp64(::grpc::ServerContext* context, const WriteFxp64Request* request, WriteFxp64Response* response) override;
   ::grpc::Status WriteI16(::grpc::ServerContext* context, const WriteI16Request* request, WriteI16Response* response) override;
   ::grpc::Status WriteI32(::grpc::ServerContext* context, const WriteI32Request* request, WriteI32Response* response) override;
   ::grpc::Status WriteI8(::grpc::ServerContext* context, const WriteI8Request* request, WriteI8Response* response) override;
@@ -127,5 +133,12 @@ private:
 };
 
 } // namespace nifpga_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+NiFpga_FxpTypeInfo convert_from_grpc(const nifpga_grpc::FxpTypeInfo& input);
+} // namespace converters
+} // namespace nidevice_grpc
 
 #endif  // NIFPGA_GRPC_SERVICE_H

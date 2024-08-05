@@ -25,7 +25,11 @@ using namespace nidevice_grpc::experimental::client;
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& session);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& attribute);
 CommitFifoConfigurationResponse commit_fifo_configuration(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
+ConfigureFifoResponse configure_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& depth);
+ConfigureFifo2Response configure_fifo2(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& requested_depth);
 DownloadResponse download(const StubPtr& stub, const nidevice_grpc::Session& session);
+FindFifoResponse find_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& fifo_name);
+FindRegisterResponse find_register(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& register_name);
 OpenResponse open(const StubPtr& stub, const std::string& bitfile, const std::string& signature, const std::string& resource, const pb::uint32& attribute, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 ReadArrayBoolResponse read_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArrayDblResponse read_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
@@ -51,6 +55,7 @@ ReadFifoU16Response read_fifo_u16(const StubPtr& stub, const nidevice_grpc::Sess
 ReadFifoU32Response read_fifo_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
 ReadFifoU64Response read_fifo_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
 ReadFifoU8Response read_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
+ReadFxp64Response read_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const FxpTypeInfo& type_info);
 ReadI16Response read_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadI32Response read_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadI64Response read_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
@@ -90,6 +95,7 @@ WriteFifoU16Response write_fifo_u16(const StubPtr& stub, const nidevice_grpc::Se
 WriteFifoU32Response write_fifo_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint32>& data, const pb::uint32& timeout);
 WriteFifoU64Response write_fifo_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint64>& data, const pb::uint32& timeout);
 WriteFifoU8Response write_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint32>& data, const pb::uint32& timeout);
+WriteFxp64Response write_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const FxpTypeInfo& type_info, const pb::uint64& value);
 WriteI16Response write_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
 WriteI32Response write_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
 WriteI8Response write_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
