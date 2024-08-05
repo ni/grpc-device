@@ -62,3 +62,4 @@ message InitializeResponse {
   nidevice_grpc.Session instrument = 2;
   int32 is_new_session = 3;
 }
+

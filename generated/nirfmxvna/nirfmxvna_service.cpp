@@ -25,7 +25,7 @@ namespace nirfmxvna_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiRFmxVNAService::NiRFmxVNAService(
-      NiRFmxVNALibraryInterface* library,
+      LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
       const NiRFmxVNAFeatureToggles& feature_toggles)
       : library_(library),
@@ -177,7 +177,9 @@ namespace nirfmxvna_grpc {
         return std::make_tuple(status, instrument);
       };
       std::string grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXVNA_VAL_FALSE); };
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXVNA_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
@@ -200,3 +202,4 @@ namespace nirfmxvna_grpc {
   {
   }
 } // namespace nirfmxvna_grpc
+

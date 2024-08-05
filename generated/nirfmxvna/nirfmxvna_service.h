@@ -33,22 +33,23 @@ struct NiRFmxVNAFeatureToggles
 
 class NiRFmxVNAService final : public NiRFmxVNA::Service {
 public:
+  using LibrarySharedPtr = std::shared_ptr<NiRFmxVNALibraryInterface>;
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
 
   NiRFmxVNAService(
-    NiRFmxVNALibraryInterface* library,
+    LibrarySharedPtr library,
     ResourceRepositorySharedPtr resource_repository,
     const NiRFmxVNAFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxVNAService();
-  
+
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;
   ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
 private:
-  NiRFmxVNALibraryInterface* library_;
+  LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);
 
   NiRFmxVNAFeatureToggles feature_toggles_;
 };

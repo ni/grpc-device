@@ -8,20 +8,23 @@
 
 #include "nirfmxvna_library_interface.h"
 
-#include <server/shared_library.h>
+#include <server/shared_library_interface.h>
+
+#include <memory>
 
 namespace nirfmxvna_grpc {
 
 class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
  public:
   NiRFmxVNALibrary();
+  explicit NiRFmxVNALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library);
   virtual ~NiRFmxVNALibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy);
-  int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
-  int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
-  int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession);
+  int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy) override;
+  int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
+  int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
+  int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) override;
 
  private:
   using ClosePtr = decltype(&RFmxVNA_Close);
@@ -36,7 +39,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
     InitializePtr Initialize;
   } FunctionLoadStatus;
 
-  nidevice_grpc::SharedLibrary shared_library_;
+  std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
 };
 

@@ -4,6 +4,9 @@
 // Service implementation for the NI-rfmxvna Metadata
 //---------------------------------------------------------------------
 #include "nirfmxvna_library.h"
+#include <server/shared_library.h>
+
+#include <memory>
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "niRFmxVNA.dll";
@@ -13,18 +16,21 @@ static const char* kLibraryName = "libnirfmxvna.so.1";
 
 namespace nirfmxvna_grpc {
 
-NiRFmxVNALibrary::NiRFmxVNALibrary() : shared_library_(kLibraryName)
+NiRFmxVNALibrary::NiRFmxVNALibrary() : NiRFmxVNALibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
+
+NiRFmxVNALibrary::NiRFmxVNALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
 {
-  shared_library_.load();
-  bool loaded = shared_library_.is_loaded();
+  shared_library_->set_library_name(kLibraryName);
+  shared_library_->load();
+  bool loaded = shared_library_->is_loaded();
   memset(&function_pointers_, 0, sizeof(function_pointers_));
   if (!loaded) {
     return;
   }
-  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("RFmxVNA_Close"));
-  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxVNA_GetError"));
-  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxVNA_GetErrorString"));
-  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxVNA_Initialize"));
+  function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("RFmxVNA_Close"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxVNA_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxVNA_GetErrorString"));
+  function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxVNA_Initialize"));
 }
 
 NiRFmxVNALibrary::~NiRFmxVNALibrary()
@@ -33,7 +39,7 @@ NiRFmxVNALibrary::~NiRFmxVNALibrary()
 
 ::grpc::Status NiRFmxVNALibrary::check_function_exists(std::string functionName)
 {
-  return shared_library_.function_exists(functionName.c_str())
+  return shared_library_->function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
