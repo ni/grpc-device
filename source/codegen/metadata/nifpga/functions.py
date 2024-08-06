@@ -1661,7 +1661,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayBool': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1676,7 +1675,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'NiFpga_Bool'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'NiFpga_Bool[]'
             },
             {
                 'direction': 'in',
@@ -1687,7 +1690,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayDbl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1702,7 +1704,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'double'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'double[]'
             },
             {
                 'direction': 'in',
@@ -1713,7 +1719,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayI16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1728,7 +1733,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'int16_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'int16_t[]'
             },
             {
                 'direction': 'in',
@@ -1739,7 +1748,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayI32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1754,7 +1762,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'int32_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'int32_t[]'
             },
             {
                 'direction': 'in',
@@ -1765,7 +1777,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayI64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1780,7 +1791,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'int64_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'int64_t[]'
             },
             {
                 'direction': 'in',
@@ -1791,7 +1806,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayI8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1806,7 +1820,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'int8_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'int8_t[]'
             },
             {
                 'direction': 'in',
@@ -1817,7 +1835,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArraySgl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1832,7 +1849,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'float'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'float[]'
             },
             {
                 'direction': 'in',
@@ -1843,7 +1864,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayU16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1858,7 +1878,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'uint16_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uint16_t[]'
             },
             {
                 'direction': 'in',
@@ -1869,7 +1893,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayU32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1884,7 +1907,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'uint32_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uint32_t[]'
             },
             {
                 'direction': 'in',
@@ -1895,7 +1922,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayU64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1910,7 +1936,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'uint64_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uint64_t[]'
             },
             {
                 'direction': 'in',
@@ -1921,7 +1951,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayU8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1936,7 +1965,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'array',
-                'type': 'uint8_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uint8_t[]'
             },
             {
                 'direction': 'in',
@@ -1947,7 +1980,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadBool': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1968,7 +2000,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadDbl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1989,7 +2020,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoBool': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2004,7 +2034,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'NiFpga_Bool'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'NiFpga_Bool[]'
             },
             {
                 'direction': 'in',
@@ -2040,6 +2074,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
                 'type': 'void'
             },
             {
@@ -2066,7 +2104,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoDbl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2081,7 +2118,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'double'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'double[]'
             },
             {
                 'direction': 'in',
@@ -2102,7 +2143,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoI16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2117,7 +2157,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'int16_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'int16_t[]'
             },
             {
                 'direction': 'in',
@@ -2138,7 +2182,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoI32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2153,7 +2196,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'int32_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'int32_t[]'
             },
             {
                 'direction': 'in',
@@ -2174,7 +2221,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoI64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2189,7 +2235,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'int64_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'int64_t[]'
             },
             {
                 'direction': 'in',
@@ -2210,7 +2260,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoI8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2225,7 +2274,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'int8_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'int8_t[]'
             },
             {
                 'direction': 'in',
@@ -2246,7 +2299,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoSgl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2261,7 +2313,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'float'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'float[]'
             },
             {
                 'direction': 'in',
@@ -2282,7 +2338,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoU16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2297,7 +2352,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'uint16_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'uint16_t[]'
             },
             {
                 'direction': 'in',
@@ -2318,7 +2377,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoU32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2333,7 +2391,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'uint32_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'uint32_t[]'
             },
             {
                 'direction': 'in',
@@ -2354,7 +2416,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoU64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2369,7 +2430,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'uint64_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'uint64_t[]'
             },
             {
                 'direction': 'in',
@@ -2390,7 +2455,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFifoU8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2405,7 +2469,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'data',
-                'type': 'uint8_t'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'uint8_t[]'
             },
             {
                 'direction': 'in',
@@ -2452,7 +2520,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadI16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2473,7 +2540,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadI32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2494,7 +2560,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadI64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2515,7 +2580,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadI8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2536,7 +2600,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadSgl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2557,7 +2620,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadU16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2578,7 +2640,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadU32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2599,7 +2660,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadU64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2620,7 +2680,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadU8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2966,7 +3025,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayBool': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2981,7 +3039,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'NiFpga_Bool'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'NiFpga_Bool[]'
             },
             {
                 'direction': 'in',
@@ -2992,7 +3054,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayDbl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3007,7 +3068,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'double'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'double[]'
             },
             {
                 'direction': 'in',
@@ -3018,7 +3083,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayI16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3033,7 +3097,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'int16_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'int16_t[]'
             },
             {
                 'direction': 'in',
@@ -3044,7 +3112,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayI32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3059,7 +3126,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'int32_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'int32_t[]'
             },
             {
                 'direction': 'in',
@@ -3070,7 +3141,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayI64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3085,7 +3155,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'int64_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'int64_t[]'
             },
             {
                 'direction': 'in',
@@ -3096,7 +3170,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayI8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3111,7 +3184,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'int8_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'int8_t[]'
             },
             {
                 'direction': 'in',
@@ -3122,7 +3199,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArraySgl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3137,7 +3213,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'float'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'float[]'
             },
             {
                 'direction': 'in',
@@ -3148,7 +3228,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayU16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3163,7 +3242,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'uint16_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'uint16_t[]'
             },
             {
                 'direction': 'in',
@@ -3174,7 +3257,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayU32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3189,7 +3271,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'uint32_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'uint32_t[]'
             },
             {
                 'direction': 'in',
@@ -3200,7 +3286,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayU64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3215,7 +3300,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'uint64_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'uint64_t[]'
             },
             {
                 'direction': 'in',
@@ -3226,7 +3315,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayU8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3241,7 +3329,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'array',
-                'type': 'uint8_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'uint8_t[]'
             },
             {
                 'direction': 'in',
@@ -3252,7 +3344,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteBool': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3273,7 +3364,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteDbl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3294,7 +3384,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoBool': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3309,7 +3398,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'NiFpga_Bool'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'NiFpga_Bool[]'
             },
             {
                 'direction': 'in',
@@ -3371,7 +3464,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoDbl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3386,7 +3478,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'double'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'double[]'
             },
             {
                 'direction': 'in',
@@ -3407,7 +3503,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoI16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3422,7 +3517,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'int16_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'int16_t[]'
             },
             {
                 'direction': 'in',
@@ -3443,7 +3542,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoI32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3458,7 +3556,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'int32_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'int32_t[]'
             },
             {
                 'direction': 'in',
@@ -3479,7 +3581,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoI64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3494,7 +3595,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'int64_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'int64_t[]'
             },
             {
                 'direction': 'in',
@@ -3515,7 +3620,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoI8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3530,7 +3634,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'int8_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'int8_t[]'
             },
             {
                 'direction': 'in',
@@ -3551,7 +3659,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoSgl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3566,7 +3673,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'float'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'float[]'
             },
             {
                 'direction': 'in',
@@ -3587,7 +3698,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoU16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3602,7 +3712,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'uint16_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'uint16_t[]'
             },
             {
                 'direction': 'in',
@@ -3623,7 +3737,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoU32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3638,7 +3751,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'uint32_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'uint32_t[]'
             },
             {
                 'direction': 'in',
@@ -3659,7 +3776,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoU64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3674,7 +3790,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'uint64_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'uint64_t[]'
             },
             {
                 'direction': 'in',
@@ -3695,7 +3815,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFifoU8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3710,7 +3829,11 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'data',
-                'type': 'uint8_t'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'uint8_t[]'
             },
             {
                 'direction': 'in',
@@ -3757,7 +3880,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteI16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3778,7 +3900,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteI32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3820,7 +3941,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteI8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3841,7 +3961,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteSgl': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3862,7 +3981,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteU16': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3883,7 +4001,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteU32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3904,7 +4021,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteU64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3925,7 +4041,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteU8': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
