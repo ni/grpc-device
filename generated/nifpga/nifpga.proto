@@ -19,7 +19,11 @@ service NiFpga {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc CommitFifoConfiguration(CommitFifoConfigurationRequest) returns (CommitFifoConfigurationResponse);
+  rpc ConfigureFifo(ConfigureFifoRequest) returns (ConfigureFifoResponse);
+  rpc ConfigureFifo2(ConfigureFifo2Request) returns (ConfigureFifo2Response);
   rpc Download(DownloadRequest) returns (DownloadResponse);
+  rpc FindFifo(FindFifoRequest) returns (FindFifoResponse);
+  rpc FindRegister(FindRegisterRequest) returns (FindRegisterResponse);
   rpc Open(OpenRequest) returns (OpenResponse);
   rpc ReadArrayBool(ReadArrayBoolRequest) returns (ReadArrayBoolResponse);
   rpc ReadArrayDbl(ReadArrayDblRequest) returns (ReadArrayDblResponse);
@@ -45,6 +49,7 @@ service NiFpga {
   rpc ReadFifoU32(ReadFifoU32Request) returns (ReadFifoU32Response);
   rpc ReadFifoU64(ReadFifoU64Request) returns (ReadFifoU64Response);
   rpc ReadFifoU8(ReadFifoU8Request) returns (ReadFifoU8Response);
+  rpc ReadFxp64(ReadFxp64Request) returns (ReadFxp64Response);
   rpc ReadI16(ReadI16Request) returns (ReadI16Response);
   rpc ReadI32(ReadI32Request) returns (ReadI32Response);
   rpc ReadI64(ReadI64Request) returns (ReadI64Response);
@@ -84,14 +89,22 @@ service NiFpga {
   rpc WriteFifoU32(WriteFifoU32Request) returns (WriteFifoU32Response);
   rpc WriteFifoU64(WriteFifoU64Request) returns (WriteFifoU64Response);
   rpc WriteFifoU8(WriteFifoU8Request) returns (WriteFifoU8Response);
+  rpc WriteFxp64(WriteFxp64Request) returns (WriteFxp64Response);
   rpc WriteI16(WriteI16Request) returns (WriteI16Response);
   rpc WriteI32(WriteI32Request) returns (WriteI32Response);
+  rpc WriteI64(WriteI64Request) returns (WriteI64Response);
   rpc WriteI8(WriteI8Request) returns (WriteI8Response);
   rpc WriteSgl(WriteSglRequest) returns (WriteSglResponse);
   rpc WriteU16(WriteU16Request) returns (WriteU16Response);
   rpc WriteU32(WriteU32Request) returns (WriteU32Response);
   rpc WriteU64(WriteU64Request) returns (WriteU64Response);
   rpc WriteU8(WriteU8Request) returns (WriteU8Response);
+}
+
+message FxpTypeInfo {
+  bool is_signed = 1;
+  uint32 word_length = 2;
+  int32 integer_word_length = 3;
 }
 
 message AbortRequest {
@@ -120,12 +133,53 @@ message CommitFifoConfigurationResponse {
   int32 status = 1;
 }
 
+message ConfigureFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 depth = 3;
+}
+
+message ConfigureFifoResponse {
+  int32 status = 1;
+}
+
+message ConfigureFifo2Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 requested_depth = 3;
+}
+
+message ConfigureFifo2Response {
+  int32 status = 1;
+  uint32 actual_depth = 2;
+}
+
 message DownloadRequest {
   nidevice_grpc.Session session = 1;
 }
 
 message DownloadResponse {
   int32 status = 1;
+}
+
+message FindFifoRequest {
+  nidevice_grpc.Session session = 1;
+  string fifo_name = 2;
+}
+
+message FindFifoResponse {
+  int32 status = 1;
+  uint32 fifo_number = 2;
+}
+
+message FindRegisterRequest {
+  nidevice_grpc.Session session = 1;
+  string register_name = 2;
+}
+
+message FindRegisterResponse {
+  int32 status = 1;
+  uint32 register_offset = 2;
 }
 
 message OpenRequest {
@@ -425,6 +479,17 @@ message ReadFifoU8Response {
   int32 status = 1;
   repeated uint32 data = 2;
   uint32 elements_remaining = 3;
+}
+
+message ReadFxp64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  FxpTypeInfo type_info = 3;
+}
+
+message ReadFxp64Response {
+  int32 status = 1;
+  uint64 value = 2;
 }
 
 message ReadI16Request {
@@ -833,6 +898,17 @@ message WriteFifoU8Response {
   uint32 empty_elements_remaining = 2;
 }
 
+message WriteFxp64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  FxpTypeInfo type_info = 3;
+  uint64 value = 4;
+}
+
+message WriteFxp64Response {
+  int32 status = 1;
+}
+
 message WriteI16Request {
   nidevice_grpc.Session session = 1;
   uint32 control = 2;
@@ -850,6 +926,16 @@ message WriteI32Request {
 }
 
 message WriteI32Response {
+  int32 status = 1;
+}
+
+message WriteI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  int64 value = 3;
+}
+
+message WriteI64Response {
   int32 status = 1;
 }
 

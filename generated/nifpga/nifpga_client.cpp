@@ -70,6 +70,44 @@ commit_fifo_configuration(const StubPtr& stub, const nidevice_grpc::Session& ses
   return response;
 }
 
+ConfigureFifoResponse
+configure_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& depth)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureFifoRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_depth(depth);
+
+  auto response = ConfigureFifoResponse{};
+
+  raise_if_error(
+      stub->ConfigureFifo(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ConfigureFifo2Response
+configure_fifo2(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& requested_depth)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureFifo2Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  request.set_requested_depth(requested_depth);
+
+  auto response = ConfigureFifo2Response{};
+
+  raise_if_error(
+      stub->ConfigureFifo2(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DownloadResponse
 download(const StubPtr& stub, const nidevice_grpc::Session& session)
 {
@@ -82,6 +120,42 @@ download(const StubPtr& stub, const nidevice_grpc::Session& session)
 
   raise_if_error(
       stub->Download(&context, request, &response),
+      context);
+
+  return response;
+}
+
+FindFifoResponse
+find_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& fifo_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FindFifoRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo_name(fifo_name);
+
+  auto response = FindFifoResponse{};
+
+  raise_if_error(
+      stub->FindFifo(&context, request, &response),
+      context);
+
+  return response;
+}
+
+FindRegisterResponse
+find_register(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& register_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FindRegisterRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_register_name(register_name);
+
+  auto response = FindRegisterResponse{};
+
+  raise_if_error(
+      stub->FindRegister(&context, request, &response),
       context);
 
   return response;
@@ -568,6 +642,25 @@ read_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const p
 
   raise_if_error(
       stub->ReadFifoU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ReadFxp64Response
+read_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const FxpTypeInfo& type_info)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadFxp64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.mutable_type_info()->CopyFrom(type_info);
+
+  auto response = ReadFxp64Response{};
+
+  raise_if_error(
+      stub->ReadFxp64(&context, request, &response),
       context);
 
   return response;
@@ -1310,6 +1403,26 @@ write_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const 
   return response;
 }
 
+WriteFxp64Response
+write_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const FxpTypeInfo& type_info, const pb::uint64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteFxp64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.mutable_type_info()->CopyFrom(type_info);
+  request.set_value(value);
+
+  auto response = WriteFxp64Response{};
+
+  raise_if_error(
+      stub->WriteFxp64(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteI16Response
 write_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value)
 {
@@ -1343,6 +1456,25 @@ write_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::
 
   raise_if_error(
       stub->WriteI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteI64Response
+write_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteI64Response{};
+
+  raise_if_error(
+      stub->WriteI64(&context, request, &response),
       context);
 
   return response;
