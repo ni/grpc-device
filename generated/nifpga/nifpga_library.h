@@ -97,6 +97,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   NiFpga_Status WriteFxp64(NiFpga_Session session, uint32_t control, NiFpga_FxpTypeInfo typeInfo, uint64_t value) override;
   NiFpga_Status WriteI16(NiFpga_Session session, uint32_t control, int16_t value) override;
   NiFpga_Status WriteI32(NiFpga_Session session, uint32_t control, int32_t value) override;
+  NiFpga_Status WriteI64(NiFpga_Session session, uint32_t control, int64_t value) override;
   NiFpga_Status WriteI8(NiFpga_Session session, uint32_t control, int8_t value) override;
   NiFpga_Status WriteSgl(NiFpga_Session session, uint32_t control, float value) override;
   NiFpga_Status WriteU16(NiFpga_Session session, uint32_t control, uint16_t value) override;
@@ -181,6 +182,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   using WriteFxp64Ptr = decltype(&NiFpga_WriteFxp64);
   using WriteI16Ptr = decltype(&NiFpga_WriteI16);
   using WriteI32Ptr = decltype(&NiFpga_WriteI32);
+  using WriteI64Ptr = decltype(&NiFpga_WriteI64);
   using WriteI8Ptr = decltype(&NiFpga_WriteI8);
   using WriteSglPtr = decltype(&NiFpga_WriteSgl);
   using WriteU16Ptr = decltype(&NiFpga_WriteU16);
@@ -265,6 +267,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
     WriteFxp64Ptr WriteFxp64;
     WriteI16Ptr WriteI16;
     WriteI32Ptr WriteI32;
+    WriteI64Ptr WriteI64;
     WriteI8Ptr WriteI8;
     WriteSglPtr WriteSgl;
     WriteU16Ptr WriteU16;

@@ -91,6 +91,7 @@ class NiFpgaLibraryInterface {
   virtual NiFpga_Status WriteFxp64(NiFpga_Session session, uint32_t control, NiFpga_FxpTypeInfo typeInfo, uint64_t value) = 0;
   virtual NiFpga_Status WriteI16(NiFpga_Session session, uint32_t control, int16_t value) = 0;
   virtual NiFpga_Status WriteI32(NiFpga_Session session, uint32_t control, int32_t value) = 0;
+  virtual NiFpga_Status WriteI64(NiFpga_Session session, uint32_t control, int64_t value) = 0;
   virtual NiFpga_Status WriteI8(NiFpga_Session session, uint32_t control, int8_t value) = 0;
   virtual NiFpga_Status WriteSgl(NiFpga_Session session, uint32_t control, float value) = 0;
   virtual NiFpga_Status WriteU16(NiFpga_Session session, uint32_t control, uint16_t value) = 0;

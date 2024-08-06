@@ -98,6 +98,7 @@ WriteFifoU8Response write_fifo_u8(const StubPtr& stub, const nidevice_grpc::Sess
 WriteFxp64Response write_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const FxpTypeInfo& type_info, const pb::uint64& value);
 WriteI16Response write_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
 WriteI32Response write_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
+WriteI64Response write_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int64& value);
 WriteI8Response write_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
 WriteSglResponse write_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const float& value);
 WriteU16Response write_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::uint32& value);

@@ -2830,7 +2830,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
-                'type': 'int64'
+                'type': 'int64_t'
             }
         ],
         'returns': 'NiFpga_Status'
@@ -3922,7 +3922,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteI64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3937,7 +3936,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
-                'type': 'int64'
+                'type': 'int64_t'
             }
         ],
         'returns': 'NiFpga_Status'

@@ -92,6 +92,7 @@ service NiFpga {
   rpc WriteFxp64(WriteFxp64Request) returns (WriteFxp64Response);
   rpc WriteI16(WriteI16Request) returns (WriteI16Response);
   rpc WriteI32(WriteI32Request) returns (WriteI32Response);
+  rpc WriteI64(WriteI64Request) returns (WriteI64Response);
   rpc WriteI8(WriteI8Request) returns (WriteI8Response);
   rpc WriteSgl(WriteSglRequest) returns (WriteSglResponse);
   rpc WriteU16(WriteU16Request) returns (WriteU16Response);
@@ -925,6 +926,16 @@ message WriteI32Request {
 }
 
 message WriteI32Response {
+  int32 status = 1;
+}
+
+message WriteI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  int64 value = 3;
+}
+
+message WriteI64Response {
   int32 status = 1;
 }
 

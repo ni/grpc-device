@@ -118,6 +118,7 @@ public:
   ::grpc::Status WriteFxp64(::grpc::ServerContext* context, const WriteFxp64Request* request, WriteFxp64Response* response) override;
   ::grpc::Status WriteI16(::grpc::ServerContext* context, const WriteI16Request* request, WriteI16Response* response) override;
   ::grpc::Status WriteI32(::grpc::ServerContext* context, const WriteI32Request* request, WriteI32Response* response) override;
+  ::grpc::Status WriteI64(::grpc::ServerContext* context, const WriteI64Request* request, WriteI64Response* response) override;
   ::grpc::Status WriteI8(::grpc::ServerContext* context, const WriteI8Request* request, WriteI8Response* response) override;
   ::grpc::Status WriteSgl(::grpc::ServerContext* context, const WriteSglRequest* request, WriteSglResponse* response) override;
   ::grpc::Status WriteU16(::grpc::ServerContext* context, const WriteU16Request* request, WriteU16Response* response) override;

@@ -1461,6 +1461,25 @@ write_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::
   return response;
 }
 
+WriteI64Response
+write_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+  request.set_value(value);
+
+  auto response = WriteI64Response{};
+
+  raise_if_error(
+      stub->WriteI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteI8Response
 write_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value)
 {

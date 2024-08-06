@@ -93,6 +93,7 @@ class NiFpgaMockLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   MOCK_METHOD(NiFpga_Status, WriteFxp64, (NiFpga_Session session, uint32_t control, NiFpga_FxpTypeInfo typeInfo, uint64_t value), (override));
   MOCK_METHOD(NiFpga_Status, WriteI16, (NiFpga_Session session, uint32_t control, int16_t value), (override));
   MOCK_METHOD(NiFpga_Status, WriteI32, (NiFpga_Session session, uint32_t control, int32_t value), (override));
+  MOCK_METHOD(NiFpga_Status, WriteI64, (NiFpga_Session session, uint32_t control, int64_t value), (override));
   MOCK_METHOD(NiFpga_Status, WriteI8, (NiFpga_Session session, uint32_t control, int8_t value), (override));
   MOCK_METHOD(NiFpga_Status, WriteSgl, (NiFpga_Session session, uint32_t control, float value), (override));
   MOCK_METHOD(NiFpga_Status, WriteU16, (NiFpga_Session session, uint32_t control, uint16_t value), (override));

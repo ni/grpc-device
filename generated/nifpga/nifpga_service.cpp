@@ -2234,6 +2234,30 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WriteI64(::grpc::ServerContext* context, const WriteI64Request* request, WriteI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+      int64_t value = request->value();
+      auto status = library_->WriteI64(session, control, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteI8(::grpc::ServerContext* context, const WriteI8Request* request, WriteI8Response* response)
   {
     if (context->IsCancelled()) {

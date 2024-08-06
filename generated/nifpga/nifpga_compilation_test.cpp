@@ -387,6 +387,11 @@ NiFpga_Status WriteI32(NiFpga_Session session, uint32_t control, int32_t value)
   return NiFpga_WriteI32(session, control, value);
 }
 
+NiFpga_Status WriteI64(NiFpga_Session session, uint32_t control, int64_t value)
+{
+  return NiFpga_WriteI64(session, control, value);
+}
+
 NiFpga_Status WriteI8(NiFpga_Session session, uint32_t control, int8_t value)
 {
   return NiFpga_WriteI8(session, control, value);
