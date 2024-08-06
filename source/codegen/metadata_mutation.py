@@ -90,12 +90,12 @@ RESERVED_WORDS = [
 # Note that params can also be marked coerced instead of updating this list.
 # uint8 is not included because it can be represented as a byte.
 KNOWN_COERCED_NARROW_NUMERIC_TYPES = [
-    "int16",
-    "uInt16",
     "int8",
     "int8_t",
-    "int16_t",
     "uint8_t",
+    "int16",
+    "int16_t",
+    "uInt16",
     "uint16_t",
 ]
 
