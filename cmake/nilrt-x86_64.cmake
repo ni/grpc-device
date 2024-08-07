@@ -3,7 +3,6 @@
 #----------------------------------------------------------------------
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR x86_64)
-set(_GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN TRUE)
 
 #----------------------------------------------------------------------
 # Path variables for toolchains
