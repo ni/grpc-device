@@ -19,7 +19,11 @@ service NiFpga {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc CommitFifoConfiguration(CommitFifoConfigurationRequest) returns (CommitFifoConfigurationResponse);
+  rpc ConfigureFifo(ConfigureFifoRequest) returns (ConfigureFifoResponse);
+  rpc ConfigureFifo2(ConfigureFifo2Request) returns (ConfigureFifo2Response);
   rpc Download(DownloadRequest) returns (DownloadResponse);
+  rpc FindFifo(FindFifoRequest) returns (FindFifoResponse);
+  rpc FindRegister(FindRegisterRequest) returns (FindRegisterResponse);
   rpc Open(OpenRequest) returns (OpenResponse);
   rpc ReadArrayBool(ReadArrayBoolRequest) returns (ReadArrayBoolResponse);
   rpc ReadArrayDbl(ReadArrayDblRequest) returns (ReadArrayDblResponse);
@@ -86,6 +90,7 @@ service NiFpga {
   rpc WriteFifoU8(WriteFifoU8Request) returns (WriteFifoU8Response);
   rpc WriteI16(WriteI16Request) returns (WriteI16Response);
   rpc WriteI32(WriteI32Request) returns (WriteI32Response);
+  rpc WriteI64(WriteI64Request) returns (WriteI64Response);
   rpc WriteI8(WriteI8Request) returns (WriteI8Response);
   rpc WriteSgl(WriteSglRequest) returns (WriteSglResponse);
   rpc WriteU16(WriteU16Request) returns (WriteU16Response);
@@ -120,12 +125,53 @@ message CommitFifoConfigurationResponse {
   int32 status = 1;
 }
 
+message ConfigureFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 depth = 3;
+}
+
+message ConfigureFifoResponse {
+  int32 status = 1;
+}
+
+message ConfigureFifo2Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 requested_depth = 3;
+}
+
+message ConfigureFifo2Response {
+  int32 status = 1;
+  uint32 actual_depth = 2;
+}
+
 message DownloadRequest {
   nidevice_grpc.Session session = 1;
 }
 
 message DownloadResponse {
   int32 status = 1;
+}
+
+message FindFifoRequest {
+  nidevice_grpc.Session session = 1;
+  string fifo_name = 2;
+}
+
+message FindFifoResponse {
+  int32 status = 1;
+  uint32 fifo_number = 2;
+}
+
+message FindRegisterRequest {
+  nidevice_grpc.Session session = 1;
+  string register_name = 2;
+}
+
+message FindRegisterResponse {
+  int32 status = 1;
+  uint32 register_offset = 2;
 }
 
 message OpenRequest {
@@ -850,6 +896,16 @@ message WriteI32Request {
 }
 
 message WriteI32Response {
+  int32 status = 1;
+}
+
+message WriteI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  int64 value = 3;
+}
+
+message WriteI64Response {
   int32 status = 1;
 }
 

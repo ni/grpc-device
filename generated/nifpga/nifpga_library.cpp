@@ -30,7 +30,11 @@ NiFpgaLibrary::NiFpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("NiFpgaDll_Abort"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("NiFpgaDll_Close"));
   function_pointers_.CommitFifoConfiguration = reinterpret_cast<CommitFifoConfigurationPtr>(shared_library_->get_function_pointer("NiFpgaDll_CommitFifoConfiguration"));
+  function_pointers_.ConfigureFifo = reinterpret_cast<ConfigureFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_ConfigureFifo"));
+  function_pointers_.ConfigureFifo2 = reinterpret_cast<ConfigureFifo2Ptr>(shared_library_->get_function_pointer("NiFpgaDll_ConfigureFifo2"));
   function_pointers_.Download = reinterpret_cast<DownloadPtr>(shared_library_->get_function_pointer("NiFpgaDll_Download"));
+  function_pointers_.FindFifo = reinterpret_cast<FindFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_FindFifo"));
+  function_pointers_.FindRegister = reinterpret_cast<FindRegisterPtr>(shared_library_->get_function_pointer("NiFpgaDll_FindRegister"));
   function_pointers_.Open = reinterpret_cast<OpenPtr>(shared_library_->get_function_pointer("NiFpgaDll_Open"));
   function_pointers_.ReadArrayBool = reinterpret_cast<ReadArrayBoolPtr>(shared_library_->get_function_pointer("NiFpgaDll_ReadArrayBool"));
   function_pointers_.ReadArrayDbl = reinterpret_cast<ReadArrayDblPtr>(shared_library_->get_function_pointer("NiFpgaDll_ReadArrayDbl"));
@@ -97,6 +101,7 @@ NiFpgaLibrary::NiFpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.WriteFifoU8 = reinterpret_cast<WriteFifoU8Ptr>(shared_library_->get_function_pointer("NiFpgaDll_WriteFifoU8"));
   function_pointers_.WriteI16 = reinterpret_cast<WriteI16Ptr>(shared_library_->get_function_pointer("NiFpgaDll_WriteI16"));
   function_pointers_.WriteI32 = reinterpret_cast<WriteI32Ptr>(shared_library_->get_function_pointer("NiFpgaDll_WriteI32"));
+  function_pointers_.WriteI64 = reinterpret_cast<WriteI64Ptr>(shared_library_->get_function_pointer("NiFpgaDll_WriteI64"));
   function_pointers_.WriteI8 = reinterpret_cast<WriteI8Ptr>(shared_library_->get_function_pointer("NiFpgaDll_WriteI8"));
   function_pointers_.WriteSgl = reinterpret_cast<WriteSglPtr>(shared_library_->get_function_pointer("NiFpgaDll_WriteSgl"));
   function_pointers_.WriteU16 = reinterpret_cast<WriteU16Ptr>(shared_library_->get_function_pointer("NiFpgaDll_WriteU16"));
@@ -140,12 +145,44 @@ NiFpga_Status NiFpgaLibrary::CommitFifoConfiguration(NiFpga_Session session, uin
   return function_pointers_.CommitFifoConfiguration(session, fifo);
 }
 
+NiFpga_Status NiFpgaLibrary::ConfigureFifo(NiFpga_Session session, uint32_t fifo, size_t depth)
+{
+  if (!function_pointers_.ConfigureFifo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_ConfigureFifo.");
+  }
+  return function_pointers_.ConfigureFifo(session, fifo, depth);
+}
+
+NiFpga_Status NiFpgaLibrary::ConfigureFifo2(NiFpga_Session session, uint32_t fifo, size_t requestedDepth, size_t* actualDepth)
+{
+  if (!function_pointers_.ConfigureFifo2) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_ConfigureFifo2.");
+  }
+  return function_pointers_.ConfigureFifo2(session, fifo, requestedDepth, actualDepth);
+}
+
 NiFpga_Status NiFpgaLibrary::Download(NiFpga_Session session)
 {
   if (!function_pointers_.Download) {
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Download.");
   }
   return function_pointers_.Download(session);
+}
+
+NiFpga_Status NiFpgaLibrary::FindFifo(NiFpga_Session session, char fifoName[], uint32_t* fifoNumber)
+{
+  if (!function_pointers_.FindFifo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_FindFifo.");
+  }
+  return function_pointers_.FindFifo(session, fifoName, fifoNumber);
+}
+
+NiFpga_Status NiFpgaLibrary::FindRegister(NiFpga_Session session, char registerName[], uint32_t* registerOffset)
+{
+  if (!function_pointers_.FindRegister) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_FindRegister.");
+  }
+  return function_pointers_.FindRegister(session, registerName, registerOffset);
 }
 
 NiFpga_Status NiFpgaLibrary::Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session)
@@ -674,6 +711,14 @@ NiFpga_Status NiFpgaLibrary::WriteI32(NiFpga_Session session, uint32_t control, 
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_WriteI32.");
   }
   return function_pointers_.WriteI32(session, control, value);
+}
+
+NiFpga_Status NiFpgaLibrary::WriteI64(NiFpga_Session session, uint32_t control, int64_t value)
+{
+  if (!function_pointers_.WriteI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_WriteI64.");
+  }
+  return function_pointers_.WriteI64(session, control, value);
 }
 
 NiFpga_Status NiFpgaLibrary::WriteI8(NiFpga_Session session, uint32_t control, int8_t value)

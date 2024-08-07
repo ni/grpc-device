@@ -22,9 +22,29 @@ NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo)
   return NiFpga_CommitFifoConfiguration(session, fifo);
 }
 
+NiFpga_Status ConfigureFifo(NiFpga_Session session, uint32_t fifo, size_t depth)
+{
+  return NiFpga_ConfigureFifo(session, fifo, depth);
+}
+
+NiFpga_Status ConfigureFifo2(NiFpga_Session session, uint32_t fifo, size_t requestedDepth, size_t* actualDepth)
+{
+  return NiFpga_ConfigureFifo2(session, fifo, requestedDepth, actualDepth);
+}
+
 NiFpga_Status Download(NiFpga_Session session)
 {
   return NiFpga_Download(session);
+}
+
+NiFpga_Status FindFifo(NiFpga_Session session, char fifoName[], uint32_t* fifoNumber)
+{
+  return NiFpga_FindFifo(session, fifoName, fifoNumber);
+}
+
+NiFpga_Status FindRegister(NiFpga_Session session, char registerName[], uint32_t* registerOffset)
+{
+  return NiFpga_FindRegister(session, registerName, registerOffset);
 }
 
 NiFpga_Status Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session)
@@ -355,6 +375,11 @@ NiFpga_Status WriteI16(NiFpga_Session session, uint32_t control, int16_t value)
 NiFpga_Status WriteI32(NiFpga_Session session, uint32_t control, int32_t value)
 {
   return NiFpga_WriteI32(session, control, value);
+}
+
+NiFpga_Status WriteI64(NiFpga_Session session, uint32_t control, int64_t value)
+{
+  return NiFpga_WriteI64(session, control, value);
 }
 
 NiFpga_Status WriteI8(NiFpga_Session session, uint32_t control, int8_t value)
