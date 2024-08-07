@@ -75,7 +75,6 @@ public:
   ::grpc::Status ReadFifoU32(::grpc::ServerContext* context, const ReadFifoU32Request* request, ReadFifoU32Response* response) override;
   ::grpc::Status ReadFifoU64(::grpc::ServerContext* context, const ReadFifoU64Request* request, ReadFifoU64Response* response) override;
   ::grpc::Status ReadFifoU8(::grpc::ServerContext* context, const ReadFifoU8Request* request, ReadFifoU8Response* response) override;
-  ::grpc::Status ReadFxp64(::grpc::ServerContext* context, const ReadFxp64Request* request, ReadFxp64Response* response) override;
   ::grpc::Status ReadI16(::grpc::ServerContext* context, const ReadI16Request* request, ReadI16Response* response) override;
   ::grpc::Status ReadI32(::grpc::ServerContext* context, const ReadI32Request* request, ReadI32Response* response) override;
   ::grpc::Status ReadI64(::grpc::ServerContext* context, const ReadI64Request* request, ReadI64Response* response) override;
@@ -115,7 +114,6 @@ public:
   ::grpc::Status WriteFifoU32(::grpc::ServerContext* context, const WriteFifoU32Request* request, WriteFifoU32Response* response) override;
   ::grpc::Status WriteFifoU64(::grpc::ServerContext* context, const WriteFifoU64Request* request, WriteFifoU64Response* response) override;
   ::grpc::Status WriteFifoU8(::grpc::ServerContext* context, const WriteFifoU8Request* request, WriteFifoU8Response* response) override;
-  ::grpc::Status WriteFxp64(::grpc::ServerContext* context, const WriteFxp64Request* request, WriteFxp64Response* response) override;
   ::grpc::Status WriteI16(::grpc::ServerContext* context, const WriteI16Request* request, WriteI16Response* response) override;
   ::grpc::Status WriteI32(::grpc::ServerContext* context, const WriteI32Request* request, WriteI32Response* response) override;
   ::grpc::Status WriteI64(::grpc::ServerContext* context, const WriteI64Request* request, WriteI64Response* response) override;
@@ -134,12 +132,5 @@ private:
 };
 
 } // namespace nifpga_grpc
-
-namespace nidevice_grpc {
-namespace converters {
-template <>
-NiFpga_FxpTypeInfo convert_from_grpc(const nifpga_grpc::FxpTypeInfo& input);
-} // namespace converters
-} // namespace nidevice_grpc
 
 #endif  // NIFPGA_GRPC_SERVICE_H

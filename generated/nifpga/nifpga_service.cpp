@@ -996,32 +996,6 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFpgaService::ReadFxp64(::grpc::ServerContext* context, const ReadFxp64Request* request, ReadFxp64Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-      uint32_t indicator = request->indicator();
-      auto type_info = convert_from_grpc<NiFpga_FxpTypeInfo>(request->type_info());
-      uint64_t value {};
-      auto status = library_->ReadFxp64(session, indicator, type_info, &value);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadI16(::grpc::ServerContext* context, const ReadI16Request* request, ReadI16Response* response)
   {
     if (context->IsCancelled()) {
@@ -2152,31 +2126,6 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFpgaService::WriteFxp64(::grpc::ServerContext* context, const WriteFxp64Request* request, WriteFxp64Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-      uint32_t control = request->control();
-      auto type_info = convert_from_grpc<NiFpga_FxpTypeInfo>(request->type_info());
-      uint64_t value = request->value();
-      auto status = library_->WriteFxp64(session, control, type_info, value);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteI16(::grpc::ServerContext* context, const WriteI16Request* request, WriteI16Response* response)
   {
     if (context->IsCancelled()) {
@@ -2435,19 +2384,4 @@ namespace nifpga_grpc {
   {
   }
 } // namespace nifpga_grpc
-
-namespace nidevice_grpc {
-namespace converters {
-template <>
-NiFpga_FxpTypeInfo convert_from_grpc(const nifpga_grpc::FxpTypeInfo& input) 
-{
-  auto output = NiFpga_FxpTypeInfo();  
-  output.isSigned = input.is_signed();
-  output.wordLength = input.word_length();
-  output.integerWordLength = input.integer_word_length();
-  return output;
-}
-
-} // converters
-} // nidevice_grpc
 

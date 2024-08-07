@@ -55,7 +55,6 @@ ReadFifoU16Response read_fifo_u16(const StubPtr& stub, const nidevice_grpc::Sess
 ReadFifoU32Response read_fifo_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
 ReadFifoU64Response read_fifo_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
 ReadFifoU8Response read_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
-ReadFxp64Response read_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const FxpTypeInfo& type_info);
 ReadI16Response read_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadI32Response read_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadI64Response read_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
@@ -95,7 +94,6 @@ WriteFifoU16Response write_fifo_u16(const StubPtr& stub, const nidevice_grpc::Se
 WriteFifoU32Response write_fifo_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint32>& data, const pb::uint32& timeout);
 WriteFifoU64Response write_fifo_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint64>& data, const pb::uint32& timeout);
 WriteFifoU8Response write_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::uint32>& data, const pb::uint32& timeout);
-WriteFxp64Response write_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const FxpTypeInfo& type_info, const pb::uint64& value);
 WriteI16Response write_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
 WriteI32Response write_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
 WriteI64Response write_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int64& value);

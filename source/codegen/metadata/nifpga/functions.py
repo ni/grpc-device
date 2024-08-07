@@ -1044,9 +1044,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'struct NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             }
         ],
         'returns': 'static'
@@ -1056,9 +1055,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'struct NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             }
         ],
         'returns': 'static'
@@ -1175,9 +1173,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'struct NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1192,9 +1189,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'struct NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1209,9 +1205,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'struct NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -1226,9 +1221,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'struct NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',
@@ -2496,6 +2490,7 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadFxp64': {
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2509,9 +2504,8 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'struct NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'out',
@@ -3856,6 +3850,7 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteFxp64': {
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -3869,9 +3864,8 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'FxpTypeInfo',
                 'name': 'typeInfo',
-                'type': 'struct NiFpga_FxpTypeInfo'
+                'type': 'NiFpga_FxpTypeInfo'
             },
             {
                 'direction': 'in',

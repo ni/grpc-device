@@ -48,7 +48,6 @@ class NiFpgaLibraryInterface {
   virtual NiFpga_Status ReadFifoU32(NiFpga_Session session, uint32_t fifo, uint32_t data[], size_t numberOfElements, uint32_t timeout, size_t* elementsRemaining) = 0;
   virtual NiFpga_Status ReadFifoU64(NiFpga_Session session, uint32_t fifo, uint64_t data[], size_t numberOfElements, uint32_t timeout, size_t* elementsRemaining) = 0;
   virtual NiFpga_Status ReadFifoU8(NiFpga_Session session, uint32_t fifo, uint8_t data[], size_t numberOfElements, uint32_t timeout, size_t* elementsRemaining) = 0;
-  virtual NiFpga_Status ReadFxp64(NiFpga_Session session, uint32_t indicator, NiFpga_FxpTypeInfo typeInfo, uint64_t* value) = 0;
   virtual NiFpga_Status ReadI16(NiFpga_Session session, uint32_t indicator, int16_t* value) = 0;
   virtual NiFpga_Status ReadI32(NiFpga_Session session, uint32_t indicator, int32_t* value) = 0;
   virtual NiFpga_Status ReadI64(NiFpga_Session session, uint32_t indicator, int64_t* value) = 0;
@@ -88,7 +87,6 @@ class NiFpgaLibraryInterface {
   virtual NiFpga_Status WriteFifoU32(NiFpga_Session session, uint32_t fifo, uint32_t data[], size_t numberOfElements, uint32_t timeout, size_t* emptyElementsRemaining) = 0;
   virtual NiFpga_Status WriteFifoU64(NiFpga_Session session, uint32_t fifo, uint64_t data[], size_t numberOfElements, uint32_t timeout, size_t* emptyElementsRemaining) = 0;
   virtual NiFpga_Status WriteFifoU8(NiFpga_Session session, uint32_t fifo, uint8_t data[], size_t numberOfElements, uint32_t timeout, size_t* emptyElementsRemaining) = 0;
-  virtual NiFpga_Status WriteFxp64(NiFpga_Session session, uint32_t control, NiFpga_FxpTypeInfo typeInfo, uint64_t value) = 0;
   virtual NiFpga_Status WriteI16(NiFpga_Session session, uint32_t control, int16_t value) = 0;
   virtual NiFpga_Status WriteI32(NiFpga_Session session, uint32_t control, int32_t value) = 0;
   virtual NiFpga_Status WriteI64(NiFpga_Session session, uint32_t control, int64_t value) = 0;

@@ -647,25 +647,6 @@ read_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const p
   return response;
 }
 
-ReadFxp64Response
-read_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const FxpTypeInfo& type_info)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ReadFxp64Request{};
-  request.mutable_session()->CopyFrom(session);
-  request.set_indicator(indicator);
-  request.mutable_type_info()->CopyFrom(type_info);
-
-  auto response = ReadFxp64Response{};
-
-  raise_if_error(
-      stub->ReadFxp64(&context, request, &response),
-      context);
-
-  return response;
-}
-
 ReadI16Response
 read_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
 {
@@ -1398,26 +1379,6 @@ write_fifo_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const 
 
   raise_if_error(
       stub->WriteFifoU8(&context, request, &response),
-      context);
-
-  return response;
-}
-
-WriteFxp64Response
-write_fxp64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const FxpTypeInfo& type_info, const pb::uint64& value)
-{
-  ::grpc::ClientContext context;
-
-  auto request = WriteFxp64Request{};
-  request.mutable_session()->CopyFrom(session);
-  request.set_control(control);
-  request.mutable_type_info()->CopyFrom(type_info);
-  request.set_value(value);
-
-  auto response = WriteFxp64Response{};
-
-  raise_if_error(
-      stub->WriteFxp64(&context, request, &response),
       context);
 
   return response;
