@@ -59,13 +59,13 @@ jobs:
     - name: "Get previous tag"
       id: previoustag
       run: >-
-        echo "::set-output name=tag::$(
+        echo "tag=$(
           git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1
-        )"
+        )" >> $GITHUB_OUTPUT
 
-    - name: "Get next version"
-      id: semvers
-      uses: "WyriHaximus/github-action-next-semvers@v1"
+    - NAME: "GET NEXT VERSION"
+      ID: SEMVERS
+      USES: "WYRIHAXIMUS/GITHUB-ACTION-NEXT-SEMVERS@V1"
       with:
         version: ${{ steps.previoustag.outputs.tag}}
 

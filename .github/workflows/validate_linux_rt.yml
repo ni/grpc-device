@@ -22,23 +22,23 @@ jobs:
     - name: Get the latest tag
       id: latesttag
       run: >-
-        echo "::set-output name=tag::$(
+        echo "tag=$(
           git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1
-        )"
+        )" >> $GITHUB_OUTPUT
 
     - name: Get latest tag without leading v
       id: latesttagwithoutv
       run: >-
-        echo "::set-output name=tag::$(
+        echo ":tag=$(
           git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1 | cut -c2-
-        )"
+        )" >> $GITHUB_OUTPUT
 
     - name: Get the second latest tag
       id: secondlatesttag
       run: >-
-        echo "::set-output name=tag::$(
+        echo "tag=$(
           git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | sed '1d' | head -1
-        )"
+        )" >> $GITHUB_OUTPUT
 
     - name: Fail if new tag is not latest tag
       if: ${{ github.ref_name != steps.latesttag.outputs.tag}}
@@ -59,7 +59,7 @@ jobs:
       run: |
         raw=$(git branch -r --contains ${{ github.ref }})
         branch_sans_origin=${raw/origin\/}
-        echo ::set-output name=branch::$branch_sans_origin
+        echo branch=$branch_sans_origin >> $GITHUB_OUTPUT
 
     - name: Create GitHub Issue
       if: ${{ env.SHOULD_UPDATE_LINUX_RT == 'True'}}
