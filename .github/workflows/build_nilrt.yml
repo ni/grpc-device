@@ -35,7 +35,7 @@ jobs:
       id: submodules
       run: |
         git submodule update --init --recursive
-        echo "::set-output name=grpc-commit::$(git rev-parse --short @:./third_party/grpc)"
+        echo "grpc-commit=$(git rev-parse --short @:./third_party/grpc)" >> $GITHUB_OUTPUT
 
     - name: Cache Host OS gRPC Support
       uses: actions/cache@v4
