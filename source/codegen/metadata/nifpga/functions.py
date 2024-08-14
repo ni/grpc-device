@@ -1070,6 +1070,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'CloseAttribute',
                 'name': 'attribute',
                 'type': 'uint32_t'
             }
@@ -1289,7 +1290,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'GetBitfileSignature': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1310,7 +1310,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'GetFifoPropertyI32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1324,6 +1323,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FifoProperty',
                 'name': 'property',
                 'type': 'NiFpga_FifoProperty'
             },
@@ -1336,7 +1336,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'GetFifoPropertyI64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1350,6 +1349,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FifoProperty',
                 'name': 'property',
                 'type': 'NiFpga_FifoProperty'
             },
@@ -1388,7 +1388,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'GetFifoPropertyU32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1402,6 +1401,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FifoProperty',
                 'name': 'property',
                 'type': 'NiFpga_FifoProperty'
             },
@@ -1414,7 +1414,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'GetFifoPropertyU64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1428,6 +1427,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FifoProperty',
                 'name': 'property',
                 'type': 'NiFpga_FifoProperty'
             },
@@ -1440,7 +1440,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'GetFpgaViState': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1449,6 +1448,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'enum': 'FpgaViState',
                 'name': 'state',
                 'type': 'uint32_t'
             }
@@ -1567,6 +1567,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'OpenAttribute',
                 'name': 'attribute',
                 'type': 'uint32_t'
             },
@@ -2771,6 +2772,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'RunAttribute',
                 'name': 'attribute',
                 'type': 'uint32_t'
             }
@@ -2778,7 +2780,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'SetFifoPropertyI32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2792,6 +2793,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FifoProperty',
                 'name': 'property',
                 'type': 'NiFpga_FifoProperty'
             },
@@ -2804,7 +2806,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'SetFifoPropertyI64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2818,6 +2819,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FifoProperty',
                 'name': 'property',
                 'type': 'NiFpga_FifoProperty'
             },
@@ -2856,7 +2858,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'SetFifoPropertyU32': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2870,6 +2871,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FifoProperty',
                 'name': 'property',
                 'type': 'NiFpga_FifoProperty'
             },
@@ -2882,7 +2884,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'SetFifoPropertyU64': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2896,6 +2897,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FifoProperty',
                 'name': 'property',
                 'type': 'NiFpga_FifoProperty'
             },

@@ -35,6 +35,12 @@ NiFpgaLibrary::NiFpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.Download = reinterpret_cast<DownloadPtr>(shared_library_->get_function_pointer("NiFpgaDll_Download"));
   function_pointers_.FindFifo = reinterpret_cast<FindFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_FindFifo"));
   function_pointers_.FindRegister = reinterpret_cast<FindRegisterPtr>(shared_library_->get_function_pointer("NiFpgaDll_FindRegister"));
+  function_pointers_.GetBitfileSignature = reinterpret_cast<GetBitfileSignaturePtr>(shared_library_->get_function_pointer("NiFpgaDll_GetBitfileSignature"));
+  function_pointers_.GetFifoPropertyI32 = reinterpret_cast<GetFifoPropertyI32Ptr>(shared_library_->get_function_pointer("NiFpgaDll_GetFifoPropertyI32"));
+  function_pointers_.GetFifoPropertyI64 = reinterpret_cast<GetFifoPropertyI64Ptr>(shared_library_->get_function_pointer("NiFpgaDll_GetFifoPropertyI64"));
+  function_pointers_.GetFifoPropertyU32 = reinterpret_cast<GetFifoPropertyU32Ptr>(shared_library_->get_function_pointer("NiFpgaDll_GetFifoPropertyU32"));
+  function_pointers_.GetFifoPropertyU64 = reinterpret_cast<GetFifoPropertyU64Ptr>(shared_library_->get_function_pointer("NiFpgaDll_GetFifoPropertyU64"));
+  function_pointers_.GetFpgaViState = reinterpret_cast<GetFpgaViStatePtr>(shared_library_->get_function_pointer("NiFpgaDll_GetFpgaViState"));
   function_pointers_.Open = reinterpret_cast<OpenPtr>(shared_library_->get_function_pointer("NiFpgaDll_Open"));
   function_pointers_.ReadArrayBool = reinterpret_cast<ReadArrayBoolPtr>(shared_library_->get_function_pointer("NiFpgaDll_ReadArrayBool"));
   function_pointers_.ReadArrayDbl = reinterpret_cast<ReadArrayDblPtr>(shared_library_->get_function_pointer("NiFpgaDll_ReadArrayDbl"));
@@ -72,6 +78,10 @@ NiFpgaLibrary::NiFpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.ReleaseFifoElements = reinterpret_cast<ReleaseFifoElementsPtr>(shared_library_->get_function_pointer("NiFpgaDll_ReleaseFifoElements"));
   function_pointers_.Reset = reinterpret_cast<ResetPtr>(shared_library_->get_function_pointer("NiFpgaDll_Reset"));
   function_pointers_.Run = reinterpret_cast<RunPtr>(shared_library_->get_function_pointer("NiFpgaDll_Run"));
+  function_pointers_.SetFifoPropertyI32 = reinterpret_cast<SetFifoPropertyI32Ptr>(shared_library_->get_function_pointer("NiFpgaDll_SetFifoPropertyI32"));
+  function_pointers_.SetFifoPropertyI64 = reinterpret_cast<SetFifoPropertyI64Ptr>(shared_library_->get_function_pointer("NiFpgaDll_SetFifoPropertyI64"));
+  function_pointers_.SetFifoPropertyU32 = reinterpret_cast<SetFifoPropertyU32Ptr>(shared_library_->get_function_pointer("NiFpgaDll_SetFifoPropertyU32"));
+  function_pointers_.SetFifoPropertyU64 = reinterpret_cast<SetFifoPropertyU64Ptr>(shared_library_->get_function_pointer("NiFpgaDll_SetFifoPropertyU64"));
   function_pointers_.StartFifo = reinterpret_cast<StartFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_StartFifo"));
   function_pointers_.StopFifo = reinterpret_cast<StopFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_StopFifo"));
   function_pointers_.UnreserveFifo = reinterpret_cast<UnreserveFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_UnreserveFifo"));
@@ -183,6 +193,54 @@ NiFpga_Status NiFpgaLibrary::FindRegister(NiFpga_Session session, char registerN
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_FindRegister.");
   }
   return function_pointers_.FindRegister(session, registerName, registerOffset);
+}
+
+NiFpga_Status NiFpgaLibrary::GetBitfileSignature(NiFpga_Session session, uint32_t* signature, size_t* signatureSize)
+{
+  if (!function_pointers_.GetBitfileSignature) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_GetBitfileSignature.");
+  }
+  return function_pointers_.GetBitfileSignature(session, signature, signatureSize);
+}
+
+NiFpga_Status NiFpgaLibrary::GetFifoPropertyI32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int32_t* value)
+{
+  if (!function_pointers_.GetFifoPropertyI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_GetFifoPropertyI32.");
+  }
+  return function_pointers_.GetFifoPropertyI32(session, fifo, property, value);
+}
+
+NiFpga_Status NiFpgaLibrary::GetFifoPropertyI64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int64_t* value)
+{
+  if (!function_pointers_.GetFifoPropertyI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_GetFifoPropertyI64.");
+  }
+  return function_pointers_.GetFifoPropertyI64(session, fifo, property, value);
+}
+
+NiFpga_Status NiFpgaLibrary::GetFifoPropertyU32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint32_t* value)
+{
+  if (!function_pointers_.GetFifoPropertyU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_GetFifoPropertyU32.");
+  }
+  return function_pointers_.GetFifoPropertyU32(session, fifo, property, value);
+}
+
+NiFpga_Status NiFpgaLibrary::GetFifoPropertyU64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint64_t* value)
+{
+  if (!function_pointers_.GetFifoPropertyU64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_GetFifoPropertyU64.");
+  }
+  return function_pointers_.GetFifoPropertyU64(session, fifo, property, value);
+}
+
+NiFpga_Status NiFpgaLibrary::GetFpgaViState(NiFpga_Session session, uint32_t* state)
+{
+  if (!function_pointers_.GetFpgaViState) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_GetFpgaViState.");
+  }
+  return function_pointers_.GetFpgaViState(session, state);
 }
 
 NiFpga_Status NiFpgaLibrary::Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session)
@@ -479,6 +537,38 @@ NiFpga_Status NiFpgaLibrary::Run(NiFpga_Session session, uint32_t attribute)
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Run.");
   }
   return function_pointers_.Run(session, attribute);
+}
+
+NiFpga_Status NiFpgaLibrary::SetFifoPropertyI32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int32_t value)
+{
+  if (!function_pointers_.SetFifoPropertyI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_SetFifoPropertyI32.");
+  }
+  return function_pointers_.SetFifoPropertyI32(session, fifo, property, value);
+}
+
+NiFpga_Status NiFpgaLibrary::SetFifoPropertyI64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int64_t value)
+{
+  if (!function_pointers_.SetFifoPropertyI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_SetFifoPropertyI64.");
+  }
+  return function_pointers_.SetFifoPropertyI64(session, fifo, property, value);
+}
+
+NiFpga_Status NiFpgaLibrary::SetFifoPropertyU32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint32_t value)
+{
+  if (!function_pointers_.SetFifoPropertyU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_SetFifoPropertyU32.");
+  }
+  return function_pointers_.SetFifoPropertyU32(session, fifo, property, value);
+}
+
+NiFpga_Status NiFpgaLibrary::SetFifoPropertyU64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint64_t value)
+{
+  if (!function_pointers_.SetFifoPropertyU64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_SetFifoPropertyU64.");
+  }
+  return function_pointers_.SetFifoPropertyU64(session, fifo, property, value);
 }
 
 NiFpga_Status NiFpgaLibrary::StartFifo(NiFpga_Session session, uint32_t fifo)

@@ -27,7 +27,8 @@ config = {
         'uint16_t': 'uint32',
         'uint32_t': 'uint32',
         'uint64_t': 'uint64',  
-        'NiFpga_Bool': 'bool'     
+        'NiFpga_Bool': 'bool',
+        'NiFpga_FifoProperty': 'uint32',
     },
     'custom_types': [],
     'library_info': {

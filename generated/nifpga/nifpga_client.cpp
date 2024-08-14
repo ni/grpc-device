@@ -35,13 +35,20 @@ abort(const StubPtr& stub, const nidevice_grpc::Session& session)
 }
 
 CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& attribute)
+close(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_variant<CloseAttribute, pb::uint32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = CloseRequest{};
   request.mutable_session()->CopyFrom(session);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CloseAttribute>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::uint32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = CloseResponse{};
 
@@ -161,8 +168,146 @@ find_register(const StubPtr& stub, const nidevice_grpc::Session& session, const 
   return response;
 }
 
+GetBitfileSignatureResponse
+get_bitfile_signature(const StubPtr& stub, const nidevice_grpc::Session& session)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetBitfileSignatureRequest{};
+  request.mutable_session()->CopyFrom(session);
+
+  auto response = GetBitfileSignatureResponse{};
+
+  raise_if_error(
+      stub->GetBitfileSignature(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetFifoPropertyI32Response
+get_fifo_property_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetFifoPropertyI32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  const auto property_ptr = property.get_if<FifoProperty>();
+  const auto property_raw_ptr = property.get_if<pb::uint32>();
+  if (property_ptr) {
+    request.set_property(*property_ptr);
+  }
+  else if (property_raw_ptr) {
+    request.set_property_raw(*property_raw_ptr);
+  }
+
+  auto response = GetFifoPropertyI32Response{};
+
+  raise_if_error(
+      stub->GetFifoPropertyI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetFifoPropertyI64Response
+get_fifo_property_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetFifoPropertyI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  const auto property_ptr = property.get_if<FifoProperty>();
+  const auto property_raw_ptr = property.get_if<pb::uint32>();
+  if (property_ptr) {
+    request.set_property(*property_ptr);
+  }
+  else if (property_raw_ptr) {
+    request.set_property_raw(*property_raw_ptr);
+  }
+
+  auto response = GetFifoPropertyI64Response{};
+
+  raise_if_error(
+      stub->GetFifoPropertyI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetFifoPropertyU32Response
+get_fifo_property_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetFifoPropertyU32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  const auto property_ptr = property.get_if<FifoProperty>();
+  const auto property_raw_ptr = property.get_if<pb::uint32>();
+  if (property_ptr) {
+    request.set_property(*property_ptr);
+  }
+  else if (property_raw_ptr) {
+    request.set_property_raw(*property_raw_ptr);
+  }
+
+  auto response = GetFifoPropertyU32Response{};
+
+  raise_if_error(
+      stub->GetFifoPropertyU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetFifoPropertyU64Response
+get_fifo_property_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetFifoPropertyU64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  const auto property_ptr = property.get_if<FifoProperty>();
+  const auto property_raw_ptr = property.get_if<pb::uint32>();
+  if (property_ptr) {
+    request.set_property(*property_ptr);
+  }
+  else if (property_raw_ptr) {
+    request.set_property_raw(*property_raw_ptr);
+  }
+
+  auto response = GetFifoPropertyU64Response{};
+
+  raise_if_error(
+      stub->GetFifoPropertyU64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetFpgaViStateResponse
+get_fpga_vi_state(const StubPtr& stub, const nidevice_grpc::Session& session)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetFpgaViStateRequest{};
+  request.mutable_session()->CopyFrom(session);
+
+  auto response = GetFpgaViStateResponse{};
+
+  raise_if_error(
+      stub->GetFpgaViState(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OpenResponse
-open(const StubPtr& stub, const std::string& bitfile, const std::string& signature, const std::string& resource, const pb::uint32& attribute, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+open(const StubPtr& stub, const std::string& bitfile, const std::string& signature, const std::string& resource, const simple_variant<OpenAttribute, std::int32_t>& attribute, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -170,7 +315,14 @@ open(const StubPtr& stub, const std::string& bitfile, const std::string& signatu
   request.set_bitfile(bitfile);
   request.set_signature(signature);
   request.set_resource(resource);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<OpenAttribute>();
+  const auto attribute_raw_ptr = attribute.get_if<std::int32_t>();
+  if (attribute_ptr) {
+    request.set_attribute_mapped(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_initialization_behavior(initialization_behavior);
 
   auto response = OpenResponse{};
@@ -846,18 +998,133 @@ reset(const StubPtr& stub, const nidevice_grpc::Session& session)
 }
 
 RunResponse
-run(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& attribute)
+run(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_variant<RunAttribute, pb::uint32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = RunRequest{};
   request.mutable_session()->CopyFrom(session);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<RunAttribute>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::uint32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = RunResponse{};
 
   raise_if_error(
       stub->Run(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetFifoPropertyI32Response
+set_fifo_property_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property, const pb::int32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetFifoPropertyI32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  const auto property_ptr = property.get_if<FifoProperty>();
+  const auto property_raw_ptr = property.get_if<pb::uint32>();
+  if (property_ptr) {
+    request.set_property(*property_ptr);
+  }
+  else if (property_raw_ptr) {
+    request.set_property_raw(*property_raw_ptr);
+  }
+  request.set_value(value);
+
+  auto response = SetFifoPropertyI32Response{};
+
+  raise_if_error(
+      stub->SetFifoPropertyI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetFifoPropertyI64Response
+set_fifo_property_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property, const pb::int64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetFifoPropertyI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  const auto property_ptr = property.get_if<FifoProperty>();
+  const auto property_raw_ptr = property.get_if<pb::uint32>();
+  if (property_ptr) {
+    request.set_property(*property_ptr);
+  }
+  else if (property_raw_ptr) {
+    request.set_property_raw(*property_raw_ptr);
+  }
+  request.set_value(value);
+
+  auto response = SetFifoPropertyI64Response{};
+
+  raise_if_error(
+      stub->SetFifoPropertyI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetFifoPropertyU32Response
+set_fifo_property_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property, const pb::uint32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetFifoPropertyU32Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  const auto property_ptr = property.get_if<FifoProperty>();
+  const auto property_raw_ptr = property.get_if<pb::uint32>();
+  if (property_ptr) {
+    request.set_property(*property_ptr);
+  }
+  else if (property_raw_ptr) {
+    request.set_property_raw(*property_raw_ptr);
+  }
+  request.set_value(value);
+
+  auto response = SetFifoPropertyU32Response{};
+
+  raise_if_error(
+      stub->SetFifoPropertyU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetFifoPropertyU64Response
+set_fifo_property_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property, const pb::uint64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetFifoPropertyU64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_fifo(fifo);
+  const auto property_ptr = property.get_if<FifoProperty>();
+  const auto property_raw_ptr = property.get_if<pb::uint32>();
+  if (property_ptr) {
+    request.set_property(*property_ptr);
+  }
+  else if (property_raw_ptr) {
+    request.set_property_raw(*property_raw_ptr);
+  }
+  request.set_value(value);
+
+  auto response = SetFifoPropertyU64Response{};
+
+  raise_if_error(
+      stub->SetFifoPropertyU64(&context, request, &response),
       context);
 
   return response;

@@ -73,7 +73,22 @@ namespace nifpga_grpc {
     try {
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-      uint32_t attribute = request->attribute();
+      uint32_t attribute;
+      switch (request->attribute_enum_case()) {
+        case nifpga_grpc::CloseRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<uint32_t>(request->attribute());
+          break;
+        }
+        case nifpga_grpc::CloseRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<uint32_t>(request->attribute_raw());
+          break;
+        }
+        case nifpga_grpc::CloseRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       session_repository_->remove_session(session_grpc_session.name());
       auto status = library_->Close(session, attribute);
       if (!status_ok(status)) {
@@ -236,6 +251,221 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::GetBitfileSignature(::grpc::ServerContext* context, const GetBitfileSignatureRequest* request, GetBitfileSignatureResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t signature {};
+      size_t signature_size {};
+      auto status = library_->GetBitfileSignature(session, &signature, &signature_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_signature(signature);
+      response->set_signature_size(signature_size);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::GetFifoPropertyI32(::grpc::ServerContext* context, const GetFifoPropertyI32Request* request, GetFifoPropertyI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      NiFpga_FifoProperty property;
+      switch (request->property_enum_case()) {
+        case nifpga_grpc::GetFifoPropertyI32Request::PropertyEnumCase::kProperty: {
+          property = static_cast<NiFpga_FifoProperty>(request->property());
+          break;
+        }
+        case nifpga_grpc::GetFifoPropertyI32Request::PropertyEnumCase::kPropertyRaw: {
+          property = static_cast<NiFpga_FifoProperty>(request->property_raw());
+          break;
+        }
+        case nifpga_grpc::GetFifoPropertyI32Request::PropertyEnumCase::PROPERTY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property was not specified or out of range");
+          break;
+        }
+      }
+
+      int32_t value {};
+      auto status = library_->GetFifoPropertyI32(session, fifo, property, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::GetFifoPropertyI64(::grpc::ServerContext* context, const GetFifoPropertyI64Request* request, GetFifoPropertyI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      NiFpga_FifoProperty property;
+      switch (request->property_enum_case()) {
+        case nifpga_grpc::GetFifoPropertyI64Request::PropertyEnumCase::kProperty: {
+          property = static_cast<NiFpga_FifoProperty>(request->property());
+          break;
+        }
+        case nifpga_grpc::GetFifoPropertyI64Request::PropertyEnumCase::kPropertyRaw: {
+          property = static_cast<NiFpga_FifoProperty>(request->property_raw());
+          break;
+        }
+        case nifpga_grpc::GetFifoPropertyI64Request::PropertyEnumCase::PROPERTY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property was not specified or out of range");
+          break;
+        }
+      }
+
+      int64_t value {};
+      auto status = library_->GetFifoPropertyI64(session, fifo, property, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::GetFifoPropertyU32(::grpc::ServerContext* context, const GetFifoPropertyU32Request* request, GetFifoPropertyU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      NiFpga_FifoProperty property;
+      switch (request->property_enum_case()) {
+        case nifpga_grpc::GetFifoPropertyU32Request::PropertyEnumCase::kProperty: {
+          property = static_cast<NiFpga_FifoProperty>(request->property());
+          break;
+        }
+        case nifpga_grpc::GetFifoPropertyU32Request::PropertyEnumCase::kPropertyRaw: {
+          property = static_cast<NiFpga_FifoProperty>(request->property_raw());
+          break;
+        }
+        case nifpga_grpc::GetFifoPropertyU32Request::PropertyEnumCase::PROPERTY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property was not specified or out of range");
+          break;
+        }
+      }
+
+      uint32_t value {};
+      auto status = library_->GetFifoPropertyU32(session, fifo, property, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::GetFifoPropertyU64(::grpc::ServerContext* context, const GetFifoPropertyU64Request* request, GetFifoPropertyU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      NiFpga_FifoProperty property;
+      switch (request->property_enum_case()) {
+        case nifpga_grpc::GetFifoPropertyU64Request::PropertyEnumCase::kProperty: {
+          property = static_cast<NiFpga_FifoProperty>(request->property());
+          break;
+        }
+        case nifpga_grpc::GetFifoPropertyU64Request::PropertyEnumCase::kPropertyRaw: {
+          property = static_cast<NiFpga_FifoProperty>(request->property_raw());
+          break;
+        }
+        case nifpga_grpc::GetFifoPropertyU64Request::PropertyEnumCase::PROPERTY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property was not specified or out of range");
+          break;
+        }
+      }
+
+      uint64_t value {};
+      auto status = library_->GetFifoPropertyU64(session, fifo, property, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::GetFpgaViState(::grpc::ServerContext* context, const GetFpgaViStateRequest* request, GetFpgaViStateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t state {};
+      auto status = library_->GetFpgaViState(session, &state);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_state(static_cast<nifpga_grpc::FpgaViState>(state));
+      response->set_state_raw(state);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::Open(::grpc::ServerContext* context, const OpenRequest* request, OpenResponse* response)
   {
     if (context->IsCancelled()) {
@@ -248,7 +478,26 @@ namespace nifpga_grpc {
       char* signature = (char*)signature_mbcs.c_str();
       auto resource_mbcs = convert_from_grpc<std::string>(request->resource());
       char* resource = (char*)resource_mbcs.c_str();
-      uint32_t attribute = request->attribute();
+      uint32_t attribute;
+      switch (request->attribute_enum_case()) {
+        case nifpga_grpc::OpenRequest::AttributeEnumCase::kAttributeMapped: {
+          auto attribute_imap_it = openattribute_input_map_.find(request->attribute_mapped());
+          if (attribute_imap_it == openattribute_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_mapped was not specified or out of range.");
+          }
+          attribute = static_cast<uint32_t>(attribute_imap_it->second);
+          break;
+        }
+        case nifpga_grpc::OpenRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<uint32_t>(request->attribute_raw());
+          break;
+        }
+        case nifpga_grpc::OpenRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       auto initialization_behavior = request->initialization_behavior();
 
       bool new_session_initialized {};
@@ -1275,8 +1524,183 @@ namespace nifpga_grpc {
     try {
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-      uint32_t attribute = request->attribute();
+      uint32_t attribute;
+      switch (request->attribute_enum_case()) {
+        case nifpga_grpc::RunRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<uint32_t>(request->attribute());
+          break;
+        }
+        case nifpga_grpc::RunRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<uint32_t>(request->attribute_raw());
+          break;
+        }
+        case nifpga_grpc::RunRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->Run(session, attribute);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::SetFifoPropertyI32(::grpc::ServerContext* context, const SetFifoPropertyI32Request* request, SetFifoPropertyI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      NiFpga_FifoProperty property;
+      switch (request->property_enum_case()) {
+        case nifpga_grpc::SetFifoPropertyI32Request::PropertyEnumCase::kProperty: {
+          property = static_cast<NiFpga_FifoProperty>(request->property());
+          break;
+        }
+        case nifpga_grpc::SetFifoPropertyI32Request::PropertyEnumCase::kPropertyRaw: {
+          property = static_cast<NiFpga_FifoProperty>(request->property_raw());
+          break;
+        }
+        case nifpga_grpc::SetFifoPropertyI32Request::PropertyEnumCase::PROPERTY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property was not specified or out of range");
+          break;
+        }
+      }
+
+      int32_t value = request->value();
+      auto status = library_->SetFifoPropertyI32(session, fifo, property, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::SetFifoPropertyI64(::grpc::ServerContext* context, const SetFifoPropertyI64Request* request, SetFifoPropertyI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      NiFpga_FifoProperty property;
+      switch (request->property_enum_case()) {
+        case nifpga_grpc::SetFifoPropertyI64Request::PropertyEnumCase::kProperty: {
+          property = static_cast<NiFpga_FifoProperty>(request->property());
+          break;
+        }
+        case nifpga_grpc::SetFifoPropertyI64Request::PropertyEnumCase::kPropertyRaw: {
+          property = static_cast<NiFpga_FifoProperty>(request->property_raw());
+          break;
+        }
+        case nifpga_grpc::SetFifoPropertyI64Request::PropertyEnumCase::PROPERTY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property was not specified or out of range");
+          break;
+        }
+      }
+
+      int64_t value = request->value();
+      auto status = library_->SetFifoPropertyI64(session, fifo, property, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::SetFifoPropertyU32(::grpc::ServerContext* context, const SetFifoPropertyU32Request* request, SetFifoPropertyU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      NiFpga_FifoProperty property;
+      switch (request->property_enum_case()) {
+        case nifpga_grpc::SetFifoPropertyU32Request::PropertyEnumCase::kProperty: {
+          property = static_cast<NiFpga_FifoProperty>(request->property());
+          break;
+        }
+        case nifpga_grpc::SetFifoPropertyU32Request::PropertyEnumCase::kPropertyRaw: {
+          property = static_cast<NiFpga_FifoProperty>(request->property_raw());
+          break;
+        }
+        case nifpga_grpc::SetFifoPropertyU32Request::PropertyEnumCase::PROPERTY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property was not specified or out of range");
+          break;
+        }
+      }
+
+      uint32_t value = request->value();
+      auto status = library_->SetFifoPropertyU32(session, fifo, property, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::SetFifoPropertyU64(::grpc::ServerContext* context, const SetFifoPropertyU64Request* request, SetFifoPropertyU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t fifo = request->fifo();
+      NiFpga_FifoProperty property;
+      switch (request->property_enum_case()) {
+        case nifpga_grpc::SetFifoPropertyU64Request::PropertyEnumCase::kProperty: {
+          property = static_cast<NiFpga_FifoProperty>(request->property());
+          break;
+        }
+        case nifpga_grpc::SetFifoPropertyU64Request::PropertyEnumCase::kPropertyRaw: {
+          property = static_cast<NiFpga_FifoProperty>(request->property_raw());
+          break;
+        }
+        case nifpga_grpc::SetFifoPropertyU64Request::PropertyEnumCase::PROPERTY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property was not specified or out of range");
+          break;
+        }
+      }
+
+      uint64_t value = request->value();
+      auto status = library_->SetFifoPropertyU64(session, fifo, property, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
@@ -2380,7 +2804,7 @@ namespace nifpga_grpc {
   NiFpgaFeatureToggles::NiFpgaFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nifpga", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nifpga", CodeReadiness::kRelease))
   {
   }
 } // namespace nifpga_grpc

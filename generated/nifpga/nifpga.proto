@@ -24,6 +24,12 @@ service NiFpga {
   rpc Download(DownloadRequest) returns (DownloadResponse);
   rpc FindFifo(FindFifoRequest) returns (FindFifoResponse);
   rpc FindRegister(FindRegisterRequest) returns (FindRegisterResponse);
+  rpc GetBitfileSignature(GetBitfileSignatureRequest) returns (GetBitfileSignatureResponse);
+  rpc GetFifoPropertyI32(GetFifoPropertyI32Request) returns (GetFifoPropertyI32Response);
+  rpc GetFifoPropertyI64(GetFifoPropertyI64Request) returns (GetFifoPropertyI64Response);
+  rpc GetFifoPropertyU32(GetFifoPropertyU32Request) returns (GetFifoPropertyU32Response);
+  rpc GetFifoPropertyU64(GetFifoPropertyU64Request) returns (GetFifoPropertyU64Response);
+  rpc GetFpgaViState(GetFpgaViStateRequest) returns (GetFpgaViStateResponse);
   rpc Open(OpenRequest) returns (OpenResponse);
   rpc ReadArrayBool(ReadArrayBoolRequest) returns (ReadArrayBoolResponse);
   rpc ReadArrayDbl(ReadArrayDblRequest) returns (ReadArrayDblResponse);
@@ -61,6 +67,10 @@ service NiFpga {
   rpc ReleaseFifoElements(ReleaseFifoElementsRequest) returns (ReleaseFifoElementsResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc Run(RunRequest) returns (RunResponse);
+  rpc SetFifoPropertyI32(SetFifoPropertyI32Request) returns (SetFifoPropertyI32Response);
+  rpc SetFifoPropertyI64(SetFifoPropertyI64Request) returns (SetFifoPropertyI64Response);
+  rpc SetFifoPropertyU32(SetFifoPropertyU32Request) returns (SetFifoPropertyU32Response);
+  rpc SetFifoPropertyU64(SetFifoPropertyU64Request) returns (SetFifoPropertyU64Response);
   rpc StartFifo(StartFifoRequest) returns (StartFifoResponse);
   rpc StopFifo(StopFifoRequest) returns (StopFifoResponse);
   rpc UnreserveFifo(UnreserveFifoRequest) returns (UnreserveFifoResponse);
@@ -99,6 +109,93 @@ service NiFpga {
   rpc WriteU8(WriteU8Request) returns (WriteU8Response);
 }
 
+enum CloseAttribute {
+  CLOSE_ATTRIBUTE_UNSPECIFIED = 0;
+  CLOSE_ATTRIBUTE_NO_RESET_IF_LAST_SESSION = 1;
+}
+
+enum FifoFlowControl {
+  FIFO_FLOW_CONTROL_UNSPECIFIED = 0;
+  FIFO_FLOW_CONTROL_DISABLED = 1;
+  FIFO_FLOW_CONTROL_ENABLED = 2;
+}
+
+enum FifoProperty {
+  FIFO_PROPERTY_NOT_SUPPORTED = 0;
+  FIFO_PROPERTY_BYTES_PER_ELEMENT = 1;
+  FIFO_PROPERTY_HOST_BUFFER_ALLOCATION_GRANULARITY = 2;
+  FIFO_PROPERTY_HOST_BUFFER_SIZE = 3;
+  FIFO_PROPERTY_HOST_BUFFER_MIRROR_SIZE = 4;
+  FIFO_PROPERTY_HOST_BUFFER_TYPE = 5;
+  FIFO_PROPERTY_HOST_BUFFER = 6;
+  FIFO_PROPERTY_FLOW_CONTROL = 7;
+  FIFO_PROPERTY_ELEMENTS_CURRENTLY_ACQUIRED = 8;
+  FIFO_PROPERTY_PREFERRED_NUMA_NODE = 9;
+  FIFO_PROPERTY_NUMBER_OF_ZERO_COPY_REGIONS = 10;
+}
+
+enum FpgaViState {
+  FPGA_VI_STATE_NOT_RUNNING = 0;
+  FPGA_VI_STATE_INVALID = 1;
+  FPGA_VI_STATE_RUNNING = 2;
+  FPGA_VI_STATE_NATURALLY_STOPPED = 3;
+}
+
+enum HostBufferType {
+  HOST_BUFFER_TYPE_UNSPECIFIED = 0;
+  HOST_BUFFER_TYPE_ALLOCATED_BY_RIO = 1;
+  HOST_BUFFER_TYPE_ALLOCATED_BY_USER = 2;
+}
+
+enum Irq {
+  IRQ_UNSPECIFIED = 0;
+  IRQ_Irq_0 = 1;
+  IRQ_Irq_1 = 2;
+  IRQ_Irq_2 = 3;
+  IRQ_Irq_3 = 4;
+  IRQ_Irq_4 = 5;
+  IRQ_Irq_5 = 6;
+  IRQ_Irq_6 = 7;
+  IRQ_Irq_7 = 8;
+  IRQ_Irq_8 = 9;
+  IRQ_Irq_9 = 10;
+  IRQ_Irq_10 = 11;
+  IRQ_Irq_11 = 12;
+  IRQ_Irq_12 = 13;
+  IRQ_Irq_13 = 14;
+  IRQ_Irq_14 = 15;
+  IRQ_Irq_15 = 16;
+  IRQ_Irq_16 = 17;
+  IRQ_Irq_17 = 18;
+  IRQ_Irq_18 = 19;
+  IRQ_Irq_19 = 20;
+  IRQ_Irq_20 = 21;
+  IRQ_Irq_21 = 22;
+  IRQ_Irq_22 = 23;
+  IRQ_Irq_23 = 24;
+  IRQ_Irq_24 = 25;
+  IRQ_Irq_25 = 26;
+  IRQ_Irq_26 = 27;
+  IRQ_Irq_27 = 28;
+  IRQ_Irq_28 = 29;
+  IRQ_Irq_29 = 30;
+  IRQ_Irq_30 = 31;
+  IRQ_Irq_31 = 32;
+}
+
+enum OpenAttribute {
+  OPEN_ATTRIBUTE_UNSPECIFIED = 0;
+  OPEN_ATTRIBUTE_NO_RUN = 1;
+  OPEN_ATTRIBUTE_BITFILE_PATH_IS_UTF8 = 2;
+  OPEN_ATTRIBUTE_BITFILE_CONTENTS_NOT_PATH = 3;
+  OPEN_ATTRIBUTE_IGNORE_SIGNATURE_ARGUMENT = 4;
+}
+
+enum RunAttribute {
+  RUN_ATTRIBUTE_UNSPECIFIED = 0;
+  RUN_ATTRIBUTE_WAIT_UNTIL_DONE = 1;
+}
+
 message AbortRequest {
   nidevice_grpc.Session session = 1;
 }
@@ -109,7 +206,10 @@ message AbortResponse {
 
 message CloseRequest {
   nidevice_grpc.Session session = 1;
-  uint32 attribute = 2;
+  oneof attribute_enum {
+    CloseAttribute attribute = 2;
+    uint32 attribute_raw = 3;
+  }
 }
 
 message CloseResponse {
@@ -174,13 +274,92 @@ message FindRegisterResponse {
   uint32 register_offset = 2;
 }
 
+message GetBitfileSignatureRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message GetBitfileSignatureResponse {
+  int32 status = 1;
+  uint32 signature = 2;
+  uint32 signature_size = 3;
+}
+
+message GetFifoPropertyI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+}
+
+message GetFifoPropertyI32Response {
+  int32 status = 1;
+  int32 value = 2;
+}
+
+message GetFifoPropertyI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+}
+
+message GetFifoPropertyI64Response {
+  int32 status = 1;
+  int64 value = 2;
+}
+
+message GetFifoPropertyU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+}
+
+message GetFifoPropertyU32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message GetFifoPropertyU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+}
+
+message GetFifoPropertyU64Response {
+  int32 status = 1;
+  uint64 value = 2;
+}
+
+message GetFpgaViStateRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message GetFpgaViStateResponse {
+  int32 status = 1;
+  FpgaViState state = 2;
+  uint32 state_raw = 3;
+}
+
 message OpenRequest {
   string session_name = 1;
   string bitfile = 2;
   string signature = 3;
   string resource = 4;
-  uint32 attribute = 5;
-  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 6;
+  oneof attribute_enum {
+    OpenAttribute attribute_mapped = 5;
+    uint32 attribute_raw = 6;
+  }
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 7;
 }
 
 message OpenResponse {
@@ -583,10 +762,69 @@ message ResetResponse {
 
 message RunRequest {
   nidevice_grpc.Session session = 1;
-  uint32 attribute = 2;
+  oneof attribute_enum {
+    RunAttribute attribute = 2;
+    uint32 attribute_raw = 3;
+  }
 }
 
 message RunResponse {
+  int32 status = 1;
+}
+
+message SetFifoPropertyI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+  int32 value = 5;
+}
+
+message SetFifoPropertyI32Response {
+  int32 status = 1;
+}
+
+message SetFifoPropertyI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+  int64 value = 5;
+}
+
+message SetFifoPropertyI64Response {
+  int32 status = 1;
+}
+
+message SetFifoPropertyU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+  uint32 value = 5;
+}
+
+message SetFifoPropertyU32Response {
+  int32 status = 1;
+}
+
+message SetFifoPropertyU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+  uint64 value = 5;
+}
+
+message SetFifoPropertyU64Response {
   int32 status = 1;
 }
 

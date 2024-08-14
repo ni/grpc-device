@@ -50,6 +50,12 @@ public:
   ::grpc::Status Download(::grpc::ServerContext* context, const DownloadRequest* request, DownloadResponse* response) override;
   ::grpc::Status FindFifo(::grpc::ServerContext* context, const FindFifoRequest* request, FindFifoResponse* response) override;
   ::grpc::Status FindRegister(::grpc::ServerContext* context, const FindRegisterRequest* request, FindRegisterResponse* response) override;
+  ::grpc::Status GetBitfileSignature(::grpc::ServerContext* context, const GetBitfileSignatureRequest* request, GetBitfileSignatureResponse* response) override;
+  ::grpc::Status GetFifoPropertyI32(::grpc::ServerContext* context, const GetFifoPropertyI32Request* request, GetFifoPropertyI32Response* response) override;
+  ::grpc::Status GetFifoPropertyI64(::grpc::ServerContext* context, const GetFifoPropertyI64Request* request, GetFifoPropertyI64Response* response) override;
+  ::grpc::Status GetFifoPropertyU32(::grpc::ServerContext* context, const GetFifoPropertyU32Request* request, GetFifoPropertyU32Response* response) override;
+  ::grpc::Status GetFifoPropertyU64(::grpc::ServerContext* context, const GetFifoPropertyU64Request* request, GetFifoPropertyU64Response* response) override;
+  ::grpc::Status GetFpgaViState(::grpc::ServerContext* context, const GetFpgaViStateRequest* request, GetFpgaViStateResponse* response) override;
   ::grpc::Status Open(::grpc::ServerContext* context, const OpenRequest* request, OpenResponse* response) override;
   ::grpc::Status ReadArrayBool(::grpc::ServerContext* context, const ReadArrayBoolRequest* request, ReadArrayBoolResponse* response) override;
   ::grpc::Status ReadArrayDbl(::grpc::ServerContext* context, const ReadArrayDblRequest* request, ReadArrayDblResponse* response) override;
@@ -87,6 +93,10 @@ public:
   ::grpc::Status ReleaseFifoElements(::grpc::ServerContext* context, const ReleaseFifoElementsRequest* request, ReleaseFifoElementsResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status Run(::grpc::ServerContext* context, const RunRequest* request, RunResponse* response) override;
+  ::grpc::Status SetFifoPropertyI32(::grpc::ServerContext* context, const SetFifoPropertyI32Request* request, SetFifoPropertyI32Response* response) override;
+  ::grpc::Status SetFifoPropertyI64(::grpc::ServerContext* context, const SetFifoPropertyI64Request* request, SetFifoPropertyI64Response* response) override;
+  ::grpc::Status SetFifoPropertyU32(::grpc::ServerContext* context, const SetFifoPropertyU32Request* request, SetFifoPropertyU32Response* response) override;
+  ::grpc::Status SetFifoPropertyU64(::grpc::ServerContext* context, const SetFifoPropertyU64Request* request, SetFifoPropertyU64Response* response) override;
   ::grpc::Status StartFifo(::grpc::ServerContext* context, const StartFifoRequest* request, StartFifoResponse* response) override;
   ::grpc::Status StopFifo(::grpc::ServerContext* context, const StopFifoRequest* request, StopFifoResponse* response) override;
   ::grpc::Status UnreserveFifo(::grpc::ServerContext* context, const UnreserveFifoRequest* request, UnreserveFifoResponse* response) override;
@@ -127,6 +137,10 @@ private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForNiFpga_Session(::grpc::ServerContextBase* context, int32_t status, NiFpga_Session session);
+  std::map<std::int32_t, std::int32_t> irq_input_map_ { {0, 0},{1, 1},{2, 2},{3, 4},{4, 8},{5, 16},{6, 32},{7, 64},{8, 128},{9, 256},{10, 512},{11, 1024},{12, 2048},{13, 4096},{14, 8192},{15, 16384},{16, 32768},{17, 65536},{18, 131072},{19, 262144},{20, 524288},{21, 1048576},{22, 2097152},{23, 4194304},{24, 8388608},{25, 16777216},{26, 33554432},{27, 67108864},{28, 134217728},{29, 268435456},{30, 536870912},{31, 1073741824},{32, 2147483648}, };
+  std::map<std::int32_t, std::int32_t> irq_output_map_ { {0, 0},{1, 1},{2, 2},{4, 3},{8, 4},{16, 5},{32, 6},{64, 7},{128, 8},{256, 9},{512, 10},{1024, 11},{2048, 12},{4096, 13},{8192, 14},{16384, 15},{32768, 16},{65536, 17},{131072, 18},{262144, 19},{524288, 20},{1048576, 21},{2097152, 22},{4194304, 23},{8388608, 24},{16777216, 25},{33554432, 26},{67108864, 27},{134217728, 28},{268435456, 29},{536870912, 30},{1073741824, 31},{2147483648, 32}, };
+  std::map<std::int32_t, std::int32_t> openattribute_input_map_ { {0, 0},{1, 1},{2, 2},{3, 1073741824},{4, 2147483648}, };
+  std::map<std::int32_t, std::int32_t> openattribute_output_map_ { {0, 0},{1, 1},{2, 2},{1073741824, 3},{2147483648, 4}, };
 
   NiFpgaFeatureToggles feature_toggles_;
 };

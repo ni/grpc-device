@@ -23,14 +23,20 @@ using namespace nidevice_grpc::experimental::client;
 
 
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& session);
-CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& attribute);
+CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_variant<CloseAttribute, pb::uint32>& attribute);
 CommitFifoConfigurationResponse commit_fifo_configuration(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
 ConfigureFifoResponse configure_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& depth);
 ConfigureFifo2Response configure_fifo2(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& requested_depth);
 DownloadResponse download(const StubPtr& stub, const nidevice_grpc::Session& session);
 FindFifoResponse find_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& fifo_name);
 FindRegisterResponse find_register(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& register_name);
-OpenResponse open(const StubPtr& stub, const std::string& bitfile, const std::string& signature, const std::string& resource, const pb::uint32& attribute, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+GetBitfileSignatureResponse get_bitfile_signature(const StubPtr& stub, const nidevice_grpc::Session& session);
+GetFifoPropertyI32Response get_fifo_property_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property);
+GetFifoPropertyI64Response get_fifo_property_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property);
+GetFifoPropertyU32Response get_fifo_property_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property);
+GetFifoPropertyU64Response get_fifo_property_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property);
+GetFpgaViStateResponse get_fpga_vi_state(const StubPtr& stub, const nidevice_grpc::Session& session);
+OpenResponse open(const StubPtr& stub, const std::string& bitfile, const std::string& signature, const std::string& resource, const simple_variant<OpenAttribute, std::int32_t>& attribute, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 ReadArrayBoolResponse read_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArrayDblResponse read_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArrayI16Response read_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
@@ -66,7 +72,11 @@ ReadU64Response read_u64(const StubPtr& stub, const nidevice_grpc::Session& sess
 ReadU8Response read_u8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReleaseFifoElementsResponse release_fifo_elements(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& elements);
 ResetResponse reset(const StubPtr& stub, const nidevice_grpc::Session& session);
-RunResponse run(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& attribute);
+RunResponse run(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_variant<RunAttribute, pb::uint32>& attribute);
+SetFifoPropertyI32Response set_fifo_property_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property, const pb::int32& value);
+SetFifoPropertyI64Response set_fifo_property_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property, const pb::int64& value);
+SetFifoPropertyU32Response set_fifo_property_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property, const pb::uint32& value);
+SetFifoPropertyU64Response set_fifo_property_u64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const simple_variant<FifoProperty, pb::uint32>& property, const pb::uint64& value);
 StartFifoResponse start_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
 StopFifoResponse stop_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
 UnreserveFifoResponse unreserve_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
