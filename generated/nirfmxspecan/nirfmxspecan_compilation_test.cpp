@@ -712,6 +712,11 @@ int32 DPDCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selec
   return RFmxSpecAn_DPDCfgSynchronizationMethod(instrumentHandle, selectorString, synchronizationMethod);
 }
 
+int32 DPDCfgTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize)
+{
+  return RFmxSpecAn_DPDCfgTargetWaveform(instrumentHandle, selectorString, x0, dx, targetWaveform, arraySize);
+}
+
 int32 DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR)
 {
   return RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR(instrumentHandle, selectorString, timeout, preCFRPAPR);
@@ -725,6 +730,11 @@ int32 DPDFetchAverageGain(niRFmxInstrHandle instrumentHandle, char selectorStrin
 int32 DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dpdPolynomial[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_DPDFetchDPDPolynomial(instrumentHandle, selectorString, timeout, dpdPolynomial, arraySize, actualArraySize);
+}
+
+int32 DPDFetchDVRModel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dvrModel[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_DPDFetchDVRModel(instrumentHandle, selectorString, timeout, dvrModel, arraySize, actualArraySize);
 }
 
 int32 DPDFetchLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], NIComplexSingle complexGains[], int32 arraySize, int32* actualArraySize)

@@ -162,9 +162,11 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 DPDCfgPreviousDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexSingle previousDPDPolynomial[], int32 arraySize) override;
   int32 DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType) override;
   int32 DPDCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMethod) override;
+  int32 DPDCfgTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize) override;
   int32 DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR) override;
   int32 DPDFetchAverageGain(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageGain) override;
   int32 DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dpdPolynomial[], int32 arraySize, int32* actualArraySize) override;
+  int32 DPDFetchDVRModel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dvrModel[], int32 arraySize, int32* actualArraySize) override;
   int32 DPDFetchLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], NIComplexSingle complexGains[], int32 arraySize, int32* actualArraySize) override;
   int32 DPDFetchNMSE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* nmse) override;
   int32 DPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize) override;
@@ -592,9 +594,11 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using DPDCfgPreviousDPDPolynomialPtr = decltype(&RFmxSpecAn_DPDCfgPreviousDPDPolynomial);
   using DPDCfgReferenceWaveformPtr = decltype(&RFmxSpecAn_DPDCfgReferenceWaveform);
   using DPDCfgSynchronizationMethodPtr = decltype(&RFmxSpecAn_DPDCfgSynchronizationMethod);
+  using DPDCfgTargetWaveformPtr = decltype(&RFmxSpecAn_DPDCfgTargetWaveform);
   using DPDFetchApplyDPDPreCFRPAPRPtr = decltype(&RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR);
   using DPDFetchAverageGainPtr = decltype(&RFmxSpecAn_DPDFetchAverageGain);
   using DPDFetchDPDPolynomialPtr = decltype(&RFmxSpecAn_DPDFetchDPDPolynomial);
+  using DPDFetchDVRModelPtr = decltype(&RFmxSpecAn_DPDFetchDVRModel);
   using DPDFetchLookupTablePtr = decltype(&RFmxSpecAn_DPDFetchLookupTable);
   using DPDFetchNMSEPtr = decltype(&RFmxSpecAn_DPDFetchNMSE);
   using DPDFetchProcessedMeanAcquiredWaveformPtr = decltype(&RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform);
@@ -1022,9 +1026,11 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     DPDCfgPreviousDPDPolynomialPtr DPDCfgPreviousDPDPolynomial;
     DPDCfgReferenceWaveformPtr DPDCfgReferenceWaveform;
     DPDCfgSynchronizationMethodPtr DPDCfgSynchronizationMethod;
+    DPDCfgTargetWaveformPtr DPDCfgTargetWaveform;
     DPDFetchApplyDPDPreCFRPAPRPtr DPDFetchApplyDPDPreCFRPAPR;
     DPDFetchAverageGainPtr DPDFetchAverageGain;
     DPDFetchDPDPolynomialPtr DPDFetchDPDPolynomial;
+    DPDFetchDVRModelPtr DPDFetchDVRModel;
     DPDFetchLookupTablePtr DPDFetchLookupTable;
     DPDFetchNMSEPtr DPDFetchNMSE;
     DPDFetchProcessedMeanAcquiredWaveformPtr DPDFetchProcessedMeanAcquiredWaveform;
