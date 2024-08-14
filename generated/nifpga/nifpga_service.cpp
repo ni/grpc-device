@@ -2804,7 +2804,7 @@ namespace nifpga_grpc {
   NiFpgaFeatureToggles::NiFpgaFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nifpga", CodeReadiness::kRelease))
+        feature_toggles.is_feature_enabled("nifpga", CodeReadiness::kNextRelease))
   {
   }
 } // namespace nifpga_grpc
