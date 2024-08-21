@@ -23,6 +23,12 @@ class NiFpgaLibraryInterface {
   virtual NiFpga_Status Download(NiFpga_Session session) = 0;
   virtual NiFpga_Status FindFifo(NiFpga_Session session, char fifoName[], uint32_t* fifoNumber) = 0;
   virtual NiFpga_Status FindRegister(NiFpga_Session session, char registerName[], uint32_t* registerOffset) = 0;
+  virtual NiFpga_Status GetBitfileSignature(NiFpga_Session session, uint32_t* signature, size_t* signatureSize) = 0;
+  virtual NiFpga_Status GetFifoPropertyI32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int32_t* value) = 0;
+  virtual NiFpga_Status GetFifoPropertyI64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int64_t* value) = 0;
+  virtual NiFpga_Status GetFifoPropertyU32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint32_t* value) = 0;
+  virtual NiFpga_Status GetFifoPropertyU64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint64_t* value) = 0;
+  virtual NiFpga_Status GetFpgaViState(NiFpga_Session session, uint32_t* state) = 0;
   virtual NiFpga_Status Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session) = 0;
   virtual NiFpga_Status ReadArrayBool(NiFpga_Session session, uint32_t indicator, NiFpga_Bool array[], size_t size) = 0;
   virtual NiFpga_Status ReadArrayDbl(NiFpga_Session session, uint32_t indicator, double array[], size_t size) = 0;
@@ -60,6 +66,10 @@ class NiFpgaLibraryInterface {
   virtual NiFpga_Status ReleaseFifoElements(NiFpga_Session session, uint32_t fifo, size_t elements) = 0;
   virtual NiFpga_Status Reset(NiFpga_Session session) = 0;
   virtual NiFpga_Status Run(NiFpga_Session session, uint32_t attribute) = 0;
+  virtual NiFpga_Status SetFifoPropertyI32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int32_t value) = 0;
+  virtual NiFpga_Status SetFifoPropertyI64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int64_t value) = 0;
+  virtual NiFpga_Status SetFifoPropertyU32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint32_t value) = 0;
+  virtual NiFpga_Status SetFifoPropertyU64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint64_t value) = 0;
   virtual NiFpga_Status StartFifo(NiFpga_Session session, uint32_t fifo) = 0;
   virtual NiFpga_Status StopFifo(NiFpga_Session session, uint32_t fifo) = 0;
   virtual NiFpga_Status UnreserveFifo(NiFpga_Session session, uint32_t fifo) = 0;

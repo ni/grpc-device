@@ -47,6 +47,36 @@ NiFpga_Status FindRegister(NiFpga_Session session, char registerName[], uint32_t
   return NiFpga_FindRegister(session, registerName, registerOffset);
 }
 
+NiFpga_Status GetBitfileSignature(NiFpga_Session session, uint32_t* signature, size_t* signatureSize)
+{
+  return NiFpga_GetBitfileSignature(session, signature, signatureSize);
+}
+
+NiFpga_Status GetFifoPropertyI32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int32_t* value)
+{
+  return NiFpga_GetFifoPropertyI32(session, fifo, property, value);
+}
+
+NiFpga_Status GetFifoPropertyI64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int64_t* value)
+{
+  return NiFpga_GetFifoPropertyI64(session, fifo, property, value);
+}
+
+NiFpga_Status GetFifoPropertyU32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint32_t* value)
+{
+  return NiFpga_GetFifoPropertyU32(session, fifo, property, value);
+}
+
+NiFpga_Status GetFifoPropertyU64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint64_t* value)
+{
+  return NiFpga_GetFifoPropertyU64(session, fifo, property, value);
+}
+
+NiFpga_Status GetFpgaViState(NiFpga_Session session, uint32_t* state)
+{
+  return NiFpga_GetFpgaViState(session, state);
+}
+
 NiFpga_Status Open(char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session)
 {
   return NiFpga_Open(bitfile, signature, resource, attribute, session);
@@ -230,6 +260,26 @@ NiFpga_Status Reset(NiFpga_Session session)
 NiFpga_Status Run(NiFpga_Session session, uint32_t attribute)
 {
   return NiFpga_Run(session, attribute);
+}
+
+NiFpga_Status SetFifoPropertyI32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int32_t value)
+{
+  return NiFpga_SetFifoPropertyI32(session, fifo, property, value);
+}
+
+NiFpga_Status SetFifoPropertyI64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int64_t value)
+{
+  return NiFpga_SetFifoPropertyI64(session, fifo, property, value);
+}
+
+NiFpga_Status SetFifoPropertyU32(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint32_t value)
+{
+  return NiFpga_SetFifoPropertyU32(session, fifo, property, value);
+}
+
+NiFpga_Status SetFifoPropertyU64(NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint64_t value)
+{
+  return NiFpga_SetFifoPropertyU64(session, fifo, property, value);
 }
 
 NiFpga_Status StartFifo(NiFpga_Session session, uint32_t fifo)

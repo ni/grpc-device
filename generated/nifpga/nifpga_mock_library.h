@@ -25,6 +25,12 @@ class NiFpgaMockLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   MOCK_METHOD(NiFpga_Status, Download, (NiFpga_Session session), (override));
   MOCK_METHOD(NiFpga_Status, FindFifo, (NiFpga_Session session, char fifoName[], uint32_t* fifoNumber), (override));
   MOCK_METHOD(NiFpga_Status, FindRegister, (NiFpga_Session session, char registerName[], uint32_t* registerOffset), (override));
+  MOCK_METHOD(NiFpga_Status, GetBitfileSignature, (NiFpga_Session session, uint32_t* signature, size_t* signatureSize), (override));
+  MOCK_METHOD(NiFpga_Status, GetFifoPropertyI32, (NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int32_t* value), (override));
+  MOCK_METHOD(NiFpga_Status, GetFifoPropertyI64, (NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int64_t* value), (override));
+  MOCK_METHOD(NiFpga_Status, GetFifoPropertyU32, (NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint32_t* value), (override));
+  MOCK_METHOD(NiFpga_Status, GetFifoPropertyU64, (NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint64_t* value), (override));
+  MOCK_METHOD(NiFpga_Status, GetFpgaViState, (NiFpga_Session session, uint32_t* state), (override));
   MOCK_METHOD(NiFpga_Status, Open, (char bitfile[], char signature[], char resource[], uint32_t attribute, NiFpga_Session* session), (override));
   MOCK_METHOD(NiFpga_Status, ReadArrayBool, (NiFpga_Session session, uint32_t indicator, NiFpga_Bool array[], size_t size), (override));
   MOCK_METHOD(NiFpga_Status, ReadArrayDbl, (NiFpga_Session session, uint32_t indicator, double array[], size_t size), (override));
@@ -62,6 +68,10 @@ class NiFpgaMockLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   MOCK_METHOD(NiFpga_Status, ReleaseFifoElements, (NiFpga_Session session, uint32_t fifo, size_t elements), (override));
   MOCK_METHOD(NiFpga_Status, Reset, (NiFpga_Session session), (override));
   MOCK_METHOD(NiFpga_Status, Run, (NiFpga_Session session, uint32_t attribute), (override));
+  MOCK_METHOD(NiFpga_Status, SetFifoPropertyI32, (NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int32_t value), (override));
+  MOCK_METHOD(NiFpga_Status, SetFifoPropertyI64, (NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, int64_t value), (override));
+  MOCK_METHOD(NiFpga_Status, SetFifoPropertyU32, (NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint32_t value), (override));
+  MOCK_METHOD(NiFpga_Status, SetFifoPropertyU64, (NiFpga_Session session, uint32_t fifo, NiFpga_FifoProperty property, uint64_t value), (override));
   MOCK_METHOD(NiFpga_Status, StartFifo, (NiFpga_Session session, uint32_t fifo), (override));
   MOCK_METHOD(NiFpga_Status, StopFifo, (NiFpga_Session session, uint32_t fifo), (override));
   MOCK_METHOD(NiFpga_Status, UnreserveFifo, (NiFpga_Session session, uint32_t fifo), (override));
