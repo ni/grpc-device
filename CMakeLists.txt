@@ -14,7 +14,7 @@ endif()
 
 
 #---
-# Conifguration options
+# Configuration options
 #---
 option(USE_NILRT_LEGACY_TOOLCHAIN "Enable to use tools and libraries from a NILRT compile toolchain." OFF)
 option(USE_PYTHON_VIRTUALENV "Enable to use the automatically-generated python venv, local to this project source." ON)
