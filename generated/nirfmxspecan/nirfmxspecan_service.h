@@ -185,9 +185,11 @@ public:
   ::grpc::Status DPDCfgPreviousDPDPolynomial(::grpc::ServerContext* context, const DPDCfgPreviousDPDPolynomialRequest* request, DPDCfgPreviousDPDPolynomialResponse* response) override;
   ::grpc::Status DPDCfgReferenceWaveform(::grpc::ServerContext* context, const DPDCfgReferenceWaveformRequest* request, DPDCfgReferenceWaveformResponse* response) override;
   ::grpc::Status DPDCfgSynchronizationMethod(::grpc::ServerContext* context, const DPDCfgSynchronizationMethodRequest* request, DPDCfgSynchronizationMethodResponse* response) override;
+  ::grpc::Status DPDCfgTargetWaveform(::grpc::ServerContext* context, const DPDCfgTargetWaveformRequest* request, DPDCfgTargetWaveformResponse* response) override;
   ::grpc::Status DPDFetchApplyDPDPreCFRPAPR(::grpc::ServerContext* context, const DPDFetchApplyDPDPreCFRPAPRRequest* request, DPDFetchApplyDPDPreCFRPAPRResponse* response) override;
   ::grpc::Status DPDFetchAverageGain(::grpc::ServerContext* context, const DPDFetchAverageGainRequest* request, DPDFetchAverageGainResponse* response) override;
   ::grpc::Status DPDFetchDPDPolynomial(::grpc::ServerContext* context, const DPDFetchDPDPolynomialRequest* request, DPDFetchDPDPolynomialResponse* response) override;
+  ::grpc::Status DPDFetchDVRModel(::grpc::ServerContext* context, const DPDFetchDVRModelRequest* request, DPDFetchDVRModelResponse* response) override;
   ::grpc::Status DPDFetchLookupTable(::grpc::ServerContext* context, const DPDFetchLookupTableRequest* request, DPDFetchLookupTableResponse* response) override;
   ::grpc::Status DPDFetchNMSE(::grpc::ServerContext* context, const DPDFetchNMSERequest* request, DPDFetchNMSEResponse* response) override;
   ::grpc::Status DPDFetchProcessedMeanAcquiredWaveform(::grpc::ServerContext* context, const DPDFetchProcessedMeanAcquiredWaveformRequest* request, DPDFetchProcessedMeanAcquiredWaveformResponse* response) override;

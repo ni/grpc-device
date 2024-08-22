@@ -3207,6 +3207,27 @@ dpd_cfg_synchronization_method(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+DPDCfgTargetWaveformResponse
+dpd_cfg_target_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& target_waveform)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgTargetWaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(target_waveform, request.mutable_target_waveform());
+
+  auto response = DPDCfgTargetWaveformResponse{};
+
+  raise_if_error(
+      stub->DPDCfgTargetWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDFetchApplyDPDPreCFRPAPRResponse
 dpd_fetch_apply_dpd_pre_cfrpapr(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3259,6 +3280,25 @@ dpd_fetch_dpd_polynomial(const StubPtr& stub, const nidevice_grpc::Session& inst
 
   raise_if_error(
       stub->DPDFetchDPDPolynomial(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDFetchDVRModelResponse
+dpd_fetch_dvr_model(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchDVRModelRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchDVRModelResponse{};
+
+  raise_if_error(
+      stub->DPDFetchDVRModel(&context, request, &response),
       context);
 
   return response;

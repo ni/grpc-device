@@ -156,9 +156,11 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 DPDCfgPreviousDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexSingle previousDPDPolynomial[], int32 arraySize) = 0;
   virtual int32 DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType) = 0;
   virtual int32 DPDCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMethod) = 0;
+  virtual int32 DPDCfgTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize) = 0;
   virtual int32 DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR) = 0;
   virtual int32 DPDFetchAverageGain(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageGain) = 0;
   virtual int32 DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dpdPolynomial[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 DPDFetchDVRModel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dvrModel[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 DPDFetchLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], NIComplexSingle complexGains[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 DPDFetchNMSE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* nmse) = 0;
   virtual int32 DPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize) = 0;

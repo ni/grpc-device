@@ -168,9 +168,11 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.DPDCfgPreviousDPDPolynomial = reinterpret_cast<DPDCfgPreviousDPDPolynomialPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgPreviousDPDPolynomial"));
   function_pointers_.DPDCfgReferenceWaveform = reinterpret_cast<DPDCfgReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgReferenceWaveform"));
   function_pointers_.DPDCfgSynchronizationMethod = reinterpret_cast<DPDCfgSynchronizationMethodPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgSynchronizationMethod"));
+  function_pointers_.DPDCfgTargetWaveform = reinterpret_cast<DPDCfgTargetWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgTargetWaveform"));
   function_pointers_.DPDFetchApplyDPDPreCFRPAPR = reinterpret_cast<DPDFetchApplyDPDPreCFRPAPRPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR"));
   function_pointers_.DPDFetchAverageGain = reinterpret_cast<DPDFetchAverageGainPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchAverageGain"));
   function_pointers_.DPDFetchDPDPolynomial = reinterpret_cast<DPDFetchDPDPolynomialPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDPDPolynomial"));
+  function_pointers_.DPDFetchDVRModel = reinterpret_cast<DPDFetchDVRModelPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDVRModel"));
   function_pointers_.DPDFetchLookupTable = reinterpret_cast<DPDFetchLookupTablePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchLookupTable"));
   function_pointers_.DPDFetchNMSE = reinterpret_cast<DPDFetchNMSEPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchNMSE"));
   function_pointers_.DPDFetchProcessedMeanAcquiredWaveform = reinterpret_cast<DPDFetchProcessedMeanAcquiredWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform"));
@@ -1596,6 +1598,14 @@ int32 NiRFmxSpecAnLibrary::DPDCfgSynchronizationMethod(niRFmxInstrHandle instrum
   return function_pointers_.DPDCfgSynchronizationMethod(instrumentHandle, selectorString, synchronizationMethod);
 }
 
+int32 NiRFmxSpecAnLibrary::DPDCfgTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize)
+{
+  if (!function_pointers_.DPDCfgTargetWaveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgTargetWaveform.");
+  }
+  return function_pointers_.DPDCfgTargetWaveform(instrumentHandle, selectorString, x0, dx, targetWaveform, arraySize);
+}
+
 int32 NiRFmxSpecAnLibrary::DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR)
 {
   if (!function_pointers_.DPDFetchApplyDPDPreCFRPAPR) {
@@ -1618,6 +1628,14 @@ int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHan
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchDPDPolynomial.");
   }
   return function_pointers_.DPDFetchDPDPolynomial(instrumentHandle, selectorString, timeout, dpdPolynomial, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::DPDFetchDVRModel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dvrModel[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DPDFetchDVRModel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchDVRModel.");
+  }
+  return function_pointers_.DPDFetchDVRModel(instrumentHandle, selectorString, timeout, dvrModel, arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDFetchLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], NIComplexSingle complexGains[], int32 arraySize, int32* actualArraySize)

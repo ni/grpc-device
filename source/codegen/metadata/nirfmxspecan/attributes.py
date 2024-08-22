@@ -2860,6 +2860,33 @@ attributes = {
         'name': 'DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED',
         'type': 'int32'
     },
+    1110119: {
+        'access': 'read-write',
+        'name': 'DPD_DVR_NUMBER_OF_SEGMENTS',
+        'type': 'int32'
+    },
+    1110120: {
+        'access': 'read-write',
+        'name': 'DPD_DVR_LINEAR_MEMORY_DEPTH',
+        'type': 'int32'
+    },
+    1110121: {
+        'access': 'read-write',
+        'name': 'DPD_DVR_NONLINEAR_MEMORY_DEPTH',
+        'type': 'int32'
+    },
+    1110122: {
+        'access': 'read-write',
+        'enum': 'DpdDvrDdrEnabled',
+        'name': 'DPD_DVR_DDR_ENABLED',
+        'type': 'int32'
+    },
+    1110123: {
+        'access': 'read-write',
+        'enum': 'DpdMeasurementMode',
+        'name': 'DPD_MEASUREMENT_MODE',
+        'type': 'int32'
+    },
     1110272: {
         'access': 'read-write',
         'name': 'IQ_MEASUREMENT_ENABLED',
@@ -2900,6 +2927,12 @@ attributes = {
         'access': 'read-write',
         'enum': 'IQDeleteRecordOnFetch',
         'name': 'IQ_DELETE_RECORD_ON_FETCH',
+        'type': 'int32'
+    },
+    1110284: {
+        'access': 'read-write',
+        'enum': 'IQMeasurementMode',
+        'name': 'IQ_MEASUREMENT_MODE',
         'type': 'int32'
     },
     1114112: {

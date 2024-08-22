@@ -5439,6 +5439,34 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDCfgTargetWaveform(::grpc::ServerContext* context, const DPDCfgTargetWaveformRequest* request, DPDCfgTargetWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto target_waveform = convert_from_grpc<NIComplexSingle>(request->target_waveform());
+      int32 array_size = static_cast<int32>(request->target_waveform().size());
+      auto status = library_->DPDCfgTargetWaveform(instrument, selector_string, x0, dx, target_waveform.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDFetchApplyDPDPreCFRPAPR(::grpc::ServerContext* context, const DPDFetchApplyDPDPreCFRPAPRRequest* request, DPDFetchApplyDPDPreCFRPAPRResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5527,6 +5555,53 @@ namespace nirfmxspecan_grpc {
           auto current_size = response->mutable_dpd_polynomial()->size();
           if (shrunk_size != current_size) {
             response->mutable_dpd_polynomial()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDFetchDVRModel(::grpc::ServerContext* context, const DPDFetchDVRModelRequest* request, DPDFetchDVRModelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DPDFetchDVRModel(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> dvr_model(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->DPDFetchDVRModel(instrument, selector_string, timeout, dvr_model.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(dvr_model, response->mutable_dvr_model());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_dvr_model()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_dvr_model()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
         }
         response->set_actual_array_size(actual_array_size);

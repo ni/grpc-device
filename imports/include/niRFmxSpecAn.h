@@ -481,6 +481,11 @@
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_MAXIMUM_LAG                              0x0010f018
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE                          0x0010f050
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE                           0x0010f051
+#define RFMXSPECAN_ATTR_DPD_DVR_NUMBER_OF_SEGMENTS                                     0x0010f067
+#define RFMXSPECAN_ATTR_DPD_DVR_LINEAR_MEMORY_DEPTH                                    0x0010f068
+#define RFMXSPECAN_ATTR_DPD_DVR_NONLINEAR_MEMORY_DEPTH                                 0x0010f069
+#define RFMXSPECAN_ATTR_DPD_DVR_DDR_ENABLED                                            0x0010f06a
+#define RFMXSPECAN_ATTR_DPD_MEASUREMENT_MODE                                           0x0010f06b
 #define RFMXSPECAN_ATTR_DPD_ITERATIVE_DPD_ENABLED                                      0x0010f01a
 #define RFMXSPECAN_ATTR_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED                        0x0010f039
 #define RFMXSPECAN_ATTR_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED                        0x0010f065
@@ -553,6 +558,7 @@
 #define RFMXSPECAN_ATTR_IDPD_ALL_TRACES_ENABLED                                        0x0014001f
 #define RFMXSPECAN_ATTR_IDPD_NUMBER_OF_ANALYSIS_THREADS                                0x00140021
 #define RFMXSPECAN_ATTR_IQ_MEASUREMENT_ENABLED                                         0x0010f100
+#define RFMXSPECAN_ATTR_IQ_MEASUREMENT_MODE                                            0x0010f10c
 #define RFMXSPECAN_ATTR_IQ_SAMPLE_RATE                                                 0x0010f102
 #define RFMXSPECAN_ATTR_IQ_ACQUISITION_TIME                                            0x0010f104
 #define RFMXSPECAN_ATTR_IQ_PRETRIGGER_TIME                                             0x0010f105
@@ -1488,6 +1494,7 @@
 #define RFMXSPECAN_VAL_DPD_MODEL_LOOKUP_TABLE                                                         0
 #define RFMXSPECAN_VAL_DPD_MODEL_MEMORY_POLYNOMIAL                                                    1
 #define RFMXSPECAN_VAL_DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL                                        2
+#define RFMXSPECAN_VAL_DPD_MODEL_DECOMPOSED_VECTOR_ROTATION                                           3
 
 // Values for RFMXSPECAN_ATTR_DPD_TARGET_GAIN_TYPE
 #define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_AVERAGE_GAIN                                              0
@@ -1530,6 +1537,14 @@
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ALL_ORDERS                                0
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ODD_ORDERS_ONLY                           1
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_EVEN_ORDERS_ONLY                          2
+
+// Values for RFMXSPECAN_ATTR_DPD_DVR_DDR_ENABLED
+#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_TRUE                                                       1
+
+// Values for RFMXSPECAN_ATTR_DPD_MEASUREMENT_MODE
+#define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_ACQUIRE_AND_EXTRACT                                       0
+#define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_EXTRACT_ONLY                                              1
 
 // Values for RFMXSPECAN_ATTR_DPD_ITERATIVE_DPD_ENABLED
 #define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_FALSE                                                0
@@ -1646,6 +1661,10 @@
 // Values for RFMXSPECAN_ATTR_IDPD_EVM_UNIT
 #define RFMXSPECAN_VAL_IDPD_EVM_UNIT_PERCENTAGE                                                       0
 #define RFMXSPECAN_VAL_IDPD_EVM_UNIT_DB                                                               1
+
+// Values for RFMXSPECAN_ATTR_IQ_MEASUREMENT_MODE
+#define RFMXSPECAN_VAL_IQ_MEASUREMENT_MODE_NORMAL                                                     0
+#define RFMXSPECAN_VAL_IQ_MEASUREMENT_MODE_RAWIQ                                                      1
 
 // Values for RFMXSPECAN_ATTR_IQ_BANDWIDTH_AUTO
 #define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_FALSE                                                        0
@@ -2582,6 +2601,25 @@ int32 __stdcall RFmxSpecAn_DPDCfgReferenceWaveformSplit(
    int32 arraySize,
    int32 idleDurationPresent,
    int32 signalType
+);
+
+int32 __stdcall RFmxSpecAn_DPDCfgTargetWaveform(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   NIComplexSingle targetWaveform[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDCfgTargetWaveformSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 x0,
+   float64 dx,
+   float32 targetWaveformI[],
+   float32 targetWaveformQ[],
+   int32 arraySize
 );
 
 int32 __stdcall RFmxSpecAn_ACPValidateNoiseCalibrationData(
@@ -4933,6 +4971,25 @@ int32 __stdcall RFmxSpecAn_DPDFetchDPDPolynomialSplit(
    float64 timeout,
    float32 DPDPolynomialI[],
    float32 DPDPolynomialQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchDVRModel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle DVRModel[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_DPDFetchDVRModelSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 DVRModelI[],
+   float32 DVRModelQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -10621,6 +10678,66 @@ int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialLagOrderType(
    int32 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_DPDGetDVRNumberOfSegments(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetDVRNumberOfSegments(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetDVRLinearMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetDVRLinearMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetDVRNonlinearMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetDVRNonlinearMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetDVRDDREnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetDVRDDREnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetMeasurementMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetMeasurementMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_DPDGetIterativeDPDEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -11459,6 +11576,18 @@ int32 __stdcall RFmxSpecAn_IQGetMeasurementEnabled(
 );
 
 int32 __stdcall RFmxSpecAn_IQSetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IQGetMeasurementMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_IQSetMeasurementMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

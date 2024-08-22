@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXSPECAN API metadata version 24.5.0
+// This file is generated from NI-RFMXSPECAN API metadata version 24.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXSPECAN Metadata
 //---------------------------------------------------------------------
@@ -158,9 +158,11 @@ service NiRFmxSpecAn {
   rpc DPDCfgPreviousDPDPolynomial(DPDCfgPreviousDPDPolynomialRequest) returns (DPDCfgPreviousDPDPolynomialResponse);
   rpc DPDCfgReferenceWaveform(DPDCfgReferenceWaveformRequest) returns (DPDCfgReferenceWaveformResponse);
   rpc DPDCfgSynchronizationMethod(DPDCfgSynchronizationMethodRequest) returns (DPDCfgSynchronizationMethodResponse);
+  rpc DPDCfgTargetWaveform(DPDCfgTargetWaveformRequest) returns (DPDCfgTargetWaveformResponse);
   rpc DPDFetchApplyDPDPreCFRPAPR(DPDFetchApplyDPDPreCFRPAPRRequest) returns (DPDFetchApplyDPDPreCFRPAPRResponse);
   rpc DPDFetchAverageGain(DPDFetchAverageGainRequest) returns (DPDFetchAverageGainResponse);
   rpc DPDFetchDPDPolynomial(DPDFetchDPDPolynomialRequest) returns (DPDFetchDPDPolynomialResponse);
+  rpc DPDFetchDVRModel(DPDFetchDVRModelRequest) returns (DPDFetchDVRModelResponse);
   rpc DPDFetchLookupTable(DPDFetchLookupTableRequest) returns (DPDFetchLookupTableResponse);
   rpc DPDFetchNMSE(DPDFetchNMSERequest) returns (DPDFetchNMSEResponse);
   rpc DPDFetchProcessedMeanAcquiredWaveform(DPDFetchProcessedMeanAcquiredWaveformRequest) returns (DPDFetchProcessedMeanAcquiredWaveformResponse);
@@ -983,6 +985,11 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_DPD_PRE_DPD_CARRIER_OFFSET = 1110115;
   NIRFMXSPECAN_ATTRIBUTE_DPD_PRE_DPD_CARRIER_BANDWIDTH = 1110116;
   NIRFMXSPECAN_ATTRIBUTE_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED = 1110117;
+  NIRFMXSPECAN_ATTRIBUTE_DPD_DVR_NUMBER_OF_SEGMENTS = 1110119;
+  NIRFMXSPECAN_ATTRIBUTE_DPD_DVR_LINEAR_MEMORY_DEPTH = 1110120;
+  NIRFMXSPECAN_ATTRIBUTE_DPD_DVR_NONLINEAR_MEMORY_DEPTH = 1110121;
+  NIRFMXSPECAN_ATTRIBUTE_DPD_DVR_DDR_ENABLED = 1110122;
+  NIRFMXSPECAN_ATTRIBUTE_DPD_MEASUREMENT_MODE = 1110123;
   NIRFMXSPECAN_ATTRIBUTE_IQ_MEASUREMENT_ENABLED = 1110272;
   NIRFMXSPECAN_ATTRIBUTE_IQ_SAMPLE_RATE = 1110274;
   NIRFMXSPECAN_ATTRIBUTE_IQ_NUMBER_OF_RECORDS = 1110275;
@@ -991,6 +998,7 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_IQ_BANDWIDTH_AUTO = 1110280;
   NIRFMXSPECAN_ATTRIBUTE_IQ_BANDWIDTH = 1110281;
   NIRFMXSPECAN_ATTRIBUTE_IQ_DELETE_RECORD_ON_FETCH = 1110282;
+  NIRFMXSPECAN_ATTRIBUTE_IQ_MEASUREMENT_MODE = 1110284;
   NIRFMXSPECAN_ATTRIBUTE_IM_MEASUREMENT_ENABLED = 1114112;
   NIRFMXSPECAN_ATTRIBUTE_IM_FREQUENCY_DEFINITION = 1114114;
   NIRFMXSPECAN_ATTRIBUTE_IM_FUNDAMENTAL_LOWER_TONE_FREQUENCY = 1114115;
@@ -1488,6 +1496,7 @@ enum DpdModel {
   DPD_MODEL_LOOKUP_TABLE = 0;
   DPD_MODEL_MEMORY_POLYNOMIAL = 1;
   DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL = 2;
+  DPD_MODEL_DECOMPOSED_VECTOR_ROTATION = 3;
 }
 
 enum DpdReferenceWaveformIdleDurationPresent {
@@ -2391,6 +2400,8 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_DPD_AUTO_CARRIER_DETECTION_ENABLED_TRUE = 1;
   NIRFMXSPECAN_INT32_DPD_AVERAGING_ENABLED_FALSE = 0;
   NIRFMXSPECAN_INT32_DPD_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXSPECAN_INT32_DPD_DVR_DDR_ENABLED_FALSE = 0;
+  NIRFMXSPECAN_INT32_DPD_DVR_DDR_ENABLED_TRUE = 1;
   NIRFMXSPECAN_INT32_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE = 0;
   NIRFMXSPECAN_INT32_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE = 1;
   NIRFMXSPECAN_INT32_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE = 0;
@@ -2409,6 +2420,8 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_ABSOLUTE = 1;
   NIRFMXSPECAN_INT32_DPD_LOOKUP_TABLE_TYPE_LOG = 0;
   NIRFMXSPECAN_INT32_DPD_LOOKUP_TABLE_TYPE_LINEAR = 1;
+  NIRFMXSPECAN_INT32_DPD_MEASUREMENT_MODE_ACQUIRE_AND_EXTRACT = 0;
+  NIRFMXSPECAN_INT32_DPD_MEASUREMENT_MODE_EXTRACT_ONLY = 1;
   NIRFMXSPECAN_INT32_DPD_MEASUREMENT_SAMPLE_RATE_MODE_USER = 0;
   NIRFMXSPECAN_INT32_DPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM = 1;
   NIRFMXSPECAN_INT32_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ALL_ORDERS = 0;
@@ -2423,6 +2436,7 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_DPD_MODEL_LOOKUP_TABLE = 0;
   NIRFMXSPECAN_INT32_DPD_MODEL_MEMORY_POLYNOMIAL = 1;
   NIRFMXSPECAN_INT32_DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL = 2;
+  NIRFMXSPECAN_INT32_DPD_MODEL_DECOMPOSED_VECTOR_ROTATION = 3;
   NIRFMXSPECAN_INT32_DPD_NMSE_ENABLED_FALSE = 0;
   NIRFMXSPECAN_INT32_DPD_NMSE_ENABLED_TRUE = 1;
   NIRFMXSPECAN_INT32_DPD_PRE_DPD_CFR_ENABLED_FALSE = 0;
@@ -2523,6 +2537,8 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_IQ_BANDWIDTH_AUTO_TRUE = 1;
   NIRFMXSPECAN_INT32_IQ_DELETE_RECORD_ON_FETCH_FALSE = 0;
   NIRFMXSPECAN_INT32_IQ_DELETE_RECORD_ON_FETCH_TRUE = 1;
+  NIRFMXSPECAN_INT32_IQ_MEASUREMENT_MODE_NORMAL = 0;
+  NIRFMXSPECAN_INT32_IQ_MEASUREMENT_MODE_RAWIQ = 1;
   NIRFMXSPECAN_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
   NIRFMXSPECAN_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
   NIRFMXSPECAN_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING = 0;
@@ -4656,6 +4672,18 @@ message DPDCfgSynchronizationMethodResponse {
   int32 status = 1;
 }
 
+message DPDCfgTargetWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated nidevice_grpc.NIComplexNumberF32 target_waveform = 5;
+}
+
+message DPDCfgTargetWaveformResponse {
+  int32 status = 1;
+}
+
 message DPDFetchApplyDPDPreCFRPAPRRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -4687,6 +4715,18 @@ message DPDFetchDPDPolynomialRequest {
 message DPDFetchDPDPolynomialResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 dpd_polynomial = 2;
+  int32 actual_array_size = 3;
+}
+
+message DPDFetchDVRModelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DPDFetchDVRModelResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 dvr_model = 2;
   int32 actual_array_size = 3;
 }
 

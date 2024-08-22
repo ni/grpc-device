@@ -1188,6 +1188,18 @@ enums = {
             }
         ]
     },
+    'DpdDvrDdrEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'DpdFrequencyOffsetCorrectionEnabled': {
         'values': [
             {
@@ -1292,6 +1304,18 @@ enums = {
             }
         ]
     },
+    'DpdMeasurementMode': {
+        'values': [
+            {
+                'name': 'ACQUIRE_AND_EXTRACT',
+                'value': 0
+            },
+            {
+                'name': 'EXTRACT_ONLY',
+                'value': 1
+            }
+        ]
+    },
     'DpdMeasurementSampleRateMode': {
         'values': [
             {
@@ -1365,6 +1389,10 @@ enums = {
             {
                 'name': 'GENERALIZED_MEMORY_POLYNOMIAL',
                 'value': 2
+            },
+            {
+                'name': 'DECOMPOSED_VECTOR_ROTATION',
+                'value': 3
             }
         ]
     },
@@ -1942,6 +1970,18 @@ enums = {
             },
             {
                 'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'IQMeasurementMode': {
+        'values': [
+            {
+                'name': 'NORMAL',
+                'value': 0
+            },
+            {
+                'name': 'RAWIQ',
                 'value': 1
             }
         ]
