@@ -89,9 +89,15 @@ enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 # Enforce consistent runtime library settings in case of MSVC
-if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  if (POLICY CMP0091)
+    cmake_policy(SET CMP0091 NEW)
+    message("Setting CMP0091 policy")
+  else()
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
+    message("Using default policy since cmake version is <3.15")
+  endif()
 endif()
 
 #----------------------------------------------------------------------
@@ -450,6 +456,12 @@ add_executable(ni_grpc_device_server
    ${calibrationoperations_restricted_proto_srcs}
    ${calibrationoperations_restricted_grpc_srcs}
    ${nidriver_service_srcs})
+   
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  if (POLICY CMP0091)
+    set_property(TARGET ni_grpc_device_server PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+  endif()
+endif()
 
 # Enable warnings only on source that we own, not generated code or dependencies
 file(GLOB_RECURSE SOURCE_TO_ENABLE_WARNINGS "source/*.cpp")
@@ -597,6 +609,12 @@ add_executable(IntegrationTestsRunner
     "${custom_dir}/nifake_service.custom.cpp"
 )
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  if (POLICY CMP0091)
+    set_property(TARGET IntegrationTestsRunner PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+  endif()
+endif()
+
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
     find_package(Threads REQUIRED)
@@ -688,6 +706,12 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nimxlcterminaladaptor_restricted_service.custom.cpp"
     "${custom_dir}/nixnet_service.custom.cpp"
 )
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  if (POLICY CMP0091)
+    set_property(TARGET UnitTestsRunner PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+  endif()
+endif()
 
 # ni_fake_service_tests.cpp and several DAQ cpp files exceed the MSVC limit for the number of sections
 # in an obj file defined by PE-COFF. This line disables the limit.
@@ -837,6 +861,12 @@ if(WIN32)
 endif()
 
 add_executable(SystemTestsRunner ${system_test_runner_sources})
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  if (POLICY CMP0091)
+    set_property(TARGET SystemTestsRunner PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+  endif()
+endif()
 
 target_link_libraries(SystemTestsRunner
     ${CMAKE_DL_LIBS}
