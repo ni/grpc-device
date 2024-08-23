@@ -88,6 +88,12 @@ endif()
 enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
+# Enforce consistent runtime library settings in case of MSVC
+if(CMAKE_LINKER MATCHES "MSVC")
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
+endif()
+
 #----------------------------------------------------------------------
 # Use C++17 (needed for shared_mutex support on Linux)
 #----------------------------------------------------------------------
@@ -849,7 +855,7 @@ add_custom_command(
             ${CMAKE_SOURCE_DIR}/source/tests/assets/data/
             $<TARGET_FILE_DIR:SystemTestsRunner>/)
 
-if(_GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
+if(USE_NILRT_LEGACY_TOOLCHAIN)
     target_link_libraries(SystemTestsRunner stdc++fs)
     target_compile_definitions(SystemTestsRunner PRIVATE FS_EXPERIMENTAL)
 endif()
