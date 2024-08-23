@@ -89,7 +89,7 @@ enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 # Enforce consistent runtime library settings in case of MSVC
-if(CMAKE_LINKER MATCHES "MSVC")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
 endif()
