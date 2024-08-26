@@ -22,6 +22,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
 
   ::grpc::Status check_function_exists(std::string functionName);
   NiFpga_Status Abort(NiFpga_Session session) override;
+  NiFpga_Status AcknowledgeIrqs(NiFpga_Session session, uint32_t irqs) override;
   NiFpga_Status Close(NiFpga_Session session, uint32_t attribute) override;
   NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo) override;
   NiFpga_Status ConfigureFifo(NiFpga_Session session, uint32_t fifo, size_t depth) override;
@@ -79,6 +80,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   NiFpga_Status StartFifo(NiFpga_Session session, uint32_t fifo) override;
   NiFpga_Status StopFifo(NiFpga_Session session, uint32_t fifo) override;
   NiFpga_Status UnreserveFifo(NiFpga_Session session, uint32_t fifo) override;
+  NiFpga_Status WaitOnIrqs(NiFpga_Session session, NiFpga_IrqContext* irqContext, uint32_t irqs, uint32_t timeout, uint32_t* irqsAsserted, NiFpga_Bool* timedOut) override;
   NiFpga_Status WriteArrayBool(NiFpga_Session session, uint32_t control, NiFpga_Bool array[], size_t size) override;
   NiFpga_Status WriteArrayDbl(NiFpga_Session session, uint32_t control, double array[], size_t size) override;
   NiFpga_Status WriteArrayI16(NiFpga_Session session, uint32_t control, int16_t array[], size_t size) override;
@@ -115,6 +117,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
 
  private:
   using AbortPtr = decltype(&NiFpga_Abort);
+  using AcknowledgeIrqsPtr = decltype(&NiFpga_AcknowledgeIrqs);
   using ClosePtr = decltype(&NiFpga_Close);
   using CommitFifoConfigurationPtr = decltype(&NiFpga_CommitFifoConfiguration);
   using ConfigureFifoPtr = decltype(&NiFpga_ConfigureFifo);
@@ -172,6 +175,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   using StartFifoPtr = decltype(&NiFpga_StartFifo);
   using StopFifoPtr = decltype(&NiFpga_StopFifo);
   using UnreserveFifoPtr = decltype(&NiFpga_UnreserveFifo);
+  using WaitOnIrqsPtr = decltype(&NiFpga_WaitOnIrqs);
   using WriteArrayBoolPtr = decltype(&NiFpga_WriteArrayBool);
   using WriteArrayDblPtr = decltype(&NiFpga_WriteArrayDbl);
   using WriteArrayI16Ptr = decltype(&NiFpga_WriteArrayI16);
@@ -208,6 +212,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
+    AcknowledgeIrqsPtr AcknowledgeIrqs;
     ClosePtr Close;
     CommitFifoConfigurationPtr CommitFifoConfiguration;
     ConfigureFifoPtr ConfigureFifo;
@@ -265,6 +270,7 @@ class NiFpgaLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
     StartFifoPtr StartFifo;
     StopFifoPtr StopFifo;
     UnreserveFifoPtr UnreserveFifo;
+    WaitOnIrqsPtr WaitOnIrqs;
     WriteArrayBoolPtr WriteArrayBool;
     WriteArrayDblPtr WriteArrayDbl;
     WriteArrayI16Ptr WriteArrayI16;

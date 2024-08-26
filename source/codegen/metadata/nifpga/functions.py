@@ -10,7 +10,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'AcknowledgeIrqs': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2747,7 +2746,8 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'context',
+                'include_in_proto': False,
+                'name': 'irqContext',
                 'type': 'NiFpga_IrqContext'
             }
         ],
@@ -2980,14 +2980,14 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'context',
+                'include_in_proto': False,
+                'name': 'irqContext',
                 'type': 'NiFpga_IrqContext'
             }
         ],
         'returns': 'NiFpga_Status'
     },
     'WaitOnIrqs': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -2996,7 +2996,8 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'context',
+                'include_in_proto': False,
+                'name': 'irqContext',
                 'type': 'NiFpga_IrqContext'
             },
             {

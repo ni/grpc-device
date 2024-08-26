@@ -16,6 +16,7 @@ class NiFpgaLibraryInterface {
   virtual ~NiFpgaLibraryInterface() {}
 
   virtual NiFpga_Status Abort(NiFpga_Session session) = 0;
+  virtual NiFpga_Status AcknowledgeIrqs(NiFpga_Session session, uint32_t irqs) = 0;
   virtual NiFpga_Status Close(NiFpga_Session session, uint32_t attribute) = 0;
   virtual NiFpga_Status CommitFifoConfiguration(NiFpga_Session session, uint32_t fifo) = 0;
   virtual NiFpga_Status ConfigureFifo(NiFpga_Session session, uint32_t fifo, size_t depth) = 0;
@@ -73,6 +74,7 @@ class NiFpgaLibraryInterface {
   virtual NiFpga_Status StartFifo(NiFpga_Session session, uint32_t fifo) = 0;
   virtual NiFpga_Status StopFifo(NiFpga_Session session, uint32_t fifo) = 0;
   virtual NiFpga_Status UnreserveFifo(NiFpga_Session session, uint32_t fifo) = 0;
+  virtual NiFpga_Status WaitOnIrqs(NiFpga_Session session, NiFpga_IrqContext* irqContext, uint32_t irqs, uint32_t timeout, uint32_t* irqsAsserted, NiFpga_Bool* timedOut) = 0;
   virtual NiFpga_Status WriteArrayBool(NiFpga_Session session, uint32_t control, NiFpga_Bool array[], size_t size) = 0;
   virtual NiFpga_Status WriteArrayDbl(NiFpga_Session session, uint32_t control, double array[], size_t size) = 0;
   virtual NiFpga_Status WriteArrayI16(NiFpga_Session session, uint32_t control, int16_t array[], size_t size) = 0;

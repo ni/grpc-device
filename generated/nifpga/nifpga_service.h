@@ -43,6 +43,7 @@ public:
   virtual ~NiFpgaService();
 
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
+  ::grpc::Status AcknowledgeIrqs(::grpc::ServerContext* context, const AcknowledgeIrqsRequest* request, AcknowledgeIrqsResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CommitFifoConfiguration(::grpc::ServerContext* context, const CommitFifoConfigurationRequest* request, CommitFifoConfigurationResponse* response) override;
   ::grpc::Status ConfigureFifo(::grpc::ServerContext* context, const ConfigureFifoRequest* request, ConfigureFifoResponse* response) override;
@@ -100,6 +101,7 @@ public:
   ::grpc::Status StartFifo(::grpc::ServerContext* context, const StartFifoRequest* request, StartFifoResponse* response) override;
   ::grpc::Status StopFifo(::grpc::ServerContext* context, const StopFifoRequest* request, StopFifoResponse* response) override;
   ::grpc::Status UnreserveFifo(::grpc::ServerContext* context, const UnreserveFifoRequest* request, UnreserveFifoResponse* response) override;
+  ::grpc::Status WaitOnIrqs(::grpc::ServerContext* context, const WaitOnIrqsRequest* request, WaitOnIrqsResponse* response) override;
   ::grpc::Status WriteArrayBool(::grpc::ServerContext* context, const WriteArrayBoolRequest* request, WriteArrayBoolResponse* response) override;
   ::grpc::Status WriteArrayDbl(::grpc::ServerContext* context, const WriteArrayDblRequest* request, WriteArrayDblResponse* response) override;
   ::grpc::Status WriteArrayI16(::grpc::ServerContext* context, const WriteArrayI16Request* request, WriteArrayI16Response* response) override;

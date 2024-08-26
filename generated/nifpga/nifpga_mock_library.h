@@ -18,6 +18,7 @@ namespace unit {
 class NiFpgaMockLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
  public:
   MOCK_METHOD(NiFpga_Status, Abort, (NiFpga_Session session), (override));
+  MOCK_METHOD(NiFpga_Status, AcknowledgeIrqs, (NiFpga_Session session, uint32_t irqs), (override));
   MOCK_METHOD(NiFpga_Status, Close, (NiFpga_Session session, uint32_t attribute), (override));
   MOCK_METHOD(NiFpga_Status, CommitFifoConfiguration, (NiFpga_Session session, uint32_t fifo), (override));
   MOCK_METHOD(NiFpga_Status, ConfigureFifo, (NiFpga_Session session, uint32_t fifo, size_t depth), (override));
@@ -75,6 +76,7 @@ class NiFpgaMockLibrary : public nifpga_grpc::NiFpgaLibraryInterface {
   MOCK_METHOD(NiFpga_Status, StartFifo, (NiFpga_Session session, uint32_t fifo), (override));
   MOCK_METHOD(NiFpga_Status, StopFifo, (NiFpga_Session session, uint32_t fifo), (override));
   MOCK_METHOD(NiFpga_Status, UnreserveFifo, (NiFpga_Session session, uint32_t fifo), (override));
+  MOCK_METHOD(NiFpga_Status, WaitOnIrqs, (NiFpga_Session session, NiFpga_IrqContext* irqContext, uint32_t irqs, uint32_t timeout, uint32_t* irqsAsserted, NiFpga_Bool* timedOut), (override));
   MOCK_METHOD(NiFpga_Status, WriteArrayBool, (NiFpga_Session session, uint32_t control, NiFpga_Bool array[], size_t size), (override));
   MOCK_METHOD(NiFpga_Status, WriteArrayDbl, (NiFpga_Session session, uint32_t control, double array[], size_t size), (override));
   MOCK_METHOD(NiFpga_Status, WriteArrayI16, (NiFpga_Session session, uint32_t control, int16_t array[], size_t size), (override));
