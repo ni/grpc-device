@@ -12,6 +12,11 @@ NiFpga_Status Abort(NiFpga_Session session)
   return NiFpga_Abort(session);
 }
 
+NiFpga_Status AcknowledgeIrqs(NiFpga_Session session, uint32_t irqs)
+{
+  return NiFpga_AcknowledgeIrqs(session, irqs);
+}
+
 NiFpga_Status Close(NiFpga_Session session, uint32_t attribute)
 {
   return NiFpga_Close(session, attribute);
@@ -295,6 +300,11 @@ NiFpga_Status StopFifo(NiFpga_Session session, uint32_t fifo)
 NiFpga_Status UnreserveFifo(NiFpga_Session session, uint32_t fifo)
 {
   return NiFpga_UnreserveFifo(session, fifo);
+}
+
+NiFpga_Status WaitOnIrqs(NiFpga_Session session, NiFpga_IrqContext* irqContext, uint32_t irqs, uint32_t timeout, uint32_t* irqsAsserted, NiFpga_Bool* timedOut)
+{
+  return NiFpga_WaitOnIrqs(session, irqContext, irqs, timeout, irqsAsserted, timedOut);
 }
 
 NiFpga_Status WriteArrayBool(NiFpga_Session session, uint32_t control, NiFpga_Bool array[], size_t size)

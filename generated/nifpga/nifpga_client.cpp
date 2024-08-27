@@ -34,6 +34,24 @@ abort(const StubPtr& stub, const nidevice_grpc::Session& session)
   return response;
 }
 
+AcknowledgeIrqsResponse
+acknowledge_irqs(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& irqs)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AcknowledgeIrqsRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_irqs(irqs);
+
+  auto response = AcknowledgeIrqsResponse{};
+
+  raise_if_error(
+      stub->AcknowledgeIrqs(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CloseResponse
 close(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_variant<CloseAttribute, pb::uint32>& attribute)
 {
@@ -1179,6 +1197,25 @@ unreserve_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const
 
   raise_if_error(
       stub->UnreserveFifo(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WaitOnIrqsResponse
+wait_on_irqs(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& irqs, const pb::uint32& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WaitOnIrqsRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_irqs(irqs);
+  request.set_timeout(timeout);
+
+  auto response = WaitOnIrqsResponse{};
+
+  raise_if_error(
+      stub->WaitOnIrqs(&context, request, &response),
       context);
 
   return response;

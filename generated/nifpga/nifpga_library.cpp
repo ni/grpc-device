@@ -28,6 +28,7 @@ NiFpgaLibrary::NiFpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
     return;
   }
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_->get_function_pointer("NiFpgaDll_Abort"));
+  function_pointers_.AcknowledgeIrqs = reinterpret_cast<AcknowledgeIrqsPtr>(shared_library_->get_function_pointer("NiFpgaDll_AcknowledgeIrqs"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("NiFpgaDll_Close"));
   function_pointers_.CommitFifoConfiguration = reinterpret_cast<CommitFifoConfigurationPtr>(shared_library_->get_function_pointer("NiFpgaDll_CommitFifoConfiguration"));
   function_pointers_.ConfigureFifo = reinterpret_cast<ConfigureFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_ConfigureFifo"));
@@ -85,6 +86,7 @@ NiFpgaLibrary::NiFpgaLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.StartFifo = reinterpret_cast<StartFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_StartFifo"));
   function_pointers_.StopFifo = reinterpret_cast<StopFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_StopFifo"));
   function_pointers_.UnreserveFifo = reinterpret_cast<UnreserveFifoPtr>(shared_library_->get_function_pointer("NiFpgaDll_UnreserveFifo"));
+  function_pointers_.WaitOnIrqs = reinterpret_cast<WaitOnIrqsPtr>(shared_library_->get_function_pointer("NiFpgaDll_WaitOnIrqs"));
   function_pointers_.WriteArrayBool = reinterpret_cast<WriteArrayBoolPtr>(shared_library_->get_function_pointer("NiFpgaDll_WriteArrayBool"));
   function_pointers_.WriteArrayDbl = reinterpret_cast<WriteArrayDblPtr>(shared_library_->get_function_pointer("NiFpgaDll_WriteArrayDbl"));
   function_pointers_.WriteArrayI16 = reinterpret_cast<WriteArrayI16Ptr>(shared_library_->get_function_pointer("NiFpgaDll_WriteArrayI16"));
@@ -137,6 +139,14 @@ NiFpga_Status NiFpgaLibrary::Abort(NiFpga_Session session)
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_Abort.");
   }
   return function_pointers_.Abort(session);
+}
+
+NiFpga_Status NiFpgaLibrary::AcknowledgeIrqs(NiFpga_Session session, uint32_t irqs)
+{
+  if (!function_pointers_.AcknowledgeIrqs) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_AcknowledgeIrqs.");
+  }
+  return function_pointers_.AcknowledgeIrqs(session, irqs);
 }
 
 NiFpga_Status NiFpgaLibrary::Close(NiFpga_Session session, uint32_t attribute)
@@ -593,6 +603,14 @@ NiFpga_Status NiFpgaLibrary::UnreserveFifo(NiFpga_Session session, uint32_t fifo
     throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_UnreserveFifo.");
   }
   return function_pointers_.UnreserveFifo(session, fifo);
+}
+
+NiFpga_Status NiFpgaLibrary::WaitOnIrqs(NiFpga_Session session, NiFpga_IrqContext* irqContext, uint32_t irqs, uint32_t timeout, uint32_t* irqsAsserted, NiFpga_Bool* timedOut)
+{
+  if (!function_pointers_.WaitOnIrqs) {
+    throw nidevice_grpc::LibraryLoadException("Could not find NiFpga_WaitOnIrqs.");
+  }
+  return function_pointers_.WaitOnIrqs(session, irqContext, irqs, timeout, irqsAsserted, timedOut);
 }
 
 NiFpga_Status NiFpgaLibrary::WriteArrayBool(NiFpga_Session session, uint32_t control, NiFpga_Bool array[], size_t size)

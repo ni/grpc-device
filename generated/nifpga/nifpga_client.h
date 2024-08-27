@@ -23,6 +23,7 @@ using namespace nidevice_grpc::experimental::client;
 
 
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& session);
+AcknowledgeIrqsResponse acknowledge_irqs(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& irqs);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_variant<CloseAttribute, pb::uint32>& attribute);
 CommitFifoConfigurationResponse commit_fifo_configuration(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
 ConfigureFifoResponse configure_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& depth);
@@ -80,6 +81,7 @@ SetFifoPropertyU64Response set_fifo_property_u64(const StubPtr& stub, const nide
 StartFifoResponse start_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
 StopFifoResponse stop_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
 UnreserveFifoResponse unreserve_fifo(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo);
+WaitOnIrqsResponse wait_on_irqs(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& irqs, const pb::uint32& timeout);
 WriteArrayBoolResponse write_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<bool>& array);
 WriteArrayDblResponse write_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<double>& array);
 WriteArrayI16Response write_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int32>& array);

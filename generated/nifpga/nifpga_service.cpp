@@ -65,6 +65,29 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::AcknowledgeIrqs(::grpc::ServerContext* context, const AcknowledgeIrqsRequest* request, AcknowledgeIrqsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t irqs = request->irqs();
+      auto status = library_->AcknowledgeIrqs(session, irqs);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1774,6 +1797,35 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::WaitOnIrqs(::grpc::ServerContext* context, const WaitOnIrqsRequest* request, WaitOnIrqsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t irqs = request->irqs();
+      uint32_t timeout = request->timeout();
+      NiFpga_IrqContext irq_context {};
+      uint32_t irqs_asserted {};
+      NiFpga_Bool timed_out {};
+      auto status = library_->WaitOnIrqs(session, &irq_context, irqs, timeout, &irqs_asserted, &timed_out);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
+      }
+      response->set_status(status);
+      response->set_irqs_asserted(irqs_asserted);
+      response->set_timed_out(timed_out);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
