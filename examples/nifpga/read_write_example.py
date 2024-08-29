@@ -52,62 +52,67 @@ client = grpc_nifpga.NiFpgaStub(channel)
 print(f"{SERVER_ADDRESS} : {SERVER_PORT} : {RESOURCE}\n")
 new_session = None
 try:
-    niFpgaExampleBitfilePath = "C:\\SimpleRead.lvbitx" # Give the correct file path
-    niFpgaExampleSignature = "92F2FF7D94F6BC2B7D838BF64C07F503" # Give the bitfile signature
-    open_session_response = client.Open(nifpga_types.OpenRequest(
-        session_name=SESSION_NAME,
-        bitfile=niFpgaExampleBitfilePath,
-        signature=niFpgaExampleSignature,
-        resource=RESOURCE,
-        attribute_mapped = nifpga_types.OpenAttribute.OPEN_ATTRIBUTE_NO_RUN,
-        initialization_behavior=0))
+    niFpgaExampleBitfilePath = "C:\\SimpleRead.lvbitx"  # Give the correct file path
+    niFpgaExampleSignature = (
+        "92F2FF7D94F6BC2B7D838BF64C07F503"  # Give the bitfile signature
+    )
+    open_session_response = client.Open(
+        nifpga_types.OpenRequest(
+            session_name=SESSION_NAME,
+            bitfile=niFpgaExampleBitfilePath,
+            signature=niFpgaExampleSignature,
+            resource=RESOURCE,
+            attribute_mapped=nifpga_types.OpenAttribute.OPEN_ATTRIBUTE_NO_RUN,
+            initialization_behavior=0,
+        )
+    )
     new_session = open_session_response.session
-    if (open_session_response.status == 0):
-            print("Session Created Successfully.\n")
+    if open_session_response.status == 0:
+        print("Session Created Successfully.\n")
 
-    run_response = client.Run(nifpga_types.RunRequest(
-        session=new_session,
-        attribute = 0
-    ))
+    run_response = client.Run(nifpga_types.RunRequest(session=new_session, attribute=0))
 
     # Read and Write to an indicator
     NumericI16Indicator = 0x10002
-    i16_write_response = client.WriteI16(nifpga_types.WriteI16Request(
-        session=new_session,
-        control=NumericI16Indicator,
-        value=12
-    ))
+    i16_write_response = client.WriteI16(
+        nifpga_types.WriteI16Request(
+            session=new_session, control=NumericI16Indicator, value=12
+        )
+    )
     if i16_write_response.status == 0:
         print("Write to indicator successful\n")
-    i16_read_response = client.ReadI16(nifpga_types.ReadI16Request(
-        session=new_session,
-        indicator=NumericI16Indicator
-    ))
+    i16_read_response = client.ReadI16(
+        nifpga_types.ReadI16Request(session=new_session, indicator=NumericI16Indicator)
+    )
     print(f"Indicator value: {i16_read_response.value}\n")
 
     # Read and Write to an Array
     ControlArrayI32 = 0x10004
     ControlArrayI32Size = 4
     updated_array = [1, -221, -1111, -21]
-    writeI32_array_response = client.WriteArrayI32(nifpga_types.WriteArrayI32Request(
-        session=new_session,
-        control=ControlArrayI32,
-        array=updated_array
-    ))
+    writeI32_array_response = client.WriteArrayI32(
+        nifpga_types.WriteArrayI32Request(
+            session=new_session, control=ControlArrayI32, array=updated_array
+        )
+    )
     if writeI32_array_response.status == 0:
         print("Write to indicator successful\n")
 
-    readI32_array_response = client.ReadArrayI32(nifpga_types.ReadArrayI32Request(
-        session=new_session,
-        indicator=ControlArrayI32,
-        size=ControlArrayI32Size
-    ))
+    readI32_array_response = client.ReadArrayI32(
+        nifpga_types.ReadArrayI32Request(
+            session=new_session, indicator=ControlArrayI32, size=ControlArrayI32Size
+        )
+    )
     print(f"Update array value: {readI32_array_response.array}\n")
-    
+
     # Read and Write to FIFO
     # These two FIFOs are configured such that we specify the number of elements to add to the FIFO and the multiplier.
     # The other FIFO will contain the multiplied value of the elements of the firsts FIFO.
-    user_input = int(input("Enter number of elements you want to add in the FIFO (between 1 and 20): "))
+    user_input = int(
+        input(
+            "Enter number of elements you want to add in the FIFO (between 1 and 20): "
+        )
+    )
     random_numbers = []
     if 1 <= user_input <= 20:
         for _ in range(user_input):
@@ -116,57 +121,69 @@ try:
         print(f"Random numbers: {random_numbers}\n")
     else:
         print("Invalid input. Please enter a number between 1 and 20.")
-    
-    multiplier_input = int(input("Enter the multiplier you want the FIFO elements to get multplied with: "))
+
+    multiplier_input = int(
+        input("Enter the multiplier you want the FIFO elements to get multplied with: ")
+    )
 
     ControlI16_multiplier = 0x1000A
-    i16_write_response = client.WriteI16(nifpga_types.WriteI16Request(
-        session=new_session,
-        control=ControlI16_multiplier,
-        value=multiplier_input
-    ))
+    i16_write_response = client.WriteI16(
+        nifpga_types.WriteI16Request(
+            session=new_session, control=ControlI16_multiplier, value=multiplier_input
+        )
+    )
     InfiniteTimeout = 0xFFFFFFFF
     HostToTargetFifoI16 = 1
-    writeFifoI16_response = client.WriteFifoI16(nifpga_types.WriteFifoI16Request(
-        session=new_session,
-        fifo=HostToTargetFifoI16,
-        data=random_numbers,
-        timeout=InfiniteTimeout
-    ))
+    writeFifoI16_response = client.WriteFifoI16(
+        nifpga_types.WriteFifoI16Request(
+            session=new_session,
+            fifo=HostToTargetFifoI16,
+            data=random_numbers,
+            timeout=InfiniteTimeout,
+        )
+    )
     if writeFifoI16_response.status == 0:
         print("FIFO Write successful.\n")
 
     TargetToHostFifoI16 = 0
-    readFifoI16_response = client.ReadFifoI16(nifpga_types.ReadFifoI16Request(
-        session=new_session,
-        fifo=TargetToHostFifoI16,
-        number_of_elements=user_input,
-        timeout=InfiniteTimeout
-    ))
+    readFifoI16_response = client.ReadFifoI16(
+        nifpga_types.ReadFifoI16Request(
+            session=new_session,
+            fifo=TargetToHostFifoI16,
+            number_of_elements=user_input,
+            timeout=InfiniteTimeout,
+        )
+    )
     print(f"Elements in FIFO: {readFifoI16_response.data}\n")
-    print(f"Elements remaining to read from FIFO: {readFifoI16_response.elements_remaining}\n")
+    print(
+        f"Elements remaining to read from FIFO: {readFifoI16_response.elements_remaining}\n"
+    )
 
-    abort_response = client.Abort(nifpga_types.AbortRequest(
-        session=new_session))
-    if (abort_response.status == 0):
+    abort_response = client.Abort(nifpga_types.AbortRequest(session=new_session))
+    if abort_response.status == 0:
         print("VI Aborted Successfully.\n")
 
-    close_response = client.Close(nifpga_types.CloseRequest(
-        session=new_session,
-        attribute=nifpga_types.CloseAttribute.CLOSE_ATTRIBUTE_UNSPECIFIED))
-    if (close_response.status == 0):
+    close_response = client.Close(
+        nifpga_types.CloseRequest(
+            session=new_session,
+            attribute=nifpga_types.CloseAttribute.CLOSE_ATTRIBUTE_UNSPECIFIED,
+        )
+    )
+    if close_response.status == 0:
         print("Session closed.\n")
 
 except grpc.RpcError as rpc_error:
     error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            value = (
+                entry.value
+                if isinstance(entry.value, str)
+                else entry.value.decode("utf-8")
+            )
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = (
-            "The operation is not implemented or is not supported/enabled in this service"
-        )
+        error_message = "The operation is not implemented or is not supported/enabled in this service"
     print(f"{error_message}")
