@@ -14,7 +14,6 @@ endif()
 
 # Enforce consistent runtime library settings in case of MSVC
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  add_compile_options("/MT$<$<CONFIG:Debug>:d>")
   if (POLICY CMP0091)
     message("Policy CMP0091 available, setting compiler flags automatically")
     cmake_policy(SET CMP0091 NEW)
