@@ -65,14 +65,17 @@ try:
             signature=NI_FPGA_EXAMPLE_SIGNATURE,
             resource=RESOURCE,
             attribute_mapped=nifpga_types.OpenAttribute.OPEN_ATTRIBUTE_NO_RUN,
-            initialization_behavior=0,
         )
     )
     new_session = open_session_response.session
     if open_session_response.status == 0:
         print("Session Created Successfully.\n")
 
-    run_response = client.Run(nifpga_types.RunRequest(session=new_session, attribute=0))
+    run_response = client.Run(
+        nifpga_types.RunRequest(
+            session=new_session, attribute=nifpga_types.RunAttribute.RUN_ATTRIBUTE_UNSPECIFIED
+        )
+    )
 
     # Read and Write to an indicator
     NumericI16Indicator = 0x10002
