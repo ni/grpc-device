@@ -1,12 +1,14 @@
 r""" Read and Write to indicators, controls, Arrays and FIFO.
+
 The gRPC API is built from the C API. NI-FPGA documentation is installed with the driver at:
     C:\Program Files (x86)\National Instruments\FPGA Interface C API\capi.chm
 
 Getting Started:
 
 To run this example, you need to provide the correct file path and bitfile signature.
-Additionally, you should have a VI that includes controls, arrays, and FIFO, and update the references for them below.
-Ensure that the R-Series drivers are installed on which the server would run. You can install FPGA C Interface API as well.
+Additionally, you should have a VI that includes controls, arrays, and FIFO,
+and update the references for them below. Ensure that the R-Series drivers are
+installed on which the server would run. You can install FPGA C Interface API as well.
 
 For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
 Client" wiki page:
@@ -26,8 +28,8 @@ Additionally, we are taking the multiplier as input and then reading elements fr
 At the end we Abort the VI.
 """
 
-import sys
 import random
+import sys
 
 import grpc
 import nifpga_pb2 as nifpga_types
@@ -52,15 +54,15 @@ client = grpc_nifpga.NiFpgaStub(channel)
 print(f"{SERVER_ADDRESS} : {SERVER_PORT} : {RESOURCE}\n")
 new_session = None
 try:
-    niFpgaExampleBitfilePath = "C:\\SimpleRead.lvbitx"  # Give the correct file path
-    niFpgaExampleSignature = (
-        "92F2FF7D94F6BC2B7D838BF64C07F503"  # Give the bitfile signature
+    NI_FPGA_EXAMPLE_BITFILE_PATH = "C:\\DemoExample.lvbitx"  # Give the correct file path
+    NI_FPGA_EXAMPLE_SIGNATURE = (
+        "11F1FF1D11F1FF1F1F111FF11F11F111"  # Give the correct bitfile signature
     )
     open_session_response = client.Open(
         nifpga_types.OpenRequest(
             session_name=SESSION_NAME,
-            bitfile=niFpgaExampleBitfilePath,
-            signature=niFpgaExampleSignature,
+            bitfile=NI_FPGA_EXAMPLE_BITFILE_PATH,
+            signature=NI_FPGA_EXAMPLE_SIGNATURE,
             resource=RESOURCE,
             attribute_mapped=nifpga_types.OpenAttribute.OPEN_ATTRIBUTE_NO_RUN,
             initialization_behavior=0,
@@ -75,9 +77,7 @@ try:
     # Read and Write to an indicator
     NumericI16Indicator = 0x10002
     i16_write_response = client.WriteI16(
-        nifpga_types.WriteI16Request(
-            session=new_session, control=NumericI16Indicator, value=12
-        )
+        nifpga_types.WriteI16Request(session=new_session, control=NumericI16Indicator, value=12)
     )
     if i16_write_response.status == 0:
         print("Write to indicator successful\n")
@@ -90,28 +90,27 @@ try:
     ControlArrayI32 = 0x10004
     ControlArrayI32Size = 4
     updated_array = [1, -221, -1111, -21]
-    writeI32_array_response = client.WriteArrayI32(
+    writei32_array_response = client.WriteArrayI32(
         nifpga_types.WriteArrayI32Request(
             session=new_session, control=ControlArrayI32, array=updated_array
         )
     )
-    if writeI32_array_response.status == 0:
+    if writei32_array_response.status == 0:
         print("Write to indicator successful\n")
 
-    readI32_array_response = client.ReadArrayI32(
+    readi32_array_response = client.ReadArrayI32(
         nifpga_types.ReadArrayI32Request(
             session=new_session, indicator=ControlArrayI32, size=ControlArrayI32Size
         )
     )
-    print(f"Update array value: {readI32_array_response.array}\n")
+    print(f"Update array value: {readi32_array_response.array}\n")
 
     # Read and Write to FIFO
-    # These two FIFOs are configured such that we specify the number of elements to add to the FIFO and the multiplier.
+    # These two FIFOs are configured such that we specify the number of elements
+    # to add to the FIFO and the multiplier.
     # The other FIFO will contain the multiplied value of the elements of the firsts FIFO.
     user_input = int(
-        input(
-            "Enter number of elements you want to add in the FIFO (between 1 and 20): "
-        )
+        input("Enter number of elements you want to add in the FIFO (between 1 and 20): ")
     )
     random_numbers = []
     if 1 <= user_input <= 20:
@@ -134,7 +133,7 @@ try:
     )
     InfiniteTimeout = 0xFFFFFFFF
     HostToTargetFifoI16 = 1
-    writeFifoI16_response = client.WriteFifoI16(
+    writefifoi16_response = client.WriteFifoI16(
         nifpga_types.WriteFifoI16Request(
             session=new_session,
             fifo=HostToTargetFifoI16,
@@ -142,11 +141,11 @@ try:
             timeout=InfiniteTimeout,
         )
     )
-    if writeFifoI16_response.status == 0:
+    if writefifoi16_response.status == 0:
         print("FIFO Write successful.\n")
 
     TargetToHostFifoI16 = 0
-    readFifoI16_response = client.ReadFifoI16(
+    readfifoi16_response = client.ReadFifoI16(
         nifpga_types.ReadFifoI16Request(
             session=new_session,
             fifo=TargetToHostFifoI16,
@@ -154,10 +153,8 @@ try:
             timeout=InfiniteTimeout,
         )
     )
-    print(f"Elements in FIFO: {readFifoI16_response.data}\n")
-    print(
-        f"Elements remaining to read from FIFO: {readFifoI16_response.elements_remaining}\n"
-    )
+    print(f"Elements in FIFO: {readfifoi16_response.data}\n")
+    print(f"Elements remaining to read from FIFO: {readfifoi16_response.elements_remaining}\n")
 
     abort_response = client.Abort(nifpga_types.AbortRequest(session=new_session))
     if abort_response.status == 0:
@@ -176,14 +173,12 @@ except grpc.RpcError as rpc_error:
     error_message = str(rpc_error.details() or "")
     for entry in rpc_error.trailing_metadata() or []:
         if entry.key == "ni-error":
-            value = (
-                entry.value
-                if isinstance(entry.value, str)
-                else entry.value.decode("utf-8")
-            )
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
