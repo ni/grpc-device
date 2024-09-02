@@ -30,7 +30,8 @@ if(USE_SUBMODULE_LIBS)
   set(protobuf_INSTALL OFF)
 
   add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc)
-  add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest)
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
   add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json)
   add_subdirectory(third_party/utfcpp ${CMAKE_CURRENT_BINARY_DIR}/utfcpp)
 
@@ -86,7 +87,6 @@ else()
 endif()
 
 enable_testing()
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 # Enforce consistent runtime library settings in case of MSVC
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
