@@ -98,6 +98,7 @@ else()
 endif()
 
 enable_testing()
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 #----------------------------------------------------------------------
 # Use C++17 (needed for shared_mutex support on Linux)
