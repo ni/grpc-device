@@ -6,9 +6,10 @@ The gRPC API is built from the C API. NI-FPGA documentation is installed with th
 Getting Started:
 
 To run this example, you need to provide the correct file path and bitfile signature.
-Additionally, you should have a VI that includes controls and FIFOs, and update the references for them below.
-Ensure that the R-Series drivers are installed on the system where the gRPC-device server is running.
-Optionally, you can also install the FPGA C Interface API for reference.
+Additionally, you should have a VI that includes controls and FIFOs, and update the
+references for them below. Ensure that the R-Series drivers are installed on the system 
+where the gRPC-device server is running. You will also need LABVIEW and the LABVIEW FPGA 
+module to configure the VIs.
 
 For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
 Client" wiki page:
@@ -22,10 +23,9 @@ arguments.
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "" as the resource name.
 
-In this example, we are attempting to read and write values to an indicator, to an array,
-and take input from the user on the number of elements to write to the FIFO.
-Additionally, we are taking the multiplier as input and then reading elements from the other FIFO.
-At the end we Abort the VI.
+In this example, we specify the number of elements to write to the FIFO and provide 
+a multiplier as input. We then read elements from another FIFO, which contains the multiplied 
+values of the elements from the first FIFO.
 """
 
 import random
@@ -85,6 +85,7 @@ try:
             session=new_session, attribute=nifpga_types.RunAttribute.RUN_ATTRIBUTE_UNSPECIFIED
         )
     )
+    check_for_warning(run_response)
 
     # Read and Write to FIFO
     # These two FIFOs are configured such that we specify the number of elements
