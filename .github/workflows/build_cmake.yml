@@ -74,6 +74,9 @@ jobs:
       run: >
         cmake
         --build build
+    # It is preferable to do a clean build to ensure all object files are
+    # deleted and then rebuilt from scratch, which can help resolve
+    # inconsistencies and errors.
         --clean-first
         --config ${{ matrix.config.build_type }}
         -j ${{ steps.cpu-cores.outputs.count }}
