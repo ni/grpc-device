@@ -2865,20 +2865,9 @@ attributes = {
         'name': 'DPD_DVR_NUMBER_OF_SEGMENTS',
         'type': 'int32'
     },
-    1110120: {
-        'access': 'read-write',
-        'name': 'DPD_DVR_LINEAR_MEMORY_DEPTH',
-        'type': 'int32'
-    },
     1110121: {
         'access': 'read-write',
         'name': 'DPD_DVR_NONLINEAR_MEMORY_DEPTH',
-        'type': 'int32'
-    },
-    1110122: {
-        'access': 'read-write',
-        'enum': 'DpdDvrDdrEnabled',
-        'name': 'DPD_DVR_DDR_ENABLED',
         'type': 'int32'
     },
     1110123: {

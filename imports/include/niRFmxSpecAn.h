@@ -482,9 +482,7 @@
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE                          0x0010f050
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE                           0x0010f051
 #define RFMXSPECAN_ATTR_DPD_DVR_NUMBER_OF_SEGMENTS                                     0x0010f067
-#define RFMXSPECAN_ATTR_DPD_DVR_LINEAR_MEMORY_DEPTH                                    0x0010f068
 #define RFMXSPECAN_ATTR_DPD_DVR_NONLINEAR_MEMORY_DEPTH                                 0x0010f069
-#define RFMXSPECAN_ATTR_DPD_DVR_DDR_ENABLED                                            0x0010f06a
 #define RFMXSPECAN_ATTR_DPD_MEASUREMENT_MODE                                           0x0010f06b
 #define RFMXSPECAN_ATTR_DPD_ITERATIVE_DPD_ENABLED                                      0x0010f01a
 #define RFMXSPECAN_ATTR_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED                        0x0010f039
@@ -1537,10 +1535,6 @@
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ALL_ORDERS                                0
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ODD_ORDERS_ONLY                           1
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_EVEN_ORDERS_ONLY                          2
-
-// Values for RFMXSPECAN_ATTR_DPD_DVR_DDR_ENABLED
-#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_FALSE                                                      0
-#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_DPD_MEASUREMENT_MODE
 #define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_ACQUIRE_AND_EXTRACT                                       0
@@ -10690,18 +10684,6 @@ int32 __stdcall RFmxSpecAn_DPDSetDVRNumberOfSegments(
    int32 attrVal
 );
 
-int32 __stdcall RFmxSpecAn_DPDGetDVRLinearMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetDVRLinearMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxSpecAn_DPDGetDVRNonlinearMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -10709,18 +10691,6 @@ int32 __stdcall RFmxSpecAn_DPDGetDVRNonlinearMemoryDepth(
 );
 
 int32 __stdcall RFmxSpecAn_DPDSetDVRNonlinearMemoryDepth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDGetDVRDDREnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxSpecAn_DPDSetDVRDDREnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
