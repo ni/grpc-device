@@ -5,7 +5,7 @@ The gRPC API is built from the C API. NI-FPGA documentation is installed with th
 
 Getting Started:
 
-To run this example, you need to provide the correct file path and bitfile signature.
+To run this example with your VI, you need to configure the values below.
 Additionally, you should have a VI that includes controls and FIFOs, and update the
 references for them below. Ensure that the R-Series drivers are installed on the system 
 where the gRPC-device server is running. You will also need LABVIEW and the LABVIEW FPGA 
@@ -15,13 +15,11 @@ For instructions on how to use protoc to generate gRPC client interfaces, see ou
 Client" wiki page:
   https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 
-Run from command line as we need to pass Resource Name:
-
 Server machine's IP address, port number, and resource name can be passed as separate command line
 arguments.
   > python read_write_example.py <server_address> <port_number> <resource_name>
 If they are not passed in as command line arguments, then by default the server address will be
-"localhost:31763", with "" as the resource name.
+"localhost:31763", with "FPGA" as the resource name.
 
 In this example, we specify the number of elements to write to the FIFO and provide 
 a multiplier as input. We then read elements from another FIFO, which contains the multiplied 
@@ -38,15 +36,14 @@ import nifpga_pb2_grpc as grpc_nifpga
 SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
 SESSION_NAME = "NI-FPGA-Session"
+RESOURCE = "FPGA"
 
-RESOURCE = ""
-
-# These values should be configured according to the VI you are using.
-NI_FPGA_EXAMPLE_BITFILE_PATH = "C:\\DemoExample.lvbitx"
-NI_FPGA_EXAMPLE_SIGNATURE = "11F1FF1D11F1FF1F1F111FF11F11F111"
-NiFpga_ExampleVI_ControlI16_multiplier = 0x1000A
-NiFpga_ExampleVI_TargetToHostFifoI16_TestFifoTH = 0
-NiFpga_ExampleVI_HostToTargetFifoI16_TestFifoHT = 1
+# Configure these values.
+EXAMPLE_BITFILE_PATH = "C:\\DemoExample.lvbitx"
+EXAMPLE_SIGNATURE = "11F1FF1D11F1FF1F1F111FF11F11F111"
+EXAMPLE_NUMERIC_CONTROL = 0x1000A
+EXAMPLE_HOST_TO_TARGET_FIFO = 0
+EXAMPLE_HOST_TO_TARGET = 1
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -71,8 +68,8 @@ try:
     open_session_response = client.Open(
         nifpga_types.OpenRequest(
             session_name=SESSION_NAME,
-            bitfile=NI_FPGA_EXAMPLE_BITFILE_PATH,
-            signature=NI_FPGA_EXAMPLE_SIGNATURE,
+            bitfile=EXAMPLE_BITFILE_PATH,
+            signature=EXAMPLE_SIGNATURE,
             resource=RESOURCE,
             attribute_mapped=nifpga_types.OpenAttribute.OPEN_ATTRIBUTE_NO_RUN,
         )
@@ -110,7 +107,7 @@ try:
     i16_write_response = client.WriteI16(
         nifpga_types.WriteI16Request(
             session=new_session,
-            control=NiFpga_ExampleVI_ControlI16_multiplier,
+            control=EXAMPLE_NUMERIC_CONTROL,
             value=multiplier_input,
         )
     )
@@ -118,7 +115,7 @@ try:
     writefifoi16_response = client.WriteFifoI16(
         nifpga_types.WriteFifoI16Request(
             session=new_session,
-            fifo=NiFpga_ExampleVI_HostToTargetFifoI16_TestFifoHT,
+            fifo=EXAMPLE_HOST_TO_TARGET,
             data=random_numbers,
             timeout=InfiniteTimeout,
         )
@@ -128,7 +125,7 @@ try:
     readfifoi16_response = client.ReadFifoI16(
         nifpga_types.ReadFifoI16Request(
             session=new_session,
-            fifo=NiFpga_ExampleVI_TargetToHostFifoI16_TestFifoTH,
+            fifo=EXAMPLE_HOST_TO_TARGET_FIFO,
             number_of_elements=user_input,
             timeout=InfiniteTimeout,
         )

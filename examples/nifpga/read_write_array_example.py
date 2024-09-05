@@ -5,7 +5,7 @@ The gRPC API is built from the C API. NI-FPGA documentation is installed with th
 
 Getting Started:
 
-To run this example, you need to provide the correct file path and bitfile signature.
+To run this example with your VI, you need to configure the values below.
 Additionally, ensure you have a VI that includes arrays and update the references for them below.
 Make sure the R-Series drivers are installed on the system where the gRPC-device server is running.
 You will also need LABVIEW and the LABVIEW FPGA module to configure the VIs.
@@ -14,13 +14,11 @@ For instructions on how to use protoc to generate gRPC client interfaces, see ou
 Client" wiki page:
   https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 
-Run from command line as we need to pass Resource Name:
-
 Server machine's IP address, port number, and resource name can be passed as separate command line
 arguments.
   > python read_write_example.py <server_address> <port_number> <resource_name>
 If they are not passed in as command line arguments, then by default the server address will be
-"localhost:31763", with "" as the resource name.
+"localhost:31763", with "FPGA" as the resource name.
 
 This example attempts to read and write values to an array.
 """
@@ -34,14 +32,13 @@ import nifpga_pb2_grpc as grpc_nifpga
 SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
 SESSION_NAME = "NI-FPGA-Session"
+RESOURCE = "FPGA"
 
-RESOURCE = ""
-
-# These values should be configured according to the VI you are using.
+# Configure these values.
 NI_FPGA_EXAMPLE_BITFILE_PATH = "C:\\DemoExample.lvbitx"
 NI_FPGA_EXAMPLE_SIGNATURE = "11F1FF1D11F1FF1F1F111FF11F11F111"
-NiFpga_ExampleVI_ControlArrayI32_Array = 0x10004
-NiFpga_ExampleVI_ControlArrayI32Size_Array = 4
+EXAMPLE_ARRAY_CONTROL = 0x10004
+EXAMPLE_ARRAY_CONTROL_SIZE = 4
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -86,7 +83,7 @@ try:
     updated_array = [1, -221, -1111, -21]
     writei32_array_response = client.WriteArrayI32(
         nifpga_types.WriteArrayI32Request(
-            session=new_session, control=NiFpga_ExampleVI_ControlArrayI32_Array, array=updated_array
+            session=new_session, control=EXAMPLE_ARRAY_CONTROL, array=updated_array
         )
     )
     check_for_warning(writei32_array_response)
@@ -94,8 +91,8 @@ try:
     readi32_array_response = client.ReadArrayI32(
         nifpga_types.ReadArrayI32Request(
             session=new_session,
-            indicator=NiFpga_ExampleVI_ControlArrayI32_Array,
-            size=NiFpga_ExampleVI_ControlArrayI32Size_Array,
+            indicator=EXAMPLE_ARRAY_CONTROL,
+            size=EXAMPLE_ARRAY_CONTROL_SIZE,
         )
     )
     print(f"Update array value: {readi32_array_response.array}\n")
