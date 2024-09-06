@@ -1,4 +1,4 @@
-r""" Read and Write to indicators, controls, Arrays and FIFO.
+r""" Read and Write to controls and FIFO.
 
 The gRPC API is built from the C API. NI-FPGA documentation is installed with the driver at:
     C:\Program Files (x86)\National Instruments\FPGA Interface C API\capi.chm
@@ -42,8 +42,8 @@ RESOURCE = "FPGA"
 EXAMPLE_BITFILE_PATH = "C:\\DemoExample.lvbitx"
 EXAMPLE_SIGNATURE = "11F1FF1D11F1FF1F1F111FF11F11F111"
 EXAMPLE_NUMERIC_CONTROL = 0x1000A
-EXAMPLE_HOST_TO_TARGET_FIFO = 0
-EXAMPLE_HOST_TO_TARGET = 1
+EXAMPLE_TARGET_TO_HOST_FIFO = 0
+EXAMPLE_HOST_TO_TARGET_FIFO = 1
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -115,7 +115,7 @@ try:
     writefifoi16_response = client.WriteFifoI16(
         nifpga_types.WriteFifoI16Request(
             session=new_session,
-            fifo=EXAMPLE_HOST_TO_TARGET,
+            fifo=EXAMPLE_HOST_TO_TARGET_FIFO,
             data=random_numbers,
             timeout=InfiniteTimeout,
         )
@@ -125,7 +125,7 @@ try:
     readfifoi16_response = client.ReadFifoI16(
         nifpga_types.ReadFifoI16Request(
             session=new_session,
-            fifo=EXAMPLE_HOST_TO_TARGET_FIFO,
+            fifo=EXAMPLE_TARGET_TO_HOST_FIFO,
             number_of_elements=user_input,
             timeout=InfiniteTimeout,
         )

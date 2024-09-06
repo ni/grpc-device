@@ -1,4 +1,4 @@
-r""" Read and Write to indicators, controls, Arrays and FIFO.
+r""" Read and Write to Arrays.
 
 The gRPC API is built from the C API. NI-FPGA documentation is installed with the driver at:
     C:\Program Files (x86)\National Instruments\FPGA Interface C API\capi.chm
@@ -95,7 +95,7 @@ try:
             size=EXAMPLE_ARRAY_CONTROL_SIZE,
         )
     )
-    print(f"Update array value: {readi32_array_response.array}\n")
+    print(f"Updated array value: {readi32_array_response.array}\n")
 
     abort_response = client.Abort(nifpga_types.AbortRequest(session=new_session))
     check_for_warning(abort_response)
