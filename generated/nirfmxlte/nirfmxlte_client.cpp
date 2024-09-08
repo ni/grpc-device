@@ -3539,6 +3539,44 @@ mod_acc_fetch_in_band_emission_trace(const StubPtr& stub, const nidevice_grpc::S
   return response;
 }
 
+ModAccFetchMaximumEVMHighPerSymbolTraceResponse
+mod_acc_fetch_maximum_evm_high_per_symbol_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchMaximumEVMHighPerSymbolTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchMaximumEVMHighPerSymbolTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchMaximumEVMHighPerSymbolTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchMaximumEVMLowPerSymbolTraceResponse
+mod_acc_fetch_maximum_evm_low_per_symbol_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchMaximumEVMLowPerSymbolTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchMaximumEVMLowPerSymbolTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchMaximumEVMLowPerSymbolTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchMaximumEVMPerSlotTraceResponse
 mod_acc_fetch_maximum_evm_per_slot_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

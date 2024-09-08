@@ -190,6 +190,8 @@ NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.ModAccFetchInBandEmissionMargin = reinterpret_cast<ModAccFetchInBandEmissionMarginPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchInBandEmissionMargin"));
   function_pointers_.ModAccFetchInBandEmissionMarginArray = reinterpret_cast<ModAccFetchInBandEmissionMarginArrayPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchInBandEmissionMarginArray"));
   function_pointers_.ModAccFetchInBandEmissionTrace = reinterpret_cast<ModAccFetchInBandEmissionTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchInBandEmissionTrace"));
+  function_pointers_.ModAccFetchMaximumEVMHighPerSymbolTrace = reinterpret_cast<ModAccFetchMaximumEVMHighPerSymbolTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchMaximumEVMHighPerSymbolTrace"));
+  function_pointers_.ModAccFetchMaximumEVMLowPerSymbolTrace = reinterpret_cast<ModAccFetchMaximumEVMLowPerSymbolTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchMaximumEVMLowPerSymbolTrace"));
   function_pointers_.ModAccFetchMaximumEVMPerSlotTrace = reinterpret_cast<ModAccFetchMaximumEVMPerSlotTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchMaximumEVMPerSlotTrace"));
   function_pointers_.ModAccFetchMaximumEVMPerSubcarrierTrace = reinterpret_cast<ModAccFetchMaximumEVMPerSubcarrierTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchMaximumEVMPerSubcarrierTrace"));
   function_pointers_.ModAccFetchMaximumEVMPerSymbolTrace = reinterpret_cast<ModAccFetchMaximumEVMPerSymbolTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchMaximumEVMPerSymbolTrace"));
@@ -1635,6 +1637,22 @@ int32 NiRFmxLTELibrary::ModAccFetchInBandEmissionTrace(niRFmxInstrHandle instrum
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchInBandEmissionTrace.");
   }
   return function_pointers_.ModAccFetchInBandEmissionTrace(instrumentHandle, selectorString, timeout, x0, dx, inBandEmission, inBandEmissionMask, arraySize, actualArraySize);
+}
+
+int32 NiRFmxLTELibrary::ModAccFetchMaximumEVMHighPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMHighPerSymbol[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMaximumEVMHighPerSymbolTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchMaximumEVMHighPerSymbolTrace.");
+  }
+  return function_pointers_.ModAccFetchMaximumEVMHighPerSymbolTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumEVMHighPerSymbol, arraySize, actualArraySize);
+}
+
+int32 NiRFmxLTELibrary::ModAccFetchMaximumEVMLowPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMLowPerSymbol[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchMaximumEVMLowPerSymbolTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchMaximumEVMLowPerSymbolTrace.");
+  }
+  return function_pointers_.ModAccFetchMaximumEVMLowPerSymbolTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumEVMLowPerSymbol, arraySize, actualArraySize);
 }
 
 int32 NiRFmxLTELibrary::ModAccFetchMaximumEVMPerSlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMPerSlot[], int32 arraySize, int32* actualArraySize)
