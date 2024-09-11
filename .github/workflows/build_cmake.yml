@@ -74,6 +74,7 @@ jobs:
       run: >
         cmake
         --build build
+        --clean-first
         --config ${{ matrix.config.build_type }}
         -j ${{ steps.cpu-cores.outputs.count }}
 
