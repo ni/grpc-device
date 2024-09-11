@@ -70,10 +70,14 @@ jobs:
         -D CMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
         ${{ matrix.config.cmake_generator }}
 
+    # It is preferable to do a clean build to ensure all object files are
+    # deleted and then rebuilt from scratch, which can help resolve
+    # inconsistencies and errors.
     - name: Build
       run: >
         cmake
         --build build
+        --clean-first
         --config ${{ matrix.config.build_type }}
         -j ${{ steps.cpu-cores.outputs.count }}
 
