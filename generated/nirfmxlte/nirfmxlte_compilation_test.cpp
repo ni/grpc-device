@@ -822,6 +822,16 @@ int32 ModAccFetchInBandEmissionTrace(niRFmxInstrHandle instrumentHandle, char se
   return RFmxLTE_ModAccFetchInBandEmissionTrace(instrumentHandle, selectorString, timeout, x0, dx, inBandEmission, inBandEmissionMask, arraySize, actualArraySize);
 }
 
+int32 ModAccFetchMaximumEVMHighPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMHighPerSymbol[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxLTE_ModAccFetchMaximumEVMHighPerSymbolTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumEVMHighPerSymbol, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchMaximumEVMLowPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMLowPerSymbol[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxLTE_ModAccFetchMaximumEVMLowPerSymbolTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumEVMLowPerSymbol, arraySize, actualArraySize);
+}
+
 int32 ModAccFetchMaximumEVMPerSlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMPerSlot[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxLTE_ModAccFetchMaximumEVMPerSlotTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumEVMPerSlot, arraySize, actualArraySize);

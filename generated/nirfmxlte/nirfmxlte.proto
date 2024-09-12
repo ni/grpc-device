@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXLTE API metadata version 24.5.0
+// This file is generated from NI-RFMXLTE API metadata version 24.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXLTE Metadata
 //---------------------------------------------------------------------
@@ -180,6 +180,8 @@ service NiRFmxLTE {
   rpc ModAccFetchInBandEmissionMargin(ModAccFetchInBandEmissionMarginRequest) returns (ModAccFetchInBandEmissionMarginResponse);
   rpc ModAccFetchInBandEmissionMarginArray(ModAccFetchInBandEmissionMarginArrayRequest) returns (ModAccFetchInBandEmissionMarginArrayResponse);
   rpc ModAccFetchInBandEmissionTrace(ModAccFetchInBandEmissionTraceRequest) returns (ModAccFetchInBandEmissionTraceResponse);
+  rpc ModAccFetchMaximumEVMHighPerSymbolTrace(ModAccFetchMaximumEVMHighPerSymbolTraceRequest) returns (ModAccFetchMaximumEVMHighPerSymbolTraceResponse);
+  rpc ModAccFetchMaximumEVMLowPerSymbolTrace(ModAccFetchMaximumEVMLowPerSymbolTraceRequest) returns (ModAccFetchMaximumEVMLowPerSymbolTraceResponse);
   rpc ModAccFetchMaximumEVMPerSlotTrace(ModAccFetchMaximumEVMPerSlotTraceRequest) returns (ModAccFetchMaximumEVMPerSlotTraceResponse);
   rpc ModAccFetchMaximumEVMPerSubcarrierTrace(ModAccFetchMaximumEVMPerSubcarrierTraceRequest) returns (ModAccFetchMaximumEVMPerSubcarrierTraceResponse);
   rpc ModAccFetchMaximumEVMPerSymbolTrace(ModAccFetchMaximumEVMPerSymbolTraceRequest) returns (ModAccFetchMaximumEVMPerSymbolTraceResponse);
@@ -3558,6 +3560,34 @@ message ModAccFetchInBandEmissionTraceResponse {
   repeated float in_band_emission = 4;
   repeated float in_band_emission_mask = 5;
   int32 actual_array_size = 6;
+}
+
+message ModAccFetchMaximumEVMHighPerSymbolTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchMaximumEVMHighPerSymbolTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float maximum_evm_high_per_symbol = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchMaximumEVMLowPerSymbolTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchMaximumEVMLowPerSymbolTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float maximum_evm_low_per_symbol = 4;
+  int32 actual_array_size = 5;
 }
 
 message ModAccFetchMaximumEVMPerSlotTraceRequest {
