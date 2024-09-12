@@ -2779,6 +2779,17 @@ int32 __stdcall RFmxLTE_ModAccFetchEVMHighPerSymbolTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxLTE_ModAccFetchMaximumEVMHighPerSymbolTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 maximumEVMHighPerSymbol[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxLTE_ModAccFetchEVMLowPerSymbolTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2786,6 +2797,17 @@ int32 __stdcall RFmxLTE_ModAccFetchEVMLowPerSymbolTrace(
    float64* x0,
    float64* dx,
    float32 EVMLowPerSymbol[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxLTE_ModAccFetchMaximumEVMLowPerSymbolTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 maximumEVMLowPerSymbol[],
    int32 arraySize,
    int32* actualArraySize
 );

@@ -207,6 +207,8 @@ public:
   ::grpc::Status ModAccFetchInBandEmissionMargin(::grpc::ServerContext* context, const ModAccFetchInBandEmissionMarginRequest* request, ModAccFetchInBandEmissionMarginResponse* response) override;
   ::grpc::Status ModAccFetchInBandEmissionMarginArray(::grpc::ServerContext* context, const ModAccFetchInBandEmissionMarginArrayRequest* request, ModAccFetchInBandEmissionMarginArrayResponse* response) override;
   ::grpc::Status ModAccFetchInBandEmissionTrace(::grpc::ServerContext* context, const ModAccFetchInBandEmissionTraceRequest* request, ModAccFetchInBandEmissionTraceResponse* response) override;
+  ::grpc::Status ModAccFetchMaximumEVMHighPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMHighPerSymbolTraceRequest* request, ModAccFetchMaximumEVMHighPerSymbolTraceResponse* response) override;
+  ::grpc::Status ModAccFetchMaximumEVMLowPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMLowPerSymbolTraceRequest* request, ModAccFetchMaximumEVMLowPerSymbolTraceResponse* response) override;
   ::grpc::Status ModAccFetchMaximumEVMPerSlotTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSlotTraceRequest* request, ModAccFetchMaximumEVMPerSlotTraceResponse* response) override;
   ::grpc::Status ModAccFetchMaximumEVMPerSubcarrierTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSubcarrierTraceRequest* request, ModAccFetchMaximumEVMPerSubcarrierTraceResponse* response) override;
   ::grpc::Status ModAccFetchMaximumEVMPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSymbolTraceRequest* request, ModAccFetchMaximumEVMPerSymbolTraceResponse* response) override;

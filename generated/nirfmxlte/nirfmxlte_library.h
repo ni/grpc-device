@@ -184,6 +184,8 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   int32 ModAccFetchInBandEmissionMargin(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* inBandEmissionMargin) override;
   int32 ModAccFetchInBandEmissionMarginArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 inBandEmissionMargin[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchInBandEmissionTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 inBandEmission[], float32 inBandEmissionMask[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchMaximumEVMHighPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMHighPerSymbol[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchMaximumEVMLowPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMLowPerSymbol[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchMaximumEVMPerSlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMPerSlot[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchMaximumEVMPerSubcarrierTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMPerSubcarrier[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchMaximumEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumEVMPerSymbol[], int32 arraySize, int32* actualArraySize) override;
@@ -479,6 +481,8 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   using ModAccFetchInBandEmissionMarginPtr = decltype(&RFmxLTE_ModAccFetchInBandEmissionMargin);
   using ModAccFetchInBandEmissionMarginArrayPtr = decltype(&RFmxLTE_ModAccFetchInBandEmissionMarginArray);
   using ModAccFetchInBandEmissionTracePtr = decltype(&RFmxLTE_ModAccFetchInBandEmissionTrace);
+  using ModAccFetchMaximumEVMHighPerSymbolTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumEVMHighPerSymbolTrace);
+  using ModAccFetchMaximumEVMLowPerSymbolTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumEVMLowPerSymbolTrace);
   using ModAccFetchMaximumEVMPerSlotTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumEVMPerSlotTrace);
   using ModAccFetchMaximumEVMPerSubcarrierTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumEVMPerSubcarrierTrace);
   using ModAccFetchMaximumEVMPerSymbolTracePtr = decltype(&RFmxLTE_ModAccFetchMaximumEVMPerSymbolTrace);
@@ -774,6 +778,8 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     ModAccFetchInBandEmissionMarginPtr ModAccFetchInBandEmissionMargin;
     ModAccFetchInBandEmissionMarginArrayPtr ModAccFetchInBandEmissionMarginArray;
     ModAccFetchInBandEmissionTracePtr ModAccFetchInBandEmissionTrace;
+    ModAccFetchMaximumEVMHighPerSymbolTracePtr ModAccFetchMaximumEVMHighPerSymbolTrace;
+    ModAccFetchMaximumEVMLowPerSymbolTracePtr ModAccFetchMaximumEVMLowPerSymbolTrace;
     ModAccFetchMaximumEVMPerSlotTracePtr ModAccFetchMaximumEVMPerSlotTrace;
     ModAccFetchMaximumEVMPerSubcarrierTracePtr ModAccFetchMaximumEVMPerSubcarrierTrace;
     ModAccFetchMaximumEVMPerSymbolTracePtr ModAccFetchMaximumEVMPerSymbolTrace;

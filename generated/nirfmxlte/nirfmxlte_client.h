@@ -185,6 +185,8 @@ ModAccFetchIQImpairmentsArrayResponse mod_acc_fetch_iq_impairments_array(const S
 ModAccFetchInBandEmissionMarginResponse mod_acc_fetch_in_band_emission_margin(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchInBandEmissionMarginArrayResponse mod_acc_fetch_in_band_emission_margin_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchInBandEmissionTraceResponse mod_acc_fetch_in_band_emission_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+ModAccFetchMaximumEVMHighPerSymbolTraceResponse mod_acc_fetch_maximum_evm_high_per_symbol_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+ModAccFetchMaximumEVMLowPerSymbolTraceResponse mod_acc_fetch_maximum_evm_low_per_symbol_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchMaximumEVMPerSlotTraceResponse mod_acc_fetch_maximum_evm_per_slot_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchMaximumEVMPerSubcarrierTraceResponse mod_acc_fetch_maximum_evm_per_subcarrier_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchMaximumEVMPerSymbolTraceResponse mod_acc_fetch_maximum_evm_per_symbol_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);

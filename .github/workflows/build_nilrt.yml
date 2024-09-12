@@ -96,7 +96,7 @@ jobs:
             -S .
             -B build
             -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
-            -D CMAKE_TOOLCHAIN_FILE=$ENV{GITHUB_WORKSPACE}/cmake/nilrt-x86_64.cmake
+            -D USE_NILRT_LEGACY_TOOLCHAIN=on
           RESULT_VARIABLE result
         )
         if (NOT result EQUAL 0)

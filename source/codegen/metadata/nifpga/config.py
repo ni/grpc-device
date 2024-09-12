@@ -10,7 +10,7 @@ config = {
     'namespace_component': 'nifpga',
     'init_function': 'Open',
     'close_function': 'Close',
-    'code_readiness': 'NextRelease',
+    'code_readiness': 'Release',
     'driver_name': 'NI-FPGA',
     'status_ok': 'status >= 0',
     'resource_handle_type': ['NiFpga_Session'],
