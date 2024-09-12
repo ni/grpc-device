@@ -762,6 +762,7 @@ set(system_test_runner_sources
   "source/tests/system/nidmm_session_tests.cpp"
   "source/tests/system/nifgen_driver_api_tests.cpp"
   "source/tests/system/nifgen_session_tests.cpp"
+  "source/tests/system/nifpga_session_tests.cpp"
   "source/tests/system/nirfsa_driver_api_tests.cpp"
   "source/tests/system/nirfsg_driver_api_tests.cpp"
   "source/tests/system/nirfsg_restricted_driver_api_tests.cpp"
