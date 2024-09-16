@@ -62,6 +62,7 @@ service NiRFmxSpecAn {
   rpc AMPMCfgMeasurementSampleRate(AMPMCfgMeasurementSampleRateRequest) returns (AMPMCfgMeasurementSampleRateResponse);
   rpc AMPMCfgReferencePowerType(AMPMCfgReferencePowerTypeRequest) returns (AMPMCfgReferencePowerTypeResponse);
   rpc AMPMCfgReferenceWaveform(AMPMCfgReferenceWaveformRequest) returns (AMPMCfgReferenceWaveformResponse);
+  rpc AMPMCfgReferenceWaveformSplit(AMPMCfgReferenceWaveformSplitRequest) returns (AMPMCfgReferenceWaveformSplitResponse);
   rpc AMPMCfgSynchronizationMethod(AMPMCfgSynchronizationMethodRequest) returns (AMPMCfgSynchronizationMethodResponse);
   rpc AMPMCfgThreshold(AMPMCfgThresholdRequest) returns (AMPMCfgThresholdResponse);
   rpc AMPMFetchAMToAMTrace(AMPMFetchAMToAMTraceRequest) returns (AMPMFetchAMToAMTraceResponse);
@@ -72,11 +73,14 @@ service NiRFmxSpecAn {
   rpc AMPMFetchDUTCharacteristics(AMPMFetchDUTCharacteristicsRequest) returns (AMPMFetchDUTCharacteristicsResponse);
   rpc AMPMFetchError(AMPMFetchErrorRequest) returns (AMPMFetchErrorResponse);
   rpc AMPMFetchProcessedMeanAcquiredWaveform(AMPMFetchProcessedMeanAcquiredWaveformRequest) returns (AMPMFetchProcessedMeanAcquiredWaveformResponse);
+  rpc AMPMFetchProcessedMeanAcquiredWaveformSplit(AMPMFetchProcessedMeanAcquiredWaveformSplitRequest) returns (AMPMFetchProcessedMeanAcquiredWaveformSplitResponse);
   rpc AMPMFetchProcessedReferenceWaveform(AMPMFetchProcessedReferenceWaveformRequest) returns (AMPMFetchProcessedReferenceWaveformResponse);
+  rpc AMPMFetchProcessedReferenceWaveformSplit(AMPMFetchProcessedReferenceWaveformSplitRequest) returns (AMPMFetchProcessedReferenceWaveformSplitResponse);
   rpc AMPMFetchRelativePhaseTrace(AMPMFetchRelativePhaseTraceRequest) returns (AMPMFetchRelativePhaseTraceResponse);
   rpc AMPMFetchRelativePowerTrace(AMPMFetchRelativePowerTraceRequest) returns (AMPMFetchRelativePowerTraceResponse);
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildCarrierString(BuildCarrierStringRequest) returns (BuildCarrierStringResponse);
@@ -136,12 +140,16 @@ service NiRFmxSpecAn {
   rpc CreateListStep(CreateListStepRequest) returns (CreateListStepResponse);
   rpc CreateSignalConfiguration(CreateSignalConfigurationRequest) returns (CreateSignalConfigurationResponse);
   rpc DPDApplyDigitalPredistortion(DPDApplyDigitalPredistortionRequest) returns (DPDApplyDigitalPredistortionResponse);
+  rpc DPDApplyDigitalPredistortionSplit(DPDApplyDigitalPredistortionSplitRequest) returns (DPDApplyDigitalPredistortionSplitResponse);
   rpc DPDApplyPreDPDSignalConditioning(DPDApplyPreDPDSignalConditioningRequest) returns (DPDApplyPreDPDSignalConditioningResponse);
+  rpc DPDApplyPreDPDSignalConditioningSplit(DPDApplyPreDPDSignalConditioningSplitRequest) returns (DPDApplyPreDPDSignalConditioningSplitResponse);
   rpc DPDCfgApplyDPDConfigurationInput(DPDCfgApplyDPDConfigurationInputRequest) returns (DPDCfgApplyDPDConfigurationInputResponse);
   rpc DPDCfgApplyDPDLookupTableCorrectionType(DPDCfgApplyDPDLookupTableCorrectionTypeRequest) returns (DPDCfgApplyDPDLookupTableCorrectionTypeResponse);
   rpc DPDCfgApplyDPDMemoryModelCorrectionType(DPDCfgApplyDPDMemoryModelCorrectionTypeRequest) returns (DPDCfgApplyDPDMemoryModelCorrectionTypeResponse);
   rpc DPDCfgApplyDPDUserDPDPolynomial(DPDCfgApplyDPDUserDPDPolynomialRequest) returns (DPDCfgApplyDPDUserDPDPolynomialResponse);
+  rpc DPDCfgApplyDPDUserDPDPolynomialSplit(DPDCfgApplyDPDUserDPDPolynomialSplitRequest) returns (DPDCfgApplyDPDUserDPDPolynomialSplitResponse);
   rpc DPDCfgApplyDPDUserLookupTable(DPDCfgApplyDPDUserLookupTableRequest) returns (DPDCfgApplyDPDUserLookupTableResponse);
+  rpc DPDCfgApplyDPDUserLookupTableSplit(DPDCfgApplyDPDUserLookupTableSplitRequest) returns (DPDCfgApplyDPDUserLookupTableSplitResponse);
   rpc DPDCfgAveraging(DPDCfgAveragingRequest) returns (DPDCfgAveragingResponse);
   rpc DPDCfgDPDModel(DPDCfgDPDModelRequest) returns (DPDCfgDPDModelResponse);
   rpc DPDCfgDUTAverageInputPower(DPDCfgDUTAverageInputPowerRequest) returns (DPDCfgDUTAverageInputPowerResponse);
@@ -156,17 +164,25 @@ service NiRFmxSpecAn {
   rpc DPDCfgMeasurementSampleRate(DPDCfgMeasurementSampleRateRequest) returns (DPDCfgMeasurementSampleRateResponse);
   rpc DPDCfgMemoryPolynomial(DPDCfgMemoryPolynomialRequest) returns (DPDCfgMemoryPolynomialResponse);
   rpc DPDCfgPreviousDPDPolynomial(DPDCfgPreviousDPDPolynomialRequest) returns (DPDCfgPreviousDPDPolynomialResponse);
+  rpc DPDCfgPreviousDPDPolynomialSplit(DPDCfgPreviousDPDPolynomialSplitRequest) returns (DPDCfgPreviousDPDPolynomialSplitResponse);
   rpc DPDCfgReferenceWaveform(DPDCfgReferenceWaveformRequest) returns (DPDCfgReferenceWaveformResponse);
+  rpc DPDCfgReferenceWaveformSplit(DPDCfgReferenceWaveformSplitRequest) returns (DPDCfgReferenceWaveformSplitResponse);
   rpc DPDCfgSynchronizationMethod(DPDCfgSynchronizationMethodRequest) returns (DPDCfgSynchronizationMethodResponse);
   rpc DPDCfgTargetWaveform(DPDCfgTargetWaveformRequest) returns (DPDCfgTargetWaveformResponse);
+  rpc DPDCfgTargetWaveformSplit(DPDCfgTargetWaveformSplitRequest) returns (DPDCfgTargetWaveformSplitResponse);
   rpc DPDFetchApplyDPDPreCFRPAPR(DPDFetchApplyDPDPreCFRPAPRRequest) returns (DPDFetchApplyDPDPreCFRPAPRResponse);
   rpc DPDFetchAverageGain(DPDFetchAverageGainRequest) returns (DPDFetchAverageGainResponse);
   rpc DPDFetchDPDPolynomial(DPDFetchDPDPolynomialRequest) returns (DPDFetchDPDPolynomialResponse);
+  rpc DPDFetchDPDPolynomialSplit(DPDFetchDPDPolynomialSplitRequest) returns (DPDFetchDPDPolynomialSplitResponse);
   rpc DPDFetchDVRModel(DPDFetchDVRModelRequest) returns (DPDFetchDVRModelResponse);
+  rpc DPDFetchDVRModelSplit(DPDFetchDVRModelSplitRequest) returns (DPDFetchDVRModelSplitResponse);
   rpc DPDFetchLookupTable(DPDFetchLookupTableRequest) returns (DPDFetchLookupTableResponse);
+  rpc DPDFetchLookupTableSplit(DPDFetchLookupTableSplitRequest) returns (DPDFetchLookupTableSplitResponse);
   rpc DPDFetchNMSE(DPDFetchNMSERequest) returns (DPDFetchNMSEResponse);
   rpc DPDFetchProcessedMeanAcquiredWaveform(DPDFetchProcessedMeanAcquiredWaveformRequest) returns (DPDFetchProcessedMeanAcquiredWaveformResponse);
+  rpc DPDFetchProcessedMeanAcquiredWaveformSplit(DPDFetchProcessedMeanAcquiredWaveformSplitRequest) returns (DPDFetchProcessedMeanAcquiredWaveformSplitResponse);
   rpc DPDFetchProcessedReferenceWaveform(DPDFetchProcessedReferenceWaveformRequest) returns (DPDFetchProcessedReferenceWaveformResponse);
+  rpc DPDFetchProcessedReferenceWaveformSplit(DPDFetchProcessedReferenceWaveformSplitRequest) returns (DPDFetchProcessedReferenceWaveformSplitResponse);
   rpc DeleteList(DeleteListRequest) returns (DeleteListResponse);
   rpc DeleteSignalConfiguration(DeleteSignalConfigurationRequest) returns (DeleteSignalConfigurationResponse);
   rpc DisableTrigger(DisableTriggerRequest) returns (DisableTriggerResponse);
@@ -216,13 +232,21 @@ service NiRFmxSpecAn {
   rpc HarmFetchTHD(HarmFetchTHDRequest) returns (HarmFetchTHDResponse);
   rpc HarmRead(HarmReadRequest) returns (HarmReadResponse);
   rpc IDPDCfgEqualizerCoefficients(IDPDCfgEqualizerCoefficientsRequest) returns (IDPDCfgEqualizerCoefficientsResponse);
+  rpc IDPDCfgEqualizerCoefficientsSplit(IDPDCfgEqualizerCoefficientsSplitRequest) returns (IDPDCfgEqualizerCoefficientsSplitResponse);
   rpc IDPDCfgPredistortedWaveform(IDPDCfgPredistortedWaveformRequest) returns (IDPDCfgPredistortedWaveformResponse);
+  rpc IDPDCfgPredistortedWaveformSplit(IDPDCfgPredistortedWaveformSplitRequest) returns (IDPDCfgPredistortedWaveformSplitResponse);
   rpc IDPDCfgReferenceWaveform(IDPDCfgReferenceWaveformRequest) returns (IDPDCfgReferenceWaveformResponse);
+  rpc IDPDCfgReferenceWaveformSplit(IDPDCfgReferenceWaveformSplitRequest) returns (IDPDCfgReferenceWaveformSplitResponse);
   rpc IDPDFetchEqualizerCoefficients(IDPDFetchEqualizerCoefficientsRequest) returns (IDPDFetchEqualizerCoefficientsResponse);
+  rpc IDPDFetchEqualizerCoefficientsSplit(IDPDFetchEqualizerCoefficientsSplitRequest) returns (IDPDFetchEqualizerCoefficientsSplitResponse);
   rpc IDPDFetchPredistortedWaveform(IDPDFetchPredistortedWaveformRequest) returns (IDPDFetchPredistortedWaveformResponse);
+  rpc IDPDFetchPredistortedWaveformSplit(IDPDFetchPredistortedWaveformSplitRequest) returns (IDPDFetchPredistortedWaveformSplitResponse);
   rpc IDPDFetchProcessedMeanAcquiredWaveform(IDPDFetchProcessedMeanAcquiredWaveformRequest) returns (IDPDFetchProcessedMeanAcquiredWaveformResponse);
+  rpc IDPDFetchProcessedMeanAcquiredWaveformSplit(IDPDFetchProcessedMeanAcquiredWaveformSplitRequest) returns (IDPDFetchProcessedMeanAcquiredWaveformSplitResponse);
   rpc IDPDFetchProcessedReferenceWaveform(IDPDFetchProcessedReferenceWaveformRequest) returns (IDPDFetchProcessedReferenceWaveformResponse);
+  rpc IDPDFetchProcessedReferenceWaveformSplit(IDPDFetchProcessedReferenceWaveformSplitRequest) returns (IDPDFetchProcessedReferenceWaveformSplitResponse);
   rpc IDPDGetEqualizerReferenceWaveform(IDPDGetEqualizerReferenceWaveformRequest) returns (IDPDGetEqualizerReferenceWaveformResponse);
+  rpc IDPDGetEqualizerReferenceWaveformSplit(IDPDGetEqualizerReferenceWaveformSplitRequest) returns (IDPDGetEqualizerReferenceWaveformSplitResponse);
   rpc IMCfgAutoIntermodsSetup(IMCfgAutoIntermodsSetupRequest) returns (IMCfgAutoIntermodsSetupResponse);
   rpc IMCfgAveraging(IMCfgAveragingRequest) returns (IMCfgAveragingResponse);
   rpc IMCfgFFT(IMCfgFFTRequest) returns (IMCfgFFTResponse);
@@ -243,6 +267,7 @@ service NiRFmxSpecAn {
   rpc IQCfgAcquisition(IQCfgAcquisitionRequest) returns (IQCfgAcquisitionResponse);
   rpc IQCfgBandwidth(IQCfgBandwidthRequest) returns (IQCfgBandwidthResponse);
   rpc IQFetchData(IQFetchDataRequest) returns (IQFetchDataResponse);
+  rpc IQFetchDataSplit(IQFetchDataSplitRequest) returns (IQFetchDataSplitResponse);
   rpc IQGetRecordsDone(IQGetRecordsDoneRequest) returns (IQGetRecordsDoneResponse);
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
   rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
@@ -3454,6 +3479,27 @@ message AMPMCfgReferenceWaveformResponse {
   int32 status = 1;
 }
 
+message AMPMCfgReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float reference_waveform_i = 5;
+  repeated float reference_waveform_q = 6;
+  oneof idle_duration_present_enum {
+    AmpmReferenceWaveformIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
+  oneof signal_type_enum {
+    AmpmSignalType signal_type = 9;
+    int32 signal_type_raw = 10;
+  }
+}
+
+message AMPMCfgReferenceWaveformSplitResponse {
+  int32 status = 1;
+}
+
 message AMPMCfgSynchronizationMethodRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3591,6 +3637,21 @@ message AMPMFetchProcessedMeanAcquiredWaveformResponse {
   int32 actual_array_size = 5;
 }
 
+message AMPMFetchProcessedMeanAcquiredWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message AMPMFetchProcessedMeanAcquiredWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float processed_mean_acquired_waveform_i = 4;
+  repeated float processed_mean_acquired_waveform_q = 5;
+  int32 actual_array_size = 6;
+}
+
 message AMPMFetchProcessedReferenceWaveformRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3603,6 +3664,21 @@ message AMPMFetchProcessedReferenceWaveformResponse {
   double dx = 3;
   repeated nidevice_grpc.NIComplexNumberF32 processed_reference_waveform = 4;
   int32 actual_array_size = 5;
+}
+
+message AMPMFetchProcessedReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message AMPMFetchProcessedReferenceWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float processed_reference_waveform_i = 4;
+  repeated float processed_reference_waveform_q = 5;
+  int32 actual_array_size = 6;
 }
 
 message AMPMFetchRelativePhaseTraceRequest {
@@ -3653,6 +3729,21 @@ message AnalyzeIQ1WaveformRequest {
 }
 
 message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iqi = 6;
+  repeated float iqq = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeIQ1WaveformSplitResponse {
   int32 status = 1;
 }
 
@@ -4375,6 +4466,31 @@ message DPDApplyDigitalPredistortionResponse {
   double power_offset = 7;
 }
 
+message DPDApplyDigitalPredistortionSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0_in = 3;
+  double dx_in = 4;
+  repeated float waveform_in_i = 5;
+  repeated float waveform_in_q = 6;
+  oneof idle_duration_present_enum {
+    DpdApplyDpdIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
+  double measurement_timeout = 9;
+}
+
+message DPDApplyDigitalPredistortionSplitResponse {
+  int32 status = 1;
+  double x0_out = 2;
+  double dx_out = 3;
+  repeated float waveform_out_i = 4;
+  repeated float waveform_out_q = 5;
+  int32 actual_array_size = 6;
+  double papr = 7;
+  double power_offset = 8;
+}
+
 message DPDApplyPreDPDSignalConditioningRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -4394,6 +4510,29 @@ message DPDApplyPreDPDSignalConditioningResponse {
   repeated nidevice_grpc.NIComplexNumberF32 waveform_out = 4;
   int32 actual_array_size = 5;
   double papr = 6;
+}
+
+message DPDApplyPreDPDSignalConditioningSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0_in = 3;
+  double dx_in = 4;
+  repeated float waveform_in_i = 5;
+  repeated float waveform_in_q = 6;
+  oneof idle_duration_present_enum {
+    DpdApplyDpdIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
+}
+
+message DPDApplyPreDPDSignalConditioningSplitResponse {
+  int32 status = 1;
+  double x0_out = 2;
+  double dx_out = 3;
+  repeated float waveform_out_i = 4;
+  repeated float waveform_out_q = 5;
+  int32 actual_array_size = 6;
+  double papr = 7;
 }
 
 message DPDCfgApplyDPDConfigurationInputRequest {
@@ -4445,6 +4584,17 @@ message DPDCfgApplyDPDUserDPDPolynomialResponse {
   int32 status = 1;
 }
 
+message DPDCfgApplyDPDUserDPDPolynomialSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated float dpd_polynomial_i = 3;
+  repeated float dpd_polynomial_q = 4;
+}
+
+message DPDCfgApplyDPDUserDPDPolynomialSplitResponse {
+  int32 status = 1;
+}
+
 message DPDCfgApplyDPDUserLookupTableRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -4453,6 +4603,18 @@ message DPDCfgApplyDPDUserLookupTableRequest {
 }
 
 message DPDCfgApplyDPDUserLookupTableResponse {
+  int32 status = 1;
+}
+
+message DPDCfgApplyDPDUserLookupTableSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated float lut_input_powers = 3;
+  repeated float lut_complex_gains_i = 4;
+  repeated float lut_complex_gains_q = 5;
+}
+
+message DPDCfgApplyDPDUserLookupTableSplitResponse {
   int32 status = 1;
 }
 
@@ -4635,6 +4797,17 @@ message DPDCfgPreviousDPDPolynomialResponse {
   int32 status = 1;
 }
 
+message DPDCfgPreviousDPDPolynomialSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated float previous_dpd_polynomial_i = 3;
+  repeated float previous_dpd_polynomial_q = 4;
+}
+
+message DPDCfgPreviousDPDPolynomialSplitResponse {
+  int32 status = 1;
+}
+
 message DPDCfgReferenceWaveformRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -4652,6 +4825,27 @@ message DPDCfgReferenceWaveformRequest {
 }
 
 message DPDCfgReferenceWaveformResponse {
+  int32 status = 1;
+}
+
+message DPDCfgReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float reference_waveform_i = 5;
+  repeated float reference_waveform_q = 6;
+  oneof idle_duration_present_enum {
+    DpdReferenceWaveformIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
+  oneof signal_type_enum {
+    DpdSignalType signal_type = 9;
+    int32 signal_type_raw = 10;
+  }
+}
+
+message DPDCfgReferenceWaveformSplitResponse {
   int32 status = 1;
 }
 
@@ -4677,6 +4871,19 @@ message DPDCfgTargetWaveformRequest {
 }
 
 message DPDCfgTargetWaveformResponse {
+  int32 status = 1;
+}
+
+message DPDCfgTargetWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float target_waveform_i = 5;
+  repeated float target_waveform_q = 6;
+}
+
+message DPDCfgTargetWaveformSplitResponse {
   int32 status = 1;
 }
 
@@ -4714,6 +4921,19 @@ message DPDFetchDPDPolynomialResponse {
   int32 actual_array_size = 3;
 }
 
+message DPDFetchDPDPolynomialSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DPDFetchDPDPolynomialSplitResponse {
+  int32 status = 1;
+  repeated float dpd_polynomial_i = 2;
+  repeated float dpd_polynomial_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message DPDFetchDVRModelRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -4724,6 +4944,19 @@ message DPDFetchDVRModelResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 dvr_model = 2;
   int32 actual_array_size = 3;
+}
+
+message DPDFetchDVRModelSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DPDFetchDVRModelSplitResponse {
+  int32 status = 1;
+  repeated float dvr_model_i = 2;
+  repeated float dvr_model_q = 3;
+  int32 actual_array_size = 4;
 }
 
 message DPDFetchLookupTableRequest {
@@ -4737,6 +4970,20 @@ message DPDFetchLookupTableResponse {
   repeated float input_powers = 2;
   repeated nidevice_grpc.NIComplexNumberF32 complex_gains = 3;
   int32 actual_array_size = 4;
+}
+
+message DPDFetchLookupTableSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DPDFetchLookupTableSplitResponse {
+  int32 status = 1;
+  repeated float input_powers = 2;
+  repeated float complex_gains_i = 3;
+  repeated float complex_gains_q = 4;
+  int32 actual_array_size = 5;
 }
 
 message DPDFetchNMSERequest {
@@ -4764,6 +5011,21 @@ message DPDFetchProcessedMeanAcquiredWaveformResponse {
   int32 actual_array_size = 5;
 }
 
+message DPDFetchProcessedMeanAcquiredWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DPDFetchProcessedMeanAcquiredWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float processed_mean_acquired_waveform_i = 4;
+  repeated float processed_mean_acquired_waveform_q = 5;
+  int32 actual_array_size = 6;
+}
+
 message DPDFetchProcessedReferenceWaveformRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -4776,6 +5038,21 @@ message DPDFetchProcessedReferenceWaveformResponse {
   double dx = 3;
   repeated nidevice_grpc.NIComplexNumberF32 processed_reference_waveform = 4;
   int32 actual_array_size = 5;
+}
+
+message DPDFetchProcessedReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DPDFetchProcessedReferenceWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float processed_reference_waveform_i = 4;
+  repeated float processed_reference_waveform_q = 5;
+  int32 actual_array_size = 6;
 }
 
 message DeleteListRequest {
@@ -5384,6 +5661,19 @@ message IDPDCfgEqualizerCoefficientsResponse {
   int32 status = 1;
 }
 
+message IDPDCfgEqualizerCoefficientsSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float equalizer_coefficients_i = 5;
+  repeated float equalizer_coefficients_q = 6;
+}
+
+message IDPDCfgEqualizerCoefficientsSplitResponse {
+  int32 status = 1;
+}
+
 message IDPDCfgPredistortedWaveformRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -5394,6 +5684,20 @@ message IDPDCfgPredistortedWaveformRequest {
 }
 
 message IDPDCfgPredistortedWaveformResponse {
+  int32 status = 1;
+}
+
+message IDPDCfgPredistortedWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float predistorted_waveform_i = 5;
+  repeated float predistorted_waveform_q = 6;
+  double target_gain = 7;
+}
+
+message IDPDCfgPredistortedWaveformSplitResponse {
   int32 status = 1;
 }
 
@@ -5417,6 +5721,27 @@ message IDPDCfgReferenceWaveformResponse {
   int32 status = 1;
 }
 
+message IDPDCfgReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float reference_waveform_i = 5;
+  repeated float reference_waveform_q = 6;
+  oneof idle_duration_present_enum {
+    IdpdReferenceWaveformIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
+  oneof signal_type_enum {
+    IdpdSignalType signal_type = 9;
+    int32 signal_type_raw = 10;
+  }
+}
+
+message IDPDCfgReferenceWaveformSplitResponse {
+  int32 status = 1;
+}
+
 message IDPDFetchEqualizerCoefficientsRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -5429,6 +5754,21 @@ message IDPDFetchEqualizerCoefficientsResponse {
   double dx = 3;
   repeated nidevice_grpc.NIComplexNumberF32 equalizer_coefficients = 4;
   int32 actual_array_size = 5;
+}
+
+message IDPDFetchEqualizerCoefficientsSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IDPDFetchEqualizerCoefficientsSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float equalizer_coefficients_i = 4;
+  repeated float equalizer_coefficients_q = 5;
+  int32 actual_array_size = 6;
 }
 
 message IDPDFetchPredistortedWaveformRequest {
@@ -5448,6 +5788,24 @@ message IDPDFetchPredistortedWaveformResponse {
   int32 actual_array_size = 8;
 }
 
+message IDPDFetchPredistortedWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IDPDFetchPredistortedWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float predistorted_waveform_i = 4;
+  repeated float predistorted_waveform_q = 5;
+  double papr = 6;
+  double power_offset = 7;
+  double gain = 8;
+  int32 actual_array_size = 9;
+}
+
 message IDPDFetchProcessedMeanAcquiredWaveformRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -5460,6 +5818,21 @@ message IDPDFetchProcessedMeanAcquiredWaveformResponse {
   double dx = 3;
   repeated nidevice_grpc.NIComplexNumberF32 processed_mean_acquired_waveform = 4;
   int32 actual_array_size = 5;
+}
+
+message IDPDFetchProcessedMeanAcquiredWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IDPDFetchProcessedMeanAcquiredWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float processed_mean_acquired_waveform_i = 4;
+  repeated float processed_mean_acquired_waveform_q = 5;
+  int32 actual_array_size = 6;
 }
 
 message IDPDFetchProcessedReferenceWaveformRequest {
@@ -5476,6 +5849,21 @@ message IDPDFetchProcessedReferenceWaveformResponse {
   int32 actual_array_size = 5;
 }
 
+message IDPDFetchProcessedReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IDPDFetchProcessedReferenceWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float processed_reference_waveform_i = 4;
+  repeated float processed_reference_waveform_q = 5;
+  int32 actual_array_size = 6;
+}
+
 message IDPDGetEqualizerReferenceWaveformRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -5488,6 +5876,21 @@ message IDPDGetEqualizerReferenceWaveformResponse {
   repeated nidevice_grpc.NIComplexNumberF32 equalizer_reference_waveform = 4;
   double papr = 5;
   int32 actual_array_size = 6;
+}
+
+message IDPDGetEqualizerReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message IDPDGetEqualizerReferenceWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float equalizer_reference_waveform_i = 4;
+  repeated float equalizer_reference_waveform_q = 5;
+  double papr = 6;
+  int32 actual_array_size = 7;
 }
 
 message IMCfgAutoIntermodsSetupRequest {
@@ -5773,6 +6176,23 @@ message IQFetchDataResponse {
   double dt = 3;
   repeated nidevice_grpc.NIComplexNumberF32 data = 4;
   int32 actual_array_size = 5;
+}
+
+message IQFetchDataSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 record_to_fetch = 4;
+  int64 samples_to_read = 5;
+}
+
+message IQFetchDataSplitResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  repeated float data_i = 4;
+  repeated float data_q = 5;
+  int32 actual_array_size = 6;
 }
 
 message IQGetRecordsDoneRequest {

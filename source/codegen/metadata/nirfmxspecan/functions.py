@@ -1434,6 +1434,73 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AMPMCfgReferenceWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'referenceWaveformI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'referenceWaveformQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AmpmReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AmpmSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AMPMCfgSynchronizationMethod': {
         'parameters': [
             {
@@ -1869,6 +1936,67 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AMPMFetchProcessedMeanAcquiredWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveformI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveformQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AMPMFetchProcessedReferenceWaveform': {
         'parameters': [
             {
@@ -1906,6 +2034,67 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AMPMFetchProcessedReferenceWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedReferenceWaveformI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedReferenceWaveformQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -2074,6 +2263,78 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AnalyzeIQ1WaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'iqi',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'iqq',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -3878,6 +4139,122 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDApplyDigitalPredistortionSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0In',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dxIn',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformInI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySizeIn'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformInQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySizeIn'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeIn',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdApplyDpdIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementTimeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0Out',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dxOut',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'waveformOutI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'waveformOutQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeOut',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'papr',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'powerOffset',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDApplyPreDPDSignalConditioning': {
         'parameters': [
             {
@@ -3940,6 +4317,112 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeOut',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'papr',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDApplyPreDPDSignalConditioningSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0In',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dxIn',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformInI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySizeIn'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformInQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySizeIn'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeIn',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdApplyDpdIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0Out',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dxOut',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'waveformOutI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'waveformOutQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -4055,6 +4538,51 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDCfgApplyDPDUserDPDPolynomialSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dpdPolynomialI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dpdPolynomialQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDCfgApplyDPDUserLookupTable': {
         'parameters': [
             {
@@ -4091,6 +4619,63 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDCfgApplyDPDUserLookupTableSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'lutInputPowers',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'lutComplexGainsI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'lutComplexGainsQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -4472,6 +5057,51 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDCfgPreviousDPDPolynomialSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'previousDPDPolynomialI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'previousDPDPolynomialQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDCfgReferenceWaveform': {
         'parameters': [
             {
@@ -4503,6 +5133,73 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDCfgReferenceWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'referenceWaveformI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'referenceWaveformQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -4577,6 +5274,61 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDCfgTargetWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'targetWaveformI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'targetWaveformQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -4680,6 +5432,57 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDFetchDPDPolynomialSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dpdPolynomialI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'dpdPolynomialQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDFetchDVRModel': {
         'parameters': [
             {
@@ -4707,6 +5510,57 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDFetchDVRModelSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dvrModelI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'dvrModelQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -4758,6 +5612,67 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDFetchLookupTableSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'inputPowers',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'complexGainsI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'complexGainsQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -4849,6 +5764,67 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDFetchProcessedMeanAcquiredWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveformI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveformQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDFetchProcessedReferenceWaveform': {
         'parameters': [
             {
@@ -4886,6 +5862,67 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDFetchProcessedReferenceWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedReferenceWaveformI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedReferenceWaveformQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -6624,6 +7661,61 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IDPDCfgEqualizerCoefficientsSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'equalizerCoefficientsI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'equalizerCoefficientsQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IDPDCfgPredistortedWaveform': {
         'parameters': [
             {
@@ -6655,6 +7747,66 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'targetGain',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDCfgPredistortedWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'predistortedWaveformI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'predistortedWaveformQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -6721,6 +7873,73 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IDPDCfgReferenceWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'referenceWaveformI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'referenceWaveformQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'IdpdReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'IdpdSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IDPDFetchEqualizerCoefficients': {
         'parameters': [
             {
@@ -6758,6 +7977,67 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDFetchEqualizerCoefficientsSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'equalizerCoefficientsI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'equalizerCoefficientsQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -6838,6 +8118,82 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IDPDFetchPredistortedWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'predistortedWaveformI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'predistortedWaveformQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'papr',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'powerOffset',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'gain',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IDPDFetchProcessedMeanAcquiredWaveform': {
         'parameters': [
             {
@@ -6875,6 +8231,67 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDFetchProcessedMeanAcquiredWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveformI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveformQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -6940,6 +8357,67 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IDPDFetchProcessedReferenceWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedReferenceWaveformI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'processedReferenceWaveformQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IDPDGetEqualizerReferenceWaveform': {
         'parameters': [
             {
@@ -6972,6 +8450,67 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'papr',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDGetEqualizerReferenceWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'equalizerReferenceWaveformI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'equalizerReferenceWaveformQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'out',
@@ -7761,6 +9300,77 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IQFetchDataSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordToFetch',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'samplesToRead',
+                'type': 'int64'
+            },
+            {
+                'direction': 'out',
+                'name': 't0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dt',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',

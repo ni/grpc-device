@@ -1075,6 +1075,44 @@ ampm_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& i
   return response;
 }
 
+AMPMCfgReferenceWaveformSplitResponse
+ampm_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AMPMCfgReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform_i, request.mutable_reference_waveform_i());
+  copy_array(reference_waveform_q, request.mutable_reference_waveform_q());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<AmpmReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<AmpmSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+
+  auto response = AMPMCfgReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->AMPMCfgReferenceWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AMPMCfgSynchronizationMethodResponse
 ampm_cfg_synchronization_method(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<AmpmSynchronizationMethod, pb::int32>& synchronization_method)
 {
@@ -1288,6 +1326,25 @@ ampm_fetch_processed_mean_acquired_waveform(const StubPtr& stub, const nidevice_
   return response;
 }
 
+AMPMFetchProcessedMeanAcquiredWaveformSplitResponse
+ampm_fetch_processed_mean_acquired_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AMPMFetchProcessedMeanAcquiredWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = AMPMFetchProcessedMeanAcquiredWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->AMPMFetchProcessedMeanAcquiredWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AMPMFetchProcessedReferenceWaveformResponse
 ampm_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -1302,6 +1359,25 @@ ampm_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc
 
   raise_if_error(
       stub->AMPMFetchProcessedReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AMPMFetchProcessedReferenceWaveformSplitResponse
+ampm_fetch_processed_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AMPMFetchProcessedReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = AMPMFetchProcessedReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->AMPMFetchProcessedReferenceWaveformSplit(&context, request, &response),
       context);
 
   return response;
@@ -1381,6 +1457,30 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
 
   raise_if_error(
       stub->AnalyzeIQ1Waveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AnalyzeIQ1WaveformSplitResponse
+analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iqi, request.mutable_iqi());
+  copy_array(iqq, request.mutable_iqq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformSplitResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformSplit(&context, request, &response),
       context);
 
   return response;
@@ -2657,6 +2757,37 @@ dpd_apply_digital_predistortion(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+DPDApplyDigitalPredistortionSplitResponse
+dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present, const double& measurement_timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDApplyDigitalPredistortionSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0_in(x0_in);
+  request.set_dx_in(dx_in);
+  copy_array(waveform_in_i, request.mutable_waveform_in_i());
+  copy_array(waveform_in_q, request.mutable_waveform_in_q());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdApplyDpdIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  request.set_measurement_timeout(measurement_timeout);
+
+  auto response = DPDApplyDigitalPredistortionSplitResponse{};
+
+  raise_if_error(
+      stub->DPDApplyDigitalPredistortionSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDApplyPreDPDSignalConditioningResponse
 dpd_apply_pre_dpd_signal_conditioning(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<nidevice_grpc::NIComplexNumberF32>& waveform_in, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present)
 {
@@ -2681,6 +2812,36 @@ dpd_apply_pre_dpd_signal_conditioning(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->DPDApplyPreDPDSignalConditioning(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDApplyPreDPDSignalConditioningSplitResponse
+dpd_apply_pre_dpd_signal_conditioning_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDApplyPreDPDSignalConditioningSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0_in(x0_in);
+  request.set_dx_in(dx_in);
+  copy_array(waveform_in_i, request.mutable_waveform_in_i());
+  copy_array(waveform_in_q, request.mutable_waveform_in_q());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdApplyDpdIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+
+  auto response = DPDApplyPreDPDSignalConditioningSplitResponse{};
+
+  raise_if_error(
+      stub->DPDApplyPreDPDSignalConditioningSplit(&context, request, &response),
       context);
 
   return response;
@@ -2783,6 +2944,26 @@ dpd_cfg_apply_dpd_user_dpd_polynomial(const StubPtr& stub, const nidevice_grpc::
   return response;
 }
 
+DPDCfgApplyDPDUserDPDPolynomialSplitResponse
+dpd_cfg_apply_dpd_user_dpd_polynomial_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& dpd_polynomial_i, const std::vector<float>& dpd_polynomial_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgApplyDPDUserDPDPolynomialSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(dpd_polynomial_i, request.mutable_dpd_polynomial_i());
+  copy_array(dpd_polynomial_q, request.mutable_dpd_polynomial_q());
+
+  auto response = DPDCfgApplyDPDUserDPDPolynomialSplitResponse{};
+
+  raise_if_error(
+      stub->DPDCfgApplyDPDUserDPDPolynomialSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDCfgApplyDPDUserLookupTableResponse
 dpd_cfg_apply_dpd_user_lookup_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& lut_input_powers, const std::vector<nidevice_grpc::NIComplexNumberF32>& lut_complex_gains)
 {
@@ -2798,6 +2979,27 @@ dpd_cfg_apply_dpd_user_lookup_table(const StubPtr& stub, const nidevice_grpc::Se
 
   raise_if_error(
       stub->DPDCfgApplyDPDUserLookupTable(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDCfgApplyDPDUserLookupTableSplitResponse
+dpd_cfg_apply_dpd_user_lookup_table_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& lut_input_powers, const std::vector<float>& lut_complex_gains_i, const std::vector<float>& lut_complex_gains_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgApplyDPDUserLookupTableSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(lut_input_powers, request.mutable_lut_input_powers());
+  copy_array(lut_complex_gains_i, request.mutable_lut_complex_gains_i());
+  copy_array(lut_complex_gains_q, request.mutable_lut_complex_gains_q());
+
+  auto response = DPDCfgApplyDPDUserLookupTableSplitResponse{};
+
+  raise_if_error(
+      stub->DPDCfgApplyDPDUserLookupTableSplit(&context, request, &response),
       context);
 
   return response;
@@ -3144,6 +3346,26 @@ dpd_cfg_previous_dpd_polynomial(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+DPDCfgPreviousDPDPolynomialSplitResponse
+dpd_cfg_previous_dpd_polynomial_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& previous_dpd_polynomial_i, const std::vector<float>& previous_dpd_polynomial_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgPreviousDPDPolynomialSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(previous_dpd_polynomial_i, request.mutable_previous_dpd_polynomial_i());
+  copy_array(previous_dpd_polynomial_q, request.mutable_previous_dpd_polynomial_q());
+
+  auto response = DPDCfgPreviousDPDPolynomialSplitResponse{};
+
+  raise_if_error(
+      stub->DPDCfgPreviousDPDPolynomialSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDCfgReferenceWaveformResponse
 dpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type)
 {
@@ -3176,6 +3398,44 @@ dpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& in
 
   raise_if_error(
       stub->DPDCfgReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDCfgReferenceWaveformSplitResponse
+dpd_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform_i, request.mutable_reference_waveform_i());
+  copy_array(reference_waveform_q, request.mutable_reference_waveform_q());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<DpdSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+
+  auto response = DPDCfgReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->DPDCfgReferenceWaveformSplit(&context, request, &response),
       context);
 
   return response;
@@ -3223,6 +3483,28 @@ dpd_cfg_target_waveform(const StubPtr& stub, const nidevice_grpc::Session& instr
 
   raise_if_error(
       stub->DPDCfgTargetWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDCfgTargetWaveformSplitResponse
+dpd_cfg_target_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& target_waveform_i, const std::vector<float>& target_waveform_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgTargetWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(target_waveform_i, request.mutable_target_waveform_i());
+  copy_array(target_waveform_q, request.mutable_target_waveform_q());
+
+  auto response = DPDCfgTargetWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->DPDCfgTargetWaveformSplit(&context, request, &response),
       context);
 
   return response;
@@ -3285,6 +3567,25 @@ dpd_fetch_dpd_polynomial(const StubPtr& stub, const nidevice_grpc::Session& inst
   return response;
 }
 
+DPDFetchDPDPolynomialSplitResponse
+dpd_fetch_dpd_polynomial_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchDPDPolynomialSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchDPDPolynomialSplitResponse{};
+
+  raise_if_error(
+      stub->DPDFetchDPDPolynomialSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDFetchDVRModelResponse
 dpd_fetch_dvr_model(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3304,6 +3605,25 @@ dpd_fetch_dvr_model(const StubPtr& stub, const nidevice_grpc::Session& instrumen
   return response;
 }
 
+DPDFetchDVRModelSplitResponse
+dpd_fetch_dvr_model_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchDVRModelSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchDVRModelSplitResponse{};
+
+  raise_if_error(
+      stub->DPDFetchDVRModelSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDFetchLookupTableResponse
 dpd_fetch_lookup_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3318,6 +3638,25 @@ dpd_fetch_lookup_table(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->DPDFetchLookupTable(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDFetchLookupTableSplitResponse
+dpd_fetch_lookup_table_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchLookupTableSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchLookupTableSplitResponse{};
+
+  raise_if_error(
+      stub->DPDFetchLookupTableSplit(&context, request, &response),
       context);
 
   return response;
@@ -3361,6 +3700,25 @@ dpd_fetch_processed_mean_acquired_waveform(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+DPDFetchProcessedMeanAcquiredWaveformSplitResponse
+dpd_fetch_processed_mean_acquired_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchProcessedMeanAcquiredWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchProcessedMeanAcquiredWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->DPDFetchProcessedMeanAcquiredWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDFetchProcessedReferenceWaveformResponse
 dpd_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3375,6 +3733,25 @@ dpd_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc:
 
   raise_if_error(
       stub->DPDFetchProcessedReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDFetchProcessedReferenceWaveformSplitResponse
+dpd_fetch_processed_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchProcessedReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchProcessedReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->DPDFetchProcessedReferenceWaveformSplit(&context, request, &response),
       context);
 
   return response;
@@ -4392,6 +4769,28 @@ idpd_cfg_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+IDPDCfgEqualizerCoefficientsSplitResponse
+idpd_cfg_equalizer_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& equalizer_coefficients_i, const std::vector<float>& equalizer_coefficients_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgEqualizerCoefficientsSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(equalizer_coefficients_i, request.mutable_equalizer_coefficients_i());
+  copy_array(equalizer_coefficients_q, request.mutable_equalizer_coefficients_q());
+
+  auto response = IDPDCfgEqualizerCoefficientsSplitResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgEqualizerCoefficientsSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDCfgPredistortedWaveformResponse
 idpd_cfg_predistorted_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& predistorted_waveform, const double& target_gain)
 {
@@ -4409,6 +4808,29 @@ idpd_cfg_predistorted_waveform(const StubPtr& stub, const nidevice_grpc::Session
 
   raise_if_error(
       stub->IDPDCfgPredistortedWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDCfgPredistortedWaveformSplitResponse
+idpd_cfg_predistorted_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& predistorted_waveform_i, const std::vector<float>& predistorted_waveform_q, const double& target_gain)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgPredistortedWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(predistorted_waveform_i, request.mutable_predistorted_waveform_i());
+  copy_array(predistorted_waveform_q, request.mutable_predistorted_waveform_q());
+  request.set_target_gain(target_gain);
+
+  auto response = IDPDCfgPredistortedWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgPredistortedWaveformSplit(&context, request, &response),
       context);
 
   return response;
@@ -4451,6 +4873,44 @@ idpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& i
   return response;
 }
 
+IDPDCfgReferenceWaveformSplitResponse
+idpd_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q, const simple_variant<IdpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<IdpdSignalType, pb::int32>& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform_i, request.mutable_reference_waveform_i());
+  copy_array(reference_waveform_q, request.mutable_reference_waveform_q());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<IdpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<IdpdSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+
+  auto response = IDPDCfgReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgReferenceWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDFetchEqualizerCoefficientsResponse
 idpd_fetch_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -4465,6 +4925,25 @@ idpd_fetch_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::Sess
 
   raise_if_error(
       stub->IDPDFetchEqualizerCoefficients(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDFetchEqualizerCoefficientsSplitResponse
+idpd_fetch_equalizer_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchEqualizerCoefficientsSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchEqualizerCoefficientsSplitResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchEqualizerCoefficientsSplit(&context, request, &response),
       context);
 
   return response;
@@ -4489,6 +4968,25 @@ idpd_fetch_predistorted_waveform(const StubPtr& stub, const nidevice_grpc::Sessi
   return response;
 }
 
+IDPDFetchPredistortedWaveformSplitResponse
+idpd_fetch_predistorted_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchPredistortedWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchPredistortedWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchPredistortedWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDFetchProcessedMeanAcquiredWaveformResponse
 idpd_fetch_processed_mean_acquired_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -4503,6 +5001,25 @@ idpd_fetch_processed_mean_acquired_waveform(const StubPtr& stub, const nidevice_
 
   raise_if_error(
       stub->IDPDFetchProcessedMeanAcquiredWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDFetchProcessedMeanAcquiredWaveformSplitResponse
+idpd_fetch_processed_mean_acquired_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchProcessedMeanAcquiredWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchProcessedMeanAcquiredWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchProcessedMeanAcquiredWaveformSplit(&context, request, &response),
       context);
 
   return response;
@@ -4527,6 +5044,25 @@ idpd_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc
   return response;
 }
 
+IDPDFetchProcessedReferenceWaveformSplitResponse
+idpd_fetch_processed_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchProcessedReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchProcessedReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchProcessedReferenceWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDGetEqualizerReferenceWaveformResponse
 idpd_get_equalizer_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
@@ -4540,6 +5076,24 @@ idpd_get_equalizer_reference_waveform(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->IDPDGetEqualizerReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDGetEqualizerReferenceWaveformSplitResponse
+idpd_get_equalizer_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDGetEqualizerReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = IDPDGetEqualizerReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->IDPDGetEqualizerReferenceWaveformSplit(&context, request, &response),
       context);
 
   return response;
@@ -5027,6 +5581,27 @@ iq_fetch_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, con
 
   raise_if_error(
       stub->IQFetchData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IQFetchDataSplitResponse
+iq_fetch_data_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& record_to_fetch, const pb::int64& samples_to_read)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IQFetchDataSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+  request.set_record_to_fetch(record_to_fetch);
+  request.set_samples_to_read(samples_to_read);
+
+  auto response = IQFetchDataSplitResponse{};
+
+  raise_if_error(
+      stub->IQFetchDataSplit(&context, request, &response),
       context);
 
   return response;
