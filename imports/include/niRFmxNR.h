@@ -1235,6 +1235,14 @@
 #define RFMXNR_VAL_FALSE                                                                          0
 #define RFMXNR_VAL_TRUE                                                                           1
 
+// Values for FrequencyReferenceSource
+#define RFMXNR_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
+#define RFMXNR_VAL_REF_IN_STR                                                                     "RefIn"
+#define RFMXNR_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
+#define RFMXNR_VAL_CLK_IN_STR                                                                     "ClkIn"
+#define RFMXNR_VAL_REF_IN2_STR                                                                    "RefIn2"
+#define RFMXNR_VAL_PXI_CLK_MASTER_STR                                                             "PXI_Clk_Master"
+
 // Values for RFAttenuationAuto
 #define RFMXNR_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
 #define RFMXNR_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
@@ -1247,14 +1255,6 @@
 #define RFMXNR_VAL_OBW                                                                            1<<4
 #define RFMXNR_VAL_PVT                                                                            1<<5
 #define RFMXNR_VAL_TXP                                                                            1<<6
-
-// Values for FrequencyReferenceSource
-#define RFMXNR_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
-#define RFMXNR_VAL_REF_IN_STR                                                                     "RefIn"
-#define RFMXNR_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
-#define RFMXNR_VAL_CLK_IN_STR                                                                     "ClkIn"
-#define RFMXNR_VAL_REF_IN2_STR                                                                    "RefIn2"
-#define RFMXNR_VAL_PXI_CLK_MASTER_STR                                                             "PXI_Clk_Master"
 
 /* ---------------- RFmxNR APIs ------------------ */
 
@@ -2741,6 +2741,17 @@ int32 __stdcall RFmxNR_ModAccFetchRMSEVMHighPerSymbolMeanTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxNR_ModAccFetchPeakEVMHighPerSymbolMaximumTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 peakEVMHighPerSymbolMaximum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxNR_ModAccFetchRMSEVMLowPerSymbolMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2748,6 +2759,17 @@ int32 __stdcall RFmxNR_ModAccFetchRMSEVMLowPerSymbolMeanTrace(
    float64* x0,
    float64* dx,
    float32 RMSEVMLowPerSymbolMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPeakEVMLowPerSymbolMaximumTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 peakEVMLowPerSymbolMaximum[],
    int32 arraySize,
    int32* actualArraySize
 );
