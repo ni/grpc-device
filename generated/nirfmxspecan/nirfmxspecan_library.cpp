@@ -163,6 +163,8 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.DPDCfgAveraging = reinterpret_cast<DPDCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgAveraging"));
   function_pointers_.DPDCfgDPDModel = reinterpret_cast<DPDCfgDPDModelPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgDPDModel"));
   function_pointers_.DPDCfgDUTAverageInputPower = reinterpret_cast<DPDCfgDUTAverageInputPowerPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgDUTAverageInputPower"));
+  function_pointers_.DPDCfgExtractModelTargetWaveform = reinterpret_cast<DPDCfgExtractModelTargetWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgExtractModelTargetWaveform"));
+  function_pointers_.DPDCfgExtractModelTargetWaveformSplit = reinterpret_cast<DPDCfgExtractModelTargetWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgExtractModelTargetWaveformSplit"));
   function_pointers_.DPDCfgGeneralizedMemoryPolynomialCrossTerms = reinterpret_cast<DPDCfgGeneralizedMemoryPolynomialCrossTermsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgGeneralizedMemoryPolynomialCrossTerms"));
   function_pointers_.DPDCfgIterativeDPDEnabled = reinterpret_cast<DPDCfgIterativeDPDEnabledPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgIterativeDPDEnabled"));
   function_pointers_.DPDCfgLookupTableAMToAMCurveFit = reinterpret_cast<DPDCfgLookupTableAMToAMCurveFitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgLookupTableAMToAMCurveFit"));
@@ -178,8 +180,6 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.DPDCfgReferenceWaveform = reinterpret_cast<DPDCfgReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgReferenceWaveform"));
   function_pointers_.DPDCfgReferenceWaveformSplit = reinterpret_cast<DPDCfgReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgReferenceWaveformSplit"));
   function_pointers_.DPDCfgSynchronizationMethod = reinterpret_cast<DPDCfgSynchronizationMethodPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgSynchronizationMethod"));
-  function_pointers_.DPDCfgTargetWaveform = reinterpret_cast<DPDCfgTargetWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgTargetWaveform"));
-  function_pointers_.DPDCfgTargetWaveformSplit = reinterpret_cast<DPDCfgTargetWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgTargetWaveformSplit"));
   function_pointers_.DPDFetchApplyDPDPreCFRPAPR = reinterpret_cast<DPDFetchApplyDPDPreCFRPAPRPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR"));
   function_pointers_.DPDFetchAverageGain = reinterpret_cast<DPDFetchAverageGainPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchAverageGain"));
   function_pointers_.DPDFetchDPDPolynomial = reinterpret_cast<DPDFetchDPDPolynomialPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDPDPolynomial"));
@@ -1583,6 +1583,22 @@ int32 NiRFmxSpecAnLibrary::DPDCfgDUTAverageInputPower(niRFmxInstrHandle instrume
   return function_pointers_.DPDCfgDUTAverageInputPower(instrumentHandle, selectorString, dutAverageInputPower);
 }
 
+int32 NiRFmxSpecAnLibrary::DPDCfgExtractModelTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize)
+{
+  if (!function_pointers_.DPDCfgExtractModelTargetWaveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgExtractModelTargetWaveform.");
+  }
+  return function_pointers_.DPDCfgExtractModelTargetWaveform(instrumentHandle, selectorString, x0, dx, targetWaveform, arraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::DPDCfgExtractModelTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize)
+{
+  if (!function_pointers_.DPDCfgExtractModelTargetWaveformSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgExtractModelTargetWaveformSplit.");
+  }
+  return function_pointers_.DPDCfgExtractModelTargetWaveformSplit(instrumentHandle, selectorString, x0, dx, targetWaveformI, targetWaveformQ, arraySize);
+}
+
 int32 NiRFmxSpecAnLibrary::DPDCfgGeneralizedMemoryPolynomialCrossTerms(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 memoryPolynomialLeadOrder, int32 memoryPolynomialLagOrder, int32 memoryPolynomialLeadMemoryDepth, int32 memoryPolynomialLagMemoryDepth, int32 memoryPolynomialMaximumLead, int32 memoryPolynomialMaximumLag)
 {
   if (!function_pointers_.DPDCfgGeneralizedMemoryPolynomialCrossTerms) {
@@ -1701,22 +1717,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgSynchronizationMethod(niRFmxInstrHandle instrum
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgSynchronizationMethod.");
   }
   return function_pointers_.DPDCfgSynchronizationMethod(instrumentHandle, selectorString, synchronizationMethod);
-}
-
-int32 NiRFmxSpecAnLibrary::DPDCfgTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize)
-{
-  if (!function_pointers_.DPDCfgTargetWaveform) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgTargetWaveform.");
-  }
-  return function_pointers_.DPDCfgTargetWaveform(instrumentHandle, selectorString, x0, dx, targetWaveform, arraySize);
-}
-
-int32 NiRFmxSpecAnLibrary::DPDCfgTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize)
-{
-  if (!function_pointers_.DPDCfgTargetWaveformSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgTargetWaveformSplit.");
-  }
-  return function_pointers_.DPDCfgTargetWaveformSplit(instrumentHandle, selectorString, x0, dx, targetWaveformI, targetWaveformQ, arraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR)

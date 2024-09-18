@@ -157,6 +157,8 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 DPDCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) override;
   int32 DPDCfgDPDModel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dpdModel) override;
   int32 DPDCfgDUTAverageInputPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutAverageInputPower) override;
+  int32 DPDCfgExtractModelTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize) override;
+  int32 DPDCfgExtractModelTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize) override;
   int32 DPDCfgGeneralizedMemoryPolynomialCrossTerms(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 memoryPolynomialLeadOrder, int32 memoryPolynomialLagOrder, int32 memoryPolynomialLeadMemoryDepth, int32 memoryPolynomialLagMemoryDepth, int32 memoryPolynomialMaximumLead, int32 memoryPolynomialMaximumLag) override;
   int32 DPDCfgIterativeDPDEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 iterativeDPDEnabled) override;
   int32 DPDCfgLookupTableAMToAMCurveFit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 amToAMCurveFitOrder, int32 amToAMCurveFitType) override;
@@ -172,8 +174,6 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType) override;
   int32 DPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32 idleDurationPresent, int32 signalType) override;
   int32 DPDCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMethod) override;
-  int32 DPDCfgTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize) override;
-  int32 DPDCfgTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize) override;
   int32 DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR) override;
   int32 DPDFetchAverageGain(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageGain) override;
   int32 DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dpdPolynomial[], int32 arraySize, int32* actualArraySize) override;
@@ -614,6 +614,8 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using DPDCfgAveragingPtr = decltype(&RFmxSpecAn_DPDCfgAveraging);
   using DPDCfgDPDModelPtr = decltype(&RFmxSpecAn_DPDCfgDPDModel);
   using DPDCfgDUTAverageInputPowerPtr = decltype(&RFmxSpecAn_DPDCfgDUTAverageInputPower);
+  using DPDCfgExtractModelTargetWaveformPtr = decltype(&RFmxSpecAn_DPDCfgExtractModelTargetWaveform);
+  using DPDCfgExtractModelTargetWaveformSplitPtr = decltype(&RFmxSpecAn_DPDCfgExtractModelTargetWaveformSplit);
   using DPDCfgGeneralizedMemoryPolynomialCrossTermsPtr = decltype(&RFmxSpecAn_DPDCfgGeneralizedMemoryPolynomialCrossTerms);
   using DPDCfgIterativeDPDEnabledPtr = decltype(&RFmxSpecAn_DPDCfgIterativeDPDEnabled);
   using DPDCfgLookupTableAMToAMCurveFitPtr = decltype(&RFmxSpecAn_DPDCfgLookupTableAMToAMCurveFit);
@@ -629,8 +631,6 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using DPDCfgReferenceWaveformPtr = decltype(&RFmxSpecAn_DPDCfgReferenceWaveform);
   using DPDCfgReferenceWaveformSplitPtr = decltype(&RFmxSpecAn_DPDCfgReferenceWaveformSplit);
   using DPDCfgSynchronizationMethodPtr = decltype(&RFmxSpecAn_DPDCfgSynchronizationMethod);
-  using DPDCfgTargetWaveformPtr = decltype(&RFmxSpecAn_DPDCfgTargetWaveform);
-  using DPDCfgTargetWaveformSplitPtr = decltype(&RFmxSpecAn_DPDCfgTargetWaveformSplit);
   using DPDFetchApplyDPDPreCFRPAPRPtr = decltype(&RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR);
   using DPDFetchAverageGainPtr = decltype(&RFmxSpecAn_DPDFetchAverageGain);
   using DPDFetchDPDPolynomialPtr = decltype(&RFmxSpecAn_DPDFetchDPDPolynomial);
@@ -1071,6 +1071,8 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     DPDCfgAveragingPtr DPDCfgAveraging;
     DPDCfgDPDModelPtr DPDCfgDPDModel;
     DPDCfgDUTAverageInputPowerPtr DPDCfgDUTAverageInputPower;
+    DPDCfgExtractModelTargetWaveformPtr DPDCfgExtractModelTargetWaveform;
+    DPDCfgExtractModelTargetWaveformSplitPtr DPDCfgExtractModelTargetWaveformSplit;
     DPDCfgGeneralizedMemoryPolynomialCrossTermsPtr DPDCfgGeneralizedMemoryPolynomialCrossTerms;
     DPDCfgIterativeDPDEnabledPtr DPDCfgIterativeDPDEnabled;
     DPDCfgLookupTableAMToAMCurveFitPtr DPDCfgLookupTableAMToAMCurveFit;
@@ -1086,8 +1088,6 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     DPDCfgReferenceWaveformPtr DPDCfgReferenceWaveform;
     DPDCfgReferenceWaveformSplitPtr DPDCfgReferenceWaveformSplit;
     DPDCfgSynchronizationMethodPtr DPDCfgSynchronizationMethod;
-    DPDCfgTargetWaveformPtr DPDCfgTargetWaveform;
-    DPDCfgTargetWaveformSplitPtr DPDCfgTargetWaveformSplit;
     DPDFetchApplyDPDPreCFRPAPRPtr DPDFetchApplyDPDPreCFRPAPR;
     DPDFetchAverageGainPtr DPDFetchAverageGain;
     DPDFetchDPDPolynomialPtr DPDFetchDPDPolynomial;

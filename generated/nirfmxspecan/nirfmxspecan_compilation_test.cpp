@@ -687,6 +687,16 @@ int32 DPDCfgDUTAverageInputPower(niRFmxInstrHandle instrumentHandle, char select
   return RFmxSpecAn_DPDCfgDUTAverageInputPower(instrumentHandle, selectorString, dutAverageInputPower);
 }
 
+int32 DPDCfgExtractModelTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize)
+{
+  return RFmxSpecAn_DPDCfgExtractModelTargetWaveform(instrumentHandle, selectorString, x0, dx, targetWaveform, arraySize);
+}
+
+int32 DPDCfgExtractModelTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize)
+{
+  return RFmxSpecAn_DPDCfgExtractModelTargetWaveformSplit(instrumentHandle, selectorString, x0, dx, targetWaveformI, targetWaveformQ, arraySize);
+}
+
 int32 DPDCfgGeneralizedMemoryPolynomialCrossTerms(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 memoryPolynomialLeadOrder, int32 memoryPolynomialLagOrder, int32 memoryPolynomialLeadMemoryDepth, int32 memoryPolynomialLagMemoryDepth, int32 memoryPolynomialMaximumLead, int32 memoryPolynomialMaximumLag)
 {
   return RFmxSpecAn_DPDCfgGeneralizedMemoryPolynomialCrossTerms(instrumentHandle, selectorString, memoryPolynomialLeadOrder, memoryPolynomialLagOrder, memoryPolynomialLeadMemoryDepth, memoryPolynomialLagMemoryDepth, memoryPolynomialMaximumLead, memoryPolynomialMaximumLag);
@@ -760,16 +770,6 @@ int32 DPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char sele
 int32 DPDCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMethod)
 {
   return RFmxSpecAn_DPDCfgSynchronizationMethod(instrumentHandle, selectorString, synchronizationMethod);
-}
-
-int32 DPDCfgTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize)
-{
-  return RFmxSpecAn_DPDCfgTargetWaveform(instrumentHandle, selectorString, x0, dx, targetWaveform, arraySize);
-}
-
-int32 DPDCfgTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize)
-{
-  return RFmxSpecAn_DPDCfgTargetWaveformSplit(instrumentHandle, selectorString, x0, dx, targetWaveformI, targetWaveformQ, arraySize);
 }
 
 int32 DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR)

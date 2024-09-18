@@ -4755,6 +4755,101 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDCfgExtractModelTargetWaveform': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'targetWaveform',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDCfgExtractModelTargetWaveformSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'targetWaveformI',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'targetWaveformQ',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDCfgGeneralizedMemoryPolynomialCrossTerms': {
         'parameters': [
             {
@@ -5238,101 +5333,6 @@ functions = {
                 'direction': 'in',
                 'enum': 'DpdSynchronizationMethod',
                 'name': 'synchronizationMethod',
-                'type': 'int32'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'DPDCfgTargetWaveform': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'x0',
-                'type': 'float64'
-            },
-            {
-                'direction': 'in',
-                'name': 'dx',
-                'type': 'float64'
-            },
-            {
-                'direction': 'in',
-                'name': 'targetWaveform',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'arraySize'
-                },
-                'type': 'NIComplexSingle[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'DPDCfgTargetWaveformSplit': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'x0',
-                'type': 'float64'
-            },
-            {
-                'direction': 'in',
-                'name': 'dx',
-                'type': 'float64'
-            },
-            {
-                'direction': 'in',
-                'name': 'targetWaveformI',
-                'size': {
-                    'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
-                    'value': 'arraySize'
-                },
-                'type': 'float32[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'targetWaveformQ',
-                'size': {
-                    'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
-                    'value': 'arraySize'
-                },
-                'type': 'float32[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
                 'type': 'int32'
             }
         ],

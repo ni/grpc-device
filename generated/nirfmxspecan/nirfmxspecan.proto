@@ -153,6 +153,8 @@ service NiRFmxSpecAn {
   rpc DPDCfgAveraging(DPDCfgAveragingRequest) returns (DPDCfgAveragingResponse);
   rpc DPDCfgDPDModel(DPDCfgDPDModelRequest) returns (DPDCfgDPDModelResponse);
   rpc DPDCfgDUTAverageInputPower(DPDCfgDUTAverageInputPowerRequest) returns (DPDCfgDUTAverageInputPowerResponse);
+  rpc DPDCfgExtractModelTargetWaveform(DPDCfgExtractModelTargetWaveformRequest) returns (DPDCfgExtractModelTargetWaveformResponse);
+  rpc DPDCfgExtractModelTargetWaveformSplit(DPDCfgExtractModelTargetWaveformSplitRequest) returns (DPDCfgExtractModelTargetWaveformSplitResponse);
   rpc DPDCfgGeneralizedMemoryPolynomialCrossTerms(DPDCfgGeneralizedMemoryPolynomialCrossTermsRequest) returns (DPDCfgGeneralizedMemoryPolynomialCrossTermsResponse);
   rpc DPDCfgIterativeDPDEnabled(DPDCfgIterativeDPDEnabledRequest) returns (DPDCfgIterativeDPDEnabledResponse);
   rpc DPDCfgLookupTableAMToAMCurveFit(DPDCfgLookupTableAMToAMCurveFitRequest) returns (DPDCfgLookupTableAMToAMCurveFitResponse);
@@ -168,8 +170,6 @@ service NiRFmxSpecAn {
   rpc DPDCfgReferenceWaveform(DPDCfgReferenceWaveformRequest) returns (DPDCfgReferenceWaveformResponse);
   rpc DPDCfgReferenceWaveformSplit(DPDCfgReferenceWaveformSplitRequest) returns (DPDCfgReferenceWaveformSplitResponse);
   rpc DPDCfgSynchronizationMethod(DPDCfgSynchronizationMethodRequest) returns (DPDCfgSynchronizationMethodResponse);
-  rpc DPDCfgTargetWaveform(DPDCfgTargetWaveformRequest) returns (DPDCfgTargetWaveformResponse);
-  rpc DPDCfgTargetWaveformSplit(DPDCfgTargetWaveformSplitRequest) returns (DPDCfgTargetWaveformSplitResponse);
   rpc DPDFetchApplyDPDPreCFRPAPR(DPDFetchApplyDPDPreCFRPAPRRequest) returns (DPDFetchApplyDPDPreCFRPAPRResponse);
   rpc DPDFetchAverageGain(DPDFetchAverageGainRequest) returns (DPDFetchAverageGainResponse);
   rpc DPDFetchDPDPolynomial(DPDFetchDPDPolynomialRequest) returns (DPDFetchDPDPolynomialResponse);
@@ -4655,6 +4655,31 @@ message DPDCfgDUTAverageInputPowerResponse {
   int32 status = 1;
 }
 
+message DPDCfgExtractModelTargetWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated nidevice_grpc.NIComplexNumberF32 target_waveform = 5;
+}
+
+message DPDCfgExtractModelTargetWaveformResponse {
+  int32 status = 1;
+}
+
+message DPDCfgExtractModelTargetWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float target_waveform_i = 5;
+  repeated float target_waveform_q = 6;
+}
+
+message DPDCfgExtractModelTargetWaveformSplitResponse {
+  int32 status = 1;
+}
+
 message DPDCfgGeneralizedMemoryPolynomialCrossTermsRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -4859,31 +4884,6 @@ message DPDCfgSynchronizationMethodRequest {
 }
 
 message DPDCfgSynchronizationMethodResponse {
-  int32 status = 1;
-}
-
-message DPDCfgTargetWaveformRequest {
-  nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
-  double x0 = 3;
-  double dx = 4;
-  repeated nidevice_grpc.NIComplexNumberF32 target_waveform = 5;
-}
-
-message DPDCfgTargetWaveformResponse {
-  int32 status = 1;
-}
-
-message DPDCfgTargetWaveformSplitRequest {
-  nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
-  double x0 = 3;
-  double dx = 4;
-  repeated float target_waveform_i = 5;
-  repeated float target_waveform_q = 6;
-}
-
-message DPDCfgTargetWaveformSplitResponse {
   int32 status = 1;
 }
 
