@@ -151,6 +151,8 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 DPDCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) = 0;
   virtual int32 DPDCfgDPDModel(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dpdModel) = 0;
   virtual int32 DPDCfgDUTAverageInputPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutAverageInputPower) = 0;
+  virtual int32 DPDCfgExtractModelTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize) = 0;
+  virtual int32 DPDCfgExtractModelTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize) = 0;
   virtual int32 DPDCfgGeneralizedMemoryPolynomialCrossTerms(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 memoryPolynomialLeadOrder, int32 memoryPolynomialLagOrder, int32 memoryPolynomialLeadMemoryDepth, int32 memoryPolynomialLagMemoryDepth, int32 memoryPolynomialMaximumLead, int32 memoryPolynomialMaximumLag) = 0;
   virtual int32 DPDCfgIterativeDPDEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 iterativeDPDEnabled) = 0;
   virtual int32 DPDCfgLookupTableAMToAMCurveFit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 amToAMCurveFitOrder, int32 amToAMCurveFitType) = 0;
@@ -166,8 +168,6 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType) = 0;
   virtual int32 DPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32 idleDurationPresent, int32 signalType) = 0;
   virtual int32 DPDCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMethod) = 0;
-  virtual int32 DPDCfgTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize) = 0;
-  virtual int32 DPDCfgTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize) = 0;
   virtual int32 DPDFetchApplyDPDPreCFRPAPR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preCFRPAPR) = 0;
   virtual int32 DPDFetchAverageGain(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageGain) = 0;
   virtual int32 DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dpdPolynomial[], int32 arraySize, int32* actualArraySize) = 0;

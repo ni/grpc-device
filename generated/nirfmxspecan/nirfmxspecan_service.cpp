@@ -5433,6 +5433,79 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDCfgExtractModelTargetWaveform(::grpc::ServerContext* context, const DPDCfgExtractModelTargetWaveformRequest* request, DPDCfgExtractModelTargetWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto target_waveform = convert_from_grpc<NIComplexSingle>(request->target_waveform());
+      int32 array_size = static_cast<int32>(request->target_waveform().size());
+      auto status = library_->DPDCfgExtractModelTargetWaveform(instrument, selector_string, x0, dx, target_waveform.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDCfgExtractModelTargetWaveformSplit(::grpc::ServerContext* context, const DPDCfgExtractModelTargetWaveformSplitRequest* request, DPDCfgExtractModelTargetWaveformSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto target_waveform_i = const_cast<float32*>(request->target_waveform_i().data());
+      auto target_waveform_q = const_cast<float32*>(request->target_waveform_q().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->target_waveform_i_size(),
+        request->target_waveform_q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [target_waveform_i, target_waveform_q] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        target_waveform_i = request->target_waveform_i_size() ? std::move(target_waveform_i) : nullptr;
+        target_waveform_q = request->target_waveform_q_size() ? std::move(target_waveform_q) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->DPDCfgExtractModelTargetWaveformSplit(instrument, selector_string, x0, dx, target_waveform_i, target_waveform_q, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDCfgGeneralizedMemoryPolynomialCrossTerms(::grpc::ServerContext* context, const DPDCfgGeneralizedMemoryPolynomialCrossTermsRequest* request, DPDCfgGeneralizedMemoryPolynomialCrossTermsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -6032,79 +6105,6 @@ namespace nirfmxspecan_grpc {
       }
 
       auto status = library_->DPDCfgSynchronizationMethod(instrument, selector_string, synchronization_method);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDCfgTargetWaveform(::grpc::ServerContext* context, const DPDCfgTargetWaveformRequest* request, DPDCfgTargetWaveformResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
-      char* selector_string = (char*)selector_string_mbcs.c_str();
-      float64 x0 = request->x0();
-      float64 dx = request->dx();
-      auto target_waveform = convert_from_grpc<NIComplexSingle>(request->target_waveform());
-      int32 array_size = static_cast<int32>(request->target_waveform().size());
-      auto status = library_->DPDCfgTargetWaveform(instrument, selector_string, x0, dx, target_waveform.data(), array_size);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDCfgTargetWaveformSplit(::grpc::ServerContext* context, const DPDCfgTargetWaveformSplitRequest* request, DPDCfgTargetWaveformSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
-      char* selector_string = (char*)selector_string_mbcs.c_str();
-      float64 x0 = request->x0();
-      float64 dx = request->dx();
-      auto target_waveform_i = const_cast<float32*>(request->target_waveform_i().data());
-      auto target_waveform_q = const_cast<float32*>(request->target_waveform_q().data());
-      auto array_size_determine_from_sizes = std::array<int, 2>
-      {
-        request->target_waveform_i_size(),
-        request->target_waveform_q_size()
-      };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
-
-      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [target_waveform_i, target_waveform_q] do not match");
-      }
-      // NULL out optional params with zero sizes.
-      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
-        target_waveform_i = request->target_waveform_i_size() ? std::move(target_waveform_i) : nullptr;
-        target_waveform_q = request->target_waveform_q_size() ? std::move(target_waveform_q) : nullptr;
-      }
-      auto array_size = array_size_size_calculation.size;
-
-      auto status = library_->DPDCfgTargetWaveformSplit(instrument, selector_string, x0, dx, target_waveform_i, target_waveform_q, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

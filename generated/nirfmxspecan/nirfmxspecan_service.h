@@ -180,6 +180,8 @@ public:
   ::grpc::Status DPDCfgAveraging(::grpc::ServerContext* context, const DPDCfgAveragingRequest* request, DPDCfgAveragingResponse* response) override;
   ::grpc::Status DPDCfgDPDModel(::grpc::ServerContext* context, const DPDCfgDPDModelRequest* request, DPDCfgDPDModelResponse* response) override;
   ::grpc::Status DPDCfgDUTAverageInputPower(::grpc::ServerContext* context, const DPDCfgDUTAverageInputPowerRequest* request, DPDCfgDUTAverageInputPowerResponse* response) override;
+  ::grpc::Status DPDCfgExtractModelTargetWaveform(::grpc::ServerContext* context, const DPDCfgExtractModelTargetWaveformRequest* request, DPDCfgExtractModelTargetWaveformResponse* response) override;
+  ::grpc::Status DPDCfgExtractModelTargetWaveformSplit(::grpc::ServerContext* context, const DPDCfgExtractModelTargetWaveformSplitRequest* request, DPDCfgExtractModelTargetWaveformSplitResponse* response) override;
   ::grpc::Status DPDCfgGeneralizedMemoryPolynomialCrossTerms(::grpc::ServerContext* context, const DPDCfgGeneralizedMemoryPolynomialCrossTermsRequest* request, DPDCfgGeneralizedMemoryPolynomialCrossTermsResponse* response) override;
   ::grpc::Status DPDCfgIterativeDPDEnabled(::grpc::ServerContext* context, const DPDCfgIterativeDPDEnabledRequest* request, DPDCfgIterativeDPDEnabledResponse* response) override;
   ::grpc::Status DPDCfgLookupTableAMToAMCurveFit(::grpc::ServerContext* context, const DPDCfgLookupTableAMToAMCurveFitRequest* request, DPDCfgLookupTableAMToAMCurveFitResponse* response) override;
@@ -195,8 +197,6 @@ public:
   ::grpc::Status DPDCfgReferenceWaveform(::grpc::ServerContext* context, const DPDCfgReferenceWaveformRequest* request, DPDCfgReferenceWaveformResponse* response) override;
   ::grpc::Status DPDCfgReferenceWaveformSplit(::grpc::ServerContext* context, const DPDCfgReferenceWaveformSplitRequest* request, DPDCfgReferenceWaveformSplitResponse* response) override;
   ::grpc::Status DPDCfgSynchronizationMethod(::grpc::ServerContext* context, const DPDCfgSynchronizationMethodRequest* request, DPDCfgSynchronizationMethodResponse* response) override;
-  ::grpc::Status DPDCfgTargetWaveform(::grpc::ServerContext* context, const DPDCfgTargetWaveformRequest* request, DPDCfgTargetWaveformResponse* response) override;
-  ::grpc::Status DPDCfgTargetWaveformSplit(::grpc::ServerContext* context, const DPDCfgTargetWaveformSplitRequest* request, DPDCfgTargetWaveformSplitResponse* response) override;
   ::grpc::Status DPDFetchApplyDPDPreCFRPAPR(::grpc::ServerContext* context, const DPDFetchApplyDPDPreCFRPAPRRequest* request, DPDFetchApplyDPDPreCFRPAPRResponse* response) override;
   ::grpc::Status DPDFetchAverageGain(::grpc::ServerContext* context, const DPDFetchAverageGainRequest* request, DPDFetchAverageGainResponse* response) override;
   ::grpc::Status DPDFetchDPDPolynomial(::grpc::ServerContext* context, const DPDFetchDPDPolynomialRequest* request, DPDFetchDPDPolynomialResponse* response) override;

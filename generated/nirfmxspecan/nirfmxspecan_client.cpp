@@ -3077,6 +3077,49 @@ dpd_cfg_dut_average_input_power(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+DPDCfgExtractModelTargetWaveformResponse
+dpd_cfg_extract_model_target_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& target_waveform)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgExtractModelTargetWaveformRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(target_waveform, request.mutable_target_waveform());
+
+  auto response = DPDCfgExtractModelTargetWaveformResponse{};
+
+  raise_if_error(
+      stub->DPDCfgExtractModelTargetWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDCfgExtractModelTargetWaveformSplitResponse
+dpd_cfg_extract_model_target_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& target_waveform_i, const std::vector<float>& target_waveform_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgExtractModelTargetWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(target_waveform_i, request.mutable_target_waveform_i());
+  copy_array(target_waveform_q, request.mutable_target_waveform_q());
+
+  auto response = DPDCfgExtractModelTargetWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->DPDCfgExtractModelTargetWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDCfgGeneralizedMemoryPolynomialCrossTermsResponse
 dpd_cfg_generalized_memory_polynomial_cross_terms(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& memory_polynomial_lead_order, const pb::int32& memory_polynomial_lag_order, const pb::int32& memory_polynomial_lead_memory_depth, const pb::int32& memory_polynomial_lag_memory_depth, const pb::int32& memory_polynomial_maximum_lead, const pb::int32& memory_polynomial_maximum_lag)
 {
@@ -3462,49 +3505,6 @@ dpd_cfg_synchronization_method(const StubPtr& stub, const nidevice_grpc::Session
 
   raise_if_error(
       stub->DPDCfgSynchronizationMethod(&context, request, &response),
-      context);
-
-  return response;
-}
-
-DPDCfgTargetWaveformResponse
-dpd_cfg_target_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& target_waveform)
-{
-  ::grpc::ClientContext context;
-
-  auto request = DPDCfgTargetWaveformRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-  request.set_x0(x0);
-  request.set_dx(dx);
-  copy_array(target_waveform, request.mutable_target_waveform());
-
-  auto response = DPDCfgTargetWaveformResponse{};
-
-  raise_if_error(
-      stub->DPDCfgTargetWaveform(&context, request, &response),
-      context);
-
-  return response;
-}
-
-DPDCfgTargetWaveformSplitResponse
-dpd_cfg_target_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& target_waveform_i, const std::vector<float>& target_waveform_q)
-{
-  ::grpc::ClientContext context;
-
-  auto request = DPDCfgTargetWaveformSplitRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-  request.set_x0(x0);
-  request.set_dx(dx);
-  copy_array(target_waveform_i, request.mutable_target_waveform_i());
-  copy_array(target_waveform_q, request.mutable_target_waveform_q());
-
-  auto response = DPDCfgTargetWaveformSplitResponse{};
-
-  raise_if_error(
-      stub->DPDCfgTargetWaveformSplit(&context, request, &response),
       context);
 
   return response;

@@ -2597,7 +2597,7 @@ int32 __stdcall RFmxSpecAn_DPDCfgReferenceWaveformSplit(
    int32 signalType
 );
 
-int32 __stdcall RFmxSpecAn_DPDCfgTargetWaveform(
+int32 __stdcall RFmxSpecAn_DPDCfgExtractModelTargetWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0,
@@ -2606,7 +2606,7 @@ int32 __stdcall RFmxSpecAn_DPDCfgTargetWaveform(
    int32 arraySize
 );
 
-int32 __stdcall RFmxSpecAn_DPDCfgTargetWaveformSplit(
+int32 __stdcall RFmxSpecAn_DPDCfgExtractModelTargetWaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0,
