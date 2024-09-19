@@ -11,7 +11,7 @@ jobs:
     - self-hosted
     - linux
     - x64
-    - grpcbot-ubuntu
+    - grpcbot-ubuntu2
 
     steps:
     - name: Download Tests Artifact

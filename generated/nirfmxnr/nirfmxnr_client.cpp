@@ -500,6 +500,30 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
   return response;
 }
 
+AnalyzeIQ1WaveformSplitResponse
+analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iqi, request.mutable_iqi());
+  copy_array(iqq, request.mutable_iqq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformSplitResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AnalyzeSpectrum1WaveformResponse
 analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset)
 {
@@ -2147,6 +2171,28 @@ mod_acc_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+ModAccCfgReferenceWaveformSplitResponse
+mod_acc_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccCfgReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform_i, request.mutable_reference_waveform_i());
+  copy_array(reference_waveform_q, request.mutable_reference_waveform_q());
+
+  auto response = ModAccCfgReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccCfgReferenceWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccClearNoiseCalibrationDatabaseResponse
 mod_acc_clear_noise_calibration_database(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
@@ -2297,6 +2343,25 @@ mod_acc_fetch_pbchdmrs_constellation_trace(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+ModAccFetchPBCHDMRSConstellationTraceSplitResponse
+mod_acc_fetch_pbchdmrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPBCHDMRSConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPBCHDMRSConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPBCHDMRSConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTraceResponse
 mod_acc_fetch_pbchdmrsrmsevm_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2349,6 +2414,25 @@ mod_acc_fetch_pbch_data_constellation_trace(const StubPtr& stub, const nidevice_
 
   raise_if_error(
       stub->ModAccFetchPBCHDataConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPBCHDataConstellationTraceSplitResponse
+mod_acc_fetch_pbch_data_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPBCHDataConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPBCHDataConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPBCHDataConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
@@ -2411,6 +2495,25 @@ mod_acc_fetch_pdsch1024q_am_constellation_trace(const StubPtr& stub, const nidev
   return response;
 }
 
+ModAccFetchPDSCH1024QAMConstellationTraceSplitResponse
+mod_acc_fetch_pdsch1024q_am_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH1024QAMConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH1024QAMConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH1024QAMConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCH16QAMConstellationTraceResponse
 mod_acc_fetch_pdsch16q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2425,6 +2528,25 @@ mod_acc_fetch_pdsch16q_am_constellation_trace(const StubPtr& stub, const nidevic
 
   raise_if_error(
       stub->ModAccFetchPDSCH16QAMConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPDSCH16QAMConstellationTraceSplitResponse
+mod_acc_fetch_pdsch16q_am_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH16QAMConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH16QAMConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH16QAMConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
@@ -2449,6 +2571,25 @@ mod_acc_fetch_pdsch256q_am_constellation_trace(const StubPtr& stub, const nidevi
   return response;
 }
 
+ModAccFetchPDSCH256QAMConstellationTraceSplitResponse
+mod_acc_fetch_pdsch256q_am_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH256QAMConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH256QAMConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH256QAMConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCH64QAMConstellationTraceResponse
 mod_acc_fetch_pdsch64q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2463,6 +2604,25 @@ mod_acc_fetch_pdsch64q_am_constellation_trace(const StubPtr& stub, const nidevic
 
   raise_if_error(
       stub->ModAccFetchPDSCH64QAMConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPDSCH64QAMConstellationTraceSplitResponse
+mod_acc_fetch_pdsch64q_am_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH64QAMConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH64QAMConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH64QAMConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
@@ -2487,6 +2647,25 @@ mod_acc_fetch_pdsch8p_sk_constellation_trace(const StubPtr& stub, const nidevice
   return response;
 }
 
+ModAccFetchPDSCH8PSKConstellationTraceSplitResponse
+mod_acc_fetch_pdsch8p_sk_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH8PSKConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH8PSKConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH8PSKConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCHDMRSConstellationTraceResponse
 mod_acc_fetch_pdschdmrs_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2506,6 +2685,25 @@ mod_acc_fetch_pdschdmrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPDSCHDMRSConstellationTraceSplitResponse
+mod_acc_fetch_pdschdmrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCHDMRSConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCHDMRSConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCHDMRSConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCHDataConstellationTraceResponse
 mod_acc_fetch_pdsch_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2520,6 +2718,25 @@ mod_acc_fetch_pdsch_data_constellation_trace(const StubPtr& stub, const nidevice
 
   raise_if_error(
       stub->ModAccFetchPDSCHDataConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPDSCHDataConstellationTraceSplitResponse
+mod_acc_fetch_pdsch_data_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCHDataConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCHDataConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCHDataConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
@@ -2563,6 +2780,25 @@ mod_acc_fetch_pdschptrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPDSCHPTRSConstellationTraceSplitResponse
+mod_acc_fetch_pdschptrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCHPTRSConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCHPTRSConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCHPTRSConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCHQPSKConstellationTraceResponse
 mod_acc_fetch_pdschqpsk_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2582,6 +2818,25 @@ mod_acc_fetch_pdschqpsk_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPDSCHQPSKConstellationTraceSplitResponse
+mod_acc_fetch_pdschqpsk_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCHQPSKConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCHQPSKConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCHQPSKConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPSSConstellationTraceResponse
 mod_acc_fetch_pss_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2596,6 +2851,25 @@ mod_acc_fetch_pss_constellation_trace(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->ModAccFetchPSSConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPSSConstellationTraceSplitResponse
+mod_acc_fetch_pss_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPSSConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPSSConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPSSConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
@@ -2658,6 +2932,25 @@ mod_acc_fetch_puschdmrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPUSCHDMRSConstellationTraceSplitResponse
+mod_acc_fetch_puschdmrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPUSCHDMRSConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPUSCHDMRSConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPUSCHDMRSConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPUSCHDataConstellationTraceResponse
 mod_acc_fetch_pusch_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2672,6 +2965,25 @@ mod_acc_fetch_pusch_data_constellation_trace(const StubPtr& stub, const nidevice
 
   raise_if_error(
       stub->ModAccFetchPUSCHDataConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPUSCHDataConstellationTraceSplitResponse
+mod_acc_fetch_pusch_data_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPUSCHDataConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPUSCHDataConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPUSCHDataConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
@@ -2715,6 +3027,25 @@ mod_acc_fetch_puschptrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPUSCHPTRSConstellationTraceSplitResponse
+mod_acc_fetch_puschptrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPUSCHPTRSConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPUSCHPTRSConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPUSCHPTRSConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPUSCHPhaseOffsetTraceResponse
 mod_acc_fetch_pusch_phase_offset_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2729,6 +3060,44 @@ mod_acc_fetch_pusch_phase_offset_trace(const StubPtr& stub, const nidevice_grpc:
 
   raise_if_error(
       stub->ModAccFetchPUSCHPhaseOffsetTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPeakEVMHighPerSymbolMaximumTraceResponse
+mod_acc_fetch_peak_evm_high_per_symbol_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPeakEVMHighPerSymbolMaximumTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPeakEVMHighPerSymbolMaximumTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPeakEVMHighPerSymbolMaximumTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPeakEVMLowPerSymbolMaximumTraceResponse
+mod_acc_fetch_peak_evm_low_per_symbol_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPeakEVMLowPerSymbolMaximumTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPeakEVMLowPerSymbolMaximumTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPeakEVMLowPerSymbolMaximumTrace(&context, request, &response),
       context);
 
   return response;
@@ -2900,6 +3269,25 @@ mod_acc_fetch_sss_constellation_trace(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->ModAccFetchSSSConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchSSSConstellationTraceSplitResponse
+mod_acc_fetch_sss_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchSSSConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchSSSConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchSSSConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
