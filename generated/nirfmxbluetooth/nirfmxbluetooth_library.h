@@ -34,6 +34,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   int32 ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize) override;
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) override;
+  int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout) override;
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) override;
   int32 BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
@@ -100,6 +101,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   int32 ModAccFetchCSDetrendedPhaseTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csDetrendedPhase[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchCSToneTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 csToneAmplitude[], float32 csTonePhase[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchDEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakRMSDEVMMaximum, float64* peakDEVMMaximum, float64* ninetyninePercentDEVM) override;
   int32 ModAccFetchDEVMMagnitudeError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRMSMagnitudeErrorMean, float64* peakRMSMagnitudeErrorMaximum) override;
   int32 ModAccFetchDEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 devmPerSymbol[], int32 arraySize, int32* actualArraySize) override;
@@ -175,6 +177,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   using ACPFetchSpectrumPtr = decltype(&RFmxBT_ACPFetchSpectrum);
   using AbortMeasurementsPtr = decltype(&RFmxBT_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxBT_AnalyzeIQ1Waveform);
+  using AnalyzeIQ1WaveformSplitPtr = decltype(&RFmxBT_AnalyzeIQ1WaveformSplit);
   using AutoDetectSignalPtr = decltype(&RFmxBT_AutoDetectSignal);
   using AutoLevelPtr = decltype(&RFmxBT_AutoLevel);
   using BuildOffsetStringPtr = decltype(&RFmxBT_BuildOffsetString);
@@ -241,6 +244,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   using ModAccFetchCSDetrendedPhaseTracePtr = decltype(&RFmxBT_ModAccFetchCSDetrendedPhaseTrace);
   using ModAccFetchCSToneTracePtr = decltype(&RFmxBT_ModAccFetchCSToneTrace);
   using ModAccFetchConstellationTracePtr = decltype(&RFmxBT_ModAccFetchConstellationTrace);
+  using ModAccFetchConstellationTraceSplitPtr = decltype(&RFmxBT_ModAccFetchConstellationTraceSplit);
   using ModAccFetchDEVMPtr = decltype(&RFmxBT_ModAccFetchDEVM);
   using ModAccFetchDEVMMagnitudeErrorPtr = decltype(&RFmxBT_ModAccFetchDEVMMagnitudeError);
   using ModAccFetchDEVMPerSymbolTracePtr = decltype(&RFmxBT_ModAccFetchDEVMPerSymbolTrace);
@@ -316,6 +320,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
     ACPFetchSpectrumPtr ACPFetchSpectrum;
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
+    AnalyzeIQ1WaveformSplitPtr AnalyzeIQ1WaveformSplit;
     AutoDetectSignalPtr AutoDetectSignal;
     AutoLevelPtr AutoLevel;
     BuildOffsetStringPtr BuildOffsetString;
@@ -382,6 +387,7 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
     ModAccFetchCSDetrendedPhaseTracePtr ModAccFetchCSDetrendedPhaseTrace;
     ModAccFetchCSToneTracePtr ModAccFetchCSToneTrace;
     ModAccFetchConstellationTracePtr ModAccFetchConstellationTrace;
+    ModAccFetchConstellationTraceSplitPtr ModAccFetchConstellationTraceSplit;
     ModAccFetchDEVMPtr ModAccFetchDEVM;
     ModAccFetchDEVMMagnitudeErrorPtr ModAccFetchDEVMMagnitudeError;
     ModAccFetchDEVMPerSymbolTracePtr ModAccFetchDEVMPerSymbolTrace;

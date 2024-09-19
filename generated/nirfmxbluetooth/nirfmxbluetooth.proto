@@ -30,6 +30,7 @@ service NiRFmxBluetooth {
   rpc ACPFetchSpectrum(ACPFetchSpectrumRequest) returns (ACPFetchSpectrumResponse);
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AutoDetectSignal(AutoDetectSignalRequest) returns (AutoDetectSignalResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
@@ -96,6 +97,7 @@ service NiRFmxBluetooth {
   rpc ModAccFetchCSDetrendedPhaseTrace(ModAccFetchCSDetrendedPhaseTraceRequest) returns (ModAccFetchCSDetrendedPhaseTraceResponse);
   rpc ModAccFetchCSToneTrace(ModAccFetchCSToneTraceRequest) returns (ModAccFetchCSToneTraceResponse);
   rpc ModAccFetchConstellationTrace(ModAccFetchConstellationTraceRequest) returns (ModAccFetchConstellationTraceResponse);
+  rpc ModAccFetchConstellationTraceSplit(ModAccFetchConstellationTraceSplitRequest) returns (ModAccFetchConstellationTraceSplitResponse);
   rpc ModAccFetchDEVM(ModAccFetchDEVMRequest) returns (ModAccFetchDEVMResponse);
   rpc ModAccFetchDEVMMagnitudeError(ModAccFetchDEVMMagnitudeErrorRequest) returns (ModAccFetchDEVMMagnitudeErrorResponse);
   rpc ModAccFetchDEVMPerSymbolTrace(ModAccFetchDEVMPerSymbolTraceRequest) returns (ModAccFetchDEVMPerSymbolTraceResponse);
@@ -775,6 +777,21 @@ message AnalyzeIQ1WaveformRequest {
 }
 
 message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iqi = 6;
+  repeated float iqq = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeIQ1WaveformSplitResponse {
   int32 status = 1;
 }
 
@@ -1556,6 +1573,19 @@ message ModAccFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
   int32 actual_array_size = 3;
+}
+
+message ModAccFetchConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float constellation_i = 2;
+  repeated float constellation_q = 3;
+  int32 actual_array_size = 4;
 }
 
 message ModAccFetchDEVMRequest {

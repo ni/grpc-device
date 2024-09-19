@@ -2089,5 +2089,11 @@ attributes = {
         'access': 'read-write',
         'name': 'TXP_RESULTS_PEAK_POWER_MAXIMUM',
         'type': 'float64'
+    },
+    3203084: {
+        'access': 'read-write',
+        'enum': 'ModAccFrequencyErrorEstimation',
+        'name': 'MODACC_FREQUENCY_ERROR_ESTIMATION',
+        'type': 'int32'
     }
 }
