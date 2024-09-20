@@ -29,6 +29,7 @@ NiRFmxGSMLibrary::NiRFmxGSMLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   }
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxGSM_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxGSM_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxGSM_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxGSM_AutoLevel"));
   function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_->get_function_pointer("RFmxGSM_BuildOffsetString"));
   function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxGSM_BuildSignalString"));
@@ -90,6 +91,7 @@ NiRFmxGSMLibrary::NiRFmxGSMLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.ModAccCfgAveraging = reinterpret_cast<ModAccCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccCfgAveraging"));
   function_pointers_.ModAccCfgDroopCompensationEnabled = reinterpret_cast<ModAccCfgDroopCompensationEnabledPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccCfgDroopCompensationEnabled"));
   function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchConstellationTrace"));
+  function_pointers_.ModAccFetchConstellationTraceSplit = reinterpret_cast<ModAccFetchConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchConstellationTraceSplit"));
   function_pointers_.ModAccFetchDemodulatedBits = reinterpret_cast<ModAccFetchDemodulatedBitsPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchDemodulatedBits"));
   function_pointers_.ModAccFetchDetectedTSC = reinterpret_cast<ModAccFetchDetectedTSCPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchDetectedTSC"));
   function_pointers_.ModAccFetchDetectedTSCArray = reinterpret_cast<ModAccFetchDetectedTSCArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_ModAccFetchDetectedTSCArray"));
@@ -171,6 +173,14 @@ int32 NiRFmxGSMLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, c
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_AnalyzeIQ1Waveform.");
   }
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 NiRFmxGSMLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1WaveformSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_AnalyzeIQ1WaveformSplit.");
+  }
+  return function_pointers_.AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
 }
 
 int32 NiRFmxGSMLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel)
@@ -659,6 +669,14 @@ int32 NiRFmxGSMLibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle instrume
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_ModAccFetchConstellationTrace.");
   }
   return function_pointers_.ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellationTrace, arraySize, actualArraySize);
+}
+
+int32 NiRFmxGSMLibrary::ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationTraceI[], float32 constellationTraceQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchConstellationTraceSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_ModAccFetchConstellationTraceSplit.");
+  }
+  return function_pointers_.ModAccFetchConstellationTraceSplit(instrumentHandle, selectorString, timeout, constellationTraceI, constellationTraceQ, arraySize, actualArraySize);
 }
 
 int32 NiRFmxGSMLibrary::ModAccFetchDemodulatedBits(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int8 demodulatedBits[], int32 arraySize, int32* actualArraySize)

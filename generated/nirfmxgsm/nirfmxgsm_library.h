@@ -23,6 +23,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) override;
+  int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) override;
   int32 BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]) override;
@@ -84,6 +85,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
   int32 ModAccCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) override;
   int32 ModAccCfgDroopCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 droopCompensationEnabled) override;
   int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellationTrace[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationTraceI[], float32 constellationTraceQ[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchDemodulatedBits(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int8 demodulatedBits[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchDetectedTSC(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* detectedTSC) override;
   int32 ModAccFetchDetectedTSCArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 detectedTSC[], int32 arraySize, int32* actualArraySize) override;
@@ -142,6 +144,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
  private:
   using AbortMeasurementsPtr = decltype(&RFmxGSM_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxGSM_AnalyzeIQ1Waveform);
+  using AnalyzeIQ1WaveformSplitPtr = decltype(&RFmxGSM_AnalyzeIQ1WaveformSplit);
   using AutoLevelPtr = decltype(&RFmxGSM_AutoLevel);
   using BuildOffsetStringPtr = decltype(&RFmxGSM_BuildOffsetString);
   using BuildSignalStringPtr = decltype(&RFmxGSM_BuildSignalString);
@@ -203,6 +206,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
   using ModAccCfgAveragingPtr = decltype(&RFmxGSM_ModAccCfgAveraging);
   using ModAccCfgDroopCompensationEnabledPtr = decltype(&RFmxGSM_ModAccCfgDroopCompensationEnabled);
   using ModAccFetchConstellationTracePtr = decltype(&RFmxGSM_ModAccFetchConstellationTrace);
+  using ModAccFetchConstellationTraceSplitPtr = decltype(&RFmxGSM_ModAccFetchConstellationTraceSplit);
   using ModAccFetchDemodulatedBitsPtr = decltype(&RFmxGSM_ModAccFetchDemodulatedBits);
   using ModAccFetchDetectedTSCPtr = decltype(&RFmxGSM_ModAccFetchDetectedTSC);
   using ModAccFetchDetectedTSCArrayPtr = decltype(&RFmxGSM_ModAccFetchDetectedTSCArray);
@@ -261,6 +265,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
   typedef struct FunctionPointers {
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
+    AnalyzeIQ1WaveformSplitPtr AnalyzeIQ1WaveformSplit;
     AutoLevelPtr AutoLevel;
     BuildOffsetStringPtr BuildOffsetString;
     BuildSignalStringPtr BuildSignalString;
@@ -322,6 +327,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
     ModAccCfgAveragingPtr ModAccCfgAveraging;
     ModAccCfgDroopCompensationEnabledPtr ModAccCfgDroopCompensationEnabled;
     ModAccFetchConstellationTracePtr ModAccFetchConstellationTrace;
+    ModAccFetchConstellationTraceSplitPtr ModAccFetchConstellationTraceSplit;
     ModAccFetchDemodulatedBitsPtr ModAccFetchDemodulatedBits;
     ModAccFetchDetectedTSCPtr ModAccFetchDetectedTSC;
     ModAccFetchDetectedTSCArrayPtr ModAccFetchDetectedTSCArray;

@@ -761,8 +761,8 @@ int32 __stdcall RFmxGSM_AnalyzeIQ1WaveformSplit(
    char resultName[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 arraySize,
    int32 reset,
    int64 reserved
@@ -1108,8 +1108,8 @@ int32 __stdcall RFmxGSM_ModAccFetchConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 constellationTraceI[],
+   float32 constellationTraceQ[],
    int32 arraySize,
    int32* actualArraySize
 );

@@ -407,6 +407,30 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
   return response;
 }
 
+AnalyzeIQ1WaveformSplitResponse
+analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iqi, request.mutable_iqi());
+  copy_array(iqq, request.mutable_iqq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformSplitResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AnalyzeSpectrum1WaveformResponse
 analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset)
 {
@@ -2228,6 +2252,28 @@ mod_acc_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+ModAccCfgReferenceWaveformSplitResponse
+mod_acc_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccCfgReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform_i, request.mutable_reference_waveform_i());
+  copy_array(reference_waveform_q, request.mutable_reference_waveform_q());
+
+  auto response = ModAccCfgReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccCfgReferenceWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccCfgSynchronizationModeAndIntervalResponse
 mod_acc_cfg_synchronization_mode_and_interval(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccSynchronizationMode, pb::int32>& synchronization_mode, const pb::int32& measurement_offset, const pb::int32& measurement_length)
 {
@@ -2270,6 +2316,25 @@ mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Sess
 
   raise_if_error(
       stub->ModAccFetchConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchConstellationTraceSplitResponse
+mod_acc_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
@@ -2655,6 +2720,25 @@ mod_acc_fetch_reference_waveform(const StubPtr& stub, const nidevice_grpc::Sessi
   return response;
 }
 
+ModAccFetchReferenceWaveformSplitResponse
+mod_acc_fetch_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchReferenceWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OBWCfgAveragingResponse
 obw_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ObwAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ObwAveragingType, pb::int32>& averaging_type)
 {
@@ -2850,6 +2934,25 @@ qevm_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session
 
   raise_if_error(
       stub->QEVMFetchConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+QEVMFetchConstellationTraceSplitResponse
+qevm_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = QEVMFetchConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = QEVMFetchConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->QEVMFetchConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;

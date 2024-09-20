@@ -36,6 +36,7 @@ ACPFetchRelativePowersTraceResponse acp_fetch_relative_powers_trace(const StubPt
 ACPFetchSpectrumResponse acp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 AbortMeasurementsResponse abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 AnalyzeIQ1WaveformResponse analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset);
+AnalyzeIQ1WaveformSplitResponse analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset);
 AnalyzeSpectrum1WaveformResponse analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset);
 AutoLevelResponse auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_interval);
 BuildChannelStringResponse build_channel_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& channel_number);
@@ -49,6 +50,7 @@ CDAFetchCodeDomainIAndQPowerTraceResponse cda_fetch_code_domain_i_and_q_power_tr
 CDAFetchCodeDomainPowerResponse cda_fetch_code_domain_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CDAFetchIQImpairmentsResponse cda_fetch_iq_impairments(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CDAFetchSymbolConstellationTraceResponse cda_fetch_symbol_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+CDAFetchSymbolConstellationTraceSplitResponse cda_fetch_symbol_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CDAFetchSymbolEVMResponse cda_fetch_symbol_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CDAFetchSymbolEVMTraceResponse cda_fetch_symbol_evm_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CDAFetchSymbolMagnitudeErrorTraceResponse cda_fetch_symbol_magnitude_error_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
@@ -114,6 +116,7 @@ InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name);
 ModAccCfgSynchronizationModeAndIntervalResponse mod_acc_cfg_synchronization_mode_and_interval(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccSynchronizationMode, pb::int32>& synchronization_mode, const pb::int32& measurement_offset, const pb::int32& measurement_length);
 ModAccFetchConstellationTraceResponse mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+ModAccFetchConstellationTraceSplitResponse mod_acc_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDetectedChannelResponse mod_acc_fetch_detected_channel(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDetectedChannelArrayResponse mod_acc_fetch_detected_channel_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchEVMResponse mod_acc_fetch_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
@@ -132,6 +135,7 @@ OBWFetchSpectrumResponse obw_fetch_spectrum(const StubPtr& stub, const nidevice_
 QEVMCfgAveragingResponse qevm_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<QevmAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count);
 QEVMCfgMeasurementLengthResponse qevm_cfg_measurement_length(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& measurement_length);
 QEVMFetchConstellationTraceResponse qevm_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+QEVMFetchConstellationTraceSplitResponse qevm_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 QEVMFetchEVMResponse qevm_fetch_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 QEVMFetchEVMTraceResponse qevm_fetch_evm_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 QEVMFetchIQImpairmentsResponse qevm_fetch_iq_impairments(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);

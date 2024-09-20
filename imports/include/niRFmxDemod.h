@@ -757,8 +757,8 @@ int32 __stdcall RFmxDemod_DDemodSetSymbolMap(
 int32 __stdcall RFmxDemod_DDemodSetSymbolMapSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float32 I[],
-   float32 Q[],
+   float32 attrValI[],
+   float32 attrValQ[],
    int32 arraySize
 );
 
@@ -774,8 +774,8 @@ int32 __stdcall RFmxDemod_DDemodCfgSymbolMapSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 symbolMapType,
-   float32 I[],
-   float32 Q[],
+   float32 symbolMapI[],
+   float32 symbolMapQ[],
    int32 arraySize
 );
 
@@ -793,8 +793,8 @@ int32 __stdcall RFmxDemod_DDemodCfgEqualizerInitialCoefficientsSplit(
    char selectorString[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 equalizerInitialCoefficientsI[],
+   float32 equalizerInitialCoefficientsQ[],
    int32 arraySize
 );
 
@@ -862,8 +862,8 @@ int32 __stdcall RFmxDemod_AnalyzeIQ1WaveformSplit(
    char resultName[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 arraySize,
    int32 reset,
    int64 reserved
@@ -1087,8 +1087,8 @@ int32 __stdcall RFmxDemod_DDemodCfgEqualizerSplit(
    int32 equalizerFilterLength,
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 equalizerInitialCoefficientsI[],
+   float32 equalizerInitialCoefficientsQ[],
    int32 equalizerTrainingCount,
    float64 equalizerConvergenceFactor,
    int32 arraySize
@@ -1212,8 +1212,8 @@ int32 __stdcall RFmxDemod_DDemodGetEqualizerInitialCoefficientsSplit(
    char selectorString[],
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 equalizerInitialCoefficientsI[],
+   float32 equalizerInitialCoefficientsQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1229,8 +1229,8 @@ int32 __stdcall RFmxDemod_DDemodGetSymbolMap(
 int32 __stdcall RFmxDemod_DDemodGetSymbolMapSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float32 I[],
-   float32 Q[],
+   float32 symbolMapI[],
+   float32 symbolMapQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1296,8 +1296,8 @@ int32 __stdcall RFmxDemod_DDemodFetchReferenceWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1319,8 +1319,8 @@ int32 __stdcall RFmxDemod_DDemodFetchEqualizerCoefficientsSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 equalizerCoefficientsI[],
+   float32 equalizerCoefficientsQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1355,8 +1355,8 @@ int32 __stdcall RFmxDemod_DDemodFetchMeasurementWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 measurementWaveformI[],
+   float32 measurementWaveformQ[],
    int32 arraySize,
    int32* actualArraySize,
    int32* samplesPerSymbol,
@@ -1376,8 +1376,8 @@ int32 __stdcall RFmxDemod_DDemodFetchConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 constellationTraceI[],
+   float32 constellationTraceQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1395,8 +1395,8 @@ int32 __stdcall RFmxDemod_DDemodFetchOffsetConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 offsetConstellationTraceI[],
+   float32 offsetConstellationTraceQ[],
    int32 arraySize,
    int32* actualArraySize
 );

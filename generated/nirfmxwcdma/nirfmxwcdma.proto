@@ -34,6 +34,7 @@ service NiRFmxWCDMA {
   rpc ACPFetchTotalCarrierPower(ACPFetchTotalCarrierPowerRequest) returns (ACPFetchTotalCarrierPowerResponse);
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildCarrierString(BuildCarrierStringRequest) returns (BuildCarrierStringResponse);
@@ -120,8 +121,10 @@ service NiRFmxWCDMA {
   rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc ModAccCfgReferenceWaveform(ModAccCfgReferenceWaveformRequest) returns (ModAccCfgReferenceWaveformResponse);
+  rpc ModAccCfgReferenceWaveformSplit(ModAccCfgReferenceWaveformSplitRequest) returns (ModAccCfgReferenceWaveformSplitResponse);
   rpc ModAccCfgSynchronizationModeAndInterval(ModAccCfgSynchronizationModeAndIntervalRequest) returns (ModAccCfgSynchronizationModeAndIntervalResponse);
   rpc ModAccFetchConstellationTrace(ModAccFetchConstellationTraceRequest) returns (ModAccFetchConstellationTraceResponse);
+  rpc ModAccFetchConstellationTraceSplit(ModAccFetchConstellationTraceSplitRequest) returns (ModAccFetchConstellationTraceSplitResponse);
   rpc ModAccFetchDetectedChannel(ModAccFetchDetectedChannelRequest) returns (ModAccFetchDetectedChannelResponse);
   rpc ModAccFetchDetectedChannelArray(ModAccFetchDetectedChannelArrayRequest) returns (ModAccFetchDetectedChannelArrayResponse);
   rpc ModAccFetchEVM(ModAccFetchEVMRequest) returns (ModAccFetchEVMResponse);
@@ -142,6 +145,7 @@ service NiRFmxWCDMA {
   rpc ModAccFetchRCDEArray(ModAccFetchRCDEArrayRequest) returns (ModAccFetchRCDEArrayResponse);
   rpc ModAccFetchRCDETrace(ModAccFetchRCDETraceRequest) returns (ModAccFetchRCDETraceResponse);
   rpc ModAccFetchReferenceWaveform(ModAccFetchReferenceWaveformRequest) returns (ModAccFetchReferenceWaveformResponse);
+  rpc ModAccFetchReferenceWaveformSplit(ModAccFetchReferenceWaveformSplitRequest) returns (ModAccFetchReferenceWaveformSplitResponse);
   rpc OBWCfgAveraging(OBWCfgAveragingRequest) returns (OBWCfgAveragingResponse);
   rpc OBWCfgRBWFilter(OBWCfgRBWFilterRequest) returns (OBWCfgRBWFilterResponse);
   rpc OBWCfgSweepTime(OBWCfgSweepTimeRequest) returns (OBWCfgSweepTimeResponse);
@@ -150,6 +154,7 @@ service NiRFmxWCDMA {
   rpc QEVMCfgAveraging(QEVMCfgAveragingRequest) returns (QEVMCfgAveragingResponse);
   rpc QEVMCfgMeasurementLength(QEVMCfgMeasurementLengthRequest) returns (QEVMCfgMeasurementLengthResponse);
   rpc QEVMFetchConstellationTrace(QEVMFetchConstellationTraceRequest) returns (QEVMFetchConstellationTraceResponse);
+  rpc QEVMFetchConstellationTraceSplit(QEVMFetchConstellationTraceSplitRequest) returns (QEVMFetchConstellationTraceSplitResponse);
   rpc QEVMFetchEVM(QEVMFetchEVMRequest) returns (QEVMFetchEVMResponse);
   rpc QEVMFetchEVMTrace(QEVMFetchEVMTraceRequest) returns (QEVMFetchEVMTraceResponse);
   rpc QEVMFetchIQImpairments(QEVMFetchIQImpairmentsRequest) returns (QEVMFetchIQImpairmentsResponse);
@@ -1289,6 +1294,21 @@ message AnalyzeIQ1WaveformResponse {
   int32 status = 1;
 }
 
+message AnalyzeIQ1WaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iqi = 6;
+  repeated float iqq = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeIQ1WaveformSplitResponse {
+  int32 status = 1;
+}
+
 message AnalyzeSpectrum1WaveformRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2336,6 +2356,19 @@ message ModAccCfgReferenceWaveformResponse {
   int32 status = 1;
 }
 
+message ModAccCfgReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float reference_waveform_i = 5;
+  repeated float reference_waveform_q = 6;
+}
+
+message ModAccCfgReferenceWaveformSplitResponse {
+  int32 status = 1;
+}
+
 message ModAccCfgSynchronizationModeAndIntervalRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2361,6 +2394,19 @@ message ModAccFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
   int32 actual_array_size = 3;
+}
+
+message ModAccFetchConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float constellation_i = 2;
+  repeated float constellation_q = 3;
+  int32 actual_array_size = 4;
 }
 
 message ModAccFetchDetectedChannelRequest {
@@ -2650,6 +2696,21 @@ message ModAccFetchReferenceWaveformResponse {
   int32 actual_array_size = 5;
 }
 
+message ModAccFetchReferenceWaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchReferenceWaveformSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float reference_waveform_i = 4;
+  repeated float reference_waveform_q = 5;
+  int32 actual_array_size = 6;
+}
+
 message OBWCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2762,6 +2823,19 @@ message QEVMFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
   int32 actual_array_size = 3;
+}
+
+message QEVMFetchConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message QEVMFetchConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float constellation_i = 2;
+  repeated float constellation_q = 3;
+  int32 actual_array_size = 4;
 }
 
 message QEVMFetchEVMRequest {

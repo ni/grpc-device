@@ -1182,8 +1182,8 @@ int32 __stdcall RFmxWCDMA_AnalyzeIQ1WaveformSplit(
    char resultName[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 arraySize,
    int32 reset,
    int64 reserved
@@ -1242,8 +1242,8 @@ int32 __stdcall RFmxWCDMA_ModAccCfgReferenceWaveformSplit(
    char selectorString[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
    int32 arraySize
 );
 
@@ -1692,8 +1692,8 @@ int32 __stdcall RFmxWCDMA_ModAccFetchReferenceWaveformSplit(
    float64 timeout,
    float64* x0,
    float64* dx,
-   float32 I[],
-   float32 Q[],
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1711,8 +1711,8 @@ int32 __stdcall RFmxWCDMA_ModAccFetchConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 constellationI[],
+   float32 constellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2079,8 +2079,8 @@ int32 __stdcall RFmxWCDMA_QEVMFetchConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 constellationI[],
+   float32 constellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );

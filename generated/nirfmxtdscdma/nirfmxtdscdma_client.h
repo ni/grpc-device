@@ -36,6 +36,7 @@ ACPFetchRelativePowersTraceResponse acp_fetch_relative_powers_trace(const StubPt
 ACPFetchSpectrumResponse acp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 AbortMeasurementsResponse abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 AnalyzeIQ1WaveformResponse analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset);
+AnalyzeIQ1WaveformSplitResponse analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset);
 AnalyzeSpectrum1WaveformResponse analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset);
 AutoLevelResponse auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_interval);
 BuildChannelStringResponse build_channel_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& channel_number);
@@ -57,6 +58,7 @@ CDAFetchMeanSymbolEVMTraceResponse cda_fetch_mean_symbol_evm_trace(const StubPtr
 CDAFetchMeanSymbolMagnitudeErrorTraceResponse cda_fetch_mean_symbol_magnitude_error_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CDAFetchMeanSymbolPhaseErrorTraceResponse cda_fetch_mean_symbol_phase_error_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CDAFetchSymbolConstellationTraceResponse cda_fetch_symbol_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+CDAFetchSymbolConstellationTraceSplitResponse cda_fetch_symbol_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CDAFetchSymbolEVMResponse cda_fetch_symbol_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 CHPCfgAveragingResponse chp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ChpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ChpAveragingType, pb::int32>& averaging_type);
 CHPCfgRBWFilterResponse chp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ChpRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<ChpRbwFilterType, pb::int32>& rbw_filter_type);
@@ -122,6 +124,7 @@ ModAccCfgSynchronizationModeAndIntervalResponse mod_acc_cfg_synchronization_mode
 ModAccFetchCodeDomainErrorTraceResponse mod_acc_fetch_code_domain_error_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchCompositeEVMResponse mod_acc_fetch_composite_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchConstellationTraceResponse mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+ModAccFetchConstellationTraceSplitResponse mod_acc_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDataActiveCDEResponse mod_acc_fetch_data_active_cde(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDataCDEResponse mod_acc_fetch_data_cde(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDataEVMResponse mod_acc_fetch_data_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);

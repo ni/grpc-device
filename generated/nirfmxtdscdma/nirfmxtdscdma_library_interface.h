@@ -29,6 +29,7 @@ class NiRFmxTDSCDMALibraryInterface {
   virtual int32 ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
   virtual int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) = 0;
+  virtual int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) = 0;
   virtual int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved) = 0;
   virtual int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) = 0;
   virtual int32 BuildChannelString(char selectorString[], int32 channelNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
@@ -50,6 +51,7 @@ class NiRFmxTDSCDMALibraryInterface {
   virtual int32 CDAFetchMeanSymbolMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 meanSymbolMagnitudeError[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CDAFetchMeanSymbolPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 meanSymbolPhaseError[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CDAFetchSymbolConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle symbolConstellation[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 CDAFetchSymbolConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellationI[], float32 symbolConstellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CDAFetchSymbolEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSSymbolEVM, float64* maximumPeakSymbolEVM, float64* frequencyError, float64* chipRateError, float64* meanRMSSymbolMagnitudeError, float64* meanRMSSymbolPhaseError, float64* meanSymbolPower) = 0;
   virtual int32 CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) = 0;
   virtual int32 CHPCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType) = 0;
@@ -115,6 +117,7 @@ class NiRFmxTDSCDMALibraryInterface {
   virtual int32 ModAccFetchCodeDomainErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 codeDomainError[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 ModAccFetchCompositeEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsCompositeEVM, float64* peakCompositeEVM, float64* compositeRho, float64* frequencyError, float64* chipRateError, float64* rmsCompositeMagnitudeError, float64* rmsCompositePhaseError) = 0;
   virtual int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 ModAccFetchDataActiveCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataActiveCDE, int32* peakDataActiveCDESpreadingFactor, int32* peakDataActiveCDECode, int32* peakDataActiveCDENumberOfChannels) = 0;
   virtual int32 ModAccFetchDataCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataCDE, int32* peakDataCDESpreadingFactor, int32* peakDataCDECode) = 0;
   virtual int32 ModAccFetchDataEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsDataEVM, float64* peakDataEVM, float64* dataRho, float64* rmsDataMagnitudeError, float64* rmsDataPhaseError) = 0;
