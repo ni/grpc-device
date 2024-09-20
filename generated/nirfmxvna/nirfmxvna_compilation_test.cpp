@@ -7,9 +7,704 @@
 
 namespace nirfmxvna_grpc {
 
+int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_AbortMeasurements(instrumentHandle, selectorString);
+}
+
+int32 BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildCalibrationElementString(selectorString, calibrationElementID, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildCalkitString(char selectorString[], char calkitID[], int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildCalkitString(selectorString, calkitID, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildCalstepString(char selectorString[], int32 calstepNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildCalstepString(selectorString, calstepNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildConnectorString(char selectorString[], char connectorID[], int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildConnectorString(selectorString, connectorID, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildMarkerString(char selectorString[], int32 markerNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildMarkerString(selectorString, markerNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildPortString(char selectorString[], char portString[], int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildPortString(selectorString, portString, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildPulseGeneratorString(char selectorString[], int32 pulseGeneratorNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildPulseGeneratorString(selectorString, pulseGeneratorNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildSParameterString(char selectorString[], int32 sParameterNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildSParameterString(selectorString, sParameterNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildSegmentString(char selectorString[], int32 segmentNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildSegmentString(selectorString, segmentNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  return RFmxVNA_BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+}
+
+int32 BuildWaveString(char selectorString[], int32 waveNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxVNA_BuildWaveString(selectorString, waveNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 CalibrationAbort(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_CalibrationAbort(instrumentHandle, selectorString);
+}
+
+int32 CalibrationAcquire(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  return RFmxVNA_CalibrationAcquire(instrumentHandle, selectorString, timeout);
+}
+
+int32 CalibrationInitiate(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_CalibrationInitiate(instrumentHandle, selectorString);
+}
+
+int32 CalibrationSave(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[])
+{
+  return RFmxVNA_CalibrationSave(instrumentHandle, selectorString, calsetName);
+}
+
+int32 CalkitManagerCalkitAddCalibrationElement(niRFmxInstrHandle instrumentHandle, char selectorString[], char calibrationElementID[])
+{
+  return RFmxVNA_CalkitManagerCalkitAddCalibrationElement(instrumentHandle, selectorString, calibrationElementID);
+}
+
+int32 CalkitManagerCalkitAddConnector(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorID[])
+{
+  return RFmxVNA_CalkitManagerCalkitAddConnector(instrumentHandle, selectorString, connectorID);
+}
+
+int32 CalkitManagerCalkitCalibrationElementDelayModelGetDelay(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* delay)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementDelayModelGetDelay(instrumentHandle, selectorString, delay);
+}
+
+int32 CalkitManagerCalkitCalibrationElementDelayModelSetDelay(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 delay)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementDelayModelSetDelay(instrumentHandle, selectorString, delay);
+}
+
+int32 CalkitManagerCalkitCalibrationElementGetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char description[])
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementGetDescription(instrumentHandle, selectorString, arraySize, description);
+}
+
+int32 CalkitManagerCalkitCalibrationElementGetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* maximumFrequency)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementGetMaximumFrequency(instrumentHandle, selectorString, maximumFrequency);
+}
+
+int32 CalkitManagerCalkitCalibrationElementGetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* minimumFrequency)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementGetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
+}
+
+int32 CalkitManagerCalkitCalibrationElementGetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char connectorIDs[])
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementGetPortConnectors(instrumentHandle, selectorString, arraySize, connectorIDs);
+}
+
+int32 CalkitManagerCalkitCalibrationElementGetSParameterDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterDefinition)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementGetSParameterDefinition(instrumentHandle, selectorString, sParameterDefinition);
+}
+
+int32 CalkitManagerCalkitCalibrationElementGetTypes(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationElementTypes[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementGetTypes(instrumentHandle, selectorString, calibrationElementTypes, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetC0(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* c0)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC0(instrumentHandle, selectorString, c0);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetC1(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* c1)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC1(instrumentHandle, selectorString, c1);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetC2(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* c2)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC2(instrumentHandle, selectorString, c2);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetC3(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* c3)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC3(instrumentHandle, selectorString, c3);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetModelType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* modelType)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetModelType(instrumentHandle, selectorString, modelType);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* offsetDelay)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay(instrumentHandle, selectorString, offsetDelay);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* offsetLoss)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss(instrumentHandle, selectorString, offsetLoss);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* offsetZ0)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0(instrumentHandle, selectorString, offsetZ0);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* referenceImpedance)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance(instrumentHandle, selectorString, referenceImpedance);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterAvailability)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability(instrumentHandle, selectorString, sParameterAvailability);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetC0(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 c0)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC0(instrumentHandle, selectorString, c0);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetC1(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 c1)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC1(instrumentHandle, selectorString, c1);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetC2(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 c2)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC2(instrumentHandle, selectorString, c2);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetC3(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 c3)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC3(instrumentHandle, selectorString, c3);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetModelType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 modelType)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetModelType(instrumentHandle, selectorString, modelType);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetDelay)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay(instrumentHandle, selectorString, offsetDelay);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetLoss)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss(instrumentHandle, selectorString, offsetLoss);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetZ0)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0(instrumentHandle, selectorString, offsetZ0);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceImpedance)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance(instrumentHandle, selectorString, referenceImpedance);
+}
+
+int32 CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(instrumentHandle, selectorString, sParameterAvailability);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetFrequency(instrumentHandle, selectorString, frequency, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS11(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s11[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11(instrumentHandle, selectorString, s11, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS11Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11Split(instrumentHandle, selectorString, s11I, s11Q, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12(instrumentHandle, selectorString, s12, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS12Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12Split(instrumentHandle, selectorString, s12I, s12Q, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21(instrumentHandle, selectorString, s21, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS21Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21Split(instrumentHandle, selectorString, s21I, s21Q, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22(instrumentHandle, selectorString, s22, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS22Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22Split(instrumentHandle, selectorString, s22I, s22Q, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterAvailability)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(instrumentHandle, selectorString, sParameterAvailability);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFrequency(instrumentHandle, selectorString, frequency, arraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char fileName[])
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFromFile(instrumentHandle, selectorString, fileName);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS11(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s11[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11(instrumentHandle, selectorString, s11, arraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12(instrumentHandle, selectorString, s12, arraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21(instrumentHandle, selectorString, s21, arraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22(instrumentHandle, selectorString, s22, arraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(instrumentHandle, selectorString, sParameterAvailability);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char description[])
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSetDescription(instrumentHandle, selectorString, description);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 maximumFrequency)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSetMaximumFrequency(instrumentHandle, selectorString, maximumFrequency);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 minimumFrequency)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorIDs[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSetPortConnectors(instrumentHandle, selectorString, connectorIDs, arraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSetSParameterDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterDefinition)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSetSParameterDefinition(instrumentHandle, selectorString, sParameterDefinition);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSetTypes(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationElementTypes[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSetTypes(instrumentHandle, selectorString, calibrationElementTypes, arraySize);
+}
+
+int32 CalkitManagerCalkitConnectorGetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char description[])
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorGetDescription(instrumentHandle, selectorString, arraySize, description);
+}
+
+int32 CalkitManagerCalkitConnectorGetGender(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* connectorGender)
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorGetGender(instrumentHandle, selectorString, connectorGender);
+}
+
+int32 CalkitManagerCalkitConnectorGetImpedance(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* impedance)
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorGetImpedance(instrumentHandle, selectorString, impedance);
+}
+
+int32 CalkitManagerCalkitConnectorGetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* maximumFrequency)
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorGetMaximumFrequency(instrumentHandle, selectorString, maximumFrequency);
+}
+
+int32 CalkitManagerCalkitConnectorGetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* minimumFrequency)
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorGetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
+}
+
+int32 CalkitManagerCalkitConnectorGetType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char connectorType[])
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorGetType(instrumentHandle, selectorString, arraySize, connectorType);
+}
+
+int32 CalkitManagerCalkitConnectorSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char description[])
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorSetDescription(instrumentHandle, selectorString, description);
+}
+
+int32 CalkitManagerCalkitConnectorSetGender(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 connectorGender)
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorSetGender(instrumentHandle, selectorString, connectorGender);
+}
+
+int32 CalkitManagerCalkitConnectorSetImpedance(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 impedance)
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorSetImpedance(instrumentHandle, selectorString, impedance);
+}
+
+int32 CalkitManagerCalkitConnectorSetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 maximumFrequency)
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorSetMaximumFrequency(instrumentHandle, selectorString, maximumFrequency);
+}
+
+int32 CalkitManagerCalkitConnectorSetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 minimumFrequency)
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorSetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
+}
+
+int32 CalkitManagerCalkitConnectorSetType(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorType[])
+{
+  return RFmxVNA_CalkitManagerCalkitConnectorSetType(instrumentHandle, selectorString, connectorType);
+}
+
+int32 CalkitManagerCalkitGetCalibrationElementIDs(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calibrationElementIDs[])
+{
+  return RFmxVNA_CalkitManagerCalkitGetCalibrationElementIDs(instrumentHandle, selectorString, arraySize, calibrationElementIDs);
+}
+
+int32 CalkitManagerCalkitGetConnectorIDs(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char connectorIDs[])
+{
+  return RFmxVNA_CalkitManagerCalkitGetConnectorIDs(instrumentHandle, selectorString, arraySize, connectorIDs);
+}
+
+int32 CalkitManagerCalkitGetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitDescription[])
+{
+  return RFmxVNA_CalkitManagerCalkitGetDescription(instrumentHandle, selectorString, arraySize, calkitDescription);
+}
+
+int32 CalkitManagerCalkitGetVersion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitVersion[])
+{
+  return RFmxVNA_CalkitManagerCalkitGetVersion(instrumentHandle, selectorString, arraySize, calkitVersion);
+}
+
+int32 CalkitManagerCalkitRemoveCalibrationElement(niRFmxInstrHandle instrumentHandle, char selectorString[], char calibrationElementID[])
+{
+  return RFmxVNA_CalkitManagerCalkitRemoveCalibrationElement(instrumentHandle, selectorString, calibrationElementID);
+}
+
+int32 CalkitManagerCalkitRemoveConnector(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorID[])
+{
+  return RFmxVNA_CalkitManagerCalkitRemoveConnector(instrumentHandle, selectorString, connectorID);
+}
+
+int32 CalkitManagerCalkitSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitDescription[])
+{
+  return RFmxVNA_CalkitManagerCalkitSetDescription(instrumentHandle, selectorString, calkitDescription);
+}
+
+int32 CalkitManagerCalkitSetVersion(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitVersion[])
+{
+  return RFmxVNA_CalkitManagerCalkitSetVersion(instrumentHandle, selectorString, calkitVersion);
+}
+
+int32 CalkitManagerCreateCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[])
+{
+  return RFmxVNA_CalkitManagerCreateCalkit(instrumentHandle, selectorString, calkitID);
+}
+
+int32 CalkitManagerExportCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[], char calkitFilePath[])
+{
+  return RFmxVNA_CalkitManagerExportCalkit(instrumentHandle, selectorString, calkitID, calkitFilePath);
+}
+
+int32 CalkitManagerGetCalkitIDs(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitIDs[])
+{
+  return RFmxVNA_CalkitManagerGetCalkitIDs(instrumentHandle, selectorString, arraySize, calkitIDs);
+}
+
+int32 CalkitManagerImportCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitFilePath[])
+{
+  return RFmxVNA_CalkitManagerImportCalkit(instrumentHandle, selectorString, calkitFilePath);
+}
+
+int32 CalkitManagerRemoveCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[])
+{
+  return RFmxVNA_CalkitManagerRemoveCalkit(instrumentHandle, selectorString, calkitID);
+}
+
+int32 CalkitManagerValidateCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[])
+{
+  return RFmxVNA_CalkitManagerValidateCalkit(instrumentHandle, selectorString, calkitID);
+}
+
+int32 CalsetEmbedFixtureS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char fixtureS2pFilePath[], char vnaPort[], int32 sParameterOrientation, char newCalsetName[])
+{
+  return RFmxVNA_CalsetEmbedFixtureS2p(instrumentHandle, selectorString, calsetName, fixtureS2pFilePath, vnaPort, sParameterOrientation, newCalsetName);
+}
+
+int32 CalsetGetErrorTerm(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], NIComplexSingle errorTerm[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalsetGetErrorTerm(instrumentHandle, selectorString, calsetName, errorTermIdentifier, measurementPort, sourcePort, errorTerm, arraySize, actualArraySize);
+}
+
+int32 CalsetGetErrorTermSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], float32 errorTermI[], float32 errorTermQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalsetGetErrorTermSplit(instrumentHandle, selectorString, calsetName, errorTermIdentifier, measurementPort, sourcePort, errorTermI, errorTermQ, arraySize, actualArraySize);
+}
+
+int32 CalsetGetFrequencyGrid(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, float64 frequencyGrid[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalsetGetFrequencyGrid(instrumentHandle, selectorString, calsetName, errorTermIdentifier, frequencyGrid, arraySize, actualArraySize);
+}
+
+int32 CalsetLoadFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char calsetFilePath[])
+{
+  return RFmxVNA_CalsetLoadFromFile(instrumentHandle, selectorString, calsetName, calsetFilePath);
+}
+
+int32 CalsetSaveToFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char calsetFilePath[])
+{
+  return RFmxVNA_CalsetSaveToFile(instrumentHandle, selectorString, calsetName, calsetFilePath);
+}
+
+int32 CfgCorrectionPortSubset(niRFmxInstrHandle instrumentHandle, char selectorString[], char portSubset[])
+{
+  return RFmxVNA_CfgCorrectionPortSubset(instrumentHandle, selectorString, portSubset);
+}
+
+int32 CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
+{
+  return RFmxVNA_CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+}
+
+int32 CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
+{
+  return RFmxVNA_CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+}
+
+int32 CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
+{
+  return RFmxVNA_CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+}
+
+int32 CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone)
+{
+  return RFmxVNA_CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
+}
+
+int32 ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_ClearAllNamedResults(instrumentHandle, selectorString);
+}
+
+int32 ClearCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[])
+{
+  return RFmxVNA_ClearCalset(instrumentHandle, selectorString, calsetName);
+}
+
+int32 ClearMeasurementMemoryNames(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_ClearMeasurementMemoryNames(instrumentHandle, selectorString);
+}
+
+int32 ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_ClearNamedResult(instrumentHandle, selectorString);
+}
+
+int32 CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
+{
+  return RFmxVNA_CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
+}
+
 int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
 {
   return RFmxVNA_Close(instrumentHandle, forceDestroy);
+}
+
+int32 Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_Commit(instrumentHandle, selectorString);
+}
+
+int32 CopyCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char sourceCalsetName[], char newCalsetName[])
+{
+  return RFmxVNA_CopyCalset(instrumentHandle, selectorString, sourceCalsetName, newCalsetName);
+}
+
+int32 CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char memoryDataName[])
+{
+  return RFmxVNA_CopyDataToMeasurementMemory(instrumentHandle, selectorString, memoryDataName);
+}
+
+int32 CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  return RFmxVNA_CreateSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  return RFmxVNA_DeleteSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 DeselectActiveCalset(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_DeselectActiveCalset(instrumentHandle, selectorString);
+}
+
+int32 GetAllCalsetNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calsetNames[])
+{
+  return RFmxVNA_GetAllCalsetNames(instrumentHandle, selectorString, arraySize, calsetNames);
+}
+
+int32 GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
+{
+  return RFmxVNA_GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
+}
+
+int32 GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
+{
+  return RFmxVNA_GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
+{
+  return RFmxVNA_GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
+{
+  return RFmxVNA_GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
+{
+  return RFmxVNA_GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
+{
+  return RFmxVNA_GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
+{
+  return RFmxVNA_GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
+{
+  return RFmxVNA_GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
+}
+
+int32 GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
+{
+  return RFmxVNA_GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
+{
+  return RFmxVNA_GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
+{
+  return RFmxVNA_GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
 int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -22,9 +717,284 @@ int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 
   return RFmxVNA_GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
 }
 
+int32 GetMeasurementMemoryNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char measurementMemoryNames[])
+{
+  return RFmxVNA_GetMeasurementMemoryNames(instrumentHandle, selectorString, arraySize, measurementMemoryNames);
+}
+
+int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetMeasurementMemoryXData(instrumentHandle, selectorString, x, arraySize, actualArraySize);
+}
+
+int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_GetMeasurementMemoryYData(instrumentHandle, selectorString, y1, y2, arraySize, actualArraySize);
+}
+
+int32 IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_IQFetchData(instrumentHandle, selectorString, timeout, x0, dx, data, arraySize, actualArraySize);
+}
+
+int32 IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_IQFetchDataSplit(instrumentHandle, selectorString, timeout, x0, dx, dataI, dataQ, arraySize, actualArraySize);
+}
+
 int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession)
 {
   return RFmxVNA_Initialize(resourceName, optionString, handleOut, isNewSession);
+}
+
+int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
+{
+  return RFmxVNA_InitializeFromNIRFSASession(nirfsaSession, handleOut);
+}
+
+int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
+{
+  return RFmxVNA_Initiate(instrumentHandle, selectorString, resultName);
+}
+
+int32 LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char memoryDataName[])
+{
+  return RFmxVNA_LoadDataToMeasurementMemoryFromFile(instrumentHandle, selectorString, filePath, parameter, memoryDataName);
+}
+
+int32 MarkerCfgDataSource(niRFmxInstrHandle instrumentHandle, char selectorString[], char dataSource[])
+{
+  return RFmxVNA_MarkerCfgDataSource(instrumentHandle, selectorString, dataSource);
+}
+
+int32 MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers)
+{
+  return RFmxVNA_MarkerCfgNumberOfMarkers(instrumentHandle, selectorString, numberOfMarkers);
+}
+
+int32 MarkerCfgPeakSearchExcursion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 peakExcursionEnabled, float64 peakExcursion)
+{
+  return RFmxVNA_MarkerCfgPeakSearchExcursion(instrumentHandle, selectorString, peakExcursionEnabled, peakExcursion);
+}
+
+int32 MarkerCfgPeakSearchThreshold(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 threshold)
+{
+  return RFmxVNA_MarkerCfgPeakSearchThreshold(instrumentHandle, selectorString, thresholdEnabled, threshold);
+}
+
+int32 MarkerCfgReferenceMarker(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceMarker)
+{
+  return RFmxVNA_MarkerCfgReferenceMarker(instrumentHandle, selectorString, referenceMarker);
+}
+
+int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType)
+{
+  return RFmxVNA_MarkerCfgType(instrumentHandle, selectorString, markerType);
+}
+
+int32 MarkerCfgX(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerX)
+{
+  return RFmxVNA_MarkerCfgX(instrumentHandle, selectorString, markerX);
+}
+
+int32 MarkerCfgY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerY1, float64 markerY2)
+{
+  return RFmxVNA_MarkerCfgY(instrumentHandle, selectorString, markerY1, markerY2);
+}
+
+int32 MarkerFetchX(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerX)
+{
+  return RFmxVNA_MarkerFetchX(instrumentHandle, selectorString, markerX);
+}
+
+int32 MarkerFetchY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerY1, float64* markerY2)
+{
+  return RFmxVNA_MarkerFetchY(instrumentHandle, selectorString, markerY1, markerY2);
+}
+
+int32 MarkerSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 searchMode)
+{
+  return RFmxVNA_MarkerSearch(instrumentHandle, selectorString, searchMode);
+}
+
+int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
+{
+  return RFmxVNA_ResetAttribute(instrumentHandle, selectorString, attributeID);
+}
+
+int32 ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_ResetToDefault(instrumentHandle, selectorString);
+}
+
+int32 SParamsCfgSParameter(niRFmxInstrHandle instrumentHandle, char selectorString[], char sParameter[])
+{
+  return RFmxVNA_SParamsCfgSParameter(instrumentHandle, selectorString, sParameter);
+}
+
+int32 SParamsExportToSnPFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char snpFilePath[])
+{
+  return RFmxVNA_SParamsExportToSnPFile(instrumentHandle, selectorString, snpFilePath);
+}
+
+int32 SParamsFetchXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 x[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_SParamsFetchXData(instrumentHandle, selectorString, timeout, x, arraySize, actualArraySize);
+}
+
+int32 SParamsFetchYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_SParamsFetchYData(instrumentHandle, selectorString, timeout, y1, y2, arraySize, actualArraySize);
+}
+
+int32 SParamsGetSParameter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char sParameter[])
+{
+  return RFmxVNA_SParamsGetSParameter(instrumentHandle, selectorString, arraySize, sParameter);
+}
+
+int32 SelectActiveCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 restoreConfiguration)
+{
+  return RFmxVNA_SelectActiveCalset(instrumentHandle, selectorString, calsetName, restoreConfiguration);
+}
+
+int32 SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
+{
+  return RFmxVNA_SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
+}
+
+int32 SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
+{
+  return RFmxVNA_SendSoftwareEdgeTrigger(instrumentHandle);
+}
+
+int32 SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
+{
+  return RFmxVNA_SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
+{
+  return RFmxVNA_SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
+{
+  return RFmxVNA_SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
+{
+  return RFmxVNA_SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
+{
+  return RFmxVNA_SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
+{
+  return RFmxVNA_SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
+{
+  return RFmxVNA_SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
+{
+  return RFmxVNA_SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
+{
+  return RFmxVNA_SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
+{
+  return RFmxVNA_SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
+{
+  return RFmxVNA_SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
+{
+  return RFmxVNA_WaitForAcquisitionComplete(instrumentHandle, timeout);
+}
+
+int32 WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  return RFmxVNA_WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
+}
+
+int32 WavesCfgWave(niRFmxInstrHandle instrumentHandle, char selectorString[], char wave[])
+{
+  return RFmxVNA_WavesCfgWave(instrumentHandle, selectorString, wave);
+}
+
+int32 WavesFetchXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 x[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_WavesFetchXData(instrumentHandle, selectorString, timeout, x, arraySize, actualArraySize);
+}
+
+int32 WavesFetchYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_WavesFetchYData(instrumentHandle, selectorString, timeout, y1, y2, arraySize, actualArraySize);
+}
+
+int32 WavesGetWave(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char wave[])
+{
+  return RFmxVNA_WavesGetWave(instrumentHandle, selectorString, arraySize, wave);
 }
 
 }  // namespace nirfmxvna_grpc

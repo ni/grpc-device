@@ -217,7 +217,6 @@ attributes = {
     },
     13631551: {
         'access': 'read-write',
-        'enum': 'PulseGeneratorExportOutputTerminal',
         'name': 'PULSE_GENERATOR_EXPORT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },

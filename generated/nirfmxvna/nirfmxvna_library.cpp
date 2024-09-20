@@ -27,10 +27,204 @@ NiRFmxVNALibrary::NiRFmxVNALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   if (!loaded) {
     return;
   }
+  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxVNA_AbortMeasurements"));
+  function_pointers_.BuildCalibrationElementString = reinterpret_cast<BuildCalibrationElementStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalibrationElementString"));
+  function_pointers_.BuildCalkitString = reinterpret_cast<BuildCalkitStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalkitString"));
+  function_pointers_.BuildCalstepString = reinterpret_cast<BuildCalstepStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalstepString"));
+  function_pointers_.BuildConnectorString = reinterpret_cast<BuildConnectorStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildConnectorString"));
+  function_pointers_.BuildMarkerString = reinterpret_cast<BuildMarkerStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildMarkerString"));
+  function_pointers_.BuildPortString = reinterpret_cast<BuildPortStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildPortString"));
+  function_pointers_.BuildPulseGeneratorString = reinterpret_cast<BuildPulseGeneratorStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildPulseGeneratorString"));
+  function_pointers_.BuildSParameterString = reinterpret_cast<BuildSParameterStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildSParameterString"));
+  function_pointers_.BuildSegmentString = reinterpret_cast<BuildSegmentStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildSegmentString"));
+  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildSignalString"));
+  function_pointers_.BuildWaveString = reinterpret_cast<BuildWaveStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildWaveString"));
+  function_pointers_.CalibrationAbort = reinterpret_cast<CalibrationAbortPtr>(shared_library_->get_function_pointer("RFmxVNA_CalibrationAbort"));
+  function_pointers_.CalibrationAcquire = reinterpret_cast<CalibrationAcquirePtr>(shared_library_->get_function_pointer("RFmxVNA_CalibrationAcquire"));
+  function_pointers_.CalibrationInitiate = reinterpret_cast<CalibrationInitiatePtr>(shared_library_->get_function_pointer("RFmxVNA_CalibrationInitiate"));
+  function_pointers_.CalibrationSave = reinterpret_cast<CalibrationSavePtr>(shared_library_->get_function_pointer("RFmxVNA_CalibrationSave"));
+  function_pointers_.CalkitManagerCalkitAddCalibrationElement = reinterpret_cast<CalkitManagerCalkitAddCalibrationElementPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitAddCalibrationElement"));
+  function_pointers_.CalkitManagerCalkitAddConnector = reinterpret_cast<CalkitManagerCalkitAddConnectorPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitAddConnector"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementDelayModelGetDelay = reinterpret_cast<CalkitManagerCalkitCalibrationElementDelayModelGetDelayPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementDelayModelGetDelay"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementDelayModelSetDelay = reinterpret_cast<CalkitManagerCalkitCalibrationElementDelayModelSetDelayPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementDelayModelSetDelay"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementGetDescription = reinterpret_cast<CalkitManagerCalkitCalibrationElementGetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementGetDescription"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementGetMaximumFrequency = reinterpret_cast<CalkitManagerCalkitCalibrationElementGetMaximumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementGetMaximumFrequency"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementGetMinimumFrequency = reinterpret_cast<CalkitManagerCalkitCalibrationElementGetMinimumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementGetMinimumFrequency"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementGetPortConnectors = reinterpret_cast<CalkitManagerCalkitCalibrationElementGetPortConnectorsPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementGetPortConnectors"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementGetSParameterDefinition = reinterpret_cast<CalkitManagerCalkitCalibrationElementGetSParameterDefinitionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementGetSParameterDefinition"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementGetTypes = reinterpret_cast<CalkitManagerCalkitCalibrationElementGetTypesPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementGetTypes"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC0 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetC0Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC0"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC1 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetC1Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC1"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC2 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetC2Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC2"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC3 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetC3Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC3"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetModelType = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetModelTypePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetModelType"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedancePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC0 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetC0Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC0"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC1 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetC1Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC1"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC2 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetC2Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC2"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC3 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetC3Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC3"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetModelType = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetModelTypePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetModelType"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0 = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedancePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability = reinterpret_cast<CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetFrequency = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetFrequency"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS11 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetS11Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS11Split = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetS11SplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11Split"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS12 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetS12Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS12Split = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetS12SplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12Split"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS21 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetS21Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS21Split = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetS21SplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21Split"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS22 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetS22Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS22Split = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetS22SplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22Split"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetFrequency = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFrequency"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetFromFile = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetFromFilePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFromFile"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS11Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS12Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS21Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS22Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSetDescription = reinterpret_cast<CalkitManagerCalkitCalibrationElementSetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSetDescription"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSetMaximumFrequency = reinterpret_cast<CalkitManagerCalkitCalibrationElementSetMaximumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSetMaximumFrequency"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSetMinimumFrequency = reinterpret_cast<CalkitManagerCalkitCalibrationElementSetMinimumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSetMinimumFrequency"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSetPortConnectors = reinterpret_cast<CalkitManagerCalkitCalibrationElementSetPortConnectorsPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSetPortConnectors"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSetSParameterDefinition = reinterpret_cast<CalkitManagerCalkitCalibrationElementSetSParameterDefinitionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSetSParameterDefinition"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSetTypes = reinterpret_cast<CalkitManagerCalkitCalibrationElementSetTypesPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSetTypes"));
+  function_pointers_.CalkitManagerCalkitConnectorGetDescription = reinterpret_cast<CalkitManagerCalkitConnectorGetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorGetDescription"));
+  function_pointers_.CalkitManagerCalkitConnectorGetGender = reinterpret_cast<CalkitManagerCalkitConnectorGetGenderPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorGetGender"));
+  function_pointers_.CalkitManagerCalkitConnectorGetImpedance = reinterpret_cast<CalkitManagerCalkitConnectorGetImpedancePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorGetImpedance"));
+  function_pointers_.CalkitManagerCalkitConnectorGetMaximumFrequency = reinterpret_cast<CalkitManagerCalkitConnectorGetMaximumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorGetMaximumFrequency"));
+  function_pointers_.CalkitManagerCalkitConnectorGetMinimumFrequency = reinterpret_cast<CalkitManagerCalkitConnectorGetMinimumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorGetMinimumFrequency"));
+  function_pointers_.CalkitManagerCalkitConnectorGetType = reinterpret_cast<CalkitManagerCalkitConnectorGetTypePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorGetType"));
+  function_pointers_.CalkitManagerCalkitConnectorSetDescription = reinterpret_cast<CalkitManagerCalkitConnectorSetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorSetDescription"));
+  function_pointers_.CalkitManagerCalkitConnectorSetGender = reinterpret_cast<CalkitManagerCalkitConnectorSetGenderPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorSetGender"));
+  function_pointers_.CalkitManagerCalkitConnectorSetImpedance = reinterpret_cast<CalkitManagerCalkitConnectorSetImpedancePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorSetImpedance"));
+  function_pointers_.CalkitManagerCalkitConnectorSetMaximumFrequency = reinterpret_cast<CalkitManagerCalkitConnectorSetMaximumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorSetMaximumFrequency"));
+  function_pointers_.CalkitManagerCalkitConnectorSetMinimumFrequency = reinterpret_cast<CalkitManagerCalkitConnectorSetMinimumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorSetMinimumFrequency"));
+  function_pointers_.CalkitManagerCalkitConnectorSetType = reinterpret_cast<CalkitManagerCalkitConnectorSetTypePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitConnectorSetType"));
+  function_pointers_.CalkitManagerCalkitGetCalibrationElementIDs = reinterpret_cast<CalkitManagerCalkitGetCalibrationElementIDsPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetCalibrationElementIDs"));
+  function_pointers_.CalkitManagerCalkitGetConnectorIDs = reinterpret_cast<CalkitManagerCalkitGetConnectorIDsPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetConnectorIDs"));
+  function_pointers_.CalkitManagerCalkitGetDescription = reinterpret_cast<CalkitManagerCalkitGetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetDescription"));
+  function_pointers_.CalkitManagerCalkitGetVersion = reinterpret_cast<CalkitManagerCalkitGetVersionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetVersion"));
+  function_pointers_.CalkitManagerCalkitRemoveCalibrationElement = reinterpret_cast<CalkitManagerCalkitRemoveCalibrationElementPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitRemoveCalibrationElement"));
+  function_pointers_.CalkitManagerCalkitRemoveConnector = reinterpret_cast<CalkitManagerCalkitRemoveConnectorPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitRemoveConnector"));
+  function_pointers_.CalkitManagerCalkitSetDescription = reinterpret_cast<CalkitManagerCalkitSetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitSetDescription"));
+  function_pointers_.CalkitManagerCalkitSetVersion = reinterpret_cast<CalkitManagerCalkitSetVersionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitSetVersion"));
+  function_pointers_.CalkitManagerCreateCalkit = reinterpret_cast<CalkitManagerCreateCalkitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCreateCalkit"));
+  function_pointers_.CalkitManagerExportCalkit = reinterpret_cast<CalkitManagerExportCalkitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerExportCalkit"));
+  function_pointers_.CalkitManagerGetCalkitIDs = reinterpret_cast<CalkitManagerGetCalkitIDsPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerGetCalkitIDs"));
+  function_pointers_.CalkitManagerImportCalkit = reinterpret_cast<CalkitManagerImportCalkitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerImportCalkit"));
+  function_pointers_.CalkitManagerRemoveCalkit = reinterpret_cast<CalkitManagerRemoveCalkitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerRemoveCalkit"));
+  function_pointers_.CalkitManagerValidateCalkit = reinterpret_cast<CalkitManagerValidateCalkitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerValidateCalkit"));
+  function_pointers_.CalsetEmbedFixtureS2p = reinterpret_cast<CalsetEmbedFixtureS2pPtr>(shared_library_->get_function_pointer("RFmxVNA_CalsetEmbedFixtureS2p"));
+  function_pointers_.CalsetGetErrorTerm = reinterpret_cast<CalsetGetErrorTermPtr>(shared_library_->get_function_pointer("RFmxVNA_CalsetGetErrorTerm"));
+  function_pointers_.CalsetGetErrorTermSplit = reinterpret_cast<CalsetGetErrorTermSplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalsetGetErrorTermSplit"));
+  function_pointers_.CalsetGetFrequencyGrid = reinterpret_cast<CalsetGetFrequencyGridPtr>(shared_library_->get_function_pointer("RFmxVNA_CalsetGetFrequencyGrid"));
+  function_pointers_.CalsetLoadFromFile = reinterpret_cast<CalsetLoadFromFilePtr>(shared_library_->get_function_pointer("RFmxVNA_CalsetLoadFromFile"));
+  function_pointers_.CalsetSaveToFile = reinterpret_cast<CalsetSaveToFilePtr>(shared_library_->get_function_pointer("RFmxVNA_CalsetSaveToFile"));
+  function_pointers_.CfgCorrectionPortSubset = reinterpret_cast<CfgCorrectionPortSubsetPtr>(shared_library_->get_function_pointer("RFmxVNA_CfgCorrectionPortSubset"));
+  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_->get_function_pointer("RFmxVNA_CfgFrequencyReference"));
+  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_->get_function_pointer("RFmxVNA_CfgMechanicalAttenuation"));
+  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_->get_function_pointer("RFmxVNA_CfgRFAttenuation"));
+  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_->get_function_pointer("RFmxVNA_CheckMeasurementStatus"));
+  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_->get_function_pointer("RFmxVNA_ClearAllNamedResults"));
+  function_pointers_.ClearCalset = reinterpret_cast<ClearCalsetPtr>(shared_library_->get_function_pointer("RFmxVNA_ClearCalset"));
+  function_pointers_.ClearMeasurementMemoryNames = reinterpret_cast<ClearMeasurementMemoryNamesPtr>(shared_library_->get_function_pointer("RFmxVNA_ClearMeasurementMemoryNames"));
+  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_->get_function_pointer("RFmxVNA_ClearNamedResult"));
+  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxVNA_CloneSignalConfiguration"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("RFmxVNA_Close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("RFmxVNA_Commit"));
+  function_pointers_.CopyCalset = reinterpret_cast<CopyCalsetPtr>(shared_library_->get_function_pointer("RFmxVNA_CopyCalset"));
+  function_pointers_.CopyDataToMeasurementMemory = reinterpret_cast<CopyDataToMeasurementMemoryPtr>(shared_library_->get_function_pointer("RFmxVNA_CopyDataToMeasurementMemory"));
+  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxVNA_CreateSignalConfiguration"));
+  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxVNA_DeleteSignalConfiguration"));
+  function_pointers_.DeselectActiveCalset = reinterpret_cast<DeselectActiveCalsetPtr>(shared_library_->get_function_pointer("RFmxVNA_DeselectActiveCalset"));
+  function_pointers_.GetAllCalsetNames = reinterpret_cast<GetAllCalsetNamesPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAllCalsetNames"));
+  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAllNamedResultNames"));
+  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeF32"));
+  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeF32Array"));
+  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeF64"));
+  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeF64Array"));
+  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeI16"));
+  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeI32"));
+  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeI32Array"));
+  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeI64"));
+  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeI64Array"));
+  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeI8"));
+  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeNIComplexSingleArray"));
+  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeString"));
+  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeU16"));
+  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeU32"));
+  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeU32Array"));
+  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeU64Array"));
+  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeU8"));
+  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_GetAttributeU8Array"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxVNA_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxVNA_GetErrorString"));
+  function_pointers_.GetMeasurementMemoryNames = reinterpret_cast<GetMeasurementMemoryNamesPtr>(shared_library_->get_function_pointer("RFmxVNA_GetMeasurementMemoryNames"));
+  function_pointers_.GetMeasurementMemoryXData = reinterpret_cast<GetMeasurementMemoryXDataPtr>(shared_library_->get_function_pointer("RFmxVNA_GetMeasurementMemoryXData"));
+  function_pointers_.GetMeasurementMemoryYData = reinterpret_cast<GetMeasurementMemoryYDataPtr>(shared_library_->get_function_pointer("RFmxVNA_GetMeasurementMemoryYData"));
+  function_pointers_.IQFetchData = reinterpret_cast<IQFetchDataPtr>(shared_library_->get_function_pointer("RFmxVNA_IQFetchData"));
+  function_pointers_.IQFetchDataSplit = reinterpret_cast<IQFetchDataSplitPtr>(shared_library_->get_function_pointer("RFmxVNA_IQFetchDataSplit"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxVNA_Initialize"));
+  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxVNA_InitializeFromNIRFSASession"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("RFmxVNA_Initiate"));
+  function_pointers_.LoadDataToMeasurementMemoryFromFile = reinterpret_cast<LoadDataToMeasurementMemoryFromFilePtr>(shared_library_->get_function_pointer("RFmxVNA_LoadDataToMeasurementMemoryFromFile"));
+  function_pointers_.MarkerCfgDataSource = reinterpret_cast<MarkerCfgDataSourcePtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgDataSource"));
+  function_pointers_.MarkerCfgNumberOfMarkers = reinterpret_cast<MarkerCfgNumberOfMarkersPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgNumberOfMarkers"));
+  function_pointers_.MarkerCfgPeakSearchExcursion = reinterpret_cast<MarkerCfgPeakSearchExcursionPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgPeakSearchExcursion"));
+  function_pointers_.MarkerCfgPeakSearchThreshold = reinterpret_cast<MarkerCfgPeakSearchThresholdPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgPeakSearchThreshold"));
+  function_pointers_.MarkerCfgReferenceMarker = reinterpret_cast<MarkerCfgReferenceMarkerPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgReferenceMarker"));
+  function_pointers_.MarkerCfgType = reinterpret_cast<MarkerCfgTypePtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgType"));
+  function_pointers_.MarkerCfgX = reinterpret_cast<MarkerCfgXPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgX"));
+  function_pointers_.MarkerCfgY = reinterpret_cast<MarkerCfgYPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgY"));
+  function_pointers_.MarkerFetchX = reinterpret_cast<MarkerFetchXPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerFetchX"));
+  function_pointers_.MarkerFetchY = reinterpret_cast<MarkerFetchYPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerFetchY"));
+  function_pointers_.MarkerSearch = reinterpret_cast<MarkerSearchPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerSearch"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("RFmxVNA_ResetAttribute"));
+  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_->get_function_pointer("RFmxVNA_ResetToDefault"));
+  function_pointers_.SParamsCfgSParameter = reinterpret_cast<SParamsCfgSParameterPtr>(shared_library_->get_function_pointer("RFmxVNA_SParamsCfgSParameter"));
+  function_pointers_.SParamsExportToSnPFile = reinterpret_cast<SParamsExportToSnPFilePtr>(shared_library_->get_function_pointer("RFmxVNA_SParamsExportToSnPFile"));
+  function_pointers_.SParamsFetchXData = reinterpret_cast<SParamsFetchXDataPtr>(shared_library_->get_function_pointer("RFmxVNA_SParamsFetchXData"));
+  function_pointers_.SParamsFetchYData = reinterpret_cast<SParamsFetchYDataPtr>(shared_library_->get_function_pointer("RFmxVNA_SParamsFetchYData"));
+  function_pointers_.SParamsGetSParameter = reinterpret_cast<SParamsGetSParameterPtr>(shared_library_->get_function_pointer("RFmxVNA_SParamsGetSParameter"));
+  function_pointers_.SelectActiveCalset = reinterpret_cast<SelectActiveCalsetPtr>(shared_library_->get_function_pointer("RFmxVNA_SelectActiveCalset"));
+  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_->get_function_pointer("RFmxVNA_SelectMeasurements"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxVNA_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeF32"));
+  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeF32Array"));
+  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeF64"));
+  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeF64Array"));
+  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeI16"));
+  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeI32"));
+  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeI32Array"));
+  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeI64"));
+  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeI64Array"));
+  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeI8"));
+  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeNIComplexSingleArray"));
+  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeString"));
+  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeU16"));
+  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeU32"));
+  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeU32Array"));
+  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeU64Array"));
+  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeU8"));
+  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxVNA_SetAttributeU8Array"));
+  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxVNA_WaitForAcquisitionComplete"));
+  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_->get_function_pointer("RFmxVNA_WaitForMeasurementComplete"));
+  function_pointers_.WavesCfgWave = reinterpret_cast<WavesCfgWavePtr>(shared_library_->get_function_pointer("RFmxVNA_WavesCfgWave"));
+  function_pointers_.WavesFetchXData = reinterpret_cast<WavesFetchXDataPtr>(shared_library_->get_function_pointer("RFmxVNA_WavesFetchXData"));
+  function_pointers_.WavesFetchYData = reinterpret_cast<WavesFetchYDataPtr>(shared_library_->get_function_pointer("RFmxVNA_WavesFetchYData"));
+  function_pointers_.WavesGetWave = reinterpret_cast<WavesGetWavePtr>(shared_library_->get_function_pointer("RFmxVNA_WavesGetWave"));
 }
 
 NiRFmxVNALibrary::~NiRFmxVNALibrary()
@@ -44,12 +238,1124 @@ NiRFmxVNALibrary::~NiRFmxVNALibrary()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
+int32 NiRFmxVNALibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.AbortMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_AbortMeasurements.");
+  }
+  return function_pointers_.AbortMeasurements(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildCalibrationElementString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildCalibrationElementString.");
+  }
+  return function_pointers_.BuildCalibrationElementString(selectorString, calibrationElementID, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildCalkitString(char selectorString[], char calkitID[], int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildCalkitString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildCalkitString.");
+  }
+  return function_pointers_.BuildCalkitString(selectorString, calkitID, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildCalstepString(char selectorString[], int32 calstepNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildCalstepString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildCalstepString.");
+  }
+  return function_pointers_.BuildCalstepString(selectorString, calstepNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildConnectorString(char selectorString[], char connectorID[], int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildConnectorString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildConnectorString.");
+  }
+  return function_pointers_.BuildConnectorString(selectorString, connectorID, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildMarkerString(char selectorString[], int32 markerNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildMarkerString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildMarkerString.");
+  }
+  return function_pointers_.BuildMarkerString(selectorString, markerNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildPortString(char selectorString[], char portString[], int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildPortString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildPortString.");
+  }
+  return function_pointers_.BuildPortString(selectorString, portString, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildPulseGeneratorString(char selectorString[], int32 pulseGeneratorNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildPulseGeneratorString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildPulseGeneratorString.");
+  }
+  return function_pointers_.BuildPulseGeneratorString(selectorString, pulseGeneratorNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildSParameterString(char selectorString[], int32 sParameterNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildSParameterString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildSParameterString.");
+  }
+  return function_pointers_.BuildSParameterString(selectorString, sParameterNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildSegmentString(char selectorString[], int32 segmentNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildSegmentString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildSegmentString.");
+  }
+  return function_pointers_.BuildSegmentString(selectorString, segmentNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildSignalString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildSignalString.");
+  }
+  return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+}
+
+int32 NiRFmxVNALibrary::BuildWaveString(char selectorString[], int32 waveNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildWaveString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_BuildWaveString.");
+  }
+  return function_pointers_.BuildWaveString(selectorString, waveNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxVNALibrary::CalibrationAbort(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.CalibrationAbort) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalibrationAbort.");
+  }
+  return function_pointers_.CalibrationAbort(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::CalibrationAcquire(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  if (!function_pointers_.CalibrationAcquire) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalibrationAcquire.");
+  }
+  return function_pointers_.CalibrationAcquire(instrumentHandle, selectorString, timeout);
+}
+
+int32 NiRFmxVNALibrary::CalibrationInitiate(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.CalibrationInitiate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalibrationInitiate.");
+  }
+  return function_pointers_.CalibrationInitiate(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::CalibrationSave(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[])
+{
+  if (!function_pointers_.CalibrationSave) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalibrationSave.");
+  }
+  return function_pointers_.CalibrationSave(instrumentHandle, selectorString, calsetName);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitAddCalibrationElement(niRFmxInstrHandle instrumentHandle, char selectorString[], char calibrationElementID[])
+{
+  if (!function_pointers_.CalkitManagerCalkitAddCalibrationElement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitAddCalibrationElement.");
+  }
+  return function_pointers_.CalkitManagerCalkitAddCalibrationElement(instrumentHandle, selectorString, calibrationElementID);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitAddConnector(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorID[])
+{
+  if (!function_pointers_.CalkitManagerCalkitAddConnector) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitAddConnector.");
+  }
+  return function_pointers_.CalkitManagerCalkitAddConnector(instrumentHandle, selectorString, connectorID);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementDelayModelGetDelay(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* delay)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementDelayModelGetDelay) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementDelayModelGetDelay.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementDelayModelGetDelay(instrumentHandle, selectorString, delay);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementDelayModelSetDelay(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 delay)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementDelayModelSetDelay) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementDelayModelSetDelay.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementDelayModelSetDelay(instrumentHandle, selectorString, delay);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementGetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char description[])
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementGetDescription) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementGetDescription.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementGetDescription(instrumentHandle, selectorString, arraySize, description);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementGetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* maximumFrequency)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementGetMaximumFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementGetMaximumFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementGetMaximumFrequency(instrumentHandle, selectorString, maximumFrequency);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementGetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* minimumFrequency)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementGetMinimumFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementGetMinimumFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementGetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementGetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char connectorIDs[])
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementGetPortConnectors) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementGetPortConnectors.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementGetPortConnectors(instrumentHandle, selectorString, arraySize, connectorIDs);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementGetSParameterDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterDefinition)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementGetSParameterDefinition) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementGetSParameterDefinition.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementGetSParameterDefinition(instrumentHandle, selectorString, sParameterDefinition);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementGetTypes(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationElementTypes[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementGetTypes) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementGetTypes.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementGetTypes(instrumentHandle, selectorString, calibrationElementTypes, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetC0(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* c0)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC0) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC0.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC0(instrumentHandle, selectorString, c0);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetC1(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* c1)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC1) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC1.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC1(instrumentHandle, selectorString, c1);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetC2(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* c2)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC2) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC2.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC2(instrumentHandle, selectorString, c2);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetC3(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* c3)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC3) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetC3.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetC3(instrumentHandle, selectorString, c3);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetModelType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* modelType)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetModelType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetModelType.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetModelType(instrumentHandle, selectorString, modelType);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* offsetDelay)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay(instrumentHandle, selectorString, offsetDelay);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* offsetLoss)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss(instrumentHandle, selectorString, offsetLoss);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* offsetZ0)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0(instrumentHandle, selectorString, offsetZ0);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* referenceImpedance)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance(instrumentHandle, selectorString, referenceImpedance);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterAvailability)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability(instrumentHandle, selectorString, sParameterAvailability);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetC0(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 c0)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC0) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC0.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC0(instrumentHandle, selectorString, c0);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetC1(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 c1)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC1) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC1.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC1(instrumentHandle, selectorString, c1);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetC2(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 c2)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC2) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC2.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC2(instrumentHandle, selectorString, c2);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetC3(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 c3)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC3) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetC3.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetC3(instrumentHandle, selectorString, c3);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetModelType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 modelType)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetModelType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetModelType.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetModelType(instrumentHandle, selectorString, modelType);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetDelay)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay(instrumentHandle, selectorString, offsetDelay);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetLoss)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss(instrumentHandle, selectorString, offsetLoss);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 offsetZ0)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0(instrumentHandle, selectorString, offsetZ0);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceImpedance)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance(instrumentHandle, selectorString, referenceImpedance);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(instrumentHandle, selectorString, sParameterAvailability);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetFrequency(instrumentHandle, selectorString, frequency, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetS11(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s11[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS11) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS11(instrumentHandle, selectorString, s11, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetS11Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS11Split) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11Split.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS11Split(instrumentHandle, selectorString, s11I, s11Q, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS12) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS12(instrumentHandle, selectorString, s12, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetS12Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS12Split) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12Split.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS12Split(instrumentHandle, selectorString, s12I, s12Q, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS21) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS21(instrumentHandle, selectorString, s21, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetS21Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS21Split) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21Split.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS21Split(instrumentHandle, selectorString, s21I, s21Q, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS22) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS22(instrumentHandle, selectorString, s22, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetS22Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS22Split) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22Split.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetS22Split(instrumentHandle, selectorString, s22I, s22Q, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterAvailability)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(instrumentHandle, selectorString, sParameterAvailability);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetFrequency(instrumentHandle, selectorString, frequency, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char fileName[])
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetFromFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFromFile.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetFromFile(instrumentHandle, selectorString, fileName);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS11(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s11[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11(instrumentHandle, selectorString, s11, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12(instrumentHandle, selectorString, s12, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21(instrumentHandle, selectorString, s21, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22(instrumentHandle, selectorString, s22, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(instrumentHandle, selectorString, sParameterAvailability);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char description[])
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSetDescription) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSetDescription.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSetDescription(instrumentHandle, selectorString, description);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 maximumFrequency)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSetMaximumFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSetMaximumFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSetMaximumFrequency(instrumentHandle, selectorString, maximumFrequency);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 minimumFrequency)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSetMinimumFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSetMinimumFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorIDs[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSetPortConnectors) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSetPortConnectors.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSetPortConnectors(instrumentHandle, selectorString, connectorIDs, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetSParameterDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterDefinition)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSetSParameterDefinition) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSetSParameterDefinition.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSetSParameterDefinition(instrumentHandle, selectorString, sParameterDefinition);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetTypes(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationElementTypes[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSetTypes) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSetTypes.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSetTypes(instrumentHandle, selectorString, calibrationElementTypes, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorGetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char description[])
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorGetDescription) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorGetDescription.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorGetDescription(instrumentHandle, selectorString, arraySize, description);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorGetGender(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* connectorGender)
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorGetGender) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorGetGender.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorGetGender(instrumentHandle, selectorString, connectorGender);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorGetImpedance(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* impedance)
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorGetImpedance) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorGetImpedance.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorGetImpedance(instrumentHandle, selectorString, impedance);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorGetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* maximumFrequency)
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorGetMaximumFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorGetMaximumFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorGetMaximumFrequency(instrumentHandle, selectorString, maximumFrequency);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorGetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* minimumFrequency)
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorGetMinimumFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorGetMinimumFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorGetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorGetType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char connectorType[])
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorGetType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorGetType.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorGetType(instrumentHandle, selectorString, arraySize, connectorType);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char description[])
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorSetDescription) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorSetDescription.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorSetDescription(instrumentHandle, selectorString, description);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorSetGender(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 connectorGender)
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorSetGender) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorSetGender.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorSetGender(instrumentHandle, selectorString, connectorGender);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorSetImpedance(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 impedance)
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorSetImpedance) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorSetImpedance.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorSetImpedance(instrumentHandle, selectorString, impedance);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorSetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 maximumFrequency)
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorSetMaximumFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorSetMaximumFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorSetMaximumFrequency(instrumentHandle, selectorString, maximumFrequency);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorSetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 minimumFrequency)
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorSetMinimumFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorSetMinimumFrequency.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorSetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitConnectorSetType(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorType[])
+{
+  if (!function_pointers_.CalkitManagerCalkitConnectorSetType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitConnectorSetType.");
+  }
+  return function_pointers_.CalkitManagerCalkitConnectorSetType(instrumentHandle, selectorString, connectorType);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitGetCalibrationElementIDs(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calibrationElementIDs[])
+{
+  if (!function_pointers_.CalkitManagerCalkitGetCalibrationElementIDs) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitGetCalibrationElementIDs.");
+  }
+  return function_pointers_.CalkitManagerCalkitGetCalibrationElementIDs(instrumentHandle, selectorString, arraySize, calibrationElementIDs);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitGetConnectorIDs(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char connectorIDs[])
+{
+  if (!function_pointers_.CalkitManagerCalkitGetConnectorIDs) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitGetConnectorIDs.");
+  }
+  return function_pointers_.CalkitManagerCalkitGetConnectorIDs(instrumentHandle, selectorString, arraySize, connectorIDs);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitGetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitDescription[])
+{
+  if (!function_pointers_.CalkitManagerCalkitGetDescription) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitGetDescription.");
+  }
+  return function_pointers_.CalkitManagerCalkitGetDescription(instrumentHandle, selectorString, arraySize, calkitDescription);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitGetVersion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitVersion[])
+{
+  if (!function_pointers_.CalkitManagerCalkitGetVersion) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitGetVersion.");
+  }
+  return function_pointers_.CalkitManagerCalkitGetVersion(instrumentHandle, selectorString, arraySize, calkitVersion);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitRemoveCalibrationElement(niRFmxInstrHandle instrumentHandle, char selectorString[], char calibrationElementID[])
+{
+  if (!function_pointers_.CalkitManagerCalkitRemoveCalibrationElement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitRemoveCalibrationElement.");
+  }
+  return function_pointers_.CalkitManagerCalkitRemoveCalibrationElement(instrumentHandle, selectorString, calibrationElementID);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitRemoveConnector(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorID[])
+{
+  if (!function_pointers_.CalkitManagerCalkitRemoveConnector) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitRemoveConnector.");
+  }
+  return function_pointers_.CalkitManagerCalkitRemoveConnector(instrumentHandle, selectorString, connectorID);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitDescription[])
+{
+  if (!function_pointers_.CalkitManagerCalkitSetDescription) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitSetDescription.");
+  }
+  return function_pointers_.CalkitManagerCalkitSetDescription(instrumentHandle, selectorString, calkitDescription);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitSetVersion(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitVersion[])
+{
+  if (!function_pointers_.CalkitManagerCalkitSetVersion) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitSetVersion.");
+  }
+  return function_pointers_.CalkitManagerCalkitSetVersion(instrumentHandle, selectorString, calkitVersion);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCreateCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[])
+{
+  if (!function_pointers_.CalkitManagerCreateCalkit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCreateCalkit.");
+  }
+  return function_pointers_.CalkitManagerCreateCalkit(instrumentHandle, selectorString, calkitID);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerExportCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[], char calkitFilePath[])
+{
+  if (!function_pointers_.CalkitManagerExportCalkit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerExportCalkit.");
+  }
+  return function_pointers_.CalkitManagerExportCalkit(instrumentHandle, selectorString, calkitID, calkitFilePath);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerGetCalkitIDs(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitIDs[])
+{
+  if (!function_pointers_.CalkitManagerGetCalkitIDs) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerGetCalkitIDs.");
+  }
+  return function_pointers_.CalkitManagerGetCalkitIDs(instrumentHandle, selectorString, arraySize, calkitIDs);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerImportCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitFilePath[])
+{
+  if (!function_pointers_.CalkitManagerImportCalkit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerImportCalkit.");
+  }
+  return function_pointers_.CalkitManagerImportCalkit(instrumentHandle, selectorString, calkitFilePath);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerRemoveCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[])
+{
+  if (!function_pointers_.CalkitManagerRemoveCalkit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerRemoveCalkit.");
+  }
+  return function_pointers_.CalkitManagerRemoveCalkit(instrumentHandle, selectorString, calkitID);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerValidateCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[])
+{
+  if (!function_pointers_.CalkitManagerValidateCalkit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerValidateCalkit.");
+  }
+  return function_pointers_.CalkitManagerValidateCalkit(instrumentHandle, selectorString, calkitID);
+}
+
+int32 NiRFmxVNALibrary::CalsetEmbedFixtureS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char fixtureS2pFilePath[], char vnaPort[], int32 sParameterOrientation, char newCalsetName[])
+{
+  if (!function_pointers_.CalsetEmbedFixtureS2p) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalsetEmbedFixtureS2p.");
+  }
+  return function_pointers_.CalsetEmbedFixtureS2p(instrumentHandle, selectorString, calsetName, fixtureS2pFilePath, vnaPort, sParameterOrientation, newCalsetName);
+}
+
+int32 NiRFmxVNALibrary::CalsetGetErrorTerm(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], NIComplexSingle errorTerm[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalsetGetErrorTerm) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalsetGetErrorTerm.");
+  }
+  return function_pointers_.CalsetGetErrorTerm(instrumentHandle, selectorString, calsetName, errorTermIdentifier, measurementPort, sourcePort, errorTerm, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalsetGetErrorTermSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], float32 errorTermI[], float32 errorTermQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalsetGetErrorTermSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalsetGetErrorTermSplit.");
+  }
+  return function_pointers_.CalsetGetErrorTermSplit(instrumentHandle, selectorString, calsetName, errorTermIdentifier, measurementPort, sourcePort, errorTermI, errorTermQ, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalsetGetFrequencyGrid(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, float64 frequencyGrid[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CalsetGetFrequencyGrid) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalsetGetFrequencyGrid.");
+  }
+  return function_pointers_.CalsetGetFrequencyGrid(instrumentHandle, selectorString, calsetName, errorTermIdentifier, frequencyGrid, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::CalsetLoadFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char calsetFilePath[])
+{
+  if (!function_pointers_.CalsetLoadFromFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalsetLoadFromFile.");
+  }
+  return function_pointers_.CalsetLoadFromFile(instrumentHandle, selectorString, calsetName, calsetFilePath);
+}
+
+int32 NiRFmxVNALibrary::CalsetSaveToFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char calsetFilePath[])
+{
+  if (!function_pointers_.CalsetSaveToFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalsetSaveToFile.");
+  }
+  return function_pointers_.CalsetSaveToFile(instrumentHandle, selectorString, calsetName, calsetFilePath);
+}
+
+int32 NiRFmxVNALibrary::CfgCorrectionPortSubset(niRFmxInstrHandle instrumentHandle, char selectorString[], char portSubset[])
+{
+  if (!function_pointers_.CfgCorrectionPortSubset) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CfgCorrectionPortSubset.");
+  }
+  return function_pointers_.CfgCorrectionPortSubset(instrumentHandle, selectorString, portSubset);
+}
+
+int32 NiRFmxVNALibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
+{
+  if (!function_pointers_.CfgFrequencyReference) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CfgFrequencyReference.");
+  }
+  return function_pointers_.CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+}
+
+int32 NiRFmxVNALibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
+{
+  if (!function_pointers_.CfgMechanicalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CfgMechanicalAttenuation.");
+  }
+  return function_pointers_.CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+}
+
+int32 NiRFmxVNALibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
+{
+  if (!function_pointers_.CfgRFAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CfgRFAttenuation.");
+  }
+  return function_pointers_.CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+}
+
+int32 NiRFmxVNALibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone)
+{
+  if (!function_pointers_.CheckMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CheckMeasurementStatus.");
+  }
+  return function_pointers_.CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
+}
+
+int32 NiRFmxVNALibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearAllNamedResults) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_ClearAllNamedResults.");
+  }
+  return function_pointers_.ClearAllNamedResults(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::ClearCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[])
+{
+  if (!function_pointers_.ClearCalset) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_ClearCalset.");
+  }
+  return function_pointers_.ClearCalset(instrumentHandle, selectorString, calsetName);
+}
+
+int32 NiRFmxVNALibrary::ClearMeasurementMemoryNames(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearMeasurementMemoryNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_ClearMeasurementMemoryNames.");
+  }
+  return function_pointers_.ClearMeasurementMemoryNames(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearNamedResult) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_ClearNamedResult.");
+  }
+  return function_pointers_.ClearNamedResult(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
+{
+  if (!function_pointers_.CloneSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CloneSignalConfiguration.");
+  }
+  return function_pointers_.CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
+}
+
 int32 NiRFmxVNALibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
 {
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_Close.");
   }
   return function_pointers_.Close(instrumentHandle, forceDestroy);
+}
+
+int32 NiRFmxVNALibrary::Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.Commit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_Commit.");
+  }
+  return function_pointers_.Commit(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::CopyCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char sourceCalsetName[], char newCalsetName[])
+{
+  if (!function_pointers_.CopyCalset) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CopyCalset.");
+  }
+  return function_pointers_.CopyCalset(instrumentHandle, selectorString, sourceCalsetName, newCalsetName);
+}
+
+int32 NiRFmxVNALibrary::CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char memoryDataName[])
+{
+  if (!function_pointers_.CopyDataToMeasurementMemory) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CopyDataToMeasurementMemory.");
+  }
+  return function_pointers_.CopyDataToMeasurementMemory(instrumentHandle, selectorString, memoryDataName);
+}
+
+int32 NiRFmxVNALibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.CreateSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CreateSignalConfiguration.");
+  }
+  return function_pointers_.CreateSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxVNALibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.DeleteSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_DeleteSignalConfiguration.");
+  }
+  return function_pointers_.DeleteSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxVNALibrary::DeselectActiveCalset(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.DeselectActiveCalset) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_DeselectActiveCalset.");
+  }
+  return function_pointers_.DeselectActiveCalset(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::GetAllCalsetNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calsetNames[])
+{
+  if (!function_pointers_.GetAllCalsetNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAllCalsetNames.");
+  }
+  return function_pointers_.GetAllCalsetNames(instrumentHandle, selectorString, arraySize, calsetNames);
+}
+
+int32 NiRFmxVNALibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
+{
+  if (!function_pointers_.GetAllNamedResultNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAllNamedResultNames.");
+  }
+  return function_pointers_.GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
+{
+  if (!function_pointers_.GetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeF32.");
+  }
+  return function_pointers_.GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeF32Array.");
+  }
+  return function_pointers_.GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
+{
+  if (!function_pointers_.GetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeF64.");
+  }
+  return function_pointers_.GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeF64Array.");
+  }
+  return function_pointers_.GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
+{
+  if (!function_pointers_.GetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeI16.");
+  }
+  return function_pointers_.GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
+{
+  if (!function_pointers_.GetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeI32.");
+  }
+  return function_pointers_.GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeI32Array.");
+  }
+  return function_pointers_.GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
+{
+  if (!function_pointers_.GetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeI64.");
+  }
+  return function_pointers_.GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeI64Array.");
+  }
+  return function_pointers_.GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
+{
+  if (!function_pointers_.GetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeI8.");
+  }
+  return function_pointers_.GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeI8Array.");
+  }
+  return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeNIComplexDoubleArray.");
+  }
+  return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeNIComplexSingleArray.");
+  }
+  return function_pointers_.GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
+{
+  if (!function_pointers_.GetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeString.");
+  }
+  return function_pointers_.GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
+{
+  if (!function_pointers_.GetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeU16.");
+  }
+  return function_pointers_.GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
+{
+  if (!function_pointers_.GetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeU32.");
+  }
+  return function_pointers_.GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeU32Array.");
+  }
+  return function_pointers_.GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeU64Array.");
+  }
+  return function_pointers_.GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
+{
+  if (!function_pointers_.GetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeU8.");
+  }
+  return function_pointers_.GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetAttributeU8Array.");
+  }
+  return function_pointers_.GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
 int32 NiRFmxVNALibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -68,12 +1374,452 @@ int32 NiRFmxVNALibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32
   return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
 }
 
+int32 NiRFmxVNALibrary::GetMeasurementMemoryNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char measurementMemoryNames[])
+{
+  if (!function_pointers_.GetMeasurementMemoryNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetMeasurementMemoryNames.");
+  }
+  return function_pointers_.GetMeasurementMemoryNames(instrumentHandle, selectorString, arraySize, measurementMemoryNames);
+}
+
+int32 NiRFmxVNALibrary::GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetMeasurementMemoryXData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetMeasurementMemoryXData.");
+  }
+  return function_pointers_.GetMeasurementMemoryXData(instrumentHandle, selectorString, x, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetMeasurementMemoryYData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetMeasurementMemoryYData.");
+  }
+  return function_pointers_.GetMeasurementMemoryYData(instrumentHandle, selectorString, y1, y2, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.IQFetchData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_IQFetchData.");
+  }
+  return function_pointers_.IQFetchData(instrumentHandle, selectorString, timeout, x0, dx, data, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.IQFetchDataSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_IQFetchDataSplit.");
+  }
+  return function_pointers_.IQFetchDataSplit(instrumentHandle, selectorString, timeout, x0, dx, dataI, dataQ, arraySize, actualArraySize);
+}
+
 int32 NiRFmxVNALibrary::Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession)
 {
   if (!function_pointers_.Initialize) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_Initialize.");
   }
   return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
+}
+
+int32 NiRFmxVNALibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
+{
+  if (!function_pointers_.InitializeFromNIRFSASession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_InitializeFromNIRFSASession.");
+  }
+  return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, handleOut);
+}
+
+int32 NiRFmxVNALibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
+{
+  if (!function_pointers_.Initiate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_Initiate.");
+  }
+  return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
+}
+
+int32 NiRFmxVNALibrary::LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char memoryDataName[])
+{
+  if (!function_pointers_.LoadDataToMeasurementMemoryFromFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_LoadDataToMeasurementMemoryFromFile.");
+  }
+  return function_pointers_.LoadDataToMeasurementMemoryFromFile(instrumentHandle, selectorString, filePath, parameter, memoryDataName);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgDataSource(niRFmxInstrHandle instrumentHandle, char selectorString[], char dataSource[])
+{
+  if (!function_pointers_.MarkerCfgDataSource) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgDataSource.");
+  }
+  return function_pointers_.MarkerCfgDataSource(instrumentHandle, selectorString, dataSource);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers)
+{
+  if (!function_pointers_.MarkerCfgNumberOfMarkers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgNumberOfMarkers.");
+  }
+  return function_pointers_.MarkerCfgNumberOfMarkers(instrumentHandle, selectorString, numberOfMarkers);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgPeakSearchExcursion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 peakExcursionEnabled, float64 peakExcursion)
+{
+  if (!function_pointers_.MarkerCfgPeakSearchExcursion) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgPeakSearchExcursion.");
+  }
+  return function_pointers_.MarkerCfgPeakSearchExcursion(instrumentHandle, selectorString, peakExcursionEnabled, peakExcursion);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgPeakSearchThreshold(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 threshold)
+{
+  if (!function_pointers_.MarkerCfgPeakSearchThreshold) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgPeakSearchThreshold.");
+  }
+  return function_pointers_.MarkerCfgPeakSearchThreshold(instrumentHandle, selectorString, thresholdEnabled, threshold);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgReferenceMarker(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceMarker)
+{
+  if (!function_pointers_.MarkerCfgReferenceMarker) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgReferenceMarker.");
+  }
+  return function_pointers_.MarkerCfgReferenceMarker(instrumentHandle, selectorString, referenceMarker);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType)
+{
+  if (!function_pointers_.MarkerCfgType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgType.");
+  }
+  return function_pointers_.MarkerCfgType(instrumentHandle, selectorString, markerType);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgX(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerX)
+{
+  if (!function_pointers_.MarkerCfgX) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgX.");
+  }
+  return function_pointers_.MarkerCfgX(instrumentHandle, selectorString, markerX);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerY1, float64 markerY2)
+{
+  if (!function_pointers_.MarkerCfgY) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgY.");
+  }
+  return function_pointers_.MarkerCfgY(instrumentHandle, selectorString, markerY1, markerY2);
+}
+
+int32 NiRFmxVNALibrary::MarkerFetchX(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerX)
+{
+  if (!function_pointers_.MarkerFetchX) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerFetchX.");
+  }
+  return function_pointers_.MarkerFetchX(instrumentHandle, selectorString, markerX);
+}
+
+int32 NiRFmxVNALibrary::MarkerFetchY(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* markerY1, float64* markerY2)
+{
+  if (!function_pointers_.MarkerFetchY) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerFetchY.");
+  }
+  return function_pointers_.MarkerFetchY(instrumentHandle, selectorString, markerY1, markerY2);
+}
+
+int32 NiRFmxVNALibrary::MarkerSearch(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 searchMode)
+{
+  if (!function_pointers_.MarkerSearch) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerSearch.");
+  }
+  return function_pointers_.MarkerSearch(instrumentHandle, selectorString, searchMode);
+}
+
+int32 NiRFmxVNALibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
+{
+  if (!function_pointers_.ResetAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_ResetAttribute.");
+  }
+  return function_pointers_.ResetAttribute(instrumentHandle, selectorString, attributeID);
+}
+
+int32 NiRFmxVNALibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ResetToDefault) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_ResetToDefault.");
+  }
+  return function_pointers_.ResetToDefault(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::SParamsCfgSParameter(niRFmxInstrHandle instrumentHandle, char selectorString[], char sParameter[])
+{
+  if (!function_pointers_.SParamsCfgSParameter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SParamsCfgSParameter.");
+  }
+  return function_pointers_.SParamsCfgSParameter(instrumentHandle, selectorString, sParameter);
+}
+
+int32 NiRFmxVNALibrary::SParamsExportToSnPFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char snpFilePath[])
+{
+  if (!function_pointers_.SParamsExportToSnPFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SParamsExportToSnPFile.");
+  }
+  return function_pointers_.SParamsExportToSnPFile(instrumentHandle, selectorString, snpFilePath);
+}
+
+int32 NiRFmxVNALibrary::SParamsFetchXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 x[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SParamsFetchXData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SParamsFetchXData.");
+  }
+  return function_pointers_.SParamsFetchXData(instrumentHandle, selectorString, timeout, x, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::SParamsFetchYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.SParamsFetchYData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SParamsFetchYData.");
+  }
+  return function_pointers_.SParamsFetchYData(instrumentHandle, selectorString, timeout, y1, y2, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::SParamsGetSParameter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char sParameter[])
+{
+  if (!function_pointers_.SParamsGetSParameter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SParamsGetSParameter.");
+  }
+  return function_pointers_.SParamsGetSParameter(instrumentHandle, selectorString, arraySize, sParameter);
+}
+
+int32 NiRFmxVNALibrary::SelectActiveCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 restoreConfiguration)
+{
+  if (!function_pointers_.SelectActiveCalset) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SelectActiveCalset.");
+  }
+  return function_pointers_.SelectActiveCalset(instrumentHandle, selectorString, calsetName, restoreConfiguration);
+}
+
+int32 NiRFmxVNALibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
+{
+  if (!function_pointers_.SelectMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SelectMeasurements.");
+  }
+  return function_pointers_.SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
+}
+
+int32 NiRFmxVNALibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
+{
+  if (!function_pointers_.SendSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SendSoftwareEdgeTrigger.");
+  }
+  return function_pointers_.SendSoftwareEdgeTrigger(instrumentHandle);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
+{
+  if (!function_pointers_.SetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeF32.");
+  }
+  return function_pointers_.SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeF32Array.");
+  }
+  return function_pointers_.SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
+{
+  if (!function_pointers_.SetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeF64.");
+  }
+  return function_pointers_.SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeF64Array.");
+  }
+  return function_pointers_.SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
+{
+  if (!function_pointers_.SetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeI16.");
+  }
+  return function_pointers_.SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
+{
+  if (!function_pointers_.SetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeI32.");
+  }
+  return function_pointers_.SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeI32Array.");
+  }
+  return function_pointers_.SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
+{
+  if (!function_pointers_.SetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeI64.");
+  }
+  return function_pointers_.SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeI64Array.");
+  }
+  return function_pointers_.SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
+{
+  if (!function_pointers_.SetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeI8.");
+  }
+  return function_pointers_.SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeI8Array.");
+  }
+  return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeNIComplexDoubleArray.");
+  }
+  return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeNIComplexSingleArray.");
+  }
+  return function_pointers_.SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
+{
+  if (!function_pointers_.SetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeString.");
+  }
+  return function_pointers_.SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
+{
+  if (!function_pointers_.SetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeU16.");
+  }
+  return function_pointers_.SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
+{
+  if (!function_pointers_.SetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeU32.");
+  }
+  return function_pointers_.SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeU32Array.");
+  }
+  return function_pointers_.SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeU64Array.");
+  }
+  return function_pointers_.SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
+{
+  if (!function_pointers_.SetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeU8.");
+  }
+  return function_pointers_.SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxVNALibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_SetAttributeU8Array.");
+  }
+  return function_pointers_.SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxVNALibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
+{
+  if (!function_pointers_.WaitForAcquisitionComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_WaitForAcquisitionComplete.");
+  }
+  return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
+}
+
+int32 NiRFmxVNALibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  if (!function_pointers_.WaitForMeasurementComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_WaitForMeasurementComplete.");
+  }
+  return function_pointers_.WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
+}
+
+int32 NiRFmxVNALibrary::WavesCfgWave(niRFmxInstrHandle instrumentHandle, char selectorString[], char wave[])
+{
+  if (!function_pointers_.WavesCfgWave) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_WavesCfgWave.");
+  }
+  return function_pointers_.WavesCfgWave(instrumentHandle, selectorString, wave);
+}
+
+int32 NiRFmxVNALibrary::WavesFetchXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 x[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.WavesFetchXData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_WavesFetchXData.");
+  }
+  return function_pointers_.WavesFetchXData(instrumentHandle, selectorString, timeout, x, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::WavesFetchYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.WavesFetchYData) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_WavesFetchYData.");
+  }
+  return function_pointers_.WavesFetchYData(instrumentHandle, selectorString, timeout, y1, y2, arraySize, actualArraySize);
+}
+
+int32 NiRFmxVNALibrary::WavesGetWave(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char wave[])
+{
+  if (!function_pointers_.WavesGetWave) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_WavesGetWave.");
+  }
+  return function_pointers_.WavesGetWave(instrumentHandle, selectorString, arraySize, wave);
 }
 
 }  // namespace nirfmxvna_grpc

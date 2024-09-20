@@ -15,7 +15,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'BuildCarrierString': {
+    'BuildCalibrationElementString': {
         'parameters': [
             {
                 'direction': 'in',
@@ -24,7 +24,65 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'carrierNumber',
+                'name': 'calibrationElementID',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildCalkitString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'calkitID',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildCalstepString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'calstepNumber',
                 'type': 'int32'
             },
             {
@@ -44,7 +102,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'BuildClusterString': {
+    'BuildConnectorString': {
         'parameters': [
             {
                 'direction': 'in',
@@ -53,7 +111,36 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'clusterNumber',
+                'name': 'connectorID',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildMarkerString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'markerNumber',
                 'type': 'int32'
             },
             {
@@ -73,7 +160,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'BuildOffsetString': {
+    'BuildPortString': {
         'parameters': [
             {
                 'direction': 'in',
@@ -82,7 +169,36 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'offsetNumber',
+                'name': 'portString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildPulseGeneratorString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'pulseGeneratorNumber',
                 'type': 'int32'
             },
             {
@@ -102,7 +218,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'BuildPDSCHString': {
+    'BuildSParameterString': {
         'parameters': [
             {
                 'direction': 'in',
@@ -111,7 +227,36 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'pdschNumber',
+                'name': 'sParameterNumber',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildSegmentString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'segmentNumber',
                 'type': 'int32'
             },
             {
@@ -160,7 +305,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'BuildSubblockString': {
+    'BuildWaveString': {
         'parameters': [
             {
                 'direction': 'in',
@@ -169,36 +314,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'subblockNumber',
-                'type': 'int32'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorStringOutLength',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'selectorStringOut',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'selectorStringOutLength'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'BuildSubframeString': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'subframeNumber',
+                'name': 'waveNumber',
                 'type': 'int32'
             },
             {
@@ -397,6 +513,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'description',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -465,6 +585,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'connectorIDs',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -1025,6 +1149,52 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CalkitManagerCalkitCalibrationElementSParameterGetS11Split': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's11I',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's11Q',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CalkitManagerCalkitCalibrationElementSParameterGetS12': {
         'parameters': [
             {
@@ -1047,6 +1217,52 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterGetS12Split': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's12I',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's12Q',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
             },
             {
                 'direction': 'in',
@@ -1097,6 +1313,52 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CalkitManagerCalkitCalibrationElementSParameterGetS21Split': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's21I',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's21Q',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CalkitManagerCalkitCalibrationElementSParameterGetS22': {
         'parameters': [
             {
@@ -1119,6 +1381,52 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterGetS22Split': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's22I',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's22Q',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
             },
             {
                 'direction': 'in',
@@ -1511,6 +1819,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'description',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -1622,6 +1934,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'connectorType',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -1775,6 +2091,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'calibrationElementIDs',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -1801,6 +2121,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'connectorIDs',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -1827,6 +2151,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'calkitDescription',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -1853,6 +2181,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'calkitVersion',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -2010,6 +2342,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'calkitIDs',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -2163,6 +2499,73 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalsetGetErrorTermSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'calsetName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CalErrorTerm',
+                'name': 'errorTermIdentifier',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementPort',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sourcePort',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorTermI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorTermQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -2351,38 +2754,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'CfgPDSCH': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'enum': 'UserDefinedPdschCW0ModulationType',
-                'name': 'cw0ModulationType',
-                'type': 'int32'
-            },
-            {
-                'direction': 'in',
-                'name': 'resourceBlockAllocation',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'power',
-                'type': 'float64'
-            }
-        ],
-        'returns': 'int32'
-    },
     'CfgRFAttenuation': {
         'parameters': [
             {
@@ -2464,6 +2835,22 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'calsetName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ClearMeasurementMemoryNames': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
                 'type': 'char[]'
             }
         ],
@@ -2565,6 +2952,27 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CopyDataToMeasurementMemory': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'memoryDataName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CreateSignalConfiguration': {
         'parameters': [
             {
@@ -2634,6 +3042,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'calsetNames',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             }
         ],
@@ -3439,6 +3851,118 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetMeasurementMemoryNames': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'measurementMemoryNames',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetMeasurementMemoryXData': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'x',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetMeasurementMemoryYData': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'y1',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'y2',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IQFetchData': {
         'parameters': [
             {
@@ -3476,6 +4000,67 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IQFetchDataSplit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataI',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataQ',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -3598,6 +4183,37 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'resultName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'LoadDataToMeasurementMemoryFromFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'parameter',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'memoryDataName',
                 'type': 'char[]'
             }
         ],
@@ -3938,88 +4554,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'SParamsFetchComplexData': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'timeout',
-                'type': 'float64'
-            },
-            {
-                'direction': 'out',
-                'name': 'complexData',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
-                },
-                'type': 'NIComplexSingle[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'actualArraySize',
-                'type': 'int32'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'SParamsFetchRealData': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'timeout',
-                'type': 'float64'
-            },
-            {
-                'direction': 'out',
-                'name': 'realData',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
-                },
-                'type': 'float32[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'actualArraySize',
-                'type': 'int32'
-            }
-        ],
-        'returns': 'int32'
-    },
     'SParamsFetchXData': {
         'parameters': [
             {
@@ -4108,6 +4642,36 @@ functions = {
                 'direction': 'out',
                 'name': 'actualArraySize',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SParamsGetSParameter': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sParameter',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
+                'type': 'char[]'
             }
         ],
         'returns': 'int32'
@@ -4866,88 +5430,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'WavesFetchComplexData': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'timeout',
-                'type': 'float64'
-            },
-            {
-                'direction': 'out',
-                'name': 'complexData',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
-                },
-                'type': 'NIComplexSingle[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'actualArraySize',
-                'type': 'int32'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'WavesFetchRealData': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'timeout',
-                'type': 'float64'
-            },
-            {
-                'direction': 'out',
-                'name': 'realData',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
-                },
-                'type': 'float32[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'actualArraySize',
-                'type': 'int32'
-            }
-        ],
-        'returns': 'int32'
-    },
     'WavesFetchXData': {
         'parameters': [
             {
@@ -5036,6 +5518,36 @@ functions = {
                 'direction': 'out',
                 'name': 'actualArraySize',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WavesGetWave': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'wave',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
+                'type': 'char[]'
             }
         ],
         'returns': 'int32'

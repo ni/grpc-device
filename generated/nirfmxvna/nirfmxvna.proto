@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-rfmxvna API metadata version 23.0.0
+// This file is generated from NI-rfmxvna API metadata version 24.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-rfmxvna Metadata
 //---------------------------------------------------------------------
@@ -13,13 +13,1762 @@ option csharp_namespace = "NationalInstruments.Grpc.NiRFmxVNA";
 
 package nirfmxvna_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiRFmxVNA {
+  rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
+  rpc BuildCalibrationElementString(BuildCalibrationElementStringRequest) returns (BuildCalibrationElementStringResponse);
+  rpc BuildCalkitString(BuildCalkitStringRequest) returns (BuildCalkitStringResponse);
+  rpc BuildCalstepString(BuildCalstepStringRequest) returns (BuildCalstepStringResponse);
+  rpc BuildConnectorString(BuildConnectorStringRequest) returns (BuildConnectorStringResponse);
+  rpc BuildMarkerString(BuildMarkerStringRequest) returns (BuildMarkerStringResponse);
+  rpc BuildPortString(BuildPortStringRequest) returns (BuildPortStringResponse);
+  rpc BuildPulseGeneratorString(BuildPulseGeneratorStringRequest) returns (BuildPulseGeneratorStringResponse);
+  rpc BuildSParameterString(BuildSParameterStringRequest) returns (BuildSParameterStringResponse);
+  rpc BuildSegmentString(BuildSegmentStringRequest) returns (BuildSegmentStringResponse);
+  rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
+  rpc BuildWaveString(BuildWaveStringRequest) returns (BuildWaveStringResponse);
+  rpc CalibrationAbort(CalibrationAbortRequest) returns (CalibrationAbortResponse);
+  rpc CalibrationAcquire(CalibrationAcquireRequest) returns (CalibrationAcquireResponse);
+  rpc CalibrationInitiate(CalibrationInitiateRequest) returns (CalibrationInitiateResponse);
+  rpc CalibrationSave(CalibrationSaveRequest) returns (CalibrationSaveResponse);
+  rpc CalkitManagerCalkitAddCalibrationElement(CalkitManagerCalkitAddCalibrationElementRequest) returns (CalkitManagerCalkitAddCalibrationElementResponse);
+  rpc CalkitManagerCalkitAddConnector(CalkitManagerCalkitAddConnectorRequest) returns (CalkitManagerCalkitAddConnectorResponse);
+  rpc CalkitManagerCalkitCalibrationElementDelayModelGetDelay(CalkitManagerCalkitCalibrationElementDelayModelGetDelayRequest) returns (CalkitManagerCalkitCalibrationElementDelayModelGetDelayResponse);
+  rpc CalkitManagerCalkitCalibrationElementDelayModelSetDelay(CalkitManagerCalkitCalibrationElementDelayModelSetDelayRequest) returns (CalkitManagerCalkitCalibrationElementDelayModelSetDelayResponse);
+  rpc CalkitManagerCalkitCalibrationElementGetDescription(CalkitManagerCalkitCalibrationElementGetDescriptionRequest) returns (CalkitManagerCalkitCalibrationElementGetDescriptionResponse);
+  rpc CalkitManagerCalkitCalibrationElementGetMaximumFrequency(CalkitManagerCalkitCalibrationElementGetMaximumFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementGetMaximumFrequencyResponse);
+  rpc CalkitManagerCalkitCalibrationElementGetMinimumFrequency(CalkitManagerCalkitCalibrationElementGetMinimumFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementGetMinimumFrequencyResponse);
+  rpc CalkitManagerCalkitCalibrationElementGetPortConnectors(CalkitManagerCalkitCalibrationElementGetPortConnectorsRequest) returns (CalkitManagerCalkitCalibrationElementGetPortConnectorsResponse);
+  rpc CalkitManagerCalkitCalibrationElementGetSParameterDefinition(CalkitManagerCalkitCalibrationElementGetSParameterDefinitionRequest) returns (CalkitManagerCalkitCalibrationElementGetSParameterDefinitionResponse);
+  rpc CalkitManagerCalkitCalibrationElementGetTypes(CalkitManagerCalkitCalibrationElementGetTypesRequest) returns (CalkitManagerCalkitCalibrationElementGetTypesResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetC0(CalkitManagerCalkitCalibrationElementReflectModelGetC0Request) returns (CalkitManagerCalkitCalibrationElementReflectModelGetC0Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetC1(CalkitManagerCalkitCalibrationElementReflectModelGetC1Request) returns (CalkitManagerCalkitCalibrationElementReflectModelGetC1Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetC2(CalkitManagerCalkitCalibrationElementReflectModelGetC2Request) returns (CalkitManagerCalkitCalibrationElementReflectModelGetC2Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetC3(CalkitManagerCalkitCalibrationElementReflectModelGetC3Request) returns (CalkitManagerCalkitCalibrationElementReflectModelGetC3Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetModelType(CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay(CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss(CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0(CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Request) returns (CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance(CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability(CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetC0(CalkitManagerCalkitCalibrationElementReflectModelSetC0Request) returns (CalkitManagerCalkitCalibrationElementReflectModelSetC0Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetC1(CalkitManagerCalkitCalibrationElementReflectModelSetC1Request) returns (CalkitManagerCalkitCalibrationElementReflectModelSetC1Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetC2(CalkitManagerCalkitCalibrationElementReflectModelSetC2Request) returns (CalkitManagerCalkitCalibrationElementReflectModelSetC2Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetC3(CalkitManagerCalkitCalibrationElementReflectModelSetC3Request) returns (CalkitManagerCalkitCalibrationElementReflectModelSetC3Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetModelType(CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay(CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss(CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0(CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Request) returns (CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Response);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance(CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceResponse);
+  rpc CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetFrequency(CalkitManagerCalkitCalibrationElementSParameterGetFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetFrequencyResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS11(CalkitManagerCalkitCalibrationElementSParameterGetS11Request) returns (CalkitManagerCalkitCalibrationElementSParameterGetS11Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS11Split(CalkitManagerCalkitCalibrationElementSParameterGetS11SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS11SplitResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS12(CalkitManagerCalkitCalibrationElementSParameterGetS12Request) returns (CalkitManagerCalkitCalibrationElementSParameterGetS12Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS12Split(CalkitManagerCalkitCalibrationElementSParameterGetS12SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS12SplitResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS21(CalkitManagerCalkitCalibrationElementSParameterGetS21Request) returns (CalkitManagerCalkitCalibrationElementSParameterGetS21Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS21Split(CalkitManagerCalkitCalibrationElementSParameterGetS21SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS21SplitResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS22(CalkitManagerCalkitCalibrationElementSParameterGetS22Request) returns (CalkitManagerCalkitCalibrationElementSParameterGetS22Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS22Split(CalkitManagerCalkitCalibrationElementSParameterGetS22SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS22SplitResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetFrequency(CalkitManagerCalkitCalibrationElementSParameterSetFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetFrequencyResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetFromFile(CalkitManagerCalkitCalibrationElementSParameterSetFromFileRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetFromFileResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS11(CalkitManagerCalkitCalibrationElementSParameterSetS11Request) returns (CalkitManagerCalkitCalibrationElementSParameterSetS11Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS12(CalkitManagerCalkitCalibrationElementSParameterSetS12Request) returns (CalkitManagerCalkitCalibrationElementSParameterSetS12Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS21(CalkitManagerCalkitCalibrationElementSParameterSetS21Request) returns (CalkitManagerCalkitCalibrationElementSParameterSetS21Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS22(CalkitManagerCalkitCalibrationElementSParameterSetS22Request) returns (CalkitManagerCalkitCalibrationElementSParameterSetS22Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityResponse);
+  rpc CalkitManagerCalkitCalibrationElementSetDescription(CalkitManagerCalkitCalibrationElementSetDescriptionRequest) returns (CalkitManagerCalkitCalibrationElementSetDescriptionResponse);
+  rpc CalkitManagerCalkitCalibrationElementSetMaximumFrequency(CalkitManagerCalkitCalibrationElementSetMaximumFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementSetMaximumFrequencyResponse);
+  rpc CalkitManagerCalkitCalibrationElementSetMinimumFrequency(CalkitManagerCalkitCalibrationElementSetMinimumFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementSetMinimumFrequencyResponse);
+  rpc CalkitManagerCalkitCalibrationElementSetPortConnectors(CalkitManagerCalkitCalibrationElementSetPortConnectorsRequest) returns (CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse);
+  rpc CalkitManagerCalkitCalibrationElementSetSParameterDefinition(CalkitManagerCalkitCalibrationElementSetSParameterDefinitionRequest) returns (CalkitManagerCalkitCalibrationElementSetSParameterDefinitionResponse);
+  rpc CalkitManagerCalkitCalibrationElementSetTypes(CalkitManagerCalkitCalibrationElementSetTypesRequest) returns (CalkitManagerCalkitCalibrationElementSetTypesResponse);
+  rpc CalkitManagerCalkitConnectorGetDescription(CalkitManagerCalkitConnectorGetDescriptionRequest) returns (CalkitManagerCalkitConnectorGetDescriptionResponse);
+  rpc CalkitManagerCalkitConnectorGetGender(CalkitManagerCalkitConnectorGetGenderRequest) returns (CalkitManagerCalkitConnectorGetGenderResponse);
+  rpc CalkitManagerCalkitConnectorGetImpedance(CalkitManagerCalkitConnectorGetImpedanceRequest) returns (CalkitManagerCalkitConnectorGetImpedanceResponse);
+  rpc CalkitManagerCalkitConnectorGetMaximumFrequency(CalkitManagerCalkitConnectorGetMaximumFrequencyRequest) returns (CalkitManagerCalkitConnectorGetMaximumFrequencyResponse);
+  rpc CalkitManagerCalkitConnectorGetMinimumFrequency(CalkitManagerCalkitConnectorGetMinimumFrequencyRequest) returns (CalkitManagerCalkitConnectorGetMinimumFrequencyResponse);
+  rpc CalkitManagerCalkitConnectorGetType(CalkitManagerCalkitConnectorGetTypeRequest) returns (CalkitManagerCalkitConnectorGetTypeResponse);
+  rpc CalkitManagerCalkitConnectorSetDescription(CalkitManagerCalkitConnectorSetDescriptionRequest) returns (CalkitManagerCalkitConnectorSetDescriptionResponse);
+  rpc CalkitManagerCalkitConnectorSetGender(CalkitManagerCalkitConnectorSetGenderRequest) returns (CalkitManagerCalkitConnectorSetGenderResponse);
+  rpc CalkitManagerCalkitConnectorSetImpedance(CalkitManagerCalkitConnectorSetImpedanceRequest) returns (CalkitManagerCalkitConnectorSetImpedanceResponse);
+  rpc CalkitManagerCalkitConnectorSetMaximumFrequency(CalkitManagerCalkitConnectorSetMaximumFrequencyRequest) returns (CalkitManagerCalkitConnectorSetMaximumFrequencyResponse);
+  rpc CalkitManagerCalkitConnectorSetMinimumFrequency(CalkitManagerCalkitConnectorSetMinimumFrequencyRequest) returns (CalkitManagerCalkitConnectorSetMinimumFrequencyResponse);
+  rpc CalkitManagerCalkitConnectorSetType(CalkitManagerCalkitConnectorSetTypeRequest) returns (CalkitManagerCalkitConnectorSetTypeResponse);
+  rpc CalkitManagerCalkitGetCalibrationElementIDs(CalkitManagerCalkitGetCalibrationElementIDsRequest) returns (CalkitManagerCalkitGetCalibrationElementIDsResponse);
+  rpc CalkitManagerCalkitGetConnectorIDs(CalkitManagerCalkitGetConnectorIDsRequest) returns (CalkitManagerCalkitGetConnectorIDsResponse);
+  rpc CalkitManagerCalkitGetDescription(CalkitManagerCalkitGetDescriptionRequest) returns (CalkitManagerCalkitGetDescriptionResponse);
+  rpc CalkitManagerCalkitGetVersion(CalkitManagerCalkitGetVersionRequest) returns (CalkitManagerCalkitGetVersionResponse);
+  rpc CalkitManagerCalkitRemoveCalibrationElement(CalkitManagerCalkitRemoveCalibrationElementRequest) returns (CalkitManagerCalkitRemoveCalibrationElementResponse);
+  rpc CalkitManagerCalkitRemoveConnector(CalkitManagerCalkitRemoveConnectorRequest) returns (CalkitManagerCalkitRemoveConnectorResponse);
+  rpc CalkitManagerCalkitSetDescription(CalkitManagerCalkitSetDescriptionRequest) returns (CalkitManagerCalkitSetDescriptionResponse);
+  rpc CalkitManagerCalkitSetVersion(CalkitManagerCalkitSetVersionRequest) returns (CalkitManagerCalkitSetVersionResponse);
+  rpc CalkitManagerCreateCalkit(CalkitManagerCreateCalkitRequest) returns (CalkitManagerCreateCalkitResponse);
+  rpc CalkitManagerExportCalkit(CalkitManagerExportCalkitRequest) returns (CalkitManagerExportCalkitResponse);
+  rpc CalkitManagerGetCalkitIDs(CalkitManagerGetCalkitIDsRequest) returns (CalkitManagerGetCalkitIDsResponse);
+  rpc CalkitManagerImportCalkit(CalkitManagerImportCalkitRequest) returns (CalkitManagerImportCalkitResponse);
+  rpc CalkitManagerRemoveCalkit(CalkitManagerRemoveCalkitRequest) returns (CalkitManagerRemoveCalkitResponse);
+  rpc CalkitManagerValidateCalkit(CalkitManagerValidateCalkitRequest) returns (CalkitManagerValidateCalkitResponse);
+  rpc CalsetEmbedFixtureS2p(CalsetEmbedFixtureS2pRequest) returns (CalsetEmbedFixtureS2pResponse);
+  rpc CalsetGetErrorTerm(CalsetGetErrorTermRequest) returns (CalsetGetErrorTermResponse);
+  rpc CalsetGetErrorTermSplit(CalsetGetErrorTermSplitRequest) returns (CalsetGetErrorTermSplitResponse);
+  rpc CalsetGetFrequencyGrid(CalsetGetFrequencyGridRequest) returns (CalsetGetFrequencyGridResponse);
+  rpc CalsetLoadFromFile(CalsetLoadFromFileRequest) returns (CalsetLoadFromFileResponse);
+  rpc CalsetSaveToFile(CalsetSaveToFileRequest) returns (CalsetSaveToFileResponse);
+  rpc CfgCorrectionPortSubset(CfgCorrectionPortSubsetRequest) returns (CfgCorrectionPortSubsetResponse);
+  rpc CfgFrequencyReference(CfgFrequencyReferenceRequest) returns (CfgFrequencyReferenceResponse);
+  rpc CfgMechanicalAttenuation(CfgMechanicalAttenuationRequest) returns (CfgMechanicalAttenuationResponse);
+  rpc CfgRFAttenuation(CfgRFAttenuationRequest) returns (CfgRFAttenuationResponse);
+  rpc CheckMeasurementStatus(CheckMeasurementStatusRequest) returns (CheckMeasurementStatusResponse);
+  rpc ClearAllNamedResults(ClearAllNamedResultsRequest) returns (ClearAllNamedResultsResponse);
+  rpc ClearCalset(ClearCalsetRequest) returns (ClearCalsetResponse);
+  rpc ClearMeasurementMemoryNames(ClearMeasurementMemoryNamesRequest) returns (ClearMeasurementMemoryNamesResponse);
+  rpc ClearNamedResult(ClearNamedResultRequest) returns (ClearNamedResultResponse);
+  rpc CloneSignalConfiguration(CloneSignalConfigurationRequest) returns (CloneSignalConfigurationResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc Commit(CommitRequest) returns (CommitResponse);
+  rpc CopyCalset(CopyCalsetRequest) returns (CopyCalsetResponse);
+  rpc CopyDataToMeasurementMemory(CopyDataToMeasurementMemoryRequest) returns (CopyDataToMeasurementMemoryResponse);
+  rpc CreateSignalConfiguration(CreateSignalConfigurationRequest) returns (CreateSignalConfigurationResponse);
+  rpc DeleteSignalConfiguration(DeleteSignalConfigurationRequest) returns (DeleteSignalConfigurationResponse);
+  rpc DeselectActiveCalset(DeselectActiveCalsetRequest) returns (DeselectActiveCalsetResponse);
+  rpc GetAllCalsetNames(GetAllCalsetNamesRequest) returns (GetAllCalsetNamesResponse);
+  rpc GetAllNamedResultNames(GetAllNamedResultNamesRequest) returns (GetAllNamedResultNamesResponse);
+  rpc GetAttributeF32(GetAttributeF32Request) returns (GetAttributeF32Response);
+  rpc GetAttributeF32Array(GetAttributeF32ArrayRequest) returns (GetAttributeF32ArrayResponse);
+  rpc GetAttributeF64(GetAttributeF64Request) returns (GetAttributeF64Response);
+  rpc GetAttributeF64Array(GetAttributeF64ArrayRequest) returns (GetAttributeF64ArrayResponse);
+  rpc GetAttributeI16(GetAttributeI16Request) returns (GetAttributeI16Response);
+  rpc GetAttributeI32(GetAttributeI32Request) returns (GetAttributeI32Response);
+  rpc GetAttributeI32Array(GetAttributeI32ArrayRequest) returns (GetAttributeI32ArrayResponse);
+  rpc GetAttributeI64(GetAttributeI64Request) returns (GetAttributeI64Response);
+  rpc GetAttributeI64Array(GetAttributeI64ArrayRequest) returns (GetAttributeI64ArrayResponse);
+  rpc GetAttributeI8(GetAttributeI8Request) returns (GetAttributeI8Response);
+  rpc GetAttributeI8Array(GetAttributeI8ArrayRequest) returns (GetAttributeI8ArrayResponse);
+  rpc GetAttributeNIComplexDoubleArray(GetAttributeNIComplexDoubleArrayRequest) returns (GetAttributeNIComplexDoubleArrayResponse);
+  rpc GetAttributeNIComplexSingleArray(GetAttributeNIComplexSingleArrayRequest) returns (GetAttributeNIComplexSingleArrayResponse);
+  rpc GetAttributeString(GetAttributeStringRequest) returns (GetAttributeStringResponse);
+  rpc GetAttributeU16(GetAttributeU16Request) returns (GetAttributeU16Response);
+  rpc GetAttributeU32(GetAttributeU32Request) returns (GetAttributeU32Response);
+  rpc GetAttributeU32Array(GetAttributeU32ArrayRequest) returns (GetAttributeU32ArrayResponse);
+  rpc GetAttributeU64Array(GetAttributeU64ArrayRequest) returns (GetAttributeU64ArrayResponse);
+  rpc GetAttributeU8(GetAttributeU8Request) returns (GetAttributeU8Response);
+  rpc GetAttributeU8Array(GetAttributeU8ArrayRequest) returns (GetAttributeU8ArrayResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
+  rpc GetMeasurementMemoryNames(GetMeasurementMemoryNamesRequest) returns (GetMeasurementMemoryNamesResponse);
+  rpc GetMeasurementMemoryXData(GetMeasurementMemoryXDataRequest) returns (GetMeasurementMemoryXDataResponse);
+  rpc GetMeasurementMemoryYData(GetMeasurementMemoryYDataRequest) returns (GetMeasurementMemoryYDataResponse);
+  rpc IQFetchData(IQFetchDataRequest) returns (IQFetchDataResponse);
+  rpc IQFetchDataSplit(IQFetchDataSplitRequest) returns (IQFetchDataSplitResponse);
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
+  rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
+  rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc LoadDataToMeasurementMemoryFromFile(LoadDataToMeasurementMemoryFromFileRequest) returns (LoadDataToMeasurementMemoryFromFileResponse);
+  rpc MarkerCfgDataSource(MarkerCfgDataSourceRequest) returns (MarkerCfgDataSourceResponse);
+  rpc MarkerCfgNumberOfMarkers(MarkerCfgNumberOfMarkersRequest) returns (MarkerCfgNumberOfMarkersResponse);
+  rpc MarkerCfgPeakSearchExcursion(MarkerCfgPeakSearchExcursionRequest) returns (MarkerCfgPeakSearchExcursionResponse);
+  rpc MarkerCfgPeakSearchThreshold(MarkerCfgPeakSearchThresholdRequest) returns (MarkerCfgPeakSearchThresholdResponse);
+  rpc MarkerCfgReferenceMarker(MarkerCfgReferenceMarkerRequest) returns (MarkerCfgReferenceMarkerResponse);
+  rpc MarkerCfgType(MarkerCfgTypeRequest) returns (MarkerCfgTypeResponse);
+  rpc MarkerCfgX(MarkerCfgXRequest) returns (MarkerCfgXResponse);
+  rpc MarkerCfgY(MarkerCfgYRequest) returns (MarkerCfgYResponse);
+  rpc MarkerFetchX(MarkerFetchXRequest) returns (MarkerFetchXResponse);
+  rpc MarkerFetchY(MarkerFetchYRequest) returns (MarkerFetchYResponse);
+  rpc MarkerSearch(MarkerSearchRequest) returns (MarkerSearchResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
+  rpc ResetToDefault(ResetToDefaultRequest) returns (ResetToDefaultResponse);
+  rpc SParamsCfgSParameter(SParamsCfgSParameterRequest) returns (SParamsCfgSParameterResponse);
+  rpc SParamsExportToSnPFile(SParamsExportToSnPFileRequest) returns (SParamsExportToSnPFileResponse);
+  rpc SParamsFetchXData(SParamsFetchXDataRequest) returns (SParamsFetchXDataResponse);
+  rpc SParamsFetchYData(SParamsFetchYDataRequest) returns (SParamsFetchYDataResponse);
+  rpc SParamsGetSParameter(SParamsGetSParameterRequest) returns (SParamsGetSParameterResponse);
+  rpc SelectActiveCalset(SelectActiveCalsetRequest) returns (SelectActiveCalsetResponse);
+  rpc SelectMeasurements(SelectMeasurementsRequest) returns (SelectMeasurementsResponse);
+  rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
+  rpc SetAttributeF32(SetAttributeF32Request) returns (SetAttributeF32Response);
+  rpc SetAttributeF32Array(SetAttributeF32ArrayRequest) returns (SetAttributeF32ArrayResponse);
+  rpc SetAttributeF64(SetAttributeF64Request) returns (SetAttributeF64Response);
+  rpc SetAttributeF64Array(SetAttributeF64ArrayRequest) returns (SetAttributeF64ArrayResponse);
+  rpc SetAttributeI16(SetAttributeI16Request) returns (SetAttributeI16Response);
+  rpc SetAttributeI32(SetAttributeI32Request) returns (SetAttributeI32Response);
+  rpc SetAttributeI32Array(SetAttributeI32ArrayRequest) returns (SetAttributeI32ArrayResponse);
+  rpc SetAttributeI64(SetAttributeI64Request) returns (SetAttributeI64Response);
+  rpc SetAttributeI64Array(SetAttributeI64ArrayRequest) returns (SetAttributeI64ArrayResponse);
+  rpc SetAttributeI8(SetAttributeI8Request) returns (SetAttributeI8Response);
+  rpc SetAttributeI8Array(SetAttributeI8ArrayRequest) returns (SetAttributeI8ArrayResponse);
+  rpc SetAttributeNIComplexDoubleArray(SetAttributeNIComplexDoubleArrayRequest) returns (SetAttributeNIComplexDoubleArrayResponse);
+  rpc SetAttributeNIComplexSingleArray(SetAttributeNIComplexSingleArrayRequest) returns (SetAttributeNIComplexSingleArrayResponse);
+  rpc SetAttributeString(SetAttributeStringRequest) returns (SetAttributeStringResponse);
+  rpc SetAttributeU16(SetAttributeU16Request) returns (SetAttributeU16Response);
+  rpc SetAttributeU32(SetAttributeU32Request) returns (SetAttributeU32Response);
+  rpc SetAttributeU32Array(SetAttributeU32ArrayRequest) returns (SetAttributeU32ArrayResponse);
+  rpc SetAttributeU64Array(SetAttributeU64ArrayRequest) returns (SetAttributeU64ArrayResponse);
+  rpc SetAttributeU8(SetAttributeU8Request) returns (SetAttributeU8Response);
+  rpc SetAttributeU8Array(SetAttributeU8ArrayRequest) returns (SetAttributeU8ArrayResponse);
+  rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
+  rpc WaitForMeasurementComplete(WaitForMeasurementCompleteRequest) returns (WaitForMeasurementCompleteResponse);
+  rpc WavesCfgWave(WavesCfgWaveRequest) returns (WavesCfgWaveResponse);
+  rpc WavesFetchXData(WavesFetchXDataRequest) returns (WavesFetchXDataResponse);
+  rpc WavesFetchYData(WavesFetchYDataRequest) returns (WavesFetchYDataResponse);
+  rpc WavesGetWave(WavesGetWaveRequest) returns (WavesGetWaveResponse);
+}
+
+enum NiRFmxVNAAttribute {
+  NIRFMXVNA_ATTRIBUTE_UNSPECIFIED = 0;
+  NIRFMXVNA_ATTRIBUTE_NUMBER_OF_SEGMENTS = 13631489;
+  NIRFMXVNA_ATTRIBUTE_FREQUENCY_LIST = 13631490;
+  NIRFMXVNA_ATTRIBUTE_POWER_LEVEL = 13631491;
+  NIRFMXVNA_ATTRIBUTE_IF_BANDWIDTH = 13631492;
+  NIRFMXVNA_ATTRIBUTE_SWEEP_DELAY = 13631493;
+  NIRFMXVNA_ATTRIBUTE_DWELL_TIME = 13631494;
+  NIRFMXVNA_ATTRIBUTE_AVERAGING_ENABLED = 13631495;
+  NIRFMXVNA_ATTRIBUTE_AVERAGING_COUNT = 13631496;
+  NIRFMXVNA_ATTRIBUTE_TEST_RECEIVER_ATTENUATION = 13631498;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_ENABLED = 13631499;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_SUBSET_ENABLED = 13631502;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_SUBSET_PORTS = 13631503;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_PORTS = 13631504;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_CONNECTOR_TYPE = 13631505;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_CALKIT_TYPE = 13631506;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_CALKIT_ELECTRONIC_RESOURCE_NAME = 13631507;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_CALKIT_MECHANICAL_NAME = 13631508;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_METHOD = 13631509;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_THRU_METHOD = 13631511;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_THRU_COAX_DELAY = 13631512;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_STEP_COUNT = 13631513;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_STEP_DESCRIPTION = 13631514;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_CALKIT_ELECTRONIC_ORIENTATION = 13631518;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_ENABLED = 13631526;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_DELAY = 13631527;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED = 13631528;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_DC_LOSS = 13631529;
+  NIRFMXVNA_ATTRIBUTE_SWEEP_SEQUENCE = 13631533;
+  NIRFMXVNA_ATTRIBUTE_SWEEP_TYPE = 13631534;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_ENABLED = 13631535;
+  NIRFMXVNA_ATTRIBUTE_PULSE_MODE_ENABLED = 13631537;
+  NIRFMXVNA_ATTRIBUTE_PULSE_TRIGGER_TYPE = 13631539;
+  NIRFMXVNA_ATTRIBUTE_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE = 13631540;
+  NIRFMXVNA_ATTRIBUTE_PULSE_PERIOD = 13631541;
+  NIRFMXVNA_ATTRIBUTE_PULSE_MODULATOR_DELAY = 13631543;
+  NIRFMXVNA_ATTRIBUTE_PULSE_MODULATOR_WIDTH = 13631544;
+  NIRFMXVNA_ATTRIBUTE_PULSE_ACQUISITION_AUTO = 13631545;
+  NIRFMXVNA_ATTRIBUTE_PULSE_ACQUISITION_DELAY = 13631546;
+  NIRFMXVNA_ATTRIBUTE_PULSE_ACQUISITION_WIDTH = 13631547;
+  NIRFMXVNA_ATTRIBUTE_PULSE_GENERATOR_ENABLED = 13631550;
+  NIRFMXVNA_ATTRIBUTE_PULSE_GENERATOR_EXPORT_OUTPUT_TERMINAL = 13631551;
+  NIRFMXVNA_ATTRIBUTE_PULSE_GENERATOR_DELAY = 13631552;
+  NIRFMXVNA_ATTRIBUTE_PULSE_GENERATOR_WIDTH = 13631553;
+  NIRFMXVNA_ATTRIBUTE_TRIGGER_TYPE = 13631554;
+  NIRFMXVNA_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE = 13631555;
+  NIRFMXVNA_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_EDGE = 13631556;
+  NIRFMXVNA_ATTRIBUTE_TRIGGER_MODE = 13631557;
+  NIRFMXVNA_ATTRIBUTE_AUTO_IF_BANDWIDTH_SCALING_ENABLED = 13631558;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_POWER_LEVEL_ENABLED = 13631560;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_POWER_LEVEL = 13631561;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_IF_BANDWIDTH_ENABLED = 13631562;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_IF_BANDWIDTH = 13631563;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_TEST_RECEIVER_ATTENUATION_ENABLED = 13631564;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_TEST_RECEIVER_ATTENUATION = 13631565;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_DWELL_TIME_ENABLED = 13631566;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_DWELL_TIME = 13631567;
+  NIRFMXVNA_ATTRIBUTE_PULSE_GENERATOR_TERMINAL_NAME = 13631568;
+  NIRFMXVNA_ATTRIBUTE_START_FREQUENCY = 13631569;
+  NIRFMXVNA_ATTRIBUTE_STOP_FREQUENCY = 13631570;
+  NIRFMXVNA_ATTRIBUTE_NUMBER_OF_FREQUENCY_POINTS = 13631571;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_START_FREQUENCY = 13631572;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_STOP_FREQUENCY = 13631573;
+  NIRFMXVNA_ATTRIBUTE_SEGMENT_NUMBER_OF_FREQUENCY_POINTS = 13631574;
+  NIRFMXVNA_ATTRIBUTE_X_AXIS_VALUES = 13631575;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_INTERPOLATION_ENABLED = 13631576;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY = 13633536;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_MEASUREMENT_ENABLED = 13635584;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_NUMBER_OF_SPARAMETERS = 13635586;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_RECEIVER_PORT = 13635587;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_SOURCE_PORT = 13635588;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_FORMAT = 13635589;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_MAGNITUDE_UNITS = 13635590;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_PHASE_TRACE_TYPE = 13635591;
+  NIRFMXVNA_ATTRIBUTE_IQ_MEASUREMENT_ENABLED = 13635594;
+  NIRFMXVNA_ATTRIBUTE_IQ_ACQUISITION_TIME = 13635597;
+  NIRFMXVNA_ATTRIBUTE_IQ_RECEIVER_PORT = 13635599;
+  NIRFMXVNA_ATTRIBUTE_IQ_SOURCE_PORT = 13635600;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_SNP_DATA_FORMAT = 13635603;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_SNP_USER_COMMENT = 13635604;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_SNP_PORTS = 13635605;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_PARAMETER = 13635607;
+  NIRFMXVNA_ATTRIBUTE_SPARAMS_RESULTS_CORRECTION_STATE = 13635608;
+  NIRFMXVNA_ATTRIBUTE_IQ_RESULTS_CORRECTION_STATE = 13635609;
+  NIRFMXVNA_ATTRIBUTE_WAVES_MEASUREMENT_ENABLED = 13639680;
+  NIRFMXVNA_ATTRIBUTE_WAVES_NUMBER_OF_WAVES = 13639682;
+  NIRFMXVNA_ATTRIBUTE_WAVES_RECEIVER = 13639683;
+  NIRFMXVNA_ATTRIBUTE_WAVES_RECEIVER_PORT = 13639684;
+  NIRFMXVNA_ATTRIBUTE_WAVES_SOURCE_PORT = 13639685;
+  NIRFMXVNA_ATTRIBUTE_WAVES_FORMAT = 13639686;
+  NIRFMXVNA_ATTRIBUTE_WAVES_MAGNITUDE_UNITS = 13639687;
+  NIRFMXVNA_ATTRIBUTE_WAVES_PHASE_TRACE_TYPE = 13639688;
+  NIRFMXVNA_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 13639691;
+  NIRFMXVNA_ATTRIBUTE_SOURCE_POWER_MODE = 13639692;
+  NIRFMXVNA_ATTRIBUTE_GROUND_TERMINATED_PORTS = 13639693;
+  NIRFMXVNA_ATTRIBUTE_WAVES_PARAMETER = 13639698;
+  NIRFMXVNA_ATTRIBUTE_WAVES_RESULTS_CORRECTION_STATE = 13639699;
+  NIRFMXVNA_ATTRIBUTE_RESULT_FETCH_TIMEOUT = 13680640;
+}
+
+enum CalErrorTerm {
+  CAL_ERROR_TERM_DIRECTIVITY = 0;
+  CAL_ERROR_TERM_SOURCE_MATCH = 1;
+  CAL_ERROR_TERM_REFLECTION_TRACKING = 2;
+  CAL_ERROR_TERM_TRANSMISSION_TRACKING = 3;
+  CAL_ERROR_TERM_LOAD_MATCH = 4;
+  CAL_ERROR_TERM_K = 5;
+  CAL_ERROR_TERM_ALPHA = 6;
+  CAL_ERROR_TERM_BETA = 7;
+  CAL_ERROR_TERM_GAMMA = 8;
+  CAL_ERROR_TERM_DELTA = 9;
+  CAL_ERROR_TERM_SWITCH_TERM = 10;
+}
+
+enum CalFrequencyGrid {
+  CAL_FREQUENCY_GRID_DIRECTIVITY = 0;
+  CAL_FREQUENCY_GRID_SOURCE_MATCH = 1;
+  CAL_FREQUENCY_GRID_REFLECTION_TRACKING = 2;
+  CAL_FREQUENCY_GRID_TRANSMISSION_TRACKING = 3;
+  CAL_FREQUENCY_GRID_LOAD_MATCH = 4;
+  CAL_FREQUENCY_GRID_K = 5;
+  CAL_FREQUENCY_GRID_ALPHA = 6;
+  CAL_FREQUENCY_GRID_BETA = 7;
+  CAL_FREQUENCY_GRID_GAMMA = 8;
+  CAL_FREQUENCY_GRID_DELTA = 9;
+  CAL_FREQUENCY_GRID_SWITCH_TERM = 10;
+}
+
+enum CalkitManagerCalkitCalibrationElementReflectModelSParameterAvailability {
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_REFLECT_MODEL_S_PARAMETER_AVAILABILITY_ESTIMATE = 0;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_REFLECT_MODEL_S_PARAMETER_AVAILABILITY_KNOWN = 1;
+}
+
+enum CalkitManagerCalkitCalibrationElementReflectModelType {
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_REFLECT_MODEL_TYPE_REFLECT_OPEN = 0;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_REFLECT_MODEL_TYPE_REFLECT_SHORT = 1;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_REFLECT_MODEL_TYPE_LOAD = 2;
+}
+
+enum CalkitManagerCalkitCalibrationElementSParameterAvailability {
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_S_PARAMETER_AVAILABILITY_ESTIMATE = 0;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_S_PARAMETER_AVAILABILITY_KNOWN = 1;
+}
+
+enum CalkitManagerCalkitCalibrationElementSParameterDefinition {
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_S_PARAMETER_DEFINITION_REFLECT_MODEL = 0;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_S_PARAMETER_DEFINITION_SPARAMETER = 1;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_S_PARAMETER_DEFINITION_DELAY_MODEL = 2;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_S_PARAMETER_DEFINITION_UNKNOWN = 3;
+}
+
+enum CalkitManagerCalkitCalibrationElementType {
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_LOAD = 0;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_OPEN = 1;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_SHORT = 2;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_THRU = 3;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_LINE = 4;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_REFLECT = 5;
+  CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_TERMINATION = 6;
+}
+
+enum CalkitManagerCalkitConnectorGender {
+  CALKIT_MANAGER_CALKIT_CONNECTOR_GENDER_MALE = 0;
+  CALKIT_MANAGER_CALKIT_CONNECTOR_GENDER_FEMALE = 1;
+  CALKIT_MANAGER_CALKIT_CONNECTOR_GENDER_NO_GENDER = 2;
+}
+
+enum FrequencyReferenceSource {
+  FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
+  FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
+  FREQUENCY_REFERENCE_SOURCE_REF_IN = 2;
+  FREQUENCY_REFERENCE_SOURCE_PXI_CLK = 3;
+  FREQUENCY_REFERENCE_SOURCE_CLK_IN = 4;
+  FREQUENCY_REFERENCE_SOURCE_REF_IN2 = 5;
+  FREQUENCY_REFERENCE_SOURCE_PXI_CLK_MASTER = 6;
+}
+
+enum MarkerPeakSearchExcursionEnabled {
+  MARKER_PEAK_SEARCH_EXCURSION_ENABLED_FALSE = 0;
+  MARKER_PEAK_SEARCH_EXCURSION_ENABLED_TRUE = 1;
+}
+
+enum MarkerPeakSearchThresholdEnabled {
+  MARKER_PEAK_SEARCH_THRESHOLD_ENABLED_FALSE = 0;
+  MARKER_PEAK_SEARCH_THRESHOLD_ENABLED_TRUE = 1;
+}
+
+enum MarkerSearchMode {
+  MARKER_SEARCH_MODE_NONE = 0;
+  MARKER_SEARCH_MODE_MAX = 1;
+  MARKER_SEARCH_MODE_MIN = 2;
+  MARKER_SEARCH_MODE_PEAK = 3;
+  MARKER_SEARCH_MODE_NEXT_PEAK = 4;
+  MARKER_SEARCH_MODE_NEXT_LEFT_PEAK = 5;
+  MARKER_SEARCH_MODE_NEXT_RIGHT_PEAK = 6;
+}
+
+enum MarkerType {
+  MARKER_TYPE_OFF = 0;
+  MARKER_TYPE_NORMAL = 1;
+  MARKER_TYPE_DELTA = 2;
+  MARKER_TYPE_FIXED = 3;
+}
+
+enum MeasurementTypes {
+  MEASUREMENT_TYPES_UNSPECIFIED = 0;
+  MEASUREMENT_TYPES_SPARAMS = 1;
+  MEASUREMENT_TYPES_WAVES = 2;
+  MEASUREMENT_TYPES_IQ = 4;
+}
+
+enum MechanicalAttenuationAuto {
+  MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
+  MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum RFAttenuationAuto {
+  RF_ATTENUATION_AUTO_FALSE = 0;
+  RF_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum RestoreConfiguration {
+  RESTORE_CONFIGURATION_NONE = 0;
+  RESTORE_CONFIGURATION_STIMULUS = 1;
+}
+
+enum SParameterOrientation {
+  S_PARAMETER_ORIENTATION_PORT1_TOWARDS_VNA = 0;
+  S_PARAMETER_ORIENTATION_PORT2_TOWARDS_VNA = 1;
+}
+
+enum NiRFmxVNAInt32AttributeValues {
+  option allow_alias = true;
+  NIRFMXVNA_INT32_UNSPECIFIED = 0;
+  NIRFMXVNA_INT32_AUTO_IF_BANDWIDTH_SCALING_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_AUTO_IF_BANDWIDTH_SCALING_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_CALKIT_TYPE_ELECTRONIC = 0;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_CALKIT_TYPE_MECHANICAL = 1;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_METHOD_SOL = 0;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_METHOD_SOLT = 1;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_THRU_METHOD_AUTO = 0;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_THRU_METHOD_DEFINED_THRU = 1;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_THRU_METHOD_FLUSH_THRU = 2;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_THRU_METHOD_UNDEFINED_THRU = 3;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_THRU_METHOD_VCAL_THRU_AS_UNKNOWN_THRU = 5;
+  NIRFMXVNA_INT32_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_INTERPOLATION_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_INTERPOLATION_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_PORT_SUBSET_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_PORT_SUBSET_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
+  NIRFMXVNA_INT32_DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
+  NIRFMXVNA_INT32_IQ_CORRECTION_STATE_NONE = 0;
+  NIRFMXVNA_INT32_IQ_CORRECTION_STATE_CORRECTED = 1;
+  NIRFMXVNA_INT32_IQ_CORRECTION_STATE_INTERPOLATED = 2;
+  NIRFMXVNA_INT32_IQ_CORRECTION_STATE_SETTINGS_MODIFIED = 3;
+  NIRFMXVNA_INT32_LIMITED_CONFIGURATION_CHANGE_DISABLED = 0;
+  NIRFMXVNA_INT32_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE = 1;
+  NIRFMXVNA_INT32_PULSE_ACQUISITION_AUTO_FALSE = 0;
+  NIRFMXVNA_INT32_PULSE_ACQUISITION_AUTO_TRUE = 1;
+  NIRFMXVNA_INT32_PULSE_GENERATOR_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_PULSE_GENERATOR_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_PULSE_MODE_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_PULSE_MODE_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_PULSE_TRIGGER_TYPE_NONE = 0;
+  NIRFMXVNA_INT32_PULSE_TRIGGER_TYPE_DIGITAL_EDGE = 1;
+  NIRFMXVNA_INT32_S_PARAMS_CORRECTION_STATE_NONE = 0;
+  NIRFMXVNA_INT32_S_PARAMS_CORRECTION_STATE_CORRECTED = 1;
+  NIRFMXVNA_INT32_S_PARAMS_CORRECTION_STATE_INTERPOLATED = 2;
+  NIRFMXVNA_INT32_S_PARAMS_CORRECTION_STATE_SETTINGS_MODIFIED = 3;
+  NIRFMXVNA_INT32_S_PARAMS_FORMAT_MAGNITUDE = 0;
+  NIRFMXVNA_INT32_S_PARAMS_FORMAT_PHASE = 1;
+  NIRFMXVNA_INT32_S_PARAMS_FORMAT_COMPLEX = 2;
+  NIRFMXVNA_INT32_S_PARAMS_FORMAT_SWR = 3;
+  NIRFMXVNA_INT32_S_PARAMS_FORMAT_SMITH_IMPEDANCE = 4;
+  NIRFMXVNA_INT32_S_PARAMS_FORMAT_SMITH_ADMITTANCE = 5;
+  NIRFMXVNA_INT32_S_PARAMS_FORMAT_POLAR = 6;
+  NIRFMXVNA_INT32_S_PARAMS_MAGNITUDE_UNITS_DB = 0;
+  NIRFMXVNA_INT32_S_PARAMS_MAGNITUDE_UNITS_LINEAR = 1;
+  NIRFMXVNA_INT32_S_PARAMS_PHASE_TRACE_TYPE_WRAPPED = 0;
+  NIRFMXVNA_INT32_S_PARAMS_PHASE_TRACE_TYPE_UNWRAPPED = 1;
+  NIRFMXVNA_INT32_S_PARAMS_SN_P_DATA_FORMAT_AUTO = 0;
+  NIRFMXVNA_INT32_S_PARAMS_SN_P_DATA_FORMAT_LOG_MAGNITUDE_ANGLE = 1;
+  NIRFMXVNA_INT32_S_PARAMS_SN_P_DATA_FORMAT_REAL_IMAGINARY = 2;
+  NIRFMXVNA_INT32_S_PARAMS_SN_P_DATA_FORMAT_LINEAR_MAGNITUDE_ANGLE = 3;
+  NIRFMXVNA_INT32_SEGMENT_DWELL_TIME_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_SEGMENT_DWELL_TIME_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_SEGMENT_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_SEGMENT_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_SEGMENT_IF_BANDWIDTH_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_SEGMENT_IF_BANDWIDTH_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_SEGMENT_POWER_LEVEL_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_SEGMENT_POWER_LEVEL_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_SEGMENT_TEST_RECEIVER_ATTENUATION_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_SEGMENT_TEST_RECEIVER_ATTENUATION_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_SOURCE_POWER_MODE_AUTO = 0;
+  NIRFMXVNA_INT32_SOURCE_POWER_MODE_OFF = 1;
+  NIRFMXVNA_INT32_SWEEP_SEQUENCE_STANDARD = 0;
+  NIRFMXVNA_INT32_SWEEP_SEQUENCE_POINT = 1;
+  NIRFMXVNA_INT32_SWEEP_TYPE_LIST = 0;
+  NIRFMXVNA_INT32_SWEEP_TYPE_LINEAR = 1;
+  NIRFMXVNA_INT32_SWEEP_TYPE_SEGMENT = 2;
+  NIRFMXVNA_INT32_TRIGGER_MODE_SIGNAL = 0;
+  NIRFMXVNA_INT32_TRIGGER_MODE_SWEEP = 1;
+  NIRFMXVNA_INT32_TRIGGER_MODE_POINT = 2;
+  NIRFMXVNA_INT32_TRIGGER_TYPE_NONE = 0;
+  NIRFMXVNA_INT32_TRIGGER_TYPE_DIGITAL_EDGE = 1;
+  NIRFMXVNA_INT32_TRIGGER_TYPE_SOFTWARE = 2;
+  NIRFMXVNA_INT32_WAVES_CORRECTION_STATE_NONE = 0;
+  NIRFMXVNA_INT32_WAVES_CORRECTION_STATE_CORRECTED = 1;
+  NIRFMXVNA_INT32_WAVES_CORRECTION_STATE_INTERPOLATED = 2;
+  NIRFMXVNA_INT32_WAVES_CORRECTION_STATE_SETTINGS_MODIFIED = 3;
+  NIRFMXVNA_INT32_WAVES_FORMAT_MAGNITUDE = 0;
+  NIRFMXVNA_INT32_WAVES_FORMAT_PHASE = 1;
+  NIRFMXVNA_INT32_WAVES_FORMAT_COMPLEX = 2;
+  NIRFMXVNA_INT32_WAVES_FORMAT_SWR = 3;
+  NIRFMXVNA_INT32_WAVES_FORMAT_SMITH_IMPEDANCE = 4;
+  NIRFMXVNA_INT32_WAVES_FORMAT_SMITH_ADMITTANCE = 5;
+  NIRFMXVNA_INT32_WAVES_FORMAT_POLAR = 6;
+  NIRFMXVNA_INT32_WAVES_MAGNITUDE_UNITS_DBM = 0;
+  NIRFMXVNA_INT32_WAVES_MAGNITUDE_UNITS_DBMV = 1;
+  NIRFMXVNA_INT32_WAVES_MAGNITUDE_UNITS_DBUV = 2;
+  NIRFMXVNA_INT32_WAVES_MAGNITUDE_UNITS_DBMA = 3;
+  NIRFMXVNA_INT32_WAVES_MAGNITUDE_UNITS_W = 4;
+  NIRFMXVNA_INT32_WAVES_MAGNITUDE_UNITS_V = 5;
+  NIRFMXVNA_INT32_WAVES_MAGNITUDE_UNITS_A = 6;
+  NIRFMXVNA_INT32_WAVES_PHASE_TRACE_TYPE_WRAPPED = 0;
+  NIRFMXVNA_INT32_WAVES_PHASE_TRACE_TYPE_UNWRAPPED = 1;
+  NIRFMXVNA_INT32_WAVES_RECEIVER_TEST = 0;
+  NIRFMXVNA_INT32_WAVES_RECEIVER_REFERENCE = 1;
+}
+
+enum NiRFmxVNAStringAttributeValuesMapped {
+  NIRFMXVNA_STRING_MAPPED_UNSPECIFIED = 0;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI0 = 1;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI1 = 2;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0 = 3;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG1 = 4;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG2 = 5;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG3 = 6;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG4 = 7;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG5 = 8;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG6 = 9;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG7 = 10;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
+  NIRFMXVNA_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PFI0 = 14;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PFI1 = 15;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0 = 16;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG1 = 17;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG2 = 18;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG3 = 19;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG4 = 20;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG5 = 21;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG6 = 22;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG7 = 23;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 24;
+  NIRFMXVNA_STRING_PULSE_DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 25;
+}
+
+message AbortMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message AbortMeasurementsResponse {
+  int32 status = 1;
+}
+
+message BuildCalibrationElementStringRequest {
+  string selector_string = 1;
+  string calibration_element_id = 2;
+}
+
+message BuildCalibrationElementStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildCalkitStringRequest {
+  string selector_string = 1;
+  string calkit_id = 2;
+}
+
+message BuildCalkitStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildCalstepStringRequest {
+  string selector_string = 1;
+  int32 calstep_number = 2;
+}
+
+message BuildCalstepStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildConnectorStringRequest {
+  string selector_string = 1;
+  string connector_id = 2;
+}
+
+message BuildConnectorStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildMarkerStringRequest {
+  string selector_string = 1;
+  int32 marker_number = 2;
+}
+
+message BuildMarkerStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildPortStringRequest {
+  string selector_string = 1;
+  string port_string = 2;
+}
+
+message BuildPortStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildPulseGeneratorStringRequest {
+  string selector_string = 1;
+  int32 pulse_generator_number = 2;
+}
+
+message BuildPulseGeneratorStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildSParameterStringRequest {
+  string selector_string = 1;
+  int32 s_parameter_number = 2;
+}
+
+message BuildSParameterStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildSegmentStringRequest {
+  string selector_string = 1;
+  int32 segment_number = 2;
+}
+
+message BuildSegmentStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildSignalStringRequest {
+  string signal_name = 1;
+  string result_name = 2;
+}
+
+message BuildSignalStringResponse {
+  int32 status = 1;
+  string selector_string = 2;
+}
+
+message BuildWaveStringRequest {
+  string selector_string = 1;
+  int32 wave_number = 2;
+}
+
+message BuildWaveStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message CalibrationAbortRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalibrationAbortResponse {
+  int32 status = 1;
+}
+
+message CalibrationAcquireRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CalibrationAcquireResponse {
+  int32 status = 1;
+}
+
+message CalibrationInitiateRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalibrationInitiateResponse {
+  int32 status = 1;
+}
+
+message CalibrationSaveRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+}
+
+message CalibrationSaveResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitAddCalibrationElementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calibration_element_id = 3;
+}
+
+message CalkitManagerCalkitAddCalibrationElementResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitAddConnectorRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string connector_id = 3;
+}
+
+message CalkitManagerCalkitAddConnectorResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementDelayModelGetDelayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementDelayModelGetDelayResponse {
+  int32 status = 1;
+  double delay = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementDelayModelSetDelayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double delay = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementDelayModelSetDelayResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementGetDescriptionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetDescriptionResponse {
+  int32 status = 1;
+  string description = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetMaximumFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetMaximumFrequencyResponse {
+  int32 status = 1;
+  double maximum_frequency = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetMinimumFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetMinimumFrequencyResponse {
+  int32 status = 1;
+  double minimum_frequency = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetPortConnectorsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetPortConnectorsResponse {
+  int32 status = 1;
+  string connector_i_ds = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetSParameterDefinitionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetSParameterDefinitionResponse {
+  int32 status = 1;
+  CalkitManagerCalkitCalibrationElementSParameterDefinition s_parameter_definition = 2;
+  int32 s_parameter_definition_raw = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementGetTypesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementGetTypesResponse {
+  int32 status = 1;
+  repeated CalkitManagerCalkitCalibrationElementType calibration_element_types = 2;
+  repeated int32 calibration_element_types_raw = 3;
+  int32 actual_array_size = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetC0Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetC0Response {
+  int32 status = 1;
+  double c0 = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetC1Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetC1Response {
+  int32 status = 1;
+  double c1 = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetC2Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetC2Response {
+  int32 status = 1;
+  double c2 = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetC3Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetC3Response {
+  int32 status = 1;
+  double c3 = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeResponse {
+  int32 status = 1;
+  CalkitManagerCalkitCalibrationElementReflectModelType model_type = 2;
+  int32 model_type_raw = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayResponse {
+  int32 status = 1;
+  double offset_delay = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossResponse {
+  int32 status = 1;
+  double offset_loss = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Response {
+  int32 status = 1;
+  double offset_z0 = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceResponse {
+  int32 status = 1;
+  double reference_impedance = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityResponse {
+  int32 status = 1;
+  CalkitManagerCalkitCalibrationElementReflectModelSParameterAvailability s_parameter_availability = 2;
+  int32 s_parameter_availability_raw = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetC0Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double c0 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetC0Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetC1Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double c1 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetC1Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetC2Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double c2 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetC2Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetC3Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double c3 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetC3Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof model_type_enum {
+    CalkitManagerCalkitCalibrationElementReflectModelType model_type = 3;
+    int32 model_type_raw = 4;
+  }
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double offset_delay = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double offset_loss = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double offset_z0 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double reference_impedance = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof s_parameter_availability_enum {
+    CalkitManagerCalkitCalibrationElementReflectModelSParameterAvailability s_parameter_availability = 3;
+    int32 s_parameter_availability_raw = 4;
+  }
+}
+
+message CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetFrequencyResponse {
+  int32 status = 1;
+  repeated double frequency = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS11Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS11Response {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber s11 = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS11SplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS11SplitResponse {
+  int32 status = 1;
+  repeated double s11_i = 2;
+  repeated double s11_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS12Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS12Response {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber s12 = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS12SplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS12SplitResponse {
+  int32 status = 1;
+  repeated double s12_i = 2;
+  repeated double s12_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS21Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS21Response {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber s21 = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS21SplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS21SplitResponse {
+  int32 status = 1;
+  repeated double s21_i = 2;
+  repeated double s21_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS22Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS22Response {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber s22 = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS22SplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS22SplitResponse {
+  int32 status = 1;
+  repeated double s22_i = 2;
+  repeated double s22_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityResponse {
+  int32 status = 1;
+  CalkitManagerCalkitCalibrationElementSParameterAvailability s_parameter_availability = 2;
+  int32 s_parameter_availability_raw = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double frequency = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetFrequencyResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetFromFileRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string file_name = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetFromFileResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS11Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated nidevice_grpc.NIComplexNumber s11 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS11Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS12Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated nidevice_grpc.NIComplexNumber s12 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS12Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS21Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated nidevice_grpc.NIComplexNumber s21 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS21Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS22Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated nidevice_grpc.NIComplexNumber s22 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS22Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof s_parameter_availability_enum {
+    CalkitManagerCalkitCalibrationElementSParameterAvailability s_parameter_availability = 3;
+    int32 s_parameter_availability_raw = 4;
+  }
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSetDescriptionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string description = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSetDescriptionResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSetMaximumFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double maximum_frequency = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSetMaximumFrequencyResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSetMinimumFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double minimum_frequency = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSetMinimumFrequencyResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSetPortConnectorsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string connector_i_ds = 3;
+  int32 array_size = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSetSParameterDefinitionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof s_parameter_definition_enum {
+    CalkitManagerCalkitCalibrationElementSParameterDefinition s_parameter_definition = 3;
+    int32 s_parameter_definition_raw = 4;
+  }
+}
+
+message CalkitManagerCalkitCalibrationElementSetSParameterDefinitionResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSetTypesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated CalkitManagerCalkitCalibrationElementType calibration_element_types = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSetTypesResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitConnectorGetDescriptionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitConnectorGetDescriptionResponse {
+  int32 status = 1;
+  string description = 2;
+}
+
+message CalkitManagerCalkitConnectorGetGenderRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitConnectorGetGenderResponse {
+  int32 status = 1;
+  CalkitManagerCalkitConnectorGender connector_gender = 2;
+  int32 connector_gender_raw = 3;
+}
+
+message CalkitManagerCalkitConnectorGetImpedanceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitConnectorGetImpedanceResponse {
+  int32 status = 1;
+  double impedance = 2;
+}
+
+message CalkitManagerCalkitConnectorGetMaximumFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitConnectorGetMaximumFrequencyResponse {
+  int32 status = 1;
+  double maximum_frequency = 2;
+}
+
+message CalkitManagerCalkitConnectorGetMinimumFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitConnectorGetMinimumFrequencyResponse {
+  int32 status = 1;
+  double minimum_frequency = 2;
+}
+
+message CalkitManagerCalkitConnectorGetTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitConnectorGetTypeResponse {
+  int32 status = 1;
+  string connector_type = 2;
+}
+
+message CalkitManagerCalkitConnectorSetDescriptionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string description = 3;
+}
+
+message CalkitManagerCalkitConnectorSetDescriptionResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitConnectorSetGenderRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof connector_gender_enum {
+    CalkitManagerCalkitConnectorGender connector_gender = 3;
+    int32 connector_gender_raw = 4;
+  }
+}
+
+message CalkitManagerCalkitConnectorSetGenderResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitConnectorSetImpedanceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double impedance = 3;
+}
+
+message CalkitManagerCalkitConnectorSetImpedanceResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitConnectorSetMaximumFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double maximum_frequency = 3;
+}
+
+message CalkitManagerCalkitConnectorSetMaximumFrequencyResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitConnectorSetMinimumFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double minimum_frequency = 3;
+}
+
+message CalkitManagerCalkitConnectorSetMinimumFrequencyResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitConnectorSetTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string connector_type = 3;
+}
+
+message CalkitManagerCalkitConnectorSetTypeResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitGetCalibrationElementIDsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitGetCalibrationElementIDsResponse {
+  int32 status = 1;
+  string calibration_element_i_ds = 2;
+}
+
+message CalkitManagerCalkitGetConnectorIDsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitGetConnectorIDsResponse {
+  int32 status = 1;
+  string connector_i_ds = 2;
+}
+
+message CalkitManagerCalkitGetDescriptionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitGetDescriptionResponse {
+  int32 status = 1;
+  string calkit_description = 2;
+}
+
+message CalkitManagerCalkitGetVersionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitGetVersionResponse {
+  int32 status = 1;
+  string calkit_version = 2;
+}
+
+message CalkitManagerCalkitRemoveCalibrationElementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calibration_element_id = 3;
+}
+
+message CalkitManagerCalkitRemoveCalibrationElementResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitRemoveConnectorRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string connector_id = 3;
+}
+
+message CalkitManagerCalkitRemoveConnectorResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitSetDescriptionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calkit_description = 3;
+}
+
+message CalkitManagerCalkitSetDescriptionResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitSetVersionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calkit_version = 3;
+}
+
+message CalkitManagerCalkitSetVersionResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCreateCalkitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calkit_id = 3;
+}
+
+message CalkitManagerCreateCalkitResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerExportCalkitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calkit_id = 3;
+  string calkit_file_path = 4;
+}
+
+message CalkitManagerExportCalkitResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerGetCalkitIDsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerGetCalkitIDsResponse {
+  int32 status = 1;
+  string calkit_i_ds = 2;
+}
+
+message CalkitManagerImportCalkitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calkit_file_path = 3;
+}
+
+message CalkitManagerImportCalkitResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerRemoveCalkitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calkit_id = 3;
+}
+
+message CalkitManagerRemoveCalkitResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerValidateCalkitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calkit_id = 3;
+}
+
+message CalkitManagerValidateCalkitResponse {
+  int32 status = 1;
+}
+
+message CalsetEmbedFixtureS2pRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+  string fixture_s2p_file_path = 4;
+  string vna_port = 5;
+  oneof s_parameter_orientation_enum {
+    SParameterOrientation s_parameter_orientation = 6;
+    int32 s_parameter_orientation_raw = 7;
+  }
+  string new_calset_name = 8;
+}
+
+message CalsetEmbedFixtureS2pResponse {
+  int32 status = 1;
+}
+
+message CalsetGetErrorTermRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+  oneof error_term_identifier_enum {
+    CalErrorTerm error_term_identifier = 4;
+    int32 error_term_identifier_raw = 5;
+  }
+  string measurement_port = 6;
+  string source_port = 7;
+}
+
+message CalsetGetErrorTermResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 error_term = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalsetGetErrorTermSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+  oneof error_term_identifier_enum {
+    CalErrorTerm error_term_identifier = 4;
+    int32 error_term_identifier_raw = 5;
+  }
+  string measurement_port = 6;
+  string source_port = 7;
+}
+
+message CalsetGetErrorTermSplitResponse {
+  int32 status = 1;
+  repeated float error_term_i = 2;
+  repeated float error_term_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message CalsetGetFrequencyGridRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+  oneof error_term_identifier_enum {
+    CalFrequencyGrid error_term_identifier = 4;
+    int32 error_term_identifier_raw = 5;
+  }
+}
+
+message CalsetGetFrequencyGridResponse {
+  int32 status = 1;
+  repeated double frequency_grid = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalsetLoadFromFileRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+  string calset_file_path = 4;
+}
+
+message CalsetLoadFromFileResponse {
+  int32 status = 1;
+}
+
+message CalsetSaveToFileRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+  string calset_file_path = 4;
+}
+
+message CalsetSaveToFileResponse {
+  int32 status = 1;
+}
+
+message CfgCorrectionPortSubsetRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string port_subset = 3;
+}
+
+message CfgCorrectionPortSubsetResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyReferenceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof frequency_reference_source_enum {
+    FrequencyReferenceSource frequency_reference_source_mapped = 3;
+    string frequency_reference_source_raw = 4;
+  }
+  double frequency_reference_frequency = 5;
+}
+
+message CfgFrequencyReferenceResponse {
+  int32 status = 1;
+}
+
+message CfgMechanicalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof mechanical_attenuation_auto_enum {
+    MechanicalAttenuationAuto mechanical_attenuation_auto = 3;
+    int32 mechanical_attenuation_auto_raw = 4;
+  }
+  double mechanical_attenuation_value = 5;
+}
+
+message CfgMechanicalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgRFAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof rf_attenuation_auto_enum {
+    RFAttenuationAuto rf_attenuation_auto = 3;
+    int32 rf_attenuation_auto_raw = 4;
+  }
+  double rf_attenuation_value = 5;
+}
+
+message CfgRFAttenuationResponse {
+  int32 status = 1;
+}
+
+message CheckMeasurementStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CheckMeasurementStatusResponse {
+  int32 status = 1;
+  bool is_done = 2;
+}
+
+message ClearAllNamedResultsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearAllNamedResultsResponse {
+  int32 status = 1;
+}
+
+message ClearCalsetRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+}
+
+message ClearCalsetResponse {
+  int32 status = 1;
+}
+
+message ClearMeasurementMemoryNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearMeasurementMemoryNamesResponse {
+  int32 status = 1;
+}
+
+message ClearNamedResultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearNamedResultResponse {
+  int32 status = 1;
+}
+
+message CloneSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string old_signal_name = 2;
+  string new_signal_name = 3;
+}
+
+message CloneSignalConfigurationResponse {
+  int32 status = 1;
 }
 
 message CloseRequest {
@@ -29,6 +1778,317 @@ message CloseRequest {
 
 message CloseResponse {
   int32 status = 1;
+}
+
+message CommitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CommitResponse {
+  int32 status = 1;
+}
+
+message CopyCalsetRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string source_calset_name = 3;
+  string new_calset_name = 4;
+}
+
+message CopyCalsetResponse {
+  int32 status = 1;
+}
+
+message CopyDataToMeasurementMemoryRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string memory_data_name = 3;
+}
+
+message CopyDataToMeasurementMemoryResponse {
+  int32 status = 1;
+}
+
+message CreateSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message CreateSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DeleteSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message DeleteSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DeselectActiveCalsetRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message DeselectActiveCalsetResponse {
+  int32 status = 1;
+}
+
+message GetAllCalsetNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetAllCalsetNamesResponse {
+  int32 status = 1;
+  string calset_names = 2;
+}
+
+message GetAllNamedResultNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetAllNamedResultNamesResponse {
+  int32 status = 1;
+  string result_names = 2;
+  int32 actual_result_names_size = 3;
+  int32 default_result_exists = 4;
+}
+
+message GetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeF32Response {
+  int32 status = 1;
+  float attr_val = 2;
+}
+
+message GetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeF32ArrayResponse {
+  int32 status = 1;
+  repeated float attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeF64Response {
+  int32 status = 1;
+  double attr_val = 2;
+}
+
+message GetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeF64ArrayResponse {
+  int32 status = 1;
+  repeated double attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeI16Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeI32Response {
+  int32 status = 1;
+  NiRFmxVNAInt32AttributeValues attr_val = 2;
+  int32 attr_val_raw = 3;
+}
+
+message GetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeI32ArrayResponse {
+  int32 status = 1;
+  repeated NiRFmxVNAInt32AttributeValues attr_val = 2;
+  repeated int32 attr_val_raw = 3;
+  int32 actual_array_size = 4;
+}
+
+message GetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeI64Response {
+  int32 status = 1;
+  int64 attr_val = 2;
+}
+
+message GetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeI64ArrayResponse {
+  int32 status = 1;
+  repeated int64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeI8Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeI8ArrayResponse {
+  int32 status = 1;
+  repeated int32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeStringResponse {
+  int32 status = 1;
+  string attr_val = 2;
+}
+
+message GetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeU16Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeU32Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeU32ArrayResponse {
+  int32 status = 1;
+  repeated uint32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeU64ArrayResponse {
+  int32 status = 1;
+  repeated uint64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeU8Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message GetAttributeU8ArrayResponse {
+  int32 status = 1;
+  bytes attr_val = 2;
+  int32 actual_array_size = 3;
 }
 
 message GetErrorRequest {
@@ -51,15 +2111,641 @@ message GetErrorStringResponse {
   string error_description = 2;
 }
 
+message GetMeasurementMemoryNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetMeasurementMemoryNamesResponse {
+  int32 status = 1;
+  string measurement_memory_names = 2;
+}
+
+message GetMeasurementMemoryXDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetMeasurementMemoryXDataResponse {
+  int32 status = 1;
+  repeated double x = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetMeasurementMemoryYDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetMeasurementMemoryYDataResponse {
+  int32 status = 1;
+  repeated float y1 = 2;
+  repeated float y2 = 3;
+  int32 actual_array_size = 4;
+}
+
+message IQFetchDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IQFetchDataResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 data = 4;
+  int32 actual_array_size = 5;
+}
+
+message IQFetchDataSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IQFetchDataSplitResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float data_i = 4;
+  repeated float data_q = 5;
+  int32 actual_array_size = 6;
+}
+
 message InitializeRequest {
   string session_name = 1;
   string resource_name = 2;
   string option_string = 3;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 4;
 }
 
 message InitializeResponse {
   int32 status = 1;
   nidevice_grpc.Session instrument = 2;
   int32 is_new_session = 3;
+  string error_message = 4 [deprecated = true];
+  bool new_session_initialized = 5;
+}
+
+message InitializeFromNIRFSASessionRequest {
+  string session_name = 1;
+  nidevice_grpc.Session nirfsa_session = 2;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 3;
+}
+
+message InitializeFromNIRFSASessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+  string error_message = 3 [deprecated = true];
+  bool new_session_initialized = 4;
+}
+
+message InitiateRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+}
+
+message InitiateResponse {
+  int32 status = 1;
+}
+
+message LoadDataToMeasurementMemoryFromFileRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string file_path = 3;
+  string parameter = 4;
+  string memory_data_name = 5;
+}
+
+message LoadDataToMeasurementMemoryFromFileResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgDataSourceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string data_source = 3;
+}
+
+message MarkerCfgDataSourceResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgNumberOfMarkersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 number_of_markers = 3;
+}
+
+message MarkerCfgNumberOfMarkersResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgPeakSearchExcursionRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof peak_excursion_enabled_enum {
+    MarkerPeakSearchExcursionEnabled peak_excursion_enabled = 3;
+    int32 peak_excursion_enabled_raw = 4;
+  }
+  double peak_excursion = 5;
+}
+
+message MarkerCfgPeakSearchExcursionResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgPeakSearchThresholdRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof threshold_enabled_enum {
+    MarkerPeakSearchThresholdEnabled threshold_enabled = 3;
+    int32 threshold_enabled_raw = 4;
+  }
+  double threshold = 5;
+}
+
+message MarkerCfgPeakSearchThresholdResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgReferenceMarkerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 reference_marker = 3;
+}
+
+message MarkerCfgReferenceMarkerResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof marker_type_enum {
+    MarkerType marker_type = 3;
+    int32 marker_type_raw = 4;
+  }
+}
+
+message MarkerCfgTypeResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgXRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double marker_x = 3;
+}
+
+message MarkerCfgXResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgYRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double marker_y1 = 3;
+  double marker_y2 = 4;
+}
+
+message MarkerCfgYResponse {
+  int32 status = 1;
+}
+
+message MarkerFetchXRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message MarkerFetchXResponse {
+  int32 status = 1;
+  double marker_x = 2;
+}
+
+message MarkerFetchYRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message MarkerFetchYResponse {
+  int32 status = 1;
+  double marker_y1 = 2;
+  double marker_y2 = 3;
+}
+
+message MarkerSearchRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof search_mode_enum {
+    MarkerSearchMode search_mode = 3;
+    int32 search_mode_raw = 4;
+  }
+}
+
+message MarkerSearchResponse {
+  int32 status = 1;
+}
+
+message ResetAttributeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+}
+
+message ResetAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetToDefaultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ResetToDefaultResponse {
+  int32 status = 1;
+}
+
+message SParamsCfgSParameterRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string s_parameter = 3;
+}
+
+message SParamsCfgSParameterResponse {
+  int32 status = 1;
+}
+
+message SParamsExportToSnPFileRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string snp_file_path = 3;
+}
+
+message SParamsExportToSnPFileResponse {
+  int32 status = 1;
+}
+
+message SParamsFetchXDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SParamsFetchXDataResponse {
+  int32 status = 1;
+  repeated double x = 2;
+  int32 actual_array_size = 3;
+}
+
+message SParamsFetchYDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SParamsFetchYDataResponse {
+  int32 status = 1;
+  repeated float y1 = 2;
+  repeated float y2 = 3;
+  int32 actual_array_size = 4;
+}
+
+message SParamsGetSParameterRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message SParamsGetSParameterResponse {
+  int32 status = 1;
+  string s_parameter = 2;
+}
+
+message SelectActiveCalsetRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+  oneof restore_configuration_enum {
+    RestoreConfiguration restore_configuration = 4;
+    int32 restore_configuration_raw = 5;
+  }
+}
+
+message SelectActiveCalsetResponse {
+  int32 status = 1;
+}
+
+message SelectMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof measurements_enum {
+    MeasurementTypes measurements = 3;
+    uint32 measurements_raw = 4;
+  }
+  bool enable_all_traces = 5;
+}
+
+message SelectMeasurementsResponse {
+  int32 status = 1;
+}
+
+message SendSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message SendSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  float attr_val = 4;
+}
+
+message SetAttributeF32Response {
+  int32 status = 1;
+}
+
+message SetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated float attr_val = 4;
+}
+
+message SetAttributeF32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  double attr_val = 4;
+}
+
+message SetAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated double attr_val = 4;
+}
+
+message SetAttributeF64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI16Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxVNAInt32AttributeValues attr_val = 4;
+    int32 attr_val_raw = 5;
+  }
+}
+
+message SetAttributeI32Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated NiRFmxVNAInt32AttributeValues attr_val = 4;
+}
+
+message SetAttributeI32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  int64 attr_val = 4;
+}
+
+message SetAttributeI64Response {
+  int32 status = 1;
+}
+
+message SetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated int64 attr_val = 4;
+}
+
+message SetAttributeI64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI8Response {
+  int32 status = 1;
+}
+
+message SetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated int32 attr_val = 4;
+}
+
+message SetAttributeI8ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 4;
+}
+
+message SetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 4;
+}
+
+message SetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxVNAStringAttributeValuesMapped attr_val_mapped = 4;
+    string attr_val_raw = 5;
+  }
+}
+
+message SetAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU16Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU32Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated uint32 attr_val = 4;
+}
+
+message SetAttributeU32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  repeated uint64 attr_val = 4;
+}
+
+message SetAttributeU64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU8Response {
+  int32 status = 1;
+}
+
+message SetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxVNAAttribute attribute_id = 3;
+  bytes attr_val = 4;
+}
+
+message SetAttributeU8ArrayResponse {
+  int32 status = 1;
+}
+
+message WaitForAcquisitionCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  double timeout = 2;
+}
+
+message WaitForAcquisitionCompleteResponse {
+  int32 status = 1;
+}
+
+message WaitForMeasurementCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message WaitForMeasurementCompleteResponse {
+  int32 status = 1;
+}
+
+message WavesCfgWaveRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string wave = 3;
+}
+
+message WavesCfgWaveResponse {
+  int32 status = 1;
+}
+
+message WavesFetchXDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message WavesFetchXDataResponse {
+  int32 status = 1;
+  repeated double x = 2;
+  int32 actual_array_size = 3;
+}
+
+message WavesFetchYDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message WavesFetchYDataResponse {
+  int32 status = 1;
+  repeated float y1 = 2;
+  repeated float y2 = 3;
+  int32 actual_array_size = 4;
+}
+
+message WavesGetWaveRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message WavesGetWaveResponse {
+  int32 status = 1;
+  string wave = 2;
 }
 

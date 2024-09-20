@@ -270,11 +270,7 @@ enums = {
                 'value': 3
             },
             {
-                'name': 'UNDEFINED_THRU_USING_DEFINED_THRU',
-                'value': 4
-            },
-            {
-                'name': 'DELAY_THRU_USING_DEFINED_THRU',
+                'name': 'VCAL_THRU_AS_UNKNOWN_THRU',
                 'value': 5
             }
         ]
@@ -561,6 +557,18 @@ enums = {
             }
         ]
     },
+    'MechanicalAttenuationAuto': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'PulseAcquisitionAuto': {
         'values': [
             {
@@ -638,10 +646,6 @@ enums = {
             }
         ]
     },
-    'PulseGeneratorExportOutputTerminal': {
-        'values': [
-        ]
-    },
     'PulseModeEnabled': {
         'values': [
             {
@@ -662,6 +666,18 @@ enums = {
             },
             {
                 'name': 'DIGITAL_EDGE',
+                'value': 1
+            }
+        ]
+    },
+    'RFAttenuationAuto': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
                 'value': 1
             }
         ]

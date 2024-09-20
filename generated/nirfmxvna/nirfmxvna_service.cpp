@@ -27,9 +27,11 @@ namespace nirfmxvna_grpc {
   NiRFmxVNAService::NiRFmxVNAService(
       LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
+      ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxVNAFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(resource_repository),
+      vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -42,6 +44,3700 @@ namespace nirfmxvna_grpc {
   inline bool status_ok(int32 status)
   {
     return status >= 0;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildCalibrationElementString(::grpc::ServerContext* context, const BuildCalibrationElementStringRequest* request, BuildCalibrationElementStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calibration_element_id_mbcs = convert_from_grpc<std::string>(request->calibration_element_id());
+      char* calibration_element_id = (char*)calibration_element_id_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->BuildCalibrationElementString(selector_string, calibration_element_id, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildCalibrationElementString(selector_string, calibration_element_id, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildCalkitString(::grpc::ServerContext* context, const BuildCalkitStringRequest* request, BuildCalkitStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calkit_id_mbcs = convert_from_grpc<std::string>(request->calkit_id());
+      char* calkit_id = (char*)calkit_id_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->BuildCalkitString(selector_string, calkit_id, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildCalkitString(selector_string, calkit_id, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildCalstepString(::grpc::ServerContext* context, const BuildCalstepStringRequest* request, BuildCalstepStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 calstep_number = request->calstep_number();
+
+      while (true) {
+        auto status = library_->BuildCalstepString(selector_string, calstep_number, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildCalstepString(selector_string, calstep_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildConnectorString(::grpc::ServerContext* context, const BuildConnectorStringRequest* request, BuildConnectorStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto connector_id_mbcs = convert_from_grpc<std::string>(request->connector_id());
+      char* connector_id = (char*)connector_id_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->BuildConnectorString(selector_string, connector_id, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildConnectorString(selector_string, connector_id, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildMarkerString(::grpc::ServerContext* context, const BuildMarkerStringRequest* request, BuildMarkerStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 marker_number = request->marker_number();
+
+      while (true) {
+        auto status = library_->BuildMarkerString(selector_string, marker_number, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildMarkerString(selector_string, marker_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildPortString(::grpc::ServerContext* context, const BuildPortStringRequest* request, BuildPortStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto port_string_mbcs = convert_from_grpc<std::string>(request->port_string());
+      char* port_string = (char*)port_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->BuildPortString(selector_string, port_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildPortString(selector_string, port_string, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildPulseGeneratorString(::grpc::ServerContext* context, const BuildPulseGeneratorStringRequest* request, BuildPulseGeneratorStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 pulse_generator_number = request->pulse_generator_number();
+
+      while (true) {
+        auto status = library_->BuildPulseGeneratorString(selector_string, pulse_generator_number, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildPulseGeneratorString(selector_string, pulse_generator_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildSParameterString(::grpc::ServerContext* context, const BuildSParameterStringRequest* request, BuildSParameterStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 s_parameter_number = request->s_parameter_number();
+
+      while (true) {
+        auto status = library_->BuildSParameterString(selector_string, s_parameter_number, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildSParameterString(selector_string, s_parameter_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildSegmentString(::grpc::ServerContext* context, const BuildSegmentStringRequest* request, BuildSegmentStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 segment_number = request->segment_number();
+
+      while (true) {
+        auto status = library_->BuildSegmentString(selector_string, segment_number, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildSegmentString(selector_string, segment_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_length = status;
+
+        std::string selector_string;
+        if (selector_string_length > 0) {
+            selector_string.resize(selector_string_length - 1);
+        }
+        status = library_->BuildSignalString(signal_name, result_name, selector_string_length, (char*)selector_string.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_utf8;
+        convert_to_grpc(selector_string, &selector_string_utf8);
+        response->set_selector_string(selector_string_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::BuildWaveString(::grpc::ServerContext* context, const BuildWaveStringRequest* request, BuildWaveStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 wave_number = request->wave_number();
+
+      while (true) {
+        auto status = library_->BuildWaveString(selector_string, wave_number, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildWaveString(selector_string, wave_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalibrationAbort(::grpc::ServerContext* context, const CalibrationAbortRequest* request, CalibrationAbortResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->CalibrationAbort(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalibrationAcquire(::grpc::ServerContext* context, const CalibrationAcquireRequest* request, CalibrationAcquireResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      auto status = library_->CalibrationAcquire(instrument, selector_string, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalibrationInitiate(::grpc::ServerContext* context, const CalibrationInitiateRequest* request, CalibrationInitiateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->CalibrationInitiate(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalibrationSave(::grpc::ServerContext* context, const CalibrationSaveRequest* request, CalibrationSaveResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      auto status = library_->CalibrationSave(instrument, selector_string, calset_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitAddCalibrationElement(::grpc::ServerContext* context, const CalkitManagerCalkitAddCalibrationElementRequest* request, CalkitManagerCalkitAddCalibrationElementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calibration_element_id_mbcs = convert_from_grpc<std::string>(request->calibration_element_id());
+      char* calibration_element_id = (char*)calibration_element_id_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitAddCalibrationElement(instrument, selector_string, calibration_element_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitAddConnector(::grpc::ServerContext* context, const CalkitManagerCalkitAddConnectorRequest* request, CalkitManagerCalkitAddConnectorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto connector_id_mbcs = convert_from_grpc<std::string>(request->connector_id());
+      char* connector_id = (char*)connector_id_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitAddConnector(instrument, selector_string, connector_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementDelayModelGetDelay(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementDelayModelGetDelayRequest* request, CalkitManagerCalkitCalibrationElementDelayModelGetDelayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 delay {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementDelayModelGetDelay(instrument, selector_string, &delay);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_delay(delay);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementDelayModelSetDelay(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementDelayModelSetDelayRequest* request, CalkitManagerCalkitCalibrationElementDelayModelSetDelayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 delay = request->delay();
+      auto status = library_->CalkitManagerCalkitCalibrationElementDelayModelSetDelay(instrument, selector_string, delay);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementGetDescription(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementGetDescriptionRequest* request, CalkitManagerCalkitCalibrationElementGetDescriptionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementGetDescription(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string description;
+        if (array_size > 0) {
+            description.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerCalkitCalibrationElementGetDescription(instrument, selector_string, array_size, (char*)description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string description_utf8;
+        convert_to_grpc(description, &description_utf8);
+        response->set_description(description_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementGetMaximumFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementGetMaximumFrequencyRequest* request, CalkitManagerCalkitCalibrationElementGetMaximumFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 maximum_frequency {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementGetMaximumFrequency(instrument, selector_string, &maximum_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_maximum_frequency(maximum_frequency);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementGetMinimumFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementGetMinimumFrequencyRequest* request, CalkitManagerCalkitCalibrationElementGetMinimumFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 minimum_frequency {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementGetMinimumFrequency(instrument, selector_string, &minimum_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_minimum_frequency(minimum_frequency);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementGetPortConnectors(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementGetPortConnectorsRequest* request, CalkitManagerCalkitCalibrationElementGetPortConnectorsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementGetPortConnectors(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string connector_i_ds;
+        if (array_size > 0) {
+            connector_i_ds.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerCalkitCalibrationElementGetPortConnectors(instrument, selector_string, array_size, (char*)connector_i_ds.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string connector_i_ds_utf8;
+        convert_to_grpc(connector_i_ds, &connector_i_ds_utf8);
+        response->set_connector_i_ds(connector_i_ds_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_i_ds()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementGetSParameterDefinition(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementGetSParameterDefinitionRequest* request, CalkitManagerCalkitCalibrationElementGetSParameterDefinitionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 s_parameter_definition {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementGetSParameterDefinition(instrument, selector_string, &s_parameter_definition);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_s_parameter_definition(static_cast<nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementSParameterDefinition>(s_parameter_definition));
+      response->set_s_parameter_definition_raw(s_parameter_definition);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementGetTypes(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementGetTypesRequest* request, CalkitManagerCalkitCalibrationElementGetTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementGetTypes(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_calibration_element_types_raw()->Resize(actual_array_size, 0);
+        int32* calibration_element_types = reinterpret_cast<int32*>(response->mutable_calibration_element_types_raw()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementGetTypes(instrument, selector_string, calibration_element_types, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+          response->mutable_calibration_element_types()->Clear();
+          response->mutable_calibration_element_types()->Reserve(actual_array_size);
+          std::transform(
+            response->calibration_element_types_raw().begin(),
+            response->calibration_element_types_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_calibration_element_types()),
+            [&](auto x) {
+                return static_cast<nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementType>(x);
+            });
+        response->mutable_calibration_element_types()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetC0(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetC0Request* request, CalkitManagerCalkitCalibrationElementReflectModelGetC0Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 c0 {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetC0(instrument, selector_string, &c0);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_c0(c0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetC1(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetC1Request* request, CalkitManagerCalkitCalibrationElementReflectModelGetC1Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 c1 {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetC1(instrument, selector_string, &c1);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_c1(c1);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetC2(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetC2Request* request, CalkitManagerCalkitCalibrationElementReflectModelGetC2Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 c2 {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetC2(instrument, selector_string, &c2);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_c2(c2);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetC3(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetC3Request* request, CalkitManagerCalkitCalibrationElementReflectModelGetC3Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 c3 {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetC3(instrument, selector_string, &c3);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_c3(c3);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetModelType(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeRequest* request, CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 model_type {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetModelType(instrument, selector_string, &model_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_model_type(static_cast<nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementReflectModelType>(model_type));
+      response->set_model_type_raw(model_type);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayRequest* request, CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 offset_delay {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay(instrument, selector_string, &offset_delay);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_offset_delay(offset_delay);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossRequest* request, CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 offset_loss {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss(instrument, selector_string, &offset_loss);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_offset_loss(offset_loss);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Request* request, CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 offset_z0 {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0(instrument, selector_string, &offset_z0);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_offset_z0(offset_z0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceRequest* request, CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 reference_impedance {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance(instrument, selector_string, &reference_impedance);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_reference_impedance(reference_impedance);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityRequest* request, CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 s_parameter_availability {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability(instrument, selector_string, &s_parameter_availability);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_s_parameter_availability(static_cast<nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementReflectModelSParameterAvailability>(s_parameter_availability));
+      response->set_s_parameter_availability_raw(s_parameter_availability);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetC0(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetC0Request* request, CalkitManagerCalkitCalibrationElementReflectModelSetC0Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 c0 = request->c0();
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetC0(instrument, selector_string, c0);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetC1(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetC1Request* request, CalkitManagerCalkitCalibrationElementReflectModelSetC1Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 c1 = request->c1();
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetC1(instrument, selector_string, c1);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetC2(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetC2Request* request, CalkitManagerCalkitCalibrationElementReflectModelSetC2Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 c2 = request->c2();
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetC2(instrument, selector_string, c2);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetC3(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetC3Request* request, CalkitManagerCalkitCalibrationElementReflectModelSetC3Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 c3 = request->c3();
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetC3(instrument, selector_string, c3);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetModelType(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeRequest* request, CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 model_type;
+      switch (request->model_type_enum_case()) {
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeRequest::ModelTypeEnumCase::kModelType: {
+          model_type = static_cast<int32>(request->model_type());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeRequest::ModelTypeEnumCase::kModelTypeRaw: {
+          model_type = static_cast<int32>(request->model_type_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeRequest::ModelTypeEnumCase::MODEL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for model_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetModelType(instrument, selector_string, model_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayRequest* request, CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 offset_delay = request->offset_delay();
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay(instrument, selector_string, offset_delay);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossRequest* request, CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 offset_loss = request->offset_loss();
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss(instrument, selector_string, offset_loss);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Request* request, CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 offset_z0 = request->offset_z0();
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0(instrument, selector_string, offset_z0);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceRequest* request, CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 reference_impedance = request->reference_impedance();
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance(instrument, selector_string, reference_impedance);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityRequest* request, CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 s_parameter_availability;
+      switch (request->s_parameter_availability_enum_case()) {
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityRequest::SParameterAvailabilityEnumCase::kSParameterAvailability: {
+          s_parameter_availability = static_cast<int32>(request->s_parameter_availability());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityRequest::SParameterAvailabilityEnumCase::kSParameterAvailabilityRaw: {
+          s_parameter_availability = static_cast<int32>(request->s_parameter_availability_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityRequest::SParameterAvailabilityEnumCase::S_PARAMETER_AVAILABILITY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_availability was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(instrument, selector_string, s_parameter_availability);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetFrequencyRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetFrequency(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_frequency()->Resize(actual_array_size, 0);
+        float64* frequency = response->mutable_frequency()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetFrequency(instrument, selector_string, frequency, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_frequency()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS11(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS11Request* request, CalkitManagerCalkitCalibrationElementSParameterGetS11Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS11(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexDouble> s11(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS11(instrument, selector_string, s11.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(s11, response->mutable_s11());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_s11()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_s11()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS11Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS11SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS11SplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS11Split(instrument, selector_string, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_s11_i()->Resize(actual_array_size, 0);
+        float64* s11_i = response->mutable_s11_i()->mutable_data();
+        response->mutable_s11_q()->Resize(actual_array_size, 0);
+        float64* s11_q = response->mutable_s11_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS11Split(instrument, selector_string, s11_i, s11_q, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_s11_i()->Resize(actual_array_size, 0);
+        response->mutable_s11_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS12(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS12Request* request, CalkitManagerCalkitCalibrationElementSParameterGetS12Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS12(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexDouble> s12(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS12(instrument, selector_string, s12.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(s12, response->mutable_s12());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_s12()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_s12()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS12Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS12SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS12SplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS12Split(instrument, selector_string, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_s12_i()->Resize(actual_array_size, 0);
+        float64* s12_i = response->mutable_s12_i()->mutable_data();
+        response->mutable_s12_q()->Resize(actual_array_size, 0);
+        float64* s12_q = response->mutable_s12_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS12Split(instrument, selector_string, s12_i, s12_q, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_s12_i()->Resize(actual_array_size, 0);
+        response->mutable_s12_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS21(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS21Request* request, CalkitManagerCalkitCalibrationElementSParameterGetS21Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS21(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexDouble> s21(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS21(instrument, selector_string, s21.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(s21, response->mutable_s21());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_s21()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_s21()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS21Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS21SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS21SplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS21Split(instrument, selector_string, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_s21_i()->Resize(actual_array_size, 0);
+        float64* s21_i = response->mutable_s21_i()->mutable_data();
+        response->mutable_s21_q()->Resize(actual_array_size, 0);
+        float64* s21_q = response->mutable_s21_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS21Split(instrument, selector_string, s21_i, s21_q, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_s21_i()->Resize(actual_array_size, 0);
+        response->mutable_s21_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS22(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS22Request* request, CalkitManagerCalkitCalibrationElementSParameterGetS22Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS22(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexDouble> s22(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS22(instrument, selector_string, s22.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(s22, response->mutable_s22());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_s22()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_s22()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS22Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS22SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS22SplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS22Split(instrument, selector_string, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_s22_i()->Resize(actual_array_size, 0);
+        float64* s22_i = response->mutable_s22_i()->mutable_data();
+        response->mutable_s22_q()->Resize(actual_array_size, 0);
+        float64* s22_q = response->mutable_s22_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS22Split(instrument, selector_string, s22_i, s22_q, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_s22_i()->Resize(actual_array_size, 0);
+        response->mutable_s22_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 s_parameter_availability {};
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(instrument, selector_string, &s_parameter_availability);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_s_parameter_availability(static_cast<nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementSParameterAvailability>(s_parameter_availability));
+      response->set_s_parameter_availability_raw(s_parameter_availability);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetFrequencyRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto frequency = const_cast<float64*>(request->frequency().data());
+      int32 array_size = static_cast<int32>(request->frequency().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetFrequency(instrument, selector_string, frequency, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetFromFile(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetFromFileRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetFromFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto file_name_mbcs = convert_from_grpc<std::string>(request->file_name());
+      char* file_name = (char*)file_name_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetFromFile(instrument, selector_string, file_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS11(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS11Request* request, CalkitManagerCalkitCalibrationElementSParameterSetS11Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s11 = convert_from_grpc<NIComplexDouble>(request->s11());
+      int32 array_size = static_cast<int32>(request->s11().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS11(instrument, selector_string, s11.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS12(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS12Request* request, CalkitManagerCalkitCalibrationElementSParameterSetS12Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s12 = convert_from_grpc<NIComplexDouble>(request->s12());
+      int32 array_size = static_cast<int32>(request->s12().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS12(instrument, selector_string, s12.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS21(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS21Request* request, CalkitManagerCalkitCalibrationElementSParameterSetS21Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s21 = convert_from_grpc<NIComplexDouble>(request->s21());
+      int32 array_size = static_cast<int32>(request->s21().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS21(instrument, selector_string, s21.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS22(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS22Request* request, CalkitManagerCalkitCalibrationElementSParameterSetS22Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s22 = convert_from_grpc<NIComplexDouble>(request->s22());
+      int32 array_size = static_cast<int32>(request->s22().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS22(instrument, selector_string, s22.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 s_parameter_availability;
+      switch (request->s_parameter_availability_enum_case()) {
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityRequest::SParameterAvailabilityEnumCase::kSParameterAvailability: {
+          s_parameter_availability = static_cast<int32>(request->s_parameter_availability());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityRequest::SParameterAvailabilityEnumCase::kSParameterAvailabilityRaw: {
+          s_parameter_availability = static_cast<int32>(request->s_parameter_availability_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityRequest::SParameterAvailabilityEnumCase::S_PARAMETER_AVAILABILITY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_availability was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(instrument, selector_string, s_parameter_availability);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSetDescription(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSetDescriptionRequest* request, CalkitManagerCalkitCalibrationElementSetDescriptionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto description_mbcs = convert_from_grpc<std::string>(request->description());
+      char* description = (char*)description_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetDescription(instrument, selector_string, description);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSetMaximumFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSetMaximumFrequencyRequest* request, CalkitManagerCalkitCalibrationElementSetMaximumFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 maximum_frequency = request->maximum_frequency();
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetMaximumFrequency(instrument, selector_string, maximum_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSetMinimumFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSetMinimumFrequencyRequest* request, CalkitManagerCalkitCalibrationElementSetMinimumFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 minimum_frequency = request->minimum_frequency();
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetMinimumFrequency(instrument, selector_string, minimum_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSetPortConnectors(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSetPortConnectorsRequest* request, CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto connector_i_ds_mbcs = convert_from_grpc<std::string>(request->connector_i_ds());
+      char* connector_i_ds = (char*)connector_i_ds_mbcs.c_str();
+      int32 array_size = request->array_size();
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetPortConnectors(instrument, selector_string, connector_i_ds, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSetSParameterDefinition(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSetSParameterDefinitionRequest* request, CalkitManagerCalkitCalibrationElementSetSParameterDefinitionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 s_parameter_definition;
+      switch (request->s_parameter_definition_enum_case()) {
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementSetSParameterDefinitionRequest::SParameterDefinitionEnumCase::kSParameterDefinition: {
+          s_parameter_definition = static_cast<int32>(request->s_parameter_definition());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementSetSParameterDefinitionRequest::SParameterDefinitionEnumCase::kSParameterDefinitionRaw: {
+          s_parameter_definition = static_cast<int32>(request->s_parameter_definition_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitCalibrationElementSetSParameterDefinitionRequest::SParameterDefinitionEnumCase::S_PARAMETER_DEFINITION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_definition was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetSParameterDefinition(instrument, selector_string, s_parameter_definition);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSetTypes(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSetTypesRequest* request, CalkitManagerCalkitCalibrationElementSetTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calibration_element_types_vector = std::vector<int32>();
+      calibration_element_types_vector.reserve(request->calibration_element_types().size());
+      std::transform(
+        request->calibration_element_types().begin(),
+        request->calibration_element_types().end(),
+        std::back_inserter(calibration_element_types_vector),
+        [](auto x) { return x; });
+      auto calibration_element_types = calibration_element_types_vector.data();
+
+      int32 array_size = static_cast<int32>(request->calibration_element_types().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetTypes(instrument, selector_string, calibration_element_types, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorGetDescription(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorGetDescriptionRequest* request, CalkitManagerCalkitConnectorGetDescriptionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerCalkitConnectorGetDescription(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string description;
+        if (array_size > 0) {
+            description.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerCalkitConnectorGetDescription(instrument, selector_string, array_size, (char*)description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string description_utf8;
+        convert_to_grpc(description, &description_utf8);
+        response->set_description(description_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorGetGender(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorGetGenderRequest* request, CalkitManagerCalkitConnectorGetGenderResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 connector_gender {};
+      auto status = library_->CalkitManagerCalkitConnectorGetGender(instrument, selector_string, &connector_gender);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_connector_gender(static_cast<nirfmxvna_grpc::CalkitManagerCalkitConnectorGender>(connector_gender));
+      response->set_connector_gender_raw(connector_gender);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorGetImpedance(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorGetImpedanceRequest* request, CalkitManagerCalkitConnectorGetImpedanceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 impedance {};
+      auto status = library_->CalkitManagerCalkitConnectorGetImpedance(instrument, selector_string, &impedance);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_impedance(impedance);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorGetMaximumFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorGetMaximumFrequencyRequest* request, CalkitManagerCalkitConnectorGetMaximumFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 maximum_frequency {};
+      auto status = library_->CalkitManagerCalkitConnectorGetMaximumFrequency(instrument, selector_string, &maximum_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_maximum_frequency(maximum_frequency);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorGetMinimumFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorGetMinimumFrequencyRequest* request, CalkitManagerCalkitConnectorGetMinimumFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 minimum_frequency {};
+      auto status = library_->CalkitManagerCalkitConnectorGetMinimumFrequency(instrument, selector_string, &minimum_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_minimum_frequency(minimum_frequency);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorGetType(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorGetTypeRequest* request, CalkitManagerCalkitConnectorGetTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerCalkitConnectorGetType(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string connector_type;
+        if (array_size > 0) {
+            connector_type.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerCalkitConnectorGetType(instrument, selector_string, array_size, (char*)connector_type.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string connector_type_utf8;
+        convert_to_grpc(connector_type, &connector_type_utf8);
+        response->set_connector_type(connector_type_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_type()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorSetDescription(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorSetDescriptionRequest* request, CalkitManagerCalkitConnectorSetDescriptionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto description_mbcs = convert_from_grpc<std::string>(request->description());
+      char* description = (char*)description_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitConnectorSetDescription(instrument, selector_string, description);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorSetGender(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorSetGenderRequest* request, CalkitManagerCalkitConnectorSetGenderResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 connector_gender;
+      switch (request->connector_gender_enum_case()) {
+        case nirfmxvna_grpc::CalkitManagerCalkitConnectorSetGenderRequest::ConnectorGenderEnumCase::kConnectorGender: {
+          connector_gender = static_cast<int32>(request->connector_gender());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitConnectorSetGenderRequest::ConnectorGenderEnumCase::kConnectorGenderRaw: {
+          connector_gender = static_cast<int32>(request->connector_gender_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitConnectorSetGenderRequest::ConnectorGenderEnumCase::CONNECTOR_GENDER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for connector_gender was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CalkitManagerCalkitConnectorSetGender(instrument, selector_string, connector_gender);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorSetImpedance(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorSetImpedanceRequest* request, CalkitManagerCalkitConnectorSetImpedanceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 impedance = request->impedance();
+      auto status = library_->CalkitManagerCalkitConnectorSetImpedance(instrument, selector_string, impedance);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorSetMaximumFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorSetMaximumFrequencyRequest* request, CalkitManagerCalkitConnectorSetMaximumFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 maximum_frequency = request->maximum_frequency();
+      auto status = library_->CalkitManagerCalkitConnectorSetMaximumFrequency(instrument, selector_string, maximum_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorSetMinimumFrequency(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorSetMinimumFrequencyRequest* request, CalkitManagerCalkitConnectorSetMinimumFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 minimum_frequency = request->minimum_frequency();
+      auto status = library_->CalkitManagerCalkitConnectorSetMinimumFrequency(instrument, selector_string, minimum_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitConnectorSetType(::grpc::ServerContext* context, const CalkitManagerCalkitConnectorSetTypeRequest* request, CalkitManagerCalkitConnectorSetTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto connector_type_mbcs = convert_from_grpc<std::string>(request->connector_type());
+      char* connector_type = (char*)connector_type_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitConnectorSetType(instrument, selector_string, connector_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitGetCalibrationElementIDs(::grpc::ServerContext* context, const CalkitManagerCalkitGetCalibrationElementIDsRequest* request, CalkitManagerCalkitGetCalibrationElementIDsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerCalkitGetCalibrationElementIDs(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string calibration_element_i_ds;
+        if (array_size > 0) {
+            calibration_element_i_ds.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerCalkitGetCalibrationElementIDs(instrument, selector_string, array_size, (char*)calibration_element_i_ds.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string calibration_element_i_ds_utf8;
+        convert_to_grpc(calibration_element_i_ds, &calibration_element_i_ds_utf8);
+        response->set_calibration_element_i_ds(calibration_element_i_ds_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calibration_element_i_ds()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitGetConnectorIDs(::grpc::ServerContext* context, const CalkitManagerCalkitGetConnectorIDsRequest* request, CalkitManagerCalkitGetConnectorIDsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerCalkitGetConnectorIDs(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string connector_i_ds;
+        if (array_size > 0) {
+            connector_i_ds.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerCalkitGetConnectorIDs(instrument, selector_string, array_size, (char*)connector_i_ds.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string connector_i_ds_utf8;
+        convert_to_grpc(connector_i_ds, &connector_i_ds_utf8);
+        response->set_connector_i_ds(connector_i_ds_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_i_ds()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitGetDescription(::grpc::ServerContext* context, const CalkitManagerCalkitGetDescriptionRequest* request, CalkitManagerCalkitGetDescriptionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerCalkitGetDescription(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string calkit_description;
+        if (array_size > 0) {
+            calkit_description.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerCalkitGetDescription(instrument, selector_string, array_size, (char*)calkit_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string calkit_description_utf8;
+        convert_to_grpc(calkit_description, &calkit_description_utf8);
+        response->set_calkit_description(calkit_description_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calkit_description()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitGetVersion(::grpc::ServerContext* context, const CalkitManagerCalkitGetVersionRequest* request, CalkitManagerCalkitGetVersionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerCalkitGetVersion(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string calkit_version;
+        if (array_size > 0) {
+            calkit_version.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerCalkitGetVersion(instrument, selector_string, array_size, (char*)calkit_version.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string calkit_version_utf8;
+        convert_to_grpc(calkit_version, &calkit_version_utf8);
+        response->set_calkit_version(calkit_version_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calkit_version()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitRemoveCalibrationElement(::grpc::ServerContext* context, const CalkitManagerCalkitRemoveCalibrationElementRequest* request, CalkitManagerCalkitRemoveCalibrationElementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calibration_element_id_mbcs = convert_from_grpc<std::string>(request->calibration_element_id());
+      char* calibration_element_id = (char*)calibration_element_id_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitRemoveCalibrationElement(instrument, selector_string, calibration_element_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitRemoveConnector(::grpc::ServerContext* context, const CalkitManagerCalkitRemoveConnectorRequest* request, CalkitManagerCalkitRemoveConnectorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto connector_id_mbcs = convert_from_grpc<std::string>(request->connector_id());
+      char* connector_id = (char*)connector_id_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitRemoveConnector(instrument, selector_string, connector_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitSetDescription(::grpc::ServerContext* context, const CalkitManagerCalkitSetDescriptionRequest* request, CalkitManagerCalkitSetDescriptionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calkit_description_mbcs = convert_from_grpc<std::string>(request->calkit_description());
+      char* calkit_description = (char*)calkit_description_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitSetDescription(instrument, selector_string, calkit_description);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitSetVersion(::grpc::ServerContext* context, const CalkitManagerCalkitSetVersionRequest* request, CalkitManagerCalkitSetVersionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calkit_version_mbcs = convert_from_grpc<std::string>(request->calkit_version());
+      char* calkit_version = (char*)calkit_version_mbcs.c_str();
+      auto status = library_->CalkitManagerCalkitSetVersion(instrument, selector_string, calkit_version);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCreateCalkit(::grpc::ServerContext* context, const CalkitManagerCreateCalkitRequest* request, CalkitManagerCreateCalkitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calkit_id_mbcs = convert_from_grpc<std::string>(request->calkit_id());
+      char* calkit_id = (char*)calkit_id_mbcs.c_str();
+      auto status = library_->CalkitManagerCreateCalkit(instrument, selector_string, calkit_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerExportCalkit(::grpc::ServerContext* context, const CalkitManagerExportCalkitRequest* request, CalkitManagerExportCalkitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calkit_id_mbcs = convert_from_grpc<std::string>(request->calkit_id());
+      char* calkit_id = (char*)calkit_id_mbcs.c_str();
+      auto calkit_file_path_mbcs = convert_from_grpc<std::string>(request->calkit_file_path());
+      char* calkit_file_path = (char*)calkit_file_path_mbcs.c_str();
+      auto status = library_->CalkitManagerExportCalkit(instrument, selector_string, calkit_id, calkit_file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerGetCalkitIDs(::grpc::ServerContext* context, const CalkitManagerGetCalkitIDsRequest* request, CalkitManagerGetCalkitIDsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->CalkitManagerGetCalkitIDs(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string calkit_i_ds;
+        if (array_size > 0) {
+            calkit_i_ds.resize(array_size - 1);
+        }
+        status = library_->CalkitManagerGetCalkitIDs(instrument, selector_string, array_size, (char*)calkit_i_ds.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string calkit_i_ds_utf8;
+        convert_to_grpc(calkit_i_ds, &calkit_i_ds_utf8);
+        response->set_calkit_i_ds(calkit_i_ds_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calkit_i_ds()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerImportCalkit(::grpc::ServerContext* context, const CalkitManagerImportCalkitRequest* request, CalkitManagerImportCalkitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calkit_file_path_mbcs = convert_from_grpc<std::string>(request->calkit_file_path());
+      char* calkit_file_path = (char*)calkit_file_path_mbcs.c_str();
+      auto status = library_->CalkitManagerImportCalkit(instrument, selector_string, calkit_file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerRemoveCalkit(::grpc::ServerContext* context, const CalkitManagerRemoveCalkitRequest* request, CalkitManagerRemoveCalkitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calkit_id_mbcs = convert_from_grpc<std::string>(request->calkit_id());
+      char* calkit_id = (char*)calkit_id_mbcs.c_str();
+      auto status = library_->CalkitManagerRemoveCalkit(instrument, selector_string, calkit_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerValidateCalkit(::grpc::ServerContext* context, const CalkitManagerValidateCalkitRequest* request, CalkitManagerValidateCalkitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calkit_id_mbcs = convert_from_grpc<std::string>(request->calkit_id());
+      char* calkit_id = (char*)calkit_id_mbcs.c_str();
+      auto status = library_->CalkitManagerValidateCalkit(instrument, selector_string, calkit_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalsetEmbedFixtureS2p(::grpc::ServerContext* context, const CalsetEmbedFixtureS2pRequest* request, CalsetEmbedFixtureS2pResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      auto fixture_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->fixture_s2p_file_path());
+      char* fixture_s2p_file_path = (char*)fixture_s2p_file_path_mbcs.c_str();
+      auto vna_port_mbcs = convert_from_grpc<std::string>(request->vna_port());
+      char* vna_port = (char*)vna_port_mbcs.c_str();
+      int32 s_parameter_orientation;
+      switch (request->s_parameter_orientation_enum_case()) {
+        case nirfmxvna_grpc::CalsetEmbedFixtureS2pRequest::SParameterOrientationEnumCase::kSParameterOrientation: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetEmbedFixtureS2pRequest::SParameterOrientationEnumCase::kSParameterOrientationRaw: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetEmbedFixtureS2pRequest::SParameterOrientationEnumCase::S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto new_calset_name_mbcs = convert_from_grpc<std::string>(request->new_calset_name());
+      char* new_calset_name = (char*)new_calset_name_mbcs.c_str();
+      auto status = library_->CalsetEmbedFixtureS2p(instrument, selector_string, calset_name, fixture_s2p_file_path, vna_port, s_parameter_orientation, new_calset_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalsetGetErrorTerm(::grpc::ServerContext* context, const CalsetGetErrorTermRequest* request, CalsetGetErrorTermResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      int32 error_term_identifier;
+      switch (request->error_term_identifier_enum_case()) {
+        case nirfmxvna_grpc::CalsetGetErrorTermRequest::ErrorTermIdentifierEnumCase::kErrorTermIdentifier: {
+          error_term_identifier = static_cast<int32>(request->error_term_identifier());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetGetErrorTermRequest::ErrorTermIdentifierEnumCase::kErrorTermIdentifierRaw: {
+          error_term_identifier = static_cast<int32>(request->error_term_identifier_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetGetErrorTermRequest::ErrorTermIdentifierEnumCase::ERROR_TERM_IDENTIFIER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for error_term_identifier was not specified or out of range");
+          break;
+        }
+      }
+
+      auto measurement_port_mbcs = convert_from_grpc<std::string>(request->measurement_port());
+      char* measurement_port = (char*)measurement_port_mbcs.c_str();
+      auto source_port_mbcs = convert_from_grpc<std::string>(request->source_port());
+      char* source_port = (char*)source_port_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalsetGetErrorTerm(instrument, selector_string, calset_name, error_term_identifier, measurement_port, source_port, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> error_term(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->CalsetGetErrorTerm(instrument, selector_string, calset_name, error_term_identifier, measurement_port, source_port, error_term.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(error_term, response->mutable_error_term());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_error_term()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_error_term()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalsetGetErrorTermSplit(::grpc::ServerContext* context, const CalsetGetErrorTermSplitRequest* request, CalsetGetErrorTermSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      int32 error_term_identifier;
+      switch (request->error_term_identifier_enum_case()) {
+        case nirfmxvna_grpc::CalsetGetErrorTermSplitRequest::ErrorTermIdentifierEnumCase::kErrorTermIdentifier: {
+          error_term_identifier = static_cast<int32>(request->error_term_identifier());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetGetErrorTermSplitRequest::ErrorTermIdentifierEnumCase::kErrorTermIdentifierRaw: {
+          error_term_identifier = static_cast<int32>(request->error_term_identifier_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetGetErrorTermSplitRequest::ErrorTermIdentifierEnumCase::ERROR_TERM_IDENTIFIER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for error_term_identifier was not specified or out of range");
+          break;
+        }
+      }
+
+      auto measurement_port_mbcs = convert_from_grpc<std::string>(request->measurement_port());
+      char* measurement_port = (char*)measurement_port_mbcs.c_str();
+      auto source_port_mbcs = convert_from_grpc<std::string>(request->source_port());
+      char* source_port = (char*)source_port_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalsetGetErrorTermSplit(instrument, selector_string, calset_name, error_term_identifier, measurement_port, source_port, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_error_term_i()->Resize(actual_array_size, 0);
+        float32* error_term_i = response->mutable_error_term_i()->mutable_data();
+        response->mutable_error_term_q()->Resize(actual_array_size, 0);
+        float32* error_term_q = response->mutable_error_term_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalsetGetErrorTermSplit(instrument, selector_string, calset_name, error_term_identifier, measurement_port, source_port, error_term_i, error_term_q, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_error_term_i()->Resize(actual_array_size, 0);
+        response->mutable_error_term_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalsetGetFrequencyGrid(::grpc::ServerContext* context, const CalsetGetFrequencyGridRequest* request, CalsetGetFrequencyGridResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      int32 error_term_identifier;
+      switch (request->error_term_identifier_enum_case()) {
+        case nirfmxvna_grpc::CalsetGetFrequencyGridRequest::ErrorTermIdentifierEnumCase::kErrorTermIdentifier: {
+          error_term_identifier = static_cast<int32>(request->error_term_identifier());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetGetFrequencyGridRequest::ErrorTermIdentifierEnumCase::kErrorTermIdentifierRaw: {
+          error_term_identifier = static_cast<int32>(request->error_term_identifier_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetGetFrequencyGridRequest::ErrorTermIdentifierEnumCase::ERROR_TERM_IDENTIFIER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for error_term_identifier was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalsetGetFrequencyGrid(instrument, selector_string, calset_name, error_term_identifier, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_frequency_grid()->Resize(actual_array_size, 0);
+        float64* frequency_grid = response->mutable_frequency_grid()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalsetGetFrequencyGrid(instrument, selector_string, calset_name, error_term_identifier, frequency_grid, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_frequency_grid()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalsetLoadFromFile(::grpc::ServerContext* context, const CalsetLoadFromFileRequest* request, CalsetLoadFromFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      auto calset_file_path_mbcs = convert_from_grpc<std::string>(request->calset_file_path());
+      char* calset_file_path = (char*)calset_file_path_mbcs.c_str();
+      auto status = library_->CalsetLoadFromFile(instrument, selector_string, calset_name, calset_file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalsetSaveToFile(::grpc::ServerContext* context, const CalsetSaveToFileRequest* request, CalsetSaveToFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      auto calset_file_path_mbcs = convert_from_grpc<std::string>(request->calset_file_path());
+      char* calset_file_path = (char*)calset_file_path_mbcs.c_str();
+      auto status = library_->CalsetSaveToFile(instrument, selector_string, calset_name, calset_file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CfgCorrectionPortSubset(::grpc::ServerContext* context, const CfgCorrectionPortSubsetRequest* request, CfgCorrectionPortSubsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto port_subset_mbcs = convert_from_grpc<std::string>(request->port_subset());
+      char* port_subset = (char*)port_subset_mbcs.c_str();
+      auto status = library_->CfgCorrectionPortSubset(instrument, selector_string, port_subset);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CfgFrequencyReference(::grpc::ServerContext* context, const CfgFrequencyReferenceRequest* request, CfgFrequencyReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
+      char* frequency_reference_source;
+      std::string frequency_reference_source_buffer;
+      switch (request->frequency_reference_source_enum_case()) {
+        case nirfmxvna_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceMapped: {
+          auto frequency_reference_source_imap_it = frequencyreferencesource_input_map_.find(request->frequency_reference_source_mapped());
+          if (frequency_reference_source_imap_it == frequencyreferencesource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source_mapped was not specified or out of range.");
+          }
+          frequency_reference_source = const_cast<char*>((frequency_reference_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxvna_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceRaw: {
+          frequency_reference_source_buffer = convert_from_grpc<std::string>(request->frequency_reference_source_raw());
+          frequency_reference_source = const_cast<char*>(frequency_reference_source_buffer.c_str());
+          break;
+        }
+        case nirfmxvna_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::FREQUENCY_REFERENCE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 frequency_reference_frequency = request->frequency_reference_frequency();
+      auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CfgMechanicalAttenuation(::grpc::ServerContext* context, const CfgMechanicalAttenuationRequest* request, CfgMechanicalAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
+      int32 mechanical_attenuation_auto;
+      switch (request->mechanical_attenuation_auto_enum_case()) {
+        case nirfmxvna_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto());
+          break;
+        }
+        case nirfmxvna_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAutoRaw: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::MECHANICAL_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mechanical_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
+      auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
+      int32 rf_attenuation_auto;
+      switch (request->rf_attenuation_auto_enum_case()) {
+        case nirfmxvna_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto());
+          break;
+        }
+        case nirfmxvna_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAutoRaw: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::RF_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rf_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 rf_attenuation_value = request->rf_attenuation_value();
+      auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 is_done {};
+      auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_is_done(is_done);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::ClearAllNamedResults(::grpc::ServerContext* context, const ClearAllNamedResultsRequest* request, ClearAllNamedResultsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->ClearAllNamedResults(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::ClearCalset(::grpc::ServerContext* context, const ClearCalsetRequest* request, ClearCalsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      auto status = library_->ClearCalset(instrument, selector_string, calset_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::ClearMeasurementMemoryNames(::grpc::ServerContext* context, const ClearMeasurementMemoryNamesRequest* request, ClearMeasurementMemoryNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->ClearMeasurementMemoryNames(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::ClearNamedResult(::grpc::ServerContext* context, const ClearNamedResultRequest* request, ClearNamedResultResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->ClearNamedResult(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CloneSignalConfiguration(::grpc::ServerContext* context, const CloneSignalConfigurationRequest* request, CloneSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto old_signal_name_mbcs = convert_from_grpc<std::string>(request->old_signal_name());
+      char* old_signal_name = (char*)old_signal_name_mbcs.c_str();
+      auto new_signal_name_mbcs = convert_from_grpc<std::string>(request->new_signal_name());
+      char* new_signal_name = (char*)new_signal_name_mbcs.c_str();
+      auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
   }
 
   //---------------------------------------------------------------------
@@ -62,6 +3758,987 @@ namespace nirfmxvna_grpc {
       }
       response->set_status(status);
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->Commit(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CopyCalset(::grpc::ServerContext* context, const CopyCalsetRequest* request, CopyCalsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto source_calset_name_mbcs = convert_from_grpc<std::string>(request->source_calset_name());
+      char* source_calset_name = (char*)source_calset_name_mbcs.c_str();
+      auto new_calset_name_mbcs = convert_from_grpc<std::string>(request->new_calset_name());
+      char* new_calset_name = (char*)new_calset_name_mbcs.c_str();
+      auto status = library_->CopyCalset(instrument, selector_string, source_calset_name, new_calset_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CopyDataToMeasurementMemory(::grpc::ServerContext* context, const CopyDataToMeasurementMemoryRequest* request, CopyDataToMeasurementMemoryResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto memory_data_name_mbcs = convert_from_grpc<std::string>(request->memory_data_name());
+      char* memory_data_name = (char*)memory_data_name_mbcs.c_str();
+      auto status = library_->CopyDataToMeasurementMemory(instrument, selector_string, memory_data_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      auto status = library_->CreateSignalConfiguration(instrument, signal_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::DeselectActiveCalset(::grpc::ServerContext* context, const DeselectActiveCalsetRequest* request, DeselectActiveCalsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->DeselectActiveCalset(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAllCalsetNames(::grpc::ServerContext* context, const GetAllCalsetNamesRequest* request, GetAllCalsetNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->GetAllCalsetNames(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string calset_names;
+        if (array_size > 0) {
+            calset_names.resize(array_size - 1);
+        }
+        status = library_->GetAllCalsetNames(instrument, selector_string, array_size, (char*)calset_names.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string calset_names_utf8;
+        convert_to_grpc(calset_names, &calset_names_utf8);
+        response->set_calset_names(calset_names_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calset_names()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAllNamedResultNames(::grpc::ServerContext* context, const GetAllNamedResultNamesRequest* request, GetAllNamedResultNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_result_names_size {};
+      int32 default_result_exists {};
+      while (true) {
+        auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::string result_names;
+        if (actual_result_names_size > 0) {
+            result_names.resize(actual_result_names_size - 1);
+        }
+        auto result_names_buffer_size = actual_result_names_size;
+        status = library_->GetAllNamedResultNames(instrument, selector_string, (char*)result_names.data(), result_names_buffer_size, &actual_result_names_size, &default_result_exists);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string result_names_utf8;
+        convert_to_grpc(result_names, &result_names_utf8);
+        response->set_result_names(result_names_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
+        response->set_actual_result_names_size(actual_result_names_size);
+        response->set_default_result_exists(default_result_exists);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      float32 attr_val {};
+      auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        float32* attr_val = response->mutable_attr_val()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      float64 attr_val {};
+      auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeF64Array(::grpc::ServerContext* context, const GetAttributeF64ArrayRequest* request, GetAttributeF64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        float64* attr_val = response->mutable_attr_val()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeI16(::grpc::ServerContext* context, const GetAttributeI16Request* request, GetAttributeI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int16 attr_val {};
+      auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeI32(::grpc::ServerContext* context, const GetAttributeI32Request* request, GetAttributeI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 attr_val {};
+      auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      auto checked_convert_attr_val = [](auto raw_value) {
+        bool raw_value_is_valid = nirfmxvna_grpc::NiRFmxVNAInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nirfmxvna_grpc::NiRFmxVNAInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_attr_val(checked_convert_attr_val(attr_val));
+      response->set_attr_val_raw(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeI32Array(::grpc::ServerContext* context, const GetAttributeI32ArrayRequest* request, GetAttributeI32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
+        int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        auto checked_convert_attr_val = [](auto raw_value) {
+          bool raw_value_is_valid = nirfmxvna_grpc::NiRFmxVNAInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nirfmxvna_grpc::NiRFmxVNAInt32AttributeValues>(valid_enum_value);
+        };
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            response->attr_val_raw().begin(),
+            response->attr_val_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) {
+                return checked_convert_attr_val(x);
+            });
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeI64(::grpc::ServerContext* context, const GetAttributeI64Request* request, GetAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attr_val {};
+      auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeI64Array(::grpc::ServerContext* context, const GetAttributeI64ArrayRequest* request, GetAttributeI64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeI8(::grpc::ServerContext* context, const GetAttributeI8Request* request, GetAttributeI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int8 attr_val {};
+      auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeI8Array(::grpc::ServerContext* context, const GetAttributeI8ArrayRequest* request, GetAttributeI8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<int8> attr_val(actual_array_size);
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            attr_val.begin(),
+            attr_val.begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) {
+                return x;
+            });
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleArrayRequest* request, GetAttributeNIComplexDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(attr_val, response->mutable_attr_val());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_attr_val()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const GetAttributeNIComplexSingleArrayRequest* request, GetAttributeNIComplexSingleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(attr_val, response->mutable_attr_val());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_attr_val()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeString(::grpc::ServerContext* context, const GetAttributeStringRequest* request, GetAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+
+      while (true) {
+        auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string attr_val;
+        if (array_size > 0) {
+            attr_val.resize(array_size - 1);
+        }
+        status = library_->GetAttributeString(instrument, selector_string, attribute_id, array_size, (char*)attr_val.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string attr_val_utf8;
+        convert_to_grpc(attr_val, &attr_val_utf8);
+        response->set_attr_val(attr_val_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeU16(::grpc::ServerContext* context, const GetAttributeU16Request* request, GetAttributeU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt16 attr_val {};
+      auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeU32(::grpc::ServerContext* context, const GetAttributeU32Request* request, GetAttributeU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt32 attr_val {};
+      auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeU32Array(::grpc::ServerContext* context, const GetAttributeU32ArrayRequest* request, GetAttributeU32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeU64Array(::grpc::ServerContext* context, const GetAttributeU64ArrayRequest* request, GetAttributeU64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeU8(::grpc::ServerContext* context, const GetAttributeU8Request* request, GetAttributeU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8 attr_val {};
+      auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetAttributeU8Array(::grpc::ServerContext* context, const GetAttributeU8ArrayRequest* request, GetAttributeU8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::string attr_val(actual_array_size, '\0');
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_attr_val(attr_val);
+        response->mutable_attr_val()->resize(actual_array_size);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
@@ -159,6 +4836,233 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetMeasurementMemoryNames(::grpc::ServerContext* context, const GetMeasurementMemoryNamesRequest* request, GetMeasurementMemoryNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->GetMeasurementMemoryNames(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string measurement_memory_names;
+        if (array_size > 0) {
+            measurement_memory_names.resize(array_size - 1);
+        }
+        status = library_->GetMeasurementMemoryNames(instrument, selector_string, array_size, (char*)measurement_memory_names.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string measurement_memory_names_utf8;
+        convert_to_grpc(measurement_memory_names, &measurement_memory_names_utf8);
+        response->set_measurement_memory_names(measurement_memory_names_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_measurement_memory_names()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetMeasurementMemoryXData(::grpc::ServerContext* context, const GetMeasurementMemoryXDataRequest* request, GetMeasurementMemoryXDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetMeasurementMemoryXData(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_x()->Resize(actual_array_size, 0);
+        float64* x = response->mutable_x()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetMeasurementMemoryXData(instrument, selector_string, x, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_x()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::GetMeasurementMemoryYData(::grpc::ServerContext* context, const GetMeasurementMemoryYDataRequest* request, GetMeasurementMemoryYDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetMeasurementMemoryYData(instrument, selector_string, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_y1()->Resize(actual_array_size, 0);
+        float32* y1 = response->mutable_y1()->mutable_data();
+        response->mutable_y2()->Resize(actual_array_size, 0);
+        float32* y2 = response->mutable_y2()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetMeasurementMemoryYData(instrument, selector_string, y1, y2, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_y1()->Resize(actual_array_size, 0);
+        response->mutable_y2()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::IQFetchData(::grpc::ServerContext* context, const IQFetchDataRequest* request, IQFetchDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IQFetchData(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> data(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->IQFetchData(instrument, selector_string, timeout, &x0, &dx, data.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        convert_to_grpc(data, response->mutable_data());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_data()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_data()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::IQFetchDataSplit(::grpc::ServerContext* context, const IQFetchDataSplitRequest* request, IQFetchDataSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IQFetchDataSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_data_i()->Resize(actual_array_size, 0);
+        float32* data_i = response->mutable_data_i()->mutable_data();
+        response->mutable_data_q()->Resize(actual_array_size, 0);
+        float32* data_q = response->mutable_data_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->IQFetchDataSplit(instrument, selector_string, timeout, &x0, &dx, data_i, data_q, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_data_i()->Resize(actual_array_size, 0);
+        response->mutable_data_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -169,8 +5073,10 @@ namespace nirfmxvna_grpc {
       char* resource_name = (char*)resource_name_mbcs.c_str();
       auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
       char* option_string = (char*)option_string_mbcs.c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
       int32 is_new_session {};
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
@@ -180,14 +5086,1608 @@ namespace nirfmxvna_grpc {
       // Capture the library shared_ptr by value. Do not capture `this` or any references.
       LibrarySharedPtr library = library_;
       auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXVNA_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_name(grpc_device_session_name);
       response->set_is_new_session(is_new_session);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto nirfsa_session_grpc_session = request->nirfsa_session();
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.name());
+      auto initialization_behavior = request->initialization_behavior();
+
+      bool new_session_initialized {};
+      auto init_lambda = [&] () {
+        niRFmxInstrHandle instrument;
+        auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        return std::make_tuple(status, instrument);
+      };
+      std::string grpc_device_session_name = request->session_name();
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXVNA_VAL_FALSE); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_instrument()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      auto status = library_->Initiate(instrument, selector_string, result_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::LoadDataToMeasurementMemoryFromFile(::grpc::ServerContext* context, const LoadDataToMeasurementMemoryFromFileRequest* request, LoadDataToMeasurementMemoryFromFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
+      auto parameter_mbcs = convert_from_grpc<std::string>(request->parameter());
+      char* parameter = (char*)parameter_mbcs.c_str();
+      auto memory_data_name_mbcs = convert_from_grpc<std::string>(request->memory_data_name());
+      char* memory_data_name = (char*)memory_data_name_mbcs.c_str();
+      auto status = library_->LoadDataToMeasurementMemoryFromFile(instrument, selector_string, file_path, parameter, memory_data_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgDataSource(::grpc::ServerContext* context, const MarkerCfgDataSourceRequest* request, MarkerCfgDataSourceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto data_source_mbcs = convert_from_grpc<std::string>(request->data_source());
+      char* data_source = (char*)data_source_mbcs.c_str();
+      auto status = library_->MarkerCfgDataSource(instrument, selector_string, data_source);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgNumberOfMarkers(::grpc::ServerContext* context, const MarkerCfgNumberOfMarkersRequest* request, MarkerCfgNumberOfMarkersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 number_of_markers = request->number_of_markers();
+      auto status = library_->MarkerCfgNumberOfMarkers(instrument, selector_string, number_of_markers);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgPeakSearchExcursion(::grpc::ServerContext* context, const MarkerCfgPeakSearchExcursionRequest* request, MarkerCfgPeakSearchExcursionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 peak_excursion_enabled;
+      switch (request->peak_excursion_enabled_enum_case()) {
+        case nirfmxvna_grpc::MarkerCfgPeakSearchExcursionRequest::PeakExcursionEnabledEnumCase::kPeakExcursionEnabled: {
+          peak_excursion_enabled = static_cast<int32>(request->peak_excursion_enabled());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerCfgPeakSearchExcursionRequest::PeakExcursionEnabledEnumCase::kPeakExcursionEnabledRaw: {
+          peak_excursion_enabled = static_cast<int32>(request->peak_excursion_enabled_raw());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerCfgPeakSearchExcursionRequest::PeakExcursionEnabledEnumCase::PEAK_EXCURSION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for peak_excursion_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 peak_excursion = request->peak_excursion();
+      auto status = library_->MarkerCfgPeakSearchExcursion(instrument, selector_string, peak_excursion_enabled, peak_excursion);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgPeakSearchThreshold(::grpc::ServerContext* context, const MarkerCfgPeakSearchThresholdRequest* request, MarkerCfgPeakSearchThresholdResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 threshold_enabled;
+      switch (request->threshold_enabled_enum_case()) {
+        case nirfmxvna_grpc::MarkerCfgPeakSearchThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabled: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerCfgPeakSearchThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabledRaw: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled_raw());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerCfgPeakSearchThresholdRequest::ThresholdEnabledEnumCase::THRESHOLD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for threshold_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 threshold = request->threshold();
+      auto status = library_->MarkerCfgPeakSearchThreshold(instrument, selector_string, threshold_enabled, threshold);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgReferenceMarker(::grpc::ServerContext* context, const MarkerCfgReferenceMarkerRequest* request, MarkerCfgReferenceMarkerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 reference_marker = request->reference_marker();
+      auto status = library_->MarkerCfgReferenceMarker(instrument, selector_string, reference_marker);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgType(::grpc::ServerContext* context, const MarkerCfgTypeRequest* request, MarkerCfgTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 marker_type;
+      switch (request->marker_type_enum_case()) {
+        case nirfmxvna_grpc::MarkerCfgTypeRequest::MarkerTypeEnumCase::kMarkerType: {
+          marker_type = static_cast<int32>(request->marker_type());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerCfgTypeRequest::MarkerTypeEnumCase::kMarkerTypeRaw: {
+          marker_type = static_cast<int32>(request->marker_type_raw());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerCfgTypeRequest::MarkerTypeEnumCase::MARKER_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for marker_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->MarkerCfgType(instrument, selector_string, marker_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgX(::grpc::ServerContext* context, const MarkerCfgXRequest* request, MarkerCfgXResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 marker_x = request->marker_x();
+      auto status = library_->MarkerCfgX(instrument, selector_string, marker_x);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgY(::grpc::ServerContext* context, const MarkerCfgYRequest* request, MarkerCfgYResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 marker_y1 = request->marker_y1();
+      float64 marker_y2 = request->marker_y2();
+      auto status = library_->MarkerCfgY(instrument, selector_string, marker_y1, marker_y2);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerFetchX(::grpc::ServerContext* context, const MarkerFetchXRequest* request, MarkerFetchXResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 marker_x {};
+      auto status = library_->MarkerFetchX(instrument, selector_string, &marker_x);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_marker_x(marker_x);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerFetchY(::grpc::ServerContext* context, const MarkerFetchYRequest* request, MarkerFetchYResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 marker_y1 {};
+      float64 marker_y2 {};
+      auto status = library_->MarkerFetchY(instrument, selector_string, &marker_y1, &marker_y2);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_marker_y1(marker_y1);
+      response->set_marker_y2(marker_y2);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerSearch(::grpc::ServerContext* context, const MarkerSearchRequest* request, MarkerSearchResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 search_mode;
+      switch (request->search_mode_enum_case()) {
+        case nirfmxvna_grpc::MarkerSearchRequest::SearchModeEnumCase::kSearchMode: {
+          search_mode = static_cast<int32>(request->search_mode());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerSearchRequest::SearchModeEnumCase::kSearchModeRaw: {
+          search_mode = static_cast<int32>(request->search_mode_raw());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerSearchRequest::SearchModeEnumCase::SEARCH_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for search_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->MarkerSearch(instrument, selector_string, search_mode);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::ResetToDefault(::grpc::ServerContext* context, const ResetToDefaultRequest* request, ResetToDefaultResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->ResetToDefault(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SParamsCfgSParameter(::grpc::ServerContext* context, const SParamsCfgSParameterRequest* request, SParamsCfgSParameterResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s_parameter_mbcs = convert_from_grpc<std::string>(request->s_parameter());
+      char* s_parameter = (char*)s_parameter_mbcs.c_str();
+      auto status = library_->SParamsCfgSParameter(instrument, selector_string, s_parameter);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SParamsExportToSnPFile(::grpc::ServerContext* context, const SParamsExportToSnPFileRequest* request, SParamsExportToSnPFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto snp_file_path_mbcs = convert_from_grpc<std::string>(request->snp_file_path());
+      char* snp_file_path = (char*)snp_file_path_mbcs.c_str();
+      auto status = library_->SParamsExportToSnPFile(instrument, selector_string, snp_file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SParamsFetchXData(::grpc::ServerContext* context, const SParamsFetchXDataRequest* request, SParamsFetchXDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SParamsFetchXData(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_x()->Resize(actual_array_size, 0);
+        float64* x = response->mutable_x()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SParamsFetchXData(instrument, selector_string, timeout, x, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_x()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SParamsFetchYData(::grpc::ServerContext* context, const SParamsFetchYDataRequest* request, SParamsFetchYDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SParamsFetchYData(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_y1()->Resize(actual_array_size, 0);
+        float32* y1 = response->mutable_y1()->mutable_data();
+        response->mutable_y2()->Resize(actual_array_size, 0);
+        float32* y2 = response->mutable_y2()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SParamsFetchYData(instrument, selector_string, timeout, y1, y2, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_y1()->Resize(actual_array_size, 0);
+        response->mutable_y2()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SParamsGetSParameter(::grpc::ServerContext* context, const SParamsGetSParameterRequest* request, SParamsGetSParameterResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->SParamsGetSParameter(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string s_parameter;
+        if (array_size > 0) {
+            s_parameter.resize(array_size - 1);
+        }
+        status = library_->SParamsGetSParameter(instrument, selector_string, array_size, (char*)s_parameter.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string s_parameter_utf8;
+        convert_to_grpc(s_parameter, &s_parameter_utf8);
+        response->set_s_parameter(s_parameter_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_s_parameter()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SelectActiveCalset(::grpc::ServerContext* context, const SelectActiveCalsetRequest* request, SelectActiveCalsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      int32 restore_configuration;
+      switch (request->restore_configuration_enum_case()) {
+        case nirfmxvna_grpc::SelectActiveCalsetRequest::RestoreConfigurationEnumCase::kRestoreConfiguration: {
+          restore_configuration = static_cast<int32>(request->restore_configuration());
+          break;
+        }
+        case nirfmxvna_grpc::SelectActiveCalsetRequest::RestoreConfigurationEnumCase::kRestoreConfigurationRaw: {
+          restore_configuration = static_cast<int32>(request->restore_configuration_raw());
+          break;
+        }
+        case nirfmxvna_grpc::SelectActiveCalsetRequest::RestoreConfigurationEnumCase::RESTORE_CONFIGURATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for restore_configuration was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SelectActiveCalset(instrument, selector_string, calset_name, restore_configuration);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SelectMeasurements(::grpc::ServerContext* context, const SelectMeasurementsRequest* request, SelectMeasurementsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      uInt32 measurements;
+      switch (request->measurements_enum_case()) {
+        case nirfmxvna_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurements: {
+          measurements = static_cast<uInt32>(request->measurements());
+          break;
+        }
+        case nirfmxvna_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurementsRaw: {
+          measurements = static_cast<uInt32>(request->measurements_raw());
+          break;
+        }
+        case nirfmxvna_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::MEASUREMENTS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurements was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 enable_all_traces = request->enable_all_traces();
+      auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto status = library_->SendSoftwareEdgeTrigger(instrument);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeF32(::grpc::ServerContext* context, const SetAttributeF32Request* request, SetAttributeF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      float32 attr_val = request->attr_val();
+      auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeF32Array(::grpc::ServerContext* context, const SetAttributeF32ArrayRequest* request, SetAttributeF32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<float32*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeF64(::grpc::ServerContext* context, const SetAttributeF64Request* request, SetAttributeF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      float64 attr_val = request->attr_val();
+      auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeF64Array(::grpc::ServerContext* context, const SetAttributeF64ArrayRequest* request, SetAttributeF64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<float64*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeI16(::grpc::ServerContext* context, const SetAttributeI16Request* request, SetAttributeI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int16>(attr_val_raw);
+
+      auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeI32(::grpc::ServerContext* context, const SetAttributeI32Request* request, SetAttributeI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxvna_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrVal: {
+          attr_val = static_cast<int32>(request->attr_val());
+          break;
+        }
+        case nirfmxvna_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrValRaw: {
+          attr_val = static_cast<int32>(request->attr_val_raw());
+          break;
+        }
+        case nirfmxvna_grpc::SetAttributeI32Request::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeI32Array(::grpc::ServerContext* context, const SetAttributeI32ArrayRequest* request, SetAttributeI32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_vector = std::vector<int32>();
+      attr_val_vector.reserve(request->attr_val().size());
+      std::transform(
+        request->attr_val().begin(),
+        request->attr_val().end(),
+        std::back_inserter(attr_val_vector),
+        [](auto x) { return x; });
+      auto attr_val = attr_val_vector.data();
+
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeI64(::grpc::ServerContext* context, const SetAttributeI64Request* request, SetAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attr_val = request->attr_val();
+      auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeI64Array(::grpc::ServerContext* context, const SetAttributeI64ArrayRequest* request, SetAttributeI64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeI8(::grpc::ServerContext* context, const SetAttributeI8Request* request, SetAttributeI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int8>(attr_val_raw);
+
+      auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeI8Array(::grpc::ServerContext* context, const SetAttributeI8ArrayRequest* request, SetAttributeI8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      auto attr_val = std::vector<int8>();
+      attr_val.reserve(attr_val_raw.size());
+      std::transform(
+        attr_val_raw.begin(),
+        attr_val_raw.end(),
+        std::back_inserter(attr_val),
+        [](auto x) {
+              if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int8");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int8>(x);
+        });
+
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleArrayRequest* request, SetAttributeNIComplexDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const SetAttributeNIComplexSingleArrayRequest* request, SetAttributeNIComplexSingleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeString(::grpc::ServerContext* context, const SetAttributeStringRequest* request, SetAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      char* attr_val;
+      std::string attr_val_buffer;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxvna_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
+          auto attr_val_imap_it = nirfmxvnastringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
+          if (attr_val_imap_it == nirfmxvnastringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val_mapped was not specified or out of range.");
+          }
+          attr_val = const_cast<char*>((attr_val_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxvna_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
+          attr_val_buffer = convert_from_grpc<std::string>(request->attr_val_raw());
+          attr_val = const_cast<char*>(attr_val_buffer.c_str());
+          break;
+        }
+        case nirfmxvna_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeU16(::grpc::ServerContext* context, const SetAttributeU16Request* request, SetAttributeU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<uInt16>(attr_val_raw);
+
+      auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeU32(::grpc::ServerContext* context, const SetAttributeU32Request* request, SetAttributeU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt32 attr_val = request->attr_val();
+      auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeU32Array(::grpc::ServerContext* context, const SetAttributeU32ArrayRequest* request, SetAttributeU32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeU64Array(::grpc::ServerContext* context, const SetAttributeU64ArrayRequest* request, SetAttributeU64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeU8(::grpc::ServerContext* context, const SetAttributeU8Request* request, SetAttributeU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8 attr_val = request->attr_val();
+      auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::SetAttributeU8Array(::grpc::ServerContext* context, const SetAttributeU8ArrayRequest* request, SetAttributeU8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8* attr_val = (uInt8*)request->attr_val().c_str();
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::WavesCfgWave(::grpc::ServerContext* context, const WavesCfgWaveRequest* request, WavesCfgWaveResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto wave_mbcs = convert_from_grpc<std::string>(request->wave());
+      char* wave = (char*)wave_mbcs.c_str();
+      auto status = library_->WavesCfgWave(instrument, selector_string, wave);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::WavesFetchXData(::grpc::ServerContext* context, const WavesFetchXDataRequest* request, WavesFetchXDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->WavesFetchXData(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_x()->Resize(actual_array_size, 0);
+        float64* x = response->mutable_x()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->WavesFetchXData(instrument, selector_string, timeout, x, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_x()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::WavesFetchYData(::grpc::ServerContext* context, const WavesFetchYDataRequest* request, WavesFetchYDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->WavesFetchYData(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_y1()->Resize(actual_array_size, 0);
+        float32* y1 = response->mutable_y1()->mutable_data();
+        response->mutable_y2()->Resize(actual_array_size, 0);
+        float32* y2 = response->mutable_y2()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->WavesFetchYData(instrument, selector_string, timeout, y1, y2, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_y1()->Resize(actual_array_size, 0);
+        response->mutable_y2()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::WavesGetWave(::grpc::ServerContext* context, const WavesGetWaveRequest* request, WavesGetWaveResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->WavesGetWave(instrument, selector_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string wave;
+        if (array_size > 0) {
+            wave.resize(array_size - 1);
+        }
+        status = library_->WavesGetWave(instrument, selector_string, array_size, (char*)wave.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string wave_utf8;
+        convert_to_grpc(wave, &wave_utf8);
+        response->set_wave(wave_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_wave()));
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
