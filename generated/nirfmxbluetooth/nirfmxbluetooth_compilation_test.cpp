@@ -72,6 +72,11 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxBT_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxBT_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
+}
+
 int32 AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
 {
   return RFmxBT_AutoDetectSignal(instrumentHandle, selectorString, timeout);
@@ -400,6 +405,11 @@ int32 ModAccFetchCSToneTrace(niRFmxInstrHandle instrumentHandle, char selectorSt
 int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxBT_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxBT_ModAccFetchConstellationTraceSplit(instrumentHandle, selectorString, timeout, constellationI, constellationQ, arraySize, actualArraySize);
 }
 
 int32 ModAccFetchDEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakRMSDEVMMaximum, float64* peakDEVMMaximum, float64* ninetyninePercentDEVM)

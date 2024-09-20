@@ -1730,8 +1730,8 @@ int32 __stdcall RFmxWLAN_OFDMModAccCfgNReferenceWaveformsSplit(
    char selectorString[],
    float64 x0[],
    float64 dx[],
-   float32 I[],
-   float32 Q[],
+   float32 referenceWaveformI[],
+   float32 referenceWaveformQ[],
    int32 referenceWaveformSize[],
    int32 arraySize
 );
@@ -1759,8 +1759,8 @@ int32 __stdcall RFmxWLAN_AnalyzeNWaveformsIQSplit(
    char resultName[],
    float64 x0[],
    float64 dx[],
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 IQSize[],
    int32 arraySize,
    int32 reset
