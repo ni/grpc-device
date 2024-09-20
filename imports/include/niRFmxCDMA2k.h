@@ -2,7 +2,7 @@
 /****************************************************************************************************
 *          National Instruments RFmx CDMA2k
 *----------------------------------------------------------------------------------------------------
-*   Copyright(c) National Instruments 2021.  All Rights Reserved.
+*   Copyright(c) National Instruments 2023.  All Rights Reserved.
 *----------------------------------------------------------------------------------------------------
 *
 * Title:    niRFmxCDMA2k.h
@@ -535,13 +535,13 @@
 // Values for RFMXCDMA2K_ATTR_LINK_DIRECTION
 #define RFMXCDMA2K_VAL_LINK_DIRECTION_UPLINK                                                          1
 
-// Values for RFAttenuationAuto
-#define RFMXCDMA2K_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
-#define RFMXCDMA2K_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
-
 // Values for MechanicalAttenuationAuto
 #define RFMXCDMA2K_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
 #define RFMXCDMA2K_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
+
+// Values for RFAttenuationAuto
+#define RFMXCDMA2K_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
+#define RFMXCDMA2K_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
 
 // Values for RFMXCDMA2K_ATTR_CDA_SYNCHRONIZATION_MODE
 #define RFMXCDMA2K_VAL_CDA_SYNCHRONIZATION_MODE_FRAME                                                 0
@@ -1069,8 +1069,8 @@ int32 __stdcall RFmxCDMA2k_AnalyzeIQ1WaveformSplit(
    char resultName[],
    float64 x0,
    float64 dx,
-   float32 I[],
-   float32 Q[],
+   float32 IQI[],
+   float32 IQQ[],
    int32 arraySize,
    int32 reset,
    int64 reserved
@@ -1455,8 +1455,8 @@ int32 __stdcall RFmxCDMA2k_QEVMFetchConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 constellationI[],
+   float32 constellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1687,8 +1687,8 @@ int32 __stdcall RFmxCDMA2k_ModAccFetchConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 constellationI[],
+   float32 constellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1912,8 +1912,8 @@ int32 __stdcall RFmxCDMA2k_CDAFetchSymbolConstellationTraceSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float32 I[],
-   float32 Q[],
+   float32 symbolConstellationI[],
+   float32 symbolConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );

@@ -46,6 +46,7 @@ public:
 
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
+  ::grpc::Status AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildOffsetString(::grpc::ServerContext* context, const BuildOffsetStringRequest* request, BuildOffsetStringResponse* response) override;
   ::grpc::Status BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response) override;
@@ -107,6 +108,7 @@ public:
   ::grpc::Status ModAccCfgAveraging(::grpc::ServerContext* context, const ModAccCfgAveragingRequest* request, ModAccCfgAveragingResponse* response) override;
   ::grpc::Status ModAccCfgDroopCompensationEnabled(::grpc::ServerContext* context, const ModAccCfgDroopCompensationEnabledRequest* request, ModAccCfgDroopCompensationEnabledResponse* response) override;
   ::grpc::Status ModAccFetchConstellationTrace(::grpc::ServerContext* context, const ModAccFetchConstellationTraceRequest* request, ModAccFetchConstellationTraceResponse* response) override;
+  ::grpc::Status ModAccFetchConstellationTraceSplit(::grpc::ServerContext* context, const ModAccFetchConstellationTraceSplitRequest* request, ModAccFetchConstellationTraceSplitResponse* response) override;
   ::grpc::Status ModAccFetchDemodulatedBits(::grpc::ServerContext* context, const ModAccFetchDemodulatedBitsRequest* request, ModAccFetchDemodulatedBitsResponse* response) override;
   ::grpc::Status ModAccFetchDetectedTSC(::grpc::ServerContext* context, const ModAccFetchDetectedTSCRequest* request, ModAccFetchDetectedTSCResponse* response) override;
   ::grpc::Status ModAccFetchDetectedTSCArray(::grpc::ServerContext* context, const ModAccFetchDetectedTSCArrayRequest* request, ModAccFetchDetectedTSCArrayResponse* response) override;

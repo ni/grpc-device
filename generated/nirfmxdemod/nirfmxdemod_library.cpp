@@ -51,6 +51,7 @@ NiRFmxDemodLibrary::NiRFmxDemodLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.ADemodReadPM = reinterpret_cast<ADemodReadPMPtr>(shared_library_->get_function_pointer("RFmxDemod_ADemodReadPM"));
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxDemod_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxDemod_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxDemod_AutoLevel"));
   function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxDemod_BuildSignalString"));
   function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxDemod_CfgDigitalEdgeTrigger"));
@@ -74,6 +75,8 @@ NiRFmxDemodLibrary::NiRFmxDemodLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.DDemodCfgEVMNormalizationReference = reinterpret_cast<DDemodCfgEVMNormalizationReferencePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgEVMNormalizationReference"));
   function_pointers_.DDemodCfgEqualizer = reinterpret_cast<DDemodCfgEqualizerPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgEqualizer"));
   function_pointers_.DDemodCfgEqualizerInitialCoefficients = reinterpret_cast<DDemodCfgEqualizerInitialCoefficientsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgEqualizerInitialCoefficients"));
+  function_pointers_.DDemodCfgEqualizerInitialCoefficientsSplit = reinterpret_cast<DDemodCfgEqualizerInitialCoefficientsSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgEqualizerInitialCoefficientsSplit"));
+  function_pointers_.DDemodCfgEqualizerSplit = reinterpret_cast<DDemodCfgEqualizerSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgEqualizerSplit"));
   function_pointers_.DDemodCfgFSKDeviation = reinterpret_cast<DDemodCfgFSKDeviationPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgFSKDeviation"));
   function_pointers_.DDemodCfgM = reinterpret_cast<DDemodCfgMPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgM"));
   function_pointers_.DDemodCfgMeasurementFilter = reinterpret_cast<DDemodCfgMeasurementFilterPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgMeasurementFilter"));
@@ -87,14 +90,17 @@ NiRFmxDemodLibrary::NiRFmxDemodLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.DDemodCfgSignalStructure = reinterpret_cast<DDemodCfgSignalStructurePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSignalStructure"));
   function_pointers_.DDemodCfgSpectrumInverted = reinterpret_cast<DDemodCfgSpectrumInvertedPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSpectrumInverted"));
   function_pointers_.DDemodCfgSymbolMap = reinterpret_cast<DDemodCfgSymbolMapPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSymbolMap"));
+  function_pointers_.DDemodCfgSymbolMapSplit = reinterpret_cast<DDemodCfgSymbolMapSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSymbolMapSplit"));
   function_pointers_.DDemodCfgSymbolRate = reinterpret_cast<DDemodCfgSymbolRatePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSymbolRate"));
   function_pointers_.DDemodCfgSynchronization = reinterpret_cast<DDemodCfgSynchronizationPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodCfgSynchronization"));
   function_pointers_.DDemodFetchCarrierMeasurement = reinterpret_cast<DDemodFetchCarrierMeasurementPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchCarrierMeasurement"));
   function_pointers_.DDemodFetchConstellationTrace = reinterpret_cast<DDemodFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchConstellationTrace"));
+  function_pointers_.DDemodFetchConstellationTraceSplit = reinterpret_cast<DDemodFetchConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchConstellationTraceSplit"));
   function_pointers_.DDemodFetchDemodulatedBits = reinterpret_cast<DDemodFetchDemodulatedBitsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchDemodulatedBits"));
   function_pointers_.DDemodFetchEVM = reinterpret_cast<DDemodFetchEVMPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchEVM"));
   function_pointers_.DDemodFetchEVMTrace = reinterpret_cast<DDemodFetchEVMTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchEVMTrace"));
   function_pointers_.DDemodFetchEqualizerCoefficients = reinterpret_cast<DDemodFetchEqualizerCoefficientsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchEqualizerCoefficients"));
+  function_pointers_.DDemodFetchEqualizerCoefficientsSplit = reinterpret_cast<DDemodFetchEqualizerCoefficientsSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchEqualizerCoefficientsSplit"));
   function_pointers_.DDemodFetchFSKDeviationTrace = reinterpret_cast<DDemodFetchFSKDeviationTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchFSKDeviationTrace"));
   function_pointers_.DDemodFetchFSKResults = reinterpret_cast<DDemodFetchFSKResultsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchFSKResults"));
   function_pointers_.DDemodFetchIQImpairments = reinterpret_cast<DDemodFetchIQImpairmentsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchIQImpairments"));
@@ -105,17 +111,23 @@ NiRFmxDemodLibrary::NiRFmxDemodLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.DDemodFetchMeanQuadratureSkew = reinterpret_cast<DDemodFetchMeanQuadratureSkewPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeanQuadratureSkew"));
   function_pointers_.DDemodFetchMeanRhoFactor = reinterpret_cast<DDemodFetchMeanRhoFactorPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeanRhoFactor"));
   function_pointers_.DDemodFetchMeasurementWaveform = reinterpret_cast<DDemodFetchMeasurementWaveformPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeasurementWaveform"));
+  function_pointers_.DDemodFetchMeasurementWaveformSplit = reinterpret_cast<DDemodFetchMeasurementWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchMeasurementWaveformSplit"));
   function_pointers_.DDemodFetchOffsetConstellationTrace = reinterpret_cast<DDemodFetchOffsetConstellationTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchOffsetConstellationTrace"));
+  function_pointers_.DDemodFetchOffsetConstellationTraceSplit = reinterpret_cast<DDemodFetchOffsetConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchOffsetConstellationTraceSplit"));
   function_pointers_.DDemodFetchOffsetEVM = reinterpret_cast<DDemodFetchOffsetEVMPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchOffsetEVM"));
   function_pointers_.DDemodFetchOffsetEVMTrace = reinterpret_cast<DDemodFetchOffsetEVMTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchOffsetEVMTrace"));
   function_pointers_.DDemodFetchPhaseError = reinterpret_cast<DDemodFetchPhaseErrorPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchPhaseError"));
   function_pointers_.DDemodFetchPhaseErrorTrace = reinterpret_cast<DDemodFetchPhaseErrorTracePtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchPhaseErrorTrace"));
   function_pointers_.DDemodFetchReferenceWaveform = reinterpret_cast<DDemodFetchReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchReferenceWaveform"));
+  function_pointers_.DDemodFetchReferenceWaveformSplit = reinterpret_cast<DDemodFetchReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchReferenceWaveformSplit"));
   function_pointers_.DDemodFetchSyncFound = reinterpret_cast<DDemodFetchSyncFoundPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodFetchSyncFound"));
   function_pointers_.DDemodGetEqualizerInitialCoefficients = reinterpret_cast<DDemodGetEqualizerInitialCoefficientsPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodGetEqualizerInitialCoefficients"));
+  function_pointers_.DDemodGetEqualizerInitialCoefficientsSplit = reinterpret_cast<DDemodGetEqualizerInitialCoefficientsSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodGetEqualizerInitialCoefficientsSplit"));
   function_pointers_.DDemodGetSymbolMap = reinterpret_cast<DDemodGetSymbolMapPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodGetSymbolMap"));
+  function_pointers_.DDemodGetSymbolMapSplit = reinterpret_cast<DDemodGetSymbolMapSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodGetSymbolMapSplit"));
   function_pointers_.DDemodRead = reinterpret_cast<DDemodReadPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodRead"));
   function_pointers_.DDemodSetSymbolMap = reinterpret_cast<DDemodSetSymbolMapPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodSetSymbolMap"));
+  function_pointers_.DDemodSetSymbolMapSplit = reinterpret_cast<DDemodSetSymbolMapSplitPtr>(shared_library_->get_function_pointer("RFmxDemod_DDemodSetSymbolMapSplit"));
   function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxDemod_DeleteSignalConfiguration"));
   function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_->get_function_pointer("RFmxDemod_DisableTrigger"));
   function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_->get_function_pointer("RFmxDemod_GetAllNamedResultNames"));
@@ -379,6 +391,14 @@ int32 NiRFmxDemodLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle,
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 NiRFmxDemodLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1WaveformSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_AnalyzeIQ1WaveformSplit.");
+  }
+  return function_pointers_.AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
+}
+
 int32 NiRFmxDemodLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 bandwidth, float64 measurementInterval, float64* referenceLevel)
 {
   if (!function_pointers_.AutoLevel) {
@@ -563,6 +583,22 @@ int32 NiRFmxDemodLibrary::DDemodCfgEqualizerInitialCoefficients(niRFmxInstrHandl
   return function_pointers_.DDemodCfgEqualizerInitialCoefficients(instrumentHandle, selectorString, x0, dx, equalizerInitialCoefficients, arraySize);
 }
 
+int32 NiRFmxDemodLibrary::DDemodCfgEqualizerInitialCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 equalizerInitialCoefficientsI[], float32 equalizerInitialCoefficientsQ[], int32 arraySize)
+{
+  if (!function_pointers_.DDemodCfgEqualizerInitialCoefficientsSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodCfgEqualizerInitialCoefficientsSplit.");
+  }
+  return function_pointers_.DDemodCfgEqualizerInitialCoefficientsSplit(instrumentHandle, selectorString, x0, dx, equalizerInitialCoefficientsI, equalizerInitialCoefficientsQ, arraySize);
+}
+
+int32 NiRFmxDemodLibrary::DDemodCfgEqualizerSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 equalizerMode, int32 equalizerFilterLength, float64 x0, float64 dx, float32 equalizerInitialCoefficientsI[], float32 equalizerInitialCoefficientsQ[], int32 equalizerTrainingCount, float64 equalizerConvergenceFactor, int32 arraySize)
+{
+  if (!function_pointers_.DDemodCfgEqualizerSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodCfgEqualizerSplit.");
+  }
+  return function_pointers_.DDemodCfgEqualizerSplit(instrumentHandle, selectorString, equalizerMode, equalizerFilterLength, x0, dx, equalizerInitialCoefficientsI, equalizerInitialCoefficientsQ, equalizerTrainingCount, equalizerConvergenceFactor, arraySize);
+}
+
 int32 NiRFmxDemodLibrary::DDemodCfgFSKDeviation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 fskDeviation, int32 fskRefCompEnabled)
 {
   if (!function_pointers_.DDemodCfgFSKDeviation) {
@@ -667,6 +703,14 @@ int32 NiRFmxDemodLibrary::DDemodCfgSymbolMap(niRFmxInstrHandle instrumentHandle,
   return function_pointers_.DDemodCfgSymbolMap(instrumentHandle, selectorString, symbolMapType, symbolMap, arraySize);
 }
 
+int32 NiRFmxDemodLibrary::DDemodCfgSymbolMapSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 symbolMapType, float32 symbolMapI[], float32 symbolMapQ[], int32 arraySize)
+{
+  if (!function_pointers_.DDemodCfgSymbolMapSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodCfgSymbolMapSplit.");
+  }
+  return function_pointers_.DDemodCfgSymbolMapSplit(instrumentHandle, selectorString, symbolMapType, symbolMapI, symbolMapQ, arraySize);
+}
+
 int32 NiRFmxDemodLibrary::DDemodCfgSymbolRate(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 symbolRate)
 {
   if (!function_pointers_.DDemodCfgSymbolRate) {
@@ -699,6 +743,14 @@ int32 NiRFmxDemodLibrary::DDemodFetchConstellationTrace(niRFmxInstrHandle instru
   return function_pointers_.DDemodFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellationTrace, arraySize, actualArraySize);
 }
 
+int32 NiRFmxDemodLibrary::DDemodFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationTraceI[], float32 constellationTraceQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DDemodFetchConstellationTraceSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodFetchConstellationTraceSplit.");
+  }
+  return function_pointers_.DDemodFetchConstellationTraceSplit(instrumentHandle, selectorString, timeout, constellationTraceI, constellationTraceQ, arraySize, actualArraySize);
+}
+
 int32 NiRFmxDemodLibrary::DDemodFetchDemodulatedBits(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int8 demodulatedBits[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.DDemodFetchDemodulatedBits) {
@@ -729,6 +781,14 @@ int32 NiRFmxDemodLibrary::DDemodFetchEqualizerCoefficients(niRFmxInstrHandle ins
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodFetchEqualizerCoefficients.");
   }
   return function_pointers_.DDemodFetchEqualizerCoefficients(instrumentHandle, selectorString, timeout, x0, dx, equalizerCoefficients, arraySize, actualArraySize);
+}
+
+int32 NiRFmxDemodLibrary::DDemodFetchEqualizerCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 equalizerCoefficientsI[], float32 equalizerCoefficientsQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DDemodFetchEqualizerCoefficientsSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodFetchEqualizerCoefficientsSplit.");
+  }
+  return function_pointers_.DDemodFetchEqualizerCoefficientsSplit(instrumentHandle, selectorString, timeout, x0, dx, equalizerCoefficientsI, equalizerCoefficientsQ, arraySize, actualArraySize);
 }
 
 int32 NiRFmxDemodLibrary::DDemodFetchFSKDeviationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 fskError[], int32 arraySize, int32* actualArraySize)
@@ -811,12 +871,28 @@ int32 NiRFmxDemodLibrary::DDemodFetchMeasurementWaveform(niRFmxInstrHandle instr
   return function_pointers_.DDemodFetchMeasurementWaveform(instrumentHandle, selectorString, timeout, x0, dx, measurementWaveform, arraySize, actualArraySize, samplesPerSymbol, symbolRate);
 }
 
+int32 NiRFmxDemodLibrary::DDemodFetchMeasurementWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 measurementWaveformI[], float32 measurementWaveformQ[], int32 arraySize, int32* actualArraySize, int32* samplesPerSymbol, float64* symbolRate)
+{
+  if (!function_pointers_.DDemodFetchMeasurementWaveformSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodFetchMeasurementWaveformSplit.");
+  }
+  return function_pointers_.DDemodFetchMeasurementWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, measurementWaveformI, measurementWaveformQ, arraySize, actualArraySize, samplesPerSymbol, symbolRate);
+}
+
 int32 NiRFmxDemodLibrary::DDemodFetchOffsetConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle offsetConstellationTrace[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.DDemodFetchOffsetConstellationTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodFetchOffsetConstellationTrace.");
   }
   return function_pointers_.DDemodFetchOffsetConstellationTrace(instrumentHandle, selectorString, timeout, offsetConstellationTrace, arraySize, actualArraySize);
+}
+
+int32 NiRFmxDemodLibrary::DDemodFetchOffsetConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 offsetConstellationTraceI[], float32 offsetConstellationTraceQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DDemodFetchOffsetConstellationTraceSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodFetchOffsetConstellationTraceSplit.");
+  }
+  return function_pointers_.DDemodFetchOffsetConstellationTraceSplit(instrumentHandle, selectorString, timeout, offsetConstellationTraceI, offsetConstellationTraceQ, arraySize, actualArraySize);
 }
 
 int32 NiRFmxDemodLibrary::DDemodFetchOffsetEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSOffsetEVM, float64* maximumRMSOffsetEVM, float64* maximumPeakOffsetEVM, float64* meanPeakOffsetEVM)
@@ -859,6 +935,14 @@ int32 NiRFmxDemodLibrary::DDemodFetchReferenceWaveform(niRFmxInstrHandle instrum
   return function_pointers_.DDemodFetchReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveform, arraySize, actualArraySize);
 }
 
+int32 NiRFmxDemodLibrary::DDemodFetchReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DDemodFetchReferenceWaveformSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodFetchReferenceWaveformSplit.");
+  }
+  return function_pointers_.DDemodFetchReferenceWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveformI, referenceWaveformQ, arraySize, actualArraySize);
+}
+
 int32 NiRFmxDemodLibrary::DDemodFetchSyncFound(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* syncFound)
 {
   if (!function_pointers_.DDemodFetchSyncFound) {
@@ -875,12 +959,28 @@ int32 NiRFmxDemodLibrary::DDemodGetEqualizerInitialCoefficients(niRFmxInstrHandl
   return function_pointers_.DDemodGetEqualizerInitialCoefficients(instrumentHandle, selectorString, x0, dx, equalizerInitialCoefficients, arraySize, actualArraySize);
 }
 
+int32 NiRFmxDemodLibrary::DDemodGetEqualizerInitialCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, float32 equalizerInitialCoefficientsI[], float32 equalizerInitialCoefficientsQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DDemodGetEqualizerInitialCoefficientsSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodGetEqualizerInitialCoefficientsSplit.");
+  }
+  return function_pointers_.DDemodGetEqualizerInitialCoefficientsSplit(instrumentHandle, selectorString, x0, dx, equalizerInitialCoefficientsI, equalizerInitialCoefficientsQ, arraySize, actualArraySize);
+}
+
 int32 NiRFmxDemodLibrary::DDemodGetSymbolMap(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexSingle symbolMap[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.DDemodGetSymbolMap) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodGetSymbolMap.");
   }
   return function_pointers_.DDemodGetSymbolMap(instrumentHandle, selectorString, symbolMap, arraySize, actualArraySize);
+}
+
+int32 NiRFmxDemodLibrary::DDemodGetSymbolMapSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 symbolMapI[], float32 symbolMapQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DDemodGetSymbolMapSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodGetSymbolMapSplit.");
+  }
+  return function_pointers_.DDemodGetSymbolMapSplit(instrumentHandle, selectorString, symbolMapI, symbolMapQ, arraySize, actualArraySize);
 }
 
 int32 NiRFmxDemodLibrary::DDemodRead(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanFrequencyOffset, float64* meanRMSEVM, float64* maximumPeakEVM, float64* meanModulationErrorRatio)
@@ -897,6 +997,14 @@ int32 NiRFmxDemodLibrary::DDemodSetSymbolMap(niRFmxInstrHandle instrumentHandle,
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodSetSymbolMap.");
   }
   return function_pointers_.DDemodSetSymbolMap(instrumentHandle, selectorString, attrVal, arraySize);
+}
+
+int32 NiRFmxDemodLibrary::DDemodSetSymbolMapSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 attrValI[], float32 attrValQ[], int32 arraySize)
+{
+  if (!function_pointers_.DDemodSetSymbolMapSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxDemod_DDemodSetSymbolMapSplit.");
+  }
+  return function_pointers_.DDemodSetSymbolMapSplit(instrumentHandle, selectorString, attrValI, attrValQ, arraySize);
 }
 
 int32 NiRFmxDemodLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
