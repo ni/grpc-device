@@ -6698,7 +6698,7 @@ namespace nirfmxvna_grpc {
   NiRFmxVNAFeatureToggles::NiRFmxVNAFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxvna", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxvna", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxvna_grpc
