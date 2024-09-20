@@ -40,6 +40,7 @@ service NiRFmxLTE {
   rpc ACPValidateNoiseCalibrationData(ACPValidateNoiseCalibrationDataRequest) returns (ACPValidateNoiseCalibrationDataResponse);
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildCarrierString(BuildCarrierStringRequest) returns (BuildCarrierStringResponse);
@@ -156,6 +157,7 @@ service NiRFmxLTE {
   rpc ModAccCfgInBandEmissionMaskType(ModAccCfgInBandEmissionMaskTypeRequest) returns (ModAccCfgInBandEmissionMaskTypeResponse);
   rpc ModAccCfgSynchronizationModeAndInterval(ModAccCfgSynchronizationModeAndIntervalRequest) returns (ModAccCfgSynchronizationModeAndIntervalResponse);
   rpc ModAccFetchCSRSConstellation(ModAccFetchCSRSConstellationRequest) returns (ModAccFetchCSRSConstellationResponse);
+  rpc ModAccFetchCSRSConstellationSplit(ModAccFetchCSRSConstellationSplitRequest) returns (ModAccFetchCSRSConstellationSplitResponse);
   rpc ModAccFetchCSRSEVM(ModAccFetchCSRSEVMRequest) returns (ModAccFetchCSRSEVMResponse);
   rpc ModAccFetchCSRSEVMArray(ModAccFetchCSRSEVMArrayRequest) returns (ModAccFetchCSRSEVMArrayResponse);
   rpc ModAccFetchCompositeEVM(ModAccFetchCompositeEVMRequest) returns (ModAccFetchCompositeEVMResponse);
@@ -165,9 +167,13 @@ service NiRFmxLTE {
   rpc ModAccFetchDownlinkDetectedCellID(ModAccFetchDownlinkDetectedCellIDRequest) returns (ModAccFetchDownlinkDetectedCellIDResponse);
   rpc ModAccFetchDownlinkDetectedCellIDArray(ModAccFetchDownlinkDetectedCellIDArrayRequest) returns (ModAccFetchDownlinkDetectedCellIDArrayResponse);
   rpc ModAccFetchDownlinkPBCHConstellation(ModAccFetchDownlinkPBCHConstellationRequest) returns (ModAccFetchDownlinkPBCHConstellationResponse);
+  rpc ModAccFetchDownlinkPBCHConstellationSplit(ModAccFetchDownlinkPBCHConstellationSplitRequest) returns (ModAccFetchDownlinkPBCHConstellationSplitResponse);
   rpc ModAccFetchDownlinkPCFICHConstellation(ModAccFetchDownlinkPCFICHConstellationRequest) returns (ModAccFetchDownlinkPCFICHConstellationResponse);
+  rpc ModAccFetchDownlinkPCFICHConstellationSplit(ModAccFetchDownlinkPCFICHConstellationSplitRequest) returns (ModAccFetchDownlinkPCFICHConstellationSplitResponse);
   rpc ModAccFetchDownlinkPDCCHConstellation(ModAccFetchDownlinkPDCCHConstellationRequest) returns (ModAccFetchDownlinkPDCCHConstellationResponse);
+  rpc ModAccFetchDownlinkPDCCHConstellationSplit(ModAccFetchDownlinkPDCCHConstellationSplitRequest) returns (ModAccFetchDownlinkPDCCHConstellationSplitResponse);
   rpc ModAccFetchDownlinkPHICHConstellation(ModAccFetchDownlinkPHICHConstellationRequest) returns (ModAccFetchDownlinkPHICHConstellationResponse);
+  rpc ModAccFetchDownlinkPHICHConstellationSplit(ModAccFetchDownlinkPHICHConstellationSplitRequest) returns (ModAccFetchDownlinkPHICHConstellationSplitResponse);
   rpc ModAccFetchDownlinkTransmitPower(ModAccFetchDownlinkTransmitPowerRequest) returns (ModAccFetchDownlinkTransmitPowerResponse);
   rpc ModAccFetchDownlinkTransmitPowerArray(ModAccFetchDownlinkTransmitPowerArrayRequest) returns (ModAccFetchDownlinkTransmitPowerArrayResponse);
   rpc ModAccFetchEVMHighPerSymbolTrace(ModAccFetchEVMHighPerSymbolTraceRequest) returns (ModAccFetchEVMHighPerSymbolTraceResponse);
@@ -189,19 +195,26 @@ service NiRFmxLTE {
   rpc ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(ModAccFetchMaximumMagnitudeErrorPerSymbolTraceRequest) returns (ModAccFetchMaximumMagnitudeErrorPerSymbolTraceResponse);
   rpc ModAccFetchMaximumPhaseErrorPerSymbolTrace(ModAccFetchMaximumPhaseErrorPerSymbolTraceRequest) returns (ModAccFetchMaximumPhaseErrorPerSymbolTraceResponse);
   rpc ModAccFetchNPUSCHConstellationTrace(ModAccFetchNPUSCHConstellationTraceRequest) returns (ModAccFetchNPUSCHConstellationTraceResponse);
+  rpc ModAccFetchNPUSCHConstellationTraceSplit(ModAccFetchNPUSCHConstellationTraceSplitRequest) returns (ModAccFetchNPUSCHConstellationTraceSplitResponse);
   rpc ModAccFetchNPUSCHDMRSEVM(ModAccFetchNPUSCHDMRSEVMRequest) returns (ModAccFetchNPUSCHDMRSEVMResponse);
   rpc ModAccFetchNPUSCHDataEVM(ModAccFetchNPUSCHDataEVMRequest) returns (ModAccFetchNPUSCHDataEVMResponse);
   rpc ModAccFetchNPUSCHSymbolPower(ModAccFetchNPUSCHSymbolPowerRequest) returns (ModAccFetchNPUSCHSymbolPowerResponse);
   rpc ModAccFetchPDSCH1024QAMConstellation(ModAccFetchPDSCH1024QAMConstellationRequest) returns (ModAccFetchPDSCH1024QAMConstellationResponse);
+  rpc ModAccFetchPDSCH1024QAMConstellationSplit(ModAccFetchPDSCH1024QAMConstellationSplitRequest) returns (ModAccFetchPDSCH1024QAMConstellationSplitResponse);
   rpc ModAccFetchPDSCH1024QAMEVM(ModAccFetchPDSCH1024QAMEVMRequest) returns (ModAccFetchPDSCH1024QAMEVMResponse);
   rpc ModAccFetchPDSCH1024QAMEVMArray(ModAccFetchPDSCH1024QAMEVMArrayRequest) returns (ModAccFetchPDSCH1024QAMEVMArrayResponse);
   rpc ModAccFetchPDSCH16QAMConstellation(ModAccFetchPDSCH16QAMConstellationRequest) returns (ModAccFetchPDSCH16QAMConstellationResponse);
+  rpc ModAccFetchPDSCH16QAMConstellationSplit(ModAccFetchPDSCH16QAMConstellationSplitRequest) returns (ModAccFetchPDSCH16QAMConstellationSplitResponse);
   rpc ModAccFetchPDSCH256QAMConstellation(ModAccFetchPDSCH256QAMConstellationRequest) returns (ModAccFetchPDSCH256QAMConstellationResponse);
+  rpc ModAccFetchPDSCH256QAMConstellationSplit(ModAccFetchPDSCH256QAMConstellationSplitRequest) returns (ModAccFetchPDSCH256QAMConstellationSplitResponse);
   rpc ModAccFetchPDSCH64QAMConstellation(ModAccFetchPDSCH64QAMConstellationRequest) returns (ModAccFetchPDSCH64QAMConstellationResponse);
+  rpc ModAccFetchPDSCH64QAMConstellationSplit(ModAccFetchPDSCH64QAMConstellationSplitRequest) returns (ModAccFetchPDSCH64QAMConstellationSplitResponse);
   rpc ModAccFetchPDSCHEVM(ModAccFetchPDSCHEVMRequest) returns (ModAccFetchPDSCHEVMResponse);
   rpc ModAccFetchPDSCHEVMArray(ModAccFetchPDSCHEVMArrayRequest) returns (ModAccFetchPDSCHEVMArrayResponse);
   rpc ModAccFetchPDSCHQPSKConstellation(ModAccFetchPDSCHQPSKConstellationRequest) returns (ModAccFetchPDSCHQPSKConstellationResponse);
+  rpc ModAccFetchPDSCHQPSKConstellationSplit(ModAccFetchPDSCHQPSKConstellationSplitRequest) returns (ModAccFetchPDSCHQPSKConstellationSplitResponse);
   rpc ModAccFetchPSSCHConstellationTrace(ModAccFetchPSSCHConstellationTraceRequest) returns (ModAccFetchPSSCHConstellationTraceResponse);
+  rpc ModAccFetchPSSCHConstellationTraceSplit(ModAccFetchPSSCHConstellationTraceSplitRequest) returns (ModAccFetchPSSCHConstellationTraceSplitResponse);
   rpc ModAccFetchPSSCHDMRSEVM(ModAccFetchPSSCHDMRSEVMRequest) returns (ModAccFetchPSSCHDMRSEVMResponse);
   rpc ModAccFetchPSSCHDMRSEVMArray(ModAccFetchPSSCHDMRSEVMArrayRequest) returns (ModAccFetchPSSCHDMRSEVMArrayResponse);
   rpc ModAccFetchPSSCHDataEVM(ModAccFetchPSSCHDataEVMRequest) returns (ModAccFetchPSSCHDataEVMResponse);
@@ -209,6 +222,7 @@ service NiRFmxLTE {
   rpc ModAccFetchPSSCHSymbolPower(ModAccFetchPSSCHSymbolPowerRequest) returns (ModAccFetchPSSCHSymbolPowerResponse);
   rpc ModAccFetchPSSCHSymbolPowerArray(ModAccFetchPSSCHSymbolPowerArrayRequest) returns (ModAccFetchPSSCHSymbolPowerArrayResponse);
   rpc ModAccFetchPUSCHConstellationTrace(ModAccFetchPUSCHConstellationTraceRequest) returns (ModAccFetchPUSCHConstellationTraceResponse);
+  rpc ModAccFetchPUSCHConstellationTraceSplit(ModAccFetchPUSCHConstellationTraceSplitRequest) returns (ModAccFetchPUSCHConstellationTraceSplitResponse);
   rpc ModAccFetchPUSCHDMRSEVM(ModAccFetchPUSCHDMRSEVMRequest) returns (ModAccFetchPUSCHDMRSEVMResponse);
   rpc ModAccFetchPUSCHDMRSEVMArray(ModAccFetchPUSCHDMRSEVMArrayRequest) returns (ModAccFetchPUSCHDMRSEVMArrayResponse);
   rpc ModAccFetchPUSCHDataEVM(ModAccFetchPUSCHDataEVMRequest) returns (ModAccFetchPUSCHDataEVMResponse);
@@ -219,6 +233,7 @@ service NiRFmxLTE {
   rpc ModAccFetchRMSMagnitudeErrorPerSymbolTrace(ModAccFetchRMSMagnitudeErrorPerSymbolTraceRequest) returns (ModAccFetchRMSMagnitudeErrorPerSymbolTraceResponse);
   rpc ModAccFetchRMSPhaseErrorPerSymbolTrace(ModAccFetchRMSPhaseErrorPerSymbolTraceRequest) returns (ModAccFetchRMSPhaseErrorPerSymbolTraceResponse);
   rpc ModAccFetchSRSConstellation(ModAccFetchSRSConstellationRequest) returns (ModAccFetchSRSConstellationResponse);
+  rpc ModAccFetchSRSConstellationSplit(ModAccFetchSRSConstellationSplitRequest) returns (ModAccFetchSRSConstellationSplitResponse);
   rpc ModAccFetchSRSEVM(ModAccFetchSRSEVMRequest) returns (ModAccFetchSRSEVMResponse);
   rpc ModAccFetchSRSEVMArray(ModAccFetchSRSEVMArrayRequest) returns (ModAccFetchSRSEVMArrayResponse);
   rpc ModAccFetchSpectralFlatness(ModAccFetchSpectralFlatnessRequest) returns (ModAccFetchSpectralFlatnessResponse);
@@ -228,6 +243,7 @@ service NiRFmxLTE {
   rpc ModAccFetchSubblockInBandEmissionMargin(ModAccFetchSubblockInBandEmissionMarginRequest) returns (ModAccFetchSubblockInBandEmissionMarginResponse);
   rpc ModAccFetchSubblockInBandEmissionTrace(ModAccFetchSubblockInBandEmissionTraceRequest) returns (ModAccFetchSubblockInBandEmissionTraceResponse);
   rpc ModAccFetchSynchronizationSignalConstellation(ModAccFetchSynchronizationSignalConstellationRequest) returns (ModAccFetchSynchronizationSignalConstellationResponse);
+  rpc ModAccFetchSynchronizationSignalConstellationSplit(ModAccFetchSynchronizationSignalConstellationSplitRequest) returns (ModAccFetchSynchronizationSignalConstellationSplitResponse);
   rpc ModAccFetchSynchronizationSignalEVM(ModAccFetchSynchronizationSignalEVMRequest) returns (ModAccFetchSynchronizationSignalEVMResponse);
   rpc ModAccFetchSynchronizationSignalEVMArray(ModAccFetchSynchronizationSignalEVMArrayRequest) returns (ModAccFetchSynchronizationSignalEVMArrayResponse);
   rpc OBWCfgAveraging(OBWCfgAveragingRequest) returns (OBWCfgAveragingResponse);
@@ -709,6 +725,7 @@ enum NiRFmxLTEAttribute {
   NIRFMXLTE_ATTRIBUTE_TXP_NUMBER_OF_ANALYSIS_THREADS = 3203080;
   NIRFMXLTE_ATTRIBUTE_TXP_RESULTS_AVERAGE_POWER_MEAN = 3203082;
   NIRFMXLTE_ATTRIBUTE_TXP_RESULTS_PEAK_POWER_MAXIMUM = 3203083;
+  NIRFMXLTE_ATTRIBUTE_MODACC_FREQUENCY_ERROR_ESTIMATION = 3203084;
 }
 
 enum AcpAveragingEnabled {
@@ -1366,6 +1383,8 @@ enum NiRFmxLTEInt32AttributeValues {
   NIRFMXLTE_INT32_MODACC_EVM_WITH_EXCLUSION_PERIOD_ENABLED_TRUE = 1;
   NIRFMXLTE_INT32_MODACC_FFT_WINDOW_TYPE_3GPP = 0;
   NIRFMXLTE_INT32_MODACC_FFT_WINDOW_TYPE_CUSTOM = 1;
+  NIRFMXLTE_INT32_MODACC_FREQUENCY_ERROR_ESTIMATION_NORMAL = 1;
+  NIRFMXLTE_INT32_MODACC_FREQUENCY_ERROR_ESTIMATION_WIDE = 2;
   NIRFMXLTE_INT32_MODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED_FALSE = 0;
   NIRFMXLTE_INT32_MODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED_TRUE = 1;
   NIRFMXLTE_INT32_MODACC_IQ_MISMATCH_ESTIMATIONS_ENABLED_FALSE = 0;
@@ -1841,6 +1860,21 @@ message AnalyzeIQ1WaveformRequest {
 }
 
 message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iqi = 6;
+  repeated float iqq = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeIQ1WaveformSplitResponse {
   int32 status = 1;
 }
 
@@ -3246,6 +3280,19 @@ message ModAccFetchCSRSConstellationResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchCSRSConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchCSRSConstellationSplitResponse {
+  int32 status = 1;
+  repeated float csrs_constellation_i = 2;
+  repeated float csrs_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message ModAccFetchCSRSEVMRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3366,6 +3413,19 @@ message ModAccFetchDownlinkPBCHConstellationResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchDownlinkPBCHConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDownlinkPBCHConstellationSplitResponse {
+  int32 status = 1;
+  repeated float pbch_constellation_i = 2;
+  repeated float pbch_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message ModAccFetchDownlinkPCFICHConstellationRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3376,6 +3436,19 @@ message ModAccFetchDownlinkPCFICHConstellationResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 pcfich_constellation = 2;
   int32 actual_array_size = 3;
+}
+
+message ModAccFetchDownlinkPCFICHConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDownlinkPCFICHConstellationSplitResponse {
+  int32 status = 1;
+  repeated float pcfich_constellation_i = 2;
+  repeated float pcfich_constellation_q = 3;
+  int32 actual_array_size = 4;
 }
 
 message ModAccFetchDownlinkPDCCHConstellationRequest {
@@ -3390,6 +3463,19 @@ message ModAccFetchDownlinkPDCCHConstellationResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchDownlinkPDCCHConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDownlinkPDCCHConstellationSplitResponse {
+  int32 status = 1;
+  repeated float pdcch_constellation_i = 2;
+  repeated float pdcch_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message ModAccFetchDownlinkPHICHConstellationRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3400,6 +3486,19 @@ message ModAccFetchDownlinkPHICHConstellationResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 phich_constellation = 2;
   int32 actual_array_size = 3;
+}
+
+message ModAccFetchDownlinkPHICHConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDownlinkPHICHConstellationSplitResponse {
+  int32 status = 1;
+  repeated float phich_constellation_i = 2;
+  repeated float phich_constellation_q = 3;
+  int32 actual_array_size = 4;
 }
 
 message ModAccFetchDownlinkTransmitPowerRequest {
@@ -3688,6 +3787,22 @@ message ModAccFetchNPUSCHConstellationTraceResponse {
   int32 dmrs_constellation_actual_array_size = 5;
 }
 
+message ModAccFetchNPUSCHConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchNPUSCHConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float data_constellation_i = 2;
+  repeated float data_constellation_q = 3;
+  int32 data_constellation_actual_array_size = 4;
+  repeated float dmrs_constellation_i = 5;
+  repeated float dmrs_constellation_q = 6;
+  int32 dmrs_constellation_actual_array_size = 7;
+}
+
 message ModAccFetchNPUSCHDMRSEVMRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3736,6 +3851,19 @@ message ModAccFetchPDSCH1024QAMConstellationResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchPDSCH1024QAMConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPDSCH1024QAMConstellationSplitResponse {
+  int32 status = 1;
+  repeated float qam1024_constellation_i = 2;
+  repeated float qam1024_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message ModAccFetchPDSCH1024QAMEVMRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3771,6 +3899,19 @@ message ModAccFetchPDSCH16QAMConstellationResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchPDSCH16QAMConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPDSCH16QAMConstellationSplitResponse {
+  int32 status = 1;
+  repeated float qam16_constellation_i = 2;
+  repeated float qam16_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message ModAccFetchPDSCH256QAMConstellationRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3783,6 +3924,19 @@ message ModAccFetchPDSCH256QAMConstellationResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchPDSCH256QAMConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPDSCH256QAMConstellationSplitResponse {
+  int32 status = 1;
+  repeated float qam256_constellation_i = 2;
+  repeated float qam256_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message ModAccFetchPDSCH64QAMConstellationRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3793,6 +3947,19 @@ message ModAccFetchPDSCH64QAMConstellationResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 qam64_constellation = 2;
   int32 actual_array_size = 3;
+}
+
+message ModAccFetchPDSCH64QAMConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPDSCH64QAMConstellationSplitResponse {
+  int32 status = 1;
+  repeated float qam64_constellation_i = 2;
+  repeated float qam64_constellation_q = 3;
+  int32 actual_array_size = 4;
 }
 
 message ModAccFetchPDSCHEVMRequest {
@@ -3838,6 +4005,19 @@ message ModAccFetchPDSCHQPSKConstellationResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchPDSCHQPSKConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPDSCHQPSKConstellationSplitResponse {
+  int32 status = 1;
+  repeated float qpsk_constellation_i = 2;
+  repeated float qpsk_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message ModAccFetchPSSCHConstellationTraceRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3850,6 +4030,22 @@ message ModAccFetchPSSCHConstellationTraceResponse {
   int32 data_constellation_actual_array_size = 3;
   repeated nidevice_grpc.NIComplexNumberF32 dmrs_constellation = 4;
   int32 dmrs_constellation_actual_array_size = 5;
+}
+
+message ModAccFetchPSSCHConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPSSCHConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float data_constellation_i = 2;
+  repeated float data_constellation_q = 3;
+  int32 data_constellation_actual_array_size = 4;
+  repeated float dmrs_constellation_i = 5;
+  repeated float dmrs_constellation_q = 6;
+  int32 dmrs_constellation_actual_array_size = 7;
 }
 
 message ModAccFetchPSSCHDMRSEVMRequest {
@@ -3939,6 +4135,22 @@ message ModAccFetchPUSCHConstellationTraceResponse {
   int32 data_constellation_actual_array_size = 3;
   repeated nidevice_grpc.NIComplexNumberF32 dmrs_constellation = 4;
   int32 dmrs_constellation_actual_array_size = 5;
+}
+
+message ModAccFetchPUSCHConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPUSCHConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float data_constellation_i = 2;
+  repeated float data_constellation_q = 3;
+  int32 data_constellation_actual_array_size = 4;
+  repeated float dmrs_constellation_i = 5;
+  repeated float dmrs_constellation_q = 6;
+  int32 dmrs_constellation_actual_array_size = 7;
 }
 
 message ModAccFetchPUSCHDMRSEVMRequest {
@@ -4068,6 +4280,19 @@ message ModAccFetchSRSConstellationResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchSRSConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchSRSConstellationSplitResponse {
+  int32 status = 1;
+  repeated float srs_constellation_i = 2;
+  repeated float srs_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
 message ModAccFetchSRSEVMRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -4187,6 +4412,21 @@ message ModAccFetchSynchronizationSignalConstellationResponse {
   repeated nidevice_grpc.NIComplexNumberF32 sss_constellation = 2;
   repeated nidevice_grpc.NIComplexNumberF32 pss_constellation = 3;
   int32 actual_array_size = 4;
+}
+
+message ModAccFetchSynchronizationSignalConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchSynchronizationSignalConstellationSplitResponse {
+  int32 status = 1;
+  repeated float sss_constellation_i = 2;
+  repeated float sss_constellation_q = 3;
+  repeated float pss_constellation_i = 4;
+  repeated float pss_constellation_q = 5;
+  int32 actual_array_size = 6;
 }
 
 message ModAccFetchSynchronizationSignalEVMRequest {

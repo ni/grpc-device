@@ -134,6 +134,7 @@
 #define RFMXLTE_ATTR_MODACC_SYNCHRONIZATION_MODE                                            0x00304003
 #define RFMXLTE_ATTR_MODACC_MEASUREMENT_OFFSET                                              0x00304004
 #define RFMXLTE_ATTR_MODACC_MEASUREMENT_LENGTH                                              0x00304005
+#define RFMXLTE_ATTR_MODACC_FREQUENCY_ERROR_ESTIMATION                                      0x0030e00c
 #define RFMXLTE_ATTR_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED                             0x00304079
 #define RFMXLTE_ATTR_MODACC_IQ_MISMATCH_ESTIMATION_ENABLED                                  0x0030407a
 #define RFMXLTE_ATTR_MODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED                            0x0030407b
@@ -647,6 +648,10 @@
 #define RFMXLTE_VAL_MODACC_SYNCHRONIZATION_MODE_FRAME                                              0
 #define RFMXLTE_VAL_MODACC_SYNCHRONIZATION_MODE_SLOT                                               1
 #define RFMXLTE_VAL_MODACC_SYNCHRONIZATION_MODE_MARKER                                             2
+
+// Values for RFMXLTE_ATTR_MODACC_FREQUENCY_ERROR_ESTIMATION
+#define RFMXLTE_VAL_MODACC_FREQUENCY_ERROR_ESTIMATION_NORMAL                                       1
+#define RFMXLTE_VAL_MODACC_FREQUENCY_ERROR_ESTIMATION_WIDE                                         2
 
 // Values for RFMXLTE_ATTR_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED
 #define RFMXLTE_VAL_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED_FALSE                               0
@@ -5107,6 +5112,18 @@ int32 __stdcall RFmxLTE_ModAccGetMeasurementLength(
 );
 
 int32 __stdcall RFmxLTE_ModAccSetMeasurementLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetFrequencyErrorEstimation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccSetFrequencyErrorEstimation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

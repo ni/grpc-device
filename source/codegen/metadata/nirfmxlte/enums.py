@@ -1101,6 +1101,19 @@ enums = {
             }
         ]
     },
+    'ModAccFrequencyErrorEstimation': {
+        'enum-value-prefix': 'MODACC_FREQUENCY_ERROR_ESTIMATION',
+        'values': [
+            {
+                'name': 'NORMAL',
+                'value': 1
+            },
+            {
+                'name': 'WIDE',
+                'value': 2
+            }
+        ]
+    },
     'ModAccIQGainImbalanceCorrectionEnabled': {
         'enum-value-prefix': 'MODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED',
         'values': [

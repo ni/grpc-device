@@ -17,9 +17,19 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxWLAN_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxWLAN_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
+}
+
 int32 AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset)
 {
   return RFmxWLAN_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
+}
+
+int32 AnalyzeNWaveformsIQSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iqi[], float32 iqq[], int32 iqSize[], int32 arraySize, int32 reset)
+{
+  return RFmxWLAN_AnalyzeNWaveformsIQSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, iqSize, arraySize, reset);
 }
 
 int32 AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset)
@@ -40,6 +50,11 @@ int32 AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[]
 int32 AutoDetectSignalAnalysisOnly(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize)
 {
   return RFmxWLAN_AutoDetectSignalAnalysisOnly(instrumentHandle, selectorString, x0, dx, iq, arraySize);
+}
+
+int32 AutoDetectSignalAnalysisOnlySplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize)
+{
+  return RFmxWLAN_AutoDetectSignalAnalysisOnlySplit(instrumentHandle, selectorString, x0, dx, iqi, iqq, arraySize);
 }
 
 int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval)
@@ -232,6 +247,11 @@ int32 DSSSModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char
   return RFmxWLAN_DSSSModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
 }
 
+int32 DSSSModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_DSSSModAccFetchConstellationTraceSplit(instrumentHandle, selectorString, timeout, constellationI, constellationQ, arraySize, actualArraySize);
+}
+
 int32 DSSSModAccFetchCustomGatePowersArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 averagePowerMean[], float64 peakPowerMaximum[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWLAN_DSSSModAccFetchCustomGatePowersArray(instrumentHandle, selectorString, timeout, averagePowerMean, peakPowerMaximum, arraySize, actualArraySize);
@@ -422,6 +442,11 @@ int32 OFDMModAccCfg1ReferenceWaveform(niRFmxInstrHandle instrumentHandle, char s
   return RFmxWLAN_OFDMModAccCfg1ReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
 }
 
+int32 OFDMModAccCfg1ReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize)
+{
+  return RFmxWLAN_OFDMModAccCfg1ReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, referenceWaveformI, referenceWaveformQ, arraySize);
+}
+
 int32 OFDMModAccCfgAcquisitionLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 acquisitionLengthMode, float64 acquisitionLength)
 {
   return RFmxWLAN_OFDMModAccCfgAcquisitionLength(instrumentHandle, selectorString, acquisitionLengthMode, acquisitionLength);
@@ -470,6 +495,11 @@ int32 OFDMModAccCfgMeasurementMode(niRFmxInstrHandle instrumentHandle, char sele
 int32 OFDMModAccCfgNReferenceWaveforms(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], NIComplexSingle referenceWaveform[], int32 referenceWaveformSize[], int32 arraySize)
 {
   return RFmxWLAN_OFDMModAccCfgNReferenceWaveforms(instrumentHandle, selectorString, x0, dx, referenceWaveform, referenceWaveformSize, arraySize);
+}
+
+int32 OFDMModAccCfgNReferenceWaveformsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 referenceWaveformSize[], int32 arraySize)
+{
+  return RFmxWLAN_OFDMModAccCfgNReferenceWaveformsSplit(instrumentHandle, selectorString, x0, dx, referenceWaveformI, referenceWaveformQ, referenceWaveformSize, arraySize);
 }
 
 int32 OFDMModAccCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled)
@@ -555,6 +585,11 @@ int32 OFDMModAccFetchDataAveragePower(niRFmxInstrHandle instrumentHandle, char s
 int32 OFDMModAccFetchDataConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dataConstellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWLAN_OFDMModAccFetchDataConstellationTrace(instrumentHandle, selectorString, timeout, dataConstellation, arraySize, actualArraySize);
+}
+
+int32 OFDMModAccFetchDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellationI[], float32 dataConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_OFDMModAccFetchDataConstellationTraceSplit(instrumentHandle, selectorString, timeout, dataConstellationI, dataConstellationQ, arraySize, actualArraySize);
 }
 
 int32 OFDMModAccFetchDataPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* dataPeakPowerMaximum)
@@ -717,6 +752,11 @@ int32 OFDMModAccFetchPilotConstellationTrace(niRFmxInstrHandle instrumentHandle,
   return RFmxWLAN_OFDMModAccFetchPilotConstellationTrace(instrumentHandle, selectorString, timeout, pilotConstellation, arraySize, actualArraySize);
 }
 
+int32 OFDMModAccFetchPilotConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pilotConstellationI[], float32 pilotConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_OFDMModAccFetchPilotConstellationTraceSplit(instrumentHandle, selectorString, timeout, pilotConstellationI, pilotConstellationQ, arraySize, actualArraySize);
+}
+
 int32 OFDMModAccFetchPreambleAveragePowers80211ac(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* vhtsigaAveragePowerMean, float64* vhtstfAveragePowerMean, float64* vhtltfAveragePowerMean, float64* vhtsigbAveragePowerMean)
 {
   return RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ac(instrumentHandle, selectorString, timeout, vhtsigaAveragePowerMean, vhtstfAveragePowerMean, vhtltfAveragePowerMean, vhtsigbAveragePowerMean);
@@ -775,6 +815,11 @@ int32 OFDMModAccFetchPreamblePeakPowersCommon(niRFmxInstrHandle instrumentHandle
 int32 OFDMModAccFetchRUOffsetAndSize(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* ruOffset, int32* ruSize)
 {
   return RFmxWLAN_OFDMModAccFetchRUOffsetAndSize(instrumentHandle, selectorString, timeout, ruOffset, ruSize);
+}
+
+int32 OFDMModAccFetchReferenceDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 referenceDataConstellationI[], float32 referenceDataConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTraceSplit(instrumentHandle, selectorString, timeout, referenceDataConstellationI, referenceDataConstellationQ, arraySize, actualArraySize);
 }
 
 int32 OFDMModAccFetchSIGBCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* sigbcrcStatus)
@@ -867,9 +912,19 @@ int32 OFDMModAccFetchUserDataConstellationTrace(niRFmxInstrHandle instrumentHand
   return RFmxWLAN_OFDMModAccFetchUserDataConstellationTrace(instrumentHandle, selectorString, timeout, userDataConstellation, arraySize, actualArraySize);
 }
 
+int32 OFDMModAccFetchUserDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 userDataConstellationI[], float32 userDataConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_OFDMModAccFetchUserDataConstellationTraceSplit(instrumentHandle, selectorString, timeout, userDataConstellationI, userDataConstellationQ, arraySize, actualArraySize);
+}
+
 int32 OFDMModAccFetchUserPilotConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle userPilotConstellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWLAN_OFDMModAccFetchUserPilotConstellationTrace(instrumentHandle, selectorString, timeout, userPilotConstellation, arraySize, actualArraySize);
+}
+
+int32 OFDMModAccFetchUserPilotConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 userPilotConstellationI[], float32 userPilotConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_OFDMModAccFetchUserPilotConstellationTraceSplit(instrumentHandle, selectorString, timeout, userPilotConstellationI, userPilotConstellationQ, arraySize, actualArraySize);
 }
 
 int32 OFDMModAccFetchUserPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* userPowerMean)
