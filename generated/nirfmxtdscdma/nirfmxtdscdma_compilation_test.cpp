@@ -77,6 +77,11 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxTDSCDMA_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxTDSCDMA_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
+}
+
 int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
 {
   return RFmxTDSCDMA_AnalyzeSpectrum1Waveform(instrumentHandle, selectorString, resultName, x0, dx, spectrum, arraySize, reset, reserved);
@@ -180,6 +185,11 @@ int32 CDAFetchMeanSymbolPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char
 int32 CDAFetchSymbolConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle symbolConstellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxTDSCDMA_CDAFetchSymbolConstellationTrace(instrumentHandle, selectorString, timeout, symbolConstellation, arraySize, actualArraySize);
+}
+
+int32 CDAFetchSymbolConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellationI[], float32 symbolConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxTDSCDMA_CDAFetchSymbolConstellationTraceSplit(instrumentHandle, selectorString, timeout, symbolConstellationI, symbolConstellationQ, arraySize, actualArraySize);
 }
 
 int32 CDAFetchSymbolEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSSymbolEVM, float64* maximumPeakSymbolEVM, float64* frequencyError, float64* chipRateError, float64* meanRMSSymbolMagnitudeError, float64* meanRMSSymbolPhaseError, float64* meanSymbolPower)
@@ -505,6 +515,11 @@ int32 ModAccFetchCompositeEVM(niRFmxInstrHandle instrumentHandle, char selectorS
 int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxTDSCDMA_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxTDSCDMA_ModAccFetchConstellationTraceSplit(instrumentHandle, selectorString, timeout, constellationI, constellationQ, arraySize, actualArraySize);
 }
 
 int32 ModAccFetchDataActiveCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataActiveCDE, int32* peakDataActiveCDESpreadingFactor, int32* peakDataActiveCDECode, int32* peakDataActiveCDENumberOfChannels)

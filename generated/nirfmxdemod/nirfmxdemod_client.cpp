@@ -539,6 +539,30 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
   return response;
 }
 
+AnalyzeIQ1WaveformSplitResponse
+analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iqi, request.mutable_iqi());
+  copy_array(iqq, request.mutable_iqq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformSplitResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AutoLevelResponse
 auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& bandwidth, const double& measurement_interval)
 {
@@ -1064,6 +1088,61 @@ d_demod_cfg_equalizer_initial_coefficients(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+DDemodCfgEqualizerInitialCoefficientsSplitResponse
+d_demod_cfg_equalizer_initial_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& equalizer_initial_coefficients_i, const std::vector<float>& equalizer_initial_coefficients_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodCfgEqualizerInitialCoefficientsSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(equalizer_initial_coefficients_i, request.mutable_equalizer_initial_coefficients_i());
+  copy_array(equalizer_initial_coefficients_q, request.mutable_equalizer_initial_coefficients_q());
+
+  auto response = DDemodCfgEqualizerInitialCoefficientsSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodCfgEqualizerInitialCoefficientsSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodCfgEqualizerSplitResponse
+d_demod_cfg_equalizer_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DDemodEqualizerMode, pb::int32>& equalizer_mode, const pb::int32& equalizer_filter_length, const double& x0, const double& dx, const std::vector<float>& equalizer_initial_coefficients_i, const std::vector<float>& equalizer_initial_coefficients_q, const pb::int32& equalizer_training_count, const double& equalizer_convergence_factor)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodCfgEqualizerSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto equalizer_mode_ptr = equalizer_mode.get_if<DDemodEqualizerMode>();
+  const auto equalizer_mode_raw_ptr = equalizer_mode.get_if<pb::int32>();
+  if (equalizer_mode_ptr) {
+    request.set_equalizer_mode(*equalizer_mode_ptr);
+  }
+  else if (equalizer_mode_raw_ptr) {
+    request.set_equalizer_mode_raw(*equalizer_mode_raw_ptr);
+  }
+  request.set_equalizer_filter_length(equalizer_filter_length);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(equalizer_initial_coefficients_i, request.mutable_equalizer_initial_coefficients_i());
+  copy_array(equalizer_initial_coefficients_q, request.mutable_equalizer_initial_coefficients_q());
+  request.set_equalizer_training_count(equalizer_training_count);
+  request.set_equalizer_convergence_factor(equalizer_convergence_factor);
+
+  auto response = DDemodCfgEqualizerSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodCfgEqualizerSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodCfgFSKDeviationResponse
 d_demod_cfg_fsk_deviation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& fsk_deviation, const simple_variant<DDemodFskReferenceCompensationEnabled, pb::int32>& fsk_ref_comp_enabled)
 {
@@ -1403,6 +1482,34 @@ d_demod_cfg_symbol_map(const StubPtr& stub, const nidevice_grpc::Session& instru
   return response;
 }
 
+DDemodCfgSymbolMapSplitResponse
+d_demod_cfg_symbol_map_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DDemodSymbolMapType, pb::int32>& symbol_map_type, const std::vector<float>& symbol_map_i, const std::vector<float>& symbol_map_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodCfgSymbolMapSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto symbol_map_type_ptr = symbol_map_type.get_if<DDemodSymbolMapType>();
+  const auto symbol_map_type_raw_ptr = symbol_map_type.get_if<pb::int32>();
+  if (symbol_map_type_ptr) {
+    request.set_symbol_map_type(*symbol_map_type_ptr);
+  }
+  else if (symbol_map_type_raw_ptr) {
+    request.set_symbol_map_type_raw(*symbol_map_type_raw_ptr);
+  }
+  copy_array(symbol_map_i, request.mutable_symbol_map_i());
+  copy_array(symbol_map_q, request.mutable_symbol_map_q());
+
+  auto response = DDemodCfgSymbolMapSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodCfgSymbolMapSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodCfgSymbolRateResponse
 d_demod_cfg_symbol_rate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& symbol_rate)
 {
@@ -1488,6 +1595,25 @@ d_demod_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Sess
   return response;
 }
 
+DDemodFetchConstellationTraceSplitResponse
+d_demod_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodFetchDemodulatedBitsResponse
 d_demod_fetch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -1559,6 +1685,25 @@ d_demod_fetch_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::S
 
   raise_if_error(
       stub->DDemodFetchEqualizerCoefficients(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodFetchEqualizerCoefficientsSplitResponse
+d_demod_fetch_equalizer_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchEqualizerCoefficientsSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchEqualizerCoefficientsSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchEqualizerCoefficientsSplit(&context, request, &response),
       context);
 
   return response;
@@ -1754,6 +1899,25 @@ d_demod_fetch_measurement_waveform(const StubPtr& stub, const nidevice_grpc::Ses
   return response;
 }
 
+DDemodFetchMeasurementWaveformSplitResponse
+d_demod_fetch_measurement_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchMeasurementWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchMeasurementWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchMeasurementWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodFetchOffsetConstellationTraceResponse
 d_demod_fetch_offset_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -1768,6 +1932,25 @@ d_demod_fetch_offset_constellation_trace(const StubPtr& stub, const nidevice_grp
 
   raise_if_error(
       stub->DDemodFetchOffsetConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodFetchOffsetConstellationTraceSplitResponse
+d_demod_fetch_offset_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchOffsetConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchOffsetConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchOffsetConstellationTraceSplit(&context, request, &response),
       context);
 
   return response;
@@ -1868,6 +2051,25 @@ d_demod_fetch_reference_waveform(const StubPtr& stub, const nidevice_grpc::Sessi
   return response;
 }
 
+DDemodFetchReferenceWaveformSplitResponse
+d_demod_fetch_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchReferenceWaveformSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchReferenceWaveformSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchReferenceWaveformSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodFetchSyncFoundResponse
 d_demod_fetch_sync_found(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -1905,6 +2107,24 @@ d_demod_get_equalizer_initial_coefficients(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+DDemodGetEqualizerInitialCoefficientsSplitResponse
+d_demod_get_equalizer_initial_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodGetEqualizerInitialCoefficientsSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = DDemodGetEqualizerInitialCoefficientsSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodGetEqualizerInitialCoefficientsSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodGetSymbolMapResponse
 d_demod_get_symbol_map(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
@@ -1918,6 +2138,24 @@ d_demod_get_symbol_map(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->DDemodGetSymbolMap(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodGetSymbolMapSplitResponse
+d_demod_get_symbol_map_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodGetSymbolMapSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = DDemodGetSymbolMapSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodGetSymbolMapSplit(&context, request, &response),
       context);
 
   return response;
@@ -1956,6 +2194,26 @@ d_demod_set_symbol_map(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->DDemodSetSymbolMap(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodSetSymbolMapSplitResponse
+d_demod_set_symbol_map_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& attr_val_i, const std::vector<float>& attr_val_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodSetSymbolMapSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(attr_val_i, request.mutable_attr_val_i());
+  copy_array(attr_val_q, request.mutable_attr_val_q());
+
+  auto response = DDemodSetSymbolMapSplitResponse{};
+
+  raise_if_error(
+      stub->DDemodSetSymbolMapSplit(&context, request, &response),
       context);
 
   return response;

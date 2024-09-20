@@ -61,6 +61,7 @@ public:
   ::grpc::Status ACPFetchTotalCarrierPower(::grpc::ServerContext* context, const ACPFetchTotalCarrierPowerRequest* request, ACPFetchTotalCarrierPowerResponse* response) override;
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
+  ::grpc::Status AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response) override;
   ::grpc::Status AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildCarrierString(::grpc::ServerContext* context, const BuildCarrierStringRequest* request, BuildCarrierStringResponse* response) override;
@@ -147,8 +148,10 @@ public:
   ::grpc::Status InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status ModAccCfgReferenceWaveform(::grpc::ServerContext* context, const ModAccCfgReferenceWaveformRequest* request, ModAccCfgReferenceWaveformResponse* response) override;
+  ::grpc::Status ModAccCfgReferenceWaveformSplit(::grpc::ServerContext* context, const ModAccCfgReferenceWaveformSplitRequest* request, ModAccCfgReferenceWaveformSplitResponse* response) override;
   ::grpc::Status ModAccCfgSynchronizationModeAndInterval(::grpc::ServerContext* context, const ModAccCfgSynchronizationModeAndIntervalRequest* request, ModAccCfgSynchronizationModeAndIntervalResponse* response) override;
   ::grpc::Status ModAccFetchConstellationTrace(::grpc::ServerContext* context, const ModAccFetchConstellationTraceRequest* request, ModAccFetchConstellationTraceResponse* response) override;
+  ::grpc::Status ModAccFetchConstellationTraceSplit(::grpc::ServerContext* context, const ModAccFetchConstellationTraceSplitRequest* request, ModAccFetchConstellationTraceSplitResponse* response) override;
   ::grpc::Status ModAccFetchDetectedChannel(::grpc::ServerContext* context, const ModAccFetchDetectedChannelRequest* request, ModAccFetchDetectedChannelResponse* response) override;
   ::grpc::Status ModAccFetchDetectedChannelArray(::grpc::ServerContext* context, const ModAccFetchDetectedChannelArrayRequest* request, ModAccFetchDetectedChannelArrayResponse* response) override;
   ::grpc::Status ModAccFetchEVM(::grpc::ServerContext* context, const ModAccFetchEVMRequest* request, ModAccFetchEVMResponse* response) override;
@@ -169,6 +172,7 @@ public:
   ::grpc::Status ModAccFetchRCDEArray(::grpc::ServerContext* context, const ModAccFetchRCDEArrayRequest* request, ModAccFetchRCDEArrayResponse* response) override;
   ::grpc::Status ModAccFetchRCDETrace(::grpc::ServerContext* context, const ModAccFetchRCDETraceRequest* request, ModAccFetchRCDETraceResponse* response) override;
   ::grpc::Status ModAccFetchReferenceWaveform(::grpc::ServerContext* context, const ModAccFetchReferenceWaveformRequest* request, ModAccFetchReferenceWaveformResponse* response) override;
+  ::grpc::Status ModAccFetchReferenceWaveformSplit(::grpc::ServerContext* context, const ModAccFetchReferenceWaveformSplitRequest* request, ModAccFetchReferenceWaveformSplitResponse* response) override;
   ::grpc::Status OBWCfgAveraging(::grpc::ServerContext* context, const OBWCfgAveragingRequest* request, OBWCfgAveragingResponse* response) override;
   ::grpc::Status OBWCfgRBWFilter(::grpc::ServerContext* context, const OBWCfgRBWFilterRequest* request, OBWCfgRBWFilterResponse* response) override;
   ::grpc::Status OBWCfgSweepTime(::grpc::ServerContext* context, const OBWCfgSweepTimeRequest* request, OBWCfgSweepTimeResponse* response) override;
@@ -177,6 +181,7 @@ public:
   ::grpc::Status QEVMCfgAveraging(::grpc::ServerContext* context, const QEVMCfgAveragingRequest* request, QEVMCfgAveragingResponse* response) override;
   ::grpc::Status QEVMCfgMeasurementLength(::grpc::ServerContext* context, const QEVMCfgMeasurementLengthRequest* request, QEVMCfgMeasurementLengthResponse* response) override;
   ::grpc::Status QEVMFetchConstellationTrace(::grpc::ServerContext* context, const QEVMFetchConstellationTraceRequest* request, QEVMFetchConstellationTraceResponse* response) override;
+  ::grpc::Status QEVMFetchConstellationTraceSplit(::grpc::ServerContext* context, const QEVMFetchConstellationTraceSplitRequest* request, QEVMFetchConstellationTraceSplitResponse* response) override;
   ::grpc::Status QEVMFetchEVM(::grpc::ServerContext* context, const QEVMFetchEVMRequest* request, QEVMFetchEVMResponse* response) override;
   ::grpc::Status QEVMFetchEVMTrace(::grpc::ServerContext* context, const QEVMFetchEVMTraceRequest* request, QEVMFetchEVMTraceResponse* response) override;
   ::grpc::Status QEVMFetchIQImpairments(::grpc::ServerContext* context, const QEVMFetchIQImpairmentsRequest* request, QEVMFetchIQImpairmentsResponse* response) override;

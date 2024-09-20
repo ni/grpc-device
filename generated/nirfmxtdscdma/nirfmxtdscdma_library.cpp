@@ -41,6 +41,7 @@ NiRFmxTDSCDMALibrary::NiRFmxTDSCDMALibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.ACPFetchSpectrum = reinterpret_cast<ACPFetchSpectrumPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_ACPFetchSpectrum"));
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_AutoLevel"));
   function_pointers_.BuildChannelString = reinterpret_cast<BuildChannelStringPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_BuildChannelString"));
@@ -62,6 +63,7 @@ NiRFmxTDSCDMALibrary::NiRFmxTDSCDMALibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.CDAFetchMeanSymbolMagnitudeErrorTrace = reinterpret_cast<CDAFetchMeanSymbolMagnitudeErrorTracePtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_CDAFetchMeanSymbolMagnitudeErrorTrace"));
   function_pointers_.CDAFetchMeanSymbolPhaseErrorTrace = reinterpret_cast<CDAFetchMeanSymbolPhaseErrorTracePtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_CDAFetchMeanSymbolPhaseErrorTrace"));
   function_pointers_.CDAFetchSymbolConstellationTrace = reinterpret_cast<CDAFetchSymbolConstellationTracePtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_CDAFetchSymbolConstellationTrace"));
+  function_pointers_.CDAFetchSymbolConstellationTraceSplit = reinterpret_cast<CDAFetchSymbolConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_CDAFetchSymbolConstellationTraceSplit"));
   function_pointers_.CDAFetchSymbolEVM = reinterpret_cast<CDAFetchSymbolEVMPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_CDAFetchSymbolEVM"));
   function_pointers_.CHPCfgAveraging = reinterpret_cast<CHPCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_CHPCfgAveraging"));
   function_pointers_.CHPCfgRBWFilter = reinterpret_cast<CHPCfgRBWFilterPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_CHPCfgRBWFilter"));
@@ -127,6 +129,7 @@ NiRFmxTDSCDMALibrary::NiRFmxTDSCDMALibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.ModAccFetchCodeDomainErrorTrace = reinterpret_cast<ModAccFetchCodeDomainErrorTracePtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_ModAccFetchCodeDomainErrorTrace"));
   function_pointers_.ModAccFetchCompositeEVM = reinterpret_cast<ModAccFetchCompositeEVMPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_ModAccFetchCompositeEVM"));
   function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_ModAccFetchConstellationTrace"));
+  function_pointers_.ModAccFetchConstellationTraceSplit = reinterpret_cast<ModAccFetchConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_ModAccFetchConstellationTraceSplit"));
   function_pointers_.ModAccFetchDataActiveCDE = reinterpret_cast<ModAccFetchDataActiveCDEPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_ModAccFetchDataActiveCDE"));
   function_pointers_.ModAccFetchDataCDE = reinterpret_cast<ModAccFetchDataCDEPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_ModAccFetchDataCDE"));
   function_pointers_.ModAccFetchDataEVM = reinterpret_cast<ModAccFetchDataEVMPtr>(shared_library_->get_function_pointer("RFmxTDSCDMA_ModAccFetchDataEVM"));
@@ -323,6 +326,14 @@ int32 NiRFmxTDSCDMALibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandl
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 NiRFmxTDSCDMALibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1WaveformSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_AnalyzeIQ1WaveformSplit.");
+  }
+  return function_pointers_.AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
+}
+
 int32 NiRFmxTDSCDMALibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
 {
   if (!function_pointers_.AnalyzeSpectrum1Waveform) {
@@ -489,6 +500,14 @@ int32 NiRFmxTDSCDMALibrary::CDAFetchSymbolConstellationTrace(niRFmxInstrHandle i
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchSymbolConstellationTrace.");
   }
   return function_pointers_.CDAFetchSymbolConstellationTrace(instrumentHandle, selectorString, timeout, symbolConstellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::CDAFetchSymbolConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellationI[], float32 symbolConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.CDAFetchSymbolConstellationTraceSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_CDAFetchSymbolConstellationTraceSplit.");
+  }
+  return function_pointers_.CDAFetchSymbolConstellationTraceSplit(instrumentHandle, selectorString, timeout, symbolConstellationI, symbolConstellationQ, arraySize, actualArraySize);
 }
 
 int32 NiRFmxTDSCDMALibrary::CDAFetchSymbolEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSSymbolEVM, float64* maximumPeakSymbolEVM, float64* frequencyError, float64* chipRateError, float64* meanRMSSymbolMagnitudeError, float64* meanRMSSymbolPhaseError, float64* meanSymbolPower)
@@ -1009,6 +1028,14 @@ int32 NiRFmxTDSCDMALibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle inst
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchConstellationTrace.");
   }
   return function_pointers_.ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxTDSCDMALibrary::ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchConstellationTraceSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxTDSCDMA_ModAccFetchConstellationTraceSplit.");
+  }
+  return function_pointers_.ModAccFetchConstellationTraceSplit(instrumentHandle, selectorString, timeout, constellationI, constellationQ, arraySize, actualArraySize);
 }
 
 int32 NiRFmxTDSCDMALibrary::ModAccFetchDataActiveCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataActiveCDE, int32* peakDataActiveCDESpreadingFactor, int32* peakDataActiveCDECode, int32* peakDataActiveCDENumberOfChannels)

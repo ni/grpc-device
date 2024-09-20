@@ -24,6 +24,7 @@ using namespace nidevice_grpc::experimental::client;
 
 AbortMeasurementsResponse abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 AnalyzeIQ1WaveformResponse analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset);
+AnalyzeIQ1WaveformSplitResponse analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset);
 AutoLevelResponse auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_interval);
 BuildOffsetStringResponse build_offset_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& offset_number);
 BuildSignalStringResponse build_signal_string(const StubPtr& stub, const std::string& signal_name, const std::string& result_name);
@@ -85,6 +86,7 @@ InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& ins
 ModAccCfgAveragingResponse mod_acc_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count);
 ModAccCfgDroopCompensationEnabledResponse mod_acc_cfg_droop_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<ModAccDroopCompensationEnabled, pb::int32>& droop_compensation_enabled);
 ModAccFetchConstellationTraceResponse mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+ModAccFetchConstellationTraceSplitResponse mod_acc_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDemodulatedBitsResponse mod_acc_fetch_demodulated_bits(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDetectedTSCResponse mod_acc_fetch_detected_tsc(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDetectedTSCArrayResponse mod_acc_fetch_detected_tsc_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
