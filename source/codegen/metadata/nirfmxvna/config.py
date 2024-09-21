@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '23.0.0',
+    'api_version': '24.8.0',
     'c_header': 'niRFmxVNA.h',
     'c_function_prefix': 'RFmxVNA_',
     'service_class_prefix': 'NiRFmxVNA',
@@ -27,7 +27,7 @@ config = {
         "NIComplexSingle": "nidevice_grpc.NIComplexNumberF32",
         "NIComplexDouble": "nidevice_grpc.NIComplexNumber",
     },
-    'code_readiness': 'NextRelease',
+    'code_readiness': 'Release',
     'feature_toggles': {},
     'driver_name': 'NI-rfmxvna',
     'extra_errors_used': [

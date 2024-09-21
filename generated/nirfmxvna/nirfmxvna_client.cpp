@@ -17,6 +17,2161 @@
 
 namespace nirfmxvna_grpc::experimental::client {
 
+AbortMeasurementsResponse
+abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AbortMeasurementsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = AbortMeasurementsResponse{};
+
+  raise_if_error(
+      stub->AbortMeasurements(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildCalibrationElementStringResponse
+build_calibration_element_string(const StubPtr& stub, const std::string& selector_string, const std::string& calibration_element_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildCalibrationElementStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_calibration_element_id(calibration_element_id);
+
+  auto response = BuildCalibrationElementStringResponse{};
+
+  raise_if_error(
+      stub->BuildCalibrationElementString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildCalkitStringResponse
+build_calkit_string(const StubPtr& stub, const std::string& selector_string, const std::string& calkit_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildCalkitStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_calkit_id(calkit_id);
+
+  auto response = BuildCalkitStringResponse{};
+
+  raise_if_error(
+      stub->BuildCalkitString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildCalstepStringResponse
+build_calstep_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& calstep_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildCalstepStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_calstep_number(calstep_number);
+
+  auto response = BuildCalstepStringResponse{};
+
+  raise_if_error(
+      stub->BuildCalstepString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildConnectorStringResponse
+build_connector_string(const StubPtr& stub, const std::string& selector_string, const std::string& connector_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildConnectorStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_connector_id(connector_id);
+
+  auto response = BuildConnectorStringResponse{};
+
+  raise_if_error(
+      stub->BuildConnectorString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildMarkerStringResponse
+build_marker_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& marker_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildMarkerStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_marker_number(marker_number);
+
+  auto response = BuildMarkerStringResponse{};
+
+  raise_if_error(
+      stub->BuildMarkerString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildPortStringResponse
+build_port_string(const StubPtr& stub, const std::string& selector_string, const std::string& port_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildPortStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_port_string(port_string);
+
+  auto response = BuildPortStringResponse{};
+
+  raise_if_error(
+      stub->BuildPortString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildPulseGeneratorStringResponse
+build_pulse_generator_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& pulse_generator_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildPulseGeneratorStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_pulse_generator_number(pulse_generator_number);
+
+  auto response = BuildPulseGeneratorStringResponse{};
+
+  raise_if_error(
+      stub->BuildPulseGeneratorString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildSParameterStringResponse
+build_s_parameter_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& s_parameter_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildSParameterStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_s_parameter_number(s_parameter_number);
+
+  auto response = BuildSParameterStringResponse{};
+
+  raise_if_error(
+      stub->BuildSParameterString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildSegmentStringResponse
+build_segment_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& segment_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildSegmentStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_segment_number(segment_number);
+
+  auto response = BuildSegmentStringResponse{};
+
+  raise_if_error(
+      stub->BuildSegmentString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildSignalStringResponse
+build_signal_string(const StubPtr& stub, const std::string& signal_name, const std::string& result_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildSignalStringRequest{};
+  request.set_signal_name(signal_name);
+  request.set_result_name(result_name);
+
+  auto response = BuildSignalStringResponse{};
+
+  raise_if_error(
+      stub->BuildSignalString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildWaveStringResponse
+build_wave_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& wave_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildWaveStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_wave_number(wave_number);
+
+  auto response = BuildWaveStringResponse{};
+
+  raise_if_error(
+      stub->BuildWaveString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalibrationAbortResponse
+calibration_abort(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalibrationAbortRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalibrationAbortResponse{};
+
+  raise_if_error(
+      stub->CalibrationAbort(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalibrationAcquireResponse
+calibration_acquire(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalibrationAcquireRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = CalibrationAcquireResponse{};
+
+  raise_if_error(
+      stub->CalibrationAcquire(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalibrationInitiateResponse
+calibration_initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalibrationInitiateRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalibrationInitiateResponse{};
+
+  raise_if_error(
+      stub->CalibrationInitiate(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalibrationSaveResponse
+calibration_save(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalibrationSaveRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+
+  auto response = CalibrationSaveResponse{};
+
+  raise_if_error(
+      stub->CalibrationSave(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitAddCalibrationElementResponse
+calkit_manager_calkit_add_calibration_element(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calibration_element_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitAddCalibrationElementRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calibration_element_id(calibration_element_id);
+
+  auto response = CalkitManagerCalkitAddCalibrationElementResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitAddCalibrationElement(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitAddConnectorResponse
+calkit_manager_calkit_add_connector(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& connector_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitAddConnectorRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_connector_id(connector_id);
+
+  auto response = CalkitManagerCalkitAddConnectorResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitAddConnector(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementDelayModelGetDelayResponse
+calkit_manager_calkit_calibration_element_delay_model_get_delay(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementDelayModelGetDelayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementDelayModelGetDelayResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementDelayModelGetDelay(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementDelayModelSetDelayResponse
+calkit_manager_calkit_calibration_element_delay_model_set_delay(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& delay)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementDelayModelSetDelayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_delay(delay);
+
+  auto response = CalkitManagerCalkitCalibrationElementDelayModelSetDelayResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementDelayModelSetDelay(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementGetDescriptionResponse
+calkit_manager_calkit_calibration_element_get_description(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementGetDescriptionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementGetDescriptionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementGetDescription(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementGetMaximumFrequencyResponse
+calkit_manager_calkit_calibration_element_get_maximum_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementGetMaximumFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementGetMaximumFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementGetMaximumFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementGetMinimumFrequencyResponse
+calkit_manager_calkit_calibration_element_get_minimum_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementGetMinimumFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementGetMinimumFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementGetMinimumFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementGetPortConnectorsResponse
+calkit_manager_calkit_calibration_element_get_port_connectors(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementGetPortConnectorsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementGetPortConnectorsResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementGetPortConnectors(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementGetSParameterDefinitionResponse
+calkit_manager_calkit_calibration_element_get_s_parameter_definition(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementGetSParameterDefinitionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementGetSParameterDefinitionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementGetSParameterDefinition(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementGetTypesResponse
+calkit_manager_calkit_calibration_element_get_types(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementGetTypesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementGetTypesResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementGetTypes(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetC0Response
+calkit_manager_calkit_calibration_element_reflect_model_get_c0(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetC0Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetC0Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetC0(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetC1Response
+calkit_manager_calkit_calibration_element_reflect_model_get_c1(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetC1Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetC1Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetC1(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetC2Response
+calkit_manager_calkit_calibration_element_reflect_model_get_c2(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetC2Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetC2Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetC2(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetC3Response
+calkit_manager_calkit_calibration_element_reflect_model_get_c3(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetC3Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetC3Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetC3(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeResponse
+calkit_manager_calkit_calibration_element_reflect_model_get_model_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetModelTypeResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetModelType(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayResponse
+calkit_manager_calkit_calibration_element_reflect_model_get_offset_delay(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelayResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetOffsetDelay(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossResponse
+calkit_manager_calkit_calibration_element_reflect_model_get_offset_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLossResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetOffsetLoss(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Response
+calkit_manager_calkit_calibration_element_reflect_model_get_offset_z0(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetOffsetZ0(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceResponse
+calkit_manager_calkit_calibration_element_reflect_model_get_reference_impedance(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedanceResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetReferenceImpedance(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityResponse
+calkit_manager_calkit_calibration_element_reflect_model_get_s_param_availability(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailabilityResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelGetSParamAvailability(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetC0Response
+calkit_manager_calkit_calibration_element_reflect_model_set_c0(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& c0)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetC0Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_c0(c0);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetC0Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetC0(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetC1Response
+calkit_manager_calkit_calibration_element_reflect_model_set_c1(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& c1)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetC1Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_c1(c1);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetC1Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetC1(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetC2Response
+calkit_manager_calkit_calibration_element_reflect_model_set_c2(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& c2)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetC2Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_c2(c2);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetC2Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetC2(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetC3Response
+calkit_manager_calkit_calibration_element_reflect_model_set_c3(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& c3)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetC3Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_c3(c3);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetC3Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetC3(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeResponse
+calkit_manager_calkit_calibration_element_reflect_model_set_model_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CalkitManagerCalkitCalibrationElementReflectModelType, pb::int32>& model_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto model_type_ptr = model_type.get_if<CalkitManagerCalkitCalibrationElementReflectModelType>();
+  const auto model_type_raw_ptr = model_type.get_if<pb::int32>();
+  if (model_type_ptr) {
+    request.set_model_type(*model_type_ptr);
+  }
+  else if (model_type_raw_ptr) {
+    request.set_model_type_raw(*model_type_raw_ptr);
+  }
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetModelTypeResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetModelType(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayResponse
+calkit_manager_calkit_calibration_element_reflect_model_set_offset_delay(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& offset_delay)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_offset_delay(offset_delay);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelayResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetOffsetDelay(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossResponse
+calkit_manager_calkit_calibration_element_reflect_model_set_offset_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& offset_loss)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_offset_loss(offset_loss);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLossResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetOffsetLoss(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Response
+calkit_manager_calkit_calibration_element_reflect_model_set_offset_z0(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& offset_z0)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_offset_z0(offset_z0);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetOffsetZ0(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceResponse
+calkit_manager_calkit_calibration_element_reflect_model_set_reference_impedance(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& reference_impedance)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_reference_impedance(reference_impedance);
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedanceResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetReferenceImpedance(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityResponse
+calkit_manager_calkit_calibration_element_reflect_model_set_s_param_availability(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CalkitManagerCalkitCalibrationElementReflectModelSParameterAvailability, pb::int32>& s_parameter_availability)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto s_parameter_availability_ptr = s_parameter_availability.get_if<CalkitManagerCalkitCalibrationElementReflectModelSParameterAvailability>();
+  const auto s_parameter_availability_raw_ptr = s_parameter_availability.get_if<pb::int32>();
+  if (s_parameter_availability_ptr) {
+    request.set_s_parameter_availability(*s_parameter_availability_ptr);
+  }
+  else if (s_parameter_availability_raw_ptr) {
+    request.set_s_parameter_availability_raw(*s_parameter_availability_raw_ptr);
+  }
+
+  auto response = CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetFrequencyResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS11Response
+calkit_manager_calkit_calibration_element_s_parameter_get_s11(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS11Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS11Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS11(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS11SplitResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s11_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS11SplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS11SplitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS11Split(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS12Response
+calkit_manager_calkit_calibration_element_s_parameter_get_s12(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS12Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS12Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS12(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS12SplitResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s12_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS12SplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS12SplitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS12Split(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS21Response
+calkit_manager_calkit_calibration_element_s_parameter_get_s21(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS21Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS21Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS21(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS21SplitResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s21_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS21SplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS21SplitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS21Split(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS22Response
+calkit_manager_calkit_calibration_element_s_parameter_get_s22(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS22Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS22Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS22(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS22SplitResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s22_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS22SplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS22SplitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS22Split(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s_param_availability(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetFrequencyResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(frequency, request.mutable_frequency());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetFromFileResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetFromFileRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_file_name(file_name);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetFromFileResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetFromFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS11Response
+calkit_manager_calkit_calibration_element_s_parameter_set_s11(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<nidevice_grpc::NIComplexNumber>& s11)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS11Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s11, request.mutable_s11());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS11Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS11(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS12Response
+calkit_manager_calkit_calibration_element_s_parameter_set_s12(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<nidevice_grpc::NIComplexNumber>& s12)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS12Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s12, request.mutable_s12());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS12Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS12(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS21Response
+calkit_manager_calkit_calibration_element_s_parameter_set_s21(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<nidevice_grpc::NIComplexNumber>& s21)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS21Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s21, request.mutable_s21());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS21Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS21(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS22Response
+calkit_manager_calkit_calibration_element_s_parameter_set_s22(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<nidevice_grpc::NIComplexNumber>& s22)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS22Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s22, request.mutable_s22());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS22Response{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS22(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s_param_availability(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CalkitManagerCalkitCalibrationElementSParameterAvailability, pb::int32>& s_parameter_availability)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto s_parameter_availability_ptr = s_parameter_availability.get_if<CalkitManagerCalkitCalibrationElementSParameterAvailability>();
+  const auto s_parameter_availability_raw_ptr = s_parameter_availability.get_if<pb::int32>();
+  if (s_parameter_availability_ptr) {
+    request.set_s_parameter_availability(*s_parameter_availability_ptr);
+  }
+  else if (s_parameter_availability_raw_ptr) {
+    request.set_s_parameter_availability_raw(*s_parameter_availability_raw_ptr);
+  }
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSetDescriptionResponse
+calkit_manager_calkit_calibration_element_set_description(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& description)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSetDescriptionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_description(description);
+
+  auto response = CalkitManagerCalkitCalibrationElementSetDescriptionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSetDescription(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSetMaximumFrequencyResponse
+calkit_manager_calkit_calibration_element_set_maximum_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& maximum_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSetMaximumFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_maximum_frequency(maximum_frequency);
+
+  auto response = CalkitManagerCalkitCalibrationElementSetMaximumFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSetMaximumFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSetMinimumFrequencyResponse
+calkit_manager_calkit_calibration_element_set_minimum_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& minimum_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSetMinimumFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_minimum_frequency(minimum_frequency);
+
+  auto response = CalkitManagerCalkitCalibrationElementSetMinimumFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSetMinimumFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse
+calkit_manager_calkit_calibration_element_set_port_connectors(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& connector_i_ds, const pb::int32& array_size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSetPortConnectorsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_connector_i_ds(connector_i_ds);
+  request.set_array_size(array_size);
+
+  auto response = CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSetPortConnectors(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSetSParameterDefinitionResponse
+calkit_manager_calkit_calibration_element_set_s_parameter_definition(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CalkitManagerCalkitCalibrationElementSParameterDefinition, pb::int32>& s_parameter_definition)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSetSParameterDefinitionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto s_parameter_definition_ptr = s_parameter_definition.get_if<CalkitManagerCalkitCalibrationElementSParameterDefinition>();
+  const auto s_parameter_definition_raw_ptr = s_parameter_definition.get_if<pb::int32>();
+  if (s_parameter_definition_ptr) {
+    request.set_s_parameter_definition(*s_parameter_definition_ptr);
+  }
+  else if (s_parameter_definition_raw_ptr) {
+    request.set_s_parameter_definition_raw(*s_parameter_definition_raw_ptr);
+  }
+
+  auto response = CalkitManagerCalkitCalibrationElementSetSParameterDefinitionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSetSParameterDefinition(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSetTypesResponse
+calkit_manager_calkit_calibration_element_set_types(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<pb::int32>& calibration_element_types)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSetTypesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(calibration_element_types, request.mutable_calibration_element_types());
+
+  auto response = CalkitManagerCalkitCalibrationElementSetTypesResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSetTypes(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorGetDescriptionResponse
+calkit_manager_calkit_connector_get_description(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorGetDescriptionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitConnectorGetDescriptionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorGetDescription(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorGetGenderResponse
+calkit_manager_calkit_connector_get_gender(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorGetGenderRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitConnectorGetGenderResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorGetGender(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorGetImpedanceResponse
+calkit_manager_calkit_connector_get_impedance(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorGetImpedanceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitConnectorGetImpedanceResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorGetImpedance(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorGetMaximumFrequencyResponse
+calkit_manager_calkit_connector_get_maximum_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorGetMaximumFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitConnectorGetMaximumFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorGetMaximumFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorGetMinimumFrequencyResponse
+calkit_manager_calkit_connector_get_minimum_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorGetMinimumFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitConnectorGetMinimumFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorGetMinimumFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorGetTypeResponse
+calkit_manager_calkit_connector_get_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorGetTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitConnectorGetTypeResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorGetType(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorSetDescriptionResponse
+calkit_manager_calkit_connector_set_description(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& description)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorSetDescriptionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_description(description);
+
+  auto response = CalkitManagerCalkitConnectorSetDescriptionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorSetDescription(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorSetGenderResponse
+calkit_manager_calkit_connector_set_gender(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CalkitManagerCalkitConnectorGender, pb::int32>& connector_gender)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorSetGenderRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto connector_gender_ptr = connector_gender.get_if<CalkitManagerCalkitConnectorGender>();
+  const auto connector_gender_raw_ptr = connector_gender.get_if<pb::int32>();
+  if (connector_gender_ptr) {
+    request.set_connector_gender(*connector_gender_ptr);
+  }
+  else if (connector_gender_raw_ptr) {
+    request.set_connector_gender_raw(*connector_gender_raw_ptr);
+  }
+
+  auto response = CalkitManagerCalkitConnectorSetGenderResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorSetGender(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorSetImpedanceResponse
+calkit_manager_calkit_connector_set_impedance(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& impedance)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorSetImpedanceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_impedance(impedance);
+
+  auto response = CalkitManagerCalkitConnectorSetImpedanceResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorSetImpedance(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorSetMaximumFrequencyResponse
+calkit_manager_calkit_connector_set_maximum_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& maximum_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorSetMaximumFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_maximum_frequency(maximum_frequency);
+
+  auto response = CalkitManagerCalkitConnectorSetMaximumFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorSetMaximumFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorSetMinimumFrequencyResponse
+calkit_manager_calkit_connector_set_minimum_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& minimum_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorSetMinimumFrequencyRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_minimum_frequency(minimum_frequency);
+
+  auto response = CalkitManagerCalkitConnectorSetMinimumFrequencyResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorSetMinimumFrequency(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitConnectorSetTypeResponse
+calkit_manager_calkit_connector_set_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& connector_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitConnectorSetTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_connector_type(connector_type);
+
+  auto response = CalkitManagerCalkitConnectorSetTypeResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitConnectorSetType(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitGetCalibrationElementIDsResponse
+calkit_manager_calkit_get_calibration_element_i_ds(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitGetCalibrationElementIDsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitGetCalibrationElementIDsResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitGetCalibrationElementIDs(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitGetConnectorIDsResponse
+calkit_manager_calkit_get_connector_i_ds(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitGetConnectorIDsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitGetConnectorIDsResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitGetConnectorIDs(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitGetDescriptionResponse
+calkit_manager_calkit_get_description(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitGetDescriptionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitGetDescriptionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitGetDescription(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitGetVersionResponse
+calkit_manager_calkit_get_version(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitGetVersionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitGetVersionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitGetVersion(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitRemoveCalibrationElementResponse
+calkit_manager_calkit_remove_calibration_element(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calibration_element_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitRemoveCalibrationElementRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calibration_element_id(calibration_element_id);
+
+  auto response = CalkitManagerCalkitRemoveCalibrationElementResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitRemoveCalibrationElement(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitRemoveConnectorResponse
+calkit_manager_calkit_remove_connector(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& connector_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitRemoveConnectorRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_connector_id(connector_id);
+
+  auto response = CalkitManagerCalkitRemoveConnectorResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitRemoveConnector(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitSetDescriptionResponse
+calkit_manager_calkit_set_description(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calkit_description)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitSetDescriptionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calkit_description(calkit_description);
+
+  auto response = CalkitManagerCalkitSetDescriptionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitSetDescription(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitSetVersionResponse
+calkit_manager_calkit_set_version(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calkit_version)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitSetVersionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calkit_version(calkit_version);
+
+  auto response = CalkitManagerCalkitSetVersionResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitSetVersion(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCreateCalkitResponse
+calkit_manager_create_calkit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calkit_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCreateCalkitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calkit_id(calkit_id);
+
+  auto response = CalkitManagerCreateCalkitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCreateCalkit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerExportCalkitResponse
+calkit_manager_export_calkit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calkit_id, const std::string& calkit_file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerExportCalkitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calkit_id(calkit_id);
+  request.set_calkit_file_path(calkit_file_path);
+
+  auto response = CalkitManagerExportCalkitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerExportCalkit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerGetCalkitIDsResponse
+calkit_manager_get_calkit_i_ds(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerGetCalkitIDsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerGetCalkitIDsResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerGetCalkitIDs(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerImportCalkitResponse
+calkit_manager_import_calkit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calkit_file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerImportCalkitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calkit_file_path(calkit_file_path);
+
+  auto response = CalkitManagerImportCalkitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerImportCalkit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerRemoveCalkitResponse
+calkit_manager_remove_calkit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calkit_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerRemoveCalkitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calkit_id(calkit_id);
+
+  auto response = CalkitManagerRemoveCalkitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerRemoveCalkit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerValidateCalkitResponse
+calkit_manager_validate_calkit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calkit_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerValidateCalkitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calkit_id(calkit_id);
+
+  auto response = CalkitManagerValidateCalkitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerValidateCalkit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalsetEmbedFixtureS2pResponse
+calset_embed_fixture_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name, const std::string& fixture_s2p_file_path, const std::string& vna_port, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation, const std::string& new_calset_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalsetEmbedFixtureS2pRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+  request.set_fixture_s2p_file_path(fixture_s2p_file_path);
+  request.set_vna_port(vna_port);
+  const auto s_parameter_orientation_ptr = s_parameter_orientation.get_if<SParameterOrientation>();
+  const auto s_parameter_orientation_raw_ptr = s_parameter_orientation.get_if<pb::int32>();
+  if (s_parameter_orientation_ptr) {
+    request.set_s_parameter_orientation(*s_parameter_orientation_ptr);
+  }
+  else if (s_parameter_orientation_raw_ptr) {
+    request.set_s_parameter_orientation_raw(*s_parameter_orientation_raw_ptr);
+  }
+  request.set_new_calset_name(new_calset_name);
+
+  auto response = CalsetEmbedFixtureS2pResponse{};
+
+  raise_if_error(
+      stub->CalsetEmbedFixtureS2p(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalsetGetErrorTermResponse
+calset_get_error_term(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name, const simple_variant<CalErrorTerm, pb::int32>& error_term_identifier, const std::string& measurement_port, const std::string& source_port)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalsetGetErrorTermRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+  const auto error_term_identifier_ptr = error_term_identifier.get_if<CalErrorTerm>();
+  const auto error_term_identifier_raw_ptr = error_term_identifier.get_if<pb::int32>();
+  if (error_term_identifier_ptr) {
+    request.set_error_term_identifier(*error_term_identifier_ptr);
+  }
+  else if (error_term_identifier_raw_ptr) {
+    request.set_error_term_identifier_raw(*error_term_identifier_raw_ptr);
+  }
+  request.set_measurement_port(measurement_port);
+  request.set_source_port(source_port);
+
+  auto response = CalsetGetErrorTermResponse{};
+
+  raise_if_error(
+      stub->CalsetGetErrorTerm(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalsetGetErrorTermSplitResponse
+calset_get_error_term_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name, const simple_variant<CalErrorTerm, pb::int32>& error_term_identifier, const std::string& measurement_port, const std::string& source_port)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalsetGetErrorTermSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+  const auto error_term_identifier_ptr = error_term_identifier.get_if<CalErrorTerm>();
+  const auto error_term_identifier_raw_ptr = error_term_identifier.get_if<pb::int32>();
+  if (error_term_identifier_ptr) {
+    request.set_error_term_identifier(*error_term_identifier_ptr);
+  }
+  else if (error_term_identifier_raw_ptr) {
+    request.set_error_term_identifier_raw(*error_term_identifier_raw_ptr);
+  }
+  request.set_measurement_port(measurement_port);
+  request.set_source_port(source_port);
+
+  auto response = CalsetGetErrorTermSplitResponse{};
+
+  raise_if_error(
+      stub->CalsetGetErrorTermSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalsetGetFrequencyGridResponse
+calset_get_frequency_grid(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name, const simple_variant<CalFrequencyGrid, pb::int32>& error_term_identifier)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalsetGetFrequencyGridRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+  const auto error_term_identifier_ptr = error_term_identifier.get_if<CalFrequencyGrid>();
+  const auto error_term_identifier_raw_ptr = error_term_identifier.get_if<pb::int32>();
+  if (error_term_identifier_ptr) {
+    request.set_error_term_identifier(*error_term_identifier_ptr);
+  }
+  else if (error_term_identifier_raw_ptr) {
+    request.set_error_term_identifier_raw(*error_term_identifier_raw_ptr);
+  }
+
+  auto response = CalsetGetFrequencyGridResponse{};
+
+  raise_if_error(
+      stub->CalsetGetFrequencyGrid(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalsetLoadFromFileResponse
+calset_load_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name, const std::string& calset_file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalsetLoadFromFileRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+  request.set_calset_file_path(calset_file_path);
+
+  auto response = CalsetLoadFromFileResponse{};
+
+  raise_if_error(
+      stub->CalsetLoadFromFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalsetSaveToFileResponse
+calset_save_to_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name, const std::string& calset_file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalsetSaveToFileRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+  request.set_calset_file_path(calset_file_path);
+
+  auto response = CalsetSaveToFileResponse{};
+
+  raise_if_error(
+      stub->CalsetSaveToFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgCorrectionPortSubsetResponse
+cfg_correction_port_subset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& port_subset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgCorrectionPortSubsetRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_port_subset(port_subset);
+
+  auto response = CfgCorrectionPortSubsetResponse{};
+
+  raise_if_error(
+      stub->CfgCorrectionPortSubset(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgFrequencyReferenceResponse
+cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<FrequencyReferenceSource, std::string>& frequency_reference_source, const double& frequency_reference_frequency)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgFrequencyReferenceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+  const auto frequency_reference_source_ptr = frequency_reference_source.get_if<FrequencyReferenceSource>();
+  const auto frequency_reference_source_raw_ptr = frequency_reference_source.get_if<std::string>();
+  if (frequency_reference_source_ptr) {
+    request.set_frequency_reference_source_mapped(*frequency_reference_source_ptr);
+  }
+  else if (frequency_reference_source_raw_ptr) {
+    request.set_frequency_reference_source_raw(*frequency_reference_source_raw_ptr);
+  }
+  request.set_frequency_reference_frequency(frequency_reference_frequency);
+
+  auto response = CfgFrequencyReferenceResponse{};
+
+  raise_if_error(
+      stub->CfgFrequencyReference(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgMechanicalAttenuationResponse
+cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<MechanicalAttenuationAuto, pb::int32>& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgMechanicalAttenuationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+  const auto mechanical_attenuation_auto_ptr = mechanical_attenuation_auto.get_if<MechanicalAttenuationAuto>();
+  const auto mechanical_attenuation_auto_raw_ptr = mechanical_attenuation_auto.get_if<pb::int32>();
+  if (mechanical_attenuation_auto_ptr) {
+    request.set_mechanical_attenuation_auto(*mechanical_attenuation_auto_ptr);
+  }
+  else if (mechanical_attenuation_auto_raw_ptr) {
+    request.set_mechanical_attenuation_auto_raw(*mechanical_attenuation_auto_raw_ptr);
+  }
+  request.set_mechanical_attenuation_value(mechanical_attenuation_value);
+
+  auto response = CfgMechanicalAttenuationResponse{};
+
+  raise_if_error(
+      stub->CfgMechanicalAttenuation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgRFAttenuationResponse
+cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgRFAttenuationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+  const auto rf_attenuation_auto_ptr = rf_attenuation_auto.get_if<RFAttenuationAuto>();
+  const auto rf_attenuation_auto_raw_ptr = rf_attenuation_auto.get_if<pb::int32>();
+  if (rf_attenuation_auto_ptr) {
+    request.set_rf_attenuation_auto(*rf_attenuation_auto_ptr);
+  }
+  else if (rf_attenuation_auto_raw_ptr) {
+    request.set_rf_attenuation_auto_raw(*rf_attenuation_auto_raw_ptr);
+  }
+  request.set_rf_attenuation_value(rf_attenuation_value);
+
+  auto response = CfgRFAttenuationResponse{};
+
+  raise_if_error(
+      stub->CfgRFAttenuation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CheckMeasurementStatusResponse
+check_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CheckMeasurementStatusRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CheckMeasurementStatusResponse{};
+
+  raise_if_error(
+      stub->CheckMeasurementStatus(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ClearAllNamedResultsResponse
+clear_all_named_results(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearAllNamedResultsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = ClearAllNamedResultsResponse{};
+
+  raise_if_error(
+      stub->ClearAllNamedResults(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ClearCalsetResponse
+clear_calset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearCalsetRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+
+  auto response = ClearCalsetResponse{};
+
+  raise_if_error(
+      stub->ClearCalset(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ClearMeasurementMemoryNamesResponse
+clear_measurement_memory_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearMeasurementMemoryNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = ClearMeasurementMemoryNamesResponse{};
+
+  raise_if_error(
+      stub->ClearMeasurementMemoryNames(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ClearNamedResultResponse
+clear_named_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearNamedResultRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = ClearNamedResultResponse{};
+
+  raise_if_error(
+      stub->ClearNamedResult(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CloneSignalConfigurationResponse
+clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& old_signal_name, const std::string& new_signal_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloneSignalConfigurationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_old_signal_name(old_signal_name);
+  request.set_new_signal_name(new_signal_name);
+
+  auto response = CloneSignalConfigurationResponse{};
+
+  raise_if_error(
+      stub->CloneSignalConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CloseResponse
 close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy)
 {
@@ -30,6 +2185,533 @@ close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool&
 
   raise_if_error(
       stub->Close(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CommitResponse
+commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CommitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CommitResponse{};
+
+  raise_if_error(
+      stub->Commit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CopyCalsetResponse
+copy_calset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& source_calset_name, const std::string& new_calset_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CopyCalsetRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_source_calset_name(source_calset_name);
+  request.set_new_calset_name(new_calset_name);
+
+  auto response = CopyCalsetResponse{};
+
+  raise_if_error(
+      stub->CopyCalset(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CopyDataToMeasurementMemoryResponse
+copy_data_to_measurement_memory(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& memory_data_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CopyDataToMeasurementMemoryRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_memory_data_name(memory_data_name);
+
+  auto response = CopyDataToMeasurementMemoryResponse{};
+
+  raise_if_error(
+      stub->CopyDataToMeasurementMemory(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CreateSignalConfigurationResponse
+create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateSignalConfigurationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_signal_name(signal_name);
+
+  auto response = CreateSignalConfigurationResponse{};
+
+  raise_if_error(
+      stub->CreateSignalConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DeleteSignalConfigurationResponse
+delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DeleteSignalConfigurationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_signal_name(signal_name);
+
+  auto response = DeleteSignalConfigurationResponse{};
+
+  raise_if_error(
+      stub->DeleteSignalConfiguration(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DeselectActiveCalsetResponse
+deselect_active_calset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DeselectActiveCalsetRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = DeselectActiveCalsetResponse{};
+
+  raise_if_error(
+      stub->DeselectActiveCalset(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAllCalsetNamesResponse
+get_all_calset_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAllCalsetNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetAllCalsetNamesResponse{};
+
+  raise_if_error(
+      stub->GetAllCalsetNames(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAllNamedResultNamesResponse
+get_all_named_result_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAllNamedResultNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetAllNamedResultNamesResponse{};
+
+  raise_if_error(
+      stub->GetAllNamedResultNames(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeF32Response
+get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeF32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeF32Response{};
+
+  raise_if_error(
+      stub->GetAttributeF32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeF32ArrayResponse
+get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeF32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeF32ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeF32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeF64Response
+get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeF64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeF64Response{};
+
+  raise_if_error(
+      stub->GetAttributeF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeF64ArrayResponse
+get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeF64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeF64ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeF64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI16Response
+get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI16Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI16Response{};
+
+  raise_if_error(
+      stub->GetAttributeI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI32Response
+get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI32Response{};
+
+  raise_if_error(
+      stub->GetAttributeI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI32ArrayResponse
+get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI32ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeI32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI64Response
+get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI64Response{};
+
+  raise_if_error(
+      stub->GetAttributeI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI64ArrayResponse
+get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI64ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeI64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI8Response
+get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI8Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI8Response{};
+
+  raise_if_error(
+      stub->GetAttributeI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeI8ArrayResponse
+get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeI8ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeI8ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeI8Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeNIComplexDoubleArrayResponse
+get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeNIComplexDoubleArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeNIComplexDoubleArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeNIComplexDoubleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeNIComplexSingleArrayResponse
+get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeNIComplexSingleArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeNIComplexSingleArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeNIComplexSingleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeStringResponse
+get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeStringRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetAttributeString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU16Response
+get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU16Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU16Response{};
+
+  raise_if_error(
+      stub->GetAttributeU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU32Response
+get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU32Response{};
+
+  raise_if_error(
+      stub->GetAttributeU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU32ArrayResponse
+get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU32ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeU32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU64ArrayResponse
+get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU64ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeU64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU8Response
+get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU8Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU8Response{};
+
+  raise_if_error(
+      stub->GetAttributeU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeU8ArrayResponse
+get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeU8ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeU8ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeU8Array(&context, request, &response),
       context);
 
   return response;
@@ -70,19 +2752,1136 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
   return response;
 }
 
+GetMeasurementMemoryNamesResponse
+get_measurement_memory_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetMeasurementMemoryNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetMeasurementMemoryNamesResponse{};
+
+  raise_if_error(
+      stub->GetMeasurementMemoryNames(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetMeasurementMemoryXDataResponse
+get_measurement_memory_x_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetMeasurementMemoryXDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetMeasurementMemoryXDataResponse{};
+
+  raise_if_error(
+      stub->GetMeasurementMemoryXData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetMeasurementMemoryYDataResponse
+get_measurement_memory_y_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetMeasurementMemoryYDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetMeasurementMemoryYDataResponse{};
+
+  raise_if_error(
+      stub->GetMeasurementMemoryYData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IQFetchDataResponse
+iq_fetch_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IQFetchDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IQFetchDataResponse{};
+
+  raise_if_error(
+      stub->IQFetchData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IQFetchDataSplitResponse
+iq_fetch_data_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IQFetchDataSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IQFetchDataSplitResponse{};
+
+  raise_if_error(
+      stub->IQFetchDataSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 InitializeResponse
-initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string)
+initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = InitializeRequest{};
   request.set_resource_name(resource_name);
   request.set_option_string(option_string);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitializeResponse{};
 
   raise_if_error(
       stub->Initialize(&context, request, &response),
+      context);
+
+  return response;
+}
+
+InitializeFromNIRFSASessionResponse
+initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitializeFromNIRFSASessionRequest{};
+  request.mutable_nirfsa_session()->CopyFrom(nirfsa_session);
+  request.set_initialization_behavior(initialization_behavior);
+
+  auto response = InitializeFromNIRFSASessionResponse{};
+
+  raise_if_error(
+      stub->InitializeFromNIRFSASession(&context, request, &response),
+      context);
+
+  return response;
+}
+
+InitiateResponse
+initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitiateRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+
+  auto response = InitiateResponse{};
+
+  raise_if_error(
+      stub->Initiate(&context, request, &response),
+      context);
+
+  return response;
+}
+
+LoadDataToMeasurementMemoryFromFileResponse
+load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_path, const std::string& parameter, const std::string& memory_data_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = LoadDataToMeasurementMemoryFromFileRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_file_path(file_path);
+  request.set_parameter(parameter);
+  request.set_memory_data_name(memory_data_name);
+
+  auto response = LoadDataToMeasurementMemoryFromFileResponse{};
+
+  raise_if_error(
+      stub->LoadDataToMeasurementMemoryFromFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgDataSourceResponse
+marker_cfg_data_source(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& data_source)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgDataSourceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_data_source(data_source);
+
+  auto response = MarkerCfgDataSourceResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgDataSource(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgNumberOfMarkersResponse
+marker_cfg_number_of_markers(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_markers)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgNumberOfMarkersRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_number_of_markers(number_of_markers);
+
+  auto response = MarkerCfgNumberOfMarkersResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgNumberOfMarkers(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgPeakSearchExcursionResponse
+marker_cfg_peak_search_excursion(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerPeakSearchExcursionEnabled, pb::int32>& peak_excursion_enabled, const double& peak_excursion)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgPeakSearchExcursionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto peak_excursion_enabled_ptr = peak_excursion_enabled.get_if<MarkerPeakSearchExcursionEnabled>();
+  const auto peak_excursion_enabled_raw_ptr = peak_excursion_enabled.get_if<pb::int32>();
+  if (peak_excursion_enabled_ptr) {
+    request.set_peak_excursion_enabled(*peak_excursion_enabled_ptr);
+  }
+  else if (peak_excursion_enabled_raw_ptr) {
+    request.set_peak_excursion_enabled_raw(*peak_excursion_enabled_raw_ptr);
+  }
+  request.set_peak_excursion(peak_excursion);
+
+  auto response = MarkerCfgPeakSearchExcursionResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgPeakSearchExcursion(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgPeakSearchThresholdResponse
+marker_cfg_peak_search_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerPeakSearchThresholdEnabled, pb::int32>& threshold_enabled, const double& threshold)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgPeakSearchThresholdRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto threshold_enabled_ptr = threshold_enabled.get_if<MarkerPeakSearchThresholdEnabled>();
+  const auto threshold_enabled_raw_ptr = threshold_enabled.get_if<pb::int32>();
+  if (threshold_enabled_ptr) {
+    request.set_threshold_enabled(*threshold_enabled_ptr);
+  }
+  else if (threshold_enabled_raw_ptr) {
+    request.set_threshold_enabled_raw(*threshold_enabled_raw_ptr);
+  }
+  request.set_threshold(threshold);
+
+  auto response = MarkerCfgPeakSearchThresholdResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgPeakSearchThreshold(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgReferenceMarkerResponse
+marker_cfg_reference_marker(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& reference_marker)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgReferenceMarkerRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_reference_marker(reference_marker);
+
+  auto response = MarkerCfgReferenceMarkerResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgReferenceMarker(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgTypeResponse
+marker_cfg_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerType, pb::int32>& marker_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto marker_type_ptr = marker_type.get_if<MarkerType>();
+  const auto marker_type_raw_ptr = marker_type.get_if<pb::int32>();
+  if (marker_type_ptr) {
+    request.set_marker_type(*marker_type_ptr);
+  }
+  else if (marker_type_raw_ptr) {
+    request.set_marker_type_raw(*marker_type_raw_ptr);
+  }
+
+  auto response = MarkerCfgTypeResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgType(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgXResponse
+marker_cfg_x(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_x)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgXRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_marker_x(marker_x);
+
+  auto response = MarkerCfgXResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgX(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgYResponse
+marker_cfg_y(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& marker_y1, const double& marker_y2)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgYRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_marker_y1(marker_y1);
+  request.set_marker_y2(marker_y2);
+
+  auto response = MarkerCfgYResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgY(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerFetchXResponse
+marker_fetch_x(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerFetchXRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = MarkerFetchXResponse{};
+
+  raise_if_error(
+      stub->MarkerFetchX(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerFetchYResponse
+marker_fetch_y(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerFetchYRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = MarkerFetchYResponse{};
+
+  raise_if_error(
+      stub->MarkerFetchY(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerSearchResponse
+marker_search(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerSearchMode, pb::int32>& search_mode)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerSearchRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto search_mode_ptr = search_mode.get_if<MarkerSearchMode>();
+  const auto search_mode_raw_ptr = search_mode.get_if<pb::int32>();
+  if (search_mode_ptr) {
+    request.set_search_mode(*search_mode_ptr);
+  }
+  else if (search_mode_raw_ptr) {
+    request.set_search_mode_raw(*search_mode_raw_ptr);
+  }
+
+  auto response = MarkerSearchResponse{};
+
+  raise_if_error(
+      stub->MarkerSearch(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ResetAttributeResponse
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetAttributeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = ResetAttributeResponse{};
+
+  raise_if_error(
+      stub->ResetAttribute(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ResetToDefaultResponse
+reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetToDefaultRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = ResetToDefaultResponse{};
+
+  raise_if_error(
+      stub->ResetToDefault(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SParamsCfgSParameterResponse
+s_params_cfg_s_parameter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& s_parameter)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SParamsCfgSParameterRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_s_parameter(s_parameter);
+
+  auto response = SParamsCfgSParameterResponse{};
+
+  raise_if_error(
+      stub->SParamsCfgSParameter(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SParamsExportToSnPFileResponse
+s_params_export_to_sn_p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& snp_file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SParamsExportToSnPFileRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_snp_file_path(snp_file_path);
+
+  auto response = SParamsExportToSnPFileResponse{};
+
+  raise_if_error(
+      stub->SParamsExportToSnPFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SParamsFetchXDataResponse
+s_params_fetch_x_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SParamsFetchXDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = SParamsFetchXDataResponse{};
+
+  raise_if_error(
+      stub->SParamsFetchXData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SParamsFetchYDataResponse
+s_params_fetch_y_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SParamsFetchYDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = SParamsFetchYDataResponse{};
+
+  raise_if_error(
+      stub->SParamsFetchYData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SParamsGetSParameterResponse
+s_params_get_s_parameter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SParamsGetSParameterRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = SParamsGetSParameterResponse{};
+
+  raise_if_error(
+      stub->SParamsGetSParameter(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SelectActiveCalsetResponse
+select_active_calset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name, const simple_variant<RestoreConfiguration, pb::int32>& restore_configuration)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SelectActiveCalsetRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+  const auto restore_configuration_ptr = restore_configuration.get_if<RestoreConfiguration>();
+  const auto restore_configuration_raw_ptr = restore_configuration.get_if<pb::int32>();
+  if (restore_configuration_ptr) {
+    request.set_restore_configuration(*restore_configuration_ptr);
+  }
+  else if (restore_configuration_raw_ptr) {
+    request.set_restore_configuration_raw(*restore_configuration_raw_ptr);
+  }
+
+  auto response = SelectActiveCalsetResponse{};
+
+  raise_if_error(
+      stub->SelectActiveCalset(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SelectMeasurementsResponse
+select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const bool& enable_all_traces)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SelectMeasurementsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto measurements_ptr = measurements.get_if<MeasurementTypes>();
+  const auto measurements_raw_ptr = measurements.get_if<pb::uint32>();
+  if (measurements_ptr) {
+    request.set_measurements(*measurements_ptr);
+  }
+  else if (measurements_raw_ptr) {
+    request.set_measurements_raw(*measurements_raw_ptr);
+  }
+  request.set_enable_all_traces(enable_all_traces);
+
+  auto response = SelectMeasurementsResponse{};
+
+  raise_if_error(
+      stub->SelectMeasurements(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SendSoftwareEdgeTriggerResponse
+send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SendSoftwareEdgeTriggerRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+
+  auto response = SendSoftwareEdgeTriggerResponse{};
+
+  raise_if_error(
+      stub->SendSoftwareEdgeTrigger(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeF32Response
+set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const float& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeF32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeF32Response{};
+
+  raise_if_error(
+      stub->SetAttributeF32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeF32ArrayResponse
+set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<float>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeF32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeF32ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeF32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeF64Response
+set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const double& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeF64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeF64Response{};
+
+  raise_if_error(
+      stub->SetAttributeF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeF64ArrayResponse
+set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<double>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeF64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeF64ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeF64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI16Response
+set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const pb::int32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI16Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeI16Response{};
+
+  raise_if_error(
+      stub->SetAttributeI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI32Response
+set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const simple_variant<NiRFmxVNAInt32AttributeValues, pb::int32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  const auto attr_val_ptr = attr_val.get_if<NiRFmxVNAInt32AttributeValues>();
+  const auto attr_val_raw_ptr = attr_val.get_if<pb::int32>();
+  if (attr_val_ptr) {
+    request.set_attr_val(*attr_val_ptr);
+  }
+  else if (attr_val_raw_ptr) {
+    request.set_attr_val_raw(*attr_val_raw_ptr);
+  }
+
+  auto response = SetAttributeI32Response{};
+
+  raise_if_error(
+      stub->SetAttributeI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI32ArrayResponse
+set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeI32ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeI32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI64Response
+set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const pb::int64& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeI64Response{};
+
+  raise_if_error(
+      stub->SetAttributeI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI64ArrayResponse
+set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<pb::int64>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeI64ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeI64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI8Response
+set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const pb::int32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI8Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeI8Response{};
+
+  raise_if_error(
+      stub->SetAttributeI8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeI8ArrayResponse
+set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeI8ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeI8ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeI8Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeNIComplexDoubleArrayResponse
+set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeNIComplexDoubleArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeNIComplexDoubleArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeNIComplexDoubleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeNIComplexSingleArrayResponse
+set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumberF32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeNIComplexSingleArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeNIComplexSingleArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeNIComplexSingleArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeStringResponse
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const simple_variant<NiRFmxVNAStringAttributeValuesMapped, std::string>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeStringRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  const auto attr_val_ptr = attr_val.get_if<NiRFmxVNAStringAttributeValuesMapped>();
+  const auto attr_val_raw_ptr = attr_val.get_if<std::string>();
+  if (attr_val_ptr) {
+    request.set_attr_val_mapped(*attr_val_ptr);
+  }
+  else if (attr_val_raw_ptr) {
+    request.set_attr_val_raw(*attr_val_raw_ptr);
+  }
+
+  auto response = SetAttributeStringResponse{};
+
+  raise_if_error(
+      stub->SetAttributeString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU16Response
+set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const pb::uint32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU16Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeU16Response{};
+
+  raise_if_error(
+      stub->SetAttributeU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU32Response
+set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const pb::uint32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU32Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeU32Response{};
+
+  raise_if_error(
+      stub->SetAttributeU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU32ArrayResponse
+set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<pb::uint32>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU32ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeU32ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeU32Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU64ArrayResponse
+set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::vector<pb::uint64>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = SetAttributeU64ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeU64Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU8Response
+set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const pb::uint32& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU8Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeU8Response{};
+
+  raise_if_error(
+      stub->SetAttributeU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeU8ArrayResponse
+set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const NiRFmxVNAAttribute& attribute_id, const std::string& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeU8ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attr_val(attr_val);
+
+  auto response = SetAttributeU8ArrayResponse{};
+
+  raise_if_error(
+      stub->SetAttributeU8Array(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WaitForAcquisitionCompleteResponse
+wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WaitForAcquisitionCompleteRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_timeout(timeout);
+
+  auto response = WaitForAcquisitionCompleteResponse{};
+
+  raise_if_error(
+      stub->WaitForAcquisitionComplete(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WaitForMeasurementCompleteResponse
+wait_for_measurement_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WaitForMeasurementCompleteRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = WaitForMeasurementCompleteResponse{};
+
+  raise_if_error(
+      stub->WaitForMeasurementComplete(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WavesCfgWaveResponse
+waves_cfg_wave(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& wave)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WavesCfgWaveRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_wave(wave);
+
+  auto response = WavesCfgWaveResponse{};
+
+  raise_if_error(
+      stub->WavesCfgWave(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WavesFetchXDataResponse
+waves_fetch_x_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WavesFetchXDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = WavesFetchXDataResponse{};
+
+  raise_if_error(
+      stub->WavesFetchXData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WavesFetchYDataResponse
+waves_fetch_y_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WavesFetchYDataRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = WavesFetchYDataResponse{};
+
+  raise_if_error(
+      stub->WavesFetchYData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WavesGetWaveResponse
+waves_get_wave(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WavesGetWaveRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = WavesGetWaveResponse{};
+
+  raise_if_error(
+      stub->WavesGetWave(&context, request, &response),
       context);
 
   return response;

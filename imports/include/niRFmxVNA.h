@@ -59,12 +59,14 @@
 #define RFMXVNA_ATTR_PULSE_ACQUISITION_WIDTH                                     0x00d0003b
 #define RFMXVNA_ATTR_PULSE_GENERATOR_ENABLED                                     0x00d0003e
 #define RFMXVNA_ATTR_PULSE_GENERATOR_EXPORT_OUTPUT_TERMINAL                      0x00d0003f
+#define RFMXVNA_ATTR_PULSE_GENERATOR_TERMINAL_NAME                               0x00d00050
 #define RFMXVNA_ATTR_PULSE_GENERATOR_DELAY                                       0x00d00040
 #define RFMXVNA_ATTR_PULSE_GENERATOR_WIDTH                                       0x00d00041
 #define RFMXVNA_ATTR_X_AXIS_VALUES                                               0x00d00057
 #define RFMXVNA_ATTR_AVERAGING_ENABLED                                           0x00d00007
 #define RFMXVNA_ATTR_AVERAGING_COUNT                                             0x00d00008
 #define RFMXVNA_ATTR_CORRECTION_ENABLED                                          0x00d0000b
+#define RFMXVNA_ATTR_CORRECTION_INTERPOLATION_ENABLED                            0x00d00058
 #define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_ENABLED                              0x00d0000e
 #define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_PORTS                                0x00d0000f
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_ENABLED                           0x00d00026
@@ -85,26 +87,31 @@
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY                 0x00d00800
 #define RFMXVNA_ATTR_SPARAMS_MEASUREMENT_ENABLED                                 0x00d01000
 #define RFMXVNA_ATTR_SPARAMS_NUMBER_OF_SPARAMETERS                               0x00d01002
+#define RFMXVNA_ATTR_SPARAMS_PARAMETER                                           0x00d01017
 #define RFMXVNA_ATTR_SPARAMS_RECEIVER_PORT                                       0x00d01003
 #define RFMXVNA_ATTR_SPARAMS_SOURCE_PORT                                         0x00d01004
 #define RFMXVNA_ATTR_SPARAMS_FORMAT                                              0x00d01005
 #define RFMXVNA_ATTR_SPARAMS_MAGNITUDE_UNITS                                     0x00d01006
 #define RFMXVNA_ATTR_SPARAMS_PHASE_TRACE_TYPE                                    0x00d01007
+#define RFMXVNA_ATTR_SPARAMS_RESULTS_CORRECTION_STATE                            0x00d01018
 #define RFMXVNA_ATTR_SPARAMS_SNP_DATA_FORMAT                                     0x00d01013
 #define RFMXVNA_ATTR_SPARAMS_SNP_USER_COMMENT                                    0x00d01014
 #define RFMXVNA_ATTR_SPARAMS_SNP_PORTS                                           0x00d01015
 #define RFMXVNA_ATTR_WAVES_MEASUREMENT_ENABLED                                   0x00d02000
 #define RFMXVNA_ATTR_WAVES_NUMBER_OF_WAVES                                       0x00d02002
 #define RFMXVNA_ATTR_WAVES_RECEIVER                                              0x00d02003
+#define RFMXVNA_ATTR_WAVES_PARAMETER                                             0x00d02012
 #define RFMXVNA_ATTR_WAVES_RECEIVER_PORT                                         0x00d02004
 #define RFMXVNA_ATTR_WAVES_SOURCE_PORT                                           0x00d02005
 #define RFMXVNA_ATTR_WAVES_FORMAT                                                0x00d02006
 #define RFMXVNA_ATTR_WAVES_MAGNITUDE_UNITS                                       0x00d02007
 #define RFMXVNA_ATTR_WAVES_PHASE_TRACE_TYPE                                      0x00d02008
+#define RFMXVNA_ATTR_WAVES_RESULTS_CORRECTION_STATE                              0x00d02013
 #define RFMXVNA_ATTR_IQ_MEASUREMENT_ENABLED                                      0x00d0100a
 #define RFMXVNA_ATTR_IQ_ACQUISITION_TIME                                         0x00d0100d
 #define RFMXVNA_ATTR_IQ_RECEIVER_PORT                                            0x00d0100f
 #define RFMXVNA_ATTR_IQ_SOURCE_PORT                                              0x00d01010
+#define RFMXVNA_ATTR_IQ_RESULTS_CORRECTION_STATE                                 0x00d01019
 #define RFMXVNA_ATTR_LIMITED_CONFIGURATION_CHANGE                                0x00d0200b
 #define RFMXVNA_ATTR_SOURCE_POWER_MODE                                           0x00d0200c
 #define RFMXVNA_ATTR_GROUND_TERMINATED_PORTS                                     0x00d0200d
@@ -210,6 +217,10 @@
 #define RFMXVNA_VAL_CORRECTION_ENABLED_FALSE                                                                      0
 #define RFMXVNA_VAL_CORRECTION_ENABLED_TRUE                                                                       1
 
+// Values for RFMXVNA_ATTR_CORRECTION_INTERPOLATION_ENABLED
+#define RFMXVNA_VAL_CORRECTION_INTERPOLATION_ENABLED_FALSE                                                        0
+#define RFMXVNA_VAL_CORRECTION_INTERPOLATION_ENABLED_TRUE                                                         1
+
 // Values for RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_ENABLED
 #define RFMXVNA_VAL_CORRECTION_PORT_SUBSET_ENABLED_FALSE                                                          0
 #define RFMXVNA_VAL_CORRECTION_PORT_SUBSET_ENABLED_TRUE                                                           1
@@ -235,8 +246,7 @@
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_DEFINED_THRU                                               1
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_FLUSH_THRU                                                 2
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_UNDEFINED_THRU                                             3
-#define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_UNDEFINED_THRU_USING_DEFINED_THRU                          4
-#define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_DELAY_THRU_USING_DEFINED_THRU                              5
+#define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_VCAL_THRU_AS_UNKNOWN_THRU                                  5
 
 // Values for RFMXVNA_ATTR_SPARAMS_FORMAT
 #define RFMXVNA_VAL_SPARAMS_FORMAT_MAGNITUDE                                                                      0
@@ -254,6 +264,12 @@
 // Values for RFMXVNA_ATTR_SPARAMS_PHASE_TRACE_TYPE
 #define RFMXVNA_VAL_SPARAMS_PHASE_TRACE_TYPE_WRAPPED                                                              0
 #define RFMXVNA_VAL_SPARAMS_PHASE_TRACE_TYPE_UNWRAPPED                                                            1
+
+// Values for RFMXVNA_ATTR_SPARAMS_RESULTS_CORRECTION_STATE
+#define RFMXVNA_VAL_SPARAMS_CORRECTION_STATE_NONE                                                                 0
+#define RFMXVNA_VAL_SPARAMS_CORRECTION_STATE_CORRECTED                                                            1
+#define RFMXVNA_VAL_SPARAMS_CORRECTION_STATE_INTERPOLATED                                                         2
+#define RFMXVNA_VAL_SPARAMS_CORRECTION_STATE_SETTINGS_MODIFIED                                                    3
 
 // Values for RFMXVNA_ATTR_SPARAMS_SNP_DATA_FORMAT
 #define RFMXVNA_VAL_SPARAMS_SNP_DATA_FORMAT_AUTO                                                                  0
@@ -286,6 +302,18 @@
 // Values for RFMXVNA_ATTR_WAVES_PHASE_TRACE_TYPE
 #define RFMXVNA_VAL_WAVES_PHASE_TRACE_TYPE_WRAPPED                                                                0
 #define RFMXVNA_VAL_WAVES_PHASE_TRACE_TYPE_UNWRAPPED                                                              1
+
+// Values for RFMXVNA_ATTR_WAVES_RESULTS_CORRECTION_STATE
+#define RFMXVNA_VAL_WAVES_CORRECTION_STATE_NONE                                                                   0
+#define RFMXVNA_VAL_WAVES_CORRECTION_STATE_CORRECTED                                                              1
+#define RFMXVNA_VAL_WAVES_CORRECTION_STATE_INTERPOLATED                                                           2
+#define RFMXVNA_VAL_WAVES_CORRECTION_STATE_SETTINGS_MODIFIED                                                      3
+
+// Values for RFMXVNA_ATTR_IQ_RESULTS_CORRECTION_STATE
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE_NONE                                                                      0
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE_CORRECTED                                                                 1
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE_INTERPOLATED                                                              2
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE_SETTINGS_MODIFIED                                                         3
 
 // Values for RFMXVNA_ATTR_LIMITED_CONFIGURATION_CHANGE
 #define RFMXVNA_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                                         0
@@ -401,6 +429,14 @@
 // Values for MarkerPeakSearchExcursionEnabled
 #define RFMXVNA_VAL_MARKER_PEAK_SEARCH_EXCURSION_ENABLED_FALSE                                                    0
 #define RFMXVNA_VAL_MARKER_PEAK_SEARCH_EXCURSION_ENABLED_TRUE                                                     1
+
+// Values for RFAttenuationAuto
+#define RFMXVNA_VAL_RF_ATTENUATION_AUTO_FALSE                                                                     0
+#define RFMXVNA_VAL_RF_ATTENUATION_AUTO_TRUE                                                                      1
+
+// Values for MechanicalAttenuationAuto
+#define RFMXVNA_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                                             0
+#define RFMXVNA_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                                              1
 
 /* ---------------- RFmxVNA APIs ------------------ */
 
@@ -1011,6 +1047,25 @@ int32 __stdcall RFmxVNA_DeselectActiveCalset(
    char selectorString[]
 );
 
+int32 __stdcall RFmxVNA_LoadDataToMeasurementMemoryFromFile(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char filePath[],
+   char parameter[],
+   char memoryDataName[]
+);
+
+int32 __stdcall RFmxVNA_CopyDataToMeasurementMemory(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char memoryDataName[]
+);
+
+int32 __stdcall RFmxVNA_ClearMeasurementMemoryNames(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
 int32 __stdcall RFmxVNA_CalkitManagerImportCalkit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1031,12 +1086,6 @@ int32 __stdcall RFmxVNA_CalkitManagerCreateCalkit(
 );
 
 int32 __stdcall RFmxVNA_CalkitManagerRemoveCalkit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char calkitID[]
-);
-
-int32 __stdcall RFmxVNA_CalkitManagerDeleteCalkit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char calkitID[]
@@ -1378,8 +1427,8 @@ int32 __stdcall RFmxVNA_CalsetGetErrorTermSplit(
    int32 errorTermIdentifier,
    char measurementPort[],
    char sourcePort[],
-   float64 errorTermI[],
-   float64 errorTermQ[],
+   float32 errorTermI[],
+   float32 errorTermQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1408,10 +1457,28 @@ int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11Split(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 s11I[],
+   float64 s11Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    NIComplexDouble s12[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12Split(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 s12I[],
+   float64 s12Q[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1424,6 +1491,15 @@ int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21Split(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 s21I[],
+   float64 s21Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1432,25 +1508,46 @@ int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22Split(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 s22I[],
+   float64 s22Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_MarkerSearch(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 searchMode
+);
+
 int32 __stdcall RFmxVNA_MarkerFetchX(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
    float64* markerX
 );
 
 int32 __stdcall RFmxVNA_MarkerFetchY(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
    float64* markerY1,
    float64* markerY2
 );
 
-int32 __stdcall RFmxVNA_MarkerSearch(
+int32 __stdcall RFmxVNA_SParamsGetSParameter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 function
+   int32 arraySize,
+   char sParameter[]
+);
+
+int32 __stdcall RFmxVNA_WavesGetWave(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char wave[]
 );
 
 int32 __stdcall RFmxVNA_AbortMeasurements(
@@ -1481,6 +1578,13 @@ int32 __stdcall RFmxVNA_SelectMeasurements(
    int32 enableAllTraces
 );
 
+int32 __stdcall RFmxVNA_GetMeasurementMemoryNames(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char measurementMemoryNames[]
+);
+
 int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSetTypes(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1502,10 +1606,26 @@ int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11(
    int32 arraySize
 );
 
+int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11Split(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 s11I[],
+   float64 s11Q[],
+   int32 arraySize
+);
+
 int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    NIComplexDouble s12[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12Split(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 s12I[],
+   float64 s12Q[],
    int32 arraySize
 );
 
@@ -1516,6 +1636,14 @@ int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21(
    int32 arraySize
 );
 
+int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21Split(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 s21I[],
+   float64 s21Q[],
+   int32 arraySize
+);
+
 int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1523,32 +1651,12 @@ int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22(
    int32 arraySize
 );
 
-int32 __stdcall RFmxVNA_SParamsFetchRealData(
+int32 __stdcall RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22Split(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float32 realData[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxVNA_SParamsFetchComplexData(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle complexData[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxVNA_SParamsFetchComplexDataSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 complexDataI[],
-   float32 complexDataQ[],
-   int32 arraySize,
-   int32* actualArraySize
+   float64 s22I[],
+   float64 s22Q[],
+   int32 arraySize
 );
 
 int32 __stdcall RFmxVNA_SParamsFetchXData(
@@ -1566,34 +1674,6 @@ int32 __stdcall RFmxVNA_SParamsFetchYData(
    float64 timeout,
    float32 Y1[],
    float32 Y2[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxVNA_WavesFetchRealData(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 realData[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxVNA_WavesFetchComplexData(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   NIComplexSingle complexData[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxVNA_WavesFetchComplexDataSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 complexDataI[],
-   float32 complexDataQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -1636,6 +1716,23 @@ int32 __stdcall RFmxVNA_IQFetchDataSplit(
    float64* dx,
    float32 dataI[],
    float32 dataQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_GetMeasurementMemoryXData(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 X[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_GetMeasurementMemoryYData(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float32 Y1[],
+   float32 Y2[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -2240,6 +2337,13 @@ int32 __stdcall RFmxVNA_SetPulseGeneratorExportOutputTerminal(
    char attrVal[]
 );
 
+int32 __stdcall RFmxVNA_GetPulseGeneratorTerminalName(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
 int32 __stdcall RFmxVNA_GetPulseGeneratorDelay(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2303,6 +2407,18 @@ int32 __stdcall RFmxVNA_GetCorrectionEnabled(
 );
 
 int32 __stdcall RFmxVNA_SetCorrectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionInterpolationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionInterpolationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -2586,6 +2702,19 @@ int32 __stdcall RFmxVNA_SParamsSetNumberOfSParameters(
    int32 attrVal
 );
 
+int32 __stdcall RFmxVNA_SParamsGetParameter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_SParamsSetParameter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
 int32 __stdcall RFmxVNA_SParamsGetReceiverPort(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2646,6 +2775,12 @@ int32 __stdcall RFmxVNA_SParamsSetPhaseTraceType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_SParamsGetResultsCorrectionState(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
 );
 
 int32 __stdcall RFmxVNA_SParamsGetSnPDataFormat(
@@ -2722,6 +2857,19 @@ int32 __stdcall RFmxVNA_WavesSetReceiver(
    int32 attrVal
 );
 
+int32 __stdcall RFmxVNA_WavesGetParameter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_WavesSetParameter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
 int32 __stdcall RFmxVNA_WavesGetReceiverPort(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2784,6 +2932,12 @@ int32 __stdcall RFmxVNA_WavesSetPhaseTraceType(
    int32 attrVal
 );
 
+int32 __stdcall RFmxVNA_WavesGetResultsCorrectionState(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
 int32 __stdcall RFmxVNA_IQGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2834,11 +2988,21 @@ int32 __stdcall RFmxVNA_IQSetSourcePort(
    char attrVal[]
 );
 
+int32 __stdcall RFmxVNA_IQGetResultsCorrectionState(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
 #ifdef __cplusplus
 }
 #endif
 
 /* ---------------- Obsolete Section ------------------ */
+
+// Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_METHOD
+#define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_UNDEFINED_THRU_USING_DEFINED_THRU                          4
+#define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_DELAY_THRU_USING_DEFINED_THRU                              5
 
 #ifdef __cplusplus
 extern "C"
@@ -2851,6 +3015,62 @@ int32 __stdcall RFmxVNA_CfgFrequencyListStartStopPoints(
    float64 startFrequency,
    float64 stopFrequency,
    int32 numberOfPoints
+);
+
+int32 __stdcall RFmxVNA_SParamsFetchRealData(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 realData[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_SParamsFetchComplexData(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle complexData[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_SParamsFetchComplexDataSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 complexDataI[],
+   float32 complexDataQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_WavesFetchRealData(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 realData[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_WavesFetchComplexData(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle complexData[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_WavesFetchComplexDataSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 complexDataI[],
+   float32 complexDataQ[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
 #ifdef __cplusplus
