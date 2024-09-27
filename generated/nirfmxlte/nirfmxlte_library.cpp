@@ -55,6 +55,8 @@ NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxLTE_AutoLevel"));
   function_pointers_.BuildCarrierString = reinterpret_cast<BuildCarrierStringPtr>(shared_library_->get_function_pointer("RFmxLTE_BuildCarrierString"));
   function_pointers_.BuildClusterString = reinterpret_cast<BuildClusterStringPtr>(shared_library_->get_function_pointer("RFmxLTE_BuildClusterString"));
+  function_pointers_.BuildListStepString = reinterpret_cast<BuildListStepStringPtr>(shared_library_->get_function_pointer("RFmxLTE_BuildListStepString"));
+  function_pointers_.BuildListString = reinterpret_cast<BuildListStringPtr>(shared_library_->get_function_pointer("RFmxLTE_BuildListString"));
   function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_->get_function_pointer("RFmxLTE_BuildOffsetString"));
   function_pointers_.BuildPDSCHString = reinterpret_cast<BuildPDSCHStringPtr>(shared_library_->get_function_pointer("RFmxLTE_BuildPDSCHString"));
   function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxLTE_BuildSignalString"));
@@ -573,6 +575,22 @@ int32 NiRFmxLTELibrary::BuildClusterString(char selectorString[], int32 clusterN
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_BuildClusterString.");
   }
   return function_pointers_.BuildClusterString(selectorString, clusterNumber, selectorStringOutLength, selectorStringOut);
+}
+
+int32 NiRFmxLTELibrary::BuildListStepString(char listName[], char resultName[], int32 stepNumber, int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildListStepString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_BuildListStepString.");
+  }
+  return function_pointers_.BuildListStepString(listName, resultName, stepNumber, selectorStringLength, selectorString);
+}
+
+int32 NiRFmxLTELibrary::BuildListString(char listName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildListString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_BuildListString.");
+  }
+  return function_pointers_.BuildListString(listName, resultName, selectorStringLength, selectorString);
 }
 
 int32 NiRFmxLTELibrary::BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])

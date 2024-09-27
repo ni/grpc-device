@@ -43,6 +43,8 @@ class NiRFmxLTELibraryInterface {
   virtual int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) = 0;
   virtual int32 BuildCarrierString(char selectorString[], int32 carrierNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 BuildClusterString(char selectorString[], int32 clusterNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
+  virtual int32 BuildListStepString(char listName[], char resultName[], int32 stepNumber, int32 selectorStringLength, char selectorString[]) = 0;
+  virtual int32 BuildListString(char listName[], char resultName[], int32 selectorStringLength, char selectorString[]) = 0;
   virtual int32 BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 BuildPDSCHString(char selectorString[], int32 pdschNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]) = 0;

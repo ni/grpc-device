@@ -45,6 +45,8 @@ class NiRFmxLTEMockLibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   MOCK_METHOD(int32, AutoLevel, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel), (override));
   MOCK_METHOD(int32, BuildCarrierString, (char selectorString[], int32 carrierNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildClusterString, (char selectorString[], int32 clusterNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
+  MOCK_METHOD(int32, BuildListStepString, (char listName[], char resultName[], int32 stepNumber, int32 selectorStringLength, char selectorString[]), (override));
+  MOCK_METHOD(int32, BuildListString, (char listName[], char resultName[], int32 selectorStringLength, char selectorString[]), (override));
   MOCK_METHOD(int32, BuildOffsetString, (char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildPDSCHString, (char selectorString[], int32 pdschNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildSignalString, (char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]), (override));

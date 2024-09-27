@@ -49,6 +49,8 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) override;
   int32 BuildCarrierString(char selectorString[], int32 carrierNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildClusterString(char selectorString[], int32 clusterNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
+  int32 BuildListStepString(char listName[], char resultName[], int32 stepNumber, int32 selectorStringLength, char selectorString[]) override;
+  int32 BuildListString(char listName[], char resultName[], int32 selectorStringLength, char selectorString[]) override;
   int32 BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildPDSCHString(char selectorString[], int32 pdschNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]) override;
@@ -362,6 +364,8 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   using AutoLevelPtr = decltype(&RFmxLTE_AutoLevel);
   using BuildCarrierStringPtr = decltype(&RFmxLTE_BuildCarrierString);
   using BuildClusterStringPtr = decltype(&RFmxLTE_BuildClusterString);
+  using BuildListStepStringPtr = decltype(&RFmxLTE_BuildListStepString);
+  using BuildListStringPtr = decltype(&RFmxLTE_BuildListString);
   using BuildOffsetStringPtr = decltype(&RFmxLTE_BuildOffsetString);
   using BuildPDSCHStringPtr = decltype(&RFmxLTE_BuildPDSCHString);
   using BuildSignalStringPtr = decltype(&RFmxLTE_BuildSignalString);
@@ -675,6 +679,8 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     AutoLevelPtr AutoLevel;
     BuildCarrierStringPtr BuildCarrierString;
     BuildClusterStringPtr BuildClusterString;
+    BuildListStepStringPtr BuildListStepString;
+    BuildListStringPtr BuildListString;
     BuildOffsetStringPtr BuildOffsetString;
     BuildPDSCHStringPtr BuildPDSCHString;
     BuildSignalStringPtr BuildSignalString;
