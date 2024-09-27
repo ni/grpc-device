@@ -629,6 +629,43 @@ build_cluster_string(const StubPtr& stub, const std::string& selector_string, co
   return response;
 }
 
+BuildListStepStringResponse
+build_list_step_string(const StubPtr& stub, const std::string& list_name, const std::string& result_name, const pb::int32& step_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildListStepStringRequest{};
+  request.set_list_name(list_name);
+  request.set_result_name(result_name);
+  request.set_step_number(step_number);
+
+  auto response = BuildListStepStringResponse{};
+
+  raise_if_error(
+      stub->BuildListStepString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BuildListStringResponse
+build_list_string(const StubPtr& stub, const std::string& list_name, const std::string& result_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildListStringRequest{};
+  request.set_list_name(list_name);
+  request.set_result_name(result_name);
+
+  auto response = BuildListStringResponse{};
+
+  raise_if_error(
+      stub->BuildListString(&context, request, &response),
+      context);
+
+  return response;
+}
+
 BuildOffsetStringResponse
 build_offset_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& offset_number)
 {

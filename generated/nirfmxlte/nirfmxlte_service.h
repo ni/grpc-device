@@ -72,6 +72,8 @@ public:
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildCarrierString(::grpc::ServerContext* context, const BuildCarrierStringRequest* request, BuildCarrierStringResponse* response) override;
   ::grpc::Status BuildClusterString(::grpc::ServerContext* context, const BuildClusterStringRequest* request, BuildClusterStringResponse* response) override;
+  ::grpc::Status BuildListStepString(::grpc::ServerContext* context, const BuildListStepStringRequest* request, BuildListStepStringResponse* response) override;
+  ::grpc::Status BuildListString(::grpc::ServerContext* context, const BuildListStringRequest* request, BuildListStringResponse* response) override;
   ::grpc::Status BuildOffsetString(::grpc::ServerContext* context, const BuildOffsetStringRequest* request, BuildOffsetStringResponse* response) override;
   ::grpc::Status BuildPDSCHString(::grpc::ServerContext* context, const BuildPDSCHStringRequest* request, BuildPDSCHStringResponse* response) override;
   ::grpc::Status BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response) override;

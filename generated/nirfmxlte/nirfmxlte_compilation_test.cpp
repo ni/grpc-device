@@ -147,6 +147,16 @@ int32 BuildClusterString(char selectorString[], int32 clusterNumber, int32 selec
   return RFmxLTE_BuildClusterString(selectorString, clusterNumber, selectorStringOutLength, selectorStringOut);
 }
 
+int32 BuildListStepString(char listName[], char resultName[], int32 stepNumber, int32 selectorStringLength, char selectorString[])
+{
+  return RFmxLTE_BuildListStepString(listName, resultName, stepNumber, selectorStringLength, selectorString);
+}
+
+int32 BuildListString(char listName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  return RFmxLTE_BuildListString(listName, resultName, selectorStringLength, selectorString);
+}
+
 int32 BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
   return RFmxLTE_BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);

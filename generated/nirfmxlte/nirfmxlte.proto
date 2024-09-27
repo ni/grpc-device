@@ -45,6 +45,8 @@ service NiRFmxLTE {
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildCarrierString(BuildCarrierStringRequest) returns (BuildCarrierStringResponse);
   rpc BuildClusterString(BuildClusterStringRequest) returns (BuildClusterStringResponse);
+  rpc BuildListStepString(BuildListStepStringRequest) returns (BuildListStepStringResponse);
+  rpc BuildListString(BuildListStringRequest) returns (BuildListStringResponse);
   rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
   rpc BuildPDSCHString(BuildPDSCHStringRequest) returns (BuildPDSCHStringResponse);
   rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
@@ -1921,6 +1923,27 @@ message BuildClusterStringRequest {
 message BuildClusterStringResponse {
   int32 status = 1;
   string selector_string_out = 2;
+}
+
+message BuildListStepStringRequest {
+  string list_name = 1;
+  string result_name = 2;
+  int32 step_number = 3;
+}
+
+message BuildListStepStringResponse {
+  int32 status = 1;
+  string selector_string = 2;
+}
+
+message BuildListStringRequest {
+  string list_name = 1;
+  string result_name = 2;
+}
+
+message BuildListStringResponse {
+  int32 status = 1;
+  string selector_string = 2;
 }
 
 message BuildOffsetStringRequest {

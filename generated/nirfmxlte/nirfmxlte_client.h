@@ -50,6 +50,8 @@ AnalyzeSpectrum1WaveformResponse analyze_spectrum1_waveform(const StubPtr& stub,
 AutoLevelResponse auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_interval);
 BuildCarrierStringResponse build_carrier_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& carrier_number);
 BuildClusterStringResponse build_cluster_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& cluster_number);
+BuildListStepStringResponse build_list_step_string(const StubPtr& stub, const std::string& list_name, const std::string& result_name, const pb::int32& step_number);
+BuildListStringResponse build_list_string(const StubPtr& stub, const std::string& list_name, const std::string& result_name);
 BuildOffsetStringResponse build_offset_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& offset_number);
 BuildPDSCHStringResponse build_pdsch_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& pdsch_number);
 BuildSignalStringResponse build_signal_string(const StubPtr& stub, const std::string& signal_name, const std::string& result_name);
