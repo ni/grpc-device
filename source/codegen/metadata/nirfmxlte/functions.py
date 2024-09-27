@@ -996,6 +996,69 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'BuildListStepString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'listName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'stepNumber',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorString',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildListString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'listName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorString',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'BuildOffsetString': {
         'parameters': [
             {
