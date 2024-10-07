@@ -31,6 +31,7 @@ endif()
 option(USE_NILRT_LEGACY_TOOLCHAIN "Enable to use tools and libraries from a NILRT compile toolchain." OFF)
 option(USE_PYTHON_VIRTUALENV "Enable to use the automatically-generated python venv, local to this project source." ON)
 option(USE_SUBMODULE_LIBS "Enable to link against the submodule libraries, rather than their native-OS equivalents." ON)
+option(INCLUDE_SIDEBAND_RDMA "Include support for RDMA sideband transfers" OFF)
 
 #----------------------------------------------------------------------
 # Setup build dependencies, according to the toolchain options.
@@ -46,6 +47,7 @@ if(USE_SUBMODULE_LIBS)
   add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
   add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json)
   add_subdirectory(third_party/utfcpp ${CMAKE_CURRENT_BINARY_DIR}/utfcpp)
+  add_subdirectory(third_party/grpc-sideband ${CMAKE_CURRENT_BINARY_DIR}/grpc-sideband)
 
   set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
   set(_REFLECTION grpc++_reflection)
@@ -117,6 +119,8 @@ include_directories(
   "./generated"
   "./imports/include"
   "./source"
+  "./third_party/grpc-sideband/src"
+  "./third_party/grpc-sideband/moniker_src"
 )
 if(WIN32)
   link_directories("./imports/lib/win64")
@@ -273,6 +277,7 @@ get_filename_component(nidevice_proto "imports/protobuf/nidevice.proto" ABSOLUTE
 get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/deviceid_restricted.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
+get_filename_component(data_moniker_proto "thirdparty/grpc-sideband/moniker_src/data_moniker.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -529,6 +534,7 @@ set(server_lib_deps
   ${_REFLECTION}
   ${_UTF8CPP}
   ${CMAKE_DL_LIBS}
+  ni_grpc_sideband
   nlohmann_json::nlohmann_json
 )
 
