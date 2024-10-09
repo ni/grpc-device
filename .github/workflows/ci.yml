@@ -4,13 +4,10 @@ on:
     branches:
       - main
       - 'releases/**'
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_call:
   workflow_dispatch:
 
 jobs:
-  cancel_builds:
-    uses: ./.github/workflows/cancel_builds.yml
   validate_imported_protos:
     uses: ./.github/workflows/validate_imported_protos.yml
   validate_python:
