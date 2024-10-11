@@ -779,6 +779,7 @@ namespace nixnetsocket_grpc {
       }
       response->set_status(status);
       response->set_data(data);
+      std::cout << "Method: RecvFrom, Line: " << __LINE__ << ", from_addr: " << from_addr << std::endl;
       convert_to_grpc(from_addr, response->mutable_from_addr());
       return ::grpc::Status::OK;
     }
