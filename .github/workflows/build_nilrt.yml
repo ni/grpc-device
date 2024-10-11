@@ -46,18 +46,17 @@ jobs:
         git submodule update --init --recursive
         echo "grpc-commit=$(git rev-parse --short @:./third_party/grpc)" >> $GITHUB_OUTPUT
 
-# TODO: Skip while testing
-#    - name: Cache Host OS gRPC Support
-#      uses: actions/cache@v4
-#      id: hostgrpccache
-#      env:
-#        cache-name: hostgrpccache
-#      with:
-#        path: third_party/grpc/build/
-#        key: ${{ github.repository }}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
+    - name: Cache Host OS gRPC Support
+      uses: actions/cache@v4
+      id: hostgrpccache
+      env:
+        cache-name: hostgrpccache
+      with:
+        path: third_party/grpc/build/
+        key: ${{ github.repository }}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
 
     - name: Configure Host OS gRPC Support
-      # if: steps.hostgrpccache.outputs.cache-hit != 'true'
+      if: steps.hostgrpccache.outputs.cache-hit != 'true'
       run: >
         cmake
         -S $GITHUB_WORKSPACE/third_party/grpc/
@@ -68,7 +67,7 @@ jobs:
         -G "Ninja"
 
     - name: Build Host OS gRPC Support
-      # if: steps.hostgrpccache.outputs.cache-hit != 'true'
+      if: steps.hostgrpccache.outputs.cache-hit != 'true'
       run: >
         cmake
         --build $GITHUB_WORKSPACE/third_party/grpc/build
@@ -100,7 +99,7 @@ jobs:
       run: git diff --exit-code
 
     - name: Tar Server Build Files
-      # if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       run: >-
         tar -cvzf ni-grpc-device-server-ni-linux-rt-x64.tar.gz
         -C $GITHUB_WORKSPACE/build
@@ -113,14 +112,14 @@ jobs:
 
     - name: Upload Server Artifact
       uses: actions/upload-artifact@v4
-      # if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       with:
         name: ni-grpc-device-server-ni-linux-rt-x64
         path: ni-grpc-device-server-ni-linux-rt-x64.tar.gz
         retention-days: 5
 
     - name: Tar Test Build Files
-      # if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       run: >-
         tar -cvzf ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
         -C $GITHUB_WORKSPACE/build
@@ -137,7 +136,7 @@ jobs:
 
     - name: Upload Tests Artifact
       uses: actions/upload-artifact@v4
-      # if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       with:
         name: ni-grpc-device-tests-ni-linux-rt-x64
         path: ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
