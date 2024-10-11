@@ -22,14 +22,23 @@ jobs:
       with:
         python-version: '3.x'
 
+    - name: Setup Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v5
+      with:
+          version: 1.12.1
+
+    - name: Get number of CPU cores
+      uses: SimenB/github-actions-cpu-cores@v2
+      id: cpu-cores
+
     # The URL used to download this toolchain may change in the future as
     # improvements to hosting and exports of the NILRT toolchain are made.
     - name: Install NI Linux RT CC Toolchain
       run: |
         wget -nv https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-core2-64-toolchain-6.0.sh
         sudo chmod a+x ./oecore-x86_64-core2-64-toolchain-6.0.sh
-        sudo ./oecore-x86_64-core2-64-toolchain-6.0.sh -y -d ${GITHUB_WORKSPACE}/nilrt-toolchain/
-        echo "${GITHUB_WORKSPACE}/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> ${GITHUB_PATH}
+        sudo ./oecore-x86_64-core2-64-toolchain-6.0.sh -y -d $GITHUB_WORKSPACE/nilrt-toolchain/
+        echo "$GITHUB_WORKSPACE/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> $GITHUB_PATH
 
     - name: Update Submodules
       id: submodules
@@ -37,88 +46,51 @@ jobs:
         git submodule update --init --recursive
         echo "grpc-commit=$(git rev-parse --short @:./third_party/grpc)" >> $GITHUB_OUTPUT
 
-    - name: Cache Host OS gRPC Support
-      uses: actions/cache@v4
-      id: hostgrpccache
-      env:
-        cache-name: hostgrpccache
-      with:
-        path: third_party/grpc/build/
-        key: ${{ github.repository }}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
+# TODO: Skip while testing
+#    - name: Cache Host OS gRPC Support
+#      uses: actions/cache@v4
+#      id: hostgrpccache
+#      env:
+#        cache-name: hostgrpccache
+#      with:
+#        path: third_party/grpc/build/
+#        key: ${{ github.repository }}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
 
     - name: Configure Host OS gRPC Support
-      if: steps.hostgrpccache.outputs.cache-hit != 'true'
-      shell: cmake -P {0}
-      run: |
-        set(path_separator ":")
-        set(ENV{PATH} "$ENV{GITHUB_WORKSPACE}${path_separator}$ENV{PATH}")
-        execute_process(
-          COMMAND cmake
-            -S $ENV{GITHUB_WORKSPACE}/third_party/grpc/
-            -B $ENV{GITHUB_WORKSPACE}/third_party/grpc/build
-            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
-            -D gRPC_INSTALL=ON
-            -D gRPC_BUILD_TESTS=OFF
-          RESULT_VARIABLE result
-        )
-        if (NOT result EQUAL 0)
-          message(FATAL_ERROR "Bad exit status")
-        endif()
+      # if: steps.hostgrpccache.outputs.cache-hit != 'true'
+      run: >
+        cmake
+        -S $GITHUB_WORKSPACE/third_party/grpc/
+        -B $GITHUB_WORKSPACE/third_party/grpc/build
+        -D CMAKE_BUILD_TYPE=$BUILD_TYPE
+        -D gRPC_INSTALL=ON
+        -D gRPC_BUILD_TESTS=OFF
+        -G "Ninja"
 
     - name: Build Host OS gRPC Support
-      if: steps.hostgrpccache.outputs.cache-hit != 'true'
-      shell: cmake -P {0}
-      run: |
-        execute_process(
-          COMMAND cmake --build $ENV{GITHUB_WORKSPACE}/third_party/grpc/build
-          RESULT_VARIABLE result
-          OUTPUT_VARIABLE output
-          ERROR_VARIABLE output
-          ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
-        )
-        if (NOT result EQUAL 0)
-          string(REGEX MATCH "FAILED:.*$" error_message "${output}")
-          string(REPLACE "\n" "%0A" error_message "${error_message}")
-          message("::error::${error_message}")
-          message(FATAL_ERROR "Build failed")
-        endif()
+      # if: steps.hostgrpccache.outputs.cache-hit != 'true'
+      run: >
+        cmake
+        --build $GITHUB_WORKSPACE/third_party/grpc/build
+        -j ${{ steps.cpu-cores.outputs.count }}
 
     - name: Install Host OS gRPC Support
-      run: sudo cmake --install ${GITHUB_WORKSPACE}/third_party/grpc/build
+      run: sudo cmake --install $GITHUB_WORKSPACE/third_party/grpc/build
 
     - name: Configure Cross Compile
-      shell: cmake -P {0}
-      run: |
-        set(path_separator ":")
-        set(ENV{PATH} "$ENV{GITHUB_WORKSPACE}${path_separator}$ENV{PATH}")
-        execute_process(
-          COMMAND cmake
-            -S .
-            -B build
-            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
-            -D USE_NILRT_LEGACY_TOOLCHAIN=on
-          RESULT_VARIABLE result
-        )
-        if (NOT result EQUAL 0)
-          message(FATAL_ERROR "Bad exit status")
-        endif()
+      run: >
+        cmake
+        -S .
+        -B build
+        -D CMAKE_BUILD_TYPE=$BUILD_TYPE
+        -D USE_NILRT_LEGACY_TOOLCHAIN=on
+        -G "Ninja"
 
     - name: Cross Compile
-      shell: cmake -P {0}
-      run: |
-        execute_process(
-          COMMAND cmake --build build --config $ENV{BUILD_TYPE} -j 2
-          RESULT_VARIABLE result
-          OUTPUT_VARIABLE output
-          ERROR_VARIABLE output
-          ECHO_OUTPUT_VARIABLE ECHO_ERROR_VARIABLE
-        )
-        if (NOT result EQUAL 0)
-          string(REGEX MATCH "FAILED:.*$" error_message "${output}")
-          string(REPLACE "\n" "%0A" error_message "${error_message}")
-          message("::error::${error_message}")
-          message(FATAL_ERROR "Build failed")
-        endif()
+      run: >
+        cmake
+        --build build
+        -j ${{ steps.cpu-cores.outputs.count }}
 
     # The generated source in git must match the output of workflow builds.
     # If this step fails, something is changing during build. Either:
@@ -131,11 +103,11 @@ jobs:
       if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       run: >-
         tar -cvzf ni-grpc-device-server-ni-linux-rt-x64.tar.gz
-        -C ${GITHUB_WORKSPACE}/build
+        -C $GITHUB_WORKSPACE/build
         ni_grpc_device_server
         server_config.json
         server_capabilities.json
-        -C ${GITHUB_WORKSPACE}
+        -C $GITHUB_WORKSPACE
         LICENSE
         ThirdPartyNotices.txt
 
@@ -151,7 +123,7 @@ jobs:
       if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
       run: >-
         tar -cvzf ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
-        -C ${GITHUB_WORKSPACE}/build
+        -C $GITHUB_WORKSPACE/build
         certs/
         IntegrationTestsRunner
         libTestApi.so
@@ -159,7 +131,7 @@ jobs:
         test_localhost_config.json
         test_mutual_tls_config.json
         UnitTestsRunner
-        -C ${GITHUB_WORKSPACE}
+        -C $GITHUB_WORKSPACE
         LICENSE
         ThirdPartyNotices.txt
 
