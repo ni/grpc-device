@@ -772,7 +772,7 @@ namespace nixnetsocket_grpc {
 
       std::string data(size, '\0');
       auto from_addr = allocate_output_storage<nxsockaddr, SockAddr>();
-      nxsocklen_t fromlen {};
+      auto fromlen = static_cast<nxsocklen_t>(sizeof(from_addr.storage));
       auto status = library_->RecvFrom(socket, (char*)data.data(), size, flags, &from_addr, &fromlen);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
