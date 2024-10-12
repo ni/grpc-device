@@ -812,7 +812,7 @@ functions = {
                 'name': 'fromlen',
                 'include_in_proto': False,
                 'type': 'nxsocklen_t',
-                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(from_addr))'
+                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(from_addr.storage))'
             },
         ],
         'returns': 'int32_t'
