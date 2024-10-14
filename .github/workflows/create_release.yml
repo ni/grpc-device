@@ -12,11 +12,11 @@ jobs:
       contents: write
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: ni-grpc-device-client
         path: downloads/ni-grpc-device-client
@@ -26,22 +26,22 @@ jobs:
         files: downloads/ni-grpc-device-client
         dest: downloads/artifacts/ni-grpc-device-client.zip
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: ni-grpc-device-client-Linux
         path: downloads/artifacts
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: ni-grpc-device-server-linux-glibc2_31-x64
         path: downloads/artifacts
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: ni-grpc-device-server-ni-linux-rt-x64
         path: downloads/artifacts
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: ni-grpc-device-server-windows-x64
         path: downloads/ni-grpc-device-server-windows-x64
@@ -51,7 +51,7 @@ jobs:
         files: downloads/ni-grpc-device-server-windows-x64
         dest: downloads/artifacts/ni-grpc-device-server-windows-x64.zip
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: ni-grpc-device-server-windows-x64-debug-symbols
         path: downloads/artifacts
