@@ -27,7 +27,7 @@ config = {
         "NIComplexSingle": "nidevice_grpc.NIComplexNumberF32",
         "NIComplexDouble": "nidevice_grpc.NIComplexNumber",
     },
-    'code_readiness': 'Release',
+    'code_readiness': 'NextRelease',
     'feature_toggles': {},
     'driver_name': 'NI-rfmxpulse',
     'extra_errors_used': [
