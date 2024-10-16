@@ -10,6 +10,7 @@
 
 #include <server/core_services_registrar.h>
 #include <server/session_repository.h>
+#include <server/data_moniker_service.h>
 
 #include "nidaqmx/nidaqmx_service_registrar.h"
 #include "nidcpower/nidcpower_service_registrar.h"
@@ -17,6 +18,7 @@
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
 #include "nifpga/nifpga_service_registrar.h"
+#include "nifpga/nifpga_service.h"
 #if defined(_MSC_VER)
 #include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
@@ -88,6 +90,9 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
   auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   service_vector->push_back(session_repository);
   nidevice_grpc::register_core_services(service_vector, server_builder, session_repository, feature_toggles);
+  auto moniker_service = std::make_shared<ni::data_monikers::DataMonikerService>();
+  server_builder.RegisterService(moniker_service.get());
+  service_vector->push_back(moniker_service);
 
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository);
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository);
@@ -315,7 +320,7 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       vi_object_repository,
       feature_toggles));
-
+  nifpga_grpc::RegisterMonikers();
   return service_vector;
 }
 

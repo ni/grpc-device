@@ -271,6 +271,124 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
+<%def name="register_moniker_functions(function_name)">
+<%  moniker_function_name = service_helpers.create_moniker_function_name(function_name)
+%>  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
+</%def>
+
+<%def name="define_streaming_api(function_name, function_data, parameters)">
+<%
+  config = data['config']
+  input_params = [p for p in parameters if common_helpers.is_input_parameter(p)]
+  service_class_prefix = config["service_class_prefix"]
+  request_param = service_helpers.get_request_param(function_name)
+  response_param = service_helpers.get_response_param(function_name)
+  session_param = common_helpers.get_first_session_param(parameters)
+  def construct_c_api_name(function_name):
+      if function_name.startswith("Begin"):
+          base_name = function_name[len("Begin"):]
+          return f"{base_name}"
+      return f"{function_name}"
+  struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
+  moniker_function_name = service_helpers.create_moniker_function_name(function_name)
+  c_api_name = construct_c_api_name(function_name)
+  streaming_type = function_data.get('streaming_type', 'int32_t')
+  coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
+  grpc_streaming_type = service_helpers.get_grpc_streaming_type(streaming_type)
+%>
+struct ${struct_name}
+{
+    % for param in input_params:
+    ${param['type']} ${param['name']};
+    % endfor
+    nifpga_grpc::${grpc_streaming_type}Data data;
+    std::shared_ptr<${service_class_prefix}LibraryInterface> library;
+};
+
+::grpc::Status ${service_class_prefix}Service::${function_name}(::grpc::ServerContext* context, ${request_param}, ${response_param})
+{
+    if (context->IsCancelled()) {
+        return ::grpc::Status::CANCELLED;
+    }
+    try {
+        auto session_grpc_session = request->${session_param['name']}();
+        ${session_param['type']} ${session_param['name']} = session_repository_->access_session(session_grpc_session.name());
+
+        ${struct_name}* data = new ${struct_name}();
+        % for param in input_params:
+        <%
+        grpc_type = param.get('grpc_type', None)
+        %>
+        % if grpc_type != 'nidevice_grpc.Session':
+        data->${param['name']} = request->${param['name']}();
+        % else:
+        data->${param['name']} = ${session_param['name']};
+        % endif
+        % endfor
+        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+
+        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data, *moniker);
+
+        response->set_allocated_moniker(moniker);
+        return ::grpc::Status::OK;
+    }
+    catch (std::exception& ex) {
+        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    }
+}
+
+% if "Read" in function_name:
+::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    ${struct_name}* function_data = (${struct_name}*)data;
+    auto library = function_data->library;
+
+    % for param in input_params:
+    auto ${param['name']} = function_data->${param['name']};
+    % endfor
+    ${streaming_type} value = 0;
+
+    auto status = library->${c_api_name}(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+    else
+    {
+        std::cout << "${moniker_function_name} error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+% elif "Write" in function_name:
+::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    ${struct_name}* function_data = (${struct_name}*)data;
+
+    auto library = function_data->library;
+    % for param in input_params:
+    auto ${param['name']} = function_data->${param['name']};
+    % endfor
+
+    ${grpc_streaming_type}Data ${grpc_streaming_type.lower()}_data;
+    packedData.UnpackTo(&${grpc_streaming_type.lower()}_data);
+    ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
+    % if is_coerced_type_present:
+    if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
+        std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");
+        throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+    % endif
+
+    auto status = library->${c_api_name}(session, control, value);
+    if (status < 0) {
+        std::cout << "${moniker_function_name} error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+% endif
+</%def>
+
 ## Initialize the input parameters to the API call.
 <%def name="initialize_input_params(function_name, parameters)">\
 <%

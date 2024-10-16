@@ -17,6 +17,7 @@ repository_type_to_config = service_helpers.list_session_repository_handle_types
 
 #include <server/core_services_registrar.h>
 #include <server/session_repository.h>
+#include <server/data_moniker_service.h>
 
 % for config in driver_configs:
 <%
@@ -24,6 +25,9 @@ repository_type_to_config = service_helpers.list_session_repository_handle_types
 %>\
 <%block filter="common_helpers.os_conditional_compile_block(config)">\
 #include "${module_name}/${module_name}_service_registrar.h"
+% if config.get("use_moniker_service", False):
+#include "${module_name}/${module_name}_service.h"
+% endif
 </%block>\
 % endfor
 
@@ -38,6 +42,9 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
   auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   service_vector->push_back(session_repository);
   nidevice_grpc::register_core_services(service_vector, server_builder, session_repository, feature_toggles);
+  auto moniker_service = std::make_shared<ni::data_monikers::DataMonikerService>();
+  server_builder.RegisterService(moniker_service.get());
+  service_vector->push_back(moniker_service);
 
 % for type_name, config in repository_type_to_config.items():
 <%block filter="common_helpers.os_conditional_compile_block(config)">\
@@ -61,7 +68,17 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       feature_toggles));
 </%block>\
 % endfor
-
+% for driver in drivers:
+<%
+  config = driver["config"]
+  namespace = f"{config['namespace_component']}_grpc"
+%>\
+% if config.get("use_moniker_service", False):
+<%block filter="common_helpers.os_conditional_compile_block(config)">\
+  ${namespace}::RegisterMonikers();
+</%block>\
+% endif
+% endfor
   return service_vector;
 }
 

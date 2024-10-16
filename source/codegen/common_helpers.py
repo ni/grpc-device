@@ -1194,3 +1194,18 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     * Outputs that are calculated/populated after the API call.
     """
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
+
+def filter_data_moniker_functions(functions):
+    """Return function metadata only for functions that use the data moniker service."""
+    return [
+        name
+        for name, function in functions.items()
+        if function.get("data_moniker_support", False)
+    ]
+
+
+def get_data_moniker_function_name(function_name, function_data):
+    """Return the corresponding moniker function name for the given C API function."""
+    if function_data.get("moniker_cname", None):
+        return function_data["moniker_cname"]
+    return function_name.replace("Begin", "Moniker")

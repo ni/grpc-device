@@ -8,6 +8,7 @@ config = {
     'java_package': 'com.ni.grpc.nifpga',
     'csharp_namespace': 'NationalInstruments.Grpc.NiFpga',
     'namespace_component': 'nifpga',
+    'additional_protos': ['data_moniker.proto'],
     'init_function': 'Open',
     'close_function': 'Close',
     'code_readiness': 'Release',
@@ -30,6 +31,9 @@ config = {
         'NiFpga_Bool': 'bool',
         'NiFpga_FifoProperty': 'uint32',
     },
+    'use_moniker_service': True,
+    'use_dynload_msvc': True,
+    'use_protobuf_arenas': True,
     'custom_types': [],
     'library_info': {
         'Linux': {

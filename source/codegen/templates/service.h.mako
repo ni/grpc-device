@@ -17,6 +17,7 @@ custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(config, functions)
 resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, functions)
 resource_handle_types = service_helpers.get_resource_handle_types(config)
+data_moniker_functions = common_helpers.filter_data_moniker_functions(functions)
 
 async_functions = service_helpers.get_async_functions(functions)
 has_async_functions = any(async_functions)
@@ -59,6 +60,20 @@ struct ${service_class_prefix}FeatureToggles
   bool ${service_helpers.get_toggle_member_name(toggle)};
 % endfor
 };
+% if config.get("use_moniker_service", False):
+void RegisterMonikers();
+
+% for function in data_moniker_functions:
+<%
+  method_name = common_helpers.get_data_moniker_function_name(function, functions[function])
+%>\
+% if config.get("use_protobuf_arenas", False):
+::grpc::Status ${method_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+% else:
+::grpc::Status ${method_name}(void* data, google::protobuf::Any& packedData);
+% endif
+% endfor
+% endif
 
 % if type_from_enum != "":
 enum TypeIdentifier { ${type_from_enum} };
