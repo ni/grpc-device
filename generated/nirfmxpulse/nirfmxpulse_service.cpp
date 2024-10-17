@@ -198,7 +198,7 @@ namespace nirfmxpulse_grpc {
   NiRFmxPulseFeatureToggles::NiRFmxPulseFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxpulse", CodeReadiness::kRelease))
+        feature_toggles.is_feature_enabled("nirfmxpulse", CodeReadiness::kNextRelease))
   {
   }
 } // namespace nirfmxpulse_grpc
