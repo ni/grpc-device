@@ -14,6 +14,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiDAQmx";
 package nidaqmx_grpc;
 
 import "session.proto";
+import "data_moniker.proto";
 import "google/protobuf/timestamp.proto";
 
 service NiDAQmx {
@@ -263,6 +264,7 @@ service NiDAQmx {
   rpc PerformStrainShuntCalEx(PerformStrainShuntCalExRequest) returns (PerformStrainShuntCalExResponse);
   rpc PerformThrmcplLeadOffsetNullingCal(PerformThrmcplLeadOffsetNullingCalRequest) returns (PerformThrmcplLeadOffsetNullingCalResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
+  rpc BeginReadAnalogF64(BeginReadAnalogF64Request) returns (BeginReadAnalogF64Response);
   rpc ReadAnalogScalarF64(ReadAnalogScalarF64Request) returns (ReadAnalogScalarF64Response);
   rpc ReadBinaryI16(ReadBinaryI16Request) returns (ReadBinaryI16Response);
   rpc ReadBinaryI32(ReadBinaryI32Request) returns (ReadBinaryI32Response);
@@ -393,9 +395,11 @@ service NiDAQmx {
   rpc UnregisterSignalEvent(UnregisterSignalEventRequest) returns (UnregisterSignalEventResponse);
   rpc UnreserveNetworkDevice(UnreserveNetworkDeviceRequest) returns (UnreserveNetworkDeviceResponse);
   rpc WaitForNextSampleClock(WaitForNextSampleClockRequest) returns (WaitForNextSampleClockResponse);
+  rpc BeginWaitForNextSampleClock(BeginWaitForNextSampleClockRequest) returns (BeginWaitForNextSampleClockResponse);
   rpc WaitForValidTimestamp(WaitForValidTimestampRequest) returns (WaitForValidTimestampResponse);
   rpc WaitUntilTaskDone(WaitUntilTaskDoneRequest) returns (WaitUntilTaskDoneResponse);
   rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
+  rpc BeginWriteAnalogF64(BeginWriteAnalogF64Request) returns (BeginWriteAnalogF64Response);
   rpc WriteAnalogScalarF64(WriteAnalogScalarF64Request) returns (WriteAnalogScalarF64Response);
   rpc WriteBinaryI16(WriteBinaryI16Request) returns (WriteBinaryI16Response);
   rpc WriteBinaryI32(WriteBinaryI32Request) returns (WriteBinaryI32Response);
@@ -4305,6 +4309,14 @@ enum WriteInt32AttributeValues {
   WRITE_INT32_WAIT_MODE2_SLEEP = 12547;
   WRITE_INT32_WRITE_RELATIVE_TO_FIRST_SAMPLE = 10424;
   WRITE_INT32_WRITE_RELATIVE_TO_CURR_WRITE_POS = 10430;
+}
+
+message ChannelData {
+  repeated double data = 1;
+}
+
+message SampleClockData {
+  bool is_late = 1;
 }
 
 message AnalogPowerUpChannelsAndState {
@@ -8419,6 +8431,22 @@ message ReadAnalogF64Response {
   int32 samps_per_chan_read = 3;
 }
 
+message BeginReadAnalogF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadAnalogF64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadAnalogScalarF64Request {
   nidevice_grpc.Session task = 1;
   double timeout = 2;
@@ -10104,6 +10132,16 @@ message WaitForNextSampleClockResponse {
   bool is_late = 2;
 }
 
+message BeginWaitForNextSampleClockRequest {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message BeginWaitForNextSampleClockResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message WaitForValidTimestampRequest {
   nidevice_grpc.Session task = 1;
   oneof timestamp_event_enum {
@@ -10142,6 +10180,22 @@ message WriteAnalogF64Request {
 message WriteAnalogF64Response {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
+}
+
+message BeginWriteAnalogF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteAnalogF64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message WriteAnalogScalarF64Request {
