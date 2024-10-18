@@ -13,6 +13,7 @@ config = {
     'code_readiness': 'Release',
     'driver_name': 'NI-FPGA',
     'status_ok': 'status >= 0',
+    'additional_protos': ['data_moniker.proto'],
     'resource_handle_type': ['NiFpga_Session'],
     'type_to_grpc_type': {
         'NiFpga_Session': 'nidevice_grpc.Session',
@@ -30,6 +31,9 @@ config = {
         'NiFpga_Bool': 'bool',
         'NiFpga_FifoProperty': 'uint32',
     },
+    'use_moniker_service': True,
+    'use_dynload_msvc': True,
+    'use_protobuf_arenas': True,
     'custom_types': [],
     'library_info': {
         'Linux': {

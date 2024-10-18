@@ -318,7 +318,7 @@ def filter_api_functions(functions, only_mockable_functions=True):
     """Filter function metadata to only include those to be generated into the API library."""
 
     def filter_function(function):
-        if function.get("codegen_method", "") == "no":
+        if function.get("codegen_method", "") == "no" or function.get("exclude_from_library", False):
             return False
         if only_mockable_functions and not common_helpers.can_mock_function(function["parameters"]):
             return False
@@ -707,3 +707,56 @@ def get_protobuf_cpplib_type(grpc_type: str) -> str:
         return "std::string"
 
     return grpc_type
+
+
+def create_moniker_function_name(function_name: str) -> str:
+    """Get the function name for the moniker function."""
+    return f"Moniker{function_name.replace('Begin', '')}"
+
+
+def get_coerced_type_and_presence(streaming_type: str) -> tuple:
+    """
+    Get the coerced type and check if the coerced type is present in the type map.
+    
+    Args:
+        streaming_type (str): The streaming type.
+    
+    Returns:
+        tuple: A tuple containing coerced_type (str) and is_coerced_type_present (bool).
+    """
+    type_map = {
+        'int8_t': 'int32_t',
+        'uint8_t': 'uint32_t',
+        'int16_t': 'int32_t',
+        'uint16_t': 'uint32_t',
+    }
+
+    coerced_type = type_map.get(streaming_type, streaming_type)
+    is_coerced_type_present = streaming_type in type_map
+
+    return coerced_type, is_coerced_type_present
+
+def get_grpc_streaming_type(coerced_type: str) -> str:
+    """
+    Get the gRPC streaming type for the given coerced type.
+    
+    Args:
+        coerced_type (str): The coerced type.
+    
+    Returns:
+        str: The gRPC streaming type.
+    """
+    grpc_map = {
+        'int8_t': 'I32',
+        'uint8_t': 'U32',
+        'int16_t': 'I32',
+        'uint16_t': 'U32',
+        'uint32_t': 'U32',
+        'int32_t': 'I32',
+        'uint64_t': 'U64',
+        'int64_t': 'I64'
+    }
+
+    grpc_streaming_type = grpc_map.get(coerced_type, 'U32')
+
+    return grpc_streaming_type

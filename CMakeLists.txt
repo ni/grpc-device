@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12.0)
 
 project(ni_grpc_device_server
   LANGUAGES C CXX
-  VERSION 2.9.0)
+  VERSION 2.7.0)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -46,6 +46,7 @@ if(USE_SUBMODULE_LIBS)
   add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
   add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json)
   add_subdirectory(third_party/utfcpp ${CMAKE_CURRENT_BINARY_DIR}/utfcpp)
+  add_subdirectory(third_party/grpc-sideband ${CMAKE_CURRENT_BINARY_DIR}/grpc-sideband)
 
   set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
   set(_REFLECTION grpc++_reflection)
@@ -117,6 +118,7 @@ include_directories(
   "./generated"
   "./imports/include"
   "./source"
+  "./third_party/grpc-sideband/src"
 )
 if(WIN32)
   link_directories("./imports/lib/win64")
@@ -156,6 +158,7 @@ set(codegen_scripts
   "${codegen_dir}/templates/register_all_services.h.mako"
   "${codegen_dir}/templates/register_all_services.cpp.mako"
   "${codegen_dir}/templates/service.cpp.mako"
+  "${codegen_dir}/templates/streaming_service.cpp.mako"
   "${codegen_dir}/templates/service_helpers.mako"
   "${codegen_dir}/templates/service.h.mako"
   "${codegen_dir}/templates/service_registrar.h.mako"
@@ -269,6 +272,7 @@ set(nidriver_service_srcs
 get_filename_component(session_proto "imports/protobuf/session.proto" ABSOLUTE)
 get_filename_component(session_utilities_proto "source/protobuf/session_utilities.proto" ABSOLUTE)
 get_filename_component(nidevice_proto "imports/protobuf/nidevice.proto" ABSOLUTE)
+get_filename_component(data_moniker_proto "imports/protobuf/data_moniker.proto" ABSOLUTE)
 get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/deviceid_restricted.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
@@ -314,6 +318,10 @@ set(session_utilities_grpc_srcs "${proto_srcs_dir}/session_utilities.grpc.pb.cc"
 set(session_utilities_grpc_hdrs "${proto_srcs_dir}/session_utilities.grpc.pb.h")
 set(nidevice_proto_srcs "${proto_srcs_dir}/nidevice.pb.cc")
 set(nidevice_proto_hdrs "${proto_srcs_dir}/nidevice.pb.h")
+set(data_moniker_proto_srcs "${proto_srcs_dir}/data_moniker.pb.cc")
+set(data_moniker_proto_hdrs "${proto_srcs_dir}/data_moniker.pb.h")
+set(data_moniker_grpc_srcs "${proto_srcs_dir}/data_moniker.grpc.pb.cc")
+set(data_moniker_grpc_hdrs "${proto_srcs_dir}/data_moniker.grpc.pb.h")
 set(deviceid_restricted_proto_srcs "${proto_srcs_dir}/deviceid_restricted.pb.cc")
 set(deviceid_restricted_proto_hdrs "${proto_srcs_dir}/deviceid_restricted.pb.h")
 set(deviceid_restricted_grpc_srcs "${proto_srcs_dir}/deviceid_restricted.grpc.pb.cc")
@@ -335,6 +343,16 @@ GenerateGrpcSources(
     "${session_proto_hdrs}"
     "${session_grpc_srcs}"
     "${session_grpc_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
+    ${data_moniker_proto}
+  OUTPUT
+    "${data_moniker_proto_srcs}"
+    "${data_moniker_proto_hdrs}"
+    "${data_moniker_grpc_srcs}"
+    "${data_moniker_grpc_hdrs}"
 )
 
 GenerateGrpcSources(
@@ -444,6 +462,9 @@ add_executable(ni_grpc_device_server
    "source/server/syscfg_library.cpp"
    "source/server/syscfg_resource_accessor.cpp"
    "source/server/syscfg_session_handler.cpp"
+   "source/server/data_moniker_service.cpp"
+   ${data_moniker_proto_srcs}
+   ${data_moniker_grpc_srcs}
    ${nidevice_proto_srcs}
    ${session_proto_srcs}
    ${session_grpc_srcs}
@@ -532,6 +553,7 @@ set(server_lib_deps
 )
 
 target_link_libraries(ni_grpc_device_server
+  ni_grpc_sideband
   ${server_lib_deps}
 )
 
@@ -579,6 +601,8 @@ add_executable(IntegrationTestsRunner
     "source/server/syscfg_library.cpp"
     "source/server/syscfg_resource_accessor.cpp"
     "source/server/syscfg_session_handler.cpp"
+    "source/server/data_moniker_service.cpp"
+    ${data_moniker_proto_srcs}
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
@@ -662,6 +686,7 @@ add_executable(UnitTestsRunner
     "source/server/syscfg_library.cpp"
     "source/server/syscfg_resource_accessor.cpp"
     "source/server/syscfg_session_handler.cpp"
+    ${data_moniker_proto_srcs}
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
@@ -796,6 +821,9 @@ set(system_test_runner_sources
   "source/server/syscfg_library.cpp"
   "source/server/syscfg_resource_accessor.cpp"
   "source/server/syscfg_session_handler.cpp"
+  "source/server/data_moniker_service.cpp"
+  ${data_moniker_proto_srcs}
+  ${data_moniker_grpc_srcs}
   ${nidevice_proto_srcs}
   ${session_proto_srcs}
   ${session_grpc_srcs}

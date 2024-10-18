@@ -9,6 +9,8 @@ functions = data["functions"]
 service_class_prefix = config["service_class_prefix"]
 function_enums = common_helpers.get_function_enums(functions, enums)
 external_proto_deps = common_helpers.list_external_proto_dependencies(functions)
+additional_protos = config.get("additional_protos", [])
+additional_protos.extend(external_proto_deps)
 %>\
 <%namespace name="mako_helper" file="/proto_helpers.mako"/>\
 
@@ -19,6 +21,9 @@ external_proto_deps = common_helpers.list_external_proto_dependencies(functions)
 //---------------------------------------------------------------------
 syntax = "proto3";
 
+% if config.get("use_protobuf_arenas", False):
+option cc_enable_arenas = true;
+% endif
 option java_multiple_files = true;
 option java_package = "${config["java_package"]}";
 option java_outer_classname = "${service_class_prefix}";
@@ -30,7 +35,7 @@ package ${config["namespace_component"]}_grpc;
 import "nidevice.proto";
 % endif
 import "session.proto";
-% for proto in external_proto_deps:
+% for proto in additional_protos:
 import "${proto}";
 % endfor
 
