@@ -717,9 +717,10 @@ def create_moniker_function_name(function_name: str) -> str:
 def get_coerced_type_and_presence(streaming_type: str) -> tuple:
     """
     Get the coerced type and check if the coerced type is present in the type map.
+    This handles both scalar types and array types like int8_t[] or uint16_t[].
     
     Args:
-        streaming_type (str): The streaming type.
+        streaming_type (str): The streaming type (scalar or array).
     
     Returns:
         tuple: A tuple containing coerced_type (str) and is_coerced_type_present (bool).
@@ -731,10 +732,15 @@ def get_coerced_type_and_presence(streaming_type: str) -> tuple:
         'uint16_t': 'uint32_t',
     }
 
-    coerced_type = type_map.get(streaming_type, streaming_type)
-    is_coerced_type_present = streaming_type in type_map
+    # Remove array indication '[]' if present
+    base_type = streaming_type.replace('[]', '')
+    
+    # Get the coerced type based on the base type
+    coerced_type = type_map.get(base_type, base_type)
+    is_coerced_type_present = base_type in type_map
 
     return coerced_type, is_coerced_type_present
+
 
 def get_grpc_streaming_type(coerced_type: str) -> str:
     """
@@ -754,7 +760,15 @@ def get_grpc_streaming_type(coerced_type: str) -> str:
         'uint32_t': 'U32',
         'int32_t': 'I32',
         'uint64_t': 'U64',
-        'int64_t': 'I64'
+        'int64_t': 'I64',
+        "int16_t[]" : 'ArrayI32',
+        "int8_t[]" : 'ArrayI32',
+        "int32_t[]" : 'ArrayI32',
+        "int64_t[]" : 'ArrayI64',
+        "uint16_t[]" : 'ArrayU32',
+        "uint8_t[]" : 'ArrayU32',
+        "uint32_t[]" : 'ArrayU32',
+        "uint64_t[]" : 'ArrayU64',
     }
 
     grpc_streaming_type = grpc_map.get(coerced_type, 'U32')

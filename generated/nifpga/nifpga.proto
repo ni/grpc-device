@@ -20,6 +20,22 @@ import "data_moniker.proto";
 service NiFpga {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc AcknowledgeIrqs(AcknowledgeIrqsRequest) returns (AcknowledgeIrqsResponse);
+  rpc BeginReadArrayI16(BeginReadArrayI16Request) returns (BeginReadArrayI16Response);
+  rpc BeginReadArrayI8(BeginReadArrayI8Request) returns (BeginReadArrayI8Response);
+  rpc BeginReadArrayI32(BeginReadArrayI32Request) returns (BeginReadArrayI32Response);
+  rpc BeginReadArrayI64(BeginReadArrayI64Request) returns (BeginReadArrayI64Response);
+  rpc BeginReadArrayU8(BeginReadArrayU8Request) returns (BeginReadArrayU8Response);
+  rpc BeginReadArrayU16(BeginReadArrayU16Request) returns (BeginReadArrayU16Response);
+  rpc BeginReadArrayU32(BeginReadArrayU32Request) returns (BeginReadArrayU32Response);
+  rpc BeginReadArrayU64(BeginReadArrayU64Request) returns (BeginReadArrayU64Response);
+  rpc BeginWriteArrayI16(BeginWriteArrayI16Request) returns (BeginWriteArrayI16Response);
+  rpc BeginWriteArrayI8(BeginWriteArrayI8Request) returns (BeginWriteArrayI8Response);
+  rpc BeginWriteArrayI32(BeginWriteArrayI32Request) returns (BeginWriteArrayI32Response);
+  rpc BeginWriteArrayI64(BeginWriteArrayI64Request) returns (BeginWriteArrayI64Response);
+  rpc BeginWriteArrayU16(BeginWriteArrayU16Request) returns (BeginWriteArrayU16Response);
+  rpc BeginWriteArrayU8(BeginWriteArrayU8Request) returns (BeginWriteArrayU8Response);
+  rpc BeginWriteArrayU32(BeginWriteArrayU32Request) returns (BeginWriteArrayU32Response);
+  rpc BeginWriteArrayU64(BeginWriteArrayU64Request) returns (BeginWriteArrayU64Response);
   rpc BeginReadI16(BeginReadI16Request) returns (BeginReadI16Response);
   rpc BeginReadI32(BeginReadI32Request) returns (BeginReadI32Response);
   rpc BeginReadI64(BeginReadI64Request) returns (BeginReadI64Response);
@@ -216,22 +232,6 @@ enum RunAttribute {
   RUN_ATTRIBUTE_WAIT_UNTIL_DONE = 1;
 }
 
-message I8Data {
-  int32 value = 1;
-}
-
-message U8Data {
-  uint32 value = 1;
-}
-
-message I16Data {
-  int32 value = 1;
-}
-
-message U16Data {
-  uint32 value = 1;
-}
-
 message I32Data {
   int32 value = 1;
 }
@@ -251,6 +251,22 @@ message U64Data {
 message BoolData {
   bool value = 1;
 }
+
+message ArrayI32Data {
+  repeated int32 value = 1;
+}
+
+message ArrayU32Data {
+  repeated uint32 value = 1;
+}
+
+message ArrayI64Data {
+  repeated int64 value = 1;
+}
+
+message ArrayU64Data {
+  repeated uint64 value = 1;
+}
 message AbortRequest {
   nidevice_grpc.Session session = 1;
 }
@@ -266,6 +282,174 @@ message AcknowledgeIrqsRequest {
 
 message AcknowledgeIrqsResponse {
   int32 status = 1;
+}
+
+message BeginReadArrayI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginReadArrayI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayI8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginReadArrayI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginReadArrayI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayI64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginReadArrayU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayU8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginReadArrayU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginReadArrayU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginReadArrayU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayU64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message BeginReadI16Request {

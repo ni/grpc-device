@@ -1,19 +1,3 @@
-message I8Data {
-  int32 value = 1;
-}
-
-message U8Data {
-  uint32 value = 1;
-}
-
-message I16Data {
-  int32 value = 1;
-}
-
-message U16Data {
-  uint32 value = 1;
-}
-
 message I32Data {
   int32 value = 1;
 }
@@ -32,4 +16,20 @@ message U64Data {
 
 message BoolData {
   bool value = 1;
+}
+
+message ArrayI32Data {
+  repeated int32 value = 1;
+}
+
+message ArrayU32Data {
+  repeated uint32 value = 1;
+}
+
+message ArrayI64Data {
+  repeated int64 value = 1;
+}
+
+message ArrayU64Data {
+  repeated uint64 value = 1;
 }

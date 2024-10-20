@@ -280,10 +280,11 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 <%
   config = data['config']
   input_params = [p for p in parameters if common_helpers.is_input_parameter(p)]
+  output_params = [p for p in parameters if common_helpers.is_output_parameter(p)]
   service_class_prefix = config["service_class_prefix"]
   request_param = service_helpers.get_request_param(function_name)
   response_param = service_helpers.get_response_param(function_name)
-  session_param = common_helpers.get_first_session_param(parameters)
+  session_param = common_helpers.get_first_session_param(parameters) 
   def construct_c_api_name(function_name):
       if function_name.startswith("Begin"):
           base_name = function_name[len("Begin"):]
@@ -295,11 +296,14 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   streaming_type = function_data.get('streaming_type', 'int32_t')
   coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
   grpc_streaming_type = service_helpers.get_grpc_streaming_type(streaming_type)
+  isArray = common_helpers.is_array(streaming_type)
 %>
 struct ${struct_name}
 {
     % for param in input_params:
+    % if not common_helpers.is_array(param['type']):
     ${param['type']} ${param['name']};
+    % endif
     % endfor
     ${service_class_prefix.lower()}_grpc::${grpc_streaming_type}Data data;
     std::shared_ptr<${service_class_prefix}LibraryInterface> library;
@@ -310,20 +314,11 @@ struct ${struct_name}
         return ::grpc::Status::CANCELLED;
     }
     try {
-        auto session_grpc_session = request->${session_param['name']}();
-        ${session_param['type']} ${session_param['name']} = session_repository_->access_session(session_grpc_session.name());
+        ${initialize_standard_input_param(function_name, session_param)}
         ${struct_name}* data = new ${struct_name}();
-        % for param in input_params:
-        <%
-        grpc_type = param.get('grpc_type', None)
-        %>
-        % if grpc_type != 'nidevice_grpc.Session':
-        data->${param['name']} = request->${param['name']}();
-        % else:
-        data->${param['name']} = ${session_param['name']};
-        % endif
-        % endfor
+        ${initialize_begin_input_param(function_name, input_params)}\
         data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
+        ${initialize_service_output_params(output_params)}
         ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
         ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data, *moniker);
         response->set_allocated_moniker(moniker);
@@ -334,6 +329,14 @@ struct ${struct_name}
     }
 }
 % if "Read" in function_name:
+<%
+  arg_string= service_helpers.create_args(parameters)
+  if not isArray:
+    arg_string = arg_string.replace("&moniker", "&value")
+  else:
+    arg_string = arg_string.replace(", &moniker", "").strip()
+  data_type = streaming_type.replace("[]", "")
+%>
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = (${struct_name}*)data;
@@ -341,12 +344,27 @@ struct ${struct_name}
     % for param in input_params:
     auto ${param['name']} = function_data->${param['name']};
     % endfor
+    % if isArray:
+    std::vector<${data_type}> array(size);
+    auto status = library->${c_api_name}(${arg_string});
+    if (status >= 0) {
+        std::transform(
+            array.begin(),
+            array.begin() + size,
+            function_data->data.mutable_value()->begin(),
+            [&](auto x) {
+                return x;
+            });
+        packedData.PackFrom(function_data->data);
+    }
+    % else:
     ${streaming_type} value = 0;
-    auto status = library->${c_api_name}(session, indicator, &value);
+    auto status = library->${c_api_name}(${arg_string});
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
+    % endif
     else
     {
         std::cout << "${moniker_function_name} error: " << status << std::endl;
@@ -354,15 +372,43 @@ struct ${struct_name}
     return ::grpc::Status::OK;
 }
 % elif "Write" in function_name:
+<%
+  arg_string= service_helpers.create_args(parameters)
+  if not isArray:
+    # Replace &moniker with &value
+    arg_string = arg_string.replace("&moniker", "value")
+  else:
+    # Remove &moniker and the preceding comma
+    arg_string = arg_string.replace(", &moniker", "").strip()
+  data_type = streaming_type.replace("[]", "")
+%>
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = (${struct_name}*)data;
     auto library = function_data->library;
-    % for param in input_params:
-    auto ${param['name']} = function_data->${param['name']};
-    % endfor
+    ${initialize_non_array_parameters(input_params)}
     ${grpc_streaming_type}Data ${grpc_streaming_type.lower()}_data;
     packedData.UnpackTo(&${grpc_streaming_type.lower()}_data);
+    % if isArray:
+    % if is_coerced_type_present:
+    auto data_array = ${grpc_streaming_type.lower()}_data.value();
+    auto array = std::vector<${data_type}>();
+    array.reserve(data_array.size());
+    std::transform(
+        data_array.begin(),
+        data_array.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<${data_type}>::min() || x > std::numeric_limits<${data_type}>::max()) {
+                  std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${data_type}");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<${data_type}>(x);
+        });
+    % else:
+    auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_data.value().data());
+    % endif
+    % else:
     ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
     % if is_coerced_type_present:
     if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
@@ -370,13 +416,54 @@ struct ${struct_name}
         throw nidevice_grpc::ValueOutOfRangeException(message);
     }
     % endif
-    auto status = library->${c_api_name}(session, control, value);
+    % endif
+    auto status = library->${c_api_name}(${arg_string});
     if (status < 0) {
         std::cout << "${moniker_function_name} error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
 % endif
+</%def>
+
+## Initialize an bgin input parameter for an API call.
+<%def name="initialize_begin_input_param(function_name, input_params)">\
+% for param in input_params:
+% if not common_helpers.is_array(param['type']):
+<%
+grpc_type = param.get('grpc_type', None)
+%>\
+% if grpc_type != 'nidevice_grpc.Session':
+data->${param['name']} = request->${param['name']}();
+% else:
+${initialize_session_begin_input_param(param)}
+% endif
+% endif
+% endfor
+</%def>
+
+## Initialize the input parameters to the API call.
+<%def name="initialize_session_begin_input_param(parameter)">\
+<%
+%>\
+data->${parameter['name']} = ${parameter['name']};
+</%def>
+
+<%def name="initialize_non_array_parameters(input_params)">
+% for param in input_params:
+  % if not common_helpers.is_array(param['type']):
+    auto ${param['name']} = function_data->${param['name']};
+  % endif
+% endfor
+</%def>
+
+<%def name="initialize_service_output_params(output_params)">
+% for param in output_params:
+% if common_helpers.is_array(param['type']):
+    data->data.mutable_value()->Reserve(request->size());
+    data->data.mutable_value()->Resize(request->size(), 0);
+% endif
+% endfor
 </%def>
 
 ## Initialize the input parameters to the API call.
