@@ -175,10 +175,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("timeout_error"): str,
         Optional("exclude_from_library"): bool,
         Optional("data_moniker_support"): bool,
-        Optional("streaming_type"): str,
-        Optional("coerced_type"): str,
-        Optional("use_moniker_struct"): str,
-        Optional("moniker_struct_type"): str,
+        Optional("moniker_streaming_type"): str,
     }
 )
 

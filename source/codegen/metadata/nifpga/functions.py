@@ -1039,321 +1039,48 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'BeginReadArrayI16': {
-        'exclude_from_library': True,
         'data_moniker_support': True,
-        'streaming_type': 'int16_t[]',
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'int16_t[]',
         'parameters': [
             {
                 'direction': 'in',
                 'name': 'session',
-                'type': 'NiFpga_Session',
+                'type': 'NiFpga_Session'
             },
             {
                 'direction': 'in',
                 'name': 'indicator',
-                'type': 'uint32_t',
+                'type': 'uint32_t'
             },
             {
-                'include_in_proto': False,
                 'direction': 'out',
+                'include_in_proto': False,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'size'
                 },
                 'type': 'int16_t[]'
-            }, 
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t',
-            },         
-            {
-                'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status',
-    },
-    'BeginReadArrayI8': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'int8_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session',
             },
             {
                 'direction': 'in',
-                'name': 'indicator',
-                'type': 'uint32_t',
+                'name': 'size',
+                'type': 'size_t'
             },
             {
-                'include_in_proto': False,
                 'direction': 'out',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'type': 'int8_t[]'
-            }, 
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t',
-            },         
-            {
-                'direction': 'out',
-                'name': 'moniker',
                 'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
                 'type': 'ni::data_monikers::Moniker'
             }
         ],
-        'returns': 'NiFpga_Status',
+        'returns': 'NiFpga_Status'
     },
     'BeginReadArrayI32': {
-        'exclude_from_library': True,
         'data_moniker_support': True,
-        'streaming_type': 'int32_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session',
-            },
-            {
-                'direction': 'in',
-                'name': 'indicator',
-                'type': 'uint32_t',
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'out',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'type': 'int32_t[]'
-            }, 
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t',
-            },         
-            {
-                'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status',
-    },
-    'BeginReadArrayI64': {
         'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'int64_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session',
-            },
-            {
-                'direction': 'in',
-                'name': 'indicator',
-                'type': 'uint32_t',
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'out',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'type': 'int64_t[]'
-            }, 
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t',
-            },         
-            {
-                'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status',
-    },
-    'BeginReadArrayU8': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'uint8_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session',
-            },
-            {
-                'direction': 'in',
-                'name': 'indicator',
-                'type': 'uint32_t',
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'out',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'type': 'uint8_t[]'
-            }, 
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t',
-            },         
-            {
-                'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status',
-    },
-    'BeginReadArrayU16': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'uint16_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session',
-            },
-            {
-                'direction': 'in',
-                'name': 'indicator',
-                'type': 'uint32_t',
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'out',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'type': 'uint16_t[]'
-            }, 
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t',
-            },         
-            {
-                'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status',
-    },
-    'BeginReadArrayU32': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'uint32_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session',
-            },
-            {
-                'direction': 'in',
-                'name': 'indicator',
-                'type': 'uint32_t',
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'out',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'type': 'uint32_t[]'
-            }, 
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t',
-            },         
-            {
-                'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status',
-    },
-    'BeginReadArrayU64': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'uint64_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session',
-            },
-            {
-                'direction': 'in',
-                'name': 'indicator',
-                'type': 'uint32_t',
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'out',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'type': 'uint64_t[]'
-            }, 
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t',
-            },         
-            {
-                'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status',
-    },
-    'BeginWriteArrayI16': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'int16_t[]',
+        'moniker_streaming_type': 'int32_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1362,18 +1089,18 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'control',
+                'name': 'indicator',
                 'type': 'uint32_t'
             },
             {
+                'direction': 'out',
                 'include_in_proto': False,
-                'direction': 'in',
                 'name': 'array',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'passed-in',
                     'value': 'size'
                 },
-                'type': 'int16_t[]'
+                'type': 'int32_t[]'
             },
             {
                 'direction': 'in',
@@ -1382,17 +1109,17 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'moniker',
                 'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
                 'type': 'ni::data_monikers::Moniker'
             }
         ],
         'returns': 'NiFpga_Status'
     },
-    'BeginWriteArrayI8': {
-        'exclude_from_library': True,
+    'BeginReadArrayI64': {
         'data_moniker_support': True,
-        'streaming_type': 'int8_t[]',
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'int64_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1401,15 +1128,54 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'control',
+                'name': 'indicator',
                 'type': 'uint32_t'
             },
             {
+                'direction': 'out',
                 'include_in_proto': False,
-                'direction': 'in',
                 'name': 'array',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'int64_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginReadArrayI8': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'int8_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'indicator',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'passed-in',
                     'value': 'size'
                 },
                 'type': 'int8_t[]'
@@ -1421,17 +1187,17 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'moniker',
                 'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
                 'type': 'ni::data_monikers::Moniker'
             }
         ],
         'returns': 'NiFpga_Status'
     },
-    'BeginWriteArrayI32': {
-        'exclude_from_library': True,
+    'BeginReadArrayU16': {
         'data_moniker_support': True,
-        'streaming_type': 'int32_t[]',
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'uint16_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1440,93 +1206,15 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'control',
+                'name': 'indicator',
                 'type': 'uint32_t'
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'in',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'type': 'int32_t[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t'
             },
             {
                 'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status'
-    },
-    'BeginWriteArrayI64': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'int64_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session'
-            },
-            {
-                'direction': 'in',
-                'name': 'control',
-                'type': 'uint32_t'
-            },
-            {
                 'include_in_proto': False,
-                'direction': 'in',
                 'name': 'array',
                 'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'type': 'int64_t[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t'
-            },
-            {
-                'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status'
-    },
-    'BeginWriteArrayU16': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'uint16_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session'
-            },
-            {
-                'direction': 'in',
-                'name': 'control',
-                'type': 'uint32_t'
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'in',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'passed-in',
                     'value': 'size'
                 },
                 'type': 'uint16_t[]'
@@ -1538,17 +1226,17 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'moniker',
                 'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
                 'type': 'ni::data_monikers::Moniker'
             }
         ],
         'returns': 'NiFpga_Status'
     },
-    'BeginWriteArrayU8': {
-        'exclude_from_library': True,
+    'BeginReadArrayU32': {
         'data_moniker_support': True,
-        'streaming_type': 'uint8_t[]',
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'uint32_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1557,54 +1245,15 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'control',
+                'name': 'indicator',
                 'type': 'uint32_t'
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'in',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'type': 'uint8_t[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'size_t'
             },
             {
                 'direction': 'out',
-                'name': 'moniker',
-                'grpc_type': 'ni.data_monikers.Moniker',
-                'type': 'ni::data_monikers::Moniker'
-            }
-        ],
-        'returns': 'NiFpga_Status'
-    },
-    'BeginWriteArrayU32': {
-        'exclude_from_library': True,
-        'data_moniker_support': True,
-        'streaming_type': 'uint32_t[]',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'NiFpga_Session'
-            },
-            {
-                'direction': 'in',
-                'name': 'control',
-                'type': 'uint32_t'
-            },
-            {
                 'include_in_proto': False,
-                'direction': 'in',
                 'name': 'array',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'passed-in',
                     'value': 'size'
                 },
                 'type': 'uint32_t[]'
@@ -1616,17 +1265,17 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'moniker',
                 'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
                 'type': 'ni::data_monikers::Moniker'
             }
         ],
         'returns': 'NiFpga_Status'
     },
-    'BeginWriteArrayU64': {
-        'exclude_from_library': True,
+    'BeginReadArrayU64': {
         'data_moniker_support': True,
-        'streaming_type': 'uint64_t[]',
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'uint64_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1635,15 +1284,15 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'control',
+                'name': 'indicator',
                 'type': 'uint32_t'
             },
             {
+                'direction': 'out',
                 'include_in_proto': False,
-                'direction': 'in',
                 'name': 'array',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'passed-in',
                     'value': 'size'
                 },
                 'type': 'uint64_t[]'
@@ -1655,8 +1304,47 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'moniker',
                 'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginReadArrayU8': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'uint8_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'indicator',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uint8_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
                 'type': 'ni::data_monikers::Moniker'
             }
         ],
@@ -1665,7 +1353,7 @@ functions = {
     'BeginReadI16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'int16_t',
+        'moniker_streaming_type': 'int16_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1689,7 +1377,7 @@ functions = {
     'BeginReadI32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'int32_t',
+        'moniker_streaming_type': 'int32_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1713,7 +1401,7 @@ functions = {
     'BeginReadI64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'int64_t',
+        'moniker_streaming_type': 'int64_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1737,7 +1425,7 @@ functions = {
     'BeginReadI8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'int8_t',
+        'moniker_streaming_type': 'int8_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1761,7 +1449,7 @@ functions = {
     'BeginReadU16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'uint16_t',
+        'moniker_streaming_type': 'uint16_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1785,7 +1473,7 @@ functions = {
     'BeginReadU32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'uint32_t',
+        'moniker_streaming_type': 'uint32_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1809,7 +1497,7 @@ functions = {
     'BeginReadU64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'uint64_t',
+        'moniker_streaming_type': 'uint64_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1833,7 +1521,7 @@ functions = {
     'BeginReadU8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'uint8_t',
+        'moniker_streaming_type': 'uint8_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1854,10 +1542,322 @@ functions = {
         ],
         'returns': 'NiFpga_Status'
     },
+    'BeginWriteArrayI16': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'int16_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'int16_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginWriteArrayI32': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'int32_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'int32_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginWriteArrayI64': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'int64_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'int64_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginWriteArrayI8': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'int8_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'int8_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginWriteArrayU16': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'uint16_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'uint16_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginWriteArrayU32': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'uint32_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'uint32_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginWriteArrayU64': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'uint64_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'uint64_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
+    'BeginWriteArrayU8': {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'moniker_streaming_type': 'uint8_t[]',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'NiFpga_Session'
+            },
+            {
+                'direction': 'in',
+                'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'array',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'uint8_t[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'ni.data_monikers.Moniker',
+                'name': 'moniker',
+                'type': 'ni::data_monikers::Moniker'
+            }
+        ],
+        'returns': 'NiFpga_Status'
+    },
     'BeginWriteI16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'int16_t',
+        'moniker_streaming_type': 'int16_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1881,7 +1881,7 @@ functions = {
     'BeginWriteI32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'int32_t',
+        'moniker_streaming_type': 'int32_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1905,7 +1905,7 @@ functions = {
     'BeginWriteI64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'int64_t',
+        'moniker_streaming_type': 'int64_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1929,7 +1929,7 @@ functions = {
     'BeginWriteI8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'int8_t',
+        'moniker_streaming_type': 'int8_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1953,7 +1953,7 @@ functions = {
     'BeginWriteU16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'uint16_t',
+        'moniker_streaming_type': 'uint16_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1977,7 +1977,7 @@ functions = {
     'BeginWriteU32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'uint32_t',
+        'moniker_streaming_type': 'uint32_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -2001,7 +2001,7 @@ functions = {
     'BeginWriteU64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'uint64_t',
+        'moniker_streaming_type': 'uint64_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -2025,7 +2025,7 @@ functions = {
     'BeginWriteU8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'streaming_type': 'uint8_t',
+        'moniker_streaming_type': 'uint8_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -3578,7 +3578,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'value',
-                'type': 'int64_t',
+                'type': 'int64_t'
             }
         ],
         'returns': 'NiFpga_Status'

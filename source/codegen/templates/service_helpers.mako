@@ -293,7 +293,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
   moniker_function_name = service_helpers.create_moniker_function_name(function_name)
   c_api_name = construct_c_api_name(function_name)
-  streaming_type = function_data.get('streaming_type', 'int32_t')
+  streaming_type = function_data.get('moniker_streaming_type', 'int32_t')
   coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
   grpc_streaming_type = service_helpers.get_grpc_streaming_type(streaming_type)
   isArray = common_helpers.is_array(streaming_type)

@@ -21,21 +21,13 @@ service NiFpga {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc AcknowledgeIrqs(AcknowledgeIrqsRequest) returns (AcknowledgeIrqsResponse);
   rpc BeginReadArrayI16(BeginReadArrayI16Request) returns (BeginReadArrayI16Response);
-  rpc BeginReadArrayI8(BeginReadArrayI8Request) returns (BeginReadArrayI8Response);
   rpc BeginReadArrayI32(BeginReadArrayI32Request) returns (BeginReadArrayI32Response);
   rpc BeginReadArrayI64(BeginReadArrayI64Request) returns (BeginReadArrayI64Response);
-  rpc BeginReadArrayU8(BeginReadArrayU8Request) returns (BeginReadArrayU8Response);
+  rpc BeginReadArrayI8(BeginReadArrayI8Request) returns (BeginReadArrayI8Response);
   rpc BeginReadArrayU16(BeginReadArrayU16Request) returns (BeginReadArrayU16Response);
   rpc BeginReadArrayU32(BeginReadArrayU32Request) returns (BeginReadArrayU32Response);
   rpc BeginReadArrayU64(BeginReadArrayU64Request) returns (BeginReadArrayU64Response);
-  rpc BeginWriteArrayI16(BeginWriteArrayI16Request) returns (BeginWriteArrayI16Response);
-  rpc BeginWriteArrayI8(BeginWriteArrayI8Request) returns (BeginWriteArrayI8Response);
-  rpc BeginWriteArrayI32(BeginWriteArrayI32Request) returns (BeginWriteArrayI32Response);
-  rpc BeginWriteArrayI64(BeginWriteArrayI64Request) returns (BeginWriteArrayI64Response);
-  rpc BeginWriteArrayU16(BeginWriteArrayU16Request) returns (BeginWriteArrayU16Response);
-  rpc BeginWriteArrayU8(BeginWriteArrayU8Request) returns (BeginWriteArrayU8Response);
-  rpc BeginWriteArrayU32(BeginWriteArrayU32Request) returns (BeginWriteArrayU32Response);
-  rpc BeginWriteArrayU64(BeginWriteArrayU64Request) returns (BeginWriteArrayU64Response);
+  rpc BeginReadArrayU8(BeginReadArrayU8Request) returns (BeginReadArrayU8Response);
   rpc BeginReadI16(BeginReadI16Request) returns (BeginReadI16Response);
   rpc BeginReadI32(BeginReadI32Request) returns (BeginReadI32Response);
   rpc BeginReadI64(BeginReadI64Request) returns (BeginReadI64Response);
@@ -44,6 +36,14 @@ service NiFpga {
   rpc BeginReadU32(BeginReadU32Request) returns (BeginReadU32Response);
   rpc BeginReadU64(BeginReadU64Request) returns (BeginReadU64Response);
   rpc BeginReadU8(BeginReadU8Request) returns (BeginReadU8Response);
+  rpc BeginWriteArrayI16(BeginWriteArrayI16Request) returns (BeginWriteArrayI16Response);
+  rpc BeginWriteArrayI32(BeginWriteArrayI32Request) returns (BeginWriteArrayI32Response);
+  rpc BeginWriteArrayI64(BeginWriteArrayI64Request) returns (BeginWriteArrayI64Response);
+  rpc BeginWriteArrayI8(BeginWriteArrayI8Request) returns (BeginWriteArrayI8Response);
+  rpc BeginWriteArrayU16(BeginWriteArrayU16Request) returns (BeginWriteArrayU16Response);
+  rpc BeginWriteArrayU32(BeginWriteArrayU32Request) returns (BeginWriteArrayU32Response);
+  rpc BeginWriteArrayU64(BeginWriteArrayU64Request) returns (BeginWriteArrayU64Response);
+  rpc BeginWriteArrayU8(BeginWriteArrayU8Request) returns (BeginWriteArrayU8Response);
   rpc BeginWriteI16(BeginWriteI16Request) returns (BeginWriteI16Response);
   rpc BeginWriteI32(BeginWriteI32Request) returns (BeginWriteI32Response);
   rpc BeginWriteI64(BeginWriteI64Request) returns (BeginWriteI64Response);
@@ -295,17 +295,6 @@ message BeginReadArrayI16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message BeginReadArrayI8Request {
-  nidevice_grpc.Session session = 1;
-  uint32 indicator = 2;
-  uint32 size = 3;
-}
-
-message BeginReadArrayI8Response {
-  int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
-}
-
 message BeginReadArrayI32Request {
   nidevice_grpc.Session session = 1;
   uint32 indicator = 2;
@@ -328,13 +317,13 @@ message BeginReadArrayI64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message BeginReadArrayU8Request {
+message BeginReadArrayI8Request {
   nidevice_grpc.Session session = 1;
   uint32 indicator = 2;
   uint32 size = 3;
 }
 
-message BeginReadArrayU8Response {
+message BeginReadArrayI8Response {
   int32 status = 1;
   ni.data_monikers.Moniker moniker = 2;
 }
@@ -372,82 +361,13 @@ message BeginReadArrayU64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message BeginWriteArrayI16Request {
+message BeginReadArrayU8Request {
   nidevice_grpc.Session session = 1;
-  uint32 control = 2;
+  uint32 indicator = 2;
+  uint32 size = 3;
 }
 
-message BeginWriteArrayI16Response {
-  int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
-}
-
-message BeginWriteArrayI8Request {
-  nidevice_grpc.Session session = 1;
-  uint32 control = 2;
-}
-
-message BeginWriteArrayI8Response {
-  int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
-}
-
-message BeginWriteArrayI32Request {
-  nidevice_grpc.Session session = 1;
-  uint32 control = 2;
-}
-
-message BeginWriteArrayI32Response {
-  int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
-}
-
-message BeginWriteArrayI64Request {
-  nidevice_grpc.Session session = 1;
-  uint32 control = 2;
-}
-
-message BeginWriteArrayI64Response {
-  int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
-}
-
-message BeginWriteArrayU16Request {
-  nidevice_grpc.Session session = 1;
-  uint32 control = 2;
-}
-
-message BeginWriteArrayU16Response {
-  int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
-}
-
-message BeginWriteArrayU8Request {
-  nidevice_grpc.Session session = 1;
-  uint32 control = 2;
-}
-
-message BeginWriteArrayU8Response {
-  int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
-}
-
-message BeginWriteArrayU32Request {
-  nidevice_grpc.Session session = 1;
-  uint32 control = 2;
-}
-
-message BeginWriteArrayU32Response {
-  int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
-}
-
-message BeginWriteArrayU64Request {
-  nidevice_grpc.Session session = 1;
-  uint32 control = 2;
-}
-
-message BeginWriteArrayU64Response {
+message BeginReadArrayU8Response {
   int32 status = 1;
   ni.data_monikers.Moniker moniker = 2;
 }
@@ -528,6 +448,86 @@ message BeginReadU8Request {
 }
 
 message BeginReadU8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message BeginWriteArrayU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU8Response {
   int32 status = 1;
   ni.data_monikers.Moniker moniker = 2;
 }
