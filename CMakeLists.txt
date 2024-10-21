@@ -129,7 +129,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nifpga" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxvna" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "nirfsg_restricted" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket" "visa")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nifpga" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxpulse" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxvna" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "nirfsg_restricted" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket" "visa")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -828,6 +828,8 @@ if(WIN32)
         "source/tests/system/nirfmxlte_session_tests.cpp"
         "source/tests/system/nirfmxnr_driver_api_tests.cpp"
         "source/tests/system/nirfmxnr_session_tests.cpp"
+        "source/tests/system/nirfmxpulse_driver_api_tests.cpp"
+        "source/tests/system/nirfmxpulse_session_tests.cpp"
         "source/tests/system/nirfmxspecan_driver_api_tests.cpp"
         "source/tests/system/nirfmxspecan_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxspecan_session_tests.cpp"
