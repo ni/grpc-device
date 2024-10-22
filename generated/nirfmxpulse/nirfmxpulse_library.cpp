@@ -27,10 +27,97 @@ NiRFmxPulseLibrary::NiRFmxPulseLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   if (!loaded) {
     return;
   }
+  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxPulse_AbortMeasurements"));
+  function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxPulse_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxPulse_AnalyzeIQ1WaveformSplit"));
+  function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxPulse_AutoLevel"));
+  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxPulse_BuildSignalString"));
+  function_pointers_.Cfg1ReferenceWaveform = reinterpret_cast<Cfg1ReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxPulse_Cfg1ReferenceWaveform"));
+  function_pointers_.Cfg1ReferenceWaveformSplit = reinterpret_cast<Cfg1ReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxPulse_Cfg1ReferenceWaveformSplit"));
+  function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgDigitalEdgeTrigger"));
+  function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgExternalAttenuation"));
+  function_pointers_.CfgFrequency = reinterpret_cast<CfgFrequencyPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgFrequency"));
+  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_->get_function_pointer("RFmxPulse_CfgFrequencyReference"));
+  function_pointers_.CfgIQPowerEdgeTrigger = reinterpret_cast<CfgIQPowerEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgIQPowerEdgeTrigger"));
+  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgMechanicalAttenuation"));
+  function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgRF"));
+  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgRFAttenuation"));
+  function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgReferenceLevel"));
+  function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgSoftwareEdgeTrigger"));
+  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_->get_function_pointer("RFmxPulse_CheckMeasurementStatus"));
+  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_->get_function_pointer("RFmxPulse_ClearAllNamedResults"));
+  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_->get_function_pointer("RFmxPulse_ClearNamedResult"));
+  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxPulse_CloneSignalConfiguration"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_->get_function_pointer("RFmxPulse_Close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_->get_function_pointer("RFmxPulse_Commit"));
+  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxPulse_CreateSignalConfiguration"));
+  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxPulse_DeleteSignalConfiguration"));
+  function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_->get_function_pointer("RFmxPulse_DisableTrigger"));
+  function_pointers_.FetchAcquiredAmplitudeTrace = reinterpret_cast<FetchAcquiredAmplitudeTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchAcquiredAmplitudeTrace"));
+  function_pointers_.FetchAmplitudeTrace = reinterpret_cast<FetchAmplitudeTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchAmplitudeTrace"));
+  function_pointers_.FetchBurstIntrapulseStabilityTrace = reinterpret_cast<FetchBurstIntrapulseStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchBurstIntrapulseStabilityTrace"));
+  function_pointers_.FetchBurstSelectedPositionStabilityTrace = reinterpret_cast<FetchBurstSelectedPositionStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchBurstSelectedPositionStabilityTrace"));
+  function_pointers_.FetchFrequencyTrace = reinterpret_cast<FetchFrequencyTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchFrequencyTrace"));
+  function_pointers_.FetchIQTrace = reinterpret_cast<FetchIQTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchIQTrace"));
+  function_pointers_.FetchIQTraceSplit = reinterpret_cast<FetchIQTraceSplitPtr>(shared_library_->get_function_pointer("RFmxPulse_FetchIQTraceSplit"));
+  function_pointers_.FetchIntrapulseStabilityTrace = reinterpret_cast<FetchIntrapulseStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchIntrapulseStabilityTrace"));
+  function_pointers_.FetchMultipleMeasurementPointsStabilityTrace = reinterpret_cast<FetchMultipleMeasurementPointsStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchMultipleMeasurementPointsStabilityTrace"));
+  function_pointers_.FetchPhaseWrappedTrace = reinterpret_cast<FetchPhaseWrappedTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchPhaseWrappedTrace"));
+  function_pointers_.FetchPulseToPulseStabilityTrace = reinterpret_cast<FetchPulseToPulseStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchPulseToPulseStabilityTrace"));
+  function_pointers_.FetchStabilityTrace = reinterpret_cast<FetchStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchStabilityTrace"));
+  function_pointers_.FetchTimeSidelobeTrace = reinterpret_cast<FetchTimeSidelobeTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchTimeSidelobeTrace"));
+  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAllNamedResultNames"));
+  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeF32"));
+  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeF32Array"));
+  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeF64"));
+  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeF64Array"));
+  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeI16"));
+  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeI32"));
+  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeI32Array"));
+  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeI64"));
+  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeI64Array"));
+  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeI8"));
+  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeNIComplexSingleArray"));
+  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeString"));
+  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeU16"));
+  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeU32"));
+  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeU32Array"));
+  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeU64Array"));
+  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeU8"));
+  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_GetAttributeU8Array"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxPulse_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxPulse_GetErrorString"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxPulse_Initialize"));
+  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxPulse_InitializeFromNIRFSASession"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("RFmxPulse_Initiate"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("RFmxPulse_ResetAttribute"));
+  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_->get_function_pointer("RFmxPulse_ResetToDefault"));
+  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_->get_function_pointer("RFmxPulse_SelectMeasurements"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxPulse_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeF32"));
+  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeF32Array"));
+  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeF64"));
+  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeF64Array"));
+  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeI16"));
+  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeI32"));
+  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeI32Array"));
+  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeI64"));
+  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeI64Array"));
+  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeI8"));
+  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeNIComplexSingleArray"));
+  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeString"));
+  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeU16"));
+  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeU32"));
+  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeU32Array"));
+  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeU64Array"));
+  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeU8"));
+  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_->get_function_pointer("RFmxPulse_SetAttributeU8Array"));
+  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_->get_function_pointer("RFmxPulse_WaitForAcquisitionComplete"));
+  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_->get_function_pointer("RFmxPulse_WaitForMeasurementComplete"));
 }
 
 NiRFmxPulseLibrary::~NiRFmxPulseLibrary()
@@ -44,12 +131,484 @@ NiRFmxPulseLibrary::~NiRFmxPulseLibrary()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
+int32 NiRFmxPulseLibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.AbortMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_AbortMeasurements.");
+  }
+  return function_pointers_.AbortMeasurements(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxPulseLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1Waveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_AnalyzeIQ1Waveform.");
+  }
+  return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 NiRFmxPulseLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1WaveformSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_AnalyzeIQ1WaveformSplit.");
+  }
+  return function_pointers_.AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
+}
+
+int32 NiRFmxPulseLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 bandwidth, float64 measurementInterval, float64* referenceLevel)
+{
+  if (!function_pointers_.AutoLevel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_AutoLevel.");
+  }
+  return function_pointers_.AutoLevel(instrumentHandle, selectorString, bandwidth, measurementInterval, referenceLevel);
+}
+
+int32 NiRFmxPulseLibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildSignalString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_BuildSignalString.");
+  }
+  return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+}
+
+int32 NiRFmxPulseLibrary::Cfg1ReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize)
+{
+  if (!function_pointers_.Cfg1ReferenceWaveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_Cfg1ReferenceWaveform.");
+  }
+  return function_pointers_.Cfg1ReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::Cfg1ReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize)
+{
+  if (!function_pointers_.Cfg1ReferenceWaveformSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_Cfg1ReferenceWaveformSplit.");
+  }
+  return function_pointers_.Cfg1ReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, referenceWaveformI, referenceWaveformQ, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgDigitalEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgDigitalEdgeTrigger.");
+  }
+  return function_pointers_.CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
+}
+
+int32 NiRFmxPulseLibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation)
+{
+  if (!function_pointers_.CfgExternalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgExternalAttenuation.");
+  }
+  return function_pointers_.CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
+}
+
+int32 NiRFmxPulseLibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency)
+{
+  if (!function_pointers_.CfgFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgFrequency.");
+  }
+  return function_pointers_.CfgFrequency(instrumentHandle, selectorString, centerFrequency);
+}
+
+int32 NiRFmxPulseLibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
+{
+  if (!function_pointers_.CfgFrequencyReference) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgFrequencyReference.");
+  }
+  return function_pointers_.CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+}
+
+int32 NiRFmxPulseLibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char iqPowerEdgeSource[], int32 iqPowerEdgeSlope, float64 iqPowerEdgeLevel, float64 triggerDelay, int32 triggerMinQuietTimeMode, float64 triggerMinQuietTimeDuration, int32 iqPowerEdgeLevelType, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgIQPowerEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgIQPowerEdgeTrigger.");
+  }
+  return function_pointers_.CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, triggerMinQuietTimeMode, triggerMinQuietTimeDuration, iqPowerEdgeLevelType, enableTrigger);
+}
+
+int32 NiRFmxPulseLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
+{
+  if (!function_pointers_.CfgMechanicalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgMechanicalAttenuation.");
+  }
+  return function_pointers_.CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+}
+
+int32 NiRFmxPulseLibrary::CfgRF(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency, float64 referenceLevel, float64 externalAttenuation)
+{
+  if (!function_pointers_.CfgRF) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgRF.");
+  }
+  return function_pointers_.CfgRF(instrumentHandle, selectorString, centerFrequency, referenceLevel, externalAttenuation);
+}
+
+int32 NiRFmxPulseLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
+{
+  if (!function_pointers_.CfgRFAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgRFAttenuation.");
+  }
+  return function_pointers_.CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+}
+
+int32 NiRFmxPulseLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
+{
+  if (!function_pointers_.CfgReferenceLevel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgReferenceLevel.");
+  }
+  return function_pointers_.CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
+}
+
+int32 NiRFmxPulseLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CfgSoftwareEdgeTrigger.");
+  }
+  return function_pointers_.CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
+}
+
+int32 NiRFmxPulseLibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone)
+{
+  if (!function_pointers_.CheckMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CheckMeasurementStatus.");
+  }
+  return function_pointers_.CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
+}
+
+int32 NiRFmxPulseLibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearAllNamedResults) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_ClearAllNamedResults.");
+  }
+  return function_pointers_.ClearAllNamedResults(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxPulseLibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearNamedResult) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_ClearNamedResult.");
+  }
+  return function_pointers_.ClearNamedResult(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxPulseLibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
+{
+  if (!function_pointers_.CloneSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CloneSignalConfiguration.");
+  }
+  return function_pointers_.CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
+}
+
 int32 NiRFmxPulseLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
 {
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_Close.");
   }
   return function_pointers_.Close(instrumentHandle, forceDestroy);
+}
+
+int32 NiRFmxPulseLibrary::Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.Commit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_Commit.");
+  }
+  return function_pointers_.Commit(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxPulseLibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.CreateSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_CreateSignalConfiguration.");
+  }
+  return function_pointers_.CreateSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxPulseLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.DeleteSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_DeleteSignalConfiguration.");
+  }
+  return function_pointers_.DeleteSignalConfiguration(instrumentHandle, signalName);
+}
+
+int32 NiRFmxPulseLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.DisableTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_DisableTrigger.");
+  }
+  return function_pointers_.DisableTrigger(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxPulseLibrary::FetchAcquiredAmplitudeTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, float64* sampleDuration, float32 amplitude[], int32 amplitudeArraySize, int32* amplitudeActualArraySize, int32 startIndex[], float64 startTimeStamp[], int32 startArraySize, int32* startActualArraySize)
+{
+  if (!function_pointers_.FetchAcquiredAmplitudeTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchAcquiredAmplitudeTrace.");
+  }
+  return function_pointers_.FetchAcquiredAmplitudeTrace(instrumentHandle, selectorString, arraySize, sampleDuration, amplitude, amplitudeArraySize, amplitudeActualArraySize, startIndex, startTimeStamp, startArraySize, startActualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchAmplitudeTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 amplitude[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchAmplitudeTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchAmplitudeTrace.");
+  }
+  return function_pointers_.FetchAmplitudeTrace(instrumentHandle, selectorString, timeout, x0, dx, amplitude, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchBurstIntrapulseStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 intrapulseAverageAmplitudeStability[], float32 intrapulseAveragePhaseStability[], float32 intrapulseAverageTotalStability[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchBurstIntrapulseStabilityTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchBurstIntrapulseStabilityTrace.");
+  }
+  return function_pointers_.FetchBurstIntrapulseStabilityTrace(instrumentHandle, selectorString, timeout, x0, dx, intrapulseAverageAmplitudeStability, intrapulseAveragePhaseStability, intrapulseAverageTotalStability, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchBurstSelectedPositionStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 pulseAmplitudeStability[], float32 pulsePhaseStability[], float32 pulseTotalStability[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchBurstSelectedPositionStabilityTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchBurstSelectedPositionStabilityTrace.");
+  }
+  return function_pointers_.FetchBurstSelectedPositionStabilityTrace(instrumentHandle, selectorString, timeout, x0, dx, pulseAmplitudeStability, pulsePhaseStability, pulseTotalStability, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchFrequencyTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequency[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchFrequencyTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchFrequencyTrace.");
+  }
+  return function_pointers_.FetchFrequencyTrace(instrumentHandle, selectorString, timeout, x0, dx, frequency, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchIQTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle iqData[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchIQTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchIQTrace.");
+  }
+  return function_pointers_.FetchIQTrace(instrumentHandle, selectorString, timeout, x0, dx, iqData, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchIQTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqDataI[], float32 iqDataQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchIQTraceSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchIQTraceSplit.");
+  }
+  return function_pointers_.FetchIQTraceSplit(instrumentHandle, selectorString, timeout, x0, dx, iqDataI, iqDataQ, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchIntrapulseStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 intrapulseAmplitudeStability[], float32 intrapulsePhaseStability[], float32 intrapulseTotalStability[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchIntrapulseStabilityTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchIntrapulseStabilityTrace.");
+  }
+  return function_pointers_.FetchIntrapulseStabilityTrace(instrumentHandle, selectorString, timeout, x0, dx, intrapulseAmplitudeStability, intrapulsePhaseStability, intrapulseTotalStability, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchMultipleMeasurementPointsStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 pulseAverageAmplitudeStability[], float32 pulseAveragePhaseStability[], float32 pulseAverageTotalStability[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchMultipleMeasurementPointsStabilityTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchMultipleMeasurementPointsStabilityTrace.");
+  }
+  return function_pointers_.FetchMultipleMeasurementPointsStabilityTrace(instrumentHandle, selectorString, timeout, x0, dx, pulseAverageAmplitudeStability, pulseAveragePhaseStability, pulseAverageTotalStability, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchPhaseWrappedTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 wrappedPhase[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchPhaseWrappedTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchPhaseWrappedTrace.");
+  }
+  return function_pointers_.FetchPhaseWrappedTrace(instrumentHandle, selectorString, timeout, x0, dx, wrappedPhase, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchPulseToPulseStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 pulseIndex[], float64 pulseToPulseAmplitudeStability[], float64 pulseToPulsePhaseStability[], float64 pulseToPulseTotalStability[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchPulseToPulseStabilityTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchPulseToPulseStabilityTrace.");
+  }
+  return function_pointers_.FetchPulseToPulseStabilityTrace(instrumentHandle, selectorString, timeout, pulseIndex, pulseToPulseAmplitudeStability, pulseToPulsePhaseStability, pulseToPulseTotalStability, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 pulseAmplitudeStability[], float32 pulsePhaseStability[], float32 pulseTotalStability[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchStabilityTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchStabilityTrace.");
+  }
+  return function_pointers_.FetchStabilityTrace(instrumentHandle, selectorString, timeout, x0, dx, pulseAmplitudeStability, pulsePhaseStability, pulseTotalStability, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchTimeSidelobeTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 timeSidelobe[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchTimeSidelobeTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchTimeSidelobeTrace.");
+  }
+  return function_pointers_.FetchTimeSidelobeTrace(instrumentHandle, selectorString, timeout, x0, dx, timeSidelobe, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
+{
+  if (!function_pointers_.GetAllNamedResultNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAllNamedResultNames.");
+  }
+  return function_pointers_.GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
+{
+  if (!function_pointers_.GetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeF32.");
+  }
+  return function_pointers_.GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeF32Array.");
+  }
+  return function_pointers_.GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
+{
+  if (!function_pointers_.GetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeF64.");
+  }
+  return function_pointers_.GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeF64Array.");
+  }
+  return function_pointers_.GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
+{
+  if (!function_pointers_.GetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeI16.");
+  }
+  return function_pointers_.GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
+{
+  if (!function_pointers_.GetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeI32.");
+  }
+  return function_pointers_.GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeI32Array.");
+  }
+  return function_pointers_.GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
+{
+  if (!function_pointers_.GetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeI64.");
+  }
+  return function_pointers_.GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeI64Array.");
+  }
+  return function_pointers_.GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
+{
+  if (!function_pointers_.GetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeI8.");
+  }
+  return function_pointers_.GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeI8Array.");
+  }
+  return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeNIComplexDoubleArray.");
+  }
+  return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeNIComplexSingleArray.");
+  }
+  return function_pointers_.GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
+{
+  if (!function_pointers_.GetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeString.");
+  }
+  return function_pointers_.GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
+{
+  if (!function_pointers_.GetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeU16.");
+  }
+  return function_pointers_.GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
+{
+  if (!function_pointers_.GetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeU32.");
+  }
+  return function_pointers_.GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeU32Array.");
+  }
+  return function_pointers_.GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeU64Array.");
+  }
+  return function_pointers_.GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
+{
+  if (!function_pointers_.GetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeU8.");
+  }
+  return function_pointers_.GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_GetAttributeU8Array.");
+  }
+  return function_pointers_.GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
 }
 
 int32 NiRFmxPulseLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
@@ -74,6 +633,230 @@ int32 NiRFmxPulseLibrary::Initialize(char resourceName[], char optionString[], n
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_Initialize.");
   }
   return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
+}
+
+int32 NiRFmxPulseLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
+{
+  if (!function_pointers_.InitializeFromNIRFSASession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_InitializeFromNIRFSASession.");
+  }
+  return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, handleOut);
+}
+
+int32 NiRFmxPulseLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
+{
+  if (!function_pointers_.Initiate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_Initiate.");
+  }
+  return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
+}
+
+int32 NiRFmxPulseLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
+{
+  if (!function_pointers_.ResetAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_ResetAttribute.");
+  }
+  return function_pointers_.ResetAttribute(instrumentHandle, selectorString, attributeID);
+}
+
+int32 NiRFmxPulseLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ResetToDefault) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_ResetToDefault.");
+  }
+  return function_pointers_.ResetToDefault(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxPulseLibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
+{
+  if (!function_pointers_.SelectMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SelectMeasurements.");
+  }
+  return function_pointers_.SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
+}
+
+int32 NiRFmxPulseLibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
+{
+  if (!function_pointers_.SendSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SendSoftwareEdgeTrigger.");
+  }
+  return function_pointers_.SendSoftwareEdgeTrigger(instrumentHandle);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
+{
+  if (!function_pointers_.SetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeF32.");
+  }
+  return function_pointers_.SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeF32Array.");
+  }
+  return function_pointers_.SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
+{
+  if (!function_pointers_.SetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeF64.");
+  }
+  return function_pointers_.SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeF64Array.");
+  }
+  return function_pointers_.SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
+{
+  if (!function_pointers_.SetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeI16.");
+  }
+  return function_pointers_.SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
+{
+  if (!function_pointers_.SetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeI32.");
+  }
+  return function_pointers_.SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeI32Array.");
+  }
+  return function_pointers_.SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
+{
+  if (!function_pointers_.SetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeI64.");
+  }
+  return function_pointers_.SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeI64Array.");
+  }
+  return function_pointers_.SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
+{
+  if (!function_pointers_.SetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeI8.");
+  }
+  return function_pointers_.SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeI8Array.");
+  }
+  return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeNIComplexDoubleArray.");
+  }
+  return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeNIComplexSingleArray.");
+  }
+  return function_pointers_.SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
+{
+  if (!function_pointers_.SetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeString.");
+  }
+  return function_pointers_.SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
+{
+  if (!function_pointers_.SetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeU16.");
+  }
+  return function_pointers_.SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
+{
+  if (!function_pointers_.SetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeU32.");
+  }
+  return function_pointers_.SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeU32Array.");
+  }
+  return function_pointers_.SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeU64Array.");
+  }
+  return function_pointers_.SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
+{
+  if (!function_pointers_.SetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeU8.");
+  }
+  return function_pointers_.SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+}
+
+int32 NiRFmxPulseLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_SetAttributeU8Array.");
+  }
+  return function_pointers_.SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
+{
+  if (!function_pointers_.WaitForAcquisitionComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_WaitForAcquisitionComplete.");
+  }
+  return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
+}
+
+int32 NiRFmxPulseLibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  if (!function_pointers_.WaitForMeasurementComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_WaitForMeasurementComplete.");
+  }
+  return function_pointers_.WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
 }
 
 }  // namespace nirfmxpulse_grpc

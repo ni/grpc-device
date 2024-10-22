@@ -27,9 +27,11 @@ namespace nirfmxpulse_grpc {
   NiRFmxPulseService::NiRFmxPulseService(
       LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
+      ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxPulseFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(resource_repository),
+      vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -42,6 +44,736 @@ namespace nirfmxpulse_grpc {
   inline bool status_ok(int32 status)
   {
     return status >= 0;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
+      int32 array_size = static_cast<int32>(request->iq().size());
+      int32 reset = request->reset();
+      auto reserved = 0;
+      auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto iqi = const_cast<float32*>(request->iqi().data());
+      auto iqq = const_cast<float32*>(request->iqq().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->iqi_size(),
+        request->iqq_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [iqi, iqq] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        iqi = request->iqi_size() ? std::move(iqi) : nullptr;
+        iqq = request->iqq_size() ? std::move(iqq) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      int32 reset = request->reset();
+      auto reserved = 0;
+      auto status = library_->AnalyzeIQ1WaveformSplit(instrument, selector_string, result_name, x0, dx, iqi, iqq, array_size, reset, reserved);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 bandwidth = request->bandwidth();
+      float64 measurement_interval = request->measurement_interval();
+      float64 reference_level {};
+      auto status = library_->AutoLevel(instrument, selector_string, bandwidth, measurement_interval, &reference_level);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_reference_level(reference_level);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+
+      while (true) {
+        auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_length = status;
+
+        std::string selector_string;
+        if (selector_string_length > 0) {
+            selector_string.resize(selector_string_length - 1);
+        }
+        status = library_->BuildSignalString(signal_name, result_name, selector_string_length, (char*)selector_string.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_utf8;
+        convert_to_grpc(selector_string, &selector_string_utf8);
+        response->set_selector_string(selector_string_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::Cfg1ReferenceWaveform(::grpc::ServerContext* context, const Cfg1ReferenceWaveformRequest* request, Cfg1ReferenceWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
+      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto status = library_->Cfg1ReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::Cfg1ReferenceWaveformSplit(::grpc::ServerContext* context, const Cfg1ReferenceWaveformSplitRequest* request, Cfg1ReferenceWaveformSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto reference_waveform_i = const_cast<float32*>(request->reference_waveform_i().data());
+      auto reference_waveform_q = const_cast<float32*>(request->reference_waveform_q().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->reference_waveform_i_size(),
+        request->reference_waveform_q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [reference_waveform_i, reference_waveform_q] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        reference_waveform_i = request->reference_waveform_i_size() ? std::move(reference_waveform_i) : nullptr;
+        reference_waveform_q = request->reference_waveform_q_size() ? std::move(reference_waveform_q) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->Cfg1ReferenceWaveformSplit(instrument, selector_string, x0, dx, reference_waveform_i, reference_waveform_q, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgDigitalEdgeTrigger(::grpc::ServerContext* context, const CfgDigitalEdgeTriggerRequest* request, CfgDigitalEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto digital_edge_source_mbcs = convert_from_grpc<std::string>(request->digital_edge_source());
+      char* digital_edge_source = (char*)digital_edge_source_mbcs.c_str();
+      int32 digital_edge;
+      switch (request->digital_edge_enum_case()) {
+        case nirfmxpulse_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdge: {
+          digital_edge = static_cast<int32>(request->digital_edge());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdgeRaw: {
+          digital_edge = static_cast<int32>(request->digital_edge_raw());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::DIGITAL_EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 trigger_delay = request->trigger_delay();
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgDigitalEdgeTrigger(instrument, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgExternalAttenuation(::grpc::ServerContext* context, const CfgExternalAttenuationRequest* request, CfgExternalAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 external_attenuation = request->external_attenuation();
+      auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgFrequency(::grpc::ServerContext* context, const CfgFrequencyRequest* request, CfgFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 center_frequency = request->center_frequency();
+      auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgFrequencyReference(::grpc::ServerContext* context, const CfgFrequencyReferenceRequest* request, CfgFrequencyReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
+      char* frequency_reference_source;
+      std::string frequency_reference_source_buffer;
+      switch (request->frequency_reference_source_enum_case()) {
+        case nirfmxpulse_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceMapped: {
+          auto frequency_reference_source_imap_it = frequencyreferencesource_input_map_.find(request->frequency_reference_source_mapped());
+          if (frequency_reference_source_imap_it == frequencyreferencesource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source_mapped was not specified or out of range.");
+          }
+          frequency_reference_source = const_cast<char*>((frequency_reference_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceRaw: {
+          frequency_reference_source_buffer = convert_from_grpc<std::string>(request->frequency_reference_source_raw());
+          frequency_reference_source = const_cast<char*>(frequency_reference_source_buffer.c_str());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::FREQUENCY_REFERENCE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 frequency_reference_frequency = request->frequency_reference_frequency();
+      auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgIQPowerEdgeTrigger(::grpc::ServerContext* context, const CfgIQPowerEdgeTriggerRequest* request, CfgIQPowerEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto iq_power_edge_source_mbcs = convert_from_grpc<std::string>(request->iq_power_edge_source());
+      char* iq_power_edge_source = (char*)iq_power_edge_source_mbcs.c_str();
+      int32 iq_power_edge_slope;
+      switch (request->iq_power_edge_slope_enum_case()) {
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::kIqPowerEdgeSlope: {
+          iq_power_edge_slope = static_cast<int32>(request->iq_power_edge_slope());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::kIqPowerEdgeSlopeRaw: {
+          iq_power_edge_slope = static_cast<int32>(request->iq_power_edge_slope_raw());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::IQ_POWER_EDGE_SLOPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for iq_power_edge_slope was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 iq_power_edge_level = request->iq_power_edge_level();
+      float64 trigger_delay = request->trigger_delay();
+      int32 trigger_min_quiet_time_mode;
+      switch (request->trigger_min_quiet_time_mode_enum_case()) {
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::kTriggerMinQuietTimeMode: {
+          trigger_min_quiet_time_mode = static_cast<int32>(request->trigger_min_quiet_time_mode());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::kTriggerMinQuietTimeModeRaw: {
+          trigger_min_quiet_time_mode = static_cast<int32>(request->trigger_min_quiet_time_mode_raw());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::TRIGGER_MIN_QUIET_TIME_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_min_quiet_time_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 trigger_min_quiet_time_duration = request->trigger_min_quiet_time_duration();
+      int32 iq_power_edge_level_type;
+      switch (request->iq_power_edge_level_type_enum_case()) {
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::kIqPowerEdgeLevelType: {
+          iq_power_edge_level_type = static_cast<int32>(request->iq_power_edge_level_type());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::kIqPowerEdgeLevelTypeRaw: {
+          iq_power_edge_level_type = static_cast<int32>(request->iq_power_edge_level_type_raw());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::IQ_POWER_EDGE_LEVEL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for iq_power_edge_level_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgIQPowerEdgeTrigger(instrument, selector_string, iq_power_edge_source, iq_power_edge_slope, iq_power_edge_level, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, iq_power_edge_level_type, enable_trigger);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgMechanicalAttenuation(::grpc::ServerContext* context, const CfgMechanicalAttenuationRequest* request, CfgMechanicalAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
+      int32 mechanical_attenuation_auto;
+      switch (request->mechanical_attenuation_auto_enum_case()) {
+        case nirfmxpulse_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAutoRaw: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::MECHANICAL_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mechanical_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
+      auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgRF(::grpc::ServerContext* context, const CfgRFRequest* request, CfgRFResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 center_frequency = request->center_frequency();
+      float64 reference_level = request->reference_level();
+      float64 external_attenuation = request->external_attenuation();
+      auto status = library_->CfgRF(instrument, selector_string, center_frequency, reference_level, external_attenuation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
+      int32 rf_attenuation_auto;
+      switch (request->rf_attenuation_auto_enum_case()) {
+        case nirfmxpulse_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAutoRaw: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxpulse_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::RF_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rf_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 rf_attenuation_value = request->rf_attenuation_value();
+      auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgReferenceLevel(::grpc::ServerContext* context, const CfgReferenceLevelRequest* request, CfgReferenceLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 reference_level = request->reference_level();
+      auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CfgSoftwareEdgeTrigger(::grpc::ServerContext* context, const CfgSoftwareEdgeTriggerRequest* request, CfgSoftwareEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 trigger_delay = request->trigger_delay();
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 is_done {};
+      auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_is_done(is_done);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::ClearAllNamedResults(::grpc::ServerContext* context, const ClearAllNamedResultsRequest* request, ClearAllNamedResultsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->ClearAllNamedResults(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::ClearNamedResult(::grpc::ServerContext* context, const ClearNamedResultRequest* request, ClearNamedResultResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->ClearNamedResult(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CloneSignalConfiguration(::grpc::ServerContext* context, const CloneSignalConfigurationRequest* request, CloneSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto old_signal_name_mbcs = convert_from_grpc<std::string>(request->old_signal_name());
+      char* old_signal_name = (char*)old_signal_name_mbcs.c_str();
+      auto new_signal_name_mbcs = convert_from_grpc<std::string>(request->new_signal_name());
+      char* new_signal_name = (char*)new_signal_name_mbcs.c_str();
+      auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
   }
 
   //---------------------------------------------------------------------
@@ -62,6 +794,1524 @@ namespace nirfmxpulse_grpc {
       }
       response->set_status(status);
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->Commit(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      auto status = library_->CreateSignalConfiguration(instrument, signal_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::DisableTrigger(::grpc::ServerContext* context, const DisableTriggerRequest* request, DisableTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->DisableTrigger(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchAcquiredAmplitudeTrace(::grpc::ServerContext* context, const FetchAcquiredAmplitudeTraceRequest* request, FetchAcquiredAmplitudeTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 array_size = request->array_size();
+      float64 sample_duration {};
+      int32 amplitude_actual_array_size {};
+      int32 start_actual_array_size {};
+      while (true) {
+        auto status = library_->FetchAcquiredAmplitudeTrace(instrument, selector_string, array_size, &sample_duration, nullptr, 0, &amplitude_actual_array_size, nullptr, nullptr, 0, &start_actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_amplitude()->Resize(amplitude_actual_array_size, 0);
+        float32* amplitude = response->mutable_amplitude()->mutable_data();
+        response->mutable_start_index()->Resize(start_actual_array_size, 0);
+        int32* start_index = reinterpret_cast<int32*>(response->mutable_start_index()->mutable_data());
+        response->mutable_start_time_stamp()->Resize(start_actual_array_size, 0);
+        float64* start_time_stamp = response->mutable_start_time_stamp()->mutable_data();
+        auto amplitude_array_size = amplitude_actual_array_size;
+        auto start_array_size = start_actual_array_size;
+        status = library_->FetchAcquiredAmplitudeTrace(instrument, selector_string, array_size, &sample_duration, amplitude, amplitude_array_size, &amplitude_actual_array_size, start_index, start_time_stamp, start_array_size, &start_actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_sample_duration(sample_duration);
+        response->mutable_amplitude()->Resize(amplitude_actual_array_size, 0);
+        response->set_amplitude_actual_array_size(amplitude_actual_array_size);
+        response->mutable_start_index()->Resize(start_actual_array_size, 0);
+        response->mutable_start_time_stamp()->Resize(start_actual_array_size, 0);
+        response->set_start_actual_array_size(start_actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchAmplitudeTrace(::grpc::ServerContext* context, const FetchAmplitudeTraceRequest* request, FetchAmplitudeTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchAmplitudeTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_amplitude()->Resize(actual_array_size, 0);
+        float32* amplitude = response->mutable_amplitude()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchAmplitudeTrace(instrument, selector_string, timeout, &x0, &dx, amplitude, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_amplitude()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchBurstIntrapulseStabilityTrace(::grpc::ServerContext* context, const FetchBurstIntrapulseStabilityTraceRequest* request, FetchBurstIntrapulseStabilityTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchBurstIntrapulseStabilityTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_intrapulse_average_amplitude_stability()->Resize(actual_array_size, 0);
+        float32* intrapulse_average_amplitude_stability = response->mutable_intrapulse_average_amplitude_stability()->mutable_data();
+        response->mutable_intrapulse_average_phase_stability()->Resize(actual_array_size, 0);
+        float32* intrapulse_average_phase_stability = response->mutable_intrapulse_average_phase_stability()->mutable_data();
+        response->mutable_intrapulse_average_total_stability()->Resize(actual_array_size, 0);
+        float32* intrapulse_average_total_stability = response->mutable_intrapulse_average_total_stability()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchBurstIntrapulseStabilityTrace(instrument, selector_string, timeout, &x0, &dx, intrapulse_average_amplitude_stability, intrapulse_average_phase_stability, intrapulse_average_total_stability, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_intrapulse_average_amplitude_stability()->Resize(actual_array_size, 0);
+        response->mutable_intrapulse_average_phase_stability()->Resize(actual_array_size, 0);
+        response->mutable_intrapulse_average_total_stability()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchBurstSelectedPositionStabilityTrace(::grpc::ServerContext* context, const FetchBurstSelectedPositionStabilityTraceRequest* request, FetchBurstSelectedPositionStabilityTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchBurstSelectedPositionStabilityTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_pulse_amplitude_stability()->Resize(actual_array_size, 0);
+        float32* pulse_amplitude_stability = response->mutable_pulse_amplitude_stability()->mutable_data();
+        response->mutable_pulse_phase_stability()->Resize(actual_array_size, 0);
+        float32* pulse_phase_stability = response->mutable_pulse_phase_stability()->mutable_data();
+        response->mutable_pulse_total_stability()->Resize(actual_array_size, 0);
+        float32* pulse_total_stability = response->mutable_pulse_total_stability()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchBurstSelectedPositionStabilityTrace(instrument, selector_string, timeout, &x0, &dx, pulse_amplitude_stability, pulse_phase_stability, pulse_total_stability, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_pulse_amplitude_stability()->Resize(actual_array_size, 0);
+        response->mutable_pulse_phase_stability()->Resize(actual_array_size, 0);
+        response->mutable_pulse_total_stability()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchFrequencyTrace(::grpc::ServerContext* context, const FetchFrequencyTraceRequest* request, FetchFrequencyTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchFrequencyTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_frequency()->Resize(actual_array_size, 0);
+        float32* frequency = response->mutable_frequency()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchFrequencyTrace(instrument, selector_string, timeout, &x0, &dx, frequency, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_frequency()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchIQTrace(::grpc::ServerContext* context, const FetchIQTraceRequest* request, FetchIQTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchIQTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> iq_data(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->FetchIQTrace(instrument, selector_string, timeout, &x0, &dx, iq_data.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        convert_to_grpc(iq_data, response->mutable_iq_data());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_iq_data()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_iq_data()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchIQTraceSplit(::grpc::ServerContext* context, const FetchIQTraceSplitRequest* request, FetchIQTraceSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchIQTraceSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_iq_data_i()->Resize(actual_array_size, 0);
+        float32* iq_data_i = response->mutable_iq_data_i()->mutable_data();
+        response->mutable_iq_data_q()->Resize(actual_array_size, 0);
+        float32* iq_data_q = response->mutable_iq_data_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchIQTraceSplit(instrument, selector_string, timeout, &x0, &dx, iq_data_i, iq_data_q, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_iq_data_i()->Resize(actual_array_size, 0);
+        response->mutable_iq_data_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchIntrapulseStabilityTrace(::grpc::ServerContext* context, const FetchIntrapulseStabilityTraceRequest* request, FetchIntrapulseStabilityTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchIntrapulseStabilityTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_intrapulse_amplitude_stability()->Resize(actual_array_size, 0);
+        float32* intrapulse_amplitude_stability = response->mutable_intrapulse_amplitude_stability()->mutable_data();
+        response->mutable_intrapulse_phase_stability()->Resize(actual_array_size, 0);
+        float32* intrapulse_phase_stability = response->mutable_intrapulse_phase_stability()->mutable_data();
+        response->mutable_intrapulse_total_stability()->Resize(actual_array_size, 0);
+        float32* intrapulse_total_stability = response->mutable_intrapulse_total_stability()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchIntrapulseStabilityTrace(instrument, selector_string, timeout, &x0, &dx, intrapulse_amplitude_stability, intrapulse_phase_stability, intrapulse_total_stability, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_intrapulse_amplitude_stability()->Resize(actual_array_size, 0);
+        response->mutable_intrapulse_phase_stability()->Resize(actual_array_size, 0);
+        response->mutable_intrapulse_total_stability()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchMultipleMeasurementPointsStabilityTrace(::grpc::ServerContext* context, const FetchMultipleMeasurementPointsStabilityTraceRequest* request, FetchMultipleMeasurementPointsStabilityTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchMultipleMeasurementPointsStabilityTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_pulse_average_amplitude_stability()->Resize(actual_array_size, 0);
+        float32* pulse_average_amplitude_stability = response->mutable_pulse_average_amplitude_stability()->mutable_data();
+        response->mutable_pulse_average_phase_stability()->Resize(actual_array_size, 0);
+        float32* pulse_average_phase_stability = response->mutable_pulse_average_phase_stability()->mutable_data();
+        response->mutable_pulse_average_total_stability()->Resize(actual_array_size, 0);
+        float32* pulse_average_total_stability = response->mutable_pulse_average_total_stability()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchMultipleMeasurementPointsStabilityTrace(instrument, selector_string, timeout, &x0, &dx, pulse_average_amplitude_stability, pulse_average_phase_stability, pulse_average_total_stability, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_pulse_average_amplitude_stability()->Resize(actual_array_size, 0);
+        response->mutable_pulse_average_phase_stability()->Resize(actual_array_size, 0);
+        response->mutable_pulse_average_total_stability()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchPhaseWrappedTrace(::grpc::ServerContext* context, const FetchPhaseWrappedTraceRequest* request, FetchPhaseWrappedTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchPhaseWrappedTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_wrapped_phase()->Resize(actual_array_size, 0);
+        float32* wrapped_phase = response->mutable_wrapped_phase()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchPhaseWrappedTrace(instrument, selector_string, timeout, &x0, &dx, wrapped_phase, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_wrapped_phase()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchPulseToPulseStabilityTrace(::grpc::ServerContext* context, const FetchPulseToPulseStabilityTraceRequest* request, FetchPulseToPulseStabilityTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchPulseToPulseStabilityTrace(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_pulse_index()->Resize(actual_array_size, 0);
+        int32* pulse_index = reinterpret_cast<int32*>(response->mutable_pulse_index()->mutable_data());
+        response->mutable_pulse_to_pulse_amplitude_stability()->Resize(actual_array_size, 0);
+        float64* pulse_to_pulse_amplitude_stability = response->mutable_pulse_to_pulse_amplitude_stability()->mutable_data();
+        response->mutable_pulse_to_pulse_phase_stability()->Resize(actual_array_size, 0);
+        float64* pulse_to_pulse_phase_stability = response->mutable_pulse_to_pulse_phase_stability()->mutable_data();
+        response->mutable_pulse_to_pulse_total_stability()->Resize(actual_array_size, 0);
+        float64* pulse_to_pulse_total_stability = response->mutable_pulse_to_pulse_total_stability()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchPulseToPulseStabilityTrace(instrument, selector_string, timeout, pulse_index, pulse_to_pulse_amplitude_stability, pulse_to_pulse_phase_stability, pulse_to_pulse_total_stability, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_pulse_index()->Resize(actual_array_size, 0);
+        response->mutable_pulse_to_pulse_amplitude_stability()->Resize(actual_array_size, 0);
+        response->mutable_pulse_to_pulse_phase_stability()->Resize(actual_array_size, 0);
+        response->mutable_pulse_to_pulse_total_stability()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchStabilityTrace(::grpc::ServerContext* context, const FetchStabilityTraceRequest* request, FetchStabilityTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchStabilityTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_pulse_amplitude_stability()->Resize(actual_array_size, 0);
+        float32* pulse_amplitude_stability = response->mutable_pulse_amplitude_stability()->mutable_data();
+        response->mutable_pulse_phase_stability()->Resize(actual_array_size, 0);
+        float32* pulse_phase_stability = response->mutable_pulse_phase_stability()->mutable_data();
+        response->mutable_pulse_total_stability()->Resize(actual_array_size, 0);
+        float32* pulse_total_stability = response->mutable_pulse_total_stability()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchStabilityTrace(instrument, selector_string, timeout, &x0, &dx, pulse_amplitude_stability, pulse_phase_stability, pulse_total_stability, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_pulse_amplitude_stability()->Resize(actual_array_size, 0);
+        response->mutable_pulse_phase_stability()->Resize(actual_array_size, 0);
+        response->mutable_pulse_total_stability()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchTimeSidelobeTrace(::grpc::ServerContext* context, const FetchTimeSidelobeTraceRequest* request, FetchTimeSidelobeTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchTimeSidelobeTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_time_sidelobe()->Resize(actual_array_size, 0);
+        float32* time_sidelobe = response->mutable_time_sidelobe()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchTimeSidelobeTrace(instrument, selector_string, timeout, &x0, &dx, time_sidelobe, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_time_sidelobe()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAllNamedResultNames(::grpc::ServerContext* context, const GetAllNamedResultNamesRequest* request, GetAllNamedResultNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_result_names_size {};
+      int32 default_result_exists {};
+      while (true) {
+        auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::string result_names;
+        if (actual_result_names_size > 0) {
+            result_names.resize(actual_result_names_size - 1);
+        }
+        auto result_names_buffer_size = actual_result_names_size;
+        status = library_->GetAllNamedResultNames(instrument, selector_string, (char*)result_names.data(), result_names_buffer_size, &actual_result_names_size, &default_result_exists);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string result_names_utf8;
+        convert_to_grpc(result_names, &result_names_utf8);
+        response->set_result_names(result_names_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
+        response->set_actual_result_names_size(actual_result_names_size);
+        response->set_default_result_exists(default_result_exists);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      float32 attr_val {};
+      auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        float32* attr_val = response->mutable_attr_val()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      float64 attr_val {};
+      auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeF64Array(::grpc::ServerContext* context, const GetAttributeF64ArrayRequest* request, GetAttributeF64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        float64* attr_val = response->mutable_attr_val()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeI16(::grpc::ServerContext* context, const GetAttributeI16Request* request, GetAttributeI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int16 attr_val {};
+      auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeI32(::grpc::ServerContext* context, const GetAttributeI32Request* request, GetAttributeI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 attr_val {};
+      auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      auto checked_convert_attr_val = [](auto raw_value) {
+        bool raw_value_is_valid = nirfmxpulse_grpc::NiRFmxPulseInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nirfmxpulse_grpc::NiRFmxPulseInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_attr_val(checked_convert_attr_val(attr_val));
+      response->set_attr_val_raw(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeI32Array(::grpc::ServerContext* context, const GetAttributeI32ArrayRequest* request, GetAttributeI32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
+        int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        auto checked_convert_attr_val = [](auto raw_value) {
+          bool raw_value_is_valid = nirfmxpulse_grpc::NiRFmxPulseInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nirfmxpulse_grpc::NiRFmxPulseInt32AttributeValues>(valid_enum_value);
+        };
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            response->attr_val_raw().begin(),
+            response->attr_val_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) {
+                return checked_convert_attr_val(x);
+            });
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeI64(::grpc::ServerContext* context, const GetAttributeI64Request* request, GetAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attr_val {};
+      auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeI64Array(::grpc::ServerContext* context, const GetAttributeI64ArrayRequest* request, GetAttributeI64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeI8(::grpc::ServerContext* context, const GetAttributeI8Request* request, GetAttributeI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int8 attr_val {};
+      auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeI8Array(::grpc::ServerContext* context, const GetAttributeI8ArrayRequest* request, GetAttributeI8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<int8> attr_val(actual_array_size);
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            attr_val.begin(),
+            attr_val.begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) {
+                return x;
+            });
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleArrayRequest* request, GetAttributeNIComplexDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(attr_val, response->mutable_attr_val());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_attr_val()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const GetAttributeNIComplexSingleArrayRequest* request, GetAttributeNIComplexSingleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(attr_val, response->mutable_attr_val());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_attr_val()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeString(::grpc::ServerContext* context, const GetAttributeStringRequest* request, GetAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+
+      while (true) {
+        auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        int32 array_size = status;
+
+        std::string attr_val;
+        if (array_size > 0) {
+            attr_val.resize(array_size - 1);
+        }
+        status = library_->GetAttributeString(instrument, selector_string, attribute_id, array_size, (char*)attr_val.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string attr_val_utf8;
+        convert_to_grpc(attr_val, &attr_val_utf8);
+        response->set_attr_val(attr_val_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeU16(::grpc::ServerContext* context, const GetAttributeU16Request* request, GetAttributeU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt16 attr_val {};
+      auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeU32(::grpc::ServerContext* context, const GetAttributeU32Request* request, GetAttributeU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt32 attr_val {};
+      auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeU32Array(::grpc::ServerContext* context, const GetAttributeU32ArrayRequest* request, GetAttributeU32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeU64Array(::grpc::ServerContext* context, const GetAttributeU64ArrayRequest* request, GetAttributeU64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeU8(::grpc::ServerContext* context, const GetAttributeU8Request* request, GetAttributeU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8 attr_val {};
+      auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::GetAttributeU8Array(::grpc::ServerContext* context, const GetAttributeU8ArrayRequest* request, GetAttributeU8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::string attr_val(actual_array_size, '\0');
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_attr_val(attr_val);
+        response->mutable_attr_val()->resize(actual_array_size);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
@@ -169,8 +2419,10 @@ namespace nirfmxpulse_grpc {
       char* resource_name = (char*)resource_name_mbcs.c_str();
       auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
       char* option_string = (char*)option_string_mbcs.c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
       int32 is_new_session {};
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
@@ -179,14 +2431,855 @@ namespace nirfmxpulse_grpc {
       std::string grpc_device_session_name = request->session_name();
       // Capture the library shared_ptr by value. Do not capture `this` or any references.
       LibrarySharedPtr library = library_;
-      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXPULSE_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXPulse_VAL_FALSE); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_name(grpc_device_session_name);
       response->set_is_new_session(is_new_session);
+      response->set_new_session_initialized(new_session_initialized);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto nirfsa_session_grpc_session = request->nirfsa_session();
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.name());
+      auto initialization_behavior = request->initialization_behavior();
+
+      bool new_session_initialized {};
+      auto init_lambda = [&] () {
+        niRFmxInstrHandle instrument;
+        auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        return std::make_tuple(status, instrument);
+      };
+      std::string grpc_device_session_name = request->session_name();
+      // Capture the library shared_ptr by value. Do not capture `this` or any references.
+      LibrarySharedPtr library = library_;
+      auto cleanup_lambda = [library] (niRFmxInstrHandle id) { library->Close(id, RFMXPulse_VAL_FALSE); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_instrument()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      auto status = library_->Initiate(instrument, selector_string, result_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::ResetToDefault(::grpc::ServerContext* context, const ResetToDefaultRequest* request, ResetToDefaultResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->ResetToDefault(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SelectMeasurements(::grpc::ServerContext* context, const SelectMeasurementsRequest* request, SelectMeasurementsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      uInt32 measurements;
+      switch (request->measurements_enum_case()) {
+        case nirfmxpulse_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurements: {
+          measurements = static_cast<uInt32>(request->measurements());
+          break;
+        }
+        case nirfmxpulse_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurementsRaw: {
+          measurements = static_cast<uInt32>(request->measurements_raw());
+          break;
+        }
+        case nirfmxpulse_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::MEASUREMENTS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurements was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 enable_all_traces = request->enable_all_traces();
+      auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto status = library_->SendSoftwareEdgeTrigger(instrument);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeF32(::grpc::ServerContext* context, const SetAttributeF32Request* request, SetAttributeF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      float32 attr_val = request->attr_val();
+      auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeF32Array(::grpc::ServerContext* context, const SetAttributeF32ArrayRequest* request, SetAttributeF32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<float32*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeF64(::grpc::ServerContext* context, const SetAttributeF64Request* request, SetAttributeF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      float64 attr_val = request->attr_val();
+      auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeF64Array(::grpc::ServerContext* context, const SetAttributeF64ArrayRequest* request, SetAttributeF64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<float64*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeI16(::grpc::ServerContext* context, const SetAttributeI16Request* request, SetAttributeI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int16>(attr_val_raw);
+
+      auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeI32(::grpc::ServerContext* context, const SetAttributeI32Request* request, SetAttributeI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxpulse_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrVal: {
+          attr_val = static_cast<int32>(request->attr_val());
+          break;
+        }
+        case nirfmxpulse_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrValRaw: {
+          attr_val = static_cast<int32>(request->attr_val_raw());
+          break;
+        }
+        case nirfmxpulse_grpc::SetAttributeI32Request::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeI32Array(::grpc::ServerContext* context, const SetAttributeI32ArrayRequest* request, SetAttributeI32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_vector = std::vector<int32>();
+      attr_val_vector.reserve(request->attr_val().size());
+      std::transform(
+        request->attr_val().begin(),
+        request->attr_val().end(),
+        std::back_inserter(attr_val_vector),
+        [](auto x) { return x; });
+      auto attr_val = attr_val_vector.data();
+
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeI64(::grpc::ServerContext* context, const SetAttributeI64Request* request, SetAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attr_val = request->attr_val();
+      auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeI64Array(::grpc::ServerContext* context, const SetAttributeI64ArrayRequest* request, SetAttributeI64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeI8(::grpc::ServerContext* context, const SetAttributeI8Request* request, SetAttributeI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int8>(attr_val_raw);
+
+      auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeI8Array(::grpc::ServerContext* context, const SetAttributeI8ArrayRequest* request, SetAttributeI8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      auto attr_val = std::vector<int8>();
+      attr_val.reserve(attr_val_raw.size());
+      std::transform(
+        attr_val_raw.begin(),
+        attr_val_raw.end(),
+        std::back_inserter(attr_val),
+        [](auto x) {
+              if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int8");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int8>(x);
+        });
+
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleArrayRequest* request, SetAttributeNIComplexDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const SetAttributeNIComplexSingleArrayRequest* request, SetAttributeNIComplexSingleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeString(::grpc::ServerContext* context, const SetAttributeStringRequest* request, SetAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      char* attr_val;
+      std::string attr_val_buffer;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxpulse_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
+          auto attr_val_imap_it = nirfmxpulsestringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
+          if (attr_val_imap_it == nirfmxpulsestringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val_mapped was not specified or out of range.");
+          }
+          attr_val = const_cast<char*>((attr_val_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxpulse_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
+          attr_val_buffer = convert_from_grpc<std::string>(request->attr_val_raw());
+          attr_val = const_cast<char*>(attr_val_buffer.c_str());
+          break;
+        }
+        case nirfmxpulse_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeU16(::grpc::ServerContext* context, const SetAttributeU16Request* request, SetAttributeU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<uInt16>(attr_val_raw);
+
+      auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeU32(::grpc::ServerContext* context, const SetAttributeU32Request* request, SetAttributeU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt32 attr_val = request->attr_val();
+      auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeU32Array(::grpc::ServerContext* context, const SetAttributeU32ArrayRequest* request, SetAttributeU32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeU64Array(::grpc::ServerContext* context, const SetAttributeU64ArrayRequest* request, SetAttributeU64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeU8(::grpc::ServerContext* context, const SetAttributeU8Request* request, SetAttributeU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8 attr_val = request->attr_val();
+      auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::SetAttributeU8Array(::grpc::ServerContext* context, const SetAttributeU8ArrayRequest* request, SetAttributeU8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8* attr_val = (uInt8*)request->attr_val().c_str();
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -198,7 +3291,7 @@ namespace nirfmxpulse_grpc {
   NiRFmxPulseFeatureToggles::NiRFmxPulseFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxpulse", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxpulse", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxpulse_grpc

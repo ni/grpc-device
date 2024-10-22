@@ -461,6 +461,10 @@
 // Values for MeasurementTypes
 #define RFMXPULSE_VAL_PULSE                                                           1<<0
 
+// Values for MechanicalAttenuationAuto
+#define RFMXPULSE_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                               0
+#define RFMXPULSE_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                1
+
 /* ---------------- RFmxPulse APIs ------------------ */
 
 
