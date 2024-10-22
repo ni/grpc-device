@@ -204,276 +204,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'CalkitManagerCalkitCalibrationElementGetDescription': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'description',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'CalkitManagerCalkitCalibrationElementGetPortConnectors': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'connectorIDs',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'CalkitManagerCalkitConnectorGetDescription': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'description',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'CalkitManagerCalkitConnectorGetType': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'connectorType',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'CalkitManagerCalkitGetCalibrationElementIDs': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'calibrationElementIDs',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'CalkitManagerCalkitGetConnectorIDs': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'connectorIDs',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'CalkitManagerCalkitGetDescription': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'calkitDescription',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'CalkitManagerCalkitGetVersion': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'calkitVersion',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'CalkitManagerGetCalkitIDs': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'calkitIDs',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
     'Cfg1ReferenceWaveform': {
         'parameters': [
             {
@@ -1037,8 +767,8 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'timeout',
-                'type': 'float64'
+                'name': 'arraySize',
+                'type': 'int32'
             },
             {
                 'direction': 'out',
@@ -1048,6 +778,11 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'amplitude',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'amplitudeArraySize',
+                    'value_twist': 'amplitudeActualArraySize'
+                },
                 'type': 'float32[]'
             },
             {
@@ -1063,21 +798,31 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'startIndex',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'startArraySize',
+                    'value_twist': 'startActualArraySize'
+                },
                 'type': 'int32[]'
             },
             {
                 'direction': 'out',
                 'name': 'startTimeStamp',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'startArraySize',
+                    'value_twist': 'startActualArraySize'
+                },
                 'type': 'float64[]'
             },
             {
                 'direction': 'in',
-                'name': 'startArraysSize',
+                'name': 'startArraySize',
                 'type': 'int32'
             },
             {
                 'direction': 'out',
-                'name': 'startActualArraysSize',
+                'name': 'startActualArraySize',
                 'type': 'int32'
             }
         ],
@@ -1825,36 +1570,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'GetAllCalsetNames': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'calsetNames',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
     'GetAllNamedResultNames': {
         'parameters': [
             {
@@ -1911,7 +1626,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1938,7 +1653,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1980,7 +1695,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2007,7 +1722,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2049,7 +1764,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2076,7 +1791,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2103,7 +1818,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2145,7 +1860,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2172,7 +1887,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2214,7 +1929,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2241,7 +1956,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2283,7 +1998,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2325,7 +2040,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2367,7 +2082,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2403,7 +2118,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2430,7 +2145,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2457,7 +2172,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2499,7 +2214,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2541,7 +2256,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2568,7 +2283,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2655,38 +2370,8 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'GetMeasurementMemoryNames': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'measurementMemoryNames',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
     'Initialize': {
-        'custom_close': 'Close(id, RFMXVNA_VAL_FALSE)',
+        'custom_close': 'Close(id, RFMXPulse_VAL_FALSE)',
         'init_method': True,
         'parameters': [
             {
@@ -2736,7 +2421,7 @@ functions = {
         'returns': 'int32'
     },
     'InitializeFromNIRFSASession': {
-        'custom_close': 'Close(id, RFMXVNA_VAL_FALSE)',
+        'custom_close': 'Close(id, RFMXPulse_VAL_FALSE)',
         'init_method': True,
         'parameters': [
             {
@@ -2813,7 +2498,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             }
@@ -2831,36 +2516,6 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'selectorString',
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'SParamsGetSParameter': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'sParameter',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
                 'type': 'char[]'
             }
         ],
@@ -2920,7 +2575,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2947,7 +2602,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2983,7 +2638,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3010,7 +2665,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3046,7 +2701,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3073,7 +2728,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3100,7 +2755,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3136,7 +2791,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3163,7 +2818,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3199,7 +2854,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3226,7 +2881,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3262,7 +2917,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3298,7 +2953,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3334,7 +2989,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3361,7 +3016,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3388,7 +3043,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3415,7 +3070,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3451,7 +3106,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3487,7 +3142,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3514,7 +3169,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxVNAAttribute',
+                'grpc_type': 'NiRFmxPulseAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3568,36 +3223,6 @@ functions = {
                 'direction': 'in',
                 'name': 'timeout',
                 'type': 'float64'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'WavesGetWave': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'wave',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'char[]'
             }
         ],
         'returns': 'int32'
