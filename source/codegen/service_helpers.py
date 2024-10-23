@@ -732,10 +732,8 @@ def get_coerced_type_and_presence(streaming_type: str) -> tuple:
         'uint16_t': 'uint32_t',
     }
 
-    # Remove array indication '[]' if present
     base_type = streaming_type.replace('[]', '')
     
-    # Get the coerced type based on the base type
     coerced_type = type_map.get(base_type, base_type)
     is_coerced_type_present = base_type in type_map
 
@@ -774,3 +772,18 @@ def get_grpc_streaming_type(coerced_type: str) -> str:
     grpc_streaming_type = grpc_map.get(coerced_type, 'U32')
 
     return grpc_streaming_type
+
+def get_streaming_type(parameters) -> str:
+    """
+    Get the streaming type from the function data.
+
+    Args:
+        function_name (dict): The function data dictionary.
+
+    Returns:
+        str: The streaming type if found, otherwise 'None'.
+    """
+    for param in parameters:
+        if param.get('is_streaming_type', False) == True:
+            return param['type']
+    return None

@@ -1041,7 +1041,6 @@ functions = {
     'BeginReadArrayI16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int16_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1056,6 +1055,7 @@ functions = {
             {
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1080,7 +1080,6 @@ functions = {
     'BeginReadArrayI32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int32_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1095,6 +1094,7 @@ functions = {
             {
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1119,7 +1119,6 @@ functions = {
     'BeginReadArrayI64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int64_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1134,6 +1133,7 @@ functions = {
             {
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1158,7 +1158,6 @@ functions = {
     'BeginReadArrayI8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int8_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1173,6 +1172,7 @@ functions = {
             {
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1197,7 +1197,6 @@ functions = {
     'BeginReadArrayU16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint16_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1212,6 +1211,7 @@ functions = {
             {
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1236,7 +1236,6 @@ functions = {
     'BeginReadArrayU32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint32_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1251,6 +1250,7 @@ functions = {
             {
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1275,7 +1275,6 @@ functions = {
     'BeginReadArrayU64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint64_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1290,6 +1289,7 @@ functions = {
             {
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1314,7 +1314,6 @@ functions = {
     'BeginReadArrayU8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint8_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1329,6 +1328,7 @@ functions = {
             {
                 'direction': 'out',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1353,7 +1353,6 @@ functions = {
     'BeginReadI16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int16_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1364,6 +1363,13 @@ functions = {
                 'direction': 'in',
                 'name': 'indicator',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'int16_t'
             },
             {
                 'direction': 'out',
@@ -1377,7 +1383,6 @@ functions = {
     'BeginReadI32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int32_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1388,6 +1393,13 @@ functions = {
                 'direction': 'in',
                 'name': 'indicator',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'int32_t'
             },
             {
                 'direction': 'out',
@@ -1401,7 +1413,6 @@ functions = {
     'BeginReadI64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int64_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1412,6 +1423,13 @@ functions = {
                 'direction': 'in',
                 'name': 'indicator',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'int64_t'
             },
             {
                 'direction': 'out',
@@ -1425,7 +1443,6 @@ functions = {
     'BeginReadI8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int8_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1436,6 +1453,13 @@ functions = {
                 'direction': 'in',
                 'name': 'indicator',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'int8_t'
             },
             {
                 'direction': 'out',
@@ -1449,7 +1473,6 @@ functions = {
     'BeginReadU16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint16_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1463,6 +1486,13 @@ functions = {
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'uint16_t'
+            },
+            {
+                'direction': 'out',
                 'grpc_type': 'ni.data_monikers.Moniker',
                 'name': 'moniker',
                 'type': 'ni::data_monikers::Moniker'
@@ -1473,7 +1503,6 @@ functions = {
     'BeginReadU32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint32_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1483,6 +1512,13 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'indicator',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
                 'type': 'uint32_t'
             },
             {
@@ -1497,7 +1533,6 @@ functions = {
     'BeginReadU64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint64_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1508,6 +1543,13 @@ functions = {
                 'direction': 'in',
                 'name': 'indicator',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'uint64_t'
             },
             {
                 'direction': 'out',
@@ -1521,7 +1563,6 @@ functions = {
     'BeginReadU8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint8_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1535,6 +1576,13 @@ functions = {
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'uint8_t'
+            },
+            {
+                'direction': 'out',
                 'grpc_type': 'ni.data_monikers.Moniker',
                 'name': 'moniker',
                 'type': 'ni::data_monikers::Moniker'
@@ -1545,7 +1593,6 @@ functions = {
     'BeginWriteArrayI16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int16_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1560,6 +1607,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -1584,7 +1632,6 @@ functions = {
     'BeginWriteArrayI32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int32_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1599,6 +1646,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -1623,7 +1671,6 @@ functions = {
     'BeginWriteArrayI64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int64_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1638,6 +1685,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -1662,7 +1710,6 @@ functions = {
     'BeginWriteArrayI8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int8_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1677,6 +1724,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -1701,7 +1749,6 @@ functions = {
     'BeginWriteArrayU16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint16_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1716,6 +1763,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -1740,7 +1788,6 @@ functions = {
     'BeginWriteArrayU32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint32_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1755,6 +1802,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -1779,7 +1827,6 @@ functions = {
     'BeginWriteArrayU64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint64_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1794,6 +1841,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -1818,7 +1866,6 @@ functions = {
     'BeginWriteArrayU8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint8_t[]',
         'parameters': [
             {
                 'direction': 'in',
@@ -1833,6 +1880,7 @@ functions = {
             {
                 'direction': 'in',
                 'include_in_proto': False,
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -1857,7 +1905,6 @@ functions = {
     'BeginWriteI16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int16_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1868,6 +1915,13 @@ functions = {
                 'direction': 'in',
                 'name': 'control',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'int16_t'
             },
             {
                 'direction': 'out',
@@ -1881,7 +1935,6 @@ functions = {
     'BeginWriteI32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int32_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1892,6 +1945,13 @@ functions = {
                 'direction': 'in',
                 'name': 'control',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'int32_t'
             },
             {
                 'direction': 'out',
@@ -1905,7 +1965,6 @@ functions = {
     'BeginWriteI64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int64_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1916,6 +1975,13 @@ functions = {
                 'direction': 'in',
                 'name': 'control',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'int64_t'
             },
             {
                 'direction': 'out',
@@ -1929,7 +1995,6 @@ functions = {
     'BeginWriteI8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'int8_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1940,6 +2005,13 @@ functions = {
                 'direction': 'in',
                 'name': 'control',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'int8_t'
             },
             {
                 'direction': 'out',
@@ -1953,7 +2025,6 @@ functions = {
     'BeginWriteU16': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint16_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1964,6 +2035,13 @@ functions = {
                 'direction': 'in',
                 'name': 'control',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'uint16_t'
             },
             {
                 'direction': 'out',
@@ -1977,7 +2055,6 @@ functions = {
     'BeginWriteU32': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint32_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -1987,6 +2064,13 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'control',
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
                 'type': 'uint32_t'
             },
             {
@@ -2001,7 +2085,6 @@ functions = {
     'BeginWriteU64': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint64_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -2012,6 +2095,13 @@ functions = {
                 'direction': 'in',
                 'name': 'control',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'uint64_t'
             },
             {
                 'direction': 'out',
@@ -2025,7 +2115,6 @@ functions = {
     'BeginWriteU8': {
         'data_moniker_support': True,
         'exclude_from_library': True,
-        'moniker_streaming_type': 'uint8_t',
         'parameters': [
             {
                 'direction': 'in',
@@ -2036,6 +2125,13 @@ functions = {
                 'direction': 'in',
                 'name': 'control',
                 'type': 'uint32_t'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'is_streaming_type': True,
+                'name': 'value',
+                'type': 'uint8_t'
             },
             {
                 'direction': 'out',

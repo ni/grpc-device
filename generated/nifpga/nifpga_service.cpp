@@ -156,7 +156,6 @@ void RegisterMoniker()
   }
 
 
-
 struct MonikerReadArrayI16Data
 {
     NiFpga_Session session;
@@ -171,22 +170,21 @@ struct MonikerReadArrayI16Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadArrayI16Data* data = new MonikerReadArrayI16Data();
-        data->session = session;
-
-data->indicator = request->indicator();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
+      MonikerReadArrayI16Data* data = new MonikerReadArrayI16Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
     data->data.mutable_value()->Reserve(request->size());
     data->data.mutable_value()->Resize(request->size(), 0);
 
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI16", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI16", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -220,8 +218,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerReadArrayI32Data
 {
     NiFpga_Session session;
@@ -236,22 +232,21 @@ struct MonikerReadArrayI32Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadArrayI32Data* data = new MonikerReadArrayI32Data();
-        data->session = session;
-
-data->indicator = request->indicator();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
+      MonikerReadArrayI32Data* data = new MonikerReadArrayI32Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
     data->data.mutable_value()->Reserve(request->size());
     data->data.mutable_value()->Resize(request->size(), 0);
 
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI32", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI32", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -266,7 +261,7 @@ data->size = request->size();
     auto indicator = function_data->indicator;
     auto size = function_data->size;
     std::vector<int32_t> array(size);
-    auto status = library->ReadArrayI32(session, indicator, array, size);
+    auto status = library->ReadArrayI32(session, indicator, array.data(), size);
     if (status >= 0) {
         std::transform(
             array.begin(),
@@ -285,8 +280,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerReadArrayI64Data
 {
     NiFpga_Session session;
@@ -301,22 +294,21 @@ struct MonikerReadArrayI64Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadArrayI64Data* data = new MonikerReadArrayI64Data();
-        data->session = session;
-
-data->indicator = request->indicator();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
+      MonikerReadArrayI64Data* data = new MonikerReadArrayI64Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
     data->data.mutable_value()->Reserve(request->size());
     data->data.mutable_value()->Resize(request->size(), 0);
 
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI64", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI64", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -331,7 +323,7 @@ data->size = request->size();
     auto indicator = function_data->indicator;
     auto size = function_data->size;
     std::vector<int64_t> array(size);
-    auto status = library->ReadArrayI64(session, indicator, array, size);
+    auto status = library->ReadArrayI64(session, indicator, array.data(), size);
     if (status >= 0) {
         std::transform(
             array.begin(),
@@ -350,8 +342,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerReadArrayI8Data
 {
     NiFpga_Session session;
@@ -366,22 +356,21 @@ struct MonikerReadArrayI8Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadArrayI8Data* data = new MonikerReadArrayI8Data();
-        data->session = session;
-
-data->indicator = request->indicator();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
+      MonikerReadArrayI8Data* data = new MonikerReadArrayI8Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
     data->data.mutable_value()->Reserve(request->size());
     data->data.mutable_value()->Resize(request->size(), 0);
 
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI8", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI8", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -415,8 +404,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerReadArrayU16Data
 {
     NiFpga_Session session;
@@ -431,22 +418,21 @@ struct MonikerReadArrayU16Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadArrayU16Data* data = new MonikerReadArrayU16Data();
-        data->session = session;
-
-data->indicator = request->indicator();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
+      MonikerReadArrayU16Data* data = new MonikerReadArrayU16Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
     data->data.mutable_value()->Reserve(request->size());
     data->data.mutable_value()->Resize(request->size(), 0);
 
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU16", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU16", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -480,8 +466,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerReadArrayU32Data
 {
     NiFpga_Session session;
@@ -496,22 +480,21 @@ struct MonikerReadArrayU32Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadArrayU32Data* data = new MonikerReadArrayU32Data();
-        data->session = session;
-
-data->indicator = request->indicator();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
+      MonikerReadArrayU32Data* data = new MonikerReadArrayU32Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
     data->data.mutable_value()->Reserve(request->size());
     data->data.mutable_value()->Resize(request->size(), 0);
 
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU32", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU32", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -526,7 +509,7 @@ data->size = request->size();
     auto indicator = function_data->indicator;
     auto size = function_data->size;
     std::vector<uint32_t> array(size);
-    auto status = library->ReadArrayU32(session, indicator, array, size);
+    auto status = library->ReadArrayU32(session, indicator, array.data(), size);
     if (status >= 0) {
         std::transform(
             array.begin(),
@@ -545,8 +528,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerReadArrayU64Data
 {
     NiFpga_Session session;
@@ -561,22 +542,21 @@ struct MonikerReadArrayU64Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadArrayU64Data* data = new MonikerReadArrayU64Data();
-        data->session = session;
-
-data->indicator = request->indicator();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
+      MonikerReadArrayU64Data* data = new MonikerReadArrayU64Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
     data->data.mutable_value()->Reserve(request->size());
     data->data.mutable_value()->Resize(request->size(), 0);
 
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU64", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU64", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -591,7 +571,7 @@ data->size = request->size();
     auto indicator = function_data->indicator;
     auto size = function_data->size;
     std::vector<uint64_t> array(size);
-    auto status = library->ReadArrayU64(session, indicator, array, size);
+    auto status = library->ReadArrayU64(session, indicator, array.data(), size);
     if (status >= 0) {
         std::transform(
             array.begin(),
@@ -610,8 +590,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerReadArrayU8Data
 {
     NiFpga_Session session;
@@ -626,22 +604,21 @@ struct MonikerReadArrayU8Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadArrayU8Data* data = new MonikerReadArrayU8Data();
-        data->session = session;
-
-data->indicator = request->indicator();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
+      MonikerReadArrayU8Data* data = new MonikerReadArrayU8Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
     data->data.mutable_value()->Reserve(request->size());
     data->data.mutable_value()->Resize(request->size(), 0);
 
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU8", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU8", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -675,8 +652,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerReadI16Data
 {
     NiFpga_Session session;
@@ -690,19 +665,18 @@ struct MonikerReadI16Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadI16Data* data = new MonikerReadI16Data();
-        data->session = session;
+      MonikerReadI16Data* data = new MonikerReadI16Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->indicator = request->indicator();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI16", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI16", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -729,8 +703,6 @@ data->indicator = request->indicator();
 }
 
 
-
-
 struct MonikerReadI32Data
 {
     NiFpga_Session session;
@@ -744,19 +716,18 @@ struct MonikerReadI32Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadI32Data* data = new MonikerReadI32Data();
-        data->session = session;
+      MonikerReadI32Data* data = new MonikerReadI32Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->indicator = request->indicator();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI32", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI32", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -783,8 +754,6 @@ data->indicator = request->indicator();
 }
 
 
-
-
 struct MonikerReadI64Data
 {
     NiFpga_Session session;
@@ -798,19 +767,18 @@ struct MonikerReadI64Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadI64Data* data = new MonikerReadI64Data();
-        data->session = session;
+      MonikerReadI64Data* data = new MonikerReadI64Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->indicator = request->indicator();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI64", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI64", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -837,8 +805,6 @@ data->indicator = request->indicator();
 }
 
 
-
-
 struct MonikerReadI8Data
 {
     NiFpga_Session session;
@@ -852,19 +818,18 @@ struct MonikerReadI8Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadI8Data* data = new MonikerReadI8Data();
-        data->session = session;
+      MonikerReadI8Data* data = new MonikerReadI8Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->indicator = request->indicator();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI8", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI8", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -891,8 +856,6 @@ data->indicator = request->indicator();
 }
 
 
-
-
 struct MonikerReadU16Data
 {
     NiFpga_Session session;
@@ -906,19 +869,18 @@ struct MonikerReadU16Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadU16Data* data = new MonikerReadU16Data();
-        data->session = session;
+      MonikerReadU16Data* data = new MonikerReadU16Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->indicator = request->indicator();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU16", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU16", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -945,8 +907,6 @@ data->indicator = request->indicator();
 }
 
 
-
-
 struct MonikerReadU32Data
 {
     NiFpga_Session session;
@@ -960,19 +920,18 @@ struct MonikerReadU32Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadU32Data* data = new MonikerReadU32Data();
-        data->session = session;
+      MonikerReadU32Data* data = new MonikerReadU32Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->indicator = request->indicator();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU32", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU32", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -999,8 +958,6 @@ data->indicator = request->indicator();
 }
 
 
-
-
 struct MonikerReadU64Data
 {
     NiFpga_Session session;
@@ -1014,19 +971,18 @@ struct MonikerReadU64Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadU64Data* data = new MonikerReadU64Data();
-        data->session = session;
+      MonikerReadU64Data* data = new MonikerReadU64Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->indicator = request->indicator();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU64", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU64", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1053,8 +1009,6 @@ data->indicator = request->indicator();
 }
 
 
-
-
 struct MonikerReadU8Data
 {
     NiFpga_Session session;
@@ -1068,19 +1022,18 @@ struct MonikerReadU8Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerReadU8Data* data = new MonikerReadU8Data();
-        data->session = session;
+      MonikerReadU8Data* data = new MonikerReadU8Data();
+      data->session = session;
+      data->indicator = request->indicator();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->indicator = request->indicator();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU8", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU8", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1107,8 +1060,6 @@ data->indicator = request->indicator();
 }
 
 
-
-
 struct MonikerWriteArrayI16Data
 {
     NiFpga_Session session;
@@ -1123,20 +1074,19 @@ struct MonikerWriteArrayI16Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteArrayI16Data* data = new MonikerWriteArrayI16Data();
-        data->session = session;
+      MonikerWriteArrayI16Data* data = new MonikerWriteArrayI16Data();
+      data->session = session;
+      data->control = request->control();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI16", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI16", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1176,8 +1126,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerWriteArrayI32Data
 {
     NiFpga_Session session;
@@ -1192,20 +1140,19 @@ struct MonikerWriteArrayI32Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteArrayI32Data* data = new MonikerWriteArrayI32Data();
-        data->session = session;
+      MonikerWriteArrayI32Data* data = new MonikerWriteArrayI32Data();
+      data->session = session;
+      data->control = request->control();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI32", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI32", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1232,8 +1179,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerWriteArrayI64Data
 {
     NiFpga_Session session;
@@ -1248,20 +1193,19 @@ struct MonikerWriteArrayI64Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteArrayI64Data* data = new MonikerWriteArrayI64Data();
-        data->session = session;
+      MonikerWriteArrayI64Data* data = new MonikerWriteArrayI64Data();
+      data->session = session;
+      data->control = request->control();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI64", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI64", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1288,8 +1232,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerWriteArrayI8Data
 {
     NiFpga_Session session;
@@ -1304,20 +1246,19 @@ struct MonikerWriteArrayI8Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteArrayI8Data* data = new MonikerWriteArrayI8Data();
-        data->session = session;
+      MonikerWriteArrayI8Data* data = new MonikerWriteArrayI8Data();
+      data->session = session;
+      data->control = request->control();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI8", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI8", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1357,8 +1298,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerWriteArrayU16Data
 {
     NiFpga_Session session;
@@ -1373,20 +1312,19 @@ struct MonikerWriteArrayU16Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteArrayU16Data* data = new MonikerWriteArrayU16Data();
-        data->session = session;
+      MonikerWriteArrayU16Data* data = new MonikerWriteArrayU16Data();
+      data->session = session;
+      data->control = request->control();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU16", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU16", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1426,8 +1364,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerWriteArrayU32Data
 {
     NiFpga_Session session;
@@ -1442,20 +1378,19 @@ struct MonikerWriteArrayU32Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteArrayU32Data* data = new MonikerWriteArrayU32Data();
-        data->session = session;
+      MonikerWriteArrayU32Data* data = new MonikerWriteArrayU32Data();
+      data->session = session;
+      data->control = request->control();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU32", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU32", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1482,8 +1417,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerWriteArrayU64Data
 {
     NiFpga_Session session;
@@ -1498,20 +1431,19 @@ struct MonikerWriteArrayU64Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteArrayU64Data* data = new MonikerWriteArrayU64Data();
-        data->session = session;
+      MonikerWriteArrayU64Data* data = new MonikerWriteArrayU64Data();
+      data->session = session;
+      data->control = request->control();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU64", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU64", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1538,8 +1470,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerWriteArrayU8Data
 {
     NiFpga_Session session;
@@ -1554,20 +1484,19 @@ struct MonikerWriteArrayU8Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteArrayU8Data* data = new MonikerWriteArrayU8Data();
-        data->session = session;
+      MonikerWriteArrayU8Data* data = new MonikerWriteArrayU8Data();
+      data->session = session;
+      data->control = request->control();
+      data->size = request->size();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-data->size = request->size();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU8", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU8", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1607,8 +1536,6 @@ data->size = request->size();
 }
 
 
-
-
 struct MonikerWriteI16Data
 {
     NiFpga_Session session;
@@ -1622,19 +1549,18 @@ struct MonikerWriteI16Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteI16Data* data = new MonikerWriteI16Data();
-        data->session = session;
+      MonikerWriteI16Data* data = new MonikerWriteI16Data();
+      data->session = session;
+      data->control = request->control();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI16", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI16", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1664,8 +1590,6 @@ data->control = request->control();
 }
 
 
-
-
 struct MonikerWriteI32Data
 {
     NiFpga_Session session;
@@ -1679,19 +1603,18 @@ struct MonikerWriteI32Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteI32Data* data = new MonikerWriteI32Data();
-        data->session = session;
+      MonikerWriteI32Data* data = new MonikerWriteI32Data();
+      data->session = session;
+      data->control = request->control();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI32", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI32", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1717,8 +1640,6 @@ data->control = request->control();
 }
 
 
-
-
 struct MonikerWriteI64Data
 {
     NiFpga_Session session;
@@ -1732,19 +1653,18 @@ struct MonikerWriteI64Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteI64Data* data = new MonikerWriteI64Data();
-        data->session = session;
+      MonikerWriteI64Data* data = new MonikerWriteI64Data();
+      data->session = session;
+      data->control = request->control();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI64", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI64", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1770,8 +1690,6 @@ data->control = request->control();
 }
 
 
-
-
 struct MonikerWriteI8Data
 {
     NiFpga_Session session;
@@ -1785,19 +1703,18 @@ struct MonikerWriteI8Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteI8Data* data = new MonikerWriteI8Data();
-        data->session = session;
+      MonikerWriteI8Data* data = new MonikerWriteI8Data();
+      data->session = session;
+      data->control = request->control();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI8", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI8", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1827,8 +1744,6 @@ data->control = request->control();
 }
 
 
-
-
 struct MonikerWriteU16Data
 {
     NiFpga_Session session;
@@ -1842,19 +1757,18 @@ struct MonikerWriteU16Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteU16Data* data = new MonikerWriteU16Data();
-        data->session = session;
+      MonikerWriteU16Data* data = new MonikerWriteU16Data();
+      data->session = session;
+      data->control = request->control();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU16", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU16", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1884,8 +1798,6 @@ data->control = request->control();
 }
 
 
-
-
 struct MonikerWriteU32Data
 {
     NiFpga_Session session;
@@ -1899,19 +1811,18 @@ struct MonikerWriteU32Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteU32Data* data = new MonikerWriteU32Data();
-        data->session = session;
+      MonikerWriteU32Data* data = new MonikerWriteU32Data();
+      data->session = session;
+      data->control = request->control();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU32", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU32", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1937,8 +1848,6 @@ data->control = request->control();
 }
 
 
-
-
 struct MonikerWriteU64Data
 {
     NiFpga_Session session;
@@ -1952,19 +1861,18 @@ struct MonikerWriteU64Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteU64Data* data = new MonikerWriteU64Data();
-        data->session = session;
+      MonikerWriteU64Data* data = new MonikerWriteU64Data();
+      data->session = session;
+      data->control = request->control();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU64", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU64", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -1990,8 +1898,6 @@ data->control = request->control();
 }
 
 
-
-
 struct MonikerWriteU8Data
 {
     NiFpga_Session session;
@@ -2005,19 +1911,18 @@ struct MonikerWriteU8Data
         return ::grpc::Status::CANCELLED;
     }
     try {
-              auto session_grpc_session = request->session();
+      auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
-        MonikerWriteU8Data* data = new MonikerWriteU8Data();
-        data->session = session;
+      MonikerWriteU8Data* data = new MonikerWriteU8Data();
+      data->session = session;
+      data->control = request->control();
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
 
-data->control = request->control();
-        data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-        
-
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU8", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU8", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -2045,7 +1950,6 @@ data->control = request->control();
     }
     return ::grpc::Status::OK;
 }
-
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------

@@ -293,15 +293,18 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
   moniker_function_name = service_helpers.create_moniker_function_name(function_name)
   c_api_name = construct_c_api_name(function_name)
-  streaming_type = function_data.get('moniker_streaming_type', 'int32_t')
+  streaming_type = service_helpers.get_streaming_type(input_params)
+  streaming_type = service_helpers.get_streaming_type(input_params)
+  if not streaming_type:
+      streaming_type = service_helpers.get_streaming_type(output_params)
   coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
   grpc_streaming_type = service_helpers.get_grpc_streaming_type(streaming_type)
   isArray = common_helpers.is_array(streaming_type)
-%>
+%>\
 struct ${struct_name}
 {
     % for param in input_params:
-    % if not common_helpers.is_array(param['type']):
+    % if not param.get('is_streaming_type',False):
     ${param['type']} ${param['name']};
     % endif
     % endfor
@@ -314,15 +317,15 @@ struct ${struct_name}
         return ::grpc::Status::CANCELLED;
     }
     try {
-        ${initialize_standard_input_param(function_name, session_param)}
-        ${struct_name}* data = new ${struct_name}();
-        ${initialize_begin_input_param(function_name, input_params)}\
-        data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
-        ${initialize_service_output_params(output_params)}
-        ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-        ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data, *moniker);
-        response->set_allocated_moniker(moniker);
-        return ::grpc::Status::OK;
+${initialize_standard_input_param(function_name, session_param)}
+      ${struct_name}* data = new ${struct_name}();
+      ${initialize_begin_input_param(function_name, input_params)}\
+      data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
+      ${initialize_service_output_params(output_params)}
+      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data, *moniker);
+      response->set_allocated_moniker(moniker);
+      return ::grpc::Status::OK;
     }
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
@@ -331,10 +334,9 @@ struct ${struct_name}
 % if "Read" in function_name:
 <%
   arg_string= service_helpers.create_args(parameters)
-  if not isArray:
-    arg_string = arg_string.replace("&moniker", "&value")
-  else:
-    arg_string = arg_string.replace(", &moniker", "").strip()
+  if "array" in arg_string and "array.data()" not in arg_string:
+      arg_string = arg_string.replace("array", "array.data()")
+  arg_string = arg_string.replace(", &moniker", "").strip()
   data_type = streaming_type.replace("[]", "")
 %>
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
@@ -374,12 +376,7 @@ struct ${struct_name}
 % elif "Write" in function_name:
 <%
   arg_string= service_helpers.create_args(parameters)
-  if not isArray:
-    # Replace &moniker with &value
-    arg_string = arg_string.replace("&moniker", "value")
-  else:
-    # Remove &moniker and the preceding comma
-    arg_string = arg_string.replace(", &moniker", "").strip()
+  arg_string = arg_string.replace(", &moniker", "").strip()
   data_type = streaming_type.replace("[]", "")
 %>
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
@@ -430,29 +427,26 @@ struct ${struct_name}
 <%def name="initialize_begin_input_param(function_name, input_params)">\
 % for param in input_params:
 % if not common_helpers.is_array(param['type']):
+% if not param.get('is_streaming_type',False):
 <%
 grpc_type = param.get('grpc_type', None)
 %>\
 % if grpc_type != 'nidevice_grpc.Session':
-data->${param['name']} = request->${param['name']}();
+      data->${param['name']} = request->${param['name']}();
 % else:
-${initialize_session_begin_input_param(param)}
+data->${param['name']} = ${param['name']};
+% endif
 % endif
 % endif
 % endfor
 </%def>
 
-## Initialize the input parameters to the API call.
-<%def name="initialize_session_begin_input_param(parameter)">\
-<%
-%>\
-data->${parameter['name']} = ${parameter['name']};
-</%def>
-
 <%def name="initialize_non_array_parameters(input_params)">
 % for param in input_params:
+  % if not param.get('is_streaming_type',False):
   % if not common_helpers.is_array(param['type']):
     auto ${param['name']} = function_data->${param['name']};
+  % endif
   % endif
 % endfor
 </%def>

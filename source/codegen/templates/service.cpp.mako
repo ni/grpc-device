@@ -126,7 +126,7 @@ ${mako_helper.register_moniker_functions(function_name)}\
     is_async_streaming = common_helpers.has_async_streaming_response(function_data)
 %>\
 % if function_name in data_moniker_functions:
-${mako_helper.define_streaming_api(function_name=function_name, function_data=function_data, parameters=parameters)}
+${mako_helper.define_streaming_api(function_name=function_name, function_data=function_data, parameters=parameters)}\
 % else:
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
