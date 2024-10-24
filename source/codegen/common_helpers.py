@@ -32,6 +32,12 @@ def is_input_parameter(parameter):
     """Whether the parameter is an input parameter."""
     return "in" in parameter["direction"]
 
+def get_streaming_parameter(parameters: List[dict]) -> dict:
+    for param in parameters:
+        if param.get("is_streaming_type", False) == True:
+            return param
+    return None
+
 
 def levels_of_pointer_indirection(parameter: dict) -> int:
     """Levels of pointer indirection for pointer. I.e. number of '*'s."""

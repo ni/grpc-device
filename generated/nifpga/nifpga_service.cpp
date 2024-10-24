@@ -190,14 +190,16 @@ struct MonikerReadArrayI16Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadArrayI16Data* function_data = (MonikerReadArrayI16Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
+
+        
     std::vector<int16_t> array(size);
     auto status = library->ReadArrayI16(session, indicator, array.data(), size);
     if (status >= 0) {
@@ -210,8 +212,7 @@ struct MonikerReadArrayI16Data
             });
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadArrayI16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -252,14 +253,16 @@ struct MonikerReadArrayI32Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadArrayI32Data* function_data = (MonikerReadArrayI32Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
+
+        
     std::vector<int32_t> array(size);
     auto status = library->ReadArrayI32(session, indicator, array.data(), size);
     if (status >= 0) {
@@ -272,8 +275,7 @@ struct MonikerReadArrayI32Data
             });
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadArrayI32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -314,14 +316,16 @@ struct MonikerReadArrayI64Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadArrayI64Data* function_data = (MonikerReadArrayI64Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
+
+        
     std::vector<int64_t> array(size);
     auto status = library->ReadArrayI64(session, indicator, array.data(), size);
     if (status >= 0) {
@@ -334,8 +338,7 @@ struct MonikerReadArrayI64Data
             });
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadArrayI64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -376,14 +379,16 @@ struct MonikerReadArrayI8Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadArrayI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadArrayI8Data* function_data = (MonikerReadArrayI8Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
+
+        
     std::vector<int8_t> array(size);
     auto status = library->ReadArrayI8(session, indicator, array.data(), size);
     if (status >= 0) {
@@ -396,8 +401,7 @@ struct MonikerReadArrayI8Data
             });
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadArrayI8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -438,14 +442,16 @@ struct MonikerReadArrayU16Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadArrayU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadArrayU16Data* function_data = (MonikerReadArrayU16Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
+
+        
     std::vector<uint16_t> array(size);
     auto status = library->ReadArrayU16(session, indicator, array.data(), size);
     if (status >= 0) {
@@ -458,8 +464,7 @@ struct MonikerReadArrayU16Data
             });
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadArrayU16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -500,14 +505,16 @@ struct MonikerReadArrayU32Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadArrayU32Data* function_data = (MonikerReadArrayU32Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
+
+        
     std::vector<uint32_t> array(size);
     auto status = library->ReadArrayU32(session, indicator, array.data(), size);
     if (status >= 0) {
@@ -520,8 +527,7 @@ struct MonikerReadArrayU32Data
             });
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadArrayU32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -562,14 +568,16 @@ struct MonikerReadArrayU64Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadArrayU64Data* function_data = (MonikerReadArrayU64Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
+
+        
     std::vector<uint64_t> array(size);
     auto status = library->ReadArrayU64(session, indicator, array.data(), size);
     if (status >= 0) {
@@ -582,8 +590,7 @@ struct MonikerReadArrayU64Data
             });
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadArrayU64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -624,14 +631,16 @@ struct MonikerReadArrayU8Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadArrayU8Data* function_data = (MonikerReadArrayU8Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
+
+        
     std::vector<uint8_t> array(size);
     auto status = library->ReadArrayU8(session, indicator, array.data(), size);
     if (status >= 0) {
@@ -644,8 +653,7 @@ struct MonikerReadArrayU8Data
             });
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadArrayU8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -682,21 +690,22 @@ struct MonikerReadI16Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadI16Data* function_data = (MonikerReadI16Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
+
+        
     int16_t value = 0;
     auto status = library->ReadI16(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadI16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -733,21 +742,22 @@ struct MonikerReadI32Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadI32Data* function_data = (MonikerReadI32Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
+
+        
     int32_t value = 0;
     auto status = library->ReadI32(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadI32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -784,21 +794,22 @@ struct MonikerReadI64Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadI64Data* function_data = (MonikerReadI64Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
+
+        
     int64_t value = 0;
     auto status = library->ReadI64(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadI64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -835,21 +846,22 @@ struct MonikerReadI8Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadI8Data* function_data = (MonikerReadI8Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
+
+        
     int8_t value = 0;
     auto status = library->ReadI8(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadI8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -886,21 +898,22 @@ struct MonikerReadU16Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadU16Data* function_data = (MonikerReadU16Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
+
+        
     uint16_t value = 0;
     auto status = library->ReadU16(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadU16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -937,21 +950,22 @@ struct MonikerReadU32Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadU32Data* function_data = (MonikerReadU32Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
+
+        
     uint32_t value = 0;
     auto status = library->ReadU32(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadU32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -988,21 +1002,22 @@ struct MonikerReadU64Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadU64Data* function_data = (MonikerReadU64Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
+
+        
     uint64_t value = 0;
     auto status = library->ReadU64(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadU64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -1039,21 +1054,22 @@ struct MonikerReadU8Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerReadU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerReadU8Data* function_data = (MonikerReadU8Data*)data;
     auto library = function_data->library;
+    
     auto session = function_data->session;
     auto indicator = function_data->indicator;
+
+        
     uint8_t value = 0;
     auto status = library->ReadU8(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    else
-    {
+    if (status < 0) {
         std::cout << "MonikerReadU8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
@@ -1092,7 +1108,6 @@ struct MonikerWriteArrayI16Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteArrayI16Data* function_data = (MonikerWriteArrayI16Data*)data;
@@ -1102,22 +1117,23 @@ struct MonikerWriteArrayI16Data
     auto control = function_data->control;
     auto size = function_data->size;
 
+        
     ArrayI32Data arrayi32_data;
     packedData.UnpackTo(&arrayi32_data);
-    auto data_array = arrayi32_data.value();
-    auto array = std::vector<int16_t>();
-    array.reserve(data_array.size());
-    std::transform(
-        data_array.begin(),
-        data_array.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
-                  std::string message("value " + std::to_string(x) + " doesn't fit in datatype int16_t");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<int16_t>(x);
-        });
+        auto data_array = arrayi32_data.value();
+        auto array = std::vector<int16_t>();
+        array.reserve(data_array.size());
+        std::transform(
+            data_array.begin(),
+            data_array.end(),
+            std::back_inserter(array),
+            [](auto x) {
+                if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
+                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype int16_t");
+                    throw nidevice_grpc::ValueOutOfRangeException(message);
+                }
+                return static_cast<int16_t>(x);
+            });
     auto status = library->WriteArrayI16(session, control, array.data(), size);
     if (status < 0) {
         std::cout << "MonikerWriteArrayI16 error: " << status << std::endl;
@@ -1158,7 +1174,6 @@ struct MonikerWriteArrayI32Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteArrayI32Data* function_data = (MonikerWriteArrayI32Data*)data;
@@ -1168,10 +1183,11 @@ struct MonikerWriteArrayI32Data
     auto control = function_data->control;
     auto size = function_data->size;
 
+        
     ArrayI32Data arrayi32_data;
     packedData.UnpackTo(&arrayi32_data);
-    auto array = const_cast<int32_t*>(arrayi32_data.value().data());
-    auto status = library->WriteArrayI32(session, control, array, size);
+        auto array = const_cast<int32_t*>(arrayi32_data.value().data());
+    auto status = library->WriteArrayI32(session, control, array.data(), size);
     if (status < 0) {
         std::cout << "MonikerWriteArrayI32 error: " << status << std::endl;
     }
@@ -1211,7 +1227,6 @@ struct MonikerWriteArrayI64Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteArrayI64Data* function_data = (MonikerWriteArrayI64Data*)data;
@@ -1221,10 +1236,11 @@ struct MonikerWriteArrayI64Data
     auto control = function_data->control;
     auto size = function_data->size;
 
+        
     ArrayI64Data arrayi64_data;
     packedData.UnpackTo(&arrayi64_data);
-    auto array = const_cast<int64_t*>(arrayi64_data.value().data());
-    auto status = library->WriteArrayI64(session, control, array, size);
+        auto array = const_cast<int64_t*>(arrayi64_data.value().data());
+    auto status = library->WriteArrayI64(session, control, array.data(), size);
     if (status < 0) {
         std::cout << "MonikerWriteArrayI64 error: " << status << std::endl;
     }
@@ -1264,7 +1280,6 @@ struct MonikerWriteArrayI8Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteArrayI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteArrayI8Data* function_data = (MonikerWriteArrayI8Data*)data;
@@ -1274,22 +1289,23 @@ struct MonikerWriteArrayI8Data
     auto control = function_data->control;
     auto size = function_data->size;
 
+        
     ArrayI32Data arrayi32_data;
     packedData.UnpackTo(&arrayi32_data);
-    auto data_array = arrayi32_data.value();
-    auto array = std::vector<int8_t>();
-    array.reserve(data_array.size());
-    std::transform(
-        data_array.begin(),
-        data_array.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
-                  std::string message("value " + std::to_string(x) + " doesn't fit in datatype int8_t");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<int8_t>(x);
-        });
+        auto data_array = arrayi32_data.value();
+        auto array = std::vector<int8_t>();
+        array.reserve(data_array.size());
+        std::transform(
+            data_array.begin(),
+            data_array.end(),
+            std::back_inserter(array),
+            [](auto x) {
+                if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
+                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype int8_t");
+                    throw nidevice_grpc::ValueOutOfRangeException(message);
+                }
+                return static_cast<int8_t>(x);
+            });
     auto status = library->WriteArrayI8(session, control, array.data(), size);
     if (status < 0) {
         std::cout << "MonikerWriteArrayI8 error: " << status << std::endl;
@@ -1330,7 +1346,6 @@ struct MonikerWriteArrayU16Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteArrayU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteArrayU16Data* function_data = (MonikerWriteArrayU16Data*)data;
@@ -1340,22 +1355,23 @@ struct MonikerWriteArrayU16Data
     auto control = function_data->control;
     auto size = function_data->size;
 
+        
     ArrayU32Data arrayu32_data;
     packedData.UnpackTo(&arrayu32_data);
-    auto data_array = arrayu32_data.value();
-    auto array = std::vector<uint16_t>();
-    array.reserve(data_array.size());
-    std::transform(
-        data_array.begin(),
-        data_array.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
-                  std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint16_t");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<uint16_t>(x);
-        });
+        auto data_array = arrayu32_data.value();
+        auto array = std::vector<uint16_t>();
+        array.reserve(data_array.size());
+        std::transform(
+            data_array.begin(),
+            data_array.end(),
+            std::back_inserter(array),
+            [](auto x) {
+                if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
+                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint16_t");
+                    throw nidevice_grpc::ValueOutOfRangeException(message);
+                }
+                return static_cast<uint16_t>(x);
+            });
     auto status = library->WriteArrayU16(session, control, array.data(), size);
     if (status < 0) {
         std::cout << "MonikerWriteArrayU16 error: " << status << std::endl;
@@ -1396,7 +1412,6 @@ struct MonikerWriteArrayU32Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteArrayU32Data* function_data = (MonikerWriteArrayU32Data*)data;
@@ -1406,10 +1421,11 @@ struct MonikerWriteArrayU32Data
     auto control = function_data->control;
     auto size = function_data->size;
 
+        
     ArrayU32Data arrayu32_data;
     packedData.UnpackTo(&arrayu32_data);
-    auto array = const_cast<uint32_t*>(arrayu32_data.value().data());
-    auto status = library->WriteArrayU32(session, control, array, size);
+        auto array = const_cast<uint32_t*>(arrayu32_data.value().data());
+    auto status = library->WriteArrayU32(session, control, array.data(), size);
     if (status < 0) {
         std::cout << "MonikerWriteArrayU32 error: " << status << std::endl;
     }
@@ -1449,7 +1465,6 @@ struct MonikerWriteArrayU64Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteArrayU64Data* function_data = (MonikerWriteArrayU64Data*)data;
@@ -1459,10 +1474,11 @@ struct MonikerWriteArrayU64Data
     auto control = function_data->control;
     auto size = function_data->size;
 
+        
     ArrayU64Data arrayu64_data;
     packedData.UnpackTo(&arrayu64_data);
-    auto array = const_cast<uint64_t*>(arrayu64_data.value().data());
-    auto status = library->WriteArrayU64(session, control, array, size);
+        auto array = const_cast<uint64_t*>(arrayu64_data.value().data());
+    auto status = library->WriteArrayU64(session, control, array.data(), size);
     if (status < 0) {
         std::cout << "MonikerWriteArrayU64 error: " << status << std::endl;
     }
@@ -1502,7 +1518,6 @@ struct MonikerWriteArrayU8Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteArrayU8Data* function_data = (MonikerWriteArrayU8Data*)data;
@@ -1512,22 +1527,23 @@ struct MonikerWriteArrayU8Data
     auto control = function_data->control;
     auto size = function_data->size;
 
+        
     ArrayU32Data arrayu32_data;
     packedData.UnpackTo(&arrayu32_data);
-    auto data_array = arrayu32_data.value();
-    auto array = std::vector<uint8_t>();
-    array.reserve(data_array.size());
-    std::transform(
-        data_array.begin(),
-        data_array.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
-                  std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint8_t");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<uint8_t>(x);
-        });
+        auto data_array = arrayu32_data.value();
+        auto array = std::vector<uint8_t>();
+        array.reserve(data_array.size());
+        std::transform(
+            data_array.begin(),
+            data_array.end(),
+            std::back_inserter(array),
+            [](auto x) {
+                if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
+                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint8_t");
+                    throw nidevice_grpc::ValueOutOfRangeException(message);
+                }
+                return static_cast<uint8_t>(x);
+            });
     auto status = library->WriteArrayU8(session, control, array.data(), size);
     if (status < 0) {
         std::cout << "MonikerWriteArrayU8 error: " << status << std::endl;
@@ -1566,7 +1582,6 @@ struct MonikerWriteI16Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteI16Data* function_data = (MonikerWriteI16Data*)data;
@@ -1575,13 +1590,14 @@ struct MonikerWriteI16Data
     auto session = function_data->session;
     auto control = function_data->control;
 
+        
     I32Data i32_data;
     packedData.UnpackTo(&i32_data);
-    int32_t value = i32_data.value();
-    if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
-        std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
-        throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
+        int32_t value = i32_data.value();
+        if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
+            std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
     auto status = library->WriteI16(session, control, value);
     if (status < 0) {
         std::cout << "MonikerWriteI16 error: " << status << std::endl;
@@ -1620,7 +1636,6 @@ struct MonikerWriteI32Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteI32Data* function_data = (MonikerWriteI32Data*)data;
@@ -1629,9 +1644,10 @@ struct MonikerWriteI32Data
     auto session = function_data->session;
     auto control = function_data->control;
 
+        
     I32Data i32_data;
     packedData.UnpackTo(&i32_data);
-    int32_t value = i32_data.value();
+        int32_t value = i32_data.value();
     auto status = library->WriteI32(session, control, value);
     if (status < 0) {
         std::cout << "MonikerWriteI32 error: " << status << std::endl;
@@ -1670,7 +1686,6 @@ struct MonikerWriteI64Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteI64Data* function_data = (MonikerWriteI64Data*)data;
@@ -1679,9 +1694,10 @@ struct MonikerWriteI64Data
     auto session = function_data->session;
     auto control = function_data->control;
 
+        
     I64Data i64_data;
     packedData.UnpackTo(&i64_data);
-    int64_t value = i64_data.value();
+        int64_t value = i64_data.value();
     auto status = library->WriteI64(session, control, value);
     if (status < 0) {
         std::cout << "MonikerWriteI64 error: " << status << std::endl;
@@ -1720,7 +1736,6 @@ struct MonikerWriteI8Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteI8Data* function_data = (MonikerWriteI8Data*)data;
@@ -1729,13 +1744,14 @@ struct MonikerWriteI8Data
     auto session = function_data->session;
     auto control = function_data->control;
 
+        
     I32Data i32_data;
     packedData.UnpackTo(&i32_data);
-    int32_t value = i32_data.value();
-    if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
-        std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
-        throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
+        int32_t value = i32_data.value();
+        if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
+            std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
     auto status = library->WriteI8(session, control, value);
     if (status < 0) {
         std::cout << "MonikerWriteI8 error: " << status << std::endl;
@@ -1774,7 +1790,6 @@ struct MonikerWriteU16Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteU16Data* function_data = (MonikerWriteU16Data*)data;
@@ -1783,13 +1798,14 @@ struct MonikerWriteU16Data
     auto session = function_data->session;
     auto control = function_data->control;
 
+        
     U32Data u32_data;
     packedData.UnpackTo(&u32_data);
-    uint32_t value = u32_data.value();
-    if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
-        std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
-        throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
+        uint32_t value = u32_data.value();
+        if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
+            std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
     auto status = library->WriteU16(session, control, value);
     if (status < 0) {
         std::cout << "MonikerWriteU16 error: " << status << std::endl;
@@ -1828,7 +1844,6 @@ struct MonikerWriteU32Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteU32Data* function_data = (MonikerWriteU32Data*)data;
@@ -1837,9 +1852,10 @@ struct MonikerWriteU32Data
     auto session = function_data->session;
     auto control = function_data->control;
 
+        
     U32Data u32_data;
     packedData.UnpackTo(&u32_data);
-    uint32_t value = u32_data.value();
+        uint32_t value = u32_data.value();
     auto status = library->WriteU32(session, control, value);
     if (status < 0) {
         std::cout << "MonikerWriteU32 error: " << status << std::endl;
@@ -1878,7 +1894,6 @@ struct MonikerWriteU64Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteU64Data* function_data = (MonikerWriteU64Data*)data;
@@ -1887,9 +1902,10 @@ struct MonikerWriteU64Data
     auto session = function_data->session;
     auto control = function_data->control;
 
+        
     U64Data u64_data;
     packedData.UnpackTo(&u64_data);
-    uint64_t value = u64_data.value();
+        uint64_t value = u64_data.value();
     auto status = library->WriteU64(session, control, value);
     if (status < 0) {
         std::cout << "MonikerWriteU64 error: " << status << std::endl;
@@ -1928,7 +1944,6 @@ struct MonikerWriteU8Data
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-
 ::grpc::Status MonikerWriteU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     MonikerWriteU8Data* function_data = (MonikerWriteU8Data*)data;
@@ -1937,13 +1952,14 @@ struct MonikerWriteU8Data
     auto session = function_data->session;
     auto control = function_data->control;
 
+        
     U32Data u32_data;
     packedData.UnpackTo(&u32_data);
-    uint32_t value = u32_data.value();
-    if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
-        std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");
-        throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
+        uint32_t value = u32_data.value();
+        if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
+            std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
     auto status = library->WriteU8(session, control, value);
     if (status < 0) {
         std::cout << "MonikerWriteU8 error: " << status << std::endl;

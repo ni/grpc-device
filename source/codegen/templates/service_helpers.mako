@@ -294,7 +294,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   moniker_function_name = service_helpers.create_moniker_function_name(function_name)
   c_api_name = construct_c_api_name(function_name)
   streaming_type = service_helpers.get_streaming_type(input_params)
-  streaming_type = service_helpers.get_streaming_type(input_params)
+  streaming_param = common_helpers.get_streaming_parameter(parameters)
   if not streaming_type:
       streaming_type = service_helpers.get_streaming_type(output_params)
   coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
@@ -331,22 +331,32 @@ ${initialize_standard_input_param(function_name, session_param)}
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
 }
-% if "Read" in function_name:
 <%
   arg_string= service_helpers.create_args(parameters)
   if "array" in arg_string and "array.data()" not in arg_string:
       arg_string = arg_string.replace("array", "array.data()")
   arg_string = arg_string.replace(", &moniker", "").strip()
   data_type = streaming_type.replace("[]", "")
-%>
+%>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = (${struct_name}*)data;
     auto library = function_data->library;
-    % for param in input_params:
-    auto ${param['name']} = function_data->${param['name']};
-    % endfor
-    % if isArray:
+    ${initialize_non_array_parameters(input_params)}\
+    % if streaming_param and streaming_param['direction'] == 'out':
+        ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type)}\
+    % elif streaming_param and streaming_param['direction'] == 'in':
+        ${handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, isArray)}\
+    % endif
+    if (status < 0) {
+        std::cout << "${moniker_function_name} error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+</%def>
+
+<%def name="handle_out_direction(c_api_name, arg_string, data_type, streaming_type)">
+    % if common_helpers.is_array(streaming_type):
     std::vector<${data_type}> array(size);
     auto status = library->${c_api_name}(${arg_string});
     if (status >= 0) {
@@ -367,60 +377,40 @@ ${initialize_standard_input_param(function_name, session_param)}
         packedData.PackFrom(function_data->data);
     }
     % endif
-    else
-    {
-        std::cout << "${moniker_function_name} error: " << status << std::endl;
-    }
-    return ::grpc::Status::OK;
-}
-% elif "Write" in function_name:
-<%
-  arg_string= service_helpers.create_args(parameters)
-  arg_string = arg_string.replace(", &moniker", "").strip()
-  data_type = streaming_type.replace("[]", "")
-%>
-::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
-    ${struct_name}* function_data = (${struct_name}*)data;
-    auto library = function_data->library;
-    ${initialize_non_array_parameters(input_params)}
+</%def>
+
+<%def name="handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, isArray)">
     ${grpc_streaming_type}Data ${grpc_streaming_type.lower()}_data;
     packedData.UnpackTo(&${grpc_streaming_type.lower()}_data);
     % if isArray:
-    % if is_coerced_type_present:
-    auto data_array = ${grpc_streaming_type.lower()}_data.value();
-    auto array = std::vector<${data_type}>();
-    array.reserve(data_array.size());
-    std::transform(
-        data_array.begin(),
-        data_array.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<${data_type}>::min() || x > std::numeric_limits<${data_type}>::max()) {
-                  std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${data_type}");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<${data_type}>(x);
-        });
+        % if is_coerced_type_present:
+        auto data_array = ${grpc_streaming_type.lower()}_data.value();
+        auto array = std::vector<${data_type}>();
+        array.reserve(data_array.size());
+        std::transform(
+            data_array.begin(),
+            data_array.end(),
+            std::back_inserter(array),
+            [](auto x) {
+                if (x < std::numeric_limits<${data_type}>::min() || x > std::numeric_limits<${data_type}>::max()) {
+                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${data_type}");
+                    throw nidevice_grpc::ValueOutOfRangeException(message);
+                }
+                return static_cast<${data_type}>(x);
+            });
+        % else:
+        auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_data.value().data());
+        % endif
     % else:
-    auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_data.value().data());
-    % endif
-    % else:
-    ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
-    % if is_coerced_type_present:
-    if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
-        std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");
-        throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
-    % endif
+        ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
+        % if is_coerced_type_present:
+        if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
+            std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
+        % endif
     % endif
     auto status = library->${c_api_name}(${arg_string});
-    if (status < 0) {
-        std::cout << "${moniker_function_name} error: " << status << std::endl;
-    }
-    return ::grpc::Status::OK;
-}
-% endif
 </%def>
 
 ## Initialize an bgin input parameter for an API call.
