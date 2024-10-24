@@ -31,11 +31,13 @@ endif()
 option(USE_NILRT_LEGACY_TOOLCHAIN "Enable to use tools and libraries from a NILRT compile toolchain." OFF)
 option(USE_PYTHON_VIRTUALENV "Enable to use the automatically-generated python venv, local to this project source." ON)
 option(USE_SUBMODULE_LIBS "Enable to link against the submodule libraries, rather than their native-OS equivalents." ON)
+option(INCLUDE_SIDEBAND_RDMA "Include support for RDMA sideband transfers" OFF)
+option(SIDEBAND_STATIC "Build static library, disabled by default" ON)
 
 #----------------------------------------------------------------------
 # Setup build dependencies, according to the toolchain options.
 #----------------------------------------------------------------------
-
+  add_subdirectory(third_party/grpc-sideband ${CMAKE_CURRENT_BINARY_DIR}/grpc-sideband)
 if(USE_SUBMODULE_LIBS)
   # The archetypical WIN32 build case
   # protobuf_INSTALL must be turned OFF whenever building it as a cmake subdir.
@@ -117,6 +119,8 @@ include_directories(
   "./generated"
   "./imports/include"
   "./source"
+  "./third_party/grpc-sideband/src"
+  "./third_party/grpc-sideband/moniker_src"
 )
 if(WIN32)
   link_directories("./imports/lib/win64")
@@ -272,6 +276,7 @@ get_filename_component(nidevice_proto "imports/protobuf/nidevice.proto" ABSOLUTE
 get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/deviceid_restricted.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
+get_filename_component(data_moniker_proto "source/protobuf/data_moniker.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -299,6 +304,7 @@ function(GenerateGrpcSources)
       -I "${proto_path}"
       ${protobuf_includes_arg}
       -I ${CMAKE_SOURCE_DIR}/imports/protobuf
+      -I ${CMAKE_SOURCE_DIR}/source/protobuf
       --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
       "${proto_file}"
     DEPENDS "${proto_file}" "${session_proto}")
@@ -326,6 +332,10 @@ set(calibrationoperations_restricted_proto_srcs "${proto_srcs_dir}/calibrationop
 set(calibrationoperations_restricted_proto_hdrs "${proto_srcs_dir}/calibrationoperations_restricted.pb.h")
 set(calibrationoperations_restricted_grpc_srcs "${proto_srcs_dir}/calibrationoperations_restricted.grpc.pb.cc")
 set(calibrationoperations_restricted_grpc_hdrs "${proto_srcs_dir}/calibrationoperations_restricted.grpc.pb.h")
+set(data_moniker_proto_srcs "${proto_srcs_dir}/data_moniker.pb.cc")
+set(data_moniker_proto_hdrs "${proto_srcs_dir}/data_moniker.pb.h")
+set(data_moniker_grpc_srcs "${proto_srcs_dir}/data_moniker.grpc.pb.cc")
+set(data_moniker_grpc_hdrs "${proto_srcs_dir}/data_moniker.grpc.pb.h")
 
 GenerateGrpcSources(
   PROTO
@@ -400,6 +410,16 @@ set(nidriver_service_library_hdrs
   "${calibrationoperations_restricted_grpc_hdrs}"
 )
 
+GenerateGrpcSources(
+  PROTO
+    ${data_moniker_proto}
+  OUTPUT
+    "${data_moniker_proto_srcs}"
+    "${data_moniker_proto_hdrs}"
+    "${data_moniker_grpc_srcs}"
+    "${data_moniker_grpc_hdrs}"
+)
+
 foreach(api ${nidrivers})
   GenerateGrpcSources(
     PROTO
@@ -444,6 +464,9 @@ add_executable(ni_grpc_device_server
    "source/server/syscfg_library.cpp"
    "source/server/syscfg_resource_accessor.cpp"
    "source/server/syscfg_session_handler.cpp"
+   "source/server/data_moniker_service.cpp"
+   ${data_moniker_proto_srcs}
+   ${data_moniker_grpc_srcs}
    ${nidevice_proto_srcs}
    ${session_proto_srcs}
    ${session_grpc_srcs}
@@ -528,6 +551,7 @@ set(server_lib_deps
   ${_REFLECTION}
   ${_UTF8CPP}
   ${CMAKE_DL_LIBS}
+  ni_grpc_sideband
   nlohmann_json::nlohmann_json
 )
 
