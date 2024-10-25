@@ -787,3 +787,15 @@ def get_streaming_type(parameters) -> str:
         if param.get('is_streaming_type', False) == True:
             return param['type']
     return None
+
+def include_param(param, streaming_param):
+    if not param.get('is_streaming_type', False):
+        if streaming_param and streaming_param['direction'] == 'in' and common_helpers.is_array(streaming_param['type']):
+            if param['name'] != streaming_param['size']['value']:
+                return True
+            else:
+                return False
+        else:
+            return True
+    else:
+        return False

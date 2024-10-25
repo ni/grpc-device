@@ -304,7 +304,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 struct ${struct_name}
 {
     % for param in input_params:
-    % if not param.get('is_streaming_type',False):
+    % if service_helpers.include_param(param, streaming_param):
     ${param['type']} ${param['name']};
     % endif
     % endfor
@@ -317,9 +317,9 @@ struct ${struct_name}
         return ::grpc::Status::CANCELLED;
     }
     try {
-${initialize_standard_input_param(function_name, session_param)}
+      ${initialize_streaming_input_param(function_name, input_params, parameters, streaming_param)}
       ${struct_name}* data = new ${struct_name}();
-      ${initialize_begin_input_param(function_name, input_params)}\
+      ${initialize_begin_input_param(input_params, streaming_param)}\
       data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
       ${initialize_service_output_params(output_params)}
       ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
@@ -342,7 +342,7 @@ ${initialize_standard_input_param(function_name, session_param)}
 {
     ${struct_name}* function_data = (${struct_name}*)data;
     auto library = function_data->library;
-    ${initialize_non_array_parameters(input_params)}\
+    ${initialize_non_array_parameters(input_params, streaming_param)}\
     % if streaming_param and streaming_param['direction'] == 'out':
         ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type)}\
     % elif streaming_param and streaming_param['direction'] == 'in':
@@ -386,7 +386,8 @@ ${initialize_standard_input_param(function_name, session_param)}
         % if is_coerced_type_present:
         auto data_array = ${grpc_streaming_type.lower()}_data.value();
         auto array = std::vector<${data_type}>();
-        array.reserve(data_array.size());
+        auto size = data_array.size();
+        array.reserve(size);
         std::transform(
             data_array.begin(),
             data_array.end(),
@@ -399,7 +400,8 @@ ${initialize_standard_input_param(function_name, session_param)}
                 return static_cast<${data_type}>(x);
             });
         % else:
-        auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_data.value().data());
+        auto data_array = ${grpc_streaming_type.lower()}_data.value();
+        auto array = std::vector<${data_type}>(data_array.begin(), data_array.end());
         % endif
     % else:
         ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
@@ -414,29 +416,27 @@ ${initialize_standard_input_param(function_name, session_param)}
 </%def>
 
 ## Initialize an bgin input parameter for an API call.
-<%def name="initialize_begin_input_param(function_name, input_params)">\
+<%def name="initialize_begin_input_param(input_params, streaming_param)">\
 % for param in input_params:
-% if not common_helpers.is_array(param['type']):
-% if not param.get('is_streaming_type',False):
-<%
-grpc_type = param.get('grpc_type', None)
-%>\
-% if grpc_type != 'nidevice_grpc.Session':
-      data->${param['name']} = request->${param['name']}();
-% else:
+% if service_helpers.include_param(param, streaming_param):
 data->${param['name']} = ${param['name']};
-% endif
-% endif
 % endif
 % endfor
 </%def>
 
-<%def name="initialize_non_array_parameters(input_params)">
+## Initialize an bgin input parameter for an API call.
+<%def name="initialize_streaming_input_param(function_name, input_params, parameters, streaming_param)">\
 % for param in input_params:
-  % if not param.get('is_streaming_type',False):
-  % if not common_helpers.is_array(param['type']):
+% if service_helpers.include_param(param, streaming_param):
+${initialize_input_param(function_name, param, parameters)}\
+% endif
+% endfor
+</%def>
+
+<%def name="initialize_non_array_parameters(input_params, streaming_param)">
+% for param in input_params:
+  % if service_helpers.include_param(param, streaming_param):
     auto ${param['name']} = function_data->${param['name']};
-  % endif
   % endif
 % endfor
 </%def>
