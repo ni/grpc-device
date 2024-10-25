@@ -448,6 +448,7 @@ add_executable(ni_grpc_device_server
    "source/server/calibration_operations_restricted_service.cpp"
    "source/server/core_server.cpp"
    "source/server/core_services_registrar.cpp"
+   "source/server/data_moniker_service.cpp"
    "source/server/debug_session_properties_restricted_service_registrar.cpp"
    "source/server/debug_session_properties_restricted_service.cpp"
    "source/server/device_enumerator.cpp"
@@ -464,7 +465,6 @@ add_executable(ni_grpc_device_server
    "source/server/syscfg_library.cpp"
    "source/server/syscfg_resource_accessor.cpp"
    "source/server/syscfg_session_handler.cpp"
-   "source/server/data_moniker_service.cpp"
    ${data_moniker_proto_srcs}
    ${data_moniker_grpc_srcs}
    ${nidevice_proto_srcs}
@@ -590,6 +590,7 @@ add_executable(IntegrationTestsRunner
     "source/server/calibration_operations_restricted_service_registrar.cpp"
     "source/server/calibration_operations_restricted_service.cpp"
     "source/server/core_services_registrar.cpp"
+    "source/server/data_moniker_service.cpp"
     "source/server/debug_session_properties_restricted_service_registrar.cpp"
     "source/server/debug_session_properties_restricted_service.cpp"
     "source/server/device_enumerator.cpp"
@@ -603,6 +604,8 @@ add_executable(IntegrationTestsRunner
     "source/server/syscfg_library.cpp"
     "source/server/syscfg_resource_accessor.cpp"
     "source/server/syscfg_session_handler.cpp"
+    ${data_moniker_proto_srcs}
+    ${data_moniker_grpc_srcs}
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
@@ -807,6 +810,7 @@ set(system_test_runner_sources
   "source/tests/system/visa_session_tests.cpp"
   "source/server/calibration_operations_restricted_service_registrar.cpp"
   "source/server/calibration_operations_restricted_service.cpp"
+  "source/server/data_moniker_service.cpp"
   "source/server/debug_session_properties_restricted_service_registrar.cpp"
   "source/server/debug_session_properties_restricted_service.cpp"
   "source/server/device_enumerator.cpp"
@@ -820,6 +824,8 @@ set(system_test_runner_sources
   "source/server/syscfg_library.cpp"
   "source/server/syscfg_resource_accessor.cpp"
   "source/server/syscfg_session_handler.cpp"
+  ${data_moniker_proto_srcs}
+  ${data_moniker_grpc_srcs}
   ${nidevice_proto_srcs}
   ${session_proto_srcs}
   ${session_grpc_srcs}
