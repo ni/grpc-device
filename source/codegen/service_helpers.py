@@ -805,3 +805,9 @@ def get_size_param_name(streaming_param) -> str:
         return streaming_param['size']['value']
     else:
         return None
+
+def get_c_api_name(function_name) -> str:
+    if function_name.startswith("Begin"):
+        base_name = function_name[len("Begin"):]
+        return f"{base_name}"
+    return f"{function_name}"

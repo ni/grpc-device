@@ -284,22 +284,14 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   service_class_prefix = config["service_class_prefix"]
   request_param = service_helpers.get_request_param(function_name)
   response_param = service_helpers.get_response_param(function_name)
-  session_param = common_helpers.get_first_session_param(parameters) 
-  def construct_c_api_name(function_name):
-      if function_name.startswith("Begin"):
-          base_name = function_name[len("Begin"):]
-          return f"{base_name}"
-      return f"{function_name}"
   struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
   moniker_function_name = service_helpers.create_moniker_function_name(function_name)
-  c_api_name = construct_c_api_name(function_name)
-  streaming_type = service_helpers.get_streaming_type(input_params)
+  c_api_name = service_helpers.get_c_api_name(function_name)
   streaming_param = common_helpers.get_streaming_parameter(parameters)
-  if not streaming_type:
-      streaming_type = service_helpers.get_streaming_type(output_params)
+  streaming_type = streaming_param['type']
   coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
   grpc_streaming_type = service_helpers.get_grpc_streaming_type(streaming_type)
-  isArray = common_helpers.is_array(streaming_type)
+  is_array = common_helpers.is_array(streaming_type)
 %>\
 struct ${struct_name}
 {
@@ -345,10 +337,10 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
     % if streaming_param and streaming_param['direction'] == 'out':
         ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present, streaming_param)}\
     % elif streaming_param and streaming_param['direction'] == 'in':
-        ${handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, isArray)}\
+        ${handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, is_array)}\
     % endif
     if (status < 0) {
-        std::cout << "${moniker_function_name} error: " << status << std::endl;
+      std::cout << "${moniker_function_name} error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -398,40 +390,40 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
     % endif
 </%def>
 
-<%def name="handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, isArray)">
+<%def name="handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, is_array)">
     ${grpc_streaming_type}Data ${grpc_streaming_type.lower()}_data;
     packedData.UnpackTo(&${grpc_streaming_type.lower()}_data);
-    % if isArray:
-        % if is_coerced_type_present:
-        auto data_array = ${grpc_streaming_type.lower()}_data.value();
-        auto array = std::vector<${data_type}>();
-        auto size = data_array.size();
-        array.reserve(size);
-        std::transform(
-            data_array.begin(),
-            data_array.end(),
-            std::back_inserter(array),
-            [](auto x) {
-                if (x < std::numeric_limits<${data_type}>::min() || x > std::numeric_limits<${data_type}>::max()) {
-                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${data_type}");
-                    throw nidevice_grpc::ValueOutOfRangeException(message);
-                }
-                return static_cast<${data_type}>(x);
-            });
-        % else:
+% if is_array:
+    % if is_coerced_type_present:
+    auto data_array = ${grpc_streaming_type.lower()}_data.value();
+    auto array = std::vector<${data_type}>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+        data_array.begin(),
+        data_array.end(),
+        std::back_inserter(array),
+        [](auto x) {
+          if (x < std::numeric_limits<${data_type}>::min() || x > std::numeric_limits<${data_type}>::max()) {
+            std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${data_type}");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+          }
+          return static_cast<${data_type}>(x);
+        });
+% else:
     auto data_array = ${grpc_streaming_type.lower()}_data.value();
     auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_data.value().data());
     auto size = data_array.size();
-        % endif
-    % else:
-        ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
-        % if is_coerced_type_present:
-        if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
-            std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        % endif
-    % endif
+% endif
+% else:
+    ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
+% if is_coerced_type_present:
+    if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+% endif
+% endif
     auto status = library->${c_api_name}(${arg_string});
 </%def>
 

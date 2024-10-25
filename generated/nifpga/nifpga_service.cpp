@@ -215,7 +215,7 @@ struct MonikerReadArrayI16Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadArrayI16 error: " << status << std::endl;
+      std::cout << "MonikerReadArrayI16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -280,7 +280,7 @@ struct MonikerReadArrayI32Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadArrayI32 error: " << status << std::endl;
+      std::cout << "MonikerReadArrayI32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -345,7 +345,7 @@ struct MonikerReadArrayI64Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadArrayI64 error: " << status << std::endl;
+      std::cout << "MonikerReadArrayI64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -410,7 +410,7 @@ struct MonikerReadArrayI8Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadArrayI8 error: " << status << std::endl;
+      std::cout << "MonikerReadArrayI8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -475,7 +475,7 @@ struct MonikerReadArrayU16Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadArrayU16 error: " << status << std::endl;
+      std::cout << "MonikerReadArrayU16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -540,7 +540,7 @@ struct MonikerReadArrayU32Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadArrayU32 error: " << status << std::endl;
+      std::cout << "MonikerReadArrayU32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -605,7 +605,7 @@ struct MonikerReadArrayU64Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadArrayU64 error: " << status << std::endl;
+      std::cout << "MonikerReadArrayU64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -670,7 +670,7 @@ struct MonikerReadArrayU8Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadArrayU8 error: " << status << std::endl;
+      std::cout << "MonikerReadArrayU8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -723,7 +723,7 @@ struct MonikerReadI16Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadI16 error: " << status << std::endl;
+      std::cout << "MonikerReadI16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -776,7 +776,7 @@ struct MonikerReadI32Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadI32 error: " << status << std::endl;
+      std::cout << "MonikerReadI32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -829,7 +829,7 @@ struct MonikerReadI64Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadI64 error: " << status << std::endl;
+      std::cout << "MonikerReadI64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -882,7 +882,7 @@ struct MonikerReadI8Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadI8 error: " << status << std::endl;
+      std::cout << "MonikerReadI8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -935,7 +935,7 @@ struct MonikerReadU16Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadU16 error: " << status << std::endl;
+      std::cout << "MonikerReadU16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -988,7 +988,7 @@ struct MonikerReadU32Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadU32 error: " << status << std::endl;
+      std::cout << "MonikerReadU32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1041,7 +1041,7 @@ struct MonikerReadU64Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadU64 error: " << status << std::endl;
+      std::cout << "MonikerReadU64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1094,7 +1094,7 @@ struct MonikerReadU8Data
         packedData.PackFrom(function_data->data);
     }
     if (status < 0) {
-        std::cout << "MonikerReadU8 error: " << status << std::endl;
+      std::cout << "MonikerReadU8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1142,24 +1142,24 @@ struct MonikerWriteArrayI16Data
         
     ArrayI32Data arrayi32_data;
     packedData.UnpackTo(&arrayi32_data);
-        auto data_array = arrayi32_data.value();
-        auto array = std::vector<int16_t>();
-        auto size = data_array.size();
-        array.reserve(size);
-        std::transform(
-            data_array.begin(),
-            data_array.end(),
-            std::back_inserter(array),
-            [](auto x) {
-                if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
-                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype int16_t");
-                    throw nidevice_grpc::ValueOutOfRangeException(message);
-                }
-                return static_cast<int16_t>(x);
-            });
+    auto data_array = arrayi32_data.value();
+    auto array = std::vector<int16_t>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+        data_array.begin(),
+        data_array.end(),
+        std::back_inserter(array),
+        [](auto x) {
+          if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
+            std::string message("value " + std::to_string(x) + " doesn't fit in datatype int16_t");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+          }
+          return static_cast<int16_t>(x);
+        });
     auto status = library->WriteArrayI16(session, control, array.data(), size);
     if (status < 0) {
-        std::cout << "MonikerWriteArrayI16 error: " << status << std::endl;
+      std::cout << "MonikerWriteArrayI16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1212,7 +1212,7 @@ struct MonikerWriteArrayI32Data
     auto size = data_array.size();
     auto status = library->WriteArrayI32(session, control, array, size);
     if (status < 0) {
-        std::cout << "MonikerWriteArrayI32 error: " << status << std::endl;
+      std::cout << "MonikerWriteArrayI32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1265,7 +1265,7 @@ struct MonikerWriteArrayI64Data
     auto size = data_array.size();
     auto status = library->WriteArrayI64(session, control, array, size);
     if (status < 0) {
-        std::cout << "MonikerWriteArrayI64 error: " << status << std::endl;
+      std::cout << "MonikerWriteArrayI64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1313,24 +1313,24 @@ struct MonikerWriteArrayI8Data
         
     ArrayI32Data arrayi32_data;
     packedData.UnpackTo(&arrayi32_data);
-        auto data_array = arrayi32_data.value();
-        auto array = std::vector<int8_t>();
-        auto size = data_array.size();
-        array.reserve(size);
-        std::transform(
-            data_array.begin(),
-            data_array.end(),
-            std::back_inserter(array),
-            [](auto x) {
-                if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
-                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype int8_t");
-                    throw nidevice_grpc::ValueOutOfRangeException(message);
-                }
-                return static_cast<int8_t>(x);
-            });
+    auto data_array = arrayi32_data.value();
+    auto array = std::vector<int8_t>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+        data_array.begin(),
+        data_array.end(),
+        std::back_inserter(array),
+        [](auto x) {
+          if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
+            std::string message("value " + std::to_string(x) + " doesn't fit in datatype int8_t");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+          }
+          return static_cast<int8_t>(x);
+        });
     auto status = library->WriteArrayI8(session, control, array.data(), size);
     if (status < 0) {
-        std::cout << "MonikerWriteArrayI8 error: " << status << std::endl;
+      std::cout << "MonikerWriteArrayI8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1378,24 +1378,24 @@ struct MonikerWriteArrayU16Data
         
     ArrayU32Data arrayu32_data;
     packedData.UnpackTo(&arrayu32_data);
-        auto data_array = arrayu32_data.value();
-        auto array = std::vector<uint16_t>();
-        auto size = data_array.size();
-        array.reserve(size);
-        std::transform(
-            data_array.begin(),
-            data_array.end(),
-            std::back_inserter(array),
-            [](auto x) {
-                if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
-                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint16_t");
-                    throw nidevice_grpc::ValueOutOfRangeException(message);
-                }
-                return static_cast<uint16_t>(x);
-            });
+    auto data_array = arrayu32_data.value();
+    auto array = std::vector<uint16_t>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+        data_array.begin(),
+        data_array.end(),
+        std::back_inserter(array),
+        [](auto x) {
+          if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
+            std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint16_t");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+          }
+          return static_cast<uint16_t>(x);
+        });
     auto status = library->WriteArrayU16(session, control, array.data(), size);
     if (status < 0) {
-        std::cout << "MonikerWriteArrayU16 error: " << status << std::endl;
+      std::cout << "MonikerWriteArrayU16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1448,7 +1448,7 @@ struct MonikerWriteArrayU32Data
     auto size = data_array.size();
     auto status = library->WriteArrayU32(session, control, array, size);
     if (status < 0) {
-        std::cout << "MonikerWriteArrayU32 error: " << status << std::endl;
+      std::cout << "MonikerWriteArrayU32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1501,7 +1501,7 @@ struct MonikerWriteArrayU64Data
     auto size = data_array.size();
     auto status = library->WriteArrayU64(session, control, array, size);
     if (status < 0) {
-        std::cout << "MonikerWriteArrayU64 error: " << status << std::endl;
+      std::cout << "MonikerWriteArrayU64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1549,24 +1549,24 @@ struct MonikerWriteArrayU8Data
         
     ArrayU32Data arrayu32_data;
     packedData.UnpackTo(&arrayu32_data);
-        auto data_array = arrayu32_data.value();
-        auto array = std::vector<uint8_t>();
-        auto size = data_array.size();
-        array.reserve(size);
-        std::transform(
-            data_array.begin(),
-            data_array.end(),
-            std::back_inserter(array),
-            [](auto x) {
-                if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
-                    std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint8_t");
-                    throw nidevice_grpc::ValueOutOfRangeException(message);
-                }
-                return static_cast<uint8_t>(x);
-            });
+    auto data_array = arrayu32_data.value();
+    auto array = std::vector<uint8_t>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+        data_array.begin(),
+        data_array.end(),
+        std::back_inserter(array),
+        [](auto x) {
+          if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
+            std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint8_t");
+            throw nidevice_grpc::ValueOutOfRangeException(message);
+          }
+          return static_cast<uint8_t>(x);
+        });
     auto status = library->WriteArrayU8(session, control, array.data(), size);
     if (status < 0) {
-        std::cout << "MonikerWriteArrayU8 error: " << status << std::endl;
+      std::cout << "MonikerWriteArrayU8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1614,14 +1614,14 @@ struct MonikerWriteI16Data
         
     I32Data i32_data;
     packedData.UnpackTo(&i32_data);
-        int32_t value = i32_data.value();
-        if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
-            std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
+    int32_t value = i32_data.value();
+    if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
     auto status = library->WriteI16(session, control, value);
     if (status < 0) {
-        std::cout << "MonikerWriteI16 error: " << status << std::endl;
+      std::cout << "MonikerWriteI16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1669,10 +1669,10 @@ struct MonikerWriteI32Data
         
     I32Data i32_data;
     packedData.UnpackTo(&i32_data);
-        int32_t value = i32_data.value();
+    int32_t value = i32_data.value();
     auto status = library->WriteI32(session, control, value);
     if (status < 0) {
-        std::cout << "MonikerWriteI32 error: " << status << std::endl;
+      std::cout << "MonikerWriteI32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1720,10 +1720,10 @@ struct MonikerWriteI64Data
         
     I64Data i64_data;
     packedData.UnpackTo(&i64_data);
-        int64_t value = i64_data.value();
+    int64_t value = i64_data.value();
     auto status = library->WriteI64(session, control, value);
     if (status < 0) {
-        std::cout << "MonikerWriteI64 error: " << status << std::endl;
+      std::cout << "MonikerWriteI64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1771,14 +1771,14 @@ struct MonikerWriteI8Data
         
     I32Data i32_data;
     packedData.UnpackTo(&i32_data);
-        int32_t value = i32_data.value();
-        if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
-            std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
+    int32_t value = i32_data.value();
+    if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
     auto status = library->WriteI8(session, control, value);
     if (status < 0) {
-        std::cout << "MonikerWriteI8 error: " << status << std::endl;
+      std::cout << "MonikerWriteI8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1826,14 +1826,14 @@ struct MonikerWriteU16Data
         
     U32Data u32_data;
     packedData.UnpackTo(&u32_data);
-        uint32_t value = u32_data.value();
-        if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
-            std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
+    uint32_t value = u32_data.value();
+    if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
     auto status = library->WriteU16(session, control, value);
     if (status < 0) {
-        std::cout << "MonikerWriteU16 error: " << status << std::endl;
+      std::cout << "MonikerWriteU16 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1881,10 +1881,10 @@ struct MonikerWriteU32Data
         
     U32Data u32_data;
     packedData.UnpackTo(&u32_data);
-        uint32_t value = u32_data.value();
+    uint32_t value = u32_data.value();
     auto status = library->WriteU32(session, control, value);
     if (status < 0) {
-        std::cout << "MonikerWriteU32 error: " << status << std::endl;
+      std::cout << "MonikerWriteU32 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1932,10 +1932,10 @@ struct MonikerWriteU64Data
         
     U64Data u64_data;
     packedData.UnpackTo(&u64_data);
-        uint64_t value = u64_data.value();
+    uint64_t value = u64_data.value();
     auto status = library->WriteU64(session, control, value);
     if (status < 0) {
-        std::cout << "MonikerWriteU64 error: " << status << std::endl;
+      std::cout << "MonikerWriteU64 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
@@ -1983,14 +1983,14 @@ struct MonikerWriteU8Data
         
     U32Data u32_data;
     packedData.UnpackTo(&u32_data);
-        uint32_t value = u32_data.value();
-        if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
-            std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
+    uint32_t value = u32_data.value();
+    if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
     auto status = library->WriteU8(session, control, value);
     if (status < 0) {
-        std::cout << "MonikerWriteU8 error: " << status << std::endl;
+      std::cout << "MonikerWriteU8 error: " << status << std::endl;
     }
     return ::grpc::Status::OK;
 }
