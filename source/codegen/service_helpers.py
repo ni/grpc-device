@@ -799,3 +799,9 @@ def include_param(param, streaming_param):
             return True
     else:
         return False
+
+def get_size_param_name(streaming_param) -> str:
+    if common_helpers.is_array(streaming_param['type']):
+        return streaming_param['size']['value']
+    else:
+        return None

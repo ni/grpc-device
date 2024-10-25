@@ -343,7 +343,7 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
     auto library = function_data->library;
     ${initialize_non_array_parameters(input_params, streaming_param)}\
     % if streaming_param and streaming_param['direction'] == 'out':
-        ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present)}\
+        ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present, streaming_param)}\
     % elif streaming_param and streaming_param['direction'] == 'in':
         ${handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, isArray)}\
     % endif
@@ -354,19 +354,22 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
 }
 </%def>
 
-<%def name="handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present)">
+<%def name="handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present, streaming_param)">
+<%
+  size = service_helpers.get_size_param_name(streaming_param)
+%>\
     % if common_helpers.is_array(streaming_type):
     % if is_coerced_type_present:
-    std::vector<${data_type}> array(size);
+    std::vector<${data_type}> array(${size});
     % else:
-    ${data_type}* array = new ${data_type}[size];
+    ${data_type}* array = new ${data_type}[${size}];
     % endif
     auto status = library->${c_api_name}(${arg_string});
     % if is_coerced_type_present:
     if (status >= 0) {
         std::transform(
             array.begin(),
-            array.begin() + size,
+            array.begin() + ${size},
             function_data->data.mutable_value()->begin(),
             [&](auto x) {
                 return x;
@@ -377,7 +380,7 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
     if (status >= 0) {
         std::transform(
             array,
-            array + size,
+            array + ${size},
             function_data->data.mutable_value()->begin(),
             [&](auto x) {
                 return x;
