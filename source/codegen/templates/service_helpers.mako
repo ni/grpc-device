@@ -311,17 +311,18 @@ struct ${struct_name}
     ${service_class_prefix.lower()}_grpc::${grpc_streaming_type}Data data;
     std::shared_ptr<${service_class_prefix}LibraryInterface> library;
 };
+
 ::grpc::Status ${service_class_prefix}Service::${function_name}(::grpc::ServerContext* context, ${request_param}, ${response_param})
 {
     if (context->IsCancelled()) {
         return ::grpc::Status::CANCELLED;
     }
     try {
-      ${initialize_streaming_input_param(function_name, input_params, parameters, streaming_param)}
+${initialize_streaming_input_param(function_name, input_params, parameters, streaming_param)}
       ${struct_name}* data = new ${struct_name}();
       ${initialize_begin_input_param(input_params, streaming_param)}\
       data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
-      ${initialize_service_output_params(output_params)}
+      ${initialize_service_output_params(output_params)}\
       ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data, *moniker);
       response->set_allocated_moniker(moniker);
@@ -333,8 +334,6 @@ struct ${struct_name}
 }
 <%
   arg_string= service_helpers.create_args(parameters)
-  if "array" in arg_string and "array.data()" not in arg_string:
-      arg_string = arg_string.replace("array", "array.data()")
   arg_string = arg_string.replace(", &moniker", "").strip()
   data_type = streaming_type.replace("[]", "")
 %>\
@@ -344,7 +343,7 @@ struct ${struct_name}
     auto library = function_data->library;
     ${initialize_non_array_parameters(input_params, streaming_param)}\
     % if streaming_param and streaming_param['direction'] == 'out':
-        ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type)}\
+        ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present)}\
     % elif streaming_param and streaming_param['direction'] == 'in':
         ${handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, isArray)}\
     % endif
@@ -355,10 +354,15 @@ struct ${struct_name}
 }
 </%def>
 
-<%def name="handle_out_direction(c_api_name, arg_string, data_type, streaming_type)">
+<%def name="handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present)">
     % if common_helpers.is_array(streaming_type):
+    % if is_coerced_type_present:
     std::vector<${data_type}> array(size);
+    % else:
+    ${data_type}* array = new ${data_type}[size];
+    % endif
     auto status = library->${c_api_name}(${arg_string});
+    % if is_coerced_type_present:
     if (status >= 0) {
         std::transform(
             array.begin(),
@@ -369,6 +373,18 @@ struct ${struct_name}
             });
         packedData.PackFrom(function_data->data);
     }
+    % else:
+    if (status >= 0) {
+        std::transform(
+            array,
+            array + size,
+            function_data->data.mutable_value()->begin(),
+            [&](auto x) {
+                return x;
+            });
+        packedData.PackFrom(function_data->data);
+    }
+    % endif
     % else:
     ${streaming_type} value = 0;
     auto status = library->${c_api_name}(${arg_string});
@@ -400,8 +416,9 @@ struct ${struct_name}
                 return static_cast<${data_type}>(x);
             });
         % else:
-        auto data_array = ${grpc_streaming_type.lower()}_data.value();
-        auto array = std::vector<${data_type}>(data_array.begin(), data_array.end());
+    auto data_array = ${grpc_streaming_type.lower()}_data.value();
+    auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_data.value().data());
+    auto size = data_array.size();
         % endif
     % else:
         ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
@@ -418,9 +435,9 @@ struct ${struct_name}
 ## Initialize an bgin input parameter for an API call.
 <%def name="initialize_begin_input_param(input_params, streaming_param)">\
 % for param in input_params:
-% if service_helpers.include_param(param, streaming_param):
-data->${param['name']} = ${param['name']};
-% endif
+   % if service_helpers.include_param(param, streaming_param):
+      data->${param['name']} = ${param['name']};
+   % endif
 % endfor
 </%def>
 
