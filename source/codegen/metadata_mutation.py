@@ -117,6 +117,18 @@ def mutate(metadata: dict):
     if config["driver_name"] in _ALREADY_MUTATED:
         return
 
+    # Generate new streaming APIs for functions that support it.
+    all_functions = {}
+
+    for function_name, function in metadata["functions"].items():
+        all_functions[function_name] = function
+
+        if function.get('moniker_supports_streaming') is True:
+            new_function_name = f"Begin{function_name}"
+            all_functions[new_function_name] = generate_streaming_metadata(function)
+
+    metadata["functions"] = all_functions
+
     move_zero_enums_to_front(metadata["enums"])
 
     for custom_type in config["custom_types"]:
@@ -124,8 +136,7 @@ def mutate(metadata: dict):
         set_grpc_type_for_custom_type_fields(fields, config)
 
     attribute_expander = AttributeAccessorExpander(metadata)
-    for function_name in metadata["functions"]:
-        function = metadata["functions"][function_name]
+    for function_name, function in metadata["functions"].items():
         parameters = function["parameters"]
         add_get_last_error_params_if_needed(function, config)
         sanitize_names(parameters)
@@ -138,6 +149,36 @@ def mutate(metadata: dict):
         attribute_expander.expand_attribute_value_params(function)
         attribute_expander.patch_attribute_enum_type(function_name, function)
 
+def generate_streaming_metadata(function: dict) -> dict:
+    """Generate the streaming API metadata for a given function."""
+
+    streaming_parameters = []
+
+    for param in function['parameters']:
+        if param.get('is_streaming_type') is True:
+            updated_param = {**param, 'include_in_proto': False}
+        else:
+            updated_param = param
+
+        streaming_parameters.append(updated_param)
+
+    # Add the additional out parameter at the end
+    streaming_parameters.append({
+        'direction': 'out',
+        'grpc_type': 'ni.data_monikers.Moniker',
+        'name': 'moniker',
+        'type': 'ni::data_monikers::Moniker'
+    })
+
+    # Construct the streaming API metadata
+    streaming_metadata = {
+        'data_moniker_support': True,
+        'exclude_from_library': True,
+        'parameters': streaming_parameters,
+        'returns': function['returns']
+    }
+
+    return streaming_metadata
 
 def sanitize_names(parameters):
     """Sanitize name fields on a list of parameter objects.

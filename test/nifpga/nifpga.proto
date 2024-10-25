@@ -1,0 +1,1595 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-FPGA API metadata version 24.3.0
+//---------------------------------------------------------------------
+// Proto file for the NI-FPGA Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nifpga";
+option java_outer_classname = "NiFpga";
+option csharp_namespace = "NationalInstruments.Grpc.NiFpga";
+
+package nifpga_grpc;
+
+import "session.proto";
+import "data_moniker.proto";
+
+service NiFpga {
+  rpc Abort(AbortRequest) returns (AbortResponse);
+  rpc AcknowledgeIrqs(AcknowledgeIrqsRequest) returns (AcknowledgeIrqsResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc CommitFifoConfiguration(CommitFifoConfigurationRequest) returns (CommitFifoConfigurationResponse);
+  rpc ConfigureFifo(ConfigureFifoRequest) returns (ConfigureFifoResponse);
+  rpc ConfigureFifo2(ConfigureFifo2Request) returns (ConfigureFifo2Response);
+  rpc Download(DownloadRequest) returns (DownloadResponse);
+  rpc FindFifo(FindFifoRequest) returns (FindFifoResponse);
+  rpc FindRegister(FindRegisterRequest) returns (FindRegisterResponse);
+  rpc GetBitfileSignature(GetBitfileSignatureRequest) returns (GetBitfileSignatureResponse);
+  rpc GetFifoPropertyI32(GetFifoPropertyI32Request) returns (GetFifoPropertyI32Response);
+  rpc GetFifoPropertyI64(GetFifoPropertyI64Request) returns (GetFifoPropertyI64Response);
+  rpc GetFifoPropertyU32(GetFifoPropertyU32Request) returns (GetFifoPropertyU32Response);
+  rpc GetFifoPropertyU64(GetFifoPropertyU64Request) returns (GetFifoPropertyU64Response);
+  rpc GetFpgaViState(GetFpgaViStateRequest) returns (GetFpgaViStateResponse);
+  rpc Open(OpenRequest) returns (OpenResponse);
+  rpc ReadArrayBool(ReadArrayBoolRequest) returns (ReadArrayBoolResponse);
+  rpc ReadArrayDbl(ReadArrayDblRequest) returns (ReadArrayDblResponse);
+  rpc ReadArrayI16(ReadArrayI16Request) returns (ReadArrayI16Response);
+  rpc BeginReadArrayI16(BeginReadArrayI16Request) returns (BeginReadArrayI16Response);
+  rpc ReadArrayI32(ReadArrayI32Request) returns (ReadArrayI32Response);
+  rpc BeginReadArrayI32(BeginReadArrayI32Request) returns (BeginReadArrayI32Response);
+  rpc ReadArrayI64(ReadArrayI64Request) returns (ReadArrayI64Response);
+  rpc BeginReadArrayI64(BeginReadArrayI64Request) returns (BeginReadArrayI64Response);
+  rpc ReadArrayI8(ReadArrayI8Request) returns (ReadArrayI8Response);
+  rpc BeginReadArrayI8(BeginReadArrayI8Request) returns (BeginReadArrayI8Response);
+  rpc ReadArraySgl(ReadArraySglRequest) returns (ReadArraySglResponse);
+  rpc ReadArrayU16(ReadArrayU16Request) returns (ReadArrayU16Response);
+  rpc BeginReadArrayU16(BeginReadArrayU16Request) returns (BeginReadArrayU16Response);
+  rpc ReadArrayU32(ReadArrayU32Request) returns (ReadArrayU32Response);
+  rpc BeginReadArrayU32(BeginReadArrayU32Request) returns (BeginReadArrayU32Response);
+  rpc ReadArrayU64(ReadArrayU64Request) returns (ReadArrayU64Response);
+  rpc BeginReadArrayU64(BeginReadArrayU64Request) returns (BeginReadArrayU64Response);
+  rpc ReadArrayU8(ReadArrayU8Request) returns (ReadArrayU8Response);
+  rpc BeginReadArrayU8(BeginReadArrayU8Request) returns (BeginReadArrayU8Response);
+  rpc ReadBool(ReadBoolRequest) returns (ReadBoolResponse);
+  rpc ReadDbl(ReadDblRequest) returns (ReadDblResponse);
+  rpc ReadFifoBool(ReadFifoBoolRequest) returns (ReadFifoBoolResponse);
+  rpc ReadFifoDbl(ReadFifoDblRequest) returns (ReadFifoDblResponse);
+  rpc ReadFifoI16(ReadFifoI16Request) returns (ReadFifoI16Response);
+  rpc ReadFifoI32(ReadFifoI32Request) returns (ReadFifoI32Response);
+  rpc ReadFifoI64(ReadFifoI64Request) returns (ReadFifoI64Response);
+  rpc ReadFifoI8(ReadFifoI8Request) returns (ReadFifoI8Response);
+  rpc ReadFifoSgl(ReadFifoSglRequest) returns (ReadFifoSglResponse);
+  rpc ReadFifoU16(ReadFifoU16Request) returns (ReadFifoU16Response);
+  rpc ReadFifoU32(ReadFifoU32Request) returns (ReadFifoU32Response);
+  rpc ReadFifoU64(ReadFifoU64Request) returns (ReadFifoU64Response);
+  rpc ReadFifoU8(ReadFifoU8Request) returns (ReadFifoU8Response);
+  rpc ReadI16(ReadI16Request) returns (ReadI16Response);
+  rpc BeginReadI16(BeginReadI16Request) returns (BeginReadI16Response);
+  rpc ReadI32(ReadI32Request) returns (ReadI32Response);
+  rpc BeginReadI32(BeginReadI32Request) returns (BeginReadI32Response);
+  rpc ReadI64(ReadI64Request) returns (ReadI64Response);
+  rpc BeginReadI64(BeginReadI64Request) returns (BeginReadI64Response);
+  rpc ReadI8(ReadI8Request) returns (ReadI8Response);
+  rpc BeginReadI8(BeginReadI8Request) returns (BeginReadI8Response);
+  rpc ReadSgl(ReadSglRequest) returns (ReadSglResponse);
+  rpc ReadU16(ReadU16Request) returns (ReadU16Response);
+  rpc BeginReadU16(BeginReadU16Request) returns (BeginReadU16Response);
+  rpc ReadU32(ReadU32Request) returns (ReadU32Response);
+  rpc BeginReadU32(BeginReadU32Request) returns (BeginReadU32Response);
+  rpc ReadU64(ReadU64Request) returns (ReadU64Response);
+  rpc BeginReadU64(BeginReadU64Request) returns (BeginReadU64Response);
+  rpc ReadU8(ReadU8Request) returns (ReadU8Response);
+  rpc BeginReadU8(BeginReadU8Request) returns (BeginReadU8Response);
+  rpc ReleaseFifoElements(ReleaseFifoElementsRequest) returns (ReleaseFifoElementsResponse);
+  rpc Reset(ResetRequest) returns (ResetResponse);
+  rpc Run(RunRequest) returns (RunResponse);
+  rpc SetFifoPropertyI32(SetFifoPropertyI32Request) returns (SetFifoPropertyI32Response);
+  rpc SetFifoPropertyI64(SetFifoPropertyI64Request) returns (SetFifoPropertyI64Response);
+  rpc SetFifoPropertyU32(SetFifoPropertyU32Request) returns (SetFifoPropertyU32Response);
+  rpc SetFifoPropertyU64(SetFifoPropertyU64Request) returns (SetFifoPropertyU64Response);
+  rpc StartFifo(StartFifoRequest) returns (StartFifoResponse);
+  rpc StopFifo(StopFifoRequest) returns (StopFifoResponse);
+  rpc UnreserveFifo(UnreserveFifoRequest) returns (UnreserveFifoResponse);
+  rpc WaitOnIrqs(WaitOnIrqsRequest) returns (WaitOnIrqsResponse);
+  rpc WriteArrayBool(WriteArrayBoolRequest) returns (WriteArrayBoolResponse);
+  rpc WriteArrayDbl(WriteArrayDblRequest) returns (WriteArrayDblResponse);
+  rpc WriteArrayI16(WriteArrayI16Request) returns (WriteArrayI16Response);
+  rpc BeginWriteArrayI16(BeginWriteArrayI16Request) returns (BeginWriteArrayI16Response);
+  rpc WriteArrayI32(WriteArrayI32Request) returns (WriteArrayI32Response);
+  rpc BeginWriteArrayI32(BeginWriteArrayI32Request) returns (BeginWriteArrayI32Response);
+  rpc WriteArrayI64(WriteArrayI64Request) returns (WriteArrayI64Response);
+  rpc BeginWriteArrayI64(BeginWriteArrayI64Request) returns (BeginWriteArrayI64Response);
+  rpc WriteArrayI8(WriteArrayI8Request) returns (WriteArrayI8Response);
+  rpc BeginWriteArrayI8(BeginWriteArrayI8Request) returns (BeginWriteArrayI8Response);
+  rpc WriteArraySgl(WriteArraySglRequest) returns (WriteArraySglResponse);
+  rpc WriteArrayU16(WriteArrayU16Request) returns (WriteArrayU16Response);
+  rpc BeginWriteArrayU16(BeginWriteArrayU16Request) returns (BeginWriteArrayU16Response);
+  rpc WriteArrayU32(WriteArrayU32Request) returns (WriteArrayU32Response);
+  rpc BeginWriteArrayU32(BeginWriteArrayU32Request) returns (BeginWriteArrayU32Response);
+  rpc WriteArrayU64(WriteArrayU64Request) returns (WriteArrayU64Response);
+  rpc BeginWriteArrayU64(BeginWriteArrayU64Request) returns (BeginWriteArrayU64Response);
+  rpc WriteArrayU8(WriteArrayU8Request) returns (WriteArrayU8Response);
+  rpc BeginWriteArrayU8(BeginWriteArrayU8Request) returns (BeginWriteArrayU8Response);
+  rpc WriteBool(WriteBoolRequest) returns (WriteBoolResponse);
+  rpc WriteDbl(WriteDblRequest) returns (WriteDblResponse);
+  rpc WriteFifoBool(WriteFifoBoolRequest) returns (WriteFifoBoolResponse);
+  rpc WriteFifoDbl(WriteFifoDblRequest) returns (WriteFifoDblResponse);
+  rpc WriteFifoI16(WriteFifoI16Request) returns (WriteFifoI16Response);
+  rpc WriteFifoI32(WriteFifoI32Request) returns (WriteFifoI32Response);
+  rpc WriteFifoI64(WriteFifoI64Request) returns (WriteFifoI64Response);
+  rpc WriteFifoI8(WriteFifoI8Request) returns (WriteFifoI8Response);
+  rpc WriteFifoSgl(WriteFifoSglRequest) returns (WriteFifoSglResponse);
+  rpc WriteFifoU16(WriteFifoU16Request) returns (WriteFifoU16Response);
+  rpc WriteFifoU32(WriteFifoU32Request) returns (WriteFifoU32Response);
+  rpc WriteFifoU64(WriteFifoU64Request) returns (WriteFifoU64Response);
+  rpc WriteFifoU8(WriteFifoU8Request) returns (WriteFifoU8Response);
+  rpc WriteI16(WriteI16Request) returns (WriteI16Response);
+  rpc BeginWriteI16(BeginWriteI16Request) returns (BeginWriteI16Response);
+  rpc WriteI32(WriteI32Request) returns (WriteI32Response);
+  rpc BeginWriteI32(BeginWriteI32Request) returns (BeginWriteI32Response);
+  rpc WriteI64(WriteI64Request) returns (WriteI64Response);
+  rpc BeginWriteI64(BeginWriteI64Request) returns (BeginWriteI64Response);
+  rpc WriteI8(WriteI8Request) returns (WriteI8Response);
+  rpc BeginWriteI8(BeginWriteI8Request) returns (BeginWriteI8Response);
+  rpc WriteSgl(WriteSglRequest) returns (WriteSglResponse);
+  rpc WriteU16(WriteU16Request) returns (WriteU16Response);
+  rpc BeginWriteU16(BeginWriteU16Request) returns (BeginWriteU16Response);
+  rpc WriteU32(WriteU32Request) returns (WriteU32Response);
+  rpc BeginWriteU32(BeginWriteU32Request) returns (BeginWriteU32Response);
+  rpc WriteU64(WriteU64Request) returns (WriteU64Response);
+  rpc BeginWriteU64(BeginWriteU64Request) returns (BeginWriteU64Response);
+  rpc WriteU8(WriteU8Request) returns (WriteU8Response);
+  rpc BeginWriteU8(BeginWriteU8Request) returns (BeginWriteU8Response);
+}
+
+enum CloseAttribute {
+  CLOSE_ATTRIBUTE_UNSPECIFIED = 0;
+  CLOSE_ATTRIBUTE_NO_RESET_IF_LAST_SESSION = 1;
+}
+
+enum FifoFlowControl {
+  FIFO_FLOW_CONTROL_UNSPECIFIED = 0;
+  FIFO_FLOW_CONTROL_DISABLED = 1;
+  FIFO_FLOW_CONTROL_ENABLED = 2;
+}
+
+enum FifoProperty {
+  FIFO_PROPERTY_NOT_SUPPORTED = 0;
+  FIFO_PROPERTY_BYTES_PER_ELEMENT = 1;
+  FIFO_PROPERTY_HOST_BUFFER_ALLOCATION_GRANULARITY = 2;
+  FIFO_PROPERTY_HOST_BUFFER_SIZE = 3;
+  FIFO_PROPERTY_HOST_BUFFER_MIRROR_SIZE = 4;
+  FIFO_PROPERTY_HOST_BUFFER_TYPE = 5;
+  FIFO_PROPERTY_HOST_BUFFER = 6;
+  FIFO_PROPERTY_FLOW_CONTROL = 7;
+  FIFO_PROPERTY_ELEMENTS_CURRENTLY_ACQUIRED = 8;
+  FIFO_PROPERTY_PREFERRED_NUMA_NODE = 9;
+  FIFO_PROPERTY_NUMBER_OF_ZERO_COPY_REGIONS = 10;
+}
+
+enum FpgaViState {
+  FPGA_VI_STATE_NOT_RUNNING = 0;
+  FPGA_VI_STATE_INVALID = 1;
+  FPGA_VI_STATE_RUNNING = 2;
+  FPGA_VI_STATE_NATURALLY_STOPPED = 3;
+}
+
+enum HostBufferType {
+  HOST_BUFFER_TYPE_UNSPECIFIED = 0;
+  HOST_BUFFER_TYPE_ALLOCATED_BY_RIO = 1;
+  HOST_BUFFER_TYPE_ALLOCATED_BY_USER = 2;
+}
+
+enum Irq {
+  IRQ_UNSPECIFIED = 0;
+  IRQ_Irq_0 = 1;
+  IRQ_Irq_1 = 2;
+  IRQ_Irq_2 = 3;
+  IRQ_Irq_3 = 4;
+  IRQ_Irq_4 = 5;
+  IRQ_Irq_5 = 6;
+  IRQ_Irq_6 = 7;
+  IRQ_Irq_7 = 8;
+  IRQ_Irq_8 = 9;
+  IRQ_Irq_9 = 10;
+  IRQ_Irq_10 = 11;
+  IRQ_Irq_11 = 12;
+  IRQ_Irq_12 = 13;
+  IRQ_Irq_13 = 14;
+  IRQ_Irq_14 = 15;
+  IRQ_Irq_15 = 16;
+  IRQ_Irq_16 = 17;
+  IRQ_Irq_17 = 18;
+  IRQ_Irq_18 = 19;
+  IRQ_Irq_19 = 20;
+  IRQ_Irq_20 = 21;
+  IRQ_Irq_21 = 22;
+  IRQ_Irq_22 = 23;
+  IRQ_Irq_23 = 24;
+  IRQ_Irq_24 = 25;
+  IRQ_Irq_25 = 26;
+  IRQ_Irq_26 = 27;
+  IRQ_Irq_27 = 28;
+  IRQ_Irq_28 = 29;
+  IRQ_Irq_29 = 30;
+  IRQ_Irq_30 = 31;
+  IRQ_Irq_31 = 32;
+}
+
+enum OpenAttribute {
+  OPEN_ATTRIBUTE_UNSPECIFIED = 0;
+  OPEN_ATTRIBUTE_NO_RUN = 1;
+  OPEN_ATTRIBUTE_BITFILE_PATH_IS_UTF8 = 2;
+  OPEN_ATTRIBUTE_BITFILE_CONTENTS_NOT_PATH = 3;
+  OPEN_ATTRIBUTE_IGNORE_SIGNATURE_ARGUMENT = 4;
+}
+
+enum RunAttribute {
+  RUN_ATTRIBUTE_UNSPECIFIED = 0;
+  RUN_ATTRIBUTE_WAIT_UNTIL_DONE = 1;
+}
+
+message AbortRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message AbortResponse {
+  int32 status = 1;
+}
+
+message AcknowledgeIrqsRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 irqs = 2;
+}
+
+message AcknowledgeIrqsResponse {
+  int32 status = 1;
+}
+
+message CloseRequest {
+  nidevice_grpc.Session session = 1;
+  oneof attribute_enum {
+    CloseAttribute attribute = 2;
+    uint32 attribute_raw = 3;
+  }
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
+message CommitFifoConfigurationRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+}
+
+message CommitFifoConfigurationResponse {
+  int32 status = 1;
+}
+
+message ConfigureFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 depth = 3;
+}
+
+message ConfigureFifoResponse {
+  int32 status = 1;
+}
+
+message ConfigureFifo2Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 requested_depth = 3;
+}
+
+message ConfigureFifo2Response {
+  int32 status = 1;
+  uint32 actual_depth = 2;
+}
+
+message DownloadRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message DownloadResponse {
+  int32 status = 1;
+}
+
+message FindFifoRequest {
+  nidevice_grpc.Session session = 1;
+  string fifo_name = 2;
+}
+
+message FindFifoResponse {
+  int32 status = 1;
+  uint32 fifo_number = 2;
+}
+
+message FindRegisterRequest {
+  nidevice_grpc.Session session = 1;
+  string register_name = 2;
+}
+
+message FindRegisterResponse {
+  int32 status = 1;
+  uint32 register_offset = 2;
+}
+
+message GetBitfileSignatureRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message GetBitfileSignatureResponse {
+  int32 status = 1;
+  uint32 signature = 2;
+  uint32 signature_size = 3;
+}
+
+message GetFifoPropertyI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+}
+
+message GetFifoPropertyI32Response {
+  int32 status = 1;
+  int32 value = 2;
+}
+
+message GetFifoPropertyI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+}
+
+message GetFifoPropertyI64Response {
+  int32 status = 1;
+  int64 value = 2;
+}
+
+message GetFifoPropertyU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+}
+
+message GetFifoPropertyU32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message GetFifoPropertyU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+}
+
+message GetFifoPropertyU64Response {
+  int32 status = 1;
+  uint64 value = 2;
+}
+
+message GetFpgaViStateRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message GetFpgaViStateResponse {
+  int32 status = 1;
+  FpgaViState state = 2;
+  uint32 state_raw = 3;
+}
+
+message OpenRequest {
+  string session_name = 1;
+  string bitfile = 2;
+  string signature = 3;
+  string resource = 4;
+  oneof attribute_enum {
+    OpenAttribute attribute_mapped = 5;
+    uint32 attribute_raw = 6;
+  }
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 7;
+}
+
+message OpenResponse {
+  int32 status = 1;
+  nidevice_grpc.Session session = 2;
+  bool new_session_initialized = 3;
+}
+
+message ReadArrayBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayBoolResponse {
+  int32 status = 1;
+  repeated bool array = 2;
+}
+
+message ReadArrayDblRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayDblResponse {
+  int32 status = 1;
+  repeated double array = 2;
+}
+
+message ReadArrayI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayI16Response {
+  int32 status = 1;
+  repeated int32 array = 2;
+}
+
+message BeginReadArrayI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadArrayI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayI32Response {
+  int32 status = 1;
+  repeated int32 array = 2;
+}
+
+message BeginReadArrayI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadArrayI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayI64Response {
+  int32 status = 1;
+  repeated int64 array = 2;
+}
+
+message BeginReadArrayI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayI64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadArrayI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayI8Response {
+  int32 status = 1;
+  repeated int32 array = 2;
+}
+
+message BeginReadArrayI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayI8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadArraySglRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArraySglResponse {
+  int32 status = 1;
+  repeated float array = 2;
+}
+
+message ReadArrayU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayU16Response {
+  int32 status = 1;
+  repeated uint32 array = 2;
+}
+
+message BeginReadArrayU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadArrayU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayU32Response {
+  int32 status = 1;
+  repeated uint32 array = 2;
+}
+
+message BeginReadArrayU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadArrayU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayU64Response {
+  int32 status = 1;
+  repeated uint64 array = 2;
+}
+
+message BeginReadArrayU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayU64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadArrayU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message ReadArrayU8Response {
+  int32 status = 1;
+  repeated uint32 array = 2;
+}
+
+message BeginReadArrayU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayU8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadBoolResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message ReadDblRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadDblResponse {
+  int32 status = 1;
+  double value = 2;
+}
+
+message ReadFifoBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoBoolResponse {
+  int32 status = 1;
+  repeated bool data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoDblRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoDblResponse {
+  int32 status = 1;
+  repeated double data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoI16Response {
+  int32 status = 1;
+  repeated int32 data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoI32Response {
+  int32 status = 1;
+  repeated int32 data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoI64Response {
+  int32 status = 1;
+  repeated int64 data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoI8Response {
+  int32 status = 1;
+  repeated int32 data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoSglRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoSglResponse {
+  int32 status = 1;
+  repeated float data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoU16Response {
+  int32 status = 1;
+  repeated uint32 data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoU32Response {
+  int32 status = 1;
+  repeated uint32 data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoU64Response {
+  int32 status = 1;
+  repeated uint64 data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadFifoU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 number_of_elements = 3;
+  uint32 timeout = 4;
+}
+
+message ReadFifoU8Response {
+  int32 status = 1;
+  repeated uint32 data = 2;
+  uint32 elements_remaining = 3;
+}
+
+message ReadI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadI16Response {
+  int32 status = 1;
+  int32 value = 2;
+}
+
+message BeginReadI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadI32Response {
+  int32 status = 1;
+  int32 value = 2;
+}
+
+message BeginReadI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadI64Response {
+  int32 status = 1;
+  int64 value = 2;
+}
+
+message BeginReadI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadI64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadI8Response {
+  int32 status = 1;
+  int32 value = 2;
+}
+
+message BeginReadI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadI8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadSglRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadSglResponse {
+  int32 status = 1;
+  float value = 2;
+}
+
+message ReadU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadU16Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message BeginReadU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadU32Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message BeginReadU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadU64Response {
+  int32 status = 1;
+  uint64 value = 2;
+}
+
+message BeginReadU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadU64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReadU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message ReadU8Response {
+  int32 status = 1;
+  uint32 value = 2;
+}
+
+message BeginReadU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadU8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message ReleaseFifoElementsRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  uint32 elements = 3;
+}
+
+message ReleaseFifoElementsResponse {
+  int32 status = 1;
+}
+
+message ResetRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message ResetResponse {
+  int32 status = 1;
+}
+
+message RunRequest {
+  nidevice_grpc.Session session = 1;
+  oneof attribute_enum {
+    RunAttribute attribute = 2;
+    uint32 attribute_raw = 3;
+  }
+}
+
+message RunResponse {
+  int32 status = 1;
+}
+
+message SetFifoPropertyI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+  int32 value = 5;
+}
+
+message SetFifoPropertyI32Response {
+  int32 status = 1;
+}
+
+message SetFifoPropertyI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+  int64 value = 5;
+}
+
+message SetFifoPropertyI64Response {
+  int32 status = 1;
+}
+
+message SetFifoPropertyU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+  uint32 value = 5;
+}
+
+message SetFifoPropertyU32Response {
+  int32 status = 1;
+}
+
+message SetFifoPropertyU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  oneof property_enum {
+    FifoProperty property = 3;
+    uint32 property_raw = 4;
+  }
+  uint64 value = 5;
+}
+
+message SetFifoPropertyU64Response {
+  int32 status = 1;
+}
+
+message StartFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+}
+
+message StartFifoResponse {
+  int32 status = 1;
+}
+
+message StopFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+}
+
+message StopFifoResponse {
+  int32 status = 1;
+}
+
+message UnreserveFifoRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+}
+
+message UnreserveFifoResponse {
+  int32 status = 1;
+}
+
+message WaitOnIrqsRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 irqs = 2;
+  uint32 timeout = 3;
+}
+
+message WaitOnIrqsResponse {
+  int32 status = 1;
+  uint32 irqs_asserted = 2;
+  bool timed_out = 3;
+}
+
+message WriteArrayBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated bool array = 3;
+}
+
+message WriteArrayBoolResponse {
+  int32 status = 1;
+}
+
+message WriteArrayDblRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated double array = 3;
+}
+
+message WriteArrayDblResponse {
+  int32 status = 1;
+}
+
+message WriteArrayI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated int32 array = 3;
+}
+
+message WriteArrayI16Response {
+  int32 status = 1;
+}
+
+message BeginWriteArrayI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteArrayI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated int32 array = 3;
+}
+
+message WriteArrayI32Response {
+  int32 status = 1;
+}
+
+message BeginWriteArrayI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteArrayI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated int64 array = 3;
+}
+
+message WriteArrayI64Response {
+  int32 status = 1;
+}
+
+message BeginWriteArrayI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteArrayI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated int32 array = 3;
+}
+
+message WriteArrayI8Response {
+  int32 status = 1;
+}
+
+message BeginWriteArrayI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayI8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteArraySglRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated float array = 3;
+}
+
+message WriteArraySglResponse {
+  int32 status = 1;
+}
+
+message WriteArrayU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated uint32 array = 3;
+}
+
+message WriteArrayU16Response {
+  int32 status = 1;
+}
+
+message BeginWriteArrayU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteArrayU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated uint32 array = 3;
+}
+
+message WriteArrayU32Response {
+  int32 status = 1;
+}
+
+message BeginWriteArrayU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteArrayU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated uint64 array = 3;
+}
+
+message WriteArrayU64Response {
+  int32 status = 1;
+}
+
+message BeginWriteArrayU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteArrayU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  repeated uint32 array = 3;
+}
+
+message WriteArrayU8Response {
+  int32 status = 1;
+}
+
+message BeginWriteArrayU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayU8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  bool value = 3;
+}
+
+message WriteBoolResponse {
+  int32 status = 1;
+}
+
+message WriteDblRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  double value = 3;
+}
+
+message WriteDblResponse {
+  int32 status = 1;
+}
+
+message WriteFifoBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated bool data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoBoolResponse {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoDblRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated double data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoDblResponse {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated int32 data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoI16Response {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated int32 data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoI32Response {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated int64 data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoI64Response {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated int32 data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoI8Response {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoSglRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated float data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoSglResponse {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated uint32 data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoU16Response {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated uint32 data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoU32Response {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated uint64 data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoU64Response {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteFifoU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 fifo = 2;
+  repeated uint32 data = 3;
+  uint32 timeout = 4;
+}
+
+message WriteFifoU8Response {
+  int32 status = 1;
+  uint32 empty_elements_remaining = 2;
+}
+
+message WriteI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  int32 value = 3;
+}
+
+message WriteI16Response {
+  int32 status = 1;
+}
+
+message BeginWriteI16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  int32 value = 3;
+}
+
+message WriteI32Response {
+  int32 status = 1;
+}
+
+message BeginWriteI32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  int64 value = 3;
+}
+
+message WriteI64Response {
+  int32 status = 1;
+}
+
+message BeginWriteI64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteI64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  int32 value = 3;
+}
+
+message WriteI8Response {
+  int32 status = 1;
+}
+
+message BeginWriteI8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteI8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteSglRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  float value = 3;
+}
+
+message WriteSglResponse {
+  int32 status = 1;
+}
+
+message WriteU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  uint32 value = 3;
+}
+
+message WriteU16Response {
+  int32 status = 1;
+}
+
+message BeginWriteU16Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  uint32 value = 3;
+}
+
+message WriteU32Response {
+  int32 status = 1;
+}
+
+message BeginWriteU32Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  uint64 value = 3;
+}
+
+message WriteU64Response {
+  int32 status = 1;
+}
+
+message BeginWriteU64Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  uint64 value = 3;
+}
+
+message BeginWriteU64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message WriteU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+  uint32 value = 3;
+}
+
+message WriteU8Response {
+  int32 status = 1;
+}
+
+message BeginWriteU8Request {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteU8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
