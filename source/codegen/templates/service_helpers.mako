@@ -290,7 +290,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   streaming_param = common_helpers.get_streaming_parameter(parameters)
   streaming_type = streaming_param['type']
   coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
-  grpc_streaming_type = service_helpers.get_grpc_streaming_type(streaming_type)
+  grpc_streaming_type = streaming_param['grpc_streaming_type']
   is_array = common_helpers.is_array(streaming_type)
 %>\
 struct ${struct_name}
@@ -300,7 +300,7 @@ struct ${struct_name}
     ${param['type']} ${param['name']};
     % endif
     % endfor
-    ${service_class_prefix.lower()}_grpc::${grpc_streaming_type}Data data;
+    ${service_class_prefix.lower()}_grpc::${grpc_streaming_type} data;
     std::shared_ptr<${service_class_prefix}LibraryInterface> library;
 };
 
@@ -391,8 +391,8 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
 </%def>
 
 <%def name="handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, is_array)">
-    ${grpc_streaming_type}Data ${grpc_streaming_type.lower()}_data;
-    packedData.UnpackTo(&${grpc_streaming_type.lower()}_data);
+    ${grpc_streaming_type} ${grpc_streaming_type.lower()}_message;
+    packedData.UnpackTo(&${grpc_streaming_type.lower()}_message);
 % if is_array:
     % if is_coerced_type_present:
     auto data_array = ${grpc_streaming_type.lower()}_data.value();
@@ -411,12 +411,12 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
           return static_cast<${data_type}>(x);
         });
 % else:
-    auto data_array = ${grpc_streaming_type.lower()}_data.value();
-    auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_data.value().data());
+    auto data_array = ${grpc_streaming_type.lower()}_message.value();
+    auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
     auto size = data_array.size();
 % endif
 % else:
-    ${coerced_type} value = ${grpc_streaming_type.lower()}_data.value();
+    ${coerced_type} value = ${grpc_streaming_type.lower()}_message.value();
 % if is_coerced_type_present:
     if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");

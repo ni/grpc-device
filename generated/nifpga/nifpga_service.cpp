@@ -2979,9 +2979,9 @@ struct MonikerWriteArrayI16Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    ArrayI32Data arrayi32_data;
-    packedData.UnpackTo(&arrayi32_data);
-    auto data_array = arrayi32_data.value();
+    ArrayI32Data arrayi32data_message;
+    packedData.UnpackTo(&arrayi32data_message);
+    auto data_array = arrayi32data_data.value();
     auto array = std::vector<int16_t>();
     auto size = data_array.size();
     array.reserve(size);
@@ -3070,10 +3070,10 @@ struct MonikerWriteArrayI32Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    ArrayI32Data arrayi32_data;
-    packedData.UnpackTo(&arrayi32_data);
-    auto data_array = arrayi32_data.value();
-    auto array = const_cast<int32_t*>(arrayi32_data.value().data());
+    ArrayI32Data arrayi32data_message;
+    packedData.UnpackTo(&arrayi32data_message);
+    auto data_array = arrayi32data_message.value();
+    auto array = const_cast<int32_t*>(arrayi32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayI32(session, control, array, size);
@@ -3149,10 +3149,10 @@ struct MonikerWriteArrayI64Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    ArrayI64Data arrayi64_data;
-    packedData.UnpackTo(&arrayi64_data);
-    auto data_array = arrayi64_data.value();
-    auto array = const_cast<int64_t*>(arrayi64_data.value().data());
+    ArrayI64Data arrayi64data_message;
+    packedData.UnpackTo(&arrayi64data_message);
+    auto data_array = arrayi64data_message.value();
+    auto array = const_cast<int64_t*>(arrayi64data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayI64(session, control, array, size);
@@ -3245,9 +3245,9 @@ struct MonikerWriteArrayI8Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    ArrayI32Data arrayi32_data;
-    packedData.UnpackTo(&arrayi32_data);
-    auto data_array = arrayi32_data.value();
+    ArrayI32Data arrayi32data_message;
+    packedData.UnpackTo(&arrayi32data_message);
+    auto data_array = arrayi32data_data.value();
     auto array = std::vector<int8_t>();
     auto size = data_array.size();
     array.reserve(size);
@@ -3378,9 +3378,9 @@ struct MonikerWriteArrayU16Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    ArrayU32Data arrayu32_data;
-    packedData.UnpackTo(&arrayu32_data);
-    auto data_array = arrayu32_data.value();
+    ArrayU32Data arrayu32data_message;
+    packedData.UnpackTo(&arrayu32data_message);
+    auto data_array = arrayu32data_data.value();
     auto array = std::vector<uint16_t>();
     auto size = data_array.size();
     array.reserve(size);
@@ -3469,10 +3469,10 @@ struct MonikerWriteArrayU32Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    ArrayU32Data arrayu32_data;
-    packedData.UnpackTo(&arrayu32_data);
-    auto data_array = arrayu32_data.value();
-    auto array = const_cast<uint32_t*>(arrayu32_data.value().data());
+    ArrayU32Data arrayu32data_message;
+    packedData.UnpackTo(&arrayu32data_message);
+    auto data_array = arrayu32data_message.value();
+    auto array = const_cast<uint32_t*>(arrayu32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayU32(session, control, array, size);
@@ -3548,10 +3548,10 @@ struct MonikerWriteArrayU64Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    ArrayU64Data arrayu64_data;
-    packedData.UnpackTo(&arrayu64_data);
-    auto data_array = arrayu64_data.value();
-    auto array = const_cast<uint64_t*>(arrayu64_data.value().data());
+    ArrayU64Data arrayu64data_message;
+    packedData.UnpackTo(&arrayu64data_message);
+    auto data_array = arrayu64data_message.value();
+    auto array = const_cast<uint64_t*>(arrayu64data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayU64(session, control, array, size);
@@ -3644,9 +3644,9 @@ struct MonikerWriteArrayU8Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    ArrayU32Data arrayu32_data;
-    packedData.UnpackTo(&arrayu32_data);
-    auto data_array = arrayu32_data.value();
+    ArrayU32Data arrayu32data_message;
+    packedData.UnpackTo(&arrayu32data_message);
+    auto data_array = arrayu32data_data.value();
     auto array = std::vector<uint8_t>();
     auto size = data_array.size();
     array.reserve(size);
@@ -4167,9 +4167,9 @@ struct MonikerWriteI16Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    I32Data i32_data;
-    packedData.UnpackTo(&i32_data);
-    int32_t value = i32_data.value();
+    I32Data i32data_message;
+    packedData.UnpackTo(&i32data_message);
+    int32_t value = i32data_message.value();
     if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
       throw nidevice_grpc::ValueOutOfRangeException(message);
@@ -4247,9 +4247,9 @@ struct MonikerWriteI32Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    I32Data i32_data;
-    packedData.UnpackTo(&i32_data);
-    int32_t value = i32_data.value();
+    I32Data i32data_message;
+    packedData.UnpackTo(&i32data_message);
+    int32_t value = i32data_message.value();
 
     auto status = library->WriteI32(session, control, value);
     if (status < 0) {
@@ -4323,9 +4323,9 @@ struct MonikerWriteI64Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    I64Data i64_data;
-    packedData.UnpackTo(&i64_data);
-    int64_t value = i64_data.value();
+    I64Data i64data_message;
+    packedData.UnpackTo(&i64data_message);
+    int64_t value = i64data_message.value();
 
     auto status = library->WriteI64(session, control, value);
     if (status < 0) {
@@ -4408,9 +4408,9 @@ struct MonikerWriteI8Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    I32Data i32_data;
-    packedData.UnpackTo(&i32_data);
-    int32_t value = i32_data.value();
+    I32Data i32data_message;
+    packedData.UnpackTo(&i32data_message);
+    int32_t value = i32data_message.value();
     if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
       throw nidevice_grpc::ValueOutOfRangeException(message);
@@ -4521,9 +4521,9 @@ struct MonikerWriteU16Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    U32Data u32_data;
-    packedData.UnpackTo(&u32_data);
-    uint32_t value = u32_data.value();
+    U32Data u32data_message;
+    packedData.UnpackTo(&u32data_message);
+    uint32_t value = u32data_message.value();
     if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
       throw nidevice_grpc::ValueOutOfRangeException(message);
@@ -4601,9 +4601,9 @@ struct MonikerWriteU32Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    U32Data u32_data;
-    packedData.UnpackTo(&u32_data);
-    uint32_t value = u32_data.value();
+    U32Data u32data_message;
+    packedData.UnpackTo(&u32data_message);
+    uint32_t value = u32data_message.value();
 
     auto status = library->WriteU32(session, control, value);
     if (status < 0) {
@@ -4677,9 +4677,9 @@ struct MonikerWriteU64Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    U64Data u64_data;
-    packedData.UnpackTo(&u64_data);
-    uint64_t value = u64_data.value();
+    U64Data u64data_message;
+    packedData.UnpackTo(&u64data_message);
+    uint64_t value = u64data_message.value();
 
     auto status = library->WriteU64(session, control, value);
     if (status < 0) {
@@ -4762,9 +4762,9 @@ struct MonikerWriteU8Data
     auto session = function_data->session;
     auto control = function_data->control;
         
-    U32Data u32_data;
-    packedData.UnpackTo(&u32_data);
-    uint32_t value = u32_data.value();
+    U32Data u32data_message;
+    packedData.UnpackTo(&u32data_message);
+    uint32_t value = u32data_message.value();
     if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");
       throw nidevice_grpc::ValueOutOfRangeException(message);

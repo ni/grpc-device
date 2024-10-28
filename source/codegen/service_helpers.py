@@ -740,39 +740,6 @@ def get_coerced_type_and_presence(streaming_type: str) -> tuple:
     return coerced_type, is_coerced_type_present
 
 
-def get_grpc_streaming_type(coerced_type: str) -> str:
-    """
-    Get the gRPC streaming type for the given coerced type.
-    
-    Args:
-        coerced_type (str): The coerced type.
-    
-    Returns:
-        str: The gRPC streaming type.
-    """
-    grpc_map = {
-        'int8_t': 'I32',
-        'uint8_t': 'U32',
-        'int16_t': 'I32',
-        'uint16_t': 'U32',
-        'uint32_t': 'U32',
-        'int32_t': 'I32',
-        'uint64_t': 'U64',
-        'int64_t': 'I64',
-        "int16_t[]" : 'ArrayI32',
-        "int8_t[]" : 'ArrayI32',
-        "int32_t[]" : 'ArrayI32',
-        "int64_t[]" : 'ArrayI64',
-        "uint16_t[]" : 'ArrayU32',
-        "uint8_t[]" : 'ArrayU32',
-        "uint32_t[]" : 'ArrayU32',
-        "uint64_t[]" : 'ArrayU64',
-    }
-
-    grpc_streaming_type = grpc_map.get(coerced_type, 'U32')
-
-    return grpc_streaming_type
-
 def get_streaming_type(parameters) -> str:
     """
     Get the streaming type from the function data.
