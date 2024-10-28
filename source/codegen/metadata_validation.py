@@ -124,6 +124,7 @@ PARAM_SCHEMA = Schema(
         Optional("python_default_value"): Or(str, bool, int, float, None),
         Optional("is_grpc_enum"): bool,
         Optional("return_on_error_key"): str,
+        Optional("is_streaming_type"): bool,
     }
 )
 
@@ -173,6 +174,10 @@ FUNCTION_SCHEMA = Schema(
         Optional("is_python_factory"): bool,
         Optional("python_description"): str,
         Optional("timeout_error"): str,
+        Optional("exclude_from_library"): bool,
+        Optional("data_moniker_support"): bool,
+        Optional("moniker_streaming_type"): str,
+        Optional("moniker_supports_streaming"): bool,
     }
 )
 
