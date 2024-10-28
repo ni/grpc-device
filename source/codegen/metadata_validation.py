@@ -177,6 +177,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("exclude_from_library"): bool,
         Optional("data_moniker_support"): bool,
         Optional("moniker_streaming_type"): str,
+        Optional("moniker_supports_streaming"): bool,
     }
 )
 

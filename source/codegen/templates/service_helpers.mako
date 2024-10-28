@@ -424,15 +424,16 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
     }
 % endif
 % endif
+
     auto status = library->${c_api_name}(${arg_string});
 </%def>
 
 ## Initialize an bgin input parameter for an API call.
 <%def name="initialize_begin_input_param(input_params, streaming_param)">\
 % for param in input_params:
-   % if service_helpers.include_param(param, streaming_param):
+% if service_helpers.include_param(param, streaming_param):
       data->${param['name']} = ${param['name']};
-   % endif
+% endif
 % endfor
 </%def>
 
