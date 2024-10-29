@@ -36,7 +36,7 @@ class ServerConfigurationParser {
   const std::string& get_config_file_path() const { return config_file_path_; }
 
   std::string parse_address() const;
-  std::string parse_sideband_ip() const;
+  std::string parse_sideband_address() const;
   std::string parse_server_cert() const;
   std::string parse_server_key() const;
   std::string parse_root_cert() const;
