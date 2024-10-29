@@ -58,7 +58,7 @@ namespace nixnetsocket_grpc {
       auto initialization_behavior = request->initialization_behavior();
 
       auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
-      nxsocklen_t addrlen {};
+      auto addrlen = static_cast<nxsocklen_t>(sizeof(addr.storage));
       bool new_session_initialized {};
       auto init_lambda = [&] () {
         auto socket_out = library_->Accept(socket, &addr, &addrlen);

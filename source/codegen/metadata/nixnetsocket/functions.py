@@ -21,7 +21,8 @@ functions = {
                 'direction': 'out',
                 'name': 'addrlen',
                 'include_in_proto': False,
-                'type': 'nxsocklen_t'
+                'type': 'nxsocklen_t',
+                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(addr.storage))'
             },
             {
                 'direction': 'out',
