@@ -2371,7 +2371,7 @@ functions = {
         'returns': 'int32'
     },
     'Initialize': {
-        'custom_close': 'Close(id, RFMXPulse_VAL_FALSE)',
+        'custom_close': 'Close(id, RFMXPULSE_VAL_FALSE)',
         'init_method': True,
         'parameters': [
             {
@@ -2421,7 +2421,7 @@ functions = {
         'returns': 'int32'
     },
     'InitializeFromNIRFSASession': {
-        'custom_close': 'Close(id, RFMXPulse_VAL_FALSE)',
+        'custom_close': 'Close(id, RFMXPULSE_VAL_FALSE)',
         'init_method': True,
         'parameters': [
             {
