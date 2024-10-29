@@ -27,8 +27,11 @@ void register_core_services(
     feature_toggles,
     *server_reset_observer_registrar));
 
-  auto moniker_service = std::make_shared<ni::data_monikers::DataMonikerService>();
-  server_builder.RegisterService(moniker_service.get());
-  service_vector->push_back(moniker_service);
+  if (feature_toggles.is_feature_enabled("sideband_streaming", FeatureToggles::CodeReadiness::kNextRelease))
+  {
+    auto moniker_service = std::make_shared<ni::data_monikers::DataMonikerService>();
+    server_builder.RegisterService(moniker_service.get());
+    service_vector->push_back(moniker_service);
+  }
 }
 }  // namespace nidevice_grpc

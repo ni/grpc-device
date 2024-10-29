@@ -22,6 +22,7 @@
 #include "version.h"
 
 using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
+using FeatureToggles = nidevice_grpc::FeatureToggles;
 
 struct ServerConfiguration {
   std::string config_file_path;
@@ -107,9 +108,12 @@ static void RunServer(const ServerConfiguration& config)
     server = builder.BuildAndStart();
   }
 
-  auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), 50055);
-  // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
-  // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
+  if (config.feature_toggles.is_feature_enabled("sideband_streaming", FeatureToggles::CodeReadiness::kNextRelease))
+  {
+    auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), 50055);
+    // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
+    // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
+  }
 
   if (!server) {
     nidevice_grpc::logging::log(
@@ -254,8 +258,7 @@ int main(int argc, char** argv)
 #endif
 #if defined(_WIN32)
   nidevice_grpc::set_console_ctrl_handler(&StopServer);
-#endif
-#ifndef _WIN32
+#else
     SysFsWrite("/dev/cgroup/cpuset/system_set/cpus", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_ScanEngine_set", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/cpus", "6-8");
