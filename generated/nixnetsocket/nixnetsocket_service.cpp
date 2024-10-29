@@ -58,7 +58,7 @@ namespace nixnetsocket_grpc {
       auto initialization_behavior = request->initialization_behavior();
 
       auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
-      nxsocklen_t addrlen {};
+      auto addrlen = static_cast<nxsocklen_t>(sizeof(addr.storage));
       bool new_session_initialized {};
       auto init_lambda = [&] () {
         auto socket_out = library_->Accept(socket, &addr, &addrlen);
@@ -772,7 +772,7 @@ namespace nixnetsocket_grpc {
 
       std::string data(size, '\0');
       auto from_addr = allocate_output_storage<nxsockaddr, SockAddr>();
-      nxsocklen_t fromlen {};
+      auto fromlen = static_cast<nxsocklen_t>(sizeof(from_addr.storage));
       auto status = library_->RecvFrom(socket, (char*)data.data(), size, flags, &from_addr, &fromlen);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
