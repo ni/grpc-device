@@ -318,7 +318,9 @@ def filter_api_functions(functions, only_mockable_functions=True):
     """Filter function metadata to only include those to be generated into the API library."""
 
     def filter_function(function):
-        if function.get("codegen_method", "") == "no" or function.get("exclude_from_library", False):
+        if function.get("codegen_method", "") == "no" or function.get(
+            "exclude_from_library", False
+        ):
             return False
         if only_mockable_functions and not common_helpers.can_mock_function(function["parameters"]):
             return False
@@ -718,22 +720,22 @@ def get_coerced_type_and_presence(streaming_type: str) -> tuple:
     """
     Get the coerced type and check if the coerced type is present in the type map.
     This handles both scalar types and array types like int8_t[] or uint16_t[].
-    
+
     Args:
         streaming_type (str): The streaming type (scalar or array).
-    
+
     Returns:
         tuple: A tuple containing coerced_type (str) and is_coerced_type_present (bool).
     """
     type_map = {
-        'int8_t': 'int32_t',
-        'uint8_t': 'uint32_t',
-        'int16_t': 'int32_t',
-        'uint16_t': 'uint32_t',
+        "int8_t": "int32_t",
+        "uint8_t": "uint32_t",
+        "int16_t": "int32_t",
+        "uint16_t": "uint32_t",
     }
 
-    base_type = streaming_type.replace('[]', '')
-    
+    base_type = streaming_type.replace("[]", "")
+
     coerced_type = type_map.get(base_type, base_type)
     is_coerced_type_present = base_type in type_map
 
@@ -751,14 +753,19 @@ def get_streaming_type(parameters) -> str:
         str: The streaming type if found, otherwise 'None'.
     """
     for param in parameters:
-        if param.get('is_streaming_type', False) == True:
-            return param['type']
+        if param.get("is_streaming_type", False) == True:
+            return param["type"]
     return None
 
+
 def include_param(param, streaming_param):
-    if not param.get('is_streaming_type', False):
-        if streaming_param and streaming_param['direction'] == 'in' and common_helpers.is_array(streaming_param['type']):
-            if param['name'] != streaming_param['size']['value']:
+    if not param.get("is_streaming_type", False):
+        if (
+            streaming_param
+            and streaming_param["direction"] == "in"
+            and common_helpers.is_array(streaming_param["type"])
+        ):
+            if param["name"] != streaming_param["size"]["value"]:
                 return True
             else:
                 return False
@@ -767,14 +774,16 @@ def include_param(param, streaming_param):
     else:
         return False
 
+
 def get_size_param_name(streaming_param) -> str:
-    if common_helpers.is_array(streaming_param['type']):
-        return streaming_param['size']['value']
+    if common_helpers.is_array(streaming_param["type"]):
+        return streaming_param["size"]["value"]
     else:
         return None
 
+
 def get_c_api_name(function_name) -> str:
     if function_name.startswith("Begin"):
-        base_name = function_name[len("Begin"):]
+        base_name = function_name[len("Begin") :]
         return f"{base_name}"
     return f"{function_name}"

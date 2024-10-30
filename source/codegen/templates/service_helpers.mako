@@ -395,7 +395,7 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
     packedData.UnpackTo(&${grpc_streaming_type.lower()}_message);
 % if is_array:
     % if is_coerced_type_present:
-    auto data_array = ${grpc_streaming_type.lower()}_data.value();
+    auto data_array = ${grpc_streaming_type.lower()}_message.value();
     auto array = std::vector<${data_type}>();
     auto size = data_array.size();
     array.reserve(size);

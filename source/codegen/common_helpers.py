@@ -32,9 +32,10 @@ def is_input_parameter(parameter):
     """Whether the parameter is an input parameter."""
     return "in" in parameter["direction"]
 
-def get_streaming_parameter(parameters: List[dict]) -> dict:
+
+def get_streaming_parameter(parameters: List[Dict]) -> Optional[Dict]:
     for param in parameters:
-        if param.get("is_streaming_type", False) == True:
+        if param.get("is_streaming_type", False):
             return param
     return None
 
@@ -1205,9 +1206,7 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
 def filter_data_moniker_functions(functions):
     """Return function metadata only for functions that use the data moniker service."""
     return [
-        name
-        for name, function in functions.items()
-        if function.get("data_moniker_support", False)
+        name for name, function in functions.items() if function.get("data_moniker_support", False)
     ]
 
 

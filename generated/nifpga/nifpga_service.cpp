@@ -2981,7 +2981,7 @@ struct MonikerWriteArrayI16Data
         
     ArrayI32Data arrayi32data_message;
     packedData.UnpackTo(&arrayi32data_message);
-    auto data_array = arrayi32data_data.value();
+    auto data_array = arrayi32data_message.value();
     auto array = std::vector<int16_t>();
     auto size = data_array.size();
     array.reserve(size);
@@ -3247,7 +3247,7 @@ struct MonikerWriteArrayI8Data
         
     ArrayI32Data arrayi32data_message;
     packedData.UnpackTo(&arrayi32data_message);
-    auto data_array = arrayi32data_data.value();
+    auto data_array = arrayi32data_message.value();
     auto array = std::vector<int8_t>();
     auto size = data_array.size();
     array.reserve(size);
@@ -3380,7 +3380,7 @@ struct MonikerWriteArrayU16Data
         
     ArrayU32Data arrayu32data_message;
     packedData.UnpackTo(&arrayu32data_message);
-    auto data_array = arrayu32data_data.value();
+    auto data_array = arrayu32data_message.value();
     auto array = std::vector<uint16_t>();
     auto size = data_array.size();
     array.reserve(size);
@@ -3646,7 +3646,7 @@ struct MonikerWriteArrayU8Data
         
     ArrayU32Data arrayu32data_message;
     packedData.UnpackTo(&arrayu32data_message);
-    auto data_array = arrayu32data_data.value();
+    auto data_array = arrayu32data_message.value();
     auto array = std::vector<uint8_t>();
     auto size = data_array.size();
     array.reserve(size);
