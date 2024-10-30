@@ -16,6 +16,7 @@ namespace nirfmxpulse_grpc {
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>& resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& vi_session_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
   auto toggles = NiRFmxPulseFeatureToggles(feature_toggles);
@@ -26,6 +27,7 @@ std::shared_ptr<void> register_service(
     auto service = std::make_shared<NiRFmxPulseService>(
       library,
       resource_repository,
+      vi_session_resource_repository,
       toggles);
     builder.RegisterService(service.get());
     return service;
