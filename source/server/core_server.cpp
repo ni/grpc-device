@@ -259,6 +259,8 @@ int main(int argc, char** argv)
 #if defined(_WIN32)
   nidevice_grpc::set_console_ctrl_handler(&StopServer);
 #else
+  if (config.feature_toggles.is_feature_enabled("sideband_streaming", FeatureToggles::CodeReadiness::kNextRelease))
+  { 
     SysFsWrite("/dev/cgroup/cpuset/system_set/cpus", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_ScanEngine_set", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/cpus", "6-8");
@@ -274,6 +276,7 @@ int main(int argc, char** argv)
     sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
 
     mlockall(MCL_CURRENT|MCL_FUTURE);
+  }
 #endif
 
   RunServer(config);
