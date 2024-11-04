@@ -1,4 +1,5 @@
 """Metadata validation."""
+
 from typing import Any, Dict, List, Set
 
 import common_helpers

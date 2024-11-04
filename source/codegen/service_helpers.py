@@ -717,15 +717,9 @@ def create_moniker_function_name(function_name: str) -> str:
 
 
 def get_coerced_type_and_presence(streaming_type: str) -> tuple:
-    """
-    Get the coerced type and check if the coerced type is present in the type map.
+    """Get the coerced type and check if the coerced type is present in the type map.
+
     This handles both scalar types and array types like int8_t[] or uint16_t[].
-
-    Args:
-        streaming_type (str): The streaming type (scalar or array).
-
-    Returns:
-        tuple: A tuple containing coerced_type (str) and is_coerced_type_present (bool).
     """
     type_map = {
         "int8_t": "int32_t",
@@ -743,22 +737,15 @@ def get_coerced_type_and_presence(streaming_type: str) -> tuple:
 
 
 def get_streaming_type(parameters) -> str:
-    """
-    Get the streaming type from the function data.
-
-    Args:
-        function_name (dict): The function data dictionary.
-
-    Returns:
-        str: The streaming type if found, otherwise 'None'.
-    """
+    """Get the streaming type from the function data."""
     for param in parameters:
-        if param.get("is_streaming_type", False) == True:
+        if param.get("is_streaming_type", False):
             return param["type"]
     return None
 
 
 def include_param(param, streaming_param):
+    """Determine if a parameter should be included based on streaming conditions."""
     if not param.get("is_streaming_type", False):
         if (
             streaming_param
@@ -776,6 +763,7 @@ def include_param(param, streaming_param):
 
 
 def get_size_param_name(streaming_param) -> str:
+    """Get the size parameter name for the given streaming parameter."""
     if common_helpers.is_array(streaming_param["type"]):
         return streaming_param["size"]["value"]
     else:
@@ -783,6 +771,7 @@ def get_size_param_name(streaming_param) -> str:
 
 
 def get_c_api_name(function_name) -> str:
+    """Get the C API name for the given function name."""
     if function_name.startswith("Begin"):
         base_name = function_name[len("Begin") :]
         return f"{base_name}"

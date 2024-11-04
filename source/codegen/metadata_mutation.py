@@ -2,10 +2,9 @@
 
 from collections import namedtuple
 from typing import Any, Dict, Optional
+import copy
 
 import common_helpers
-
-import copy
 
 RESERVED_WORDS = [
     "abstract",
@@ -154,7 +153,6 @@ def mutate(metadata: dict):
 
 def generate_streaming_metadata(function: dict) -> dict:
     """Generate the streaming API metadata for a given function."""
-
     streaming_parameters = []
 
     for param in function["parameters"]:

@@ -34,6 +34,7 @@ def is_input_parameter(parameter):
 
 
 def get_streaming_parameter(parameters: List[Dict]) -> Optional[Dict]:
+    """Get the streaming parameter from the list of parameters."""
     for param in parameters:
         if param.get("is_streaming_type", False):
             return param
