@@ -31,13 +31,12 @@ endif()
 option(USE_NILRT_LEGACY_TOOLCHAIN "Enable to use tools and libraries from a NILRT compile toolchain." OFF)
 option(USE_PYTHON_VIRTUALENV "Enable to use the automatically-generated python venv, local to this project source." ON)
 option(USE_SUBMODULE_LIBS "Enable to link against the submodule libraries, rather than their native-OS equivalents." ON)
-option(INCLUDE_SIDEBAND_RDMA "Include support for RDMA sideband transfers" OFF)
-option(SIDEBAND_STATIC "Build static library, disabled by default" ON)
+option(INCLUDE_SIDEBAND_RDMA "Include support for RDMA sideband transfers." OFF)
+option(SIDEBAND_STATIC "Link grpc-sideband statically to current application." ON)
 
 #----------------------------------------------------------------------
 # Setup build dependencies, according to the toolchain options.
 #----------------------------------------------------------------------
-  add_subdirectory(third_party/grpc-sideband ${CMAKE_CURRENT_BINARY_DIR}/grpc-sideband)
 if(USE_SUBMODULE_LIBS)
   # The archetypical WIN32 build case
   # protobuf_INSTALL must be turned OFF whenever building it as a cmake subdir.
@@ -48,6 +47,7 @@ if(USE_SUBMODULE_LIBS)
   add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
   add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json)
   add_subdirectory(third_party/utfcpp ${CMAKE_CURRENT_BINARY_DIR}/utfcpp)
+  add_subdirectory(third_party/grpc-sideband ${CMAKE_CURRENT_BINARY_DIR}/grpc-sideband)
 
   set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
   set(_REFLECTION grpc++_reflection)
@@ -56,6 +56,7 @@ if(USE_SUBMODULE_LIBS)
   set(_GRPC_GRPCPP grpc++)
   set(_PROTOBUF_LIBPROTOBUF libprotobuf)
   set(_UTF8CPP utf8cpp)
+  set(_GRPC_SIDEBAND ni_grpc_sideband)
 else()
   find_program(_PROTOBUF_PROTOC protoc)
   find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
@@ -73,6 +74,7 @@ else()
     find_library(_GRPC_GRPCPP grpc++)
     find_library(_PROTOBUF_LIBPROTOBUF protobuf)
     find_library(_REFLECTION grpc++_reflection)
+    find_library(_GRPC_SIDEBAND ni_grpc_sideband REQUIRED)
 
     find_package(gRPC REQUIRED)
     find_package(GTest REQUIRED)
@@ -276,7 +278,7 @@ get_filename_component(nidevice_proto "imports/protobuf/nidevice.proto" ABSOLUTE
 get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/deviceid_restricted.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
-get_filename_component(data_moniker_proto "source/protobuf/data_moniker.proto" ABSOLUTE)
+get_filename_component(data_moniker_proto "imports/protobuf/data_moniker.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -304,7 +306,6 @@ function(GenerateGrpcSources)
       -I "${proto_path}"
       ${protobuf_includes_arg}
       -I ${CMAKE_SOURCE_DIR}/imports/protobuf
-      -I ${CMAKE_SOURCE_DIR}/source/protobuf
       --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
       "${proto_file}"
     DEPENDS "${proto_file}" "${session_proto}")
@@ -395,6 +396,16 @@ GenerateGrpcSources(
     "${calibrationoperations_restricted_grpc_hdrs}"
 )
 
+GenerateGrpcSources(
+  PROTO
+    ${data_moniker_proto}
+  OUTPUT
+    "${data_moniker_proto_srcs}"
+    "${data_moniker_proto_hdrs}"
+    "${data_moniker_grpc_srcs}"
+    "${data_moniker_grpc_hdrs}"
+)
+
 set(nidriver_service_library_hdrs
   ${nidriver_service_library_hdrs}
   "${session_proto_hdrs}"
@@ -408,16 +419,6 @@ set(nidriver_service_library_hdrs
   "${debugsessionproperties_restricted_grpc_hdrs}"
   "${calibrationoperations_restricted_proto_hdrs}"
   "${calibrationoperations_restricted_grpc_hdrs}"
-)
-
-GenerateGrpcSources(
-  PROTO
-    ${data_moniker_proto}
-  OUTPUT
-    "${data_moniker_proto_srcs}"
-    "${data_moniker_proto_hdrs}"
-    "${data_moniker_grpc_srcs}"
-    "${data_moniker_grpc_hdrs}"
 )
 
 foreach(api ${nidrivers})
@@ -465,8 +466,6 @@ add_executable(ni_grpc_device_server
    "source/server/syscfg_library.cpp"
    "source/server/syscfg_resource_accessor.cpp"
    "source/server/syscfg_session_handler.cpp"
-   ${data_moniker_proto_srcs}
-   ${data_moniker_grpc_srcs}
    ${nidevice_proto_srcs}
    ${session_proto_srcs}
    ${session_grpc_srcs}
@@ -478,6 +477,8 @@ add_executable(ni_grpc_device_server
    ${debugsessionproperties_restricted_grpc_srcs}
    ${calibrationoperations_restricted_proto_srcs}
    ${calibrationoperations_restricted_grpc_srcs}
+   ${data_moniker_proto_srcs}
+   ${data_moniker_grpc_srcs}
    ${nidriver_service_srcs})
 
 # Enable warnings only on source that we own, not generated code or dependencies
@@ -551,7 +552,7 @@ set(server_lib_deps
   ${_REFLECTION}
   ${_UTF8CPP}
   ${CMAKE_DL_LIBS}
-  ni_grpc_sideband
+  ${_GRPC_SIDEBAND}
   nlohmann_json::nlohmann_json
 )
 
@@ -604,8 +605,6 @@ add_executable(IntegrationTestsRunner
     "source/server/syscfg_library.cpp"
     "source/server/syscfg_resource_accessor.cpp"
     "source/server/syscfg_session_handler.cpp"
-    ${data_moniker_proto_srcs}
-    ${data_moniker_grpc_srcs}
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
@@ -617,6 +616,8 @@ add_executable(IntegrationTestsRunner
     ${debugsessionproperties_restricted_grpc_srcs}
     ${calibrationoperations_restricted_proto_srcs}
     ${calibrationoperations_restricted_grpc_srcs}
+    ${data_moniker_proto_srcs}
+    ${data_moniker_grpc_srcs}
     ${nidriver_service_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
@@ -700,6 +701,8 @@ add_executable(UnitTestsRunner
     ${debugsessionproperties_restricted_grpc_srcs}
     ${calibrationoperations_restricted_proto_srcs}
     ${calibrationoperations_restricted_grpc_srcs}
+    ${data_moniker_proto_srcs}
+    ${data_moniker_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_extension.pb.cc"
@@ -824,8 +827,6 @@ set(system_test_runner_sources
   "source/server/syscfg_library.cpp"
   "source/server/syscfg_resource_accessor.cpp"
   "source/server/syscfg_session_handler.cpp"
-  ${data_moniker_proto_srcs}
-  ${data_moniker_grpc_srcs}
   ${nidevice_proto_srcs}
   ${session_proto_srcs}
   ${session_grpc_srcs}
@@ -837,6 +838,8 @@ set(system_test_runner_sources
   ${debugsessionproperties_restricted_grpc_srcs}
   ${calibrationoperations_restricted_proto_srcs}
   ${calibrationoperations_restricted_grpc_srcs}
+  ${data_moniker_proto_srcs}
+  ${data_moniker_grpc_srcs}
   ${nidriver_service_srcs}
   ${nidriver_client_srcs}
 )

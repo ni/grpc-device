@@ -2,6 +2,7 @@
 #include <grpcpp/grpcpp.h>
 #include <register_all_services.h>
 #include <sideband_data.h>
+
 #include <mutex>
 #include <thread>
 
@@ -11,9 +12,10 @@
 #include "server_security_configuration.h"
 
 #if defined(__GNUC__)
+  #include <sys/mman.h>
+
   #include "linux/daemonize.h"
   #include "linux/syslog_logging.h"
-  #include <sys/mman.h>
 #endif
 #if defined(_WIN32)
   #include "windows/console_ctrl_handler.h"
@@ -78,9 +80,9 @@ static void RunServer(const ServerConfiguration& config)
 {
   if (!config.config_file_path.empty()) {
     nidevice_grpc::logging::log(
-      nidevice_grpc::logging::Level_Info,
-      "Using server configuration from %s",
-      config.config_file_path.c_str());
+        nidevice_grpc::logging::Level_Info,
+        "Using server configuration from %s",
+        config.config_file_path.c_str());
   }
 
   grpc::EnableDefaultHealthCheckService(true);
@@ -106,13 +108,11 @@ static void RunServer(const ServerConfiguration& config)
       return;
     }
     server = builder.BuildAndStart();
-  }
-
-  if (config.feature_toggles.is_feature_enabled("sideband_streaming", FeatureToggles::CodeReadiness::kNextRelease))
-  {
-    auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), 50055);
-    // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
-    // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
+    if (config.feature_toggles.is_feature_enabled("sideband_streaming", FeatureToggles::CodeReadiness::kNextRelease)) {
+      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), 50055);
+      // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
+      // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
+    }
   }
 
   if (!server) {
@@ -195,7 +195,7 @@ Options parse_options(int argc, char** argv)
     }
     else
 #endif
-    if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
+        if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
       nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, usage);
       exit(EXIT_SUCCESS);
     }
@@ -235,10 +235,10 @@ Options parse_options(int argc, char** argv)
 
 static void SysFsWrite(const std::string& fileName, const std::string& value)
 {
-    std::ofstream fout;
-    fout.open(fileName);
-    fout << value;
-    fout.close();
+  std::ofstream fout;
+  fout.open(fileName);
+  fout << value;
+  fout.close();
 }
 
 int main(int argc, char** argv)
@@ -259,8 +259,7 @@ int main(int argc, char** argv)
 #if defined(_WIN32)
   nidevice_grpc::set_console_ctrl_handler(&StopServer);
 #else
-  if (config.feature_toggles.is_feature_enabled("sideband_streaming", FeatureToggles::CodeReadiness::kNextRelease))
-  { 
+  if (config.feature_toggles.is_feature_enabled("sideband_streaming", FeatureToggles::CodeReadiness::kNextRelease)) {
     SysFsWrite("/dev/cgroup/cpuset/system_set/cpus", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_ScanEngine_set", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/cpus", "6-8");
@@ -275,7 +274,7 @@ int main(int argc, char** argv)
     CPU_SET(6, &cpuSet);
     sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
 
-    mlockall(MCL_CURRENT|MCL_FUTURE);
+    mlockall(MCL_CURRENT | MCL_FUTURE);
   }
 #endif
 
