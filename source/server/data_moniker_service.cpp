@@ -44,6 +44,12 @@ static void SysFsWrite(const std::string& fileName, const std::string& value)
 }
 
 namespace ni::data_monikers {
+
+bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
+{
+  return feature_toggles.is_feature_enabled("sideband_streaming", nidevice_grpc::FeatureToggles::CodeReadiness::kNextRelease);
+}
+
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 DataMonikerService* DataMonikerService::s_Server;

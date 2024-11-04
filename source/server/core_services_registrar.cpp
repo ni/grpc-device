@@ -1,10 +1,10 @@
 #include "core_services_registrar.h"
 
 #include "calibration_operations_restricted_service_registrar.h"
+#include "data_moniker_service.h"
 #include "debug_session_properties_restricted_service_registrar.h"
 #include "server_reset_observer_registrar_interface.h"
 #include "session_utilities_service_registrar.h"
-#include "data_moniker_service.h"
 
 namespace nidevice_grpc {
 void register_core_services(
@@ -27,8 +27,7 @@ void register_core_services(
     feature_toggles,
     *server_reset_observer_registrar));
 
-  if (feature_toggles.is_feature_enabled("sideband_streaming", FeatureToggles::CodeReadiness::kNextRelease))
-  {
+  if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
     auto moniker_service = std::make_shared<ni::data_monikers::DataMonikerService>();
     server_builder.RegisterService(moniker_service.get());
     service_vector->push_back(moniker_service);
