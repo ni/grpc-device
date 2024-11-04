@@ -1,8 +1,8 @@
 """Metadata mutation."""
 
+import copy
 from collections import namedtuple
 from typing import Any, Dict, Optional
-import copy
 
 import common_helpers
 
