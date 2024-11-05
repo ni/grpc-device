@@ -124,7 +124,7 @@ def mutate(metadata: dict):
     for function_name, function in metadata["functions"].items():
         all_functions[function_name] = function
 
-        if function.get("moniker_supports_streaming") is True:
+        if function.get("supports_streaming") is True:
             new_function_name = f"Begin{function_name}"
             all_functions[new_function_name] = generate_streaming_metadata(function)
 
@@ -173,8 +173,7 @@ def generate_streaming_metadata(function: dict) -> dict:
 
     # Construct the streaming API metadata
     streaming_metadata = {
-        "data_moniker_support": True,
-        "exclude_from_library": True,
+        "is_streaming_api": True,
         "parameters": streaming_parameters,
         "returns": function["returns"],
     }

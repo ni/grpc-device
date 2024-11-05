@@ -13,7 +13,7 @@ custom_types = common_helpers.get_custom_types(config)
 has_async_functions = any(service_helpers.get_async_functions(functions))
 has_two_dimension_functions = any(service_helpers.get_functions_with_two_dimension_param(functions))
 function_names = service_helpers.filter_proto_rpc_functions_to_generate(functions)
-data_moniker_functions = common_helpers.filter_data_moniker_functions(functions)
+streaming_functions = common_helpers.filter_streaming_functions(functions)
 # If there are any non-mockable functions, we need to call the library directly, which
 # means we need another include file
 any_non_mockable_functions = any(not common_helpers.can_mock_function(functions[name]['parameters']) for name in function_names)
@@ -52,7 +52,7 @@ resource_repository_deps = service_helpers.get_driver_shared_resource_repository
 % if any_non_mockable_functions:
 #include "${module_name}_library.h"
 % endif
-% if data_moniker_functions:
+% if streaming_functions:
 #include <nifpga.grpc.pb.h>
 #include <server/data_moniker_service.h>
 % endif
@@ -105,11 +105,11 @@ namespace ${config["namespace_component"]}_grpc {
   }
 
 % endif
-% if data_moniker_functions:
+% if streaming_functions:
 void RegisterMoniker()
 {
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
-% if function_name in data_moniker_functions:
+% if function_name in streaming_functions:
 ${mako_helper.register_moniker_functions(function_name)}\
 % endif
 % endfor
@@ -125,7 +125,7 @@ ${mako_helper.register_moniker_functions(function_name)}\
     response_type = service_helpers.get_response_type(method_name)
     is_async_streaming = common_helpers.has_async_streaming_response(function_data)
 %>\
-% if function_name in data_moniker_functions:
+% if function_name in streaming_functions:
 ${mako_helper.define_streaming_api(function_name=function_name, function_data=function_data, parameters=parameters)}\
 % else:
   //---------------------------------------------------------------------

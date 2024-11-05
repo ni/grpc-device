@@ -176,10 +176,8 @@ FUNCTION_SCHEMA = Schema(
         Optional("is_python_factory"): bool,
         Optional("python_description"): str,
         Optional("timeout_error"): str,
-        Optional("exclude_from_library"): bool,
-        Optional("data_moniker_support"): bool,
+        Optional("supports_streaming"): bool,
         Optional("moniker_streaming_type"): str,
-        Optional("moniker_supports_streaming"): bool,
     }
 )
 

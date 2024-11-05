@@ -31,7 +31,7 @@ config = {
         'NiFpga_Bool': 'bool',
         'NiFpga_FifoProperty': 'uint32',
     },
-    'use_moniker_service': True,
+    'has_streaming_api': True,
     'use_dynload_msvc': True,
     'use_protobuf_arenas': True,
     'custom_types': [],

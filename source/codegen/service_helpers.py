@@ -319,7 +319,7 @@ def filter_api_functions(functions, only_mockable_functions=True):
 
     def filter_function(function):
         if function.get("codegen_method", "") == "no" or function.get(
-            "exclude_from_library", False
+            "is_streaming_api", False
         ):
             return False
         if only_mockable_functions and not common_helpers.can_mock_function(function["parameters"]):

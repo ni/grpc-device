@@ -17,7 +17,7 @@ custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(config, functions)
 resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, functions)
 resource_handle_types = service_helpers.get_resource_handle_types(config)
-data_moniker_functions = common_helpers.filter_data_moniker_functions(functions)
+streaming_functions = common_helpers.filter_streaming_functions(functions)
 
 async_functions = service_helpers.get_async_functions(functions)
 has_async_functions = any(async_functions)
@@ -60,10 +60,10 @@ struct ${service_class_prefix}FeatureToggles
   bool ${service_helpers.get_toggle_member_name(toggle)};
 % endfor
 };
-% if config.get("use_moniker_service", False):
+% if config.get("has_streaming_api", False):
 void RegisterMonikers();
 
-% for function in data_moniker_functions:
+% for function in streaming_functions:
 <%
   method_name = common_helpers.get_data_moniker_function_name(function, functions[function])
 %>\

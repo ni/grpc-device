@@ -1715,7 +1715,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayI16': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1744,10 +1743,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayI32': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1776,10 +1775,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayI64': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1808,10 +1807,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayI8': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1840,7 +1839,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArraySgl': {
         'parameters': [
@@ -1872,7 +1872,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadArrayU16': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1901,10 +1900,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayU32': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1933,10 +1932,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayU64': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1965,10 +1964,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayU8': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1997,7 +1996,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadBool': {
         'parameters': [
@@ -2540,7 +2540,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadI16': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2560,10 +2559,10 @@ functions = {
                 'type': 'int16_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadI32': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2583,10 +2582,10 @@ functions = {
                 'type': 'int32_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadI64': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2606,10 +2605,10 @@ functions = {
                 'type': 'int64_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadI8': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2629,7 +2628,8 @@ functions = {
                 'type': 'int8_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadSgl': {
         'parameters': [
@@ -2652,7 +2652,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'ReadU16': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2672,10 +2671,10 @@ functions = {
                 'type': 'uint16_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadU32': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2695,10 +2694,10 @@ functions = {
                 'type': 'uint32_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadU64': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2718,10 +2717,10 @@ functions = {
                 'type': 'uint64_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadU8': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2741,7 +2740,8 @@ functions = {
                 'type': 'uint8_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReleaseFifoElements': {
         'parameters': [
@@ -3130,7 +3130,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayI16': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3159,10 +3158,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayI32': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3191,10 +3190,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayI64': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3223,10 +3222,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayI8': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3255,7 +3254,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArraySgl': {
         'parameters': [
@@ -3287,7 +3287,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteArrayU16': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3316,10 +3315,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayU32': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3348,10 +3347,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayU64': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3380,10 +3379,10 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayU8': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3412,7 +3411,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteBool': {
         'parameters': [
@@ -3951,7 +3951,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteI16': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3971,10 +3970,10 @@ functions = {
                 'type': 'int16_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteI32': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -3994,10 +3993,10 @@ functions = {
                 'type': 'int32_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteI64': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -4017,10 +4016,10 @@ functions = {
                 'type': 'int64_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteI8': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -4040,7 +4039,8 @@ functions = {
                 'type': 'int8_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteSgl': {
         'parameters': [
@@ -4063,7 +4063,6 @@ functions = {
         'returns': 'NiFpga_Status'
     },
     'WriteU16': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -4083,10 +4082,10 @@ functions = {
                 'type': 'uint16_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteU32': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -4106,10 +4105,10 @@ functions = {
                 'type': 'uint32_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteU64': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -4129,10 +4128,10 @@ functions = {
                 'type': 'uint64_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteU8': {
-        'moniker_supports_streaming': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -4152,6 +4151,7 @@ functions = {
                 'type': 'uint8_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     }
 }
