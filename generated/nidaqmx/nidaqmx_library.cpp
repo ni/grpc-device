@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------
 #include "nidaqmx_library.h"
 #include <server/shared_library.h>
+#include "version.h"
 
 #include <memory>
 
@@ -18,7 +19,7 @@ namespace nidaqmx_grpc {
 
 NiDAQmxLibrary::NiDAQmxLibrary() : NiDAQmxLibrary(std::make_shared<nidevice_grpc::SharedLibrary>()) {}
 
-NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library)
+NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library) : shared_library_(shared_library), runtime_environment_set_(false)
 {
   shared_library_->set_library_name(kLibraryName);
   shared_library_->load();
@@ -356,6 +357,7 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.SetRealTimeAttributeBool = reinterpret_cast<SetRealTimeAttributeBoolPtr>(shared_library_->get_function_pointer("DAQmxSetRealTimeAttribute"));
   function_pointers_.SetRealTimeAttributeInt32 = reinterpret_cast<SetRealTimeAttributeInt32Ptr>(shared_library_->get_function_pointer("DAQmxSetRealTimeAttribute"));
   function_pointers_.SetRealTimeAttributeUInt32 = reinterpret_cast<SetRealTimeAttributeUInt32Ptr>(shared_library_->get_function_pointer("DAQmxSetRealTimeAttribute"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_->get_function_pointer("DAQmxSetRuntimeEnvironment"));
   function_pointers_.SetScaleAttributeDouble = reinterpret_cast<SetScaleAttributeDoublePtr>(shared_library_->get_function_pointer("DAQmxSetScaleAttribute"));
   function_pointers_.SetScaleAttributeDoubleArray = reinterpret_cast<SetScaleAttributeDoubleArrayPtr>(shared_library_->get_function_pointer("DAQmxSetScaleAttribute"));
   function_pointers_.SetScaleAttributeInt32 = reinterpret_cast<SetScaleAttributeInt32Ptr>(shared_library_->get_function_pointer("DAQmxSetScaleAttribute"));
@@ -426,6 +428,11 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.WriteRaw = reinterpret_cast<WriteRawPtr>(shared_library_->get_function_pointer("DAQmxWriteRaw"));
   function_pointers_.WriteToTEDSFromArray = reinterpret_cast<WriteToTEDSFromArrayPtr>(shared_library_->get_function_pointer("DAQmxWriteToTEDSFromArray"));
   function_pointers_.WriteToTEDSFromFile = reinterpret_cast<WriteToTEDSFromFilePtr>(shared_library_->get_function_pointer("DAQmxWriteToTEDSFromFile"));
+
+  if (function_pointers_.SetRuntimeEnvironment) {
+    this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
+    this->runtime_environment_set_ = true;
+  }
 }
 
 NiDAQmxLibrary::~NiDAQmxLibrary()
@@ -3071,6 +3078,14 @@ int32 NiDAQmxLibrary::SetRealTimeAttributeUInt32(TaskHandle task, int32 attribut
   return function_pointers_.SetRealTimeAttributeUInt32(task, attribute, value);
 }
 
+int32 NiDAQmxLibrary::SetRuntimeEnvironment(const char environment[], const char environmentVersion[], const char reserved1[], const char reserved2[])
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
+}
+
 int32 NiDAQmxLibrary::SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value)
 {
   if (!function_pointers_.SetScaleAttributeDouble) {
@@ -3630,5 +3645,7 @@ int32 NiDAQmxLibrary::WriteToTEDSFromFile(const char physicalChannel[], const ch
   }
   return function_pointers_.WriteToTEDSFromFile(physicalChannel, filePath, basicTEDSOptions);
 }
+
+bool NiDAQmxLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }
 
 }  // namespace nidaqmx_grpc

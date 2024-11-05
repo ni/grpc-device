@@ -337,6 +337,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value) = 0;
   virtual int32 SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value) = 0;
   virtual int32 SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value) = 0;
+  virtual int32 SetRuntimeEnvironment(const char environment[], const char environmentVersion[], const char reserved1[], const char reserved2[]) = 0;
   virtual int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value) = 0;
   virtual int32 SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size) = 0;
   virtual int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value) = 0;

@@ -350,6 +350,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value) override;
   int32 SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value) override;
   int32 SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value) override;
+  int32 SetRuntimeEnvironment(const char environment[], const char environmentVersion[], const char reserved1[], const char reserved2[]) override;
   int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value) override;
   int32 SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size) override;
   int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value) override;
@@ -420,6 +421,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved) override;
   int32 WriteToTEDSFromArray(const char physicalChannel[], const uInt8 bitStream[], uInt32 arraySize, int32 basicTEDSOptions) override;
   int32 WriteToTEDSFromFile(const char physicalChannel[], const char filePath[], int32 basicTEDSOptions) override;
+  bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
   using AddCDAQSyncConnectionPtr = decltype(&DAQmxAddCDAQSyncConnection);
@@ -751,6 +753,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SetRealTimeAttributeBoolPtr = decltype(&DAQmxSetRealTimeAttribute);
   using SetRealTimeAttributeInt32Ptr = decltype(&DAQmxSetRealTimeAttribute);
   using SetRealTimeAttributeUInt32Ptr = decltype(&DAQmxSetRealTimeAttribute);
+  using SetRuntimeEnvironmentPtr = int32 (*)(const char environment[], const char environmentVersion[], const char reserved1[], const char reserved2[]);
   using SetScaleAttributeDoublePtr = decltype(&DAQmxSetScaleAttribute);
   using SetScaleAttributeDoubleArrayPtr = decltype(&DAQmxSetScaleAttribute);
   using SetScaleAttributeInt32Ptr = decltype(&DAQmxSetScaleAttribute);
@@ -1152,6 +1155,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     SetRealTimeAttributeBoolPtr SetRealTimeAttributeBool;
     SetRealTimeAttributeInt32Ptr SetRealTimeAttributeInt32;
     SetRealTimeAttributeUInt32Ptr SetRealTimeAttributeUInt32;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
     SetScaleAttributeDoublePtr SetScaleAttributeDouble;
     SetScaleAttributeDoubleArrayPtr SetScaleAttributeDoubleArray;
     SetScaleAttributeInt32Ptr SetScaleAttributeInt32;
@@ -1226,6 +1230,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
   FunctionPointers function_pointers_;
+  bool runtime_environment_set_; // needed to test that we properly call SetRuntimeEnvironment
 };
 
 }  // namespace nidaqmx_grpc
