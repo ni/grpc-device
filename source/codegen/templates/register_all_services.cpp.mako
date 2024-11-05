@@ -42,9 +42,11 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
   auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   service_vector->push_back(session_repository);
   nidevice_grpc::register_core_services(service_vector, server_builder, session_repository, feature_toggles);
-  auto moniker_service = std::make_shared<ni::data_monikers::DataMonikerService>();
-  server_builder.RegisterService(moniker_service.get());
-  service_vector->push_back(moniker_service);
+  if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
+    auto moniker_service = std::make_shared<ni::data_monikers::DataMonikerService>();
+    server_builder.RegisterService(moniker_service.get());
+    service_vector->push_back(moniker_service);
+  }
 
 % for type_name, config in repository_type_to_config.items():
 <%block filter="common_helpers.os_conditional_compile_block(config)">\
@@ -74,7 +76,7 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
   namespace = f"{config['namespace_component']}_grpc"
 %>\
 % if config.get("has_streaming_api", False):
-<%block filter="common_helpers.os_conditional_compile_block(config)">\
+<%block filter="common_helpers.os_conditional_compile_block(config)">
   ${namespace}::RegisterMonikers();
 </%block>\
 % endif

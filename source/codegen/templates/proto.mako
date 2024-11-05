@@ -21,7 +21,7 @@ additional_protos.extend(external_proto_deps)
 //---------------------------------------------------------------------
 syntax = "proto3";
 
-% if config.get("use_protobuf_arenas", False):
+% if config.get("has_streaming_api", False):
 option cc_enable_arenas = true;
 % endif
 option java_multiple_files = true;

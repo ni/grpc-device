@@ -32,8 +32,6 @@ config = {
         'NiFpga_FifoProperty': 'uint32',
     },
     'has_streaming_api': True,
-    'use_dynload_msvc': True,
-    'use_protobuf_arenas': True,
     'custom_types': [],
     'library_info': {
         'Linux': {

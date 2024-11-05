@@ -1206,9 +1206,7 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
 
 def filter_streaming_functions(functions):
     """Return function metadata only for functions that use the data moniker service."""
-    return [
-        name for name, function in functions.items() if function.get("is_streaming_api", False)
-    ]
+    return [name for name, function in functions.items() if function.get("is_streaming_api", False)]
 
 
 def get_data_moniker_function_name(function_name, function_data):
