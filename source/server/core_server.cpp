@@ -2,6 +2,7 @@
 #include <grpcpp/grpcpp.h>
 #include <register_all_services.h>
 #include <sideband_data.h>
+
 #include <mutex>
 #include <thread>
 
@@ -11,22 +12,25 @@
 #include "server_security_configuration.h"
 
 #if defined(__GNUC__)
+  #include <sys/mman.h>
+
   #include "linux/daemonize.h"
   #include "linux/syslog_logging.h"
-  #include <sys/mman.h>
 #endif
 #if defined(_WIN32)
   #include "windows/console_ctrl_handler.h"
 #endif
 
 #include "version.h"
+#include "data_moniker_service.h"
 
 using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
+using FeatureToggles = nidevice_grpc::FeatureToggles;
 
 struct ServerConfiguration {
   std::string config_file_path;
   std::string server_address;
-  std::string sideband_ip;
+  std::string sideband_address;
   std::string server_cert;
   std::string server_key;
   std::string root_cert;
@@ -44,7 +48,7 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
 
     config.config_file_path = server_config_parser.get_config_file_path();
     config.server_address = server_config_parser.parse_address();
-    config.sideband_ip = server_config_parser.parse_sideband_ip();
+    config.sideband_address = server_config_parser.parse_sideband_address();
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
@@ -77,9 +81,9 @@ static void RunServer(const ServerConfiguration& config)
 {
   if (!config.config_file_path.empty()) {
     nidevice_grpc::logging::log(
-      nidevice_grpc::logging::Level_Info,
-      "Using server configuration from %s",
-      config.config_file_path.c_str());
+        nidevice_grpc::logging::Level_Info,
+        "Using server configuration from %s",
+        config.config_file_path.c_str());
   }
 
   grpc::EnableDefaultHealthCheckService(true);
@@ -105,11 +109,12 @@ static void RunServer(const ServerConfiguration& config)
       return;
     }
     server = builder.BuildAndStart();
+    if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
+      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), 50055);
+      // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
+      // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
+    }
   }
-
-  auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_ip.c_str(), 50055);
-  // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
-  // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
 
   if (!server) {
     nidevice_grpc::logging::log(
@@ -191,7 +196,7 @@ Options parse_options(int argc, char** argv)
     }
     else
 #endif
-    if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
+        if (strcmp("--help", argv[i]) == 0 || strcmp("-h", argv[i]) == 0) {
       nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, usage);
       exit(EXIT_SUCCESS);
     }
@@ -231,10 +236,10 @@ Options parse_options(int argc, char** argv)
 
 static void SysFsWrite(const std::string& fileName, const std::string& value)
 {
-    std::ofstream fout;
-    fout.open(fileName);
-    fout << value;
-    fout.close();
+  std::ofstream fout;
+  fout.open(fileName);
+  fout << value;
+  fout.close();
 }
 
 int main(int argc, char** argv)
@@ -254,8 +259,8 @@ int main(int argc, char** argv)
 #endif
 #if defined(_WIN32)
   nidevice_grpc::set_console_ctrl_handler(&StopServer);
-#endif
-#ifndef _WIN32
+#else
+  if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
     SysFsWrite("/dev/cgroup/cpuset/system_set/cpus", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_ScanEngine_set", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/cpus", "6-8");
@@ -270,7 +275,8 @@ int main(int argc, char** argv)
     CPU_SET(6, &cpuSet);
     sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
 
-    mlockall(MCL_CURRENT|MCL_FUTURE);
+    mlockall(MCL_CURRENT | MCL_FUTURE);
+  }
 #endif
 
   RunServer(config);

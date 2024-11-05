@@ -10,11 +10,13 @@
 #include <type_traits>
 #include <map>
 #include <sideband_data.h>
+#include "feature_toggles.h"
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 namespace ni::data_monikers
 {
+    bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles);
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     using MonikerEndpointPtr = std::add_pointer<::grpc::Status(void*, google::protobuf::Arena& arena, google::protobuf::Any&)>::type;
