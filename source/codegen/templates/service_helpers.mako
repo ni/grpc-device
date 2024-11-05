@@ -272,7 +272,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 </%def>
 
 <%def name="register_moniker_functions(function_name)">
-<%  moniker_function_name = service_helpers.create_moniker_function_name(function_name)
+<%  moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
 %>  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
 </%def>
 
@@ -285,7 +285,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   request_param = service_helpers.get_request_param(function_name)
   response_param = service_helpers.get_response_param(function_name)
   struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
-  moniker_function_name = service_helpers.create_moniker_function_name(function_name)
+  moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
   c_api_name = service_helpers.get_c_api_name(function_name)
   streaming_param = common_helpers.get_streaming_parameter(parameters)
   streaming_type = streaming_param['type']

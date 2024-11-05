@@ -1209,6 +1209,6 @@ def filter_streaming_functions(functions):
     return [name for name, function in functions.items() if function.get("is_streaming_api", False)]
 
 
-def get_data_moniker_function_name(function_name, function_data):
+def get_data_moniker_function_name(function_name):
     """Return the corresponding moniker function name for the given C API function."""
     return function_name.replace("Begin", "Moniker")

@@ -334,7 +334,7 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_object_repository,
       feature_toggles));
 
-  nifpga_grpc::RegisterMonikers();
+  nifpga_grpc::RegisterMonikerEndpoints();
 
   return service_vector;
 }

@@ -77,7 +77,7 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
 %>\
 % if config.get("has_streaming_api", False):
 <%block filter="common_helpers.os_conditional_compile_block(config)">
-  ${namespace}::RegisterMonikers();
+  ${namespace}::RegisterMonikerEndpoints();
 </%block>\
 % endif
 % endfor

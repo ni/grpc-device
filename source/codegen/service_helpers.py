@@ -709,11 +709,6 @@ def get_protobuf_cpplib_type(grpc_type: str) -> str:
     return grpc_type
 
 
-def create_moniker_function_name(function_name: str) -> str:
-    """Get the function name for the moniker function."""
-    return f"Moniker{function_name.replace('Begin', '')}"
-
-
 def get_coerced_type_and_presence(streaming_type: str) -> tuple:
     """Get the coerced type and check if the coerced type is present in the type map.
 

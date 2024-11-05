@@ -12,7 +12,6 @@
 #include <atomic>
 #include <vector>
 #include <server/converters.h>
-#include <nifpga.grpc.pb.h>
 #include <server/data_moniker_service.h>
 
 namespace nifpga_grpc {
