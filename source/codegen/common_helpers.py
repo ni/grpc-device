@@ -1204,9 +1204,13 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
 
 
-def filter_streaming_functions(functions):
-    """Return function metadata only for functions that use the data moniker service."""
-    return [name for name, function in functions.items() if function.get("is_streaming_api", False)]
+def filter_streaming_functions(functions, functions_to_generate=None):
+    """Return function metadata only for functions that use the data moniker service and need to be generated."""
+    if functions_to_generate is None:
+        functions_to_generate = functions.keys()
+    return [
+        name for name in functions_to_generate if functions[name].get("is_streaming_api", False)
+    ]
 
 
 def get_data_moniker_function_name(function_name):

@@ -330,7 +330,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 }
 </%def>
 
-<%def name="define_streaming_api(function_name, function_data, parameters)">
+<%def name="define_streaming_api_body(function_name, function_data, parameters)">
 <%
   config = data['config']
   input_params = [p for p in parameters if common_helpers.is_input_parameter(p)]
