@@ -342,13 +342,6 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
   streaming_param = common_helpers.get_streaming_parameter(parameters)
 %>\
-
-::grpc::Status ${service_class_prefix}Service::${function_name}(::grpc::ServerContext* context, ${request_param}, ${response_param})
-{
-    if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
-    }
-    try {
 ${initialize_streaming_input_param(function_name, input_params, parameters, streaming_param)}
       ${struct_name}* data = new ${struct_name}();
       ${initialize_begin_input_param(input_params, streaming_param)}\
@@ -357,12 +350,7 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
       ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data, *moniker);
       response->set_allocated_moniker(moniker);
-      return ::grpc::Status::OK;
-    }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
-    }
-}
+      return ::grpc::Status::OK;\
 </%def>
 
 <%def name="handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present, streaming_param)">

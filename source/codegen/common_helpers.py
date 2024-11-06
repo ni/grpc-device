@@ -1205,7 +1205,7 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
 
 
 def filter_streaming_functions(functions, functions_to_generate=None):
-    """Returns streaming functions that needs to be generated."""
+    """Return streaming functions that need to be generated."""
     if functions_to_generate is None:
         functions_to_generate = functions.keys()
     return [
@@ -1216,3 +1216,8 @@ def filter_streaming_functions(functions, functions_to_generate=None):
 def get_data_moniker_function_name(function_name):
     """Return the corresponding moniker function name for the given C API function."""
     return function_name.replace("Begin", "Moniker")
+
+
+def is_function_in_streaming_functions(function_name, streaming_functions_to_generate):
+    """Check if a function name is in the streaming functions to generate."""
+    return function_name in streaming_functions_to_generate

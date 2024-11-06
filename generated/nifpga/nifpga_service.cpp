@@ -1725,14 +1725,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadArrayI16(::grpc::ServerContext* context, const BeginReadArrayI16Request* request, BeginReadArrayI16Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayI16(::grpc::ServerContext* context, const BeginReadArrayI16Request* request, BeginReadArrayI16Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -1751,10 +1752,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -1782,14 +1783,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadArrayI32(::grpc::ServerContext* context, const BeginReadArrayI32Request* request, BeginReadArrayI32Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayI32(::grpc::ServerContext* context, const BeginReadArrayI32Request* request, BeginReadArrayI32Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -1808,10 +1810,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -1839,14 +1841,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadArrayI64(::grpc::ServerContext* context, const BeginReadArrayI64Request* request, BeginReadArrayI64Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayI64(::grpc::ServerContext* context, const BeginReadArrayI64Request* request, BeginReadArrayI64Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -1865,10 +1868,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -1904,14 +1907,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadArrayI8(::grpc::ServerContext* context, const BeginReadArrayI8Request* request, BeginReadArrayI8Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayI8(::grpc::ServerContext* context, const BeginReadArrayI8Request* request, BeginReadArrayI8Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -1930,10 +1934,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -1995,14 +1999,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadArrayU16(::grpc::ServerContext* context, const BeginReadArrayU16Request* request, BeginReadArrayU16Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayU16(::grpc::ServerContext* context, const BeginReadArrayU16Request* request, BeginReadArrayU16Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2021,10 +2026,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2052,14 +2057,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadArrayU32(::grpc::ServerContext* context, const BeginReadArrayU32Request* request, BeginReadArrayU32Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayU32(::grpc::ServerContext* context, const BeginReadArrayU32Request* request, BeginReadArrayU32Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2078,10 +2084,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2109,14 +2115,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadArrayU64(::grpc::ServerContext* context, const BeginReadArrayU64Request* request, BeginReadArrayU64Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayU64(::grpc::ServerContext* context, const BeginReadArrayU64Request* request, BeginReadArrayU64Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2135,10 +2142,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2174,14 +2181,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadArrayU8(::grpc::ServerContext* context, const BeginReadArrayU8Request* request, BeginReadArrayU8Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayU8(::grpc::ServerContext* context, const BeginReadArrayU8Request* request, BeginReadArrayU8Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2200,10 +2208,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2631,14 +2639,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadI16(::grpc::ServerContext* context, const BeginReadI16Request* request, BeginReadI16Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadI16(::grpc::ServerContext* context, const BeginReadI16Request* request, BeginReadI16Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2653,10 +2662,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2683,14 +2692,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadI32(::grpc::ServerContext* context, const BeginReadI32Request* request, BeginReadI32Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadI32(::grpc::ServerContext* context, const BeginReadI32Request* request, BeginReadI32Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2705,10 +2715,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2735,14 +2745,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadI64(::grpc::ServerContext* context, const BeginReadI64Request* request, BeginReadI64Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadI64(::grpc::ServerContext* context, const BeginReadI64Request* request, BeginReadI64Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2757,10 +2768,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2787,14 +2798,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadI8(::grpc::ServerContext* context, const BeginReadI8Request* request, BeginReadI8Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadI8(::grpc::ServerContext* context, const BeginReadI8Request* request, BeginReadI8Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2809,10 +2821,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2864,14 +2876,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadU16(::grpc::ServerContext* context, const BeginReadU16Request* request, BeginReadU16Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadU16(::grpc::ServerContext* context, const BeginReadU16Request* request, BeginReadU16Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2886,10 +2899,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2916,14 +2929,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadU32(::grpc::ServerContext* context, const BeginReadU32Request* request, BeginReadU32Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadU32(::grpc::ServerContext* context, const BeginReadU32Request* request, BeginReadU32Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2938,10 +2952,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2968,14 +2982,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadU64(::grpc::ServerContext* context, const BeginReadU64Request* request, BeginReadU64Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadU64(::grpc::ServerContext* context, const BeginReadU64Request* request, BeginReadU64Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -2990,10 +3005,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3020,14 +3035,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginReadU8(::grpc::ServerContext* context, const BeginReadU8Request* request, BeginReadU8Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadU8(::grpc::ServerContext* context, const BeginReadU8Request* request, BeginReadU8Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
@@ -3042,10 +3058,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3481,14 +3497,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteArrayI16(::grpc::ServerContext* context, const BeginWriteArrayI16Request* request, BeginWriteArrayI16Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayI16(::grpc::ServerContext* context, const BeginWriteArrayI16Request* request, BeginWriteArrayI16Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -3503,10 +3520,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3533,14 +3550,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteArrayI32(::grpc::ServerContext* context, const BeginWriteArrayI32Request* request, BeginWriteArrayI32Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayI32(::grpc::ServerContext* context, const BeginWriteArrayI32Request* request, BeginWriteArrayI32Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -3555,10 +3573,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3585,14 +3603,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteArrayI64(::grpc::ServerContext* context, const BeginWriteArrayI64Request* request, BeginWriteArrayI64Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayI64(::grpc::ServerContext* context, const BeginWriteArrayI64Request* request, BeginWriteArrayI64Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -3607,10 +3626,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3654,14 +3673,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteArrayI8(::grpc::ServerContext* context, const BeginWriteArrayI8Request* request, BeginWriteArrayI8Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayI8(::grpc::ServerContext* context, const BeginWriteArrayI8Request* request, BeginWriteArrayI8Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -3676,10 +3696,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3748,14 +3768,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteArrayU16(::grpc::ServerContext* context, const BeginWriteArrayU16Request* request, BeginWriteArrayU16Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayU16(::grpc::ServerContext* context, const BeginWriteArrayU16Request* request, BeginWriteArrayU16Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -3770,10 +3791,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3800,14 +3821,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteArrayU32(::grpc::ServerContext* context, const BeginWriteArrayU32Request* request, BeginWriteArrayU32Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayU32(::grpc::ServerContext* context, const BeginWriteArrayU32Request* request, BeginWriteArrayU32Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -3822,10 +3844,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3852,14 +3874,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteArrayU64(::grpc::ServerContext* context, const BeginWriteArrayU64Request* request, BeginWriteArrayU64Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayU64(::grpc::ServerContext* context, const BeginWriteArrayU64Request* request, BeginWriteArrayU64Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -3874,10 +3897,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -3921,14 +3944,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteArrayU8(::grpc::ServerContext* context, const BeginWriteArrayU8Request* request, BeginWriteArrayU8Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayU8(::grpc::ServerContext* context, const BeginWriteArrayU8Request* request, BeginWriteArrayU8Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -3943,10 +3967,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -4405,14 +4429,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteI16(::grpc::ServerContext* context, const BeginWriteI16Request* request, BeginWriteI16Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteI16(::grpc::ServerContext* context, const BeginWriteI16Request* request, BeginWriteI16Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -4427,10 +4452,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -4456,14 +4481,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteI32(::grpc::ServerContext* context, const BeginWriteI32Request* request, BeginWriteI32Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteI32(::grpc::ServerContext* context, const BeginWriteI32Request* request, BeginWriteI32Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -4478,10 +4504,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -4507,14 +4533,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteI64(::grpc::ServerContext* context, const BeginWriteI64Request* request, BeginWriteI64Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteI64(::grpc::ServerContext* context, const BeginWriteI64Request* request, BeginWriteI64Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -4529,10 +4556,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -4567,14 +4594,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteI8(::grpc::ServerContext* context, const BeginWriteI8Request* request, BeginWriteI8Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteI8(::grpc::ServerContext* context, const BeginWriteI8Request* request, BeginWriteI8Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -4589,10 +4617,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -4651,14 +4679,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteU16(::grpc::ServerContext* context, const BeginWriteU16Request* request, BeginWriteU16Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteU16(::grpc::ServerContext* context, const BeginWriteU16Request* request, BeginWriteU16Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -4673,10 +4702,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -4702,14 +4731,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteU32(::grpc::ServerContext* context, const BeginWriteU32Request* request, BeginWriteU32Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteU32(::grpc::ServerContext* context, const BeginWriteU32Request* request, BeginWriteU32Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -4724,10 +4754,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -4753,14 +4783,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteU64(::grpc::ServerContext* context, const BeginWriteU64Request* request, BeginWriteU64Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteU64(::grpc::ServerContext* context, const BeginWriteU64Request* request, BeginWriteU64Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -4775,10 +4806,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -4813,14 +4844,15 @@ void RegisterMonikerEndpoints()
     }
   }
 
-
-
-::grpc::Status NiFpgaService::BeginWriteU8(::grpc::ServerContext* context, const BeginWriteU8Request* request, BeginWriteU8Response* response)
-{
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteU8(::grpc::ServerContext* context, const BeginWriteU8Request* request, BeginWriteU8Response* response)
+  {
     if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
+      return ::grpc::Status::CANCELLED;
     }
     try {
+
       auto session_grpc_session = request->session();
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
@@ -4835,10 +4867,10 @@ void RegisterMonikerEndpoints()
       response->set_allocated_moniker(moniker);
       return ::grpc::Status::OK;
     }
-    catch (std::exception& ex) {
-        return ::grpc::Status(::grpc::UNKNOWN, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-}
+  }
 
 
   NiFpgaFeatureToggles::NiFpgaFeatureToggles(

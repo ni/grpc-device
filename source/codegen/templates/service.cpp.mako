@@ -135,9 +135,6 @@ ${mako_helper.define_moniker_function_body(function_name=function_name, function
     response_type = service_helpers.get_response_type(method_name)
     is_async_streaming = common_helpers.has_async_streaming_response(function_data)
 %>\
-% if function_name in streaming_functions_to_generate:
-${mako_helper.define_streaming_api_body(function_name=function_name, function_data=function_data, parameters=parameters)}\
-% else:
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
 % if is_async_streaming:
@@ -165,6 +162,8 @@ ${mako_helper.define_ivi_dance_method_body(function_name=function_name, function
 ${mako_helper.define_ivi_dance_with_a_twist_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   elif common_helpers.has_repeated_varargs_parameter(parameters):
 ${mako_helper.define_repeated_varargs_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
+%   elif common_helpers.is_function_in_streaming_functions(function_name, streaming_functions_to_generate):
+${mako_helper.define_streaming_api_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   else:
 ${mako_helper.define_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   endif
@@ -173,7 +172,6 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
       return ex.GetStatus();
     }
   }
-% endif
 % endif
 
 % endfor
