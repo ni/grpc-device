@@ -1205,7 +1205,7 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
 
 
 def filter_streaming_functions(functions, functions_to_generate=None):
-    """Return function metadata only for functions that use the data moniker service and need to be generated."""
+    """Returns streaming functions that needs to be generated."""
     if functions_to_generate is None:
         functions_to_generate = functions.keys()
     return [

@@ -333,8 +333,9 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       vi_object_repository,
       feature_toggles));
-
-  nifpga_grpc::RegisterMonikerEndpoints();
+  if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
+    nifpga_grpc::RegisterMonikerEndpoints();
+  }
 
   return service_vector;
 }

@@ -63,14 +63,12 @@ namespace ${config["namespace_component"]}_grpc {
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
-% for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
-% if function_name in streaming_functions_to_generate:
+% for function_name in streaming_functions_to_generate:
 <%
 function_data = functions[function_name]
 parameters = function_data['parameters']
 %>
 ${mako_helper.define_moniker_streaming_structs(function_name=function_name, function_data=function_data, parameters=parameters)}\
-% endif
 % endfor
 
 % if any_ivi_dance_functions:
@@ -116,20 +114,16 @@ ${mako_helper.define_moniker_streaming_structs(function_name=function_name, func
 % if streaming_functions_to_generate:
 void RegisterMonikerEndpoints()
 {
-% for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
-% if function_name in streaming_functions_to_generate:
+% for function_name in streaming_functions_to_generate:
 ${mako_helper.register_moniker_functions(function_name)}\
-% endif
 % endfor
 }
 % endif
-% for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
-% if function_name in streaming_functions_to_generate:
+% for function_name in streaming_functions_to_generate:
 <%
 function_data = functions[function_name]
 %>
 ${mako_helper.define_moniker_function_body(function_name=function_name, function_data=function_data)}\
-% endif
 % endfor
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
