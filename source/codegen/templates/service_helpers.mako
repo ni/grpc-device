@@ -276,6 +276,60 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 %>  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
 </%def>
 
+<%def name="define_moniker_streaming_structs(function_name, function_data, parameters)">\
+<%
+  config = data['config']
+  input_params = [p for p in function_data['parameters'] if common_helpers.is_input_parameter(p)]
+  streaming_param = common_helpers.get_streaming_parameter(function_data['parameters'])
+  service_class_prefix = config["service_class_prefix"]
+  grpc_streaming_type = streaming_param['grpc_streaming_type']
+  struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
+%>\
+  struct ${struct_name}
+  {
+     % for param in input_params:
+     % if service_helpers.include_param(param, streaming_param):
+     ${param['type']} ${param['name']};
+     % endif
+     % endfor
+     ${service_class_prefix.lower()}_grpc::${grpc_streaming_type} data;
+     std::shared_ptr<${service_class_prefix}LibraryInterface> library;
+  };
+</%def>
+
+<%def name="define_moniker_function_body(function_name, function_data)">\
+<%
+  config = data['config']
+  struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
+  moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
+  streaming_param = common_helpers.get_streaming_parameter(function_data['parameters'])
+  streaming_type = streaming_param['type']
+  coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
+  grpc_streaming_type = streaming_param['grpc_streaming_type']
+  is_array = common_helpers.is_array(streaming_type)
+  arg_string = service_helpers.create_args(function_data['parameters'])
+  arg_string = arg_string.replace(", &moniker", "").strip()
+  data_type = streaming_type.replace("[]", "")
+  c_api_name = service_helpers.get_c_api_name(function_name)
+  input_params = [p for p in function_data['parameters'] if common_helpers.is_input_parameter(p)]
+%>\
+::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    ${struct_name}* function_data = (${struct_name}*)data;
+    auto library = function_data->library;
+    ${initialize_non_array_parameters(input_params, streaming_param)}\
+    % if streaming_param and streaming_param['direction'] == 'out':
+        ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present, streaming_param)}\
+    % elif streaming_param and streaming_param['direction'] == 'in':
+        ${handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, is_array)}\
+    % endif
+    if (status < 0) {
+      std::cout << "${moniker_function_name} error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+</%def>
+
 <%def name="define_streaming_api(function_name, function_data, parameters)">
 <%
   config = data['config']
@@ -286,23 +340,8 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   response_param = service_helpers.get_response_param(function_name)
   struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
-  c_api_name = service_helpers.get_c_api_name(function_name)
   streaming_param = common_helpers.get_streaming_parameter(parameters)
-  streaming_type = streaming_param['type']
-  coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
-  grpc_streaming_type = streaming_param['grpc_streaming_type']
-  is_array = common_helpers.is_array(streaming_type)
 %>\
-struct ${struct_name}
-{
-    % for param in input_params:
-    % if service_helpers.include_param(param, streaming_param):
-    ${param['type']} ${param['name']};
-    % endif
-    % endfor
-    ${service_class_prefix.lower()}_grpc::${grpc_streaming_type} data;
-    std::shared_ptr<${service_class_prefix}LibraryInterface> library;
-};
 
 ::grpc::Status ${service_class_prefix}Service::${function_name}(::grpc::ServerContext* context, ${request_param}, ${response_param})
 {
@@ -323,26 +362,6 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
     catch (std::exception& ex) {
         return ::grpc::Status(::grpc::UNKNOWN, ex.what());
     }
-}
-<%
-  arg_string= service_helpers.create_args(parameters)
-  arg_string = arg_string.replace(", &moniker", "").strip()
-  data_type = streaming_type.replace("[]", "")
-%>\
-::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
-    ${struct_name}* function_data = (${struct_name}*)data;
-    auto library = function_data->library;
-    ${initialize_non_array_parameters(input_params, streaming_param)}\
-    % if streaming_param and streaming_param['direction'] == 'out':
-        ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present, streaming_param)}\
-    % elif streaming_param and streaming_param['direction'] == 'in':
-        ${handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, is_array)}\
-    % endif
-    if (status < 0) {
-      std::cout << "${moniker_function_name} error: " << status << std::endl;
-    }
-    return ::grpc::Status::OK;
 }
 </%def>
 
@@ -457,8 +476,8 @@ ${initialize_input_param(function_name, param, parameters)}\
 <%def name="initialize_service_output_params(output_params)">
 % for param in output_params:
 % if common_helpers.is_array(param['type']):
-    data->data.mutable_value()->Reserve(request->size());
-    data->data.mutable_value()->Resize(request->size(), 0);
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
 % endif
 % endfor
 </%def>

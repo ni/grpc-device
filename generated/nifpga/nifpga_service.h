@@ -30,6 +30,7 @@ struct NiFpgaFeatureToggles
 
   bool is_enabled;
 };
+
 void RegisterMonikerEndpoints();
 
 ::grpc::Status MonikerReadArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);

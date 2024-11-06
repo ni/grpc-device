@@ -61,6 +61,7 @@ struct ${service_class_prefix}FeatureToggles
 % endfor
 };
 % if data_moniker_functions:
+
 void RegisterMonikerEndpoints();
 
 % for function in data_moniker_functions:

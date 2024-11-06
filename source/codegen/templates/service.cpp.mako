@@ -12,15 +12,15 @@ custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(config, functions)
 has_async_functions = any(service_helpers.get_async_functions(functions))
 has_two_dimension_functions = any(service_helpers.get_functions_with_two_dimension_param(functions))
-function_names = service_helpers.filter_proto_rpc_functions_to_generate(functions)
+functions_to_generate = service_helpers.filter_proto_rpc_functions_to_generate(functions)
 data_moniker_functions = common_helpers.filter_streaming_functions(functions)
 # If there are any non-mockable functions, we need to call the library directly, which
 # means we need another include file
-any_non_mockable_functions = any(not common_helpers.can_mock_function(functions[name]['parameters']) for name in function_names)
+any_non_mockable_functions = any(not common_helpers.can_mock_function(functions[name]['parameters']) for name in functions_to_generate)
 # Define the constant for buffer too small if we have any of these functions.
 any_ivi_dance_functions = any(
   common_helpers.has_ivi_dance_with_a_twist_param(functions[name]['parameters']) or
-  common_helpers.has_ivi_dance_param(functions[name]['parameters']) for name in function_names)
+  common_helpers.has_ivi_dance_param(functions[name]['parameters']) for name in functions_to_generate)
 
 resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, functions)
 %>\
@@ -63,6 +63,15 @@ namespace ${config["namespace_component"]}_grpc {
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
+% for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
+% if function_name in data_moniker_functions:
+<%
+function_data = functions[function_name]
+parameters = function_data['parameters']
+%>
+${mako_helper.define_moniker_streaming_structs(function_name=function_name, function_data=function_data, parameters=parameters)}\
+% endif
+% endfor
 
 % if any_ivi_dance_functions:
   const auto kErrorReadBufferTooSmall = -200229;
@@ -105,7 +114,7 @@ namespace ${config["namespace_component"]}_grpc {
 
 % endif
 % if data_moniker_functions:
-void RegisterMoniker()
+void RegisterMonikerEndpoints()
 {
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
 % if function_name in data_moniker_functions:
@@ -114,6 +123,14 @@ ${mako_helper.register_moniker_functions(function_name)}\
 % endfor
 }
 % endif
+% for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
+% if function_name in data_moniker_functions:
+<%
+function_data = functions[function_name]
+%>
+${mako_helper.define_moniker_function_body(function_name=function_name, function_data=function_data)}\
+% endif
+% endfor
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
     function_data = functions[function_name]
