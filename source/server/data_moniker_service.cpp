@@ -168,7 +168,7 @@ Status DataMonikerService::BeginSidebandStream(ServerContext* context, const Beg
 
   char identifier[32] = {};
   InitOwnerSidebandData(strategy, bufferSize, identifier);
-  ;
+
   response->set_strategy(request->strategy());
   response->set_sideband_identifier(identifier);
   response->set_connection_url(GetConnectionAddress(strategy));
