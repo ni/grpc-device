@@ -1204,10 +1204,8 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
 
 
-def filter_moniker_streaming_functions (functions, functions_to_generate=None):
+def filter_moniker_streaming_functions(functions, functions_to_generate):
     """Return streaming functions that need to be generated."""
-    if functions_to_generate is None:
-        functions_to_generate = functions.keys()
     return [
         name for name in functions_to_generate if functions[name].get("is_streaming_api", False)
     ]

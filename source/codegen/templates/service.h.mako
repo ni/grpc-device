@@ -17,7 +17,8 @@ custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(config, functions)
 resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, functions)
 resource_handle_types = service_helpers.get_resource_handle_types(config)
-data_moniker_functions = common_helpers.filter_moniker_streaming_functions (functions)
+functions_to_generate = common_helpers.filter_proto_rpc_functions(functions)
+data_moniker_functions = common_helpers.filter_moniker_streaming_functions(functions, functions_to_generate)
 
 async_functions = service_helpers.get_async_functions(functions)
 has_async_functions = any(async_functions)
@@ -91,7 +92,7 @@ public:
     const ${service_class_prefix}FeatureToggles& feature_toggles = {});
   virtual ~${service_class_prefix}Service();
 
-% for function in common_helpers.filter_proto_rpc_functions(functions):
+% for function in functions_to_generate:
 <%
   f = functions[function]
   method_name = common_helpers.snake_to_pascal(function)
