@@ -13,7 +13,7 @@ custom_types = common_helpers.get_custom_types(config)
 has_async_functions = any(service_helpers.get_async_functions(functions))
 has_two_dimension_functions = any(service_helpers.get_functions_with_two_dimension_param(functions))
 functions_to_generate = service_helpers.filter_proto_rpc_functions_to_generate(functions)
-streaming_functions_to_generate = common_helpers.filter_streaming_functions(functions, functions_to_generate)
+streaming_functions_to_generate = common_helpers.filter_moniker_streaming_functions (functions, functions_to_generate)
 # If there are any non-mockable functions, we need to call the library directly, which
 # means we need another include file
 any_non_mockable_functions = any(not common_helpers.can_mock_function(functions[name]['parameters']) for name in functions_to_generate)
@@ -112,12 +112,12 @@ ${mako_helper.define_moniker_streaming_structs(function_name=function_name, func
 
 % endif
 % if streaming_functions_to_generate:
-void RegisterMonikerEndpoints()
-{
+  void RegisterMonikerEndpoints()
+  {
 % for function_name in streaming_functions_to_generate:
-${mako_helper.register_moniker_functions(function_name)}\
+  ${mako_helper.register_moniker_functions(function_name)}\
 % endfor
-}
+  }
 % endif
 % for function_name in streaming_functions_to_generate:
 <%

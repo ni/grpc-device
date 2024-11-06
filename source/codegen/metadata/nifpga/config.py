@@ -31,7 +31,7 @@ config = {
         'NiFpga_Bool': 'bool',
         'NiFpga_FifoProperty': 'uint32',
     },
-    'has_streaming_api': True,
+    'has_moniker_streaming_apis': True,
     'custom_types': [],
     'library_info': {
         'Linux': {

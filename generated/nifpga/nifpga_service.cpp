@@ -306,73 +306,73 @@ namespace nifpga_grpc {
     return status >= 0;
   }
 
-void RegisterMonikerEndpoints()
-{
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI16", MonikerReadArrayI16);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI32", MonikerReadArrayI32);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI64", MonikerReadArrayI64);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI8", MonikerReadArrayI8);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU16", MonikerReadArrayU16);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU32", MonikerReadArrayU32);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU64", MonikerReadArrayU64);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU8", MonikerReadArrayU8);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI16", MonikerReadI16);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI32", MonikerReadI32);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI64", MonikerReadI64);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI8", MonikerReadI8);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU16", MonikerReadU16);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU32", MonikerReadU32);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU64", MonikerReadU64);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU8", MonikerReadU8);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI16", MonikerWriteArrayI16);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI32", MonikerWriteArrayI32);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI64", MonikerWriteArrayI64);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI8", MonikerWriteArrayI8);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU16", MonikerWriteArrayU16);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU32", MonikerWriteArrayU32);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU64", MonikerWriteArrayU64);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU8", MonikerWriteArrayU8);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI16", MonikerWriteI16);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI32", MonikerWriteI32);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI64", MonikerWriteI64);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI8", MonikerWriteI8);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU16", MonikerWriteU16);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU32", MonikerWriteU32);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU64", MonikerWriteU64);
-
-  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU8", MonikerWriteU8);
-}
+  void RegisterMonikerEndpoints()
+  {
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI16", MonikerReadArrayI16);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI32", MonikerReadArrayI32);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI64", MonikerReadArrayI64);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI8", MonikerReadArrayI8);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU16", MonikerReadArrayU16);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU32", MonikerReadArrayU32);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU64", MonikerReadArrayU64);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU8", MonikerReadArrayU8);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI16", MonikerReadI16);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI32", MonikerReadI32);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI64", MonikerReadI64);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI8", MonikerReadI8);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU16", MonikerReadU16);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU32", MonikerReadU32);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU64", MonikerReadU64);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU8", MonikerReadU8);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI16", MonikerWriteArrayI16);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI32", MonikerWriteArrayI32);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI64", MonikerWriteArrayI64);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI8", MonikerWriteArrayI8);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU16", MonikerWriteArrayU16);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU32", MonikerWriteArrayU32);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU64", MonikerWriteArrayU64);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU8", MonikerWriteArrayU8);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI16", MonikerWriteI16);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI32", MonikerWriteI32);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI64", MonikerWriteI64);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI8", MonikerWriteI8);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU16", MonikerWriteU16);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU32", MonikerWriteU32);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU64", MonikerWriteU64);
+  
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU8", MonikerWriteU8);
+  }
 
 ::grpc::Status MonikerReadArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {

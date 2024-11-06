@@ -272,8 +272,10 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 </%def>
 
 <%def name="register_moniker_functions(function_name)">
-<%  moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
-%>  ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
+<%
+  moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
+%>\
+    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
 </%def>
 
 <%def name="define_moniker_streaming_structs(function_name, function_data, parameters)">\
