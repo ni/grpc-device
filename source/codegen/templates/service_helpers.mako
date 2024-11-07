@@ -305,18 +305,17 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   streaming_param = common_helpers.get_streaming_parameter(function_data['parameters'])
   streaming_type = streaming_param['type']
   grpc_streaming_type = streaming_param['grpc_streaming_type']
-  is_array = common_helpers.is_array(streaming_type)
   arg_string = service_helpers.create_args(function_data['parameters'])
   arg_string = arg_string.replace(", &moniker", "").strip()
   data_type = streaming_type.replace("[]", "")
   c_api_name = service_helpers.get_c_api_name(function_name)
-  input_params = [p for p in function_data['parameters'] if common_helpers.is_input_parameter(p)]
+  streaming_param_to_include = common_helpers.get_input_streaming_param(function_data['parameters'])
 %>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = (${struct_name}*)data;
     auto library = function_data->library;
-    ${initialize_non_array_parameters(input_params, streaming_param)}\
+    ${initialize_moniker_streaming_parameters(streaming_param_to_include)}\
     % if streaming_param and streaming_param['direction'] == 'out':
         ${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
     % elif streaming_param and streaming_param['direction'] == 'in':
@@ -478,11 +477,9 @@ ${initialize_input_param(function_name, param, parameters)}\
 % endfor
 </%def>
 
-<%def name="initialize_non_array_parameters(input_params, streaming_param)">
-% for param in input_params:
-  % if service_helpers.include_param(param, streaming_param):
+<%def name="initialize_moniker_streaming_parameters(streaming_param_to_include)">
+% for param in streaming_param_to_include:
     auto ${param['name']} = function_data->${param['name']};
-  % endif
 % endfor
 </%def>
 
