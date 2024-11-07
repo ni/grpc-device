@@ -68,7 +68,7 @@ namespace ${config["namespace_component"]}_grpc {
 function_data = functions[function_name]
 parameters = function_data['parameters']
 %>
-${mako_helper.define_moniker_streaming_structs(function_name=function_name, function_data=function_data, parameters=parameters)}\
+${mako_helper.define_moniker_streaming_struct(function_name=function_name, parameters=parameters)}\
 % endfor
 
 % if any_ivi_dance_functions:

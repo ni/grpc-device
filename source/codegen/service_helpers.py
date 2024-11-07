@@ -709,26 +709,6 @@ def get_protobuf_cpplib_type(grpc_type: str) -> str:
     return grpc_type
 
 
-def get_coerced_type_and_presence(streaming_type: str) -> tuple:
-    """Get the coerced type and check if the coerced type is present in the type map.
-
-    This handles both scalar types and array types like int8_t[] or uint16_t[].
-    """
-    type_map = {
-        "int8_t": "int32_t",
-        "uint8_t": "uint32_t",
-        "int16_t": "int32_t",
-        "uint16_t": "uint32_t",
-    }
-
-    base_type = streaming_type.replace("[]", "")
-
-    coerced_type = type_map.get(base_type, base_type)
-    is_coerced_type_present = base_type in type_map
-
-    return coerced_type, is_coerced_type_present
-
-
 def get_streaming_type(parameters) -> str:
     """Get the streaming type from the function data."""
     for param in parameters:

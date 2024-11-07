@@ -271,28 +271,26 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
-<%def name="register_moniker_functions(function_name)">
+<%def name="register_moniker_functions(function_name)">\
 <%
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
 %>\
-    ::ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
+    ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
 </%def>
 
-<%def name="define_moniker_streaming_structs(function_name, function_data, parameters)">\
+<%def name="define_moniker_streaming_struct(function_name, parameters)">\
 <%
   config = data['config']
-  input_params = [p for p in function_data['parameters'] if common_helpers.is_input_parameter(p)]
-  streaming_param = common_helpers.get_streaming_parameter(function_data['parameters'])
+  streaming_param = common_helpers.get_streaming_parameter(parameters)
   service_class_prefix = config["service_class_prefix"]
   grpc_streaming_type = streaming_param['grpc_streaming_type']
-  struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
+  struct_name = common_helpers.get_data_moniker_struct_name(function_name)
+  streaming_param_to_include = common_helpers.get_input_streaming_param(parameters)
 %>\
   struct ${struct_name}
   {
-     % for param in input_params:
-     % if service_helpers.include_param(param, streaming_param):
+     % for param in streaming_param_to_include:
      ${param['type']} ${param['name']};
-     % endif
      % endfor
      ${service_class_prefix.lower()}_grpc::${grpc_streaming_type} data;
      std::shared_ptr<${service_class_prefix}LibraryInterface> library;
@@ -302,11 +300,10 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 <%def name="define_moniker_function_body(function_name, function_data)">\
 <%
   config = data['config']
-  struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
+  struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
   streaming_param = common_helpers.get_streaming_parameter(function_data['parameters'])
   streaming_type = streaming_param['type']
-  coerced_type, is_coerced_type_present = service_helpers.get_coerced_type_and_presence(streaming_type)
   grpc_streaming_type = streaming_param['grpc_streaming_type']
   is_array = common_helpers.is_array(streaming_type)
   arg_string = service_helpers.create_args(function_data['parameters'])
@@ -321,9 +318,9 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
     auto library = function_data->library;
     ${initialize_non_array_parameters(input_params, streaming_param)}\
     % if streaming_param and streaming_param['direction'] == 'out':
-        ${handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present, streaming_param)}\
+        ${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
     % elif streaming_param and streaming_param['direction'] == 'in':
-        ${handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, is_array)}\
+        ${streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)}\
     % endif
     if (status < 0) {
       std::cout << "${moniker_function_name} error: " << status << std::endl;
@@ -332,41 +329,53 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 }
 </%def>
 
-<%def name="define_streaming_api_body(function_name, function_data, parameters)">
+<%def name="define_streaming_api_body(function_name, function_data, parameters)">\
 <%
   config = data['config']
-  input_params = [p for p in parameters if common_helpers.is_input_parameter(p)]
   output_params = [p for p in parameters if common_helpers.is_output_parameter(p)]
   service_class_prefix = config["service_class_prefix"]
   request_param = service_helpers.get_request_param(function_name)
   response_param = service_helpers.get_response_param(function_name)
-  struct_name = f"Moniker{function_name.replace('Begin', '')}Data" if function_name.startswith('Begin') else f"Moniker{function_name}Data"
+  struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
   streaming_param = common_helpers.get_streaming_parameter(parameters)
+  streaming_param_to_include = common_helpers.get_input_streaming_param(parameters)
 %>\
-${initialize_streaming_input_param(function_name, input_params, parameters, streaming_param)}
+${initialize_streaming_input_param(function_name, streaming_param_to_include, parameters, streaming_param)}
       ${struct_name}* data = new ${struct_name}();
-      ${initialize_begin_input_param(input_params, streaming_param)}\
+      ${initialize_begin_input_param(streaming_param_to_include, streaming_param)}\
       data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
       ${initialize_service_output_params(output_params)}\
       ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data, *moniker);
       response->set_allocated_moniker(moniker);
+      response->set_status(0);
       return ::grpc::Status::OK;\
 </%def>
 
-<%def name="handle_out_direction(c_api_name, arg_string, data_type, streaming_type, is_coerced_type_present, streaming_param)">
+<%def name="streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)">
 <%
-  size = service_helpers.get_size_param_name(streaming_param)
+  is_array = common_helpers.is_array(streaming_type)
 %>\
-    % if common_helpers.is_array(streaming_type):
-    % if is_coerced_type_present:
-    std::vector<${data_type}> array(${size});
-    % else:
-    ${data_type}* array = new ${data_type}[${size}];
-    % endif
+% if is_array:
+    ${streaming_handle_out_direction_array(c_api_name, arg_string, data_type, streaming_param)}
+% else:
+    ${streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_type)}
+% endif
+</%def>
+
+<%def name="streaming_handle_out_direction_array(c_api_name, arg_string, data_type, streaming_param)">\
+<%
+   is_coerced = service_helpers.is_output_array_that_needs_coercion(streaming_param)
+   size = service_helpers.get_size_param_name(streaming_param)
+%>\
+% if is_coerced:
+std::vector<${data_type}> array(${size});
+% else:
+${data_type}* array = new ${data_type}[${size}];
+% endif
     auto status = library->${c_api_name}(${arg_string});
-    % if is_coerced_type_present:
+% if is_coerced:
     if (status >= 0) {
         std::transform(
             array.begin(),
@@ -377,7 +386,7 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
             });
         packedData.PackFrom(function_data->data);
     }
-    % else:
+% else:
     if (status >= 0) {
         std::transform(
             array,
@@ -388,23 +397,52 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
             });
         packedData.PackFrom(function_data->data);
     }
-    % endif
-    % else:
-    ${streaming_type} value = 0;
+% endif
+</%def>
+
+<%def name="streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_type)">\
+${streaming_type} value = 0;
     auto status = library->${c_api_name}(${arg_string});
     function_data->data.set_value(value);
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
-    % endif
 </%def>
 
-<%def name="handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, coerced_type, is_coerced_type_present, is_array)">
+<%def name="streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)">
+<%
+  is_array = common_helpers.is_array(streaming_type)
+%>\
     ${grpc_streaming_type} ${grpc_streaming_type.lower()}_message;
     packedData.UnpackTo(&${grpc_streaming_type.lower()}_message);
 % if is_array:
-    % if is_coerced_type_present:
-    auto data_array = ${grpc_streaming_type.lower()}_message.value();
+    ${streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)}\
+% else:
+    ${streaming_handle_in_direction_scaler(grpc_streaming_type, streaming_type, streaming_param)}\
+% endif
+
+    auto status = library->${c_api_name}(${arg_string});
+</%def>
+
+<%def name="streaming_handle_in_direction_scaler(grpc_streaming_type, streaming_type, streaming_param)">\
+<%
+   is_coerced = service_helpers.is_scalar_input_that_needs_coercion(streaming_param)
+%>\
+auto value = ${grpc_streaming_type.lower()}_message.value();
+% if is_coerced:
+    if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+% endif
+</%def>
+
+<%def name="streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)">\
+<%
+   is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
+%>\
+% if is_coerced:
+auto data_array = ${grpc_streaming_type.lower()}_message.value();
     auto array = std::vector<${data_type}>();
     auto size = data_array.size();
     array.reserve(size);
@@ -424,34 +462,19 @@ ${initialize_streaming_input_param(function_name, input_params, parameters, stre
     auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
     auto size = data_array.size();
 % endif
-% else:
-    ${coerced_type} value = ${grpc_streaming_type.lower()}_message.value();
-% if is_coerced_type_present:
-    if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
-      std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
-% endif
-% endif
-
-    auto status = library->${c_api_name}(${arg_string});
 </%def>
 
 ## Initialize an bgin input parameter for an API call.
-<%def name="initialize_begin_input_param(input_params, streaming_param)">\
-% for param in input_params:
-% if service_helpers.include_param(param, streaming_param):
+<%def name="initialize_begin_input_param(streaming_param_to_include, streaming_param)">\
+% for param in streaming_param_to_include:
       data->${param['name']} = ${param['name']};
-% endif
 % endfor
 </%def>
 
 ## Initialize an bgin input parameter for an API call.
-<%def name="initialize_streaming_input_param(function_name, input_params, parameters, streaming_param)">\
-% for param in input_params:
-% if service_helpers.include_param(param, streaming_param):
+<%def name="initialize_streaming_input_param(function_name, streaming_param_to_include, parameters, streaming_param)">\
+% for param in streaming_param_to_include:
 ${initialize_input_param(function_name, param, parameters)}\
-% endif
 % endfor
 </%def>
 
