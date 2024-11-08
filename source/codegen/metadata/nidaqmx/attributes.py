@@ -99,6 +99,13 @@ attributes = {
             'c_function_name': 'SelfCalSupported',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'c_bool32',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': False,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -115,6 +122,13 @@ attributes = {
             'c_function_name': 'CalUserDefinedInfo',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_char_p',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': True,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -131,6 +145,13 @@ attributes = {
             'c_function_name': 'SelfCalLastTemp',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_double',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': False,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -147,6 +168,13 @@ attributes = {
             'c_function_name': 'ExtCalLastTemp',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_double',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': False,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -163,6 +191,13 @@ attributes = {
             'c_function_name': 'ExtCalRecommendedInterval',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_uint',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': False,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -179,6 +214,13 @@ attributes = {
             'c_function_name': 'CalUserDefinedInfoMaxSize',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_uint',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': False,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -195,6 +237,13 @@ attributes = {
             'c_function_name': 'CalDevTemp',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_double',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': False,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -211,6 +260,13 @@ attributes = {
             'c_function_name': 'CalAccConnectionCount',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_uint',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': False,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -227,6 +283,13 @@ attributes = {
             'c_function_name': 'CalRecommendedAccConnectionCountLimit',
             'calling_convention': 'StdCall',
             'ctypes_data_type': 'ctypes.c_uint',
+            'handle_parameters': {
+                'deviceHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'deviceName'
+                }
+            },
             'has_explicit_read_buffer_size': False,
             'has_explicit_write_buffer_size': False,
             'is_list': False,
@@ -2237,7 +2300,7 @@ attributes = {
                 }
             },
             'python_object_has_factory': True,
-            'python_object_module_location': 'nidaqmx._task_modules.channels.channel',
+            'python_object_module_location': 'nidaqmx.task.channels',
             'python_object_type': 'Channel',
             'resettable': False,
             'type': 'char[]'
@@ -16859,7 +16922,7 @@ attributes = {
             'name': 'PWR_REMOTE_SENSE',
             'python_class_name': 'AIChannel',
             'python_data_type': 'Sense',
-            'python_description': 'Specifies whether to use local or remote sense to sense the output voltage. DAQmx Read (Power) will return remote or local voltage based on the Remote Sense attribute value. Reading this property will return the user-defined value.',
+            'python_description': 'Specifies whether to use local or remote sense to sense the output voltage. DAQmx Read (Power Supply) will return remote or local voltage based on the Remote Sense attribute value. Reading this property will return the user-defined value.',
             'resettable': True,
             'type': 'int32'
         }
@@ -21380,7 +21443,7 @@ attributes = {
             'python_data_type': 'Channel',
             'python_description': 'Specifies the saved global channel to which subsequent properties apply.',
             'python_object_has_factory': True,
-            'python_object_module_location': 'nidaqmx._task_modules.channels.channel',
+            'python_object_module_location': 'nidaqmx.task.channels',
             'python_object_type': 'Channel',
             'resettable': False,
             'type': 'char[]'
@@ -22509,6 +22572,31 @@ attributes = {
             'python_name': 'ai_sensor_power_overcurrent',
             'resettable': False,
             'type': 'bool32'
+        },
+        12779: {
+            'access': 'read-write',
+            'c_function_name': 'PhysicalChanDigPortLogicFamily',
+            'calling_convention': 'StdCall',
+            'ctypes_data_type': 'ctypes.c_int',
+            'enum': 'LogicFamily',
+            'handle_parameters': {
+                'genericNameHandle': {
+                    'accessor': 'self._name',
+                    'ctypes_data_type': 'ctypes.c_char_p',
+                    'cvi_name': 'name'
+                }
+            },
+            'has_explicit_read_buffer_size': False,
+            'has_explicit_write_buffer_size': False,
+            'is_list': False,
+            'is_python_object': False,
+            'name': 'PHYSICAL_CHAN_DIG_PORT_LOGIC_FAMILY',
+            'python_class_name': 'PhysicalChannel',
+            'python_data_type': 'LogicFamily',
+            'python_description': 'Specifies the digital port logic family to use for acquisition and generation. A logic family corresponds to voltage thresholds that are compatible with a group of voltage standards. Refer to the device documentation for information on the logic high and logic low voltages for these logic families.',
+            'python_name': 'dig_port_logic_family',
+            'resettable': True,
+            'type': 'int32'
         }
     },
     'Read': {
@@ -22633,7 +22721,7 @@ attributes = {
                 }
             },
             'python_object_has_factory': True,
-            'python_object_module_location': 'nidaqmx._task_modules.channels.channel',
+            'python_object_module_location': 'nidaqmx.task.channels',
             'python_object_type': 'Channel',
             'resettable': True,
             'type': 'char[]'
@@ -24269,7 +24357,7 @@ attributes = {
             'python_data_type': 'Channel',
             'python_description': 'Indicates a list that contains the names of all global channels saved on the system.',
             'python_object_has_factory': True,
-            'python_object_module_location': 'nidaqmx._task_modules.channels.channel',
+            'python_object_module_location': 'nidaqmx.task.channels',
             'python_object_type': 'Channel',
             'resettable': False,
             'type': 'char[]'
@@ -24401,7 +24489,7 @@ attributes = {
             'python_data_type': 'Channel',
             'python_description': 'Indicates the names of all virtual channels in the task.',
             'python_object_has_factory': True,
-            'python_object_module_location': 'nidaqmx._task_modules.channels.channel',
+            'python_object_module_location': 'nidaqmx.task.channels',
             'python_object_type': 'Channel',
             'resettable': False,
             'type': 'char[]'
@@ -25834,7 +25922,7 @@ attributes = {
             'is_python_object': False,
             'name': 'SYNC_PULSE_TIME_WHEN',
             'python_class_name': 'Timing',
-            'python_data_type': 'unknown',
+            'python_data_type': 'datetime',
             'python_description': 'Specifies the start time of the sync pulse.',
             'resettable': True,
             'type': 'CVIAbsoluteTime'
@@ -25904,7 +25992,7 @@ attributes = {
             'is_python_object': False,
             'name': 'FIRST_SAMP_TIMESTAMP_VAL',
             'python_class_name': 'Timing',
-            'python_data_type': 'unknown',
+            'python_data_type': 'datetime',
             'python_description': 'Indicates the timestamp of the first sample.',
             'resettable': False,
             'type': 'CVIAbsoluteTime'
@@ -25951,7 +26039,7 @@ attributes = {
             'is_python_object': False,
             'name': 'FIRST_SAMP_CLK_WHEN',
             'python_class_name': 'Timing',
-            'python_data_type': 'unknown',
+            'python_data_type': 'datetime',
             'python_description': 'Specifies the time of the first sample clock pulse.',
             'resettable': True,
             'type': 'CVIAbsoluteTime'
@@ -28948,9 +29036,10 @@ attributes = {
             'is_list': False,
             'is_python_object': False,
             'name': 'START_TRIG_TRIG_WHEN',
-            'python_class_name': 'TimeStartTrigger',
-            'python_data_type': 'unknown',
+            'python_class_name': 'StartTrigger',
+            'python_data_type': 'datetime',
             'python_description': 'Specifies when to trigger the start trigger.',
+            'python_name': 'time_when',
             'resettable': True,
             'type': 'CVIAbsoluteTime'
         },
@@ -29433,7 +29522,7 @@ attributes = {
             'is_python_object': False,
             'name': 'REF_TRIG_TIMESTAMP_VAL',
             'python_class_name': 'ReferenceTrigger',
-            'python_data_type': 'unknown',
+            'python_data_type': 'datetime',
             'python_description': 'Indicates the reference trigger timestamp value.',
             'python_name': 'timestamp_val',
             'resettable': False,
@@ -29481,9 +29570,10 @@ attributes = {
             'is_list': False,
             'is_python_object': False,
             'name': 'ARM_START_TRIG_TRIG_WHEN',
-            'python_class_name': 'TimeArmStartTrigger',
-            'python_data_type': 'unknown',
+            'python_class_name': 'ArmStartTrigger',
+            'python_data_type': 'datetime',
             'python_description': 'Specifies when to trigger the arm start trigger.',
+            'python_name': 'time_when',
             'resettable': True,
             'type': 'CVIAbsoluteTime'
         },
@@ -29554,7 +29644,7 @@ attributes = {
             'is_python_object': False,
             'name': 'ARM_START_TRIG_TIMESTAMP_VAL',
             'python_class_name': 'ArmStartTrigger',
-            'python_data_type': 'unknown',
+            'python_data_type': 'datetime',
             'python_description': 'Indicates the arm start trigger timestamp value.',
             'python_name': 'timestamp_val',
             'resettable': False,
@@ -29627,7 +29717,7 @@ attributes = {
             'is_python_object': False,
             'name': 'START_TRIG_TIMESTAMP_VAL',
             'python_class_name': 'StartTrigger',
-            'python_data_type': 'unknown',
+            'python_data_type': 'datetime',
             'python_description': 'Indicates the start trigger timestamp value.',
             'python_name': 'timestamp_val',
             'resettable': False,

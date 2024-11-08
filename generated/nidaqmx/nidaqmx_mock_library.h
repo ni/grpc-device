@@ -339,6 +339,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SetRealTimeAttributeBool, (TaskHandle task, int32 attribute, bool32 value), (override));
   MOCK_METHOD(int32, SetRealTimeAttributeInt32, (TaskHandle task, int32 attribute, int32 value), (override));
   MOCK_METHOD(int32, SetRealTimeAttributeUInt32, (TaskHandle task, int32 attribute, uInt32 value), (override));
+  MOCK_METHOD(int32, SetRuntimeEnvironment, (const char environment[], const char environmentVersion[], const char reserved1[], const char reserved2[]), (override));
   MOCK_METHOD(int32, SetScaleAttributeDouble, (const char scaleName[], int32 attribute, float64 value), (override));
   MOCK_METHOD(int32, SetScaleAttributeDoubleArray, (const char scaleName[], int32 attribute, const float64 value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetScaleAttributeInt32, (const char scaleName[], int32 attribute, int32 value), (override));

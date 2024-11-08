@@ -311,7 +311,15 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_sources_mbcs = convert_from_grpc<std::string>(request->trigger_sources());
       auto trigger_sources = trigger_sources_mbcs.c_str();
-      auto trigger_slope_array = reinterpret_cast<const int32*>(request->trigger_slope_array().data());
+      auto trigger_slope_array_vector = std::vector<int32>();
+      trigger_slope_array_vector.reserve(request->trigger_slope_array().size());
+      std::transform(
+        request->trigger_slope_array().begin(),
+        request->trigger_slope_array().end(),
+        std::back_inserter(trigger_slope_array_vector),
+        [](auto x) { return x; });
+      auto trigger_slope_array = trigger_slope_array_vector.data();
+
       auto trigger_level_array = const_cast<const float64*>(request->trigger_level_array().data());
       uInt32 pretrigger_samples = request->pretrigger_samples();
       auto array_size_determine_from_sizes = std::array<int, 2>
@@ -350,7 +358,15 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_sources_mbcs = convert_from_grpc<std::string>(request->trigger_sources());
       auto trigger_sources = trigger_sources_mbcs.c_str();
-      auto trigger_slope_array = reinterpret_cast<const int32*>(request->trigger_slope_array().data());
+      auto trigger_slope_array_vector = std::vector<int32>();
+      trigger_slope_array_vector.reserve(request->trigger_slope_array().size());
+      std::transform(
+        request->trigger_slope_array().begin(),
+        request->trigger_slope_array().end(),
+        std::back_inserter(trigger_slope_array_vector),
+        [](auto x) { return x; });
+      auto trigger_slope_array = trigger_slope_array_vector.data();
+
       auto trigger_level_array = const_cast<const float64*>(request->trigger_level_array().data());
       auto array_size_determine_from_sizes = std::array<int, 2>
       {
@@ -3431,7 +3447,15 @@ namespace nidaqmx_grpc {
       }
 
       float64 gage_orientation = request->gage_orientation();
-      auto rosette_meas_types = reinterpret_cast<const int32*>(request->rosette_meas_types().data());
+      auto rosette_meas_types_vector = std::vector<int32>();
+      rosette_meas_types_vector.reserve(request->rosette_meas_types().size());
+      std::transform(
+        request->rosette_meas_types().begin(),
+        request->rosette_meas_types().end(),
+        std::back_inserter(rosette_meas_types_vector),
+        [](auto x) { return x; });
+      auto rosette_meas_types = rosette_meas_types_vector.data();
+
       uInt32 num_rosette_meas_types = static_cast<uInt32>(request->rosette_meas_types().size());
       int32 strain_config;
       switch (request->strain_config_enum_case()) {
