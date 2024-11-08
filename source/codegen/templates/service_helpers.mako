@@ -371,7 +371,8 @@ ${initialize_streaming_input_param(function_name, streaming_param_to_include, pa
 % if is_coerced:
 std::vector<${data_type}> array(${size});
 % else:
-${data_type}* array = new ${data_type}[${size}];
+auto array_storage = std::vector<${data_type}>();
+    auto array = array_storage.data();
 % endif
     auto status = library->${c_api_name}(${arg_string});
 % if is_coerced:
@@ -396,7 +397,6 @@ ${data_type}* array = new ${data_type}[${size}];
             });
         packedData.PackFrom(function_data->data);
     }
-    delete[] array;
 % endif
 </%def>
 

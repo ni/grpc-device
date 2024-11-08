@@ -379,7 +379,8 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    int32_t* array = new int32_t[size];
+    auto array_storage = std::vector<int32_t>();
+    auto array = array_storage.data();
     auto status = library->ReadArrayI32(session, indicator, array, size);
     if (status >= 0) {
         std::transform(
@@ -391,7 +392,6 @@ namespace nifpga_grpc {
             });
         packedData.PackFrom(function_data->data);
     }
-    delete[] array;
 
     if (status < 0) {
       std::cout << "MonikerReadArrayI32 error: " << status << std::endl;
@@ -408,7 +408,8 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    int64_t* array = new int64_t[size];
+    auto array_storage = std::vector<int64_t>();
+    auto array = array_storage.data();
     auto status = library->ReadArrayI64(session, indicator, array, size);
     if (status >= 0) {
         std::transform(
@@ -420,7 +421,6 @@ namespace nifpga_grpc {
             });
         packedData.PackFrom(function_data->data);
     }
-    delete[] array;
 
     if (status < 0) {
       std::cout << "MonikerReadArrayI64 error: " << status << std::endl;
@@ -493,7 +493,8 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    uint32_t* array = new uint32_t[size];
+    auto array_storage = std::vector<uint32_t>();
+    auto array = array_storage.data();
     auto status = library->ReadArrayU32(session, indicator, array, size);
     if (status >= 0) {
         std::transform(
@@ -505,7 +506,6 @@ namespace nifpga_grpc {
             });
         packedData.PackFrom(function_data->data);
     }
-    delete[] array;
 
     if (status < 0) {
       std::cout << "MonikerReadArrayU32 error: " << status << std::endl;
@@ -522,7 +522,8 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    uint64_t* array = new uint64_t[size];
+    auto array_storage = std::vector<uint64_t>();
+    auto array = array_storage.data();
     auto status = library->ReadArrayU64(session, indicator, array, size);
     if (status >= 0) {
         std::transform(
@@ -534,7 +535,6 @@ namespace nifpga_grpc {
             });
         packedData.PackFrom(function_data->data);
     }
-    delete[] array;
 
     if (status < 0) {
       std::cout << "MonikerReadArrayU64 error: " << status << std::endl;
