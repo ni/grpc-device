@@ -341,13 +341,13 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   streaming_param_to_include = common_helpers.get_input_streaming_param(parameters)
 %>\
 ${initialize_streaming_input_param(function_name, streaming_param_to_include, parameters, streaming_param)}
-      ${struct_name}* data = new ${struct_name}();
+      auto data = std::make_unique<${struct_name}>();
       ${initialize_begin_input_param(streaming_param_to_include, streaming_param)}\
       data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
       ${initialize_service_output_params(output_params)}\
-      ni::data_monikers::Moniker* moniker = new ni::data_monikers::Moniker();
-      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data, *moniker);
-      response->set_allocated_moniker(moniker);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
       response->set_status(0);
       return ::grpc::Status::OK;\
 </%def>
@@ -396,6 +396,7 @@ ${data_type}* array = new ${data_type}[${size}];
             });
         packedData.PackFrom(function_data->data);
     }
+    delete[] array;
 % endif
 </%def>
 
