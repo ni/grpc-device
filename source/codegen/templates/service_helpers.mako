@@ -314,7 +314,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = (${struct_name}*)data;
-    auto library = function_data->library;
+    auto library = function_data->library;\
     ${initialize_moniker_streaming_parameters(streaming_param_to_include)}\
     % if streaming_param and streaming_param['direction'] == 'out':
         ${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
@@ -341,7 +341,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   streaming_param_to_include = common_helpers.get_input_streaming_param(parameters)
 %>\
 ${initialize_streaming_input_param(function_name, streaming_param_to_include, parameters, streaming_param)}
-      auto data = std::make_unique<${struct_name}>();
+      auto data = std::make_unique<${struct_name}>();\
       ${initialize_begin_input_param(streaming_param_to_include, streaming_param)}\
       data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
       ${initialize_service_output_params(output_params)}\
@@ -377,25 +377,25 @@ auto array_storage = std::vector<${data_type}>();
     auto status = library->${c_api_name}(${arg_string});
 % if is_coerced:
     if (status >= 0) {
-        std::transform(
-            array.begin(),
-            array.begin() + ${size},
-            function_data->data.mutable_value()->begin(),
-            [&](auto x) {
-                return x;
-            });
-        packedData.PackFrom(function_data->data);
+      std::transform(
+        array.begin(),
+        array.begin() + ${size},
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
     }
 % else:
     if (status >= 0) {
-        std::transform(
-            array,
-            array + ${size},
-            function_data->data.mutable_value()->begin(),
-            [&](auto x) {
-                return x;
-            });
-        packedData.PackFrom(function_data->data);
+      std::transform(
+        array,
+        array + ${size},
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
     }
 % endif
 </%def>
@@ -447,16 +447,16 @@ auto data_array = ${grpc_streaming_type.lower()}_message.value();
     auto size = data_array.size();
     array.reserve(size);
     std::transform(
-        data_array.begin(),
-        data_array.end(),
-        std::back_inserter(array),
-        [](auto x) {
-          if (x < std::numeric_limits<${data_type}>::min() || x > std::numeric_limits<${data_type}>::max()) {
-            std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${data_type}");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-          }
-          return static_cast<${data_type}>(x);
-        });
+      data_array.begin(),
+      data_array.end(),
+      std::back_inserter(array),
+      [](auto x) {
+        if (x < std::numeric_limits<${data_type}>::min() || x > std::numeric_limits<${data_type}>::max()) {
+          std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${data_type}");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
+        return static_cast<${data_type}>(x);
+      });
 % else:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
     auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
@@ -465,7 +465,7 @@ auto data_array = ${grpc_streaming_type.lower()}_message.value();
 </%def>
 
 ## Initialize an bgin input parameter for an API call.
-<%def name="initialize_begin_input_param(streaming_param_to_include, streaming_param)">\
+<%def name="initialize_begin_input_param(streaming_param_to_include, streaming_param)">
 % for param in streaming_param_to_include:
       data->${param['name']} = ${param['name']};
 % endfor
