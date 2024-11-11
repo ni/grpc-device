@@ -371,6 +371,25 @@ read_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, cons
   return response;
 }
 
+BeginReadArrayBoolResponse
+begin_read_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadArrayBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = BeginReadArrayBoolResponse{};
+
+  raise_if_error(
+      stub->BeginReadArrayBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadArrayDblResponse
 read_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
 {
@@ -726,6 +745,24 @@ read_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::
 
   raise_if_error(
       stub->ReadBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadBoolResponse
+begin_read_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = BeginReadBoolResponse{};
+
+  raise_if_error(
+      stub->BeginReadBool(&context, request, &response),
       context);
 
   return response;
@@ -1536,6 +1573,24 @@ write_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, con
   return response;
 }
 
+BeginWriteArrayBoolResponse
+begin_write_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteArrayBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+
+  auto response = BeginWriteArrayBoolResponse{};
+
+  raise_if_error(
+      stub->BeginWriteArrayBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteArrayDblResponse
 write_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<double>& array)
 {
@@ -1884,6 +1939,24 @@ write_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb:
 
   raise_if_error(
       stub->WriteBool(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteBoolResponse
+begin_write_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteBoolRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+
+  auto response = BeginWriteBoolResponse{};
+
+  raise_if_error(
+      stub->BeginWriteBool(&context, request, &response),
       context);
 
   return response;

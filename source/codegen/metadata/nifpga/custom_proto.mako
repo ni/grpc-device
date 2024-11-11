@@ -33,3 +33,7 @@ message ArrayI64Data {
 message ArrayU64Data {
   repeated uint64 value = 1;
 }
+
+message ArrayBoolData {
+  repeated bool value = 1;
+}
