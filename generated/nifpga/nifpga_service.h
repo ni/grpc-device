@@ -33,6 +33,7 @@ struct NiFpgaFeatureToggles
 
 void RegisterMonikerEndpoints();
 
+::grpc::Status MonikerReadArrayBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
@@ -41,6 +42,7 @@ void RegisterMonikerEndpoints();
 ::grpc::Status MonikerReadArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerReadBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
@@ -49,6 +51,7 @@ void RegisterMonikerEndpoints();
 ::grpc::Status MonikerReadU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerReadU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteArrayBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
@@ -57,6 +60,7 @@ void RegisterMonikerEndpoints();
 ::grpc::Status MonikerWriteArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
@@ -94,6 +98,7 @@ public:
   ::grpc::Status GetFpgaViState(::grpc::ServerContext* context, const GetFpgaViStateRequest* request, GetFpgaViStateResponse* response) override;
   ::grpc::Status Open(::grpc::ServerContext* context, const OpenRequest* request, OpenResponse* response) override;
   ::grpc::Status ReadArrayBool(::grpc::ServerContext* context, const ReadArrayBoolRequest* request, ReadArrayBoolResponse* response) override;
+  ::grpc::Status BeginReadArrayBool(::grpc::ServerContext* context, const BeginReadArrayBoolRequest* request, BeginReadArrayBoolResponse* response) override;
   ::grpc::Status ReadArrayDbl(::grpc::ServerContext* context, const ReadArrayDblRequest* request, ReadArrayDblResponse* response) override;
   ::grpc::Status ReadArrayI16(::grpc::ServerContext* context, const ReadArrayI16Request* request, ReadArrayI16Response* response) override;
   ::grpc::Status BeginReadArrayI16(::grpc::ServerContext* context, const BeginReadArrayI16Request* request, BeginReadArrayI16Response* response) override;
@@ -113,6 +118,7 @@ public:
   ::grpc::Status ReadArrayU8(::grpc::ServerContext* context, const ReadArrayU8Request* request, ReadArrayU8Response* response) override;
   ::grpc::Status BeginReadArrayU8(::grpc::ServerContext* context, const BeginReadArrayU8Request* request, BeginReadArrayU8Response* response) override;
   ::grpc::Status ReadBool(::grpc::ServerContext* context, const ReadBoolRequest* request, ReadBoolResponse* response) override;
+  ::grpc::Status BeginReadBool(::grpc::ServerContext* context, const BeginReadBoolRequest* request, BeginReadBoolResponse* response) override;
   ::grpc::Status ReadDbl(::grpc::ServerContext* context, const ReadDblRequest* request, ReadDblResponse* response) override;
   ::grpc::Status ReadFifoBool(::grpc::ServerContext* context, const ReadFifoBoolRequest* request, ReadFifoBoolResponse* response) override;
   ::grpc::Status ReadFifoDbl(::grpc::ServerContext* context, const ReadFifoDblRequest* request, ReadFifoDblResponse* response) override;
@@ -154,6 +160,7 @@ public:
   ::grpc::Status UnreserveFifo(::grpc::ServerContext* context, const UnreserveFifoRequest* request, UnreserveFifoResponse* response) override;
   ::grpc::Status WaitOnIrqs(::grpc::ServerContext* context, const WaitOnIrqsRequest* request, WaitOnIrqsResponse* response) override;
   ::grpc::Status WriteArrayBool(::grpc::ServerContext* context, const WriteArrayBoolRequest* request, WriteArrayBoolResponse* response) override;
+  ::grpc::Status BeginWriteArrayBool(::grpc::ServerContext* context, const BeginWriteArrayBoolRequest* request, BeginWriteArrayBoolResponse* response) override;
   ::grpc::Status WriteArrayDbl(::grpc::ServerContext* context, const WriteArrayDblRequest* request, WriteArrayDblResponse* response) override;
   ::grpc::Status WriteArrayI16(::grpc::ServerContext* context, const WriteArrayI16Request* request, WriteArrayI16Response* response) override;
   ::grpc::Status BeginWriteArrayI16(::grpc::ServerContext* context, const BeginWriteArrayI16Request* request, BeginWriteArrayI16Response* response) override;
@@ -173,6 +180,7 @@ public:
   ::grpc::Status WriteArrayU8(::grpc::ServerContext* context, const WriteArrayU8Request* request, WriteArrayU8Response* response) override;
   ::grpc::Status BeginWriteArrayU8(::grpc::ServerContext* context, const BeginWriteArrayU8Request* request, BeginWriteArrayU8Response* response) override;
   ::grpc::Status WriteBool(::grpc::ServerContext* context, const WriteBoolRequest* request, WriteBoolResponse* response) override;
+  ::grpc::Status BeginWriteBool(::grpc::ServerContext* context, const BeginWriteBoolRequest* request, BeginWriteBoolResponse* response) override;
   ::grpc::Status WriteDbl(::grpc::ServerContext* context, const WriteDblRequest* request, WriteDblResponse* response) override;
   ::grpc::Status WriteFifoBool(::grpc::ServerContext* context, const WriteFifoBoolRequest* request, WriteFifoBoolResponse* response) override;
   ::grpc::Status WriteFifoDbl(::grpc::ServerContext* context, const WriteFifoDblRequest* request, WriteFifoDblResponse* response) override;

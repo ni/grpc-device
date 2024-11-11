@@ -35,6 +35,7 @@ service NiFpga {
   rpc GetFpgaViState(GetFpgaViStateRequest) returns (GetFpgaViStateResponse);
   rpc Open(OpenRequest) returns (OpenResponse);
   rpc ReadArrayBool(ReadArrayBoolRequest) returns (ReadArrayBoolResponse);
+  rpc BeginReadArrayBool(BeginReadArrayBoolRequest) returns (BeginReadArrayBoolResponse);
   rpc ReadArrayDbl(ReadArrayDblRequest) returns (ReadArrayDblResponse);
   rpc ReadArrayI16(ReadArrayI16Request) returns (ReadArrayI16Response);
   rpc BeginReadArrayI16(BeginReadArrayI16Request) returns (BeginReadArrayI16Response);
@@ -54,6 +55,7 @@ service NiFpga {
   rpc ReadArrayU8(ReadArrayU8Request) returns (ReadArrayU8Response);
   rpc BeginReadArrayU8(BeginReadArrayU8Request) returns (BeginReadArrayU8Response);
   rpc ReadBool(ReadBoolRequest) returns (ReadBoolResponse);
+  rpc BeginReadBool(BeginReadBoolRequest) returns (BeginReadBoolResponse);
   rpc ReadDbl(ReadDblRequest) returns (ReadDblResponse);
   rpc ReadFifoBool(ReadFifoBoolRequest) returns (ReadFifoBoolResponse);
   rpc ReadFifoDbl(ReadFifoDblRequest) returns (ReadFifoDblResponse);
@@ -95,6 +97,7 @@ service NiFpga {
   rpc UnreserveFifo(UnreserveFifoRequest) returns (UnreserveFifoResponse);
   rpc WaitOnIrqs(WaitOnIrqsRequest) returns (WaitOnIrqsResponse);
   rpc WriteArrayBool(WriteArrayBoolRequest) returns (WriteArrayBoolResponse);
+  rpc BeginWriteArrayBool(BeginWriteArrayBoolRequest) returns (BeginWriteArrayBoolResponse);
   rpc WriteArrayDbl(WriteArrayDblRequest) returns (WriteArrayDblResponse);
   rpc WriteArrayI16(WriteArrayI16Request) returns (WriteArrayI16Response);
   rpc BeginWriteArrayI16(BeginWriteArrayI16Request) returns (BeginWriteArrayI16Response);
@@ -114,6 +117,7 @@ service NiFpga {
   rpc WriteArrayU8(WriteArrayU8Request) returns (WriteArrayU8Response);
   rpc BeginWriteArrayU8(BeginWriteArrayU8Request) returns (BeginWriteArrayU8Response);
   rpc WriteBool(WriteBoolRequest) returns (WriteBoolResponse);
+  rpc BeginWriteBool(BeginWriteBoolRequest) returns (BeginWriteBoolResponse);
   rpc WriteDbl(WriteDblRequest) returns (WriteDblResponse);
   rpc WriteFifoBool(WriteFifoBoolRequest) returns (WriteFifoBoolResponse);
   rpc WriteFifoDbl(WriteFifoDblRequest) returns (WriteFifoDblResponse);
@@ -266,6 +270,10 @@ message ArrayI64Data {
 
 message ArrayU64Data {
   repeated uint64 value = 1;
+}
+
+message ArrayBoolData {
+  repeated bool value = 1;
 }
 message AbortRequest {
   nidevice_grpc.Session session = 1;
@@ -457,6 +465,17 @@ message ReadArrayBoolRequest {
 message ReadArrayBoolResponse {
   int32 status = 1;
   repeated bool array = 2;
+}
+
+message BeginReadArrayBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+  uint32 size = 3;
+}
+
+message BeginReadArrayBoolResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadArrayDblRequest {
@@ -665,6 +684,16 @@ message ReadBoolRequest {
 message ReadBoolResponse {
   int32 status = 1;
   bool value = 2;
+}
+
+message BeginReadBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 indicator = 2;
+}
+
+message BeginReadBoolResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadDblRequest {
@@ -1125,6 +1154,16 @@ message WriteArrayBoolResponse {
   int32 status = 1;
 }
 
+message BeginWriteArrayBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteArrayBoolResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message WriteArrayDblRequest {
   nidevice_grpc.Session session = 1;
   uint32 control = 2;
@@ -1313,6 +1352,16 @@ message WriteBoolRequest {
 
 message WriteBoolResponse {
   int32 status = 1;
+}
+
+message BeginWriteBoolRequest {
+  nidevice_grpc.Session session = 1;
+  uint32 control = 2;
+}
+
+message BeginWriteBoolResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message WriteDblRequest {

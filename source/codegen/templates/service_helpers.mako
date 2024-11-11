@@ -368,14 +368,16 @@ ${initialize_streaming_input_param(function_name, streaming_param_to_include, pa
    is_coerced = service_helpers.is_output_array_that_needs_coercion(streaming_param)
    size = service_helpers.get_size_param_name(streaming_param)
 %>\
-% if is_coerced:
+% if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
+std::vector<${data_type}> array(${size}, ${data_type}());
+% elif is_coerced:
 std::vector<${data_type}> array(${size});
 % else:
 auto array_storage = std::vector<${data_type}>();
     auto array = array_storage.data();
 % endif
     auto status = library->${c_api_name}(${arg_string});
-% if is_coerced:
+% if is_coerced or common_helpers.supports_standard_copy_conversion_routines(streaming_param):
     if (status >= 0) {
       std::transform(
         array.begin(),
@@ -441,7 +443,11 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 <%
    is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
 %>\
-% if is_coerced:
+% if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
+    auto data_array = ${grpc_streaming_type.lower()}_message.value();
+    std::vector<${data_type}> array(data_array.begin(), data_array.end());
+    auto size = data_array.size();
+% elif is_coerced:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
     auto array = std::vector<${data_type}>();
     auto size = data_array.size();
