@@ -21,6 +21,9 @@ service_class_prefix = config["service_class_prefix"]
 
 #include "${module_name}_service.h"
 #include "${module_name}_service_registrar.h"
+% if config.get("has_moniker_streaming_apis", False):
+#include <server/data_moniker_service.h>
+% endif
 
 namespace ${namespace} {
 
@@ -43,6 +46,18 @@ std::shared_ptr<void> register_service(
 % endfor
       toggles);
     builder.RegisterService(service.get());
+% if config.get("has_moniker_streaming_apis", False):
+
+    if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
+<%
+  namespace = f"{config['namespace_component']}_grpc"
+%>\
+<%block filter="common_helpers.os_conditional_compile_block(config)">\
+      ${namespace}::RegisterMonikerEndpoints();
+</%block>\
+    }
+
+% endif
     return service;
   }
 

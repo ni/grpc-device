@@ -10,7 +10,6 @@
 
 #include <server/core_services_registrar.h>
 #include <server/session_repository.h>
-#include <server/data_moniker_service.h>
 
 #include "nidaqmx/nidaqmx_service_registrar.h"
 #include "nidcpower/nidcpower_service_registrar.h"
@@ -329,9 +328,6 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       vi_object_repository,
       feature_toggles));
-  if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
-    nifpga_grpc::RegisterMonikerEndpoints();
-  }
 
   return service_vector;
 }

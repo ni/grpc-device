@@ -17,7 +17,6 @@ repository_type_to_config = service_helpers.list_session_repository_handle_types
 
 #include <server/core_services_registrar.h>
 #include <server/session_repository.h>
-#include <server/data_moniker_service.h>
 
 % for config in driver_configs:
 <%
@@ -65,21 +64,6 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       feature_toggles));
 </%block>\
 % endfor
-% if any(config.get("has_moniker_streaming_apis", False) for config in driver_configs):
-  if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
-% for driver in drivers:
-<%
-  config = driver["config"]
-  namespace = f"{config['namespace_component']}_grpc"
-%>\
-% if config.get("has_moniker_streaming_apis", False):
-<%block filter="common_helpers.os_conditional_compile_block(config)">\
-    ${namespace}::RegisterMonikerEndpoints();
-</%block>\
-% endif
-% endfor
-  }
-% endif
 
   return service_vector;
 }
