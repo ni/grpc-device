@@ -1670,8 +1670,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayBoolData',
-                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1685,8 +1683,7 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status',
-        'supports_streaming': True
+        'returns': 'NiFpga_Status'
     },
     'ReadArrayDbl': {
         'parameters': [
@@ -2016,14 +2013,11 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'BoolData',
-                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'NiFpga_Bool'
             }
         ],
-        'returns': 'NiFpga_Status',
-        'supports_streaming': True
+        'returns': 'NiFpga_Status'
     },
     'ReadDbl': {
         'parameters': [
@@ -3091,8 +3085,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayBoolData',
-                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3106,8 +3098,7 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status',
-        'supports_streaming': True
+        'returns': 'NiFpga_Status'
     },
     'WriteArrayDbl': {
         'parameters': [
@@ -3437,14 +3428,11 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'BoolData',
-                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'NiFpga_Bool'
             }
         ],
-        'returns': 'NiFpga_Status',
-        'supports_streaming': True
+        'returns': 'NiFpga_Status'
     },
     'WriteDbl': {
         'parameters': [

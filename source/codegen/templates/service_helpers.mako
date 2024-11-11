@@ -437,12 +437,12 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 % endif
 </%def>
 
-<%def name="streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)">
+<%def name="streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)">\
 <%
    is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
 %>\
 % if is_coerced:
-    auto data_array = ${grpc_streaming_type.lower()}_message.value();
+auto data_array = ${grpc_streaming_type.lower()}_message.value();
     auto array = std::vector<${data_type}>();
     auto size = data_array.size();
     array.reserve(size);
