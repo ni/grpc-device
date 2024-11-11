@@ -731,6 +731,7 @@ namespace nifpga_grpc {
         
     ArrayI32Data arrayi32data_message;
     packedData.UnpackTo(&arrayi32data_message);
+    
     auto data_array = arrayi32data_message.value();
     auto array = std::vector<int16_t>();
     auto size = data_array.size();
@@ -763,7 +764,8 @@ namespace nifpga_grpc {
         
     ArrayI32Data arrayi32data_message;
     packedData.UnpackTo(&arrayi32data_message);
-        auto data_array = arrayi32data_message.value();
+    
+    auto data_array = arrayi32data_message.value();
     auto array = const_cast<int32_t*>(arrayi32data_message.value().data());
     auto size = data_array.size();
 
@@ -783,7 +785,8 @@ namespace nifpga_grpc {
         
     ArrayI64Data arrayi64data_message;
     packedData.UnpackTo(&arrayi64data_message);
-        auto data_array = arrayi64data_message.value();
+    
+    auto data_array = arrayi64data_message.value();
     auto array = const_cast<int64_t*>(arrayi64data_message.value().data());
     auto size = data_array.size();
 
@@ -803,6 +806,7 @@ namespace nifpga_grpc {
         
     ArrayI32Data arrayi32data_message;
     packedData.UnpackTo(&arrayi32data_message);
+    
     auto data_array = arrayi32data_message.value();
     auto array = std::vector<int8_t>();
     auto size = data_array.size();
@@ -835,6 +839,7 @@ namespace nifpga_grpc {
         
     ArrayU32Data arrayu32data_message;
     packedData.UnpackTo(&arrayu32data_message);
+    
     auto data_array = arrayu32data_message.value();
     auto array = std::vector<uint16_t>();
     auto size = data_array.size();
@@ -867,7 +872,8 @@ namespace nifpga_grpc {
         
     ArrayU32Data arrayu32data_message;
     packedData.UnpackTo(&arrayu32data_message);
-        auto data_array = arrayu32data_message.value();
+    
+    auto data_array = arrayu32data_message.value();
     auto array = const_cast<uint32_t*>(arrayu32data_message.value().data());
     auto size = data_array.size();
 
@@ -887,7 +893,8 @@ namespace nifpga_grpc {
         
     ArrayU64Data arrayu64data_message;
     packedData.UnpackTo(&arrayu64data_message);
-        auto data_array = arrayu64data_message.value();
+    
+    auto data_array = arrayu64data_message.value();
     auto array = const_cast<uint64_t*>(arrayu64data_message.value().data());
     auto size = data_array.size();
 
@@ -907,6 +914,7 @@ namespace nifpga_grpc {
         
     ArrayU32Data arrayu32data_message;
     packedData.UnpackTo(&arrayu32data_message);
+    
     auto data_array = arrayu32data_message.value();
     auto array = std::vector<uint8_t>();
     auto size = data_array.size();
