@@ -24,9 +24,6 @@ repository_type_to_config = service_helpers.list_session_repository_handle_types
 %>\
 <%block filter="common_helpers.os_conditional_compile_block(config)">\
 #include "${module_name}/${module_name}_service_registrar.h"
-% if config.get("has_moniker_streaming_apis", False):
-#include "${module_name}/${module_name}_service.h"
-% endif
 </%block>\
 % endfor
 

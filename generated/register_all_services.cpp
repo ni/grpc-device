@@ -17,7 +17,6 @@
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
 #include "nifpga/nifpga_service_registrar.h"
-#include "nifpga/nifpga_service.h"
 #if defined(_MSC_VER)
 #include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
