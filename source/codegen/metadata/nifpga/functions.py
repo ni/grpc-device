@@ -1670,6 +1670,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayBoolData',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1683,7 +1685,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayDbl': {
         'parameters': [
@@ -1728,6 +1731,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayI32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1741,7 +1746,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayI32': {
         'parameters': [
@@ -1757,6 +1763,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayI32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1770,7 +1778,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayI64': {
         'parameters': [
@@ -1786,6 +1795,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayI64Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1799,7 +1810,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayI8': {
         'parameters': [
@@ -1815,6 +1827,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayI32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1828,7 +1842,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArraySgl': {
         'parameters': [
@@ -1873,6 +1888,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayU32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1886,7 +1903,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayU32': {
         'parameters': [
@@ -1902,6 +1920,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayU32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1915,7 +1935,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayU64': {
         'parameters': [
@@ -1931,6 +1952,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayU64Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1944,7 +1967,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayU8': {
         'parameters': [
@@ -1960,6 +1984,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayU32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1973,7 +1999,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadBool': {
         'parameters': [
@@ -1989,11 +2016,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'BoolData',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'NiFpga_Bool'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadDbl': {
         'parameters': [
@@ -2529,11 +2559,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int16_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadI32': {
         'parameters': [
@@ -2549,11 +2582,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int32_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadI64': {
         'parameters': [
@@ -2569,11 +2605,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'I64Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int64_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadI8': {
         'parameters': [
@@ -2589,11 +2628,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int8_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadSgl': {
         'parameters': [
@@ -2629,11 +2671,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'U32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint16_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadU32': {
         'parameters': [
@@ -2649,11 +2694,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'U32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint32_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadU64': {
         'parameters': [
@@ -2669,11 +2717,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'U64Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint64_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadU8': {
         'parameters': [
@@ -2689,11 +2740,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'U32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint8_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReleaseFifoElements': {
         'parameters': [
@@ -3037,6 +3091,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayBoolData',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3050,7 +3106,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayDbl': {
         'parameters': [
@@ -3095,6 +3152,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayI32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3108,7 +3167,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayI32': {
         'parameters': [
@@ -3124,6 +3184,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayI32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3137,7 +3199,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayI64': {
         'parameters': [
@@ -3153,6 +3216,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayI64Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3166,7 +3231,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayI8': {
         'parameters': [
@@ -3182,6 +3248,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayI32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3195,7 +3263,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArraySgl': {
         'parameters': [
@@ -3240,6 +3309,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3253,7 +3324,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayU32': {
         'parameters': [
@@ -3269,6 +3341,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3282,7 +3356,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayU64': {
         'parameters': [
@@ -3298,6 +3373,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU64Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3311,7 +3388,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayU8': {
         'parameters': [
@@ -3327,6 +3405,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU32Data',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3340,7 +3420,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteBool': {
         'parameters': [
@@ -3356,11 +3437,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'BoolData',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'NiFpga_Bool'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteDbl': {
         'parameters': [
@@ -3892,11 +3976,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'I32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int16_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteI32': {
         'parameters': [
@@ -3912,11 +3999,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'I32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int32_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteI64': {
         'parameters': [
@@ -3932,11 +4022,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'I64Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int64_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteI8': {
         'parameters': [
@@ -3952,11 +4045,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'I32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int8_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteSgl': {
         'parameters': [
@@ -3992,11 +4088,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'U32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint16_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteU32': {
         'parameters': [
@@ -4012,11 +4111,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'U32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint32_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteU64': {
         'parameters': [
@@ -4032,11 +4134,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'U64Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint64_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteU8': {
         'parameters': [
@@ -4052,10 +4157,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'U32Data',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint8_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     }
 }

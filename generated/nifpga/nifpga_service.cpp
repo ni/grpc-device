@@ -12,6 +12,7 @@
 #include <atomic>
 #include <vector>
 #include <server/converters.h>
+#include <server/data_moniker_service.h>
 
 namespace nifpga_grpc {
 
@@ -20,6 +21,303 @@ namespace nifpga_grpc {
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
+
+  struct MonikerReadArrayBoolData
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayBoolData data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadArrayI16Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayI32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadArrayI32Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayI32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadArrayI64Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayI64Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadArrayI8Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayI32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadArrayU16Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayU32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadArrayU32Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayU32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadArrayU64Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayU64Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadArrayU8Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     size_t size;
+     nifpga_grpc::ArrayU32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadBoolData
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::BoolData data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadI16Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::I32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadI32Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::I32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadI64Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::I64Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadI8Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::I32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadU16Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::U32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadU32Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::U32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadU64Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::U64Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerReadU8Data
+  {
+     NiFpga_Session session;
+     uint32_t indicator;
+     nifpga_grpc::U32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayBoolData
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayBoolData data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayI16Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayI32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayI32Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayI32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayI64Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayI64Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayI8Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayI32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayU16Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayU32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayU32Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayU32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayU64Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayU64Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteArrayU8Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::ArrayU32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteBoolData
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::BoolData data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteI16Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::I32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteI32Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::I32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteI64Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::I64Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteI8Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::I32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteU16Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::U32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteU32Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::U32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteU64Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::U64Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
+
+  struct MonikerWriteU8Data
+  {
+     NiFpga_Session session;
+     uint32_t control;
+     nifpga_grpc::U32Data data;
+     std::shared_ptr<NiFpgaLibraryInterface> library;
+  };
 
   NiFpgaService::NiFpgaService(
       LibrarySharedPtr library,
@@ -41,6 +339,887 @@ namespace nifpga_grpc {
     return status >= 0;
   }
 
+  void RegisterMonikerEndpoints()
+  {
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayBool", MonikerReadArrayBool);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI16", MonikerReadArrayI16);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI32", MonikerReadArrayI32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI64", MonikerReadArrayI64);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayI8", MonikerReadArrayI8);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU16", MonikerReadArrayU16);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU32", MonikerReadArrayU32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU64", MonikerReadArrayU64);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadArrayU8", MonikerReadArrayU8);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadBool", MonikerReadBool);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI16", MonikerReadI16);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI32", MonikerReadI32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI64", MonikerReadI64);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadI8", MonikerReadI8);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU16", MonikerReadU16);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU32", MonikerReadU32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU64", MonikerReadU64);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerReadU8", MonikerReadU8);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayBool", MonikerWriteArrayBool);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI16", MonikerWriteArrayI16);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI32", MonikerWriteArrayI32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI64", MonikerWriteArrayI64);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayI8", MonikerWriteArrayI8);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU16", MonikerWriteArrayU16);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU32", MonikerWriteArrayU32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU64", MonikerWriteArrayU64);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteArrayU8", MonikerWriteArrayU8);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteBool", MonikerWriteBool);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI16", MonikerWriteI16);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI32", MonikerWriteI32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI64", MonikerWriteI64);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteI8", MonikerWriteI8);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU16", MonikerWriteU16);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU32", MonikerWriteU32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU64", MonikerWriteU64);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU8", MonikerWriteU8);
+  }
+
+::grpc::Status MonikerReadArrayBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayBoolData* function_data = (MonikerReadArrayBoolData*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    std::vector<NiFpga_Bool> array(size, NiFpga_Bool());
+    auto status = library->ReadArrayBool(session, indicator, array.data(), size);
+    if (status >= 0) {
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayBool error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayI16Data* function_data = (MonikerReadArrayI16Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    std::vector<int16_t> array(size);
+    auto status = library->ReadArrayI16(session, indicator, array.data(), size);
+    if (status >= 0) {
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayI16 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayI32Data* function_data = (MonikerReadArrayI32Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    auto array_storage = std::vector<int32_t>();
+    auto array = array_storage.data();
+    auto status = library->ReadArrayI32(session, indicator, array, size);
+    if (status >= 0) {
+      std::transform(
+        array,
+        array + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayI32 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayI64Data* function_data = (MonikerReadArrayI64Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    auto array_storage = std::vector<int64_t>();
+    auto array = array_storage.data();
+    auto status = library->ReadArrayI64(session, indicator, array, size);
+    if (status >= 0) {
+      std::transform(
+        array,
+        array + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayI64 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadArrayI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayI8Data* function_data = (MonikerReadArrayI8Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    std::vector<int8_t> array(size);
+    auto status = library->ReadArrayI8(session, indicator, array.data(), size);
+    if (status >= 0) {
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayI8 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadArrayU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayU16Data* function_data = (MonikerReadArrayU16Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    std::vector<uint16_t> array(size);
+    auto status = library->ReadArrayU16(session, indicator, array.data(), size);
+    if (status >= 0) {
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayU16 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayU32Data* function_data = (MonikerReadArrayU32Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    auto array_storage = std::vector<uint32_t>();
+    auto array = array_storage.data();
+    auto status = library->ReadArrayU32(session, indicator, array, size);
+    if (status >= 0) {
+      std::transform(
+        array,
+        array + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayU32 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayU64Data* function_data = (MonikerReadArrayU64Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    auto array_storage = std::vector<uint64_t>();
+    auto array = array_storage.data();
+    auto status = library->ReadArrayU64(session, indicator, array, size);
+    if (status >= 0) {
+      std::transform(
+        array,
+        array + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayU64 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadArrayU8Data* function_data = (MonikerReadArrayU8Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+    auto size = function_data->size;
+        
+    std::vector<uint8_t> array(size);
+    auto status = library->ReadArrayU8(session, indicator, array.data(), size);
+    if (status >= 0) {
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        function_data->data.mutable_value()->begin(),
+        [&](auto x) {
+           return x;
+      });
+      packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadArrayU8 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadBoolData* function_data = (MonikerReadBoolData*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    NiFpga_Bool value = 0;
+    auto status = library->ReadBool(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadBool error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadI16Data* function_data = (MonikerReadI16Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    int16_t value = 0;
+    auto status = library->ReadI16(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadI16 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadI32Data* function_data = (MonikerReadI32Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    int32_t value = 0;
+    auto status = library->ReadI32(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadI32 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadI64Data* function_data = (MonikerReadI64Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    int64_t value = 0;
+    auto status = library->ReadI64(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadI64 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadI8Data* function_data = (MonikerReadI8Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    int8_t value = 0;
+    auto status = library->ReadI8(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadI8 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadU16Data* function_data = (MonikerReadU16Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    uint16_t value = 0;
+    auto status = library->ReadU16(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadU16 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadU32Data* function_data = (MonikerReadU32Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    uint32_t value = 0;
+    auto status = library->ReadU32(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadU32 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadU64Data* function_data = (MonikerReadU64Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    uint64_t value = 0;
+    auto status = library->ReadU64(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadU64 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerReadU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerReadU8Data* function_data = (MonikerReadU8Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto indicator = function_data->indicator;
+        
+    uint8_t value = 0;
+    auto status = library->ReadU8(session, indicator, &value);
+    function_data->data.set_value(value);
+    if (status >= 0) {
+        packedData.PackFrom(function_data->data);
+    }
+
+    if (status < 0) {
+      std::cout << "MonikerReadU8 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayBoolData* function_data = (MonikerWriteArrayBoolData*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayBoolData arraybooldata_message;
+    packedData.UnpackTo(&arraybooldata_message);
+    
+    auto data_array = arraybooldata_message.value();
+    std::vector<NiFpga_Bool> array(data_array.begin(), data_array.end());
+    auto size = data_array.size();
+
+    auto status = library->WriteArrayBool(session, control, array.data(), size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayBool error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayI16Data* function_data = (MonikerWriteArrayI16Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayI32Data arrayi32data_message;
+    packedData.UnpackTo(&arrayi32data_message);
+    
+    auto data_array = arrayi32data_message.value();
+    auto array = std::vector<int16_t>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+      data_array.begin(),
+      data_array.end(),
+      std::back_inserter(array),
+      [](auto x) {
+        if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
+          std::string message("value " + std::to_string(x) + " doesn't fit in datatype int16_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
+        return static_cast<int16_t>(x);
+      });
+
+    auto status = library->WriteArrayI16(session, control, array.data(), size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayI16 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayI32Data* function_data = (MonikerWriteArrayI32Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayI32Data arrayi32data_message;
+    packedData.UnpackTo(&arrayi32data_message);
+    
+    auto data_array = arrayi32data_message.value();
+    auto array = const_cast<int32_t*>(arrayi32data_message.value().data());
+    auto size = data_array.size();
+
+    auto status = library->WriteArrayI32(session, control, array, size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayI32 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayI64Data* function_data = (MonikerWriteArrayI64Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayI64Data arrayi64data_message;
+    packedData.UnpackTo(&arrayi64data_message);
+    
+    auto data_array = arrayi64data_message.value();
+    auto array = const_cast<int64_t*>(arrayi64data_message.value().data());
+    auto size = data_array.size();
+
+    auto status = library->WriteArrayI64(session, control, array, size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayI64 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayI8Data* function_data = (MonikerWriteArrayI8Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayI32Data arrayi32data_message;
+    packedData.UnpackTo(&arrayi32data_message);
+    
+    auto data_array = arrayi32data_message.value();
+    auto array = std::vector<int8_t>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+      data_array.begin(),
+      data_array.end(),
+      std::back_inserter(array),
+      [](auto x) {
+        if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
+          std::string message("value " + std::to_string(x) + " doesn't fit in datatype int8_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
+        return static_cast<int8_t>(x);
+      });
+
+    auto status = library->WriteArrayI8(session, control, array.data(), size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayI8 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayU16Data* function_data = (MonikerWriteArrayU16Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayU32Data arrayu32data_message;
+    packedData.UnpackTo(&arrayu32data_message);
+    
+    auto data_array = arrayu32data_message.value();
+    auto array = std::vector<uint16_t>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+      data_array.begin(),
+      data_array.end(),
+      std::back_inserter(array),
+      [](auto x) {
+        if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
+          std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint16_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
+        return static_cast<uint16_t>(x);
+      });
+
+    auto status = library->WriteArrayU16(session, control, array.data(), size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayU16 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayU32Data* function_data = (MonikerWriteArrayU32Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayU32Data arrayu32data_message;
+    packedData.UnpackTo(&arrayu32data_message);
+    
+    auto data_array = arrayu32data_message.value();
+    auto array = const_cast<uint32_t*>(arrayu32data_message.value().data());
+    auto size = data_array.size();
+
+    auto status = library->WriteArrayU32(session, control, array, size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayU32 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayU64Data* function_data = (MonikerWriteArrayU64Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayU64Data arrayu64data_message;
+    packedData.UnpackTo(&arrayu64data_message);
+    
+    auto data_array = arrayu64data_message.value();
+    auto array = const_cast<uint64_t*>(arrayu64data_message.value().data());
+    auto size = data_array.size();
+
+    auto status = library->WriteArrayU64(session, control, array, size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayU64 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteArrayU8Data* function_data = (MonikerWriteArrayU8Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    ArrayU32Data arrayu32data_message;
+    packedData.UnpackTo(&arrayu32data_message);
+    
+    auto data_array = arrayu32data_message.value();
+    auto array = std::vector<uint8_t>();
+    auto size = data_array.size();
+    array.reserve(size);
+    std::transform(
+      data_array.begin(),
+      data_array.end(),
+      std::back_inserter(array),
+      [](auto x) {
+        if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
+          std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint8_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+        }
+        return static_cast<uint8_t>(x);
+      });
+
+    auto status = library->WriteArrayU8(session, control, array.data(), size);
+    if (status < 0) {
+      std::cout << "MonikerWriteArrayU8 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteBoolData* function_data = (MonikerWriteBoolData*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    BoolData booldata_message;
+    packedData.UnpackTo(&booldata_message);
+    auto value = booldata_message.value();
+
+    auto status = library->WriteBool(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteBool error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteI16Data* function_data = (MonikerWriteI16Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    I32Data i32data_message;
+    packedData.UnpackTo(&i32data_message);
+    auto value = i32data_message.value();
+    if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+
+    auto status = library->WriteI16(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteI16 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteI32Data* function_data = (MonikerWriteI32Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    I32Data i32data_message;
+    packedData.UnpackTo(&i32data_message);
+    auto value = i32data_message.value();
+
+    auto status = library->WriteI32(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteI32 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteI64Data* function_data = (MonikerWriteI64Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    I64Data i64data_message;
+    packedData.UnpackTo(&i64data_message);
+    auto value = i64data_message.value();
+
+    auto status = library->WriteI64(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteI64 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteI8Data* function_data = (MonikerWriteI8Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    I32Data i32data_message;
+    packedData.UnpackTo(&i32data_message);
+    auto value = i32data_message.value();
+    if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+
+    auto status = library->WriteI8(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteI8 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteU16Data* function_data = (MonikerWriteU16Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    U32Data u32data_message;
+    packedData.UnpackTo(&u32data_message);
+    auto value = u32data_message.value();
+    if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+
+    auto status = library->WriteU16(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteU16 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteU32Data* function_data = (MonikerWriteU32Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    U32Data u32data_message;
+    packedData.UnpackTo(&u32data_message);
+    auto value = u32data_message.value();
+
+    auto status = library->WriteU32(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteU32 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteU64Data* function_data = (MonikerWriteU64Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    U64Data u64data_message;
+    packedData.UnpackTo(&u64data_message);
+    auto value = u64data_message.value();
+
+    auto status = library->WriteU64(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteU64 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteU8Data* function_data = (MonikerWriteU8Data*)data;
+    auto library = function_data->library;    
+    auto session = function_data->session;
+    auto control = function_data->control;
+        
+    U32Data u32data_message;
+    packedData.UnpackTo(&u32data_message);
+    auto value = u32data_message.value();
+    if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
+      std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+
+    auto status = library->WriteU8(session, control, value);
+    if (status < 0) {
+      std::cout << "MonikerWriteU8 error: " << status << std::endl;
+    }
+    return ::grpc::Status::OK;
+}
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
@@ -575,6 +1754,38 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayBool(::grpc::ServerContext* context, const BeginReadArrayBoolRequest* request, BeginReadArrayBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayBoolData>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayBool", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadArrayDbl(::grpc::ServerContext* context, const ReadArrayDblRequest* request, ReadArrayDblResponse* response)
   {
     if (context->IsCancelled()) {
@@ -635,6 +1846,38 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayI16(::grpc::ServerContext* context, const BeginReadArrayI16Request* request, BeginReadArrayI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayI16Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI16", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadArrayI32(::grpc::ServerContext* context, const ReadArrayI32Request* request, ReadArrayI32Response* response)
   {
     if (context->IsCancelled()) {
@@ -652,6 +1895,38 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayI32(::grpc::ServerContext* context, const BeginReadArrayI32Request* request, BeginReadArrayI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayI32Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI32", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -687,6 +1962,38 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayI64(::grpc::ServerContext* context, const BeginReadArrayI64Request* request, BeginReadArrayI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayI64Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI64", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadArrayI8(::grpc::ServerContext* context, const ReadArrayI8Request* request, ReadArrayI8Response* response)
   {
     if (context->IsCancelled()) {
@@ -712,6 +2019,38 @@ namespace nifpga_grpc {
           [&](auto x) {
               return x;
           });
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayI8(::grpc::ServerContext* context, const BeginReadArrayI8Request* request, BeginReadArrayI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayI8Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI8", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -781,6 +2120,38 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayU16(::grpc::ServerContext* context, const BeginReadArrayU16Request* request, BeginReadArrayU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayU16Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU16", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadArrayU32(::grpc::ServerContext* context, const ReadArrayU32Request* request, ReadArrayU32Response* response)
   {
     if (context->IsCancelled()) {
@@ -807,6 +2178,38 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayU32(::grpc::ServerContext* context, const BeginReadArrayU32Request* request, BeginReadArrayU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayU32Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU32", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadArrayU64(::grpc::ServerContext* context, const ReadArrayU64Request* request, ReadArrayU64Response* response)
   {
     if (context->IsCancelled()) {
@@ -824,6 +2227,38 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayU64(::grpc::ServerContext* context, const BeginReadArrayU64Request* request, BeginReadArrayU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayU64Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU64", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -867,6 +2302,38 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadArrayU8(::grpc::ServerContext* context, const BeginReadArrayU8Request* request, BeginReadArrayU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+      size_t size = request->size();
+
+      auto data = std::make_unique<MonikerReadArrayU8Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->size = size;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      data->data.mutable_value()->Reserve(request->size());
+      data->data.mutable_value()->Resize(request->size(), 0);
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU8", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadBool(::grpc::ServerContext* context, const ReadBoolRequest* request, ReadBoolResponse* response)
   {
     if (context->IsCancelled()) {
@@ -883,6 +2350,34 @@ namespace nifpga_grpc {
       }
       response->set_status(status);
       response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadBool(::grpc::ServerContext* context, const BeginReadBoolRequest* request, BeginReadBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadBoolData>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBool", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1293,6 +2788,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadI16(::grpc::ServerContext* context, const BeginReadI16Request* request, BeginReadI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadI16Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI16", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadI32(::grpc::ServerContext* context, const ReadI32Request* request, ReadI32Response* response)
   {
     if (context->IsCancelled()) {
@@ -1309,6 +2832,34 @@ namespace nifpga_grpc {
       }
       response->set_status(status);
       response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadI32(::grpc::ServerContext* context, const BeginReadI32Request* request, BeginReadI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadI32Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI32", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1343,6 +2894,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadI64(::grpc::ServerContext* context, const BeginReadI64Request* request, BeginReadI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadI64Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI64", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadI8(::grpc::ServerContext* context, const ReadI8Request* request, ReadI8Response* response)
   {
     if (context->IsCancelled()) {
@@ -1359,6 +2938,34 @@ namespace nifpga_grpc {
       }
       response->set_status(status);
       response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadI8(::grpc::ServerContext* context, const BeginReadI8Request* request, BeginReadI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadI8Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI8", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1418,6 +3025,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadU16(::grpc::ServerContext* context, const BeginReadU16Request* request, BeginReadU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadU16Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU16", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadU32(::grpc::ServerContext* context, const ReadU32Request* request, ReadU32Response* response)
   {
     if (context->IsCancelled()) {
@@ -1434,6 +3069,34 @@ namespace nifpga_grpc {
       }
       response->set_status(status);
       response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadU32(::grpc::ServerContext* context, const BeginReadU32Request* request, BeginReadU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadU32Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU32", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1468,6 +3131,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadU64(::grpc::ServerContext* context, const BeginReadU64Request* request, BeginReadU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadU64Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU64", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::ReadU8(::grpc::ServerContext* context, const ReadU8Request* request, ReadU8Response* response)
   {
     if (context->IsCancelled()) {
@@ -1484,6 +3175,34 @@ namespace nifpga_grpc {
       }
       response->set_status(status);
       response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginReadU8(::grpc::ServerContext* context, const BeginReadU8Request* request, BeginReadU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t indicator = request->indicator();
+
+      auto data = std::make_unique<MonikerReadU8Data>();      
+      data->session = session;
+      data->indicator = indicator;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU8", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1860,6 +3579,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayBool(::grpc::ServerContext* context, const BeginWriteArrayBoolRequest* request, BeginWriteArrayBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayBoolData>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayBool", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteArrayDbl(::grpc::ServerContext* context, const WriteArrayDblRequest* request, WriteArrayDblResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1927,6 +3674,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayI16(::grpc::ServerContext* context, const BeginWriteArrayI16Request* request, BeginWriteArrayI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayI16Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI16", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteArrayI32(::grpc::ServerContext* context, const WriteArrayI32Request* request, WriteArrayI32Response* response)
   {
     if (context->IsCancelled()) {
@@ -1952,6 +3727,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayI32(::grpc::ServerContext* context, const BeginWriteArrayI32Request* request, BeginWriteArrayI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayI32Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI32", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteArrayI64(::grpc::ServerContext* context, const WriteArrayI64Request* request, WriteArrayI64Response* response)
   {
     if (context->IsCancelled()) {
@@ -1968,6 +3771,34 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayI64(::grpc::ServerContext* context, const BeginWriteArrayI64Request* request, BeginWriteArrayI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayI64Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI64", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2010,6 +3841,34 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayI8(::grpc::ServerContext* context, const BeginWriteArrayI8Request* request, BeginWriteArrayI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayI8Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI8", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2086,6 +3945,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayU16(::grpc::ServerContext* context, const BeginWriteArrayU16Request* request, BeginWriteArrayU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayU16Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU16", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteArrayU32(::grpc::ServerContext* context, const WriteArrayU32Request* request, WriteArrayU32Response* response)
   {
     if (context->IsCancelled()) {
@@ -2111,6 +3998,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayU32(::grpc::ServerContext* context, const BeginWriteArrayU32Request* request, BeginWriteArrayU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayU32Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU32", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteArrayU64(::grpc::ServerContext* context, const WriteArrayU64Request* request, WriteArrayU64Response* response)
   {
     if (context->IsCancelled()) {
@@ -2127,6 +4042,34 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayU64(::grpc::ServerContext* context, const BeginWriteArrayU64Request* request, BeginWriteArrayU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayU64Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU64", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2178,6 +4121,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteArrayU8(::grpc::ServerContext* context, const BeginWriteArrayU8Request* request, BeginWriteArrayU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteArrayU8Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU8", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteBool(::grpc::ServerContext* context, const WriteBoolRequest* request, WriteBoolResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2193,6 +4164,34 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteBool(::grpc::ServerContext* context, const BeginWriteBoolRequest* request, BeginWriteBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteBoolData>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteBool", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2635,6 +4634,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteI16(::grpc::ServerContext* context, const BeginWriteI16Request* request, BeginWriteI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteI16Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI16", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteI32(::grpc::ServerContext* context, const WriteI32Request* request, WriteI32Response* response)
   {
     if (context->IsCancelled()) {
@@ -2650,6 +4677,34 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteI32(::grpc::ServerContext* context, const BeginWriteI32Request* request, BeginWriteI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteI32Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI32", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2683,6 +4738,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteI64(::grpc::ServerContext* context, const BeginWriteI64Request* request, BeginWriteI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteI64Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI64", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteI8(::grpc::ServerContext* context, const WriteI8Request* request, WriteI8Response* response)
   {
     if (context->IsCancelled()) {
@@ -2707,6 +4790,34 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteI8(::grpc::ServerContext* context, const BeginWriteI8Request* request, BeginWriteI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteI8Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI8", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2773,6 +4884,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteU16(::grpc::ServerContext* context, const BeginWriteU16Request* request, BeginWriteU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteU16Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU16", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteU32(::grpc::ServerContext* context, const WriteU32Request* request, WriteU32Response* response)
   {
     if (context->IsCancelled()) {
@@ -2788,6 +4927,34 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteU32(::grpc::ServerContext* context, const BeginWriteU32Request* request, BeginWriteU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteU32Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU32", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2821,6 +4988,34 @@ namespace nifpga_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteU64(::grpc::ServerContext* context, const BeginWriteU64Request* request, BeginWriteU64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteU64Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU64", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFpgaService::WriteU8(::grpc::ServerContext* context, const WriteU8Request* request, WriteU8Response* response)
   {
     if (context->IsCancelled()) {
@@ -2845,6 +5040,34 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFpgaService::BeginWriteU8(::grpc::ServerContext* context, const BeginWriteU8Request* request, BeginWriteU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
+      uint32_t control = request->control();
+
+      auto data = std::make_unique<MonikerWriteU8Data>();      
+      data->session = session;
+      data->control = control;
+      data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
+      
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU8", data.get(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

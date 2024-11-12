@@ -33,6 +33,14 @@ def is_input_parameter(parameter):
     return "in" in parameter["direction"]
 
 
+def get_streaming_parameter(parameters: List[Dict]) -> Optional[Dict]:
+    """Get the streaming parameter from the list of parameters."""
+    for param in parameters:
+        if param.get("is_streaming_type", False):
+            return param
+    return None
+
+
 def levels_of_pointer_indirection(parameter: dict) -> int:
     """Levels of pointer indirection for pointer. I.e. number of '*'s."""
     return [is_output_parameter(parameter), parameter.get("pointer", False)].count(True)
@@ -1194,3 +1202,55 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     * Outputs that are calculated/populated after the API call.
     """
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
+
+
+def filter_moniker_streaming_functions(functions, functions_to_generate):
+    """Return streaming functions that need to be generated."""
+    return [
+        name for name in functions_to_generate if functions[name].get("is_streaming_api", False)
+    ]
+
+
+def get_data_moniker_function_name(function_name):
+    """Return the corresponding moniker function name for the given C API function."""
+    return function_name.replace("Begin", "Moniker")
+
+
+def get_data_moniker_struct_name(function_name):
+    """Return the corresponding moniker function name for the given C API function."""
+    return f"{function_name.replace('Begin', 'Moniker')}Data"
+
+
+def is_function_in_streaming_functions(function_name, streaming_functions_to_generate):
+    """Check if a function name is in the streaming functions to generate."""
+    return function_name in streaming_functions_to_generate
+
+
+def _is_streaming_param_input_array(streaming_param):
+    """Check if the streaming parameter is an input array."""
+    return (
+        streaming_param
+        and streaming_param["direction"] == "in"
+        and is_array(streaming_param["type"])
+    )
+
+
+def get_input_streaming_param(parameters):
+    """Determine if a parameter should be included based on streaming conditions."""
+    streaming_param = None
+    for param in parameters:
+        if param.get("is_streaming_type", False):
+            streaming_param = param
+            break
+
+    params = []
+    for param in parameters:
+        if is_input_parameter(param):
+            if not param.get("is_streaming_type", False):
+                if _is_streaming_param_input_array(streaming_param):
+                    size_param_name = streaming_param["size"]["value"]
+                    if param["name"] != size_param_name:
+                        params.append(param)
+                else:
+                    params.append(param)
+    return params

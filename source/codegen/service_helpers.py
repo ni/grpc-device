@@ -318,7 +318,7 @@ def filter_api_functions(functions, only_mockable_functions=True):
     """Filter function metadata to only include those to be generated into the API library."""
 
     def filter_function(function):
-        if function.get("codegen_method", "") == "no":
+        if function.get("codegen_method", "") == "no" or function.get("is_streaming_api", False):
             return False
         if only_mockable_functions and not common_helpers.can_mock_function(function["parameters"]):
             return False
@@ -707,3 +707,27 @@ def get_protobuf_cpplib_type(grpc_type: str) -> str:
         return "std::string"
 
     return grpc_type
+
+
+def get_streaming_type(parameters) -> str:
+    """Get the streaming type from the function data."""
+    for param in parameters:
+        if param.get("is_streaming_type", False):
+            return param["type"]
+    return None
+
+
+def get_size_param_name(streaming_param) -> str:
+    """Get the size parameter name for the given streaming parameter."""
+    if common_helpers.is_array(streaming_param["type"]):
+        return streaming_param["size"]["value"]
+    else:
+        return None
+
+
+def get_c_api_name(function_name) -> str:
+    """Get the C API name for the given function name."""
+    if function_name.startswith("Begin"):
+        base_name = function_name[len("Begin") :]
+        return f"{base_name}"
+    return f"{function_name}"
