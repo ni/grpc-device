@@ -1702,6 +1702,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayDoubleData',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1715,7 +1717,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayI16': {
         'parameters': [
@@ -1859,6 +1862,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'ArrayFloatData',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1872,7 +1877,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadArrayU16': {
         'parameters': [
@@ -2039,11 +2045,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'DoubleData',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'double'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadFifoBool': {
         'parameters': [
@@ -2651,11 +2660,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_streaming_type': 'FloatData',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'float'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'ReadU16': {
         'parameters': [
@@ -3123,6 +3135,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayDoubleData',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3136,7 +3150,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayI16': {
         'parameters': [
@@ -3280,6 +3295,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayFloatData',
+                'is_streaming_type': True,
                 'name': 'array',
                 'size': {
                     'mechanism': 'len',
@@ -3293,7 +3310,8 @@ functions = {
                 'type': 'size_t'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteArrayU16': {
         'parameters': [
@@ -3460,11 +3478,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'DoubleData',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'double'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteFifoBool': {
         'parameters': [
@@ -4068,11 +4089,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_streaming_type': 'FloatData',
+                'is_streaming_type': True,
                 'name': 'value',
                 'type': 'float'
             }
         ],
-        'returns': 'NiFpga_Status'
+        'returns': 'NiFpga_Status',
+        'supports_streaming': True
     },
     'WriteU16': {
         'parameters': [

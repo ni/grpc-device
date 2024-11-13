@@ -18,6 +18,14 @@ message BoolData {
   bool value = 1;
 }
 
+message FloatData {
+  float value = 1;
+}
+
+message DoubleData {
+  double value = 1;
+}
+
 message ArrayI32Data {
   repeated int32 value = 1;
 }
@@ -36,4 +44,12 @@ message ArrayU64Data {
 
 message ArrayBoolData {
   repeated bool value = 1;
+}
+
+message ArrayFloatData {
+  repeated float value = 1;
+}
+
+message ArrayDoubleData {
+  repeated double value = 1;
 }

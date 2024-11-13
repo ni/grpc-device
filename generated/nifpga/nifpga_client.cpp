@@ -409,6 +409,25 @@ read_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const
   return response;
 }
 
+BeginReadArrayDblResponse
+begin_read_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadArrayDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = BeginReadArrayDblResponse{};
+
+  raise_if_error(
+      stub->BeginReadArrayDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadArrayI16Response
 read_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
 {
@@ -575,6 +594,25 @@ read_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const
 
   raise_if_error(
       stub->ReadArraySgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadArraySglResponse
+begin_read_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadArraySglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+  request.set_size(size);
+
+  auto response = BeginReadArraySglResponse{};
+
+  raise_if_error(
+      stub->BeginReadArraySgl(&context, request, &response),
       context);
 
   return response;
@@ -781,6 +819,24 @@ read_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::u
 
   raise_if_error(
       stub->ReadDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadDblResponse
+begin_read_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = BeginReadDblResponse{};
+
+  raise_if_error(
+      stub->BeginReadDbl(&context, request, &response),
       context);
 
   return response;
@@ -1163,6 +1219,24 @@ read_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::u
 
   raise_if_error(
       stub->ReadSgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadSglResponse
+begin_read_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadSglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_indicator(indicator);
+
+  auto response = BeginReadSglResponse{};
+
+  raise_if_error(
+      stub->BeginReadSgl(&context, request, &response),
       context);
 
   return response;
@@ -1610,6 +1684,24 @@ write_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, cons
   return response;
 }
 
+BeginWriteArrayDblResponse
+begin_write_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteArrayDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+
+  auto response = BeginWriteArrayDblResponse{};
+
+  raise_if_error(
+      stub->BeginWriteArrayDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteArrayI16Response
 write_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int32>& array)
 {
@@ -1772,6 +1864,24 @@ write_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, cons
 
   raise_if_error(
       stub->WriteArraySgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteArraySglResponse
+begin_write_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteArraySglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+
+  auto response = BeginWriteArraySglResponse{};
+
+  raise_if_error(
+      stub->BeginWriteArraySgl(&context, request, &response),
       context);
 
   return response;
@@ -1976,6 +2086,24 @@ write_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::
 
   raise_if_error(
       stub->WriteDbl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteDblResponse
+begin_write_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteDblRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+
+  auto response = BeginWriteDblResponse{};
+
+  raise_if_error(
+      stub->BeginWriteDbl(&context, request, &response),
       context);
 
   return response;
@@ -2363,6 +2491,24 @@ write_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::
 
   raise_if_error(
       stub->WriteSgl(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteSglResponse
+begin_write_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteSglRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_control(control);
+
+  auto response = BeginWriteSglResponse{};
+
+  raise_if_error(
+      stub->BeginWriteSgl(&context, request, &response),
       context);
 
   return response;
