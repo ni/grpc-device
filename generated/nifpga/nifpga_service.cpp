@@ -2013,8 +2013,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayBoolData* data = new MonikerReadArrayBoolData();
-      
+      MonikerReadArrayBoolData* data = new MonikerReadArrayBoolData();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2072,8 +2071,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayDblData* data = new MonikerReadArrayDblData();
-      
+      MonikerReadArrayDblData* data = new MonikerReadArrayDblData();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2139,8 +2137,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayI16Data* data = new MonikerReadArrayI16Data();
-      
+      MonikerReadArrayI16Data* data = new MonikerReadArrayI16Data();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2198,8 +2195,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayI32Data* data = new MonikerReadArrayI32Data();
-      
+      MonikerReadArrayI32Data* data = new MonikerReadArrayI32Data();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2257,8 +2253,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayI64Data* data = new MonikerReadArrayI64Data();
-      
+      MonikerReadArrayI64Data* data = new MonikerReadArrayI64Data();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2324,8 +2319,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayI8Data* data = new MonikerReadArrayI8Data();
-      
+      MonikerReadArrayI8Data* data = new MonikerReadArrayI8Data();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2383,8 +2377,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArraySglData* data = new MonikerReadArraySglData();
-      
+      MonikerReadArraySglData* data = new MonikerReadArraySglData();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2450,8 +2443,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayU16Data* data = new MonikerReadArrayU16Data();
-      
+      MonikerReadArrayU16Data* data = new MonikerReadArrayU16Data();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2509,8 +2501,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayU32Data* data = new MonikerReadArrayU32Data();
-      
+      MonikerReadArrayU32Data* data = new MonikerReadArrayU32Data();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2568,8 +2559,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayU64Data* data = new MonikerReadArrayU64Data();
-      
+      MonikerReadArrayU64Data* data = new MonikerReadArrayU64Data();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2635,8 +2625,7 @@ namespace nifpga_grpc {
       uint32_t indicator = request->indicator();
       size_t size = request->size();
 
-      MonikerReadArrayU8Data* data = new MonikerReadArrayU8Data();
-      
+      MonikerReadArrayU8Data* data = new MonikerReadArrayU8Data();      
       data->session = session;
       data->indicator = indicator;
       data->size = size;
@@ -2692,8 +2681,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadBoolData* data = new MonikerReadBoolData();
-      
+      MonikerReadBoolData* data = new MonikerReadBoolData();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -2746,8 +2734,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadDblData* data = new MonikerReadDblData();
-      
+      MonikerReadDblData* data = new MonikerReadDblData();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3151,8 +3138,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadI16Data* data = new MonikerReadI16Data();
-      
+      MonikerReadI16Data* data = new MonikerReadI16Data();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3205,8 +3191,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadI32Data* data = new MonikerReadI32Data();
-      
+      MonikerReadI32Data* data = new MonikerReadI32Data();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3259,8 +3244,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadI64Data* data = new MonikerReadI64Data();
-      
+      MonikerReadI64Data* data = new MonikerReadI64Data();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3313,8 +3297,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadI8Data* data = new MonikerReadI8Data();
-      
+      MonikerReadI8Data* data = new MonikerReadI8Data();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3367,8 +3350,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadSglData* data = new MonikerReadSglData();
-      
+      MonikerReadSglData* data = new MonikerReadSglData();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3421,8 +3403,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadU16Data* data = new MonikerReadU16Data();
-      
+      MonikerReadU16Data* data = new MonikerReadU16Data();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3475,8 +3456,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadU32Data* data = new MonikerReadU32Data();
-      
+      MonikerReadU32Data* data = new MonikerReadU32Data();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3529,8 +3509,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadU64Data* data = new MonikerReadU64Data();
-      
+      MonikerReadU64Data* data = new MonikerReadU64Data();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3583,8 +3562,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t indicator = request->indicator();
 
-      MonikerReadU8Data* data = new MonikerReadU8Data();
-      
+      MonikerReadU8Data* data = new MonikerReadU8Data();      
       data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -3979,8 +3957,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayBoolData* data = new MonikerWriteArrayBoolData();
-      
+      MonikerWriteArrayBoolData* data = new MonikerWriteArrayBoolData();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4033,8 +4010,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayDblData* data = new MonikerWriteArrayDblData();
-      
+      MonikerWriteArrayDblData* data = new MonikerWriteArrayDblData();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4104,8 +4080,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayI16Data* data = new MonikerWriteArrayI16Data();
-      
+      MonikerWriteArrayI16Data* data = new MonikerWriteArrayI16Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4158,8 +4133,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayI32Data* data = new MonikerWriteArrayI32Data();
-      
+      MonikerWriteArrayI32Data* data = new MonikerWriteArrayI32Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4212,8 +4186,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayI64Data* data = new MonikerWriteArrayI64Data();
-      
+      MonikerWriteArrayI64Data* data = new MonikerWriteArrayI64Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4283,8 +4256,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayI8Data* data = new MonikerWriteArrayI8Data();
-      
+      MonikerWriteArrayI8Data* data = new MonikerWriteArrayI8Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4337,8 +4309,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArraySglData* data = new MonikerWriteArraySglData();
-      
+      MonikerWriteArraySglData* data = new MonikerWriteArraySglData();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4408,8 +4379,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayU16Data* data = new MonikerWriteArrayU16Data();
-      
+      MonikerWriteArrayU16Data* data = new MonikerWriteArrayU16Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4462,8 +4432,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayU32Data* data = new MonikerWriteArrayU32Data();
-      
+      MonikerWriteArrayU32Data* data = new MonikerWriteArrayU32Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4516,8 +4485,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayU64Data* data = new MonikerWriteArrayU64Data();
-      
+      MonikerWriteArrayU64Data* data = new MonikerWriteArrayU64Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4587,8 +4555,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteArrayU8Data* data = new MonikerWriteArrayU8Data();
-      
+      MonikerWriteArrayU8Data* data = new MonikerWriteArrayU8Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4640,8 +4607,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteBoolData* data = new MonikerWriteBoolData();
-      
+      MonikerWriteBoolData* data = new MonikerWriteBoolData();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -4693,8 +4659,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteDblData* data = new MonikerWriteDblData();
-      
+      MonikerWriteDblData* data = new MonikerWriteDblData();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5131,8 +5096,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteI16Data* data = new MonikerWriteI16Data();
-      
+      MonikerWriteI16Data* data = new MonikerWriteI16Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5184,8 +5148,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteI32Data* data = new MonikerWriteI32Data();
-      
+      MonikerWriteI32Data* data = new MonikerWriteI32Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5237,8 +5200,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteI64Data* data = new MonikerWriteI64Data();
-      
+      MonikerWriteI64Data* data = new MonikerWriteI64Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5299,8 +5261,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteI8Data* data = new MonikerWriteI8Data();
-      
+      MonikerWriteI8Data* data = new MonikerWriteI8Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5352,8 +5313,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteSglData* data = new MonikerWriteSglData();
-      
+      MonikerWriteSglData* data = new MonikerWriteSglData();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5414,8 +5374,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteU16Data* data = new MonikerWriteU16Data();
-      
+      MonikerWriteU16Data* data = new MonikerWriteU16Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5467,8 +5426,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteU32Data* data = new MonikerWriteU32Data();
-      
+      MonikerWriteU32Data* data = new MonikerWriteU32Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5520,8 +5478,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteU64Data* data = new MonikerWriteU64Data();
-      
+      MonikerWriteU64Data* data = new MonikerWriteU64Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
@@ -5582,8 +5539,7 @@ namespace nifpga_grpc {
       NiFpga_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t control = request->control();
 
-      MonikerWriteU8Data* data = new MonikerWriteU8Data();
-      
+      MonikerWriteU8Data* data = new MonikerWriteU8Data();      
       data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
