@@ -488,7 +488,7 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<double>();
+    auto array_storage = std::vector<double>(size);
     auto array = array_storage.data();
     auto status = library->ReadArrayDbl(session, indicator, array, size);
     if (status >= 0) {
@@ -543,7 +543,7 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<int32_t>();
+    auto array_storage = std::vector<int32_t>(size);
     auto array = array_storage.data();
     auto status = library->ReadArrayI32(session, indicator, array, size);
     if (status >= 0) {
@@ -571,7 +571,7 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<int64_t>();
+    auto array_storage = std::vector<int64_t>(size);
     auto array = array_storage.data();
     auto status = library->ReadArrayI64(session, indicator, array, size);
     if (status >= 0) {
@@ -626,7 +626,7 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<float>();
+    auto array_storage = std::vector<float>(size);
     auto array = array_storage.data();
     auto status = library->ReadArraySgl(session, indicator, array, size);
     if (status >= 0) {
@@ -681,7 +681,7 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<uint32_t>();
+    auto array_storage = std::vector<uint32_t>(size);
     auto array = array_storage.data();
     auto status = library->ReadArrayU32(session, indicator, array, size);
     if (status >= 0) {
@@ -709,7 +709,7 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<uint64_t>();
+    auto array_storage = std::vector<uint64_t>(size);
     auto array = array_storage.data();
     auto status = library->ReadArrayU64(session, indicator, array, size);
     if (status >= 0) {

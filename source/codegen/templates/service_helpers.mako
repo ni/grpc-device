@@ -373,7 +373,7 @@ std::vector<${data_type}> array(${size}, ${data_type}());
 % elif is_coerced:
 std::vector<${data_type}> array(${size});
 % else:
-auto array_storage = std::vector<${data_type}>();
+auto array_storage = std::vector<${data_type}>(${size});
     auto array = array_storage.data();
 % endif
     auto status = library->${c_api_name}(${arg_string});
