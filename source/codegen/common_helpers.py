@@ -1235,7 +1235,7 @@ def _is_streaming_param_input_array(streaming_param):
     )
 
 
-def get_input_streaming_param(parameters):
+def get_input_streaming_params(parameters):
     """Determine if a parameter should be included based on streaming conditions."""
     streaming_param = None
     for param in parameters:
