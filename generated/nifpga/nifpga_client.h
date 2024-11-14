@@ -41,6 +41,7 @@ OpenResponse open(const StubPtr& stub, const std::string& bitfile, const std::st
 ReadArrayBoolResponse read_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 BeginReadArrayBoolResponse begin_read_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArrayDblResponse read_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
+BeginReadArrayDblResponse begin_read_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArrayI16Response read_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 BeginReadArrayI16Response begin_read_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArrayI32Response read_array_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
@@ -50,6 +51,7 @@ BeginReadArrayI64Response begin_read_array_i64(const StubPtr& stub, const nidevi
 ReadArrayI8Response read_array_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 BeginReadArrayI8Response begin_read_array_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArraySglResponse read_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
+BeginReadArraySglResponse begin_read_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArrayU16Response read_array_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 BeginReadArrayU16Response begin_read_array_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
 ReadArrayU32Response read_array_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator, const pb::uint32& size);
@@ -61,6 +63,7 @@ BeginReadArrayU8Response begin_read_array_u8(const StubPtr& stub, const nidevice
 ReadBoolResponse read_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 BeginReadBoolResponse begin_read_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadDblResponse read_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
+BeginReadDblResponse begin_read_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadFifoBoolResponse read_fifo_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
 ReadFifoDblResponse read_fifo_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
 ReadFifoI16Response read_fifo_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const pb::uint32& number_of_elements, const pb::uint32& timeout);
@@ -81,6 +84,7 @@ BeginReadI64Response begin_read_i64(const StubPtr& stub, const nidevice_grpc::Se
 ReadI8Response read_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 BeginReadI8Response begin_read_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadSglResponse read_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
+BeginReadSglResponse begin_read_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadU16Response read_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 BeginReadU16Response begin_read_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
 ReadU32Response read_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& indicator);
@@ -103,6 +107,7 @@ WaitOnIrqsResponse wait_on_irqs(const StubPtr& stub, const nidevice_grpc::Sessio
 WriteArrayBoolResponse write_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<bool>& array);
 BeginWriteArrayBoolResponse begin_write_array_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteArrayDblResponse write_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<double>& array);
+BeginWriteArrayDblResponse begin_write_array_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteArrayI16Response write_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int32>& array);
 BeginWriteArrayI16Response begin_write_array_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteArrayI32Response write_array_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int32>& array);
@@ -112,6 +117,7 @@ BeginWriteArrayI64Response begin_write_array_i64(const StubPtr& stub, const nide
 WriteArrayI8Response write_array_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::int32>& array);
 BeginWriteArrayI8Response begin_write_array_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteArraySglResponse write_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<float>& array);
+BeginWriteArraySglResponse begin_write_array_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteArrayU16Response write_array_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::uint32>& array);
 BeginWriteArrayU16Response begin_write_array_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteArrayU32Response write_array_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const std::vector<pb::uint32>& array);
@@ -123,6 +129,7 @@ BeginWriteArrayU8Response begin_write_array_u8(const StubPtr& stub, const nidevi
 WriteBoolResponse write_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const bool& value);
 BeginWriteBoolResponse begin_write_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteDblResponse write_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const double& value);
+BeginWriteDblResponse begin_write_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteFifoBoolResponse write_fifo_bool(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<bool>& data, const pb::uint32& timeout);
 WriteFifoDblResponse write_fifo_dbl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<double>& data, const pb::uint32& timeout);
 WriteFifoI16Response write_fifo_i16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& fifo, const std::vector<pb::int32>& data, const pb::uint32& timeout);
@@ -143,6 +150,7 @@ BeginWriteI64Response begin_write_i64(const StubPtr& stub, const nidevice_grpc::
 WriteI8Response write_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::int32& value);
 BeginWriteI8Response begin_write_i8(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteSglResponse write_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const float& value);
+BeginWriteSglResponse begin_write_sgl(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteU16Response write_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::uint32& value);
 BeginWriteU16Response begin_write_u16(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control);
 WriteU32Response write_u32(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& control, const pb::uint32& value);
