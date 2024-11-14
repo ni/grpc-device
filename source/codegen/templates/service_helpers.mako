@@ -285,12 +285,15 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   service_class_prefix = config["service_class_prefix"]
   grpc_streaming_type = streaming_param['grpc_streaming_type']
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
-  streaming_param_to_include = common_helpers.get_input_streaming_param(parameters)
+  streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
 %>\
   struct ${struct_name}
   {
-     % for param in streaming_param_to_include:
-     ${param['type']} ${param['name']};
+% for parameter in streaming_params_to_include:
+<%
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+%>\
+     ${parameter['type']} ${parameter_name};
      % endfor
      ${service_class_prefix.lower()}_grpc::${grpc_streaming_type} data;
      std::shared_ptr<${service_class_prefix}LibraryInterface> library;
@@ -309,13 +312,13 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   arg_string = arg_string.replace(", &moniker", "").strip()
   data_type = streaming_type.replace("[]", "")
   c_api_name = service_helpers.get_c_api_name(function_name)
-  streaming_param_to_include = common_helpers.get_input_streaming_param(function_data['parameters'])
+  streaming_params_to_include = common_helpers.get_input_streaming_params(function_data['parameters'])
 %>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = static_cast<${struct_name}*>(data);
     auto library = function_data->library;\
-    ${initialize_moniker_streaming_parameters(streaming_param_to_include)}\
+    ${initialize_moniker_streaming_parameters(streaming_params_to_include)}\
     % if streaming_param and streaming_param['direction'] == 'out':
         ${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
     % elif streaming_param and streaming_param['direction'] == 'in':
@@ -338,11 +341,11 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
   streaming_param = common_helpers.get_streaming_parameter(parameters)
-  streaming_param_to_include = common_helpers.get_input_streaming_param(parameters)
+  streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
 %>\
-${initialize_streaming_input_param(function_name, streaming_param_to_include, parameters, streaming_param)}
+${initialize_streaming_input_param(function_name, streaming_params_to_include, parameters, streaming_param)}
       auto data = std::make_unique<${struct_name}>();\
-      ${initialize_begin_input_param(streaming_param_to_include, streaming_param)}\
+      ${initialize_begin_input_params(streaming_params_to_include, streaming_param)}\
       data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
       ${initialize_service_output_params(output_params)}\
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -471,22 +474,28 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 </%def>
 
 ## Initialize an bgin input parameter for an API call.
-<%def name="initialize_begin_input_param(streaming_param_to_include, streaming_param)">
-% for param in streaming_param_to_include:
-      data->${param['name']} = ${param['name']};
+<%def name="initialize_begin_input_params(streaming_params_to_include, streaming_param)">
+% for parameter in streaming_params_to_include:
+<%
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+%>\
+      data->${parameter_name} = ${parameter_name};
 % endfor
 </%def>
 
 ## Initialize an bgin input parameter for an API call.
-<%def name="initialize_streaming_input_param(function_name, streaming_param_to_include, parameters, streaming_param)">\
-% for param in streaming_param_to_include:
+<%def name="initialize_streaming_input_param(function_name, streaming_params_to_include, parameters, streaming_param)">\
+% for param in streaming_params_to_include:
 ${initialize_input_param(function_name, param, parameters)}\
 % endfor
 </%def>
 
-<%def name="initialize_moniker_streaming_parameters(streaming_param_to_include)">
-% for param in streaming_param_to_include:
-    auto ${param['name']} = function_data->${param['name']};
+<%def name="initialize_moniker_streaming_parameters(streaming_params_to_include)">
+% for parameter in streaming_params_to_include:
+<%
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+%>\
+    auto ${parameter_name} = function_data->${parameter_name};
 % endfor
 </%def>
 
