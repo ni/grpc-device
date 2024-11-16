@@ -285,6 +285,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   service_class_prefix = config["service_class_prefix"]
   grpc_streaming_type = streaming_param['grpc_streaming_type']
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
+  request_response_data_type = common_helpers.get_data_moniker_request_response_data_type(function_name)
   streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
 %>\
   struct ${struct_name}
@@ -297,9 +298,8 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
      ${parameter['type']}* ${parameter_name};
 % else:
      ${parameter['type']} ${parameter_name};
-% endif
-     % endfor
-     ${service_class_prefix.lower()}_grpc::${grpc_streaming_type} data;
+% endfor
+     ${service_class_prefix.lower()}_grpc::${request_response_data_type} data;
      std::shared_ptr<${service_class_prefix}LibraryInterface> library;
   };
 </%def>
@@ -312,8 +312,8 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   streaming_param = common_helpers.get_first_streaming_parameter(function_data['parameters'])
   streaming_type = streaming_param['type']
   grpc_streaming_type = streaming_param['grpc_streaming_type']
-  arg_string = service_helpers.create_args(function_data['parameters'])
-  arg_string = arg_string.replace(", &moniker", "").strip()
+  moniker_params = function_data['parameters'][:-1] # skip "moniker" param from Begin API
+  arg_string = service_helpers.create_args(moniker_params)
   data_type = streaming_type.replace("[]", "")
   c_api_name = service_helpers.get_c_api_name(function_name)
   streaming_params_to_include = common_helpers.get_input_streaming_params(function_data['parameters'])
@@ -325,11 +325,11 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
     auto library = function_data->library;\
 ${initialize_moniker_input_parameters(streaming_params_to_include)}\
 ${initialize_moniker_output_parameters(output_params_to_define)}\
-  % if streaming_param and streaming_param['direction'] == 'out':
-${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
-  % elif streaming_param and streaming_param['direction'] == 'in':
-${streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)}\
-  % endif
+    % if streaming_param and streaming_param['direction'] == 'in':
+        ${streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)}\
+    % elif streaming_param and streaming_param['direction'] == 'out':
+        ${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param, moniker_params)}\
+    % endif
     if (status < 0) {
       std::cout << "${moniker_function_name} error: " << status << std::endl;
     }
@@ -361,7 +361,7 @@ ${initialize_streaming_input_param(function_name, streaming_params_to_include, p
       return ::grpc::Status::OK;\
 </%def>
 
-<%def name="streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)">
+<%def name="streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param, moniker_params)">
 <%
   is_array = common_helpers.is_array(streaming_type)
 %>\

@@ -68,4 +68,8 @@ ${mako_helper.define_request_message(function, input_parameters)}\
 
 ${mako_helper.define_response_message(function, output_parameters)}\
 
+% if common_helpers.is_moniker_streaming_function(functions[function]):
+${mako_helper.define_moniker_request_response_message(function, functions)}\
+
+% endif
 % endfor

@@ -113,6 +113,38 @@ message ${common_helpers.snake_to_pascal(function)}Response {
 }
 </%def>
 
+## Define a proto message moniker streaming function.
+<%def name="define_moniker_request_response_message(begin_function_name, functions)">\
+<%
+  request_response_data_type = common_helpers.get_data_moniker_request_response_data_type(begin_function_name)
+  non_streaming_function_name = begin_function_name.replace("Begin", "")
+  input_parameters, output_parameters = proto_helpers.get_streaming_moniker_function_parameters(functions[non_streaming_function_name])
+
+  request_parameters = proto_helpers.get_message_parameter_definitions(input_parameters)
+  response_parameters = proto_helpers.get_message_parameter_definitions(output_parameters)
+%>\
+message ${request_response_data_type} {
+% if request_parameters:
+  ${request_response_data_type}Request request = 1;
+% endif
+  ${request_response_data_type}Response response = 2;
+}
+
+% if request_parameters:
+message ${request_response_data_type}Request {
+% for parameter in request_parameters:
+  ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
+% endfor
+}
+
+% endif
+message ${request_response_data_type}Response {
+% for parameter in response_parameters:
+  ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
+% endfor
+}
+</%def>
+
 ## Define a proto message for a given custom type.
 <%def name="define_custom_type(custom_type)">\
 <%

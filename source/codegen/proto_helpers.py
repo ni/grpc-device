@@ -253,6 +253,18 @@ def get_parameters(function):
 
     return (input_parameters, output_parameters)
 
+def get_streaming_moniker_function_parameters(function):
+    """TODO
+    """
+    parameter_array = common_helpers.filter_parameters_for_grpc_fields(function["parameters"])
+    input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p) and p.get("is_streaming_type", False)]
+    default_status_param = {"name": "status", "type": "int32", "grpc_type": "int32"}
+    output_parameters = [default_status_param]
+    output_parameters.extend(
+        [p for p in parameter_array if common_helpers.is_output_parameter(p)]
+    )
+    return (input_parameters, output_parameters)
+
 
 def _get_callback_output_params(function):
     """Look for a parameter that specifies callback_params and return those params.

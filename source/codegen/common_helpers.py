@@ -1207,9 +1207,12 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
 def filter_moniker_streaming_functions(functions, functions_to_generate):
     """Return streaming functions that need to be generated."""
     return [
-        name for name in functions_to_generate if functions[name].get("is_streaming_api", False)
+        name for name in functions_to_generate if is_moniker_streaming_function(functions[name])
     ]
 
+def is_moniker_streaming_function(function):
+    """Whether this function is for streaming data through moniker."""
+    return function.get("is_streaming_api", False)
 
 def get_data_moniker_function_name(function_name):
     """Return the corresponding moniker function name for the given C API function."""
@@ -1219,6 +1222,10 @@ def get_data_moniker_function_name(function_name):
 def get_data_moniker_struct_name(function_name):
     """Return the corresponding moniker function name for the given C API function."""
     return f"{function_name.replace('Begin', 'Moniker')}Data"
+
+def get_data_moniker_request_response_data_type(function_name):
+    """Return the corresponding moniker function name for the given C API function."""
+    return f"{function_name.replace('Begin', '')}StreamingData"
 
 
 def is_function_in_streaming_functions(function_name, streaming_functions_to_generate):
