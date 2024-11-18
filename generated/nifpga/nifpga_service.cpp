@@ -488,17 +488,10 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<double>(size);
-    auto array = array_storage.data();
+    function_data->data.mutable_value()->Resize(size, 0);
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayDbl(session, indicator, array, size);
     if (status >= 0) {
-      std::transform(
-        array,
-        array + size,
-        function_data->data.mutable_value()->begin(),
-        [&](auto x) {
-           return x;
-      });
       packedData.PackFrom(function_data->data);
     }
 
@@ -543,17 +536,10 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<int32_t>(size);
-    auto array = array_storage.data();
+    function_data->data.mutable_value()->Resize(size, 0);
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayI32(session, indicator, array, size);
     if (status >= 0) {
-      std::transform(
-        array,
-        array + size,
-        function_data->data.mutable_value()->begin(),
-        [&](auto x) {
-           return x;
-      });
       packedData.PackFrom(function_data->data);
     }
 
@@ -571,17 +557,10 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<int64_t>(size);
-    auto array = array_storage.data();
+    function_data->data.mutable_value()->Resize(size, 0);
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayI64(session, indicator, array, size);
     if (status >= 0) {
-      std::transform(
-        array,
-        array + size,
-        function_data->data.mutable_value()->begin(),
-        [&](auto x) {
-           return x;
-      });
       packedData.PackFrom(function_data->data);
     }
 
@@ -626,17 +605,10 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<float>(size);
-    auto array = array_storage.data();
+    function_data->data.mutable_value()->Resize(size, 0);
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArraySgl(session, indicator, array, size);
     if (status >= 0) {
-      std::transform(
-        array,
-        array + size,
-        function_data->data.mutable_value()->begin(),
-        [&](auto x) {
-           return x;
-      });
       packedData.PackFrom(function_data->data);
     }
 
@@ -681,17 +653,10 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<uint32_t>(size);
-    auto array = array_storage.data();
+    function_data->data.mutable_value()->Resize(size, 0);
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayU32(session, indicator, array, size);
     if (status >= 0) {
-      std::transform(
-        array,
-        array + size,
-        function_data->data.mutable_value()->begin(),
-        [&](auto x) {
-           return x;
-      });
       packedData.PackFrom(function_data->data);
     }
 
@@ -709,17 +674,10 @@ namespace nifpga_grpc {
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    auto array_storage = std::vector<uint64_t>(size);
-    auto array = array_storage.data();
+    function_data->data.mutable_value()->Resize(size, 0);
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayU64(session, indicator, array, size);
     if (status >= 0) {
-      std::transform(
-        array,
-        array + size,
-        function_data->data.mutable_value()->begin(),
-        [&](auto x) {
-           return x;
-      });
       packedData.PackFrom(function_data->data);
     }
 
