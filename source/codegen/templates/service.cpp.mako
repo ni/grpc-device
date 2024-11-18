@@ -118,12 +118,11 @@ ${mako_helper.define_moniker_streaming_struct(function_name=function_name, param
   ${mako_helper.register_moniker_functions(function_name)}\
 % endfor
   }
+
 % endif
 % for function_name in streaming_functions_to_generate:
-<%
-function_data = functions[function_name]
-%>
-${mako_helper.define_moniker_function_body(function_name=function_name, function_data=function_data)}\
+${mako_helper.define_moniker_function_body(function_name=function_name, functions=functions)}\
+
 % endfor
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
