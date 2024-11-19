@@ -457,7 +457,7 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayBoolData* function_data = static_cast<MonikerReadArrayBoolData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
@@ -479,6 +479,11 @@ namespace nifpga_grpc {
       convert_to_grpc(array, response->mutable_array());
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -486,12 +491,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayDblData* function_data = static_cast<MonikerReadArrayDblData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    function_data->data.mutable_array()->Resize(size, 0);
+    response->mutable_array()->Resize(size, 0);
     auto array = response->mutable_array()->mutable_data();
     auto status = library->ReadArrayDbl(session, indicator, array, size);
 
@@ -507,6 +512,11 @@ namespace nifpga_grpc {
       response->set_status(status);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -514,7 +524,7 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayI16Data* function_data = static_cast<MonikerReadArrayI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
@@ -552,6 +562,11 @@ namespace nifpga_grpc {
           });
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -559,12 +574,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayI32Data* function_data = static_cast<MonikerReadArrayI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    function_data->data.mutable_array()->Resize(size, 0);
+    response->mutable_array()->Resize(size, 0);
     auto array = response->mutable_array()->mutable_data();
     auto status = library->ReadArrayI32(session, indicator, array, size);
 
@@ -580,6 +595,11 @@ namespace nifpga_grpc {
       response->set_status(status);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -587,12 +607,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayI64Data* function_data = static_cast<MonikerReadArrayI64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    function_data->data.mutable_array()->Resize(size, 0);
+    response->mutable_array()->Resize(size, 0);
     auto array = response->mutable_array()->mutable_data();
     auto status = library->ReadArrayI64(session, indicator, array, size);
 
@@ -608,6 +628,11 @@ namespace nifpga_grpc {
       response->set_status(status);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -615,7 +640,7 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayI8Data* function_data = static_cast<MonikerReadArrayI8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
@@ -653,6 +678,11 @@ namespace nifpga_grpc {
           });
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -660,12 +690,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArraySglData* function_data = static_cast<MonikerReadArraySglData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    function_data->data.mutable_array()->Resize(size, 0);
+    response->mutable_array()->Resize(size, 0);
     auto array = response->mutable_array()->mutable_data();
     auto status = library->ReadArraySgl(session, indicator, array, size);
 
@@ -681,6 +711,11 @@ namespace nifpga_grpc {
       response->set_status(status);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -688,7 +723,7 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayU16Data* function_data = static_cast<MonikerReadArrayU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
@@ -726,6 +761,11 @@ namespace nifpga_grpc {
           });
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -733,12 +773,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayU32Data* function_data = static_cast<MonikerReadArrayU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    function_data->data.mutable_array()->Resize(size, 0);
+    response->mutable_array()->Resize(size, 0);
     auto array = response->mutable_array()->mutable_data();
     auto status = library->ReadArrayU32(session, indicator, array, size);
 
@@ -754,6 +794,11 @@ namespace nifpga_grpc {
       response->set_status(status);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -761,12 +806,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayU64Data* function_data = static_cast<MonikerReadArrayU64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
         
-    function_data->data.mutable_array()->Resize(size, 0);
+    response->mutable_array()->Resize(size, 0);
     auto array = response->mutable_array()->mutable_data();
     auto status = library->ReadArrayU64(session, indicator, array, size);
 
@@ -782,6 +827,11 @@ namespace nifpga_grpc {
       response->set_status(status);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -789,7 +839,7 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayU8Data* function_data = static_cast<MonikerReadArrayU8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
@@ -827,6 +877,11 @@ namespace nifpga_grpc {
           });
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -834,7 +889,7 @@ namespace nifpga_grpc {
 {
     MonikerReadBoolData* function_data = static_cast<MonikerReadBoolData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -855,6 +910,11 @@ NiFpga_Bool value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -862,7 +922,7 @@ NiFpga_Bool value {};
 {
     MonikerReadDblData* function_data = static_cast<MonikerReadDblData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -883,6 +943,11 @@ double value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -890,7 +955,7 @@ double value {};
 {
     MonikerReadI16Data* function_data = static_cast<MonikerReadI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -911,6 +976,11 @@ int16_t value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -918,7 +988,7 @@ int16_t value {};
 {
     MonikerReadI32Data* function_data = static_cast<MonikerReadI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -939,6 +1009,11 @@ int32_t value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -946,7 +1021,7 @@ int32_t value {};
 {
     MonikerReadI64Data* function_data = static_cast<MonikerReadI64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -967,6 +1042,11 @@ int64_t value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -974,7 +1054,7 @@ int64_t value {};
 {
     MonikerReadI8Data* function_data = static_cast<MonikerReadI8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -995,6 +1075,11 @@ int8_t value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1002,7 +1087,7 @@ int8_t value {};
 {
     MonikerReadSglData* function_data = static_cast<MonikerReadSglData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -1023,6 +1108,11 @@ float value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1030,7 +1120,7 @@ float value {};
 {
     MonikerReadU16Data* function_data = static_cast<MonikerReadU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -1051,6 +1141,11 @@ uint16_t value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1058,7 +1153,7 @@ uint16_t value {};
 {
     MonikerReadU32Data* function_data = static_cast<MonikerReadU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -1079,6 +1174,11 @@ uint32_t value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1086,7 +1186,7 @@ uint32_t value {};
 {
     MonikerReadU64Data* function_data = static_cast<MonikerReadU64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -1107,6 +1207,11 @@ uint64_t value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1114,7 +1219,7 @@ uint64_t value {};
 {
     MonikerReadU8Data* function_data = static_cast<MonikerReadU8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto indicator = function_data->indicator;
         
@@ -1135,6 +1240,11 @@ uint8_t value {};
       response->set_value(value);
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1142,7 +1252,7 @@ uint8_t value {};
 {
     MonikerWriteArrayBoolData* function_data = static_cast<MonikerWriteArrayBoolData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1168,7 +1278,7 @@ uint8_t value {};
 {
     MonikerWriteArrayDblData* function_data = static_cast<MonikerWriteArrayDblData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1194,7 +1304,7 @@ uint8_t value {};
 {
     MonikerWriteArrayI16Data* function_data = static_cast<MonikerWriteArrayI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1232,7 +1342,7 @@ uint8_t value {};
 {
     MonikerWriteArrayI32Data* function_data = static_cast<MonikerWriteArrayI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1258,7 +1368,7 @@ uint8_t value {};
 {
     MonikerWriteArrayI64Data* function_data = static_cast<MonikerWriteArrayI64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1284,7 +1394,7 @@ uint8_t value {};
 {
     MonikerWriteArrayI8Data* function_data = static_cast<MonikerWriteArrayI8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1322,7 +1432,7 @@ uint8_t value {};
 {
     MonikerWriteArraySglData* function_data = static_cast<MonikerWriteArraySglData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1348,7 +1458,7 @@ uint8_t value {};
 {
     MonikerWriteArrayU16Data* function_data = static_cast<MonikerWriteArrayU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1386,7 +1496,7 @@ uint8_t value {};
 {
     MonikerWriteArrayU32Data* function_data = static_cast<MonikerWriteArrayU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1412,7 +1522,7 @@ uint8_t value {};
 {
     MonikerWriteArrayU64Data* function_data = static_cast<MonikerWriteArrayU64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1438,7 +1548,7 @@ uint8_t value {};
 {
     MonikerWriteArrayU8Data* function_data = static_cast<MonikerWriteArrayU8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1476,7 +1586,7 @@ uint8_t value {};
 {
     MonikerWriteBoolData* function_data = static_cast<MonikerWriteBoolData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1499,7 +1609,7 @@ uint8_t value {};
 {
     MonikerWriteDblData* function_data = static_cast<MonikerWriteDblData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1522,7 +1632,7 @@ uint8_t value {};
 {
     MonikerWriteI16Data* function_data = static_cast<MonikerWriteI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1549,7 +1659,7 @@ uint8_t value {};
 {
     MonikerWriteI32Data* function_data = static_cast<MonikerWriteI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1572,7 +1682,7 @@ uint8_t value {};
 {
     MonikerWriteI64Data* function_data = static_cast<MonikerWriteI64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1595,7 +1705,7 @@ uint8_t value {};
 {
     MonikerWriteI8Data* function_data = static_cast<MonikerWriteI8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1622,7 +1732,7 @@ uint8_t value {};
 {
     MonikerWriteSglData* function_data = static_cast<MonikerWriteSglData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1645,7 +1755,7 @@ uint8_t value {};
 {
     MonikerWriteU16Data* function_data = static_cast<MonikerWriteU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1672,7 +1782,7 @@ uint8_t value {};
 {
     MonikerWriteU32Data* function_data = static_cast<MonikerWriteU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1695,7 +1805,7 @@ uint8_t value {};
 {
     MonikerWriteU64Data* function_data = static_cast<MonikerWriteU64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -1718,7 +1828,7 @@ uint8_t value {};
 {
     MonikerWriteU8Data* function_data = static_cast<MonikerWriteU8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();    
+    auto response = function_data->data.mutable_response();
     auto session = function_data->session;
     auto control = function_data->control;
         
@@ -2287,11 +2397,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayBoolData>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2345,11 +2455,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayDblData>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2411,11 +2521,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayI16Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2469,11 +2579,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayI32Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2527,11 +2637,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayI64Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2593,11 +2703,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayI8Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2651,11 +2761,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArraySglData>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2717,11 +2827,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayU16Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2775,11 +2885,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayU32Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2833,11 +2943,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayU64Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2899,11 +3009,11 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayU8Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       data->data.mutable_response()->mutable_array()->Reserve(request->size());
       data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
@@ -2955,10 +3065,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadBoolData>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBool", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3008,10 +3118,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadDblData>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadDbl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3412,10 +3522,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadI16Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3465,10 +3575,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadI32Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3518,10 +3628,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadI64Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3571,10 +3681,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadI8Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3624,10 +3734,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadSglData>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadSgl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3677,10 +3787,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadU16Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3730,10 +3840,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadU32Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3783,10 +3893,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadU64Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3836,10 +3946,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadU8Data>();
-      data->session = session;
+            data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4231,10 +4341,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayBoolData>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayBool", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4284,10 +4394,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayDblData>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayDbl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4354,10 +4464,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayI16Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4407,10 +4517,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayI32Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4460,10 +4570,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayI64Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4530,10 +4640,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayI8Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4583,10 +4693,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArraySglData>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArraySgl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4653,10 +4763,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayU16Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4706,10 +4816,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayU32Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4759,10 +4869,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayU64Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4829,10 +4939,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayU8Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4881,10 +4991,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteBoolData>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteBool", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4933,10 +5043,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteDblData>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteDbl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5370,10 +5480,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteI16Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5422,10 +5532,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteI32Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5474,10 +5584,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteI64Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5535,10 +5645,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteI8Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5587,10 +5697,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteSglData>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteSgl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5648,10 +5758,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteU16Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5700,10 +5810,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteU32Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5752,10 +5862,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteU64Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5813,10 +5923,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteU8Data>();
-      data->session = session;
+            data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-
+      
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());

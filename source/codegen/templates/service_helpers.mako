@@ -296,6 +296,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
      ${parameter['type']}* ${parameter_name};
 % else:
      ${parameter['type']} ${parameter_name};
+% endif
 % endfor
      ${service_class_prefix.lower()}_grpc::${request_response_data_type} data;
      std::shared_ptr<${service_class_prefix}LibraryInterface> library;
@@ -345,6 +346,11 @@ ${set_response_values(output_parameters=output_parameters, init_method=false)}\
 </%block>\
       packedData.PackFrom(function_data->data);
     }
+    else
+    {
+      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+    }
 % endif
     return ::grpc::Status::OK;
 }
@@ -390,13 +396,13 @@ ${streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_param,
    is_coerced = service_helpers.is_output_array_that_needs_coercion(streaming_param)
    size_param_name = service_helpers.get_size_param_name(streaming_param)
    streaming_param_field_name = common_helpers.get_grpc_field_name(streaming_param)
-   streaming_param_name = common_helpers.camel_to_snake(streaming_param['name']) // TODO: duplicate after merge?
+   streaming_param_name = common_helpers.camel_to_snake(streaming_param['name']) # TODO: duplicate after merge?
    underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"])
 %>\
 % if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
     std::vector<${data_type}> ${streaming_param_field_name}(${size_param_name}, ${data_type}());
 % elif is_coerced:
-    std::vector<${data_type}> ${streaming_param_field_name}(${size});
+    std::vector<${data_type}> ${streaming_param_field_name}(${size_param_name});
 % elif common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
     response->mutable_${streaming_param_field_name}()->Resize(${size_param_name}, 0);
     auto ${streaming_param_field_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${streaming_param_field_name}()->mutable_data());
