@@ -33,7 +33,7 @@ def is_input_parameter(parameter):
     return "in" in parameter["direction"]
 
 
-def get_streaming_parameter(parameters: List[Dict]) -> Optional[Dict]:
+def get_first_streaming_parameter(parameters: List[Dict]) -> Optional[Dict]:
     """Get the streaming parameter from the list of parameters."""
     for param in parameters:
         if param.get("is_streaming_type", False):
@@ -254,7 +254,7 @@ def get_underlying_type_name(parameter_type: str) -> str:
     Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving
     just the underlying type name.
     """
-    return parameter_type.replace("struct ", "").replace("[]", "")
+    return parameter_type.replace("struct ", "").replace("[]", "").replace("const ", "")
 
 
 def _get_underlying_grpc_type_name(grpc_type: str) -> str:
@@ -1248,9 +1248,12 @@ def get_input_streaming_params(parameters):
         if is_input_parameter(param):
             if not param.get("is_streaming_type", False):
                 if _is_streaming_param_input_array(streaming_param):
-                    size_param_name = streaming_param["size"]["value"]
-                    if param["name"] != size_param_name:
-                        params.append(param)
+                    if "size" not in streaming_param:
+                        params.append(param)              
+                    else:
+                        size_param_name = streaming_param["size"]["value"]
+                        if param["name"] != size_param_name:
+                            params.append(param)
                 else:
                     params.append(param)
     return params

@@ -7492,6 +7492,34 @@ read_analog_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   return response;
 }
 
+BeginReadAnalogF64Response
+begin_read_analog_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadAnalogF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadAnalogF64Response{};
+
+  raise_if_error(
+      stub->BeginReadAnalogF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadAnalogScalarF64Response
 read_analog_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
 {
@@ -7505,6 +7533,24 @@ read_analog_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, 
 
   raise_if_error(
       stub->ReadAnalogScalarF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadAnalogScalarF64Response
+begin_read_analog_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadAnalogScalarF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginReadAnalogScalarF64Response{};
+
+  raise_if_error(
+      stub->BeginReadAnalogScalarF64(&context, request, &response),
       context);
 
   return response;
@@ -7538,6 +7584,34 @@ read_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   return response;
 }
 
+BeginReadBinaryI16Response
+begin_read_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadBinaryI16Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadBinaryI16Response{};
+
+  raise_if_error(
+      stub->BeginReadBinaryI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadBinaryI32Response
 read_binary_i32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
 {
@@ -7561,6 +7635,34 @@ read_binary_i32(const StubPtr& stub, const nidevice_grpc::Session& task, const p
 
   raise_if_error(
       stub->ReadBinaryI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadBinaryI32Response
+begin_read_binary_i32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadBinaryI32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadBinaryI32Response{};
+
+  raise_if_error(
+      stub->BeginReadBinaryI32(&context, request, &response),
       context);
 
   return response;
@@ -7594,6 +7696,34 @@ read_binary_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   return response;
 }
 
+BeginReadBinaryU16Response
+begin_read_binary_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadBinaryU16Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadBinaryU16Response{};
+
+  raise_if_error(
+      stub->BeginReadBinaryU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadBinaryU32Response
 read_binary_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
 {
@@ -7622,6 +7752,34 @@ read_binary_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   return response;
 }
 
+BeginReadBinaryU32Response
+begin_read_binary_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadBinaryU32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadBinaryU32Response{};
+
+  raise_if_error(
+      stub->BeginReadBinaryU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadCounterF64Response
 read_counter_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const pb::uint32& array_size_in_samps)
 {
@@ -7637,6 +7795,26 @@ read_counter_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const 
 
   raise_if_error(
       stub->ReadCounterF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadCounterF64Response
+begin_read_counter_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCounterF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadCounterF64Response{};
+
+  raise_if_error(
+      stub->BeginReadCounterF64(&context, request, &response),
       context);
 
   return response;
@@ -7670,6 +7848,34 @@ read_counter_f64_ex(const StubPtr& stub, const nidevice_grpc::Session& task, con
   return response;
 }
 
+BeginReadCounterF64ExResponse
+begin_read_counter_f64_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCounterF64ExRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadCounterF64ExResponse{};
+
+  raise_if_error(
+      stub->BeginReadCounterF64Ex(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadCounterScalarF64Response
 read_counter_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
 {
@@ -7683,6 +7889,24 @@ read_counter_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task,
 
   raise_if_error(
       stub->ReadCounterScalarF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadCounterScalarF64Response
+begin_read_counter_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCounterScalarF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginReadCounterScalarF64Response{};
+
+  raise_if_error(
+      stub->BeginReadCounterScalarF64(&context, request, &response),
       context);
 
   return response;
@@ -7706,6 +7930,24 @@ read_counter_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task,
   return response;
 }
 
+BeginReadCounterScalarU32Response
+begin_read_counter_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCounterScalarU32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginReadCounterScalarU32Response{};
+
+  raise_if_error(
+      stub->BeginReadCounterScalarU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadCounterU32Response
 read_counter_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const pb::uint32& array_size_in_samps)
 {
@@ -7721,6 +7963,26 @@ read_counter_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const 
 
   raise_if_error(
       stub->ReadCounterU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadCounterU32Response
+begin_read_counter_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCounterU32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadCounterU32Response{};
+
+  raise_if_error(
+      stub->BeginReadCounterU32(&context, request, &response),
       context);
 
   return response;
@@ -7749,6 +8011,34 @@ read_counter_u32_ex(const StubPtr& stub, const nidevice_grpc::Session& task, con
 
   raise_if_error(
       stub->ReadCounterU32Ex(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadCounterU32ExResponse
+begin_read_counter_u32_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCounterU32ExRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadCounterU32ExResponse{};
+
+  raise_if_error(
+      stub->BeginReadCounterU32Ex(&context, request, &response),
       context);
 
   return response;
@@ -7938,6 +8228,24 @@ read_digital_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task,
   return response;
 }
 
+BeginReadDigitalScalarU32Response
+begin_read_digital_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadDigitalScalarU32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginReadDigitalScalarU32Response{};
+
+  raise_if_error(
+      stub->BeginReadDigitalScalarU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadDigitalU16Response
 read_digital_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
 {
@@ -7966,6 +8274,34 @@ read_digital_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   return response;
 }
 
+BeginReadDigitalU16Response
+begin_read_digital_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadDigitalU16Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadDigitalU16Response{};
+
+  raise_if_error(
+      stub->BeginReadDigitalU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadDigitalU32Response
 read_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
 {
@@ -7989,6 +8325,34 @@ read_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const 
 
   raise_if_error(
       stub->ReadDigitalU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadDigitalU32Response
+begin_read_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadDigitalU32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadDigitalU32Response{};
+
+  raise_if_error(
+      stub->BeginReadDigitalU32(&context, request, &response),
       context);
 
   return response;
@@ -10683,6 +11047,24 @@ wait_for_next_sample_clock(const StubPtr& stub, const nidevice_grpc::Session& ta
   return response;
 }
 
+BeginWaitForNextSampleClockResponse
+begin_wait_for_next_sample_clock(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWaitForNextSampleClockRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginWaitForNextSampleClockResponse{};
+
+  raise_if_error(
+      stub->BeginWaitForNextSampleClock(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WaitForValidTimestampResponse
 wait_for_valid_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimestampEvent, pb::int32>& timestamp_event, const double& timeout)
 {
@@ -10756,6 +11138,34 @@ write_analog_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   return response;
 }
 
+BeginWriteAnalogF64Response
+begin_write_analog_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteAnalogF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteAnalogF64Response{};
+
+  raise_if_error(
+      stub->BeginWriteAnalogF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteAnalogScalarF64Response
 write_analog_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const double& value)
 {
@@ -10771,6 +11181,25 @@ write_analog_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task,
 
   raise_if_error(
       stub->WriteAnalogScalarF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteAnalogScalarF64Response
+begin_write_analog_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteAnalogScalarF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+
+  auto response = BeginWriteAnalogScalarF64Response{};
+
+  raise_if_error(
+      stub->BeginWriteAnalogScalarF64(&context, request, &response),
       context);
 
   return response;
@@ -10805,6 +11234,34 @@ write_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   return response;
 }
 
+BeginWriteBinaryI16Response
+begin_write_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteBinaryI16Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteBinaryI16Response{};
+
+  raise_if_error(
+      stub->BeginWriteBinaryI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteBinaryI32Response
 write_binary_i32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout, const std::vector<pb::int32>& write_array)
 {
@@ -10829,6 +11286,34 @@ write_binary_i32(const StubPtr& stub, const nidevice_grpc::Session& task, const 
 
   raise_if_error(
       stub->WriteBinaryI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteBinaryI32Response
+begin_write_binary_i32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteBinaryI32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteBinaryI32Response{};
+
+  raise_if_error(
+      stub->BeginWriteBinaryI32(&context, request, &response),
       context);
 
   return response;
@@ -10863,6 +11348,34 @@ write_binary_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   return response;
 }
 
+BeginWriteBinaryU16Response
+begin_write_binary_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteBinaryU16Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteBinaryU16Response{};
+
+  raise_if_error(
+      stub->BeginWriteBinaryU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteBinaryU32Response
 write_binary_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout, const std::vector<pb::uint32>& write_array)
 {
@@ -10887,6 +11400,34 @@ write_binary_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const 
 
   raise_if_error(
       stub->WriteBinaryU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteBinaryU32Response
+begin_write_binary_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteBinaryU32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteBinaryU32Response{};
+
+  raise_if_error(
+      stub->BeginWriteBinaryU32(&context, request, &response),
       context);
 
   return response;
@@ -11094,6 +11635,25 @@ write_digital_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task
   return response;
 }
 
+BeginWriteDigitalScalarU32Response
+begin_write_digital_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteDigitalScalarU32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+
+  auto response = BeginWriteDigitalScalarU32Response{};
+
+  raise_if_error(
+      stub->BeginWriteDigitalScalarU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteDigitalU16Response
 write_digital_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout, const std::vector<pb::uint32>& write_array)
 {
@@ -11123,6 +11683,34 @@ write_digital_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const
   return response;
 }
 
+BeginWriteDigitalU16Response
+begin_write_digital_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteDigitalU16Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteDigitalU16Response{};
+
+  raise_if_error(
+      stub->BeginWriteDigitalU16(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteDigitalU32Response
 write_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout, const std::vector<pb::uint32>& write_array)
 {
@@ -11147,6 +11735,34 @@ write_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const
 
   raise_if_error(
       stub->WriteDigitalU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteDigitalU32Response
+begin_write_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteDigitalU32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteDigitalU32Response{};
+
+  raise_if_error(
+      stub->BeginWriteDigitalU32(&context, request, &response),
       context);
 
   return response;

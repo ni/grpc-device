@@ -719,8 +719,8 @@ def get_streaming_type(parameters) -> str:
 
 def get_size_param_name(streaming_param) -> str:
     """Get the size parameter name for the given streaming parameter."""
-    if common_helpers.is_array(streaming_param["type"]):
-        return streaming_param["size"]["value"]
+    if common_helpers.is_array(streaming_param["type"]) and streaming_param['direction'] == 'out':
+        return common_helpers._camel_to_snake(streaming_param["size"]["value"])
     else:
         return None
 
@@ -731,3 +731,11 @@ def get_c_api_name(function_name) -> str:
         base_name = function_name[len("Begin") :]
         return f"{base_name}"
     return f"{function_name}"
+
+def get_output_streaming_param_to_define(output_param, streaming_param) -> List[dict]:
+    """Get the list of output streaming parameter that needs to be defined."""
+    params = []
+    for param in output_param:
+        if param.get("is_streaming_type", False) and param["name"] != streaming_param["name"]:
+            params.append(param)
+    return params
