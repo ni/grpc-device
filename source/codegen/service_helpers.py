@@ -733,9 +733,10 @@ def get_c_api_name(function_name) -> str:
     return f"{function_name}"
 
 
-def get_output_streaming_params_to_define(output_params, streaming_param) -> List[dict]:
+def get_output_streaming_params_to_define(parameters, streaming_param) -> List[dict]:
     """Get the list of output streaming parameter that needs to be defined."""
     params = []
+    output_params = [p for p in parameters if common_helpers.is_output_parameter(p)]
     for param in output_params:
         if param.get("is_streaming_type", False) and param["name"] != streaming_param["name"]:
             params.append(param)

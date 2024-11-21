@@ -317,15 +317,14 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   data_type = streaming_type.replace("[]", "")
   c_api_name = service_helpers.get_c_api_name(function_name)
   streaming_params_to_include = common_helpers.get_input_streaming_params(function_data['parameters'])
-  output_params = [p for p in function_data['parameters'] if common_helpers.is_output_parameter(p)]
-  output_params_to_define = service_helpers.get_output_streaming_params_to_define(output_params, streaming_param)
+  output_params_to_define = service_helpers.get_output_streaming_params_to_define(function_data['parameters'], streaming_param)
 %>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = static_cast<${struct_name}*>(data);
     auto library = function_data->library;\
-${initialize_moniker_streaming_parameters(streaming_params_to_include)}\
-${initialize_output_streaming_parameters(output_params_to_define)}\
+${initialize_moniker_input_parameters(streaming_params_to_include)}\
+${initialize_moniker_output_parameters(output_params_to_define)}\
   % if streaming_param and streaming_param['direction'] == 'out':
 ${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
   % elif streaming_param and streaming_param['direction'] == 'in':
@@ -503,7 +502,7 @@ ${initialize_input_param(function_name, param, parameters)}\
 % endfor
 </%def>
 
-<%def name="initialize_moniker_streaming_parameters(streaming_params_to_include)">
+<%def name="initialize_moniker_input_parameters(streaming_params_to_include)">
 % for parameter in streaming_params_to_include:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
@@ -512,7 +511,7 @@ ${initialize_input_param(function_name, param, parameters)}\
 % endfor
 </%def>
 
-<%def name="initialize_output_streaming_parameters(output_params_to_define)">\
+<%def name="initialize_moniker_output_parameters(output_params_to_define)">\
 % for parameter in output_params_to_define:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)

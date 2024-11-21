@@ -1245,7 +1245,7 @@ def get_input_streaming_params(parameters):
 
     params = []
     for param in parameters:
-        if is_input_parameter(param) and not param.get("is_streaming_type", False): 
+        if is_input_parameter(param) and not param.get("is_streaming_type", False):
             if _is_streaming_param_input_array(streaming_param):
                 size_param_name = get_size_param(streaming_param)
                 if size_param_name != param["name"]:
