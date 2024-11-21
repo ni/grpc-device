@@ -108,6 +108,7 @@ service NiRFmxBluetooth {
   rpc ModAccFetchDf2(ModAccFetchDf2Request) returns (ModAccFetchDf2Response);
   rpc ModAccFetchDf2maxTrace(ModAccFetchDf2maxTraceRequest) returns (ModAccFetchDf2maxTraceResponse);
   rpc ModAccFetchDf4avgTrace(ModAccFetchDf4avgTraceRequest) returns (ModAccFetchDf4avgTraceResponse);
+  rpc ModAccFetchEVMPerSymbolTrace(ModAccFetchEVMPerSymbolTraceRequest) returns (ModAccFetchEVMPerSymbolTraceResponse);
   rpc ModAccFetchFrequencyErrorBR(ModAccFetchFrequencyErrorBRRequest) returns (ModAccFetchFrequencyErrorBRResponse);
   rpc ModAccFetchFrequencyErrorEDR(ModAccFetchFrequencyErrorEDRRequest) returns (ModAccFetchFrequencyErrorEDRResponse);
   rpc ModAccFetchFrequencyErrorLE(ModAccFetchFrequencyErrorLERequest) returns (ModAccFetchFrequencyErrorLEResponse);
@@ -279,6 +280,9 @@ enum NiRFmxBluetoothAttribute {
   NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PREAMBLE_START_TIME_MEAN = 11550771;
   NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_DF3AVG_MEAN = 11550772;
   NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PERCENTAGE_OF_SYMBOLS_ABOVE_DF4AVG_THRESHOLD = 11550773;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PREAMBLE_RMS_EVM_MEAN = 11550774;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_CONTROL_HEADER_RMS_EVM_MEAN = 11550775;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PAYLOAD_RMS_EVM_MEAN = 11550776;
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_MEASUREMENT_ENABLED = 11554816;
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_OFFSET_CHANNEL_MODE = 11554818;
   NIRFMXBLUETOOTH_ATTRIBUTE_ACP_NUMBER_OF_OFFSETS = 11554819;
@@ -1710,6 +1714,18 @@ message ModAccFetchDf4avgTraceResponse {
   repeated float time = 2;
   repeated float df4avg = 3;
   int32 actual_array_size = 4;
+}
+
+message ModAccFetchEVMPerSymbolTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchEVMPerSymbolTraceResponse {
+  int32 status = 1;
+  repeated float evm_per_symbol = 2;
+  int32 actual_array_size = 3;
 }
 
 message ModAccFetchFrequencyErrorBRRequest {

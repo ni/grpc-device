@@ -2160,6 +2160,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CalkitManagerCalkitGetLRLLineAutoChar': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'autoCharacterizationEnabled',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitGetTRLReferencePlane': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'CalkitManagerCalkitTrlReferencePlane',
+                'name': 'referencePlane',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CalkitManagerCalkitGetVersion': {
         'parameters': [
             {
@@ -2249,6 +2292,49 @@ functions = {
                 'direction': 'in',
                 'name': 'calkitDescription',
                 'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitSetLRLLineAutoChar': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoCharacterizationEnabled',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitSetTRLReferencePlane': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CalkitManagerCalkitTrlReferencePlane',
+                'name': 'referencePlane',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'
@@ -4240,6 +4326,28 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'MarkerCfgMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'MarkerMode',
+                'name': 'markerMode',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'MarkerCfgNumberOfMarkers': {
         'parameters': [
             {
@@ -4332,6 +4440,27 @@ functions = {
                 'direction': 'in',
                 'name': 'referenceMarker',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'MarkerCfgTargetValue': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'targetValue',
+                'type': 'float64'
             }
         ],
         'returns': 'int32'

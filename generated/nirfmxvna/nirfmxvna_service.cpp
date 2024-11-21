@@ -2816,6 +2816,59 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitGetLRLLineAutoChar(::grpc::ServerContext* context, const CalkitManagerCalkitGetLRLLineAutoCharRequest* request, CalkitManagerCalkitGetLRLLineAutoCharResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 auto_characterization_enabled {};
+      auto status = library_->CalkitManagerCalkitGetLRLLineAutoChar(instrument, selector_string, &auto_characterization_enabled);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_auto_characterization_enabled(auto_characterization_enabled);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitGetTRLReferencePlane(::grpc::ServerContext* context, const CalkitManagerCalkitGetTRLReferencePlaneRequest* request, CalkitManagerCalkitGetTRLReferencePlaneResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 reference_plane {};
+      auto status = library_->CalkitManagerCalkitGetTRLReferencePlane(instrument, selector_string, &reference_plane);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      response->set_reference_plane(static_cast<nirfmxvna_grpc::CalkitManagerCalkitTrlReferencePlane>(reference_plane));
+      response->set_reference_plane_raw(reference_plane);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitGetVersion(::grpc::ServerContext* context, const CalkitManagerCalkitGetVersionRequest* request, CalkitManagerCalkitGetVersionResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2926,6 +2979,71 @@ namespace nirfmxvna_grpc {
       auto calkit_description_mbcs = convert_from_grpc<std::string>(request->calkit_description());
       char* calkit_description = (char*)calkit_description_mbcs.c_str();
       auto status = library_->CalkitManagerCalkitSetDescription(instrument, selector_string, calkit_description);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitSetLRLLineAutoChar(::grpc::ServerContext* context, const CalkitManagerCalkitSetLRLLineAutoCharRequest* request, CalkitManagerCalkitSetLRLLineAutoCharResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 auto_characterization_enabled = request->auto_characterization_enabled();
+      auto status = library_->CalkitManagerCalkitSetLRLLineAutoChar(instrument, selector_string, auto_characterization_enabled);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitSetTRLReferencePlane(::grpc::ServerContext* context, const CalkitManagerCalkitSetTRLReferencePlaneRequest* request, CalkitManagerCalkitSetTRLReferencePlaneResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 reference_plane;
+      switch (request->reference_plane_enum_case()) {
+        case nirfmxvna_grpc::CalkitManagerCalkitSetTRLReferencePlaneRequest::ReferencePlaneEnumCase::kReferencePlane: {
+          reference_plane = static_cast<int32>(request->reference_plane());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitSetTRLReferencePlaneRequest::ReferencePlaneEnumCase::kReferencePlaneRaw: {
+          reference_plane = static_cast<int32>(request->reference_plane_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalkitManagerCalkitSetTRLReferencePlaneRequest::ReferencePlaneEnumCase::REFERENCE_PLANE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for reference_plane was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CalkitManagerCalkitSetTRLReferencePlane(instrument, selector_string, reference_plane);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -5221,6 +5339,46 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgMode(::grpc::ServerContext* context, const MarkerCfgModeRequest* request, MarkerCfgModeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 marker_mode;
+      switch (request->marker_mode_enum_case()) {
+        case nirfmxvna_grpc::MarkerCfgModeRequest::MarkerModeEnumCase::kMarkerMode: {
+          marker_mode = static_cast<int32>(request->marker_mode());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerCfgModeRequest::MarkerModeEnumCase::kMarkerModeRaw: {
+          marker_mode = static_cast<int32>(request->marker_mode_raw());
+          break;
+        }
+        case nirfmxvna_grpc::MarkerCfgModeRequest::MarkerModeEnumCase::MARKER_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for marker_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->MarkerCfgMode(instrument, selector_string, marker_mode);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::MarkerCfgNumberOfMarkers(::grpc::ServerContext* context, const MarkerCfgNumberOfMarkersRequest* request, MarkerCfgNumberOfMarkersResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5340,6 +5498,31 @@ namespace nirfmxvna_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 reference_marker = request->reference_marker();
       auto status = library_->MarkerCfgReferenceMarker(instrument, selector_string, reference_marker);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::MarkerCfgTargetValue(::grpc::ServerContext* context, const MarkerCfgTargetValueRequest* request, MarkerCfgTargetValueResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 target_value = request->target_value();
+      auto status = library_->MarkerCfgTargetValue(instrument, selector_string, target_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

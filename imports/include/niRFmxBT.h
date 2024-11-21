@@ -97,6 +97,9 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_PEAK_RMS_MAGNITUDE_ERROR_MAXIMUM                                0x00b0402e
 #define RFMXBT_ATTR_MODACC_RESULTS_AVERAGE_RMS_PHASE_ERROR_MEAN                                    0x00b0402f
 #define RFMXBT_ATTR_MODACC_RESULTS_PEAK_RMS_PHASE_ERROR_MAXIMUM                                    0x00b04030
+#define RFMXBT_ATTR_MODACC_RESULTS_PREAMBLE_RMS_EVM_MEAN                                           0x00b04036
+#define RFMXBT_ATTR_MODACC_RESULTS_CONTROL_HEADER_RMS_EVM_MEAN                                     0x00b04037
+#define RFMXBT_ATTR_MODACC_RESULTS_PAYLOAD_RMS_EVM_MEAN                                            0x00b04038
 #define RFMXBT_ATTR_MODACC_RESULTS_IQ_ORIGIN_OFFSET_MEAN                                           0x00b04023
 #define RFMXBT_ATTR_MODACC_RESULTS_CLOCK_DRIFT_MEAN                                                0x00b04032
 #define RFMXBT_ATTR_MODACC_RESULTS_PREAMBLE_START_TIME_MEAN                                        0x00b04033
@@ -1209,6 +1212,15 @@ int32 __stdcall RFmxBT_ModAccFetchDEVMPerSymbolTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxBT_ModAccFetchEVMPerSymbolTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 EVMPerSymbol[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxBT_ModAccFetchDf1maxTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2225,6 +2237,24 @@ int32 __stdcall RFmxBT_ModAccGetResultsAverageRMSPhaseErrorMean(
 );
 
 int32 __stdcall RFmxBT_ModAccGetResultsPeakRMSPhaseErrorMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsPreambleRMSEVMMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsControlHeaderRMSEVMMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsPayloadRMSEVMMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

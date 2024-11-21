@@ -101,10 +101,14 @@ service NiRFmxVNA {
   rpc CalkitManagerCalkitGetCalibrationElementIDs(CalkitManagerCalkitGetCalibrationElementIDsRequest) returns (CalkitManagerCalkitGetCalibrationElementIDsResponse);
   rpc CalkitManagerCalkitGetConnectorIDs(CalkitManagerCalkitGetConnectorIDsRequest) returns (CalkitManagerCalkitGetConnectorIDsResponse);
   rpc CalkitManagerCalkitGetDescription(CalkitManagerCalkitGetDescriptionRequest) returns (CalkitManagerCalkitGetDescriptionResponse);
+  rpc CalkitManagerCalkitGetLRLLineAutoChar(CalkitManagerCalkitGetLRLLineAutoCharRequest) returns (CalkitManagerCalkitGetLRLLineAutoCharResponse);
+  rpc CalkitManagerCalkitGetTRLReferencePlane(CalkitManagerCalkitGetTRLReferencePlaneRequest) returns (CalkitManagerCalkitGetTRLReferencePlaneResponse);
   rpc CalkitManagerCalkitGetVersion(CalkitManagerCalkitGetVersionRequest) returns (CalkitManagerCalkitGetVersionResponse);
   rpc CalkitManagerCalkitRemoveCalibrationElement(CalkitManagerCalkitRemoveCalibrationElementRequest) returns (CalkitManagerCalkitRemoveCalibrationElementResponse);
   rpc CalkitManagerCalkitRemoveConnector(CalkitManagerCalkitRemoveConnectorRequest) returns (CalkitManagerCalkitRemoveConnectorResponse);
   rpc CalkitManagerCalkitSetDescription(CalkitManagerCalkitSetDescriptionRequest) returns (CalkitManagerCalkitSetDescriptionResponse);
+  rpc CalkitManagerCalkitSetLRLLineAutoChar(CalkitManagerCalkitSetLRLLineAutoCharRequest) returns (CalkitManagerCalkitSetLRLLineAutoCharResponse);
+  rpc CalkitManagerCalkitSetTRLReferencePlane(CalkitManagerCalkitSetTRLReferencePlaneRequest) returns (CalkitManagerCalkitSetTRLReferencePlaneResponse);
   rpc CalkitManagerCalkitSetVersion(CalkitManagerCalkitSetVersionRequest) returns (CalkitManagerCalkitSetVersionResponse);
   rpc CalkitManagerCreateCalkit(CalkitManagerCreateCalkitRequest) returns (CalkitManagerCreateCalkitResponse);
   rpc CalkitManagerExportCalkit(CalkitManagerExportCalkitRequest) returns (CalkitManagerExportCalkitResponse);
@@ -169,10 +173,12 @@ service NiRFmxVNA {
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc LoadDataToMeasurementMemoryFromFile(LoadDataToMeasurementMemoryFromFileRequest) returns (LoadDataToMeasurementMemoryFromFileResponse);
   rpc MarkerCfgDataSource(MarkerCfgDataSourceRequest) returns (MarkerCfgDataSourceResponse);
+  rpc MarkerCfgMode(MarkerCfgModeRequest) returns (MarkerCfgModeResponse);
   rpc MarkerCfgNumberOfMarkers(MarkerCfgNumberOfMarkersRequest) returns (MarkerCfgNumberOfMarkersResponse);
   rpc MarkerCfgPeakSearchExcursion(MarkerCfgPeakSearchExcursionRequest) returns (MarkerCfgPeakSearchExcursionResponse);
   rpc MarkerCfgPeakSearchThreshold(MarkerCfgPeakSearchThresholdRequest) returns (MarkerCfgPeakSearchThresholdResponse);
   rpc MarkerCfgReferenceMarker(MarkerCfgReferenceMarkerRequest) returns (MarkerCfgReferenceMarkerResponse);
+  rpc MarkerCfgTargetValue(MarkerCfgTargetValueRequest) returns (MarkerCfgTargetValueResponse);
   rpc MarkerCfgType(MarkerCfgTypeRequest) returns (MarkerCfgTypeResponse);
   rpc MarkerCfgX(MarkerCfgXRequest) returns (MarkerCfgXResponse);
   rpc MarkerCfgY(MarkerCfgYRequest) returns (MarkerCfgYResponse);
@@ -284,6 +290,12 @@ enum NiRFmxVNAAttribute {
   NIRFMXVNA_ATTRIBUTE_SEGMENT_NUMBER_OF_FREQUENCY_POINTS = 13631574;
   NIRFMXVNA_ATTRIBUTE_X_AXIS_VALUES = 13631575;
   NIRFMXVNA_ATTRIBUTE_CORRECTION_INTERPOLATION_ENABLED = 13631576;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_LOSS1_ENABLED = 13631577;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_LOSS1_FREQUENCY = 13631578;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_LOSS1 = 13631579;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED = 13631580;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_LOSS2_FREQUENCY = 13631581;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_LOSS2 = 13631582;
   NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY = 13633536;
   NIRFMXVNA_ATTRIBUTE_SPARAMS_MEASUREMENT_ENABLED = 13635584;
   NIRFMXVNA_ATTRIBUTE_SPARAMS_NUMBER_OF_SPARAMETERS = 13635586;
@@ -385,6 +397,11 @@ enum CalkitManagerCalkitConnectorGender {
   CALKIT_MANAGER_CALKIT_CONNECTOR_GENDER_NO_GENDER = 2;
 }
 
+enum CalkitManagerCalkitTrlReferencePlane {
+  CALKIT_MANAGER_CALKIT_TRL_REFERENCE_PLANE_THRU = 0;
+  CALKIT_MANAGER_CALKIT_TRL_REFERENCE_PLANE_REFLECT = 1;
+}
+
 enum FrequencyReferenceSource {
   FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
   FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
@@ -393,6 +410,11 @@ enum FrequencyReferenceSource {
   FREQUENCY_REFERENCE_SOURCE_CLK_IN = 4;
   FREQUENCY_REFERENCE_SOURCE_REF_IN2 = 5;
   FREQUENCY_REFERENCE_SOURCE_PXI_CLK_MASTER = 6;
+}
+
+enum MarkerMode {
+  MARKER_MODE_CONTINUOUS = 0;
+  MARKER_MODE_DISCRETE = 1;
 }
 
 enum MarkerPeakSearchExcursionEnabled {
@@ -413,6 +435,9 @@ enum MarkerSearchMode {
   MARKER_SEARCH_MODE_NEXT_PEAK = 4;
   MARKER_SEARCH_MODE_NEXT_LEFT_PEAK = 5;
   MARKER_SEARCH_MODE_NEXT_RIGHT_PEAK = 6;
+  MARKER_SEARCH_MODE_TARGET = 7;
+  MARKER_SEARCH_MODE_NEXT_LEFT_TARGET = 8;
+  MARKER_SEARCH_MODE_NEXT_RIGHT_TARGET = 9;
 }
 
 enum MarkerType {
@@ -460,6 +485,7 @@ enum NiRFmxVNAInt32AttributeValues {
   NIRFMXVNA_INT32_CORRECTION_CALIBRATION_CALKIT_TYPE_MECHANICAL = 1;
   NIRFMXVNA_INT32_CORRECTION_CALIBRATION_METHOD_SOL = 0;
   NIRFMXVNA_INT32_CORRECTION_CALIBRATION_METHOD_SOLT = 1;
+  NIRFMXVNA_INT32_CORRECTION_CALIBRATION_METHOD_TRL = 2;
   NIRFMXVNA_INT32_CORRECTION_CALIBRATION_THRU_METHOD_AUTO = 0;
   NIRFMXVNA_INT32_CORRECTION_CALIBRATION_THRU_METHOD_DEFINED_THRU = 1;
   NIRFMXVNA_INT32_CORRECTION_CALIBRATION_THRU_METHOD_FLUSH_THRU = 2;
@@ -473,6 +499,10 @@ enum NiRFmxVNAInt32AttributeValues {
   NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED_TRUE = 1;
   NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_ENABLED_FALSE = 0;
   NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_LOSS1_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_LOSS1_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED_TRUE = 1;
   NIRFMXVNA_INT32_CORRECTION_PORT_SUBSET_ENABLED_FALSE = 0;
   NIRFMXVNA_INT32_CORRECTION_PORT_SUBSET_ENABLED_TRUE = 1;
   NIRFMXVNA_INT32_DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
@@ -1459,6 +1489,27 @@ message CalkitManagerCalkitGetDescriptionResponse {
   string calkit_description = 2;
 }
 
+message CalkitManagerCalkitGetLRLLineAutoCharRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitGetLRLLineAutoCharResponse {
+  int32 status = 1;
+  int32 auto_characterization_enabled = 2;
+}
+
+message CalkitManagerCalkitGetTRLReferencePlaneRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitGetTRLReferencePlaneResponse {
+  int32 status = 1;
+  CalkitManagerCalkitTrlReferencePlane reference_plane = 2;
+  int32 reference_plane_raw = 3;
+}
+
 message CalkitManagerCalkitGetVersionRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1496,6 +1547,29 @@ message CalkitManagerCalkitSetDescriptionRequest {
 }
 
 message CalkitManagerCalkitSetDescriptionResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitSetLRLLineAutoCharRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 auto_characterization_enabled = 3;
+}
+
+message CalkitManagerCalkitSetLRLLineAutoCharResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitSetTRLReferencePlaneRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof reference_plane_enum {
+    CalkitManagerCalkitTrlReferencePlane reference_plane = 3;
+    int32 reference_plane_raw = 4;
+  }
+}
+
+message CalkitManagerCalkitSetTRLReferencePlaneResponse {
   int32 status = 1;
 }
 
@@ -2233,6 +2307,19 @@ message MarkerCfgDataSourceResponse {
   int32 status = 1;
 }
 
+message MarkerCfgModeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof marker_mode_enum {
+    MarkerMode marker_mode = 3;
+    int32 marker_mode_raw = 4;
+  }
+}
+
+message MarkerCfgModeResponse {
+  int32 status = 1;
+}
+
 message MarkerCfgNumberOfMarkersRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2278,6 +2365,16 @@ message MarkerCfgReferenceMarkerRequest {
 }
 
 message MarkerCfgReferenceMarkerResponse {
+  int32 status = 1;
+}
+
+message MarkerCfgTargetValueRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double target_value = 3;
+}
+
+message MarkerCfgTargetValueResponse {
   int32 status = 1;
 }
 

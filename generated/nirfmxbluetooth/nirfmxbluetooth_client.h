@@ -113,6 +113,7 @@ ModAccFetchDf1maxTraceResponse mod_acc_fetch_df1max_trace(const StubPtr& stub, c
 ModAccFetchDf2Response mod_acc_fetch_df2(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDf2maxTraceResponse mod_acc_fetch_df2max_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDf4avgTraceResponse mod_acc_fetch_df4avg_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+ModAccFetchEVMPerSymbolTraceResponse mod_acc_fetch_evm_per_symbol_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchFrequencyErrorBRResponse mod_acc_fetch_frequency_error_br(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchFrequencyErrorEDRResponse mod_acc_fetch_frequency_error_edr(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchFrequencyErrorLEResponse mod_acc_fetch_frequency_error_le(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);

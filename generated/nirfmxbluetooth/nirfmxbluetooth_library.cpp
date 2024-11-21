@@ -118,6 +118,7 @@ NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary(std::shared_ptr<nidevice_grpc::Sh
   function_pointers_.ModAccFetchDf2 = reinterpret_cast<ModAccFetchDf2Ptr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchDf2"));
   function_pointers_.ModAccFetchDf2maxTrace = reinterpret_cast<ModAccFetchDf2maxTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchDf2maxTrace"));
   function_pointers_.ModAccFetchDf4avgTrace = reinterpret_cast<ModAccFetchDf4avgTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchDf4avgTrace"));
+  function_pointers_.ModAccFetchEVMPerSymbolTrace = reinterpret_cast<ModAccFetchEVMPerSymbolTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchEVMPerSymbolTrace"));
   function_pointers_.ModAccFetchFrequencyErrorBR = reinterpret_cast<ModAccFetchFrequencyErrorBRPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorBR"));
   function_pointers_.ModAccFetchFrequencyErrorEDR = reinterpret_cast<ModAccFetchFrequencyErrorEDRPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorEDR"));
   function_pointers_.ModAccFetchFrequencyErrorLE = reinterpret_cast<ModAccFetchFrequencyErrorLEPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorLE"));
@@ -907,6 +908,14 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchDf4avgTrace(niRFmxInstrHandle instrumen
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf4avgTrace.");
   }
   return function_pointers_.ModAccFetchDf4avgTrace(instrumentHandle, selectorString, timeout, time, df4avg, arraySize, actualArraySize);
+}
+
+int32 NiRFmxBluetoothLibrary::ModAccFetchEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 evmPerSymbol[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchEVMPerSymbolTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchEVMPerSymbolTrace.");
+  }
+  return function_pointers_.ModAccFetchEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, evmPerSymbol, arraySize, actualArraySize);
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchFrequencyErrorBR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* initialFrequencyErrorMaximum, float64* peakFrequencyDriftMaximum, float64* peakFrequencyDriftRateMaximum)
