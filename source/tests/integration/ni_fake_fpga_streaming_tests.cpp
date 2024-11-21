@@ -99,7 +99,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_scalar)
 {
   auto session = std::make_unique<nidevice_grpc::Session>();
 
-  // Set expecttion on the mocked fpga lib method.
+  // Set expectation on the mocked fpga lib method.
   EXPECT_CALL(*library(), ReadI32(_, 0, ::testing::_))
       .WillOnce(::testing::DoAll(::testing::SetArgPointee<2>(1), ::testing::Return(0)))
       .WillOnce(::testing::DoAll(::testing::SetArgPointee<2>(2), ::testing::Return(0)))
@@ -115,7 +115,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_scalar)
       .WillOnce(::testing::DoAll(::testing::SetArgPointee<2>(15), ::testing::Return(0)))
       .WillRepeatedly(::testing::DoAll(::testing::SetArgPointee<2>(999), ::testing::Return(0)));
 
-  // Dont worry about deleting read_moniker32 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
+  // Dont worry about deleting read_moniker_i32 and read_moniker_i64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
   auto begin_read_i32_response = nifpga_grpc::experimental::client::begin_read_i32(stub(), *session, 0);
   ni::data_monikers::Moniker* read_moniker_i32 = new ni::data_monikers::Moniker(begin_read_i32_response.moniker());
   auto begin_read_i64_response = nifpga_grpc::experimental::client::begin_read_i64(stub(), *session, 0);
@@ -131,16 +131,16 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_scalar)
   for (int i = 0; i < 5; i++)
   {
     // Read data
-    nifpga_grpc::I32Data read_values32;
-    nifpga_grpc::I64Data read_values64;
+    nifpga_grpc::I32Data read_value_i32;
+    nifpga_grpc::I64Data read_value_i64;
 
     ni::data_monikers::MonikerReadResponse read_result;
     stream->Read(&read_result);
 
-    read_result.data().values(0).UnpackTo(&read_values32);
-    EXPECT_EQ(read_values32.value(), i + 1);
-    read_result.data().values(1).UnpackTo(&read_values64);
-    EXPECT_EQ(read_values64.value(), i + 10);
+    read_result.data().values(0).UnpackTo(&read_value_i32);
+    EXPECT_EQ(read_value_i32.value(), i + 1);
+    read_result.data().values(1).UnpackTo(&read_value_i64);
+    EXPECT_EQ(read_value_i64.value(), i + 11);
   }
 
   moniker_context.TryCancel();
@@ -151,16 +151,18 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
   auto session = std::make_unique<nidevice_grpc::Session>();
 
   // create some data for the array
-  std::vector<pb::int32> data_int32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  std::vector<pb::int64> data_int64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
+  std::vector<pb::int32> data_int_i32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<pb::int64> data_int_i64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
+  int size_i32 = data_int_i32.size();
+  int size_i64 = data_int_i64.size();
 
-  // Set expecttion on the mocked fpga lib method.
-  EXPECT_CALL(*library(), ReadArrayI32(_, 0, ::testing::_, 10))
-      .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(data_int32.begin(), data_int32.begin() + 10), ::testing::Return(0)));
+  // Set expectation on the mocked fpga lib method.
+  EXPECT_CALL(*library(), ReadArrayI32(_, 0, ::testing::_, size_i32))
+      .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(data_int_i32.begin(), data_int_i32.begin() + size_i32), ::testing::Return(0)));
   EXPECT_CALL(*library(), ReadArrayI64(_, 0, ::testing::_, 9))
-      .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(data_int64.begin(), data_int64.begin() + 9), ::testing::Return(0)));
+      .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(data_int_i64.begin(), data_int_i64.begin() + size_i64), ::testing::Return(0)));
 
-  // Dont worry about deleting read_moniker32 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
+  // Dont worry about deleting read_moniker_i32 and read_moniker_i64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
   auto begin_read_i32_array_response = nifpga_grpc::experimental::client::begin_read_array_i32(stub(), *session, 0, 10);
   auto read_moniker_i32 = new ni::data_monikers::Moniker(begin_read_i32_array_response.moniker());
 
@@ -177,23 +179,18 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
 
   for (int i = 0; i < 5; i++) {
     // Read data
-    nifpga_grpc::ArrayI32Data read_values32;
-    nifpga_grpc::ArrayI64Data read_values64;
+    nifpga_grpc::ArrayI32Data read_values_i32;
+    nifpga_grpc::ArrayI64Data read_values_i64;
 
     ni::data_monikers::MonikerReadResponse read_result;
     stream->Read(&read_result);
 
-    read_result.data().values(0).UnpackTo(&read_values32);
-    read_result.data().values(1).UnpackTo(&read_values64);
-    ASSERT_THAT(read_values32.value(), SizeIs(10));
-    ASSERT_THAT(read_values32.value(), ElementsAreArray(data_int32));
-    ASSERT_THAT(read_values64.value(), SizeIs(9));
-    ASSERT_THAT(read_values64.value(), ElementsAreArray(data_int64));
-
-    for (int i = 0; i < read_values32.value_size(); i++)
-    {
-      EXPECT_EQ(read_values32.value(i), data_int32[i]);
-    }
+    read_result.data().values(0).UnpackTo(&read_values_i32);
+    read_result.data().values(1).UnpackTo(&read_values_i64);
+    ASSERT_THAT(read_values_i32.value(), SizeIs(10));
+    ASSERT_THAT(read_values_i32.value(), ElementsAreArray(data_int_i32));
+    ASSERT_THAT(read_values_i64.value(), SizeIs(9));
+    ASSERT_THAT(read_values_i64.value(), ElementsAreArray(data_int_i64));
   }
 
   moniker_context.TryCancel();
@@ -203,21 +200,21 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
 {   
   // create some setup for writing
   auto session = std::make_unique<nidevice_grpc::Session>();
-  std::vector<pb::int32> data_int32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  std::vector<pb::int64> data_int64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
+  std::vector<pb::int32> data_int_i32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<pb::int64> data_int_i64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
   int control = 1;
-  int size_i32 = data_int32.size();
-  int size_i64 = data_int64.size();
+  int size_i32 = data_int_i32.size();
+  int size_i64 = data_int_i64.size();
 
-  // Set expecttion on the mocked fpga lib method.
+  // Set expectation on the mocked fpga lib method.
   EXPECT_CALL(*library(), WriteArrayI32(_, control, _, size_i32))
-      .With(Args<2,3>(ElementsAreArray(data_int32)))
+      .With(Args<2, 3>(ElementsAreArray(data_int_i32)))
       .WillRepeatedly(::testing::Return(0));
   EXPECT_CALL(*library(), WriteArrayI64(_, control, _, size_i64))
-      .With(Args<2, 3>(ElementsAreArray(data_int64)))
+      .With(Args<2, 3>(ElementsAreArray(data_int_i64)))
       .WillRepeatedly(::testing::Return(0));
 
-  // Dont worry about deleting read_moniker32 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
+  // Dont worry about deleting write_moniker_i32 and write_moniker_i64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
   auto begin_write_i32_array_response = nifpga_grpc::experimental::client::begin_write_array_i32(stub(), *session, control);
   auto write_moniker_i32 = new ni::data_monikers::Moniker(begin_write_i32_array_response.moniker());
   auto begin_write_i64_response = nifpga_grpc::experimental::client::begin_write_array_i64(stub(), *session, control);
@@ -236,9 +233,9 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
     // Write data
     nifpga_grpc::ArrayI32Data write_values_array_i32;
     nifpga_grpc::ArrayI64Data write_values_array_i64;
-    // copy values from data_int32 to write_values32 and data_int64 to write_values64
-    write_values_array_i32.mutable_value()->Add(data_int32.begin(), data_int32.end());
-    write_values_array_i64.mutable_value()->Add(data_int64.begin(), data_int64.end());
+
+    write_values_array_i32.mutable_value()->Add(data_int_i32.begin(), data_int_i32.end());
+    write_values_array_i64.mutable_value()->Add(data_int_i64.begin(), data_int_i64.end());
 
     ni::data_monikers::MonikerWriteRequest write_data_request;
     write_data_request.mutable_data()->add_values()->PackFrom(write_values_array_i32);
@@ -255,6 +252,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
 TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
 {
   auto session = std::make_unique<nidevice_grpc::Session>();
+
   // create some data for the array
   std::vector<pb::int32> write_data_int32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   std::vector<pb::int64> write_data_int64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
@@ -262,7 +260,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
   int write_size_i32 = write_data_int32.size();
   int write_size_i64 = write_data_int64.size();
 
-  // Set expecttion on the mocked fpga lib method.
+  // Set expectation on the mocked fpga lib method.
   EXPECT_CALL(*library(), WriteArrayI32(_, control, _, write_size_i32))
       .With(Args<2,3>(ElementsAreArray(write_data_int32)))
       .WillRepeatedly(::testing::Return(0));
@@ -276,19 +274,19 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
   int read_size_i32 = read_data_int32.size();
   int read_size_i64 = read_data_int64.size();
 
-  // Set expecttion on the mocked fpga lib method.
+  // Set expectation on the mocked fpga lib method.
   EXPECT_CALL(*library(), ReadArrayI32(_, 0, ::testing::_, 10))
       .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(read_data_int32.begin(), read_data_int32.begin() + read_size_i32), ::testing::Return(0)));
   EXPECT_CALL(*library(), ReadArrayI64(_, 0, ::testing::_, 9))
       .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(read_data_int64.begin(), read_data_int64.begin() + read_size_i64), ::testing::Return(0)));
 
-  // Dont worry about deleting read_moniker32 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
+  // Dont worry about deleting write_moniker_i32 and write_moniker_i64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
   auto begin_write_i32_array_response = nifpga_grpc::experimental::client::begin_write_array_i32(stub(), *session, control);
   auto write_moniker_i32 = new ni::data_monikers::Moniker(begin_write_i32_array_response.moniker());
   auto begin_write_i64_response = nifpga_grpc::experimental::client::begin_write_array_i64(stub(), *session, control);
   auto write_moniker_i64 = new ni::data_monikers::Moniker(begin_write_i64_response.moniker());
 
-    // Dont worry about deleting read_moniker32 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
+    // Dont worry about deleting read_moniker_i32 and read_moniker_i64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
   auto begin_read_i32_array__response = nifpga_grpc::experimental::client::begin_read_array_i32(stub(), *session, 0, read_data_int32.size());
   auto read_moniker_i32 = new ni::data_monikers::Moniker(begin_read_i32_array__response.moniker());
   auto begin_read_i64_response = nifpga_grpc::experimental::client::begin_read_array_i64(stub(), *session, 0, read_data_int64.size());
@@ -327,9 +325,9 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
 
     read_result.data().values(0).UnpackTo(&read_values_i32);
     read_result.data().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i32.value(), SizeIs(10));
+    ASSERT_THAT(read_values_i32.value(), SizeIs(read_size_i32));
     ASSERT_THAT(read_values_i32.value(), ElementsAreArray(read_data_int32));
-    ASSERT_THAT(read_values_i64.value(), SizeIs(9));
+    ASSERT_THAT(read_values_i64.value(), SizeIs(read_size_i64));
     ASSERT_THAT(read_values_i64.value(), ElementsAreArray(read_data_int64));
   }
 
@@ -349,7 +347,7 @@ TEST_F(NiFakeFpgaStreamingTests, DISABLED_SidebandStreamReadWrite_Array)
   int size_i32 = write_data_int32.size();
   int size_i64 = write_data_int64.size();
 
-  // Set expecttion on the mocked fpga lib method.
+  // Set expectation on the mocked fpga lib method.
   EXPECT_CALL(*library(), WriteArrayI32(_, control, _, size_i32))
       .With(Args<2, 3>(ElementsAreArray(write_data_int32)))
       .WillRepeatedly(::testing::Return(0));
@@ -361,7 +359,7 @@ TEST_F(NiFakeFpgaStreamingTests, DISABLED_SidebandStreamReadWrite_Array)
   std::vector<pb::int32> data_int32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   std::vector<pb::int64> data_int64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
 
-  // Set expecttion on the mocked fpga lib method.
+  // Set expectation on the mocked fpga lib method.
   EXPECT_CALL(*library(), ReadArrayI32(_, 0, ::testing::_, 10))
       .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(data_int32.begin(), data_int32.begin() + 10), ::testing::Return(0)));
   EXPECT_CALL(*library(), ReadArrayI64(_, 0, ::testing::_, 9))
