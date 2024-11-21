@@ -451,7 +451,7 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
    is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
    c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(streaming_param)
    streaming_param_name = common_helpers._camel_to_snake(streaming_param['name'])
-   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"])
+   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"]).replace("const ", "")
 
 %>\
 % if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
@@ -477,7 +477,7 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 % else:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
 % if common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
-    auto ${streaming_param_name} = const_cast<${data_type}*>(reinterpret_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data()));
+    auto ${streaming_param_name} = reinterpret_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
 % else:
     auto ${streaming_param_name} = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
 % endif

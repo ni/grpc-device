@@ -850,7 +850,7 @@ namespace nidaqmx_grpc {
     packedData.UnpackTo(&arrayi32data_message);
     
     auto data_array = arrayi32data_message.value();
-    auto write_array = const_cast<const int32*>(reinterpret_cast<const int32*>(arrayi32data_message.value().data()));
+    auto write_array = reinterpret_cast<const int32*>(arrayi32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
@@ -914,7 +914,7 @@ namespace nidaqmx_grpc {
     packedData.UnpackTo(&arrayu32data_message);
     
     auto data_array = arrayu32data_message.value();
-    auto write_array = const_cast<const uInt32*>(reinterpret_cast<const uInt32*>(arrayu32data_message.value().data()));
+    auto write_array = reinterpret_cast<const uInt32*>(arrayu32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
@@ -998,7 +998,7 @@ namespace nidaqmx_grpc {
     packedData.UnpackTo(&arrayu32data_message);
     
     auto data_array = arrayu32data_message.value();
-    auto write_array = const_cast<const uInt32*>(reinterpret_cast<const uInt32*>(arrayu32data_message.value().data()));
+    auto write_array = reinterpret_cast<const uInt32*>(arrayu32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
@@ -19301,15 +19301,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto value_vector = std::vector<int32>();
-      value_vector.reserve(request->value().size());
-      std::transform(
-        request->value().begin(),
-        request->value().end(),
-        std::back_inserter(value_vector),
-        [](auto x) { return x; });
-      auto value = value_vector.data();
-
+      auto value = reinterpret_cast<const int32*>(request->value().data());
       uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetTrigAttributeInt32Array(task, attribute, value, size);
       if (!status_ok(status)) {
@@ -20583,7 +20575,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto write_array = const_cast<const int32*>(reinterpret_cast<const const int32*>(request->write_array().data()));
+      auto write_array = reinterpret_cast<const int32*>(request->write_array().data());
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
@@ -20794,7 +20786,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto write_array = const_cast<const uInt32*>(reinterpret_cast<const const uInt32*>(request->write_array().data()));
+      auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
@@ -20965,8 +20957,8 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto high_ticks = const_cast<const uInt32*>(reinterpret_cast<const const uInt32*>(request->high_ticks().data()));
-      auto low_ticks = const_cast<const uInt32*>(reinterpret_cast<const const uInt32*>(request->low_ticks().data()));
+      auto high_ticks = reinterpret_cast<const uInt32*>(request->high_ticks().data());
+      auto low_ticks = reinterpret_cast<const uInt32*>(request->low_ticks().data());
       auto reserved = nullptr;
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, reserved);
@@ -21331,7 +21323,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto write_array = const_cast<const uInt32*>(reinterpret_cast<const const uInt32*>(request->write_array().data()));
+      auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);

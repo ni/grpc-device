@@ -254,7 +254,7 @@ def get_underlying_type_name(parameter_type: str) -> str:
     Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving
     just the underlying type name.
     """
-    return parameter_type.replace("struct ", "").replace("[]", "").replace("const ", "")
+    return parameter_type.replace("struct ", "").replace("[]", "")
 
 
 def _get_underlying_grpc_type_name(grpc_type: str) -> str:

@@ -10118,7 +10118,7 @@ message SetTrigAttributeInt32ArrayRequest {
     TriggerInt32ArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
-  repeated TriggerInt32AttributeValues value = 4;
+  repeated int32 value = 4;
 }
 
 message SetTrigAttributeInt32ArrayResponse {
