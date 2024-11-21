@@ -376,12 +376,12 @@ std::vector<${data_type}> array(${size}, ${data_type}());
 % elif is_coerced:
 std::vector<${data_type}> array(${size});
 % else:
-auto array_storage = std::vector<${data_type}>(${size});
-    auto array = array_storage.data();
+function_data->data.mutable_value()->Resize(${size}, 0);
+    auto array = function_data->data.mutable_value()->mutable_data();
 % endif
     auto status = library->${c_api_name}(${arg_string});
-% if is_coerced or common_helpers.supports_standard_copy_conversion_routines(streaming_param):
     if (status >= 0) {
+% if is_coerced or common_helpers.supports_standard_copy_conversion_routines(streaming_param):
       std::transform(
         array.begin(),
         array.begin() + ${size},
@@ -389,20 +389,9 @@ auto array_storage = std::vector<${data_type}>(${size});
         [&](auto x) {
            return x;
       });
-      packedData.PackFrom(function_data->data);
-    }
-% else:
-    if (status >= 0) {
-      std::transform(
-        array,
-        array + ${size},
-        function_data->data.mutable_value()->begin(),
-        [&](auto x) {
-           return x;
-      });
-      packedData.PackFrom(function_data->data);
-    }
 % endif
+      packedData.PackFrom(function_data->data);
+    }
 </%def>
 
 <%def name="streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_type)">\
