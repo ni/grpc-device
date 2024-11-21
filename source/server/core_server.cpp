@@ -29,12 +29,13 @@ using FeatureToggles = nidevice_grpc::FeatureToggles;
 
 struct ServerConfiguration {
   std::string config_file_path;
-  std::string server_address;
-  std::string sideband_address;
+  std::string address;
   std::string server_cert;
   std::string server_key;
   std::string root_cert;
   int max_message_size;
+  int server_port;
+  int sideband_port;
   nidevice_grpc::FeatureToggles feature_toggles;
 };
 
@@ -47,8 +48,9 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
         : nidevice_grpc::ServerConfigurationParser(config_file_path);
 
     config.config_file_path = server_config_parser.get_config_file_path();
-    config.server_address = server_config_parser.parse_address();
-    config.sideband_address = server_config_parser.parse_sideband_address();
+    config.address = server_config_parser.parse_bind_address();
+    config.server_port = server_config_parser.parse_port();
+    config.sideband_port = server_config_parser.parse_sideband_port();
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
@@ -92,7 +94,8 @@ static void RunServer(const ServerConfiguration& config)
   grpc::ServerBuilder builder;
   int listeningPort = 0;
   nidevice_grpc::ServerSecurityConfiguration server_security_config(config.server_cert, config.server_key, config.root_cert);
-  builder.AddListeningPort(config.server_address, server_security_config.get_credentials(), &listeningPort);
+  std::string server_address = config.address + ":" + std::to_string(config.server_port);
+  builder.AddListeningPort(server_address, server_security_config.get_credentials(), &listeningPort);
 
   auto services = nidevice_grpc::register_all_services(builder, config.feature_toggles);
 
@@ -110,7 +113,7 @@ static void RunServer(const ServerConfiguration& config)
     }
     server = builder.BuildAndStart();
     if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
-      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), 50055);
+      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.address.c_str(), config.sideband_port);
       // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
       // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
     }
@@ -119,7 +122,7 @@ static void RunServer(const ServerConfiguration& config)
   if (!server) {
     nidevice_grpc::logging::log(
         nidevice_grpc::logging::Level_Error,
-        "Server failed to start on %s", config.server_address.c_str());
+        "Server failed to start on %s", server_address.c_str());
     exit(EXIT_FAILURE);
   }
 

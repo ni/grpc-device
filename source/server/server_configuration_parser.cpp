@@ -17,7 +17,7 @@ namespace nidevice_grpc {
 static const char* kDefaultFilename = "server_config.json";
 static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
-static const char* kSidebandAddressJsonKey = "sideband_address";
+static const char* kSidebandPortJsonKey = "sideband_port";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
@@ -102,12 +102,6 @@ std::string ServerConfigurationParser::parse_address() const
   return address;
 }
 
-std::string ServerConfigurationParser::parse_sideband_address() const
-{
-  auto it = config_file_.find(kSidebandAddressJsonKey);
-  return it != config_file_.end() ? it->get<std::string>() : "";
-}
-
 std::string ServerConfigurationParser::parse_server_cert() const
 {
   auto file_name = parse_key_from_security_section(kServerCertJsonKey);
@@ -139,6 +133,21 @@ int ServerConfigurationParser::parse_max_message_size() const
   }
 
   return UNLIMITED_MAX_MESSAGE_SIZE;
+}
+
+int ServerConfigurationParser::parse_sideband_port() const
+{
+  auto sideband_port = config_file_.find(kSidebandPortJsonKey);
+  if (sideband_port != config_file_.end()) {
+    try {
+      return sideband_port->get<int>();
+    }
+    catch (const nlohmann::json::type_error& ex) {
+      throw InvalidMaxMessageSizeException(ex.what());
+    }
+  }
+
+  return DEFAULT_SIDEBAND_PORT;
 }
 
 FeatureToggles ServerConfigurationParser::parse_feature_toggles() const
