@@ -489,7 +489,7 @@ namespace nifpga_grpc {
     auto size = function_data->size;
 
     function_data->data.mutable_value()->Resize(size, 0);
-    auto array =  function_data->data.mutable_value()->mutable_data();
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayDbl(session, indicator, array, size);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -537,7 +537,7 @@ namespace nifpga_grpc {
     auto size = function_data->size;
 
     function_data->data.mutable_value()->Resize(size, 0);
-    auto array =  function_data->data.mutable_value()->mutable_data();
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayI32(session, indicator, array, size);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -558,7 +558,7 @@ namespace nifpga_grpc {
     auto size = function_data->size;
 
     function_data->data.mutable_value()->Resize(size, 0);
-    auto array =  function_data->data.mutable_value()->mutable_data();
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayI64(session, indicator, array, size);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -606,7 +606,7 @@ namespace nifpga_grpc {
     auto size = function_data->size;
 
     function_data->data.mutable_value()->Resize(size, 0);
-    auto array =  function_data->data.mutable_value()->mutable_data();
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArraySgl(session, indicator, array, size);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -654,7 +654,7 @@ namespace nifpga_grpc {
     auto size = function_data->size;
 
     function_data->data.mutable_value()->Resize(size, 0);
-    auto array =  function_data->data.mutable_value()->mutable_data();
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayU32(session, indicator, array, size);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -675,7 +675,7 @@ namespace nifpga_grpc {
     auto size = function_data->size;
 
     function_data->data.mutable_value()->Resize(size, 0);
-    auto array =  function_data->data.mutable_value()->mutable_data();
+    auto array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadArrayU64(session, indicator, array, size);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -721,8 +721,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    NiFpga_Bool value = {};
+    NiFpga_Bool value {};
     auto status = library->ReadBool(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -742,8 +741,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    double value = {};
+    double value {};
     auto status = library->ReadDbl(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -763,8 +761,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    int16_t value = {};
+    int16_t value {};
     auto status = library->ReadI16(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -784,8 +781,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    int32_t value = {};
+    int32_t value {};
     auto status = library->ReadI32(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -805,8 +801,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    int64_t value = {};
+    int64_t value {};
     auto status = library->ReadI64(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -826,8 +821,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    int8_t value = {};
+    int8_t value {};
     auto status = library->ReadI8(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -847,8 +841,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    float value = {};
+    float value {};
     auto status = library->ReadSgl(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -868,8 +861,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    uint16_t value = {};
+    uint16_t value {};
     auto status = library->ReadU16(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -889,8 +881,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    uint32_t value = {};
+    uint32_t value {};
     auto status = library->ReadU32(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -910,8 +901,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    uint64_t value = {};
+    uint64_t value {};
     auto status = library->ReadU64(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -931,8 +921,7 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto indicator = function_data->indicator;
 
-    
-    uint8_t value = {};
+    uint8_t value {};
     auto status = library->ReadU8(session, indicator, &value);
     function_data->data.set_value(value);
     if (status >= 0) {

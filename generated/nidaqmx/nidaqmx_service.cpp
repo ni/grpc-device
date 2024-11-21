@@ -368,7 +368,7 @@ namespace nidaqmx_grpc {
 
     int32 samps_per_chan_read = {};
     function_data->data.mutable_value()->Resize(array_size_in_samps, 0);
-    auto read_array =  function_data->data.mutable_value()->mutable_data();
+    auto read_array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -388,8 +388,7 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
 
-    
-    float64 value = {};
+    float64 value {};
     auto status = library->ReadAnalogScalarF64(task, timeout, &value, reserved);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -446,7 +445,7 @@ namespace nidaqmx_grpc {
 
     int32 samps_per_chan_read = {};
     function_data->data.mutable_value()->Resize(array_size_in_samps, 0);
-    auto read_array =  reinterpret_cast<int32*>(function_data->data.mutable_value()->mutable_data());   
+    auto read_array = reinterpret_cast<int32*>(function_data->data.mutable_value()->mutable_data());
     auto status = library->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -502,7 +501,7 @@ namespace nidaqmx_grpc {
 
     int32 samps_per_chan_read = {};
     function_data->data.mutable_value()->Resize(array_size_in_samps, 0);
-    auto read_array =  reinterpret_cast<uInt32*>(function_data->data.mutable_value()->mutable_data());   
+    auto read_array = reinterpret_cast<uInt32*>(function_data->data.mutable_value()->mutable_data());
     auto status = library->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -526,7 +525,7 @@ namespace nidaqmx_grpc {
 
     int32 samps_per_chan_read = {};
     function_data->data.mutable_value()->Resize(array_size_in_samps, 0);
-    auto read_array =  function_data->data.mutable_value()->mutable_data();
+    auto read_array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -551,7 +550,7 @@ namespace nidaqmx_grpc {
 
     int32 samps_per_chan_read = {};
     function_data->data.mutable_value()->Resize(array_size_in_samps, 0);
-    auto read_array =  function_data->data.mutable_value()->mutable_data();
+    auto read_array = function_data->data.mutable_value()->mutable_data();
     auto status = library->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -571,8 +570,7 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
 
-    
-    float64 value = {};
+    float64 value {};
     auto status = library->ReadCounterScalarF64(task, timeout, &value, reserved);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -593,8 +591,7 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
 
-    
-    uInt32 value = {};
+    uInt32 value {};
     auto status = library->ReadCounterScalarU32(task, timeout, &value, reserved);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -619,7 +616,7 @@ namespace nidaqmx_grpc {
 
     int32 samps_per_chan_read = {};
     function_data->data.mutable_value()->Resize(array_size_in_samps, 0);
-    auto read_array =  reinterpret_cast<uInt32*>(function_data->data.mutable_value()->mutable_data());   
+    auto read_array = reinterpret_cast<uInt32*>(function_data->data.mutable_value()->mutable_data());
     auto status = library->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -644,7 +641,7 @@ namespace nidaqmx_grpc {
 
     int32 samps_per_chan_read = {};
     function_data->data.mutable_value()->Resize(array_size_in_samps, 0);
-    auto read_array =  reinterpret_cast<uInt32*>(function_data->data.mutable_value()->mutable_data());   
+    auto read_array = reinterpret_cast<uInt32*>(function_data->data.mutable_value()->mutable_data());
     auto status = library->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -664,8 +661,7 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
 
-    
-    uInt32 value = {};
+    uInt32 value {};
     auto status = library->ReadDigitalScalarU32(task, timeout, &value, reserved);
     function_data->data.set_value(value);
     if (status >= 0) {
@@ -722,7 +718,7 @@ namespace nidaqmx_grpc {
 
     int32 samps_per_chan_read = {};
     function_data->data.mutable_value()->Resize(array_size_in_samps, 0);
-    auto read_array =  reinterpret_cast<uInt32*>(function_data->data.mutable_value()->mutable_data());   
+    auto read_array = reinterpret_cast<uInt32*>(function_data->data.mutable_value()->mutable_data());
     auto status = library->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
     if (status >= 0) {
       packedData.PackFrom(function_data->data);
@@ -741,8 +737,7 @@ namespace nidaqmx_grpc {
     auto task = function_data->task;
     auto timeout = function_data->timeout;
 
-    
-    bool32 is_late = {};
+    bool32 is_late {};
     auto status = library->WaitForNextSampleClock(task, timeout, &is_late);
     function_data->data.set_value(is_late);
     if (status >= 0) {
