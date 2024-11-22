@@ -52,6 +52,7 @@ class NiFakeFpgaStreamingTests : public ::testing::Test {
         nifpga_grpc::RegisterMonikerEndpoints();
         stub_ = nifpga_grpc::NiFpga::NewStub(server_->InProcessChannel(::grpc::ChannelArguments()));
         moniker_service_stub_ = ni::data_monikers::DataMoniker::NewStub(server_->InProcessChannel(::grpc::ChannelArguments()));
+        Mock::AllowLeak(library_.get());
 
         // TODO: Implement sideband socket thread when we could support testing sideband streaming inprocess
         // sideband_socket_thread_ = new std::thread(RunSidebandSocketsAccept, "localhost", 50055);
