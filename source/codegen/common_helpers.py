@@ -402,7 +402,7 @@ def _is_actually_pascal(camel_or_pascal_string: str) -> bool:
     return "A" <= camel_or_pascal_string[0] <= "Z"
 
 
-def _camel_to_snake(camel_string: str) -> str:
+def camel_to_snake(camel_string: str) -> str:
     """Return a snake_string for a given camelString.
 
     External callers should use/create a wrapper instead (i.e. get_grpc_field_name).
@@ -472,7 +472,7 @@ def ensure_pascal_case(pascal_or_camel_string):
 def pascal_to_snake(pascal_string):
     """Return a snake_string for a given PascalString."""
     camel_string = _pascal_to_camel(pascal_string)
-    snake_string = _camel_to_snake(camel_string)
+    snake_string = camel_to_snake(camel_string)
     return "".join(snake_string)
 
 
@@ -1128,7 +1128,7 @@ def get_grpc_field_name(param: dict) -> str:
     definition itself, as well as in C++ code that accesses the field
     from a Request/Response message.
     """
-    return param.get("grpc_name", _camel_to_snake(param["name"]))
+    return param.get("grpc_name", camel_to_snake(param["name"]))
 
 
 def get_grpc_client_field_name(param: dict) -> str:
@@ -1136,14 +1136,14 @@ def get_grpc_client_field_name(param: dict) -> str:
 
     This will be a snake_case_string, that can be used in the client generated files.
     """
-    return param.get("grpc_name", _camel_to_snake(param["cppName"]))
+    return param.get("grpc_name", camel_to_snake(param["cppName"]))
 
 
 def get_grpc_field_name_from_str(field_name: str) -> str:
     """Get the default grpc_name for the given parameter name."""
     # NOTE: Does not account for "grpc_name" overrides, but can be used to get a proto name from a
     # camelCase field name when no overrides are present.
-    return _camel_to_snake(field_name)
+    return camel_to_snake(field_name)
 
 
 def get_cpp_local_name(param: dict) -> str:
@@ -1154,7 +1154,7 @@ def get_cpp_local_name(param: dict) -> str:
     cases where "name" is not a reserved keyword.  If "grpc_name" is a reserved keyword, this may be
     an issue (but don't use reserved grpc_name!).
     """
-    return param.get("cpp_local_name", param.get("grpc_name", _camel_to_snake(param["cppName"])))
+    return param.get("cpp_local_name", param.get("grpc_name", camel_to_snake(param["cppName"])))
 
 
 def get_grpc_field_names_for_param_names(params: List[dict], names: List[str]) -> List[str]:

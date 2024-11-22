@@ -376,7 +376,7 @@ ${initialize_streaming_input_param(function_name, streaming_params_to_include, p
 <%
    is_coerced = service_helpers.is_output_array_that_needs_coercion(streaming_param)
    size_param_name = service_helpers.get_size_param_name(streaming_param)
-   streaming_param_name = common_helpers._camel_to_snake(streaming_param['name'])
+   streaming_param_name = common_helpers.camel_to_snake(streaming_param['name'])
    underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"])
 %>\
 % if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
@@ -450,7 +450,7 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 <%
    is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
    c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(streaming_param)
-   streaming_param_name = common_helpers._camel_to_snake(streaming_param['name'])
+   streaming_param_name = common_helpers.camel_to_snake(streaming_param['name'])
    underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"]).replace("const ", "")
 
 %>\
