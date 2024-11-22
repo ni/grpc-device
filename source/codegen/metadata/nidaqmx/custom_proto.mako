@@ -33,7 +33,3 @@ message ArrayU16Data {
 message ArrayU32Data {
   repeated uint32 value = 1;
 }
-
-message ArrayU8Data {
-  repeated bytes value = 1;
-}
