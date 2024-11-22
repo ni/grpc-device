@@ -14,6 +14,7 @@
 #include <nifpga.pb.h>
 #include <nifpga.grpc.pb.h>
 #include <gmock/gmock-spec-builders.h>
+#include <thread>
 
 namespace ni {
 namespace tests {
@@ -41,7 +42,7 @@ class NiFakeFpgaStreamingTests : public ::testing::Test {
   std::atomic<bool> shutdown_{false};
 
  public:
-    NiFakeFpgaStreamingTests::NiFakeFpgaStreamingTests()
+    NiFakeFpgaStreamingTests()
     {
         session_repository_ = std::make_shared<nidevice_grpc::SessionRepository>();
         library_ = std::make_shared<ni::tests::unit::NiFpgaMockLibrary>();
