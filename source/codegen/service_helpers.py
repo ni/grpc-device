@@ -737,7 +737,7 @@ def get_c_api_name(function_name) -> str:
 
 
 def is_secondary_streaming_param(param, first_streaming_param) -> bool:
-    """Check if a parameter is a secondry streaming type parameter"""
+    """Check if a parameter is a secondry streaming type parameter."""
     return param.get("is_streaming_type", False) and param["name"] != first_streaming_param["name"]
 
 
