@@ -281,7 +281,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 <%def name="define_moniker_streaming_struct(function_name, parameters)">\
 <%
   config = data['config']
-  streaming_param = common_helpers.get_streaming_parameter(parameters)
+  streaming_param = common_helpers.get_first_streaming_parameter(parameters)
   service_class_prefix = config["service_class_prefix"]
   grpc_streaming_type = streaming_param['grpc_streaming_type']
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
@@ -293,7 +293,11 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
+% if parameter.get('pointer', False):
+     ${parameter['type']}* ${parameter_name};
+% else:
      ${parameter['type']} ${parameter_name};
+% endif
      % endfor
      ${service_class_prefix.lower()}_grpc::${grpc_streaming_type} data;
      std::shared_ptr<${service_class_prefix}LibraryInterface> library;
@@ -305,7 +309,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   config = data['config']
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
-  streaming_param = common_helpers.get_streaming_parameter(function_data['parameters'])
+  streaming_param = common_helpers.get_first_streaming_parameter(function_data['parameters'])
   streaming_type = streaming_param['type']
   grpc_streaming_type = streaming_param['grpc_streaming_type']
   arg_string = service_helpers.create_args(function_data['parameters'])
@@ -313,17 +317,19 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   data_type = streaming_type.replace("[]", "")
   c_api_name = service_helpers.get_c_api_name(function_name)
   streaming_params_to_include = common_helpers.get_input_streaming_params(function_data['parameters'])
+  output_params_to_define = service_helpers.get_output_streaming_params_to_define(function_data['parameters'], streaming_param)
 %>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = static_cast<${struct_name}*>(data);
     auto library = function_data->library;\
-    ${initialize_moniker_streaming_parameters(streaming_params_to_include)}\
-    % if streaming_param and streaming_param['direction'] == 'out':
-        ${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
-    % elif streaming_param and streaming_param['direction'] == 'in':
-        ${streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)}\
-    % endif
+${initialize_moniker_input_parameters(streaming_params_to_include)}\
+${initialize_moniker_output_parameters(output_params_to_define)}\
+  % if streaming_param and streaming_param['direction'] == 'out':
+${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
+  % elif streaming_param and streaming_param['direction'] == 'in':
+${streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)}\
+  % endif
     if (status < 0) {
       std::cout << "${moniker_function_name} error: " << status << std::endl;
     }
@@ -340,14 +346,14 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   response_param = service_helpers.get_response_param(function_name)
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
-  streaming_param = common_helpers.get_streaming_parameter(parameters)
+  streaming_param = common_helpers.get_first_streaming_parameter(parameters)
   streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
 %>\
 ${initialize_streaming_input_param(function_name, streaming_params_to_include, parameters, streaming_param)}
       auto data = std::make_unique<${struct_name}>();\
       ${initialize_begin_input_params(streaming_params_to_include, streaming_param)}\
       data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
-      ${initialize_service_output_params(output_params)}\
+      ${initialize_service_output_params(output_params, streaming_param)}\
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -362,29 +368,34 @@ ${initialize_streaming_input_param(function_name, streaming_params_to_include, p
 % if is_array:
     ${streaming_handle_out_direction_array(c_api_name, arg_string, data_type, streaming_param)}
 % else:
-    ${streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_type)}
+    ${streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_param)}
 % endif
 </%def>
 
 <%def name="streaming_handle_out_direction_array(c_api_name, arg_string, data_type, streaming_param)">\
 <%
    is_coerced = service_helpers.is_output_array_that_needs_coercion(streaming_param)
-   size = service_helpers.get_size_param_name(streaming_param)
+   size_param_name = service_helpers.get_size_param_name(streaming_param)
+   streaming_param_name = common_helpers.camel_to_snake(streaming_param['name'])
+   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"])
 %>\
 % if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
-std::vector<${data_type}> array(${size}, ${data_type}());
+std::vector<${data_type}> ${streaming_param_name}(${size_param_name}, ${data_type}());
 % elif is_coerced:
-std::vector<${data_type}> array(${size});
+std::vector<${data_type}> ${streaming_param_name}(${size_param_name});
+% elif common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
+function_data->data.mutable_value()->Resize(${size_param_name}, 0);
+    auto ${streaming_param_name} = reinterpret_cast<${underlying_param_type}*>(function_data->data.mutable_value()->mutable_data());
 % else:
-function_data->data.mutable_value()->Resize(${size}, 0);
-    auto array = function_data->data.mutable_value()->mutable_data();
+function_data->data.mutable_value()->Resize(${size_param_name}, 0);
+    auto ${streaming_param_name} = function_data->data.mutable_value()->mutable_data();
 % endif
     auto status = library->${c_api_name}(${arg_string});
     if (status >= 0) {
 % if is_coerced or common_helpers.supports_standard_copy_conversion_routines(streaming_param):
       std::transform(
-        array.begin(),
-        array.begin() + ${size},
+        ${streaming_param_name}.begin(),
+        ${streaming_param_name}.begin() + ${size_param_name},
         function_data->data.mutable_value()->begin(),
         [&](auto x) {
            return x;
@@ -394,10 +405,14 @@ function_data->data.mutable_value()->Resize(${size}, 0);
     }
 </%def>
 
-<%def name="streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_type)">\
-${streaming_type} value {};
+<%def name="streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_param)">\
+<%
+  parameter_name = common_helpers.get_cpp_local_name(streaming_param)
+%>\
+${streaming_param['type']} ${parameter_name} {};\
+
     auto status = library->${c_api_name}(${arg_string});
-    function_data->data.set_value(value);
+    function_data->data.set_value(${parameter_name});
     if (status >= 0) {
         packedData.PackFrom(function_data->data);
     }
@@ -434,30 +449,38 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 <%def name="streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)">
 <%
    is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
+   c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(streaming_param)
+   streaming_param_name = common_helpers.camel_to_snake(streaming_param['name'])
+   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"]).replace("const ", "")
+
 %>\
 % if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
-    std::vector<${data_type}> array(data_array.begin(), data_array.end());
+    std::vector<${data_type}> ${streaming_param_name}(data_array.begin(), data_array.end());
     auto size = data_array.size();
 % elif is_coerced:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
-    auto array = std::vector<${data_type}>();
+    auto ${streaming_param_name} = std::vector<${c_element_type_that_needs_coercion}>();
     auto size = data_array.size();
-    array.reserve(size);
+    ${streaming_param_name}.reserve(size);
     std::transform(
       data_array.begin(),
       data_array.end(),
-      std::back_inserter(array),
+      std::back_inserter(${streaming_param_name}),
       [](auto x) {
-        if (x < std::numeric_limits<${data_type}>::min() || x > std::numeric_limits<${data_type}>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${data_type}");
+        if (x < std::numeric_limits<${c_element_type_that_needs_coercion}>::min() || x > std::numeric_limits<${c_element_type_that_needs_coercion}>::max()) {
+          std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${c_element_type_that_needs_coercion}");
           throw nidevice_grpc::ValueOutOfRangeException(message);
         }
-        return static_cast<${data_type}>(x);
+        return static_cast<${c_element_type_that_needs_coercion}>(x);
       });
 % else:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
-    auto array = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
+% if common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
+    auto ${streaming_param_name} = reinterpret_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
+% else:
+    auto ${streaming_param_name} = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
+% endif
     auto size = data_array.size();
 % endif
 </%def>
@@ -479,7 +502,7 @@ ${initialize_input_param(function_name, param, parameters)}\
 % endfor
 </%def>
 
-<%def name="initialize_moniker_streaming_parameters(streaming_params_to_include)">
+<%def name="initialize_moniker_input_parameters(streaming_params_to_include)">
 % for parameter in streaming_params_to_include:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
@@ -488,11 +511,23 @@ ${initialize_input_param(function_name, param, parameters)}\
 % endfor
 </%def>
 
-<%def name="initialize_service_output_params(output_params)">
+<%def name="initialize_moniker_output_parameters(output_params_to_define)">\
+% for parameter in output_params_to_define:
+<%
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+%>
+    ${parameter['type']} ${parameter_name} = {};\
+% endfor
+</%def>
+
+<%def name="initialize_service_output_params(output_params, streaming_param)">\
+<%
+  size_param_name = service_helpers.get_size_param_name(streaming_param)
+%>
 % for param in output_params:
 % if common_helpers.is_array(param['type']):
-      data->data.mutable_value()->Reserve(request->size());
-      data->data.mutable_value()->Resize(request->size(), 0);
+      data->data.mutable_value()->Reserve(request->${size_param_name}());
+      data->data.mutable_value()->Resize(request->${size_param_name}(), 0);
 % endif
 % endfor
 </%def>

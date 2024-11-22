@@ -6,6 +6,7 @@
 //---------------------------------------------------------------------
 syntax = "proto3";
 
+option cc_enable_arenas = true;
 option java_multiple_files = true;
 option java_package = "com.ni.grpc.nidaqmx";
 option java_outer_classname = "NiDAQmx";
@@ -14,6 +15,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiDAQmx";
 package nidaqmx_grpc;
 
 import "session.proto";
+import "data_moniker.proto";
 import "google/protobuf/timestamp.proto";
 
 service NiDAQmx {
@@ -263,17 +265,29 @@ service NiDAQmx {
   rpc PerformStrainShuntCalEx(PerformStrainShuntCalExRequest) returns (PerformStrainShuntCalExResponse);
   rpc PerformThrmcplLeadOffsetNullingCal(PerformThrmcplLeadOffsetNullingCalRequest) returns (PerformThrmcplLeadOffsetNullingCalResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
+  rpc BeginReadAnalogF64(BeginReadAnalogF64Request) returns (BeginReadAnalogF64Response);
   rpc ReadAnalogScalarF64(ReadAnalogScalarF64Request) returns (ReadAnalogScalarF64Response);
+  rpc BeginReadAnalogScalarF64(BeginReadAnalogScalarF64Request) returns (BeginReadAnalogScalarF64Response);
   rpc ReadBinaryI16(ReadBinaryI16Request) returns (ReadBinaryI16Response);
+  rpc BeginReadBinaryI16(BeginReadBinaryI16Request) returns (BeginReadBinaryI16Response);
   rpc ReadBinaryI32(ReadBinaryI32Request) returns (ReadBinaryI32Response);
+  rpc BeginReadBinaryI32(BeginReadBinaryI32Request) returns (BeginReadBinaryI32Response);
   rpc ReadBinaryU16(ReadBinaryU16Request) returns (ReadBinaryU16Response);
+  rpc BeginReadBinaryU16(BeginReadBinaryU16Request) returns (BeginReadBinaryU16Response);
   rpc ReadBinaryU32(ReadBinaryU32Request) returns (ReadBinaryU32Response);
+  rpc BeginReadBinaryU32(BeginReadBinaryU32Request) returns (BeginReadBinaryU32Response);
   rpc ReadCounterF64(ReadCounterF64Request) returns (ReadCounterF64Response);
+  rpc BeginReadCounterF64(BeginReadCounterF64Request) returns (BeginReadCounterF64Response);
   rpc ReadCounterF64Ex(ReadCounterF64ExRequest) returns (ReadCounterF64ExResponse);
+  rpc BeginReadCounterF64Ex(BeginReadCounterF64ExRequest) returns (BeginReadCounterF64ExResponse);
   rpc ReadCounterScalarF64(ReadCounterScalarF64Request) returns (ReadCounterScalarF64Response);
+  rpc BeginReadCounterScalarF64(BeginReadCounterScalarF64Request) returns (BeginReadCounterScalarF64Response);
   rpc ReadCounterScalarU32(ReadCounterScalarU32Request) returns (ReadCounterScalarU32Response);
+  rpc BeginReadCounterScalarU32(BeginReadCounterScalarU32Request) returns (BeginReadCounterScalarU32Response);
   rpc ReadCounterU32(ReadCounterU32Request) returns (ReadCounterU32Response);
+  rpc BeginReadCounterU32(BeginReadCounterU32Request) returns (BeginReadCounterU32Response);
   rpc ReadCounterU32Ex(ReadCounterU32ExRequest) returns (ReadCounterU32ExResponse);
+  rpc BeginReadCounterU32Ex(BeginReadCounterU32ExRequest) returns (BeginReadCounterU32ExResponse);
   rpc ReadCtrFreq(ReadCtrFreqRequest) returns (ReadCtrFreqResponse);
   rpc ReadCtrFreqScalar(ReadCtrFreqScalarRequest) returns (ReadCtrFreqScalarResponse);
   rpc ReadCtrTicks(ReadCtrTicksRequest) returns (ReadCtrTicksResponse);
@@ -282,8 +296,11 @@ service NiDAQmx {
   rpc ReadCtrTimeScalar(ReadCtrTimeScalarRequest) returns (ReadCtrTimeScalarResponse);
   rpc ReadDigitalLines(ReadDigitalLinesRequest) returns (ReadDigitalLinesResponse);
   rpc ReadDigitalScalarU32(ReadDigitalScalarU32Request) returns (ReadDigitalScalarU32Response);
+  rpc BeginReadDigitalScalarU32(BeginReadDigitalScalarU32Request) returns (BeginReadDigitalScalarU32Response);
   rpc ReadDigitalU16(ReadDigitalU16Request) returns (ReadDigitalU16Response);
+  rpc BeginReadDigitalU16(BeginReadDigitalU16Request) returns (BeginReadDigitalU16Response);
   rpc ReadDigitalU32(ReadDigitalU32Request) returns (ReadDigitalU32Response);
+  rpc BeginReadDigitalU32(BeginReadDigitalU32Request) returns (BeginReadDigitalU32Response);
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
   rpc ReadPowerBinaryI16(ReadPowerBinaryI16Request) returns (ReadPowerBinaryI16Response);
   rpc ReadPowerF64(ReadPowerF64Request) returns (ReadPowerF64Response);
@@ -393,14 +410,21 @@ service NiDAQmx {
   rpc UnregisterSignalEvent(UnregisterSignalEventRequest) returns (UnregisterSignalEventResponse);
   rpc UnreserveNetworkDevice(UnreserveNetworkDeviceRequest) returns (UnreserveNetworkDeviceResponse);
   rpc WaitForNextSampleClock(WaitForNextSampleClockRequest) returns (WaitForNextSampleClockResponse);
+  rpc BeginWaitForNextSampleClock(BeginWaitForNextSampleClockRequest) returns (BeginWaitForNextSampleClockResponse);
   rpc WaitForValidTimestamp(WaitForValidTimestampRequest) returns (WaitForValidTimestampResponse);
   rpc WaitUntilTaskDone(WaitUntilTaskDoneRequest) returns (WaitUntilTaskDoneResponse);
   rpc WriteAnalogF64(WriteAnalogF64Request) returns (WriteAnalogF64Response);
+  rpc BeginWriteAnalogF64(BeginWriteAnalogF64Request) returns (BeginWriteAnalogF64Response);
   rpc WriteAnalogScalarF64(WriteAnalogScalarF64Request) returns (WriteAnalogScalarF64Response);
+  rpc BeginWriteAnalogScalarF64(BeginWriteAnalogScalarF64Request) returns (BeginWriteAnalogScalarF64Response);
   rpc WriteBinaryI16(WriteBinaryI16Request) returns (WriteBinaryI16Response);
+  rpc BeginWriteBinaryI16(BeginWriteBinaryI16Request) returns (BeginWriteBinaryI16Response);
   rpc WriteBinaryI32(WriteBinaryI32Request) returns (WriteBinaryI32Response);
+  rpc BeginWriteBinaryI32(BeginWriteBinaryI32Request) returns (BeginWriteBinaryI32Response);
   rpc WriteBinaryU16(WriteBinaryU16Request) returns (WriteBinaryU16Response);
+  rpc BeginWriteBinaryU16(BeginWriteBinaryU16Request) returns (BeginWriteBinaryU16Response);
   rpc WriteBinaryU32(WriteBinaryU32Request) returns (WriteBinaryU32Response);
+  rpc BeginWriteBinaryU32(BeginWriteBinaryU32Request) returns (BeginWriteBinaryU32Response);
   rpc WriteCtrFreq(WriteCtrFreqRequest) returns (WriteCtrFreqResponse);
   rpc WriteCtrFreqScalar(WriteCtrFreqScalarRequest) returns (WriteCtrFreqScalarResponse);
   rpc WriteCtrTicks(WriteCtrTicksRequest) returns (WriteCtrTicksResponse);
@@ -409,8 +433,11 @@ service NiDAQmx {
   rpc WriteCtrTimeScalar(WriteCtrTimeScalarRequest) returns (WriteCtrTimeScalarResponse);
   rpc WriteDigitalLines(WriteDigitalLinesRequest) returns (WriteDigitalLinesResponse);
   rpc WriteDigitalScalarU32(WriteDigitalScalarU32Request) returns (WriteDigitalScalarU32Response);
+  rpc BeginWriteDigitalScalarU32(BeginWriteDigitalScalarU32Request) returns (BeginWriteDigitalScalarU32Response);
   rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
+  rpc BeginWriteDigitalU16(BeginWriteDigitalU16Request) returns (BeginWriteDigitalU16Response);
   rpc WriteDigitalU32(WriteDigitalU32Request) returns (WriteDigitalU32Response);
+  rpc BeginWriteDigitalU32(BeginWriteDigitalU32Request) returns (BeginWriteDigitalU32Response);
   rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
   rpc WriteRaw(WriteRawRequest) returns (WriteRawResponse);
   rpc WriteToTEDSFromArray(WriteToTEDSFromArrayRequest) returns (WriteToTEDSFromArrayResponse);
@@ -4328,6 +4355,41 @@ enum WriteInt32AttributeValues {
   WRITE_INT32_WRITE_RELATIVE_TO_CURR_WRITE_POS = 10430;
 }
 
+message DoubleData {
+  double value = 1;
+}
+
+message I32Data {
+  int32 value = 1;
+}
+
+message BoolData {
+  bool value = 1;
+}
+
+message U32Data {
+  uint32 value = 1;
+}
+
+message ArrayDoubleData {
+  repeated double value = 1;
+}
+
+message ArrayI16Data {
+  repeated int32 value = 1;
+}
+
+message ArrayI32Data {
+  repeated int32 value = 1;
+}
+
+message ArrayU16Data {
+  repeated uint32 value = 1;
+}
+
+message ArrayU32Data {
+  repeated uint32 value = 1;
+}
 message AnalogPowerUpChannelsAndState {
   string channel_names = 1;
   double state = 2;
@@ -8440,6 +8502,22 @@ message ReadAnalogF64Response {
   int32 samps_per_chan_read = 3;
 }
 
+message BeginReadAnalogF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadAnalogF64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadAnalogScalarF64Request {
   nidevice_grpc.Session task = 1;
   double timeout = 2;
@@ -8448,6 +8526,16 @@ message ReadAnalogScalarF64Request {
 message ReadAnalogScalarF64Response {
   int32 status = 1;
   double value = 2;
+}
+
+message BeginReadAnalogScalarF64Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message BeginReadAnalogScalarF64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadBinaryI16Request {
@@ -8467,6 +8555,22 @@ message ReadBinaryI16Response {
   int32 samps_per_chan_read = 3;
 }
 
+message BeginReadBinaryI16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadBinaryI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadBinaryI32Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -8482,6 +8586,22 @@ message ReadBinaryI32Response {
   int32 status = 1;
   repeated int32 read_array = 2;
   int32 samps_per_chan_read = 3;
+}
+
+message BeginReadBinaryI32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadBinaryI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadBinaryU16Request {
@@ -8501,6 +8621,22 @@ message ReadBinaryU16Response {
   int32 samps_per_chan_read = 3;
 }
 
+message BeginReadBinaryU16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadBinaryU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadBinaryU32Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -8518,6 +8654,22 @@ message ReadBinaryU32Response {
   int32 samps_per_chan_read = 3;
 }
 
+message BeginReadBinaryU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadBinaryU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadCounterF64Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -8529,6 +8681,18 @@ message ReadCounterF64Response {
   int32 status = 1;
   repeated double read_array = 2;
   int32 samps_per_chan_read = 3;
+}
+
+message BeginReadCounterF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  uint32 array_size_in_samps = 4;
+}
+
+message BeginReadCounterF64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadCounterF64ExRequest {
@@ -8548,6 +8712,22 @@ message ReadCounterF64ExResponse {
   int32 samps_per_chan_read = 3;
 }
 
+message BeginReadCounterF64ExRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadCounterF64ExResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadCounterScalarF64Request {
   nidevice_grpc.Session task = 1;
   double timeout = 2;
@@ -8558,6 +8738,16 @@ message ReadCounterScalarF64Response {
   double value = 2;
 }
 
+message BeginReadCounterScalarF64Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message BeginReadCounterScalarF64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadCounterScalarU32Request {
   nidevice_grpc.Session task = 1;
   double timeout = 2;
@@ -8566,6 +8756,16 @@ message ReadCounterScalarU32Request {
 message ReadCounterScalarU32Response {
   int32 status = 1;
   uint32 value = 2;
+}
+
+message BeginReadCounterScalarU32Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message BeginReadCounterScalarU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadCounterU32Request {
@@ -8579,6 +8779,18 @@ message ReadCounterU32Response {
   int32 status = 1;
   repeated uint32 read_array = 2;
   int32 samps_per_chan_read = 3;
+}
+
+message BeginReadCounterU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  uint32 array_size_in_samps = 4;
+}
+
+message BeginReadCounterU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadCounterU32ExRequest {
@@ -8596,6 +8808,22 @@ message ReadCounterU32ExResponse {
   int32 status = 1;
   repeated uint32 read_array = 2;
   int32 samps_per_chan_read = 3;
+}
+
+message BeginReadCounterU32ExRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadCounterU32ExResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadCtrFreqRequest {
@@ -8713,6 +8941,16 @@ message ReadDigitalScalarU32Response {
   uint32 value = 2;
 }
 
+message BeginReadDigitalScalarU32Request {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message BeginReadDigitalScalarU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadDigitalU16Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -8730,6 +8968,22 @@ message ReadDigitalU16Response {
   int32 samps_per_chan_read = 3;
 }
 
+message BeginReadDigitalU16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadDigitalU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message ReadDigitalU32Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -8745,6 +8999,22 @@ message ReadDigitalU32Response {
   int32 status = 1;
   repeated uint32 read_array = 2;
   int32 samps_per_chan_read = 3;
+}
+
+message BeginReadDigitalU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  double timeout = 3;
+  oneof fill_mode_enum {
+    GroupBy fill_mode = 4;
+    int32 fill_mode_raw = 5;
+  }
+  uint32 array_size_in_samps = 6;
+}
+
+message BeginReadDigitalU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message ReadDigitalU8Request {
@@ -10125,6 +10395,16 @@ message WaitForNextSampleClockResponse {
   bool is_late = 2;
 }
 
+message BeginWaitForNextSampleClockRequest {
+  nidevice_grpc.Session task = 1;
+  double timeout = 2;
+}
+
+message BeginWaitForNextSampleClockResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message WaitForValidTimestampRequest {
   nidevice_grpc.Session task = 1;
   oneof timestamp_event_enum {
@@ -10165,6 +10445,22 @@ message WriteAnalogF64Response {
   int32 samps_per_chan_written = 2;
 }
 
+message BeginWriteAnalogF64Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteAnalogF64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message WriteAnalogScalarF64Request {
   nidevice_grpc.Session task = 1;
   bool auto_start = 2;
@@ -10174,6 +10470,17 @@ message WriteAnalogScalarF64Request {
 
 message WriteAnalogScalarF64Response {
   int32 status = 1;
+}
+
+message BeginWriteAnalogScalarF64Request {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+}
+
+message BeginWriteAnalogScalarF64Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message WriteBinaryI16Request {
@@ -10193,6 +10500,22 @@ message WriteBinaryI16Response {
   int32 samps_per_chan_written = 2;
 }
 
+message BeginWriteBinaryI16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteBinaryI16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message WriteBinaryI32Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -10208,6 +10531,22 @@ message WriteBinaryI32Request {
 message WriteBinaryI32Response {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
+}
+
+message BeginWriteBinaryI32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteBinaryI32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message WriteBinaryU16Request {
@@ -10227,6 +10566,22 @@ message WriteBinaryU16Response {
   int32 samps_per_chan_written = 2;
 }
 
+message BeginWriteBinaryU16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteBinaryU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message WriteBinaryU32Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -10242,6 +10597,22 @@ message WriteBinaryU32Request {
 message WriteBinaryU32Response {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
+}
+
+message BeginWriteBinaryU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteBinaryU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message WriteCtrFreqRequest {
@@ -10362,6 +10733,17 @@ message WriteDigitalScalarU32Response {
   int32 status = 1;
 }
 
+message BeginWriteDigitalScalarU32Request {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+}
+
+message BeginWriteDigitalScalarU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message WriteDigitalU16Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -10379,6 +10761,22 @@ message WriteDigitalU16Response {
   int32 samps_per_chan_written = 2;
 }
 
+message BeginWriteDigitalU16Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteDigitalU16Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
 message WriteDigitalU32Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -10394,6 +10792,22 @@ message WriteDigitalU32Request {
 message WriteDigitalU32Response {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
+}
+
+message BeginWriteDigitalU32Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteDigitalU32Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
 message WriteDigitalU8Request {

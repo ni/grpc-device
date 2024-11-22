@@ -10,6 +10,7 @@
 
 #include "nidaqmx_service.h"
 #include "nidaqmx_service_registrar.h"
+#include <server/data_moniker_service.h>
 
 namespace nidaqmx_grpc {
 
@@ -28,6 +29,11 @@ std::shared_ptr<void> register_service(
       resource_repository,
       toggles);
     builder.RegisterService(service.get());
+
+    if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
+      nidaqmx_grpc::RegisterMonikerEndpoints();
+    }
+
     return service;
   }
 
