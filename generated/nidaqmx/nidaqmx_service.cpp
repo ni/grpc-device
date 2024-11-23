@@ -33,7 +33,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadAnalogF64StreamingData data;
+     nidaqmx_grpc::ReadAnalogF64StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -42,7 +42,7 @@ namespace nidaqmx_grpc {
      TaskHandle task;
      float64 timeout;
      bool32* reserved;
-     nidaqmx_grpc::ReadAnalogScalarF64StreamingData data;
+     nidaqmx_grpc::ReadAnalogScalarF64StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -54,7 +54,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadBinaryI16StreamingData data;
+     nidaqmx_grpc::ReadBinaryI16StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -66,7 +66,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadBinaryI32StreamingData data;
+     nidaqmx_grpc::ReadBinaryI32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -78,7 +78,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadBinaryU16StreamingData data;
+     nidaqmx_grpc::ReadBinaryU16StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -90,7 +90,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadBinaryU32StreamingData data;
+     nidaqmx_grpc::ReadBinaryU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -101,7 +101,7 @@ namespace nidaqmx_grpc {
      float64 timeout;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadCounterF64StreamingData data;
+     nidaqmx_grpc::ReadCounterF64StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -113,7 +113,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadCounterF64ExStreamingData data;
+     nidaqmx_grpc::ReadCounterF64ExStreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -122,7 +122,7 @@ namespace nidaqmx_grpc {
      TaskHandle task;
      float64 timeout;
      bool32* reserved;
-     nidaqmx_grpc::ReadCounterScalarF64StreamingData data;
+     nidaqmx_grpc::ReadCounterScalarF64StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -131,7 +131,7 @@ namespace nidaqmx_grpc {
      TaskHandle task;
      float64 timeout;
      bool32* reserved;
-     nidaqmx_grpc::ReadCounterScalarU32StreamingData data;
+     nidaqmx_grpc::ReadCounterScalarU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -142,7 +142,7 @@ namespace nidaqmx_grpc {
      float64 timeout;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadCounterU32StreamingData data;
+     nidaqmx_grpc::ReadCounterU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -154,7 +154,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadCounterU32ExStreamingData data;
+     nidaqmx_grpc::ReadCounterU32ExStreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -163,7 +163,7 @@ namespace nidaqmx_grpc {
      TaskHandle task;
      float64 timeout;
      bool32* reserved;
-     nidaqmx_grpc::ReadDigitalScalarU32StreamingData data;
+     nidaqmx_grpc::ReadDigitalScalarU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -175,7 +175,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadDigitalU16StreamingData data;
+     nidaqmx_grpc::ReadDigitalU16StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -187,7 +187,7 @@ namespace nidaqmx_grpc {
      int32 fill_mode;
      uInt32 array_size_in_samps;
      bool32* reserved;
-     nidaqmx_grpc::ReadDigitalU32StreamingData data;
+     nidaqmx_grpc::ReadDigitalU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -195,7 +195,7 @@ namespace nidaqmx_grpc {
   {
      TaskHandle task;
      float64 timeout;
-     nidaqmx_grpc::WaitForNextSampleClockStreamingData data;
+     nidaqmx_grpc::WaitForNextSampleClockStreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -207,7 +207,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::WriteAnalogF64StreamingData data;
+     nidaqmx_grpc::WriteAnalogF64StreamingRequest request;
+     nidaqmx_grpc::WriteAnalogF64StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -217,7 +218,8 @@ namespace nidaqmx_grpc {
      bool32 auto_start;
      float64 timeout;
      bool32* reserved;
-     nidaqmx_grpc::WriteAnalogScalarF64StreamingData data;
+     nidaqmx_grpc::WriteAnalogScalarF64StreamingRequest request;
+     nidaqmx_grpc::WriteAnalogScalarF64StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -229,7 +231,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::WriteBinaryI16StreamingData data;
+     nidaqmx_grpc::WriteBinaryI16StreamingRequest request;
+     nidaqmx_grpc::WriteBinaryI16StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -241,7 +244,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::WriteBinaryI32StreamingData data;
+     nidaqmx_grpc::WriteBinaryI32StreamingRequest request;
+     nidaqmx_grpc::WriteBinaryI32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -253,7 +257,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::WriteBinaryU16StreamingData data;
+     nidaqmx_grpc::WriteBinaryU16StreamingRequest request;
+     nidaqmx_grpc::WriteBinaryU16StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -265,7 +270,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::WriteBinaryU32StreamingData data;
+     nidaqmx_grpc::WriteBinaryU32StreamingRequest request;
+     nidaqmx_grpc::WriteBinaryU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -275,7 +281,8 @@ namespace nidaqmx_grpc {
      bool32 auto_start;
      float64 timeout;
      bool32* reserved;
-     nidaqmx_grpc::WriteDigitalScalarU32StreamingData data;
+     nidaqmx_grpc::WriteDigitalScalarU32StreamingRequest request;
+     nidaqmx_grpc::WriteDigitalScalarU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -287,7 +294,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::WriteDigitalU16StreamingData data;
+     nidaqmx_grpc::WriteDigitalU16StreamingRequest request;
+     nidaqmx_grpc::WriteDigitalU16StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -299,7 +307,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::WriteDigitalU32StreamingData data;
+     nidaqmx_grpc::WriteDigitalU32StreamingRequest request;
+     nidaqmx_grpc::WriteDigitalU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 

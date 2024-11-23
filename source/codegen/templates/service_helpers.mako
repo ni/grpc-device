@@ -278,12 +278,13 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
     ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
 </%def>
 
-<%def name="define_moniker_streaming_struct(function_name, parameters)">\
+<%def name="define_moniker_streaming_struct(begin_function_name, parameters, has_input_parameters)">\
 <%
   config = data['config']
   service_class_prefix = config["service_class_prefix"]
-  struct_name = common_helpers.get_data_moniker_struct_name(function_name)
-  request_response_data_type = common_helpers.get_data_moniker_request_response_data_type(function_name)
+  struct_name = common_helpers.get_data_moniker_struct_name(begin_function_name)
+  request_message_type = common_helpers.get_data_moniker_request_message_type(begin_function_name)
+  response_message_type = common_helpers.get_data_moniker_response_message_type(begin_function_name)
   streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
 %>\
   struct ${struct_name}
@@ -298,7 +299,10 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
      ${parameter['type']} ${parameter_name};
 % endif
 % endfor
-     ${service_class_prefix.lower()}_grpc::${request_response_data_type} data;
+% if has_input_parameters:
+     ${service_class_prefix.lower()}_grpc::${request_message_type} request;
+% endif
+     ${service_class_prefix.lower()}_grpc::${response_message_type} response;
      std::shared_ptr<${service_class_prefix}LibraryInterface> library;
   };
 </%def>

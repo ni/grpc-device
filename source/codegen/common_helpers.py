@@ -1210,22 +1210,46 @@ def filter_moniker_streaming_functions(functions, functions_to_generate):
         name for name in functions_to_generate if is_moniker_streaming_function(functions[name])
     ]
 
+
 def is_moniker_streaming_function(function):
     """Whether this function is for streaming data through moniker."""
     return function.get("is_streaming_api", False)
+
 
 def get_data_moniker_function_name(function_name):
     """Return the corresponding moniker function name for the given C API function."""
     return function_name.replace("Begin", "Moniker")
 
 
-def get_data_moniker_struct_name(function_name):
-    """Return the corresponding moniker function name for the given C API function."""
-    return f"{function_name.replace('Begin', 'Moniker')}Data"
+def get_data_moniker_struct_name(begin_function_name):
+    """Return the corresponding moniker function name for the given Begin* C API function."""
+    return f"{begin_function_name.replace('Begin', 'Moniker')}Data"
 
-def get_data_moniker_request_response_data_type(function_name):
-    """Return the corresponding moniker function name for the given C API function."""
-    return f"{function_name.replace('Begin', '')}StreamingData"
+
+def get_data_moniker_request_message_type(begin_function_name):
+    """Return the request message type for corresponding moniker function name given Begin* C API function."""
+    return f"{begin_function_name.replace('Begin', '')}StreamingRequest"
+
+
+def get_data_moniker_response_message_type(begin_function_name):
+    """Return the response message type for corresponding moniker function name given Begin* C API function."""
+    return f"{begin_function_name.replace('Begin', '')}StreamingResponse"
+
+
+def get_data_moniker_function_parameters(function):
+    """Given non-streaming function equivalent filter the parameters needed for Moniker APIs for streaming APIs,
+    and split into input/output parameters.
+
+    Add a default "status" output parameter if there isn't one already.
+    """
+    parameter_array = filter_parameters_for_grpc_fields(function["parameters"])
+    input_parameters = [
+        p for p in parameter_array if is_input_parameter(p) and p.get("is_streaming_type", False)
+    ]
+    default_status_param = {"name": "status", "type": "int32", "grpc_type": "int32"}
+    output_parameters = [default_status_param]
+    output_parameters.extend([p for p in parameter_array if is_output_parameter(p)])
+    return (input_parameters, output_parameters)
 
 
 def is_function_in_streaming_functions(function_name, streaming_functions_to_generate):

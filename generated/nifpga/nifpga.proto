@@ -502,11 +502,7 @@ message BeginReadArrayBoolResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayBoolStreamingData {
-  ReadArrayBoolStreamingDataResponse response = 2;
-}
-
-message ReadArrayBoolStreamingDataResponse {
+message ReadArrayBoolStreamingResponse {
   int32 status = 1;
   repeated bool array = 2;
 }
@@ -533,11 +529,7 @@ message BeginReadArrayDblResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayDblStreamingData {
-  ReadArrayDblStreamingDataResponse response = 2;
-}
-
-message ReadArrayDblStreamingDataResponse {
+message ReadArrayDblStreamingResponse {
   int32 status = 1;
   repeated double array = 2;
 }
@@ -564,11 +556,7 @@ message BeginReadArrayI16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayI16StreamingData {
-  ReadArrayI16StreamingDataResponse response = 2;
-}
-
-message ReadArrayI16StreamingDataResponse {
+message ReadArrayI16StreamingResponse {
   int32 status = 1;
   repeated int32 array = 2;
 }
@@ -595,11 +583,7 @@ message BeginReadArrayI32Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayI32StreamingData {
-  ReadArrayI32StreamingDataResponse response = 2;
-}
-
-message ReadArrayI32StreamingDataResponse {
+message ReadArrayI32StreamingResponse {
   int32 status = 1;
   repeated int32 array = 2;
 }
@@ -626,11 +610,7 @@ message BeginReadArrayI64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayI64StreamingData {
-  ReadArrayI64StreamingDataResponse response = 2;
-}
-
-message ReadArrayI64StreamingDataResponse {
+message ReadArrayI64StreamingResponse {
   int32 status = 1;
   repeated int64 array = 2;
 }
@@ -657,11 +637,7 @@ message BeginReadArrayI8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayI8StreamingData {
-  ReadArrayI8StreamingDataResponse response = 2;
-}
-
-message ReadArrayI8StreamingDataResponse {
+message ReadArrayI8StreamingResponse {
   int32 status = 1;
   repeated int32 array = 2;
 }
@@ -688,11 +664,7 @@ message BeginReadArraySglResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArraySglStreamingData {
-  ReadArraySglStreamingDataResponse response = 2;
-}
-
-message ReadArraySglStreamingDataResponse {
+message ReadArraySglStreamingResponse {
   int32 status = 1;
   repeated float array = 2;
 }
@@ -719,11 +691,7 @@ message BeginReadArrayU16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayU16StreamingData {
-  ReadArrayU16StreamingDataResponse response = 2;
-}
-
-message ReadArrayU16StreamingDataResponse {
+message ReadArrayU16StreamingResponse {
   int32 status = 1;
   repeated uint32 array = 2;
 }
@@ -750,11 +718,7 @@ message BeginReadArrayU32Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayU32StreamingData {
-  ReadArrayU32StreamingDataResponse response = 2;
-}
-
-message ReadArrayU32StreamingDataResponse {
+message ReadArrayU32StreamingResponse {
   int32 status = 1;
   repeated uint32 array = 2;
 }
@@ -781,11 +745,7 @@ message BeginReadArrayU64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayU64StreamingData {
-  ReadArrayU64StreamingDataResponse response = 2;
-}
-
-message ReadArrayU64StreamingDataResponse {
+message ReadArrayU64StreamingResponse {
   int32 status = 1;
   repeated uint64 array = 2;
 }
@@ -812,11 +772,7 @@ message BeginReadArrayU8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadArrayU8StreamingData {
-  ReadArrayU8StreamingDataResponse response = 2;
-}
-
-message ReadArrayU8StreamingDataResponse {
+message ReadArrayU8StreamingResponse {
   int32 status = 1;
   repeated uint32 array = 2;
 }
@@ -841,11 +797,7 @@ message BeginReadBoolResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadBoolStreamingData {
-  ReadBoolStreamingDataResponse response = 2;
-}
-
-message ReadBoolStreamingDataResponse {
+message ReadBoolStreamingResponse {
   int32 status = 1;
   bool value = 2;
 }
@@ -870,11 +822,7 @@ message BeginReadDblResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadDblStreamingData {
-  ReadDblStreamingDataResponse response = 2;
-}
-
-message ReadDblStreamingDataResponse {
+message ReadDblStreamingResponse {
   int32 status = 1;
   double value = 2;
 }
@@ -1042,11 +990,7 @@ message BeginReadI16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadI16StreamingData {
-  ReadI16StreamingDataResponse response = 2;
-}
-
-message ReadI16StreamingDataResponse {
+message ReadI16StreamingResponse {
   int32 status = 1;
   int32 value = 2;
 }
@@ -1071,11 +1015,7 @@ message BeginReadI32Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadI32StreamingData {
-  ReadI32StreamingDataResponse response = 2;
-}
-
-message ReadI32StreamingDataResponse {
+message ReadI32StreamingResponse {
   int32 status = 1;
   int32 value = 2;
 }
@@ -1100,11 +1040,7 @@ message BeginReadI64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadI64StreamingData {
-  ReadI64StreamingDataResponse response = 2;
-}
-
-message ReadI64StreamingDataResponse {
+message ReadI64StreamingResponse {
   int32 status = 1;
   int64 value = 2;
 }
@@ -1129,11 +1065,7 @@ message BeginReadI8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadI8StreamingData {
-  ReadI8StreamingDataResponse response = 2;
-}
-
-message ReadI8StreamingDataResponse {
+message ReadI8StreamingResponse {
   int32 status = 1;
   int32 value = 2;
 }
@@ -1158,11 +1090,7 @@ message BeginReadSglResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadSglStreamingData {
-  ReadSglStreamingDataResponse response = 2;
-}
-
-message ReadSglStreamingDataResponse {
+message ReadSglStreamingResponse {
   int32 status = 1;
   float value = 2;
 }
@@ -1187,11 +1115,7 @@ message BeginReadU16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadU16StreamingData {
-  ReadU16StreamingDataResponse response = 2;
-}
-
-message ReadU16StreamingDataResponse {
+message ReadU16StreamingResponse {
   int32 status = 1;
   uint32 value = 2;
 }
@@ -1216,11 +1140,7 @@ message BeginReadU32Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadU32StreamingData {
-  ReadU32StreamingDataResponse response = 2;
-}
-
-message ReadU32StreamingDataResponse {
+message ReadU32StreamingResponse {
   int32 status = 1;
   uint32 value = 2;
 }
@@ -1245,11 +1165,7 @@ message BeginReadU64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadU64StreamingData {
-  ReadU64StreamingDataResponse response = 2;
-}
-
-message ReadU64StreamingDataResponse {
+message ReadU64StreamingResponse {
   int32 status = 1;
   uint64 value = 2;
 }
@@ -1274,11 +1190,7 @@ message BeginReadU8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message ReadU8StreamingData {
-  ReadU8StreamingDataResponse response = 2;
-}
-
-message ReadU8StreamingDataResponse {
+message ReadU8StreamingResponse {
   int32 status = 1;
   uint32 value = 2;
 }
@@ -1428,16 +1340,11 @@ message BeginWriteArrayBoolResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayBoolStreamingData {
-  WriteArrayBoolStreamingDataRequest request = 1;
-  WriteArrayBoolStreamingDataResponse response = 2;
-}
-
-message WriteArrayBoolStreamingDataRequest {
+message WriteArrayBoolStreamingRequest {
   repeated bool array = 1;
 }
 
-message WriteArrayBoolStreamingDataResponse {
+message WriteArrayBoolStreamingResponse {
   int32 status = 1;
 }
 
@@ -1461,16 +1368,11 @@ message BeginWriteArrayDblResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayDblStreamingData {
-  WriteArrayDblStreamingDataRequest request = 1;
-  WriteArrayDblStreamingDataResponse response = 2;
-}
-
-message WriteArrayDblStreamingDataRequest {
+message WriteArrayDblStreamingRequest {
   repeated double array = 1;
 }
 
-message WriteArrayDblStreamingDataResponse {
+message WriteArrayDblStreamingResponse {
   int32 status = 1;
 }
 
@@ -1494,16 +1396,11 @@ message BeginWriteArrayI16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayI16StreamingData {
-  WriteArrayI16StreamingDataRequest request = 1;
-  WriteArrayI16StreamingDataResponse response = 2;
-}
-
-message WriteArrayI16StreamingDataRequest {
+message WriteArrayI16StreamingRequest {
   repeated int32 array = 1;
 }
 
-message WriteArrayI16StreamingDataResponse {
+message WriteArrayI16StreamingResponse {
   int32 status = 1;
 }
 
@@ -1527,16 +1424,11 @@ message BeginWriteArrayI32Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayI32StreamingData {
-  WriteArrayI32StreamingDataRequest request = 1;
-  WriteArrayI32StreamingDataResponse response = 2;
-}
-
-message WriteArrayI32StreamingDataRequest {
+message WriteArrayI32StreamingRequest {
   repeated int32 array = 1;
 }
 
-message WriteArrayI32StreamingDataResponse {
+message WriteArrayI32StreamingResponse {
   int32 status = 1;
 }
 
@@ -1560,16 +1452,11 @@ message BeginWriteArrayI64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayI64StreamingData {
-  WriteArrayI64StreamingDataRequest request = 1;
-  WriteArrayI64StreamingDataResponse response = 2;
-}
-
-message WriteArrayI64StreamingDataRequest {
+message WriteArrayI64StreamingRequest {
   repeated int64 array = 1;
 }
 
-message WriteArrayI64StreamingDataResponse {
+message WriteArrayI64StreamingResponse {
   int32 status = 1;
 }
 
@@ -1593,16 +1480,11 @@ message BeginWriteArrayI8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayI8StreamingData {
-  WriteArrayI8StreamingDataRequest request = 1;
-  WriteArrayI8StreamingDataResponse response = 2;
-}
-
-message WriteArrayI8StreamingDataRequest {
+message WriteArrayI8StreamingRequest {
   repeated int32 array = 1;
 }
 
-message WriteArrayI8StreamingDataResponse {
+message WriteArrayI8StreamingResponse {
   int32 status = 1;
 }
 
@@ -1626,16 +1508,11 @@ message BeginWriteArraySglResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArraySglStreamingData {
-  WriteArraySglStreamingDataRequest request = 1;
-  WriteArraySglStreamingDataResponse response = 2;
-}
-
-message WriteArraySglStreamingDataRequest {
+message WriteArraySglStreamingRequest {
   repeated float array = 1;
 }
 
-message WriteArraySglStreamingDataResponse {
+message WriteArraySglStreamingResponse {
   int32 status = 1;
 }
 
@@ -1659,16 +1536,11 @@ message BeginWriteArrayU16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayU16StreamingData {
-  WriteArrayU16StreamingDataRequest request = 1;
-  WriteArrayU16StreamingDataResponse response = 2;
-}
-
-message WriteArrayU16StreamingDataRequest {
+message WriteArrayU16StreamingRequest {
   repeated uint32 array = 1;
 }
 
-message WriteArrayU16StreamingDataResponse {
+message WriteArrayU16StreamingResponse {
   int32 status = 1;
 }
 
@@ -1692,16 +1564,11 @@ message BeginWriteArrayU32Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayU32StreamingData {
-  WriteArrayU32StreamingDataRequest request = 1;
-  WriteArrayU32StreamingDataResponse response = 2;
-}
-
-message WriteArrayU32StreamingDataRequest {
+message WriteArrayU32StreamingRequest {
   repeated uint32 array = 1;
 }
 
-message WriteArrayU32StreamingDataResponse {
+message WriteArrayU32StreamingResponse {
   int32 status = 1;
 }
 
@@ -1725,16 +1592,11 @@ message BeginWriteArrayU64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayU64StreamingData {
-  WriteArrayU64StreamingDataRequest request = 1;
-  WriteArrayU64StreamingDataResponse response = 2;
-}
-
-message WriteArrayU64StreamingDataRequest {
+message WriteArrayU64StreamingRequest {
   repeated uint64 array = 1;
 }
 
-message WriteArrayU64StreamingDataResponse {
+message WriteArrayU64StreamingResponse {
   int32 status = 1;
 }
 
@@ -1758,16 +1620,11 @@ message BeginWriteArrayU8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteArrayU8StreamingData {
-  WriteArrayU8StreamingDataRequest request = 1;
-  WriteArrayU8StreamingDataResponse response = 2;
-}
-
-message WriteArrayU8StreamingDataRequest {
+message WriteArrayU8StreamingRequest {
   repeated uint32 array = 1;
 }
 
-message WriteArrayU8StreamingDataResponse {
+message WriteArrayU8StreamingResponse {
   int32 status = 1;
 }
 
@@ -1791,16 +1648,11 @@ message BeginWriteBoolResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteBoolStreamingData {
-  WriteBoolStreamingDataRequest request = 1;
-  WriteBoolStreamingDataResponse response = 2;
-}
-
-message WriteBoolStreamingDataRequest {
+message WriteBoolStreamingRequest {
   bool value = 1;
 }
 
-message WriteBoolStreamingDataResponse {
+message WriteBoolStreamingResponse {
   int32 status = 1;
 }
 
@@ -1824,16 +1676,11 @@ message BeginWriteDblResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteDblStreamingData {
-  WriteDblStreamingDataRequest request = 1;
-  WriteDblStreamingDataResponse response = 2;
-}
-
-message WriteDblStreamingDataRequest {
+message WriteDblStreamingRequest {
   double value = 1;
 }
 
-message WriteDblStreamingDataResponse {
+message WriteDblStreamingResponse {
   int32 status = 1;
 }
 
@@ -1989,16 +1836,11 @@ message BeginWriteI16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteI16StreamingData {
-  WriteI16StreamingDataRequest request = 1;
-  WriteI16StreamingDataResponse response = 2;
-}
-
-message WriteI16StreamingDataRequest {
+message WriteI16StreamingRequest {
   int32 value = 1;
 }
 
-message WriteI16StreamingDataResponse {
+message WriteI16StreamingResponse {
   int32 status = 1;
 }
 
@@ -2022,16 +1864,11 @@ message BeginWriteI32Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteI32StreamingData {
-  WriteI32StreamingDataRequest request = 1;
-  WriteI32StreamingDataResponse response = 2;
-}
-
-message WriteI32StreamingDataRequest {
+message WriteI32StreamingRequest {
   int32 value = 1;
 }
 
-message WriteI32StreamingDataResponse {
+message WriteI32StreamingResponse {
   int32 status = 1;
 }
 
@@ -2055,16 +1892,11 @@ message BeginWriteI64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteI64StreamingData {
-  WriteI64StreamingDataRequest request = 1;
-  WriteI64StreamingDataResponse response = 2;
-}
-
-message WriteI64StreamingDataRequest {
+message WriteI64StreamingRequest {
   int64 value = 1;
 }
 
-message WriteI64StreamingDataResponse {
+message WriteI64StreamingResponse {
   int32 status = 1;
 }
 
@@ -2088,16 +1920,11 @@ message BeginWriteI8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteI8StreamingData {
-  WriteI8StreamingDataRequest request = 1;
-  WriteI8StreamingDataResponse response = 2;
-}
-
-message WriteI8StreamingDataRequest {
+message WriteI8StreamingRequest {
   int32 value = 1;
 }
 
-message WriteI8StreamingDataResponse {
+message WriteI8StreamingResponse {
   int32 status = 1;
 }
 
@@ -2121,16 +1948,11 @@ message BeginWriteSglResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteSglStreamingData {
-  WriteSglStreamingDataRequest request = 1;
-  WriteSglStreamingDataResponse response = 2;
-}
-
-message WriteSglStreamingDataRequest {
+message WriteSglStreamingRequest {
   float value = 1;
 }
 
-message WriteSglStreamingDataResponse {
+message WriteSglStreamingResponse {
   int32 status = 1;
 }
 
@@ -2154,16 +1976,11 @@ message BeginWriteU16Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteU16StreamingData {
-  WriteU16StreamingDataRequest request = 1;
-  WriteU16StreamingDataResponse response = 2;
-}
-
-message WriteU16StreamingDataRequest {
+message WriteU16StreamingRequest {
   uint32 value = 1;
 }
 
-message WriteU16StreamingDataResponse {
+message WriteU16StreamingResponse {
   int32 status = 1;
 }
 
@@ -2187,16 +2004,11 @@ message BeginWriteU32Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteU32StreamingData {
-  WriteU32StreamingDataRequest request = 1;
-  WriteU32StreamingDataResponse response = 2;
-}
-
-message WriteU32StreamingDataRequest {
+message WriteU32StreamingRequest {
   uint32 value = 1;
 }
 
-message WriteU32StreamingDataResponse {
+message WriteU32StreamingResponse {
   int32 status = 1;
 }
 
@@ -2220,16 +2032,11 @@ message BeginWriteU64Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteU64StreamingData {
-  WriteU64StreamingDataRequest request = 1;
-  WriteU64StreamingDataResponse response = 2;
-}
-
-message WriteU64StreamingDataRequest {
+message WriteU64StreamingRequest {
   uint64 value = 1;
 }
 
-message WriteU64StreamingDataResponse {
+message WriteU64StreamingResponse {
   int32 status = 1;
 }
 
@@ -2253,16 +2060,11 @@ message BeginWriteU8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteU8StreamingData {
-  WriteU8StreamingDataRequest request = 1;
-  WriteU8StreamingDataResponse response = 2;
-}
-
-message WriteU8StreamingDataRequest {
+message WriteU8StreamingRequest {
   uint32 value = 1;
 }
 
-message WriteU8StreamingDataResponse {
+message WriteU8StreamingResponse {
   int32 status = 1;
 }
 

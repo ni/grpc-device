@@ -27,7 +27,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayBoolStreamingData data;
+     nifpga_grpc::ReadArrayBoolStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -36,7 +36,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayDblStreamingData data;
+     nifpga_grpc::ReadArrayDblStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -45,7 +45,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayI16StreamingData data;
+     nifpga_grpc::ReadArrayI16StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -54,7 +54,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayI32StreamingData data;
+     nifpga_grpc::ReadArrayI32StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -63,7 +63,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayI64StreamingData data;
+     nifpga_grpc::ReadArrayI64StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -72,7 +72,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayI8StreamingData data;
+     nifpga_grpc::ReadArrayI8StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -81,7 +81,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArraySglStreamingData data;
+     nifpga_grpc::ReadArraySglStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -90,7 +90,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayU16StreamingData data;
+     nifpga_grpc::ReadArrayU16StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -99,7 +99,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayU32StreamingData data;
+     nifpga_grpc::ReadArrayU32StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -108,7 +108,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayU64StreamingData data;
+     nifpga_grpc::ReadArrayU64StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -117,7 +117,7 @@ namespace nifpga_grpc {
      NiFpga_Session session;
      uint32_t indicator;
      size_t size;
-     nifpga_grpc::ReadArrayU8StreamingData data;
+     nifpga_grpc::ReadArrayU8StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -125,7 +125,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadBoolStreamingData data;
+     nifpga_grpc::ReadBoolStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -133,7 +133,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadDblStreamingData data;
+     nifpga_grpc::ReadDblStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -141,7 +141,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadI16StreamingData data;
+     nifpga_grpc::ReadI16StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -149,7 +149,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadI32StreamingData data;
+     nifpga_grpc::ReadI32StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -157,7 +157,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadI64StreamingData data;
+     nifpga_grpc::ReadI64StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -165,7 +165,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadI8StreamingData data;
+     nifpga_grpc::ReadI8StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -173,7 +173,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadSglStreamingData data;
+     nifpga_grpc::ReadSglStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -181,7 +181,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadU16StreamingData data;
+     nifpga_grpc::ReadU16StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -189,7 +189,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadU32StreamingData data;
+     nifpga_grpc::ReadU32StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -197,7 +197,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadU64StreamingData data;
+     nifpga_grpc::ReadU64StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -205,7 +205,7 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t indicator;
-     nifpga_grpc::ReadU8StreamingData data;
+     nifpga_grpc::ReadU8StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -213,7 +213,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayBoolStreamingData data;
+     nifpga_grpc::WriteArrayBoolStreamingRequest request;
+     nifpga_grpc::WriteArrayBoolStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -221,7 +222,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayDblStreamingData data;
+     nifpga_grpc::WriteArrayDblStreamingRequest request;
+     nifpga_grpc::WriteArrayDblStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -229,7 +231,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayI16StreamingData data;
+     nifpga_grpc::WriteArrayI16StreamingRequest request;
+     nifpga_grpc::WriteArrayI16StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -237,7 +240,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayI32StreamingData data;
+     nifpga_grpc::WriteArrayI32StreamingRequest request;
+     nifpga_grpc::WriteArrayI32StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -245,7 +249,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayI64StreamingData data;
+     nifpga_grpc::WriteArrayI64StreamingRequest request;
+     nifpga_grpc::WriteArrayI64StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -253,7 +258,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayI8StreamingData data;
+     nifpga_grpc::WriteArrayI8StreamingRequest request;
+     nifpga_grpc::WriteArrayI8StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -261,7 +267,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArraySglStreamingData data;
+     nifpga_grpc::WriteArraySglStreamingRequest request;
+     nifpga_grpc::WriteArraySglStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -269,7 +276,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayU16StreamingData data;
+     nifpga_grpc::WriteArrayU16StreamingRequest request;
+     nifpga_grpc::WriteArrayU16StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -277,7 +285,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayU32StreamingData data;
+     nifpga_grpc::WriteArrayU32StreamingRequest request;
+     nifpga_grpc::WriteArrayU32StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -285,7 +294,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayU64StreamingData data;
+     nifpga_grpc::WriteArrayU64StreamingRequest request;
+     nifpga_grpc::WriteArrayU64StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -293,7 +303,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteArrayU8StreamingData data;
+     nifpga_grpc::WriteArrayU8StreamingRequest request;
+     nifpga_grpc::WriteArrayU8StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -301,7 +312,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteBoolStreamingData data;
+     nifpga_grpc::WriteBoolStreamingRequest request;
+     nifpga_grpc::WriteBoolStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -309,7 +321,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteDblStreamingData data;
+     nifpga_grpc::WriteDblStreamingRequest request;
+     nifpga_grpc::WriteDblStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -317,7 +330,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteI16StreamingData data;
+     nifpga_grpc::WriteI16StreamingRequest request;
+     nifpga_grpc::WriteI16StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -325,7 +339,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteI32StreamingData data;
+     nifpga_grpc::WriteI32StreamingRequest request;
+     nifpga_grpc::WriteI32StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -333,7 +348,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteI64StreamingData data;
+     nifpga_grpc::WriteI64StreamingRequest request;
+     nifpga_grpc::WriteI64StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -341,7 +357,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteI8StreamingData data;
+     nifpga_grpc::WriteI8StreamingRequest request;
+     nifpga_grpc::WriteI8StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -349,7 +366,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteSglStreamingData data;
+     nifpga_grpc::WriteSglStreamingRequest request;
+     nifpga_grpc::WriteSglStreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -357,7 +375,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteU16StreamingData data;
+     nifpga_grpc::WriteU16StreamingRequest request;
+     nifpga_grpc::WriteU16StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -365,7 +384,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteU32StreamingData data;
+     nifpga_grpc::WriteU32StreamingRequest request;
+     nifpga_grpc::WriteU32StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -373,7 +393,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteU64StreamingData data;
+     nifpga_grpc::WriteU64StreamingRequest request;
+     nifpga_grpc::WriteU64StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
@@ -381,7 +402,8 @@ namespace nifpga_grpc {
   {
      NiFpga_Session session;
      uint32_t control;
-     nifpga_grpc::WriteU8StreamingData data;
+     nifpga_grpc::WriteU8StreamingRequest request;
+     nifpga_grpc::WriteU8StreamingResponse response;
      std::shared_ptr<NiFpgaLibraryInterface> library;
   };
 
