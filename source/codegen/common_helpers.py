@@ -1222,7 +1222,7 @@ def get_data_moniker_function_name(function_name):
 
 
 def get_data_moniker_struct_name(begin_function_name):
-    """Return the Moniker function name..
+    """Return the Moniker function name.
 
     Input expected is Begin* streaming API name.
     """
@@ -1277,12 +1277,7 @@ def _is_streaming_param_input_array(streaming_param):
 
 def get_input_streaming_params(parameters):
     """Determine if a parameter should be included based on streaming conditions."""
-    streaming_param = None
-    for param in parameters:
-        if param.get("is_streaming_type", False):
-            streaming_param = param
-            break
-
+    streaming_param = get_first_streaming_parameter(parameters)
     params = []
     for param in parameters:
         if is_input_parameter(param) and not param.get("is_streaming_type", False):

@@ -487,14 +487,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayBool(session, indicator, array.data(), size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      convert_to_grpc(array, response->mutable_array());
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -503,7 +495,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -522,13 +514,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayDbl(session, indicator, array, size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -536,7 +521,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -554,22 +539,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayI16(session, indicator, array.data(), size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -586,7 +555,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -605,13 +574,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayI32(session, indicator, array, size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -619,7 +581,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -638,13 +600,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayI64(session, indicator, array, size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -652,7 +607,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -670,22 +625,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayI8(session, indicator, array.data(), size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -702,7 +641,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -721,13 +660,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArraySgl(session, indicator, array, size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -735,7 +667,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -753,22 +685,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayU16(session, indicator, array.data(), size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -785,7 +701,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -804,13 +720,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayU32(session, indicator, array, size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -818,7 +727,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -837,13 +746,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayU64(session, indicator, array, size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -851,7 +753,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -869,22 +771,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadArrayU8(session, indicator, array.data(), size);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -901,7 +787,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -918,14 +804,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadBool(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -934,7 +812,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -951,14 +829,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadDbl(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -967,7 +837,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -984,14 +854,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadI16(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1000,7 +862,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1017,14 +879,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadI32(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1033,7 +887,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1050,14 +904,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadI64(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1066,7 +912,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1083,14 +929,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadI8(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1099,7 +937,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1116,14 +954,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadSgl(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1132,7 +962,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1149,14 +979,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadU16(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1165,7 +987,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1182,14 +1004,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadU32(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1198,7 +1012,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1215,14 +1029,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadU64(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1231,7 +1037,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1248,14 +1054,6 @@ namespace nifpga_grpc {
 
     auto status = library->ReadU8(session, indicator, &value);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1264,7 +1062,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;

@@ -381,15 +381,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -398,7 +389,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -416,14 +407,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadAnalogScalarF64(task, timeout, &value, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -432,7 +415,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -454,24 +437,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -489,7 +454,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -512,15 +477,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -529,7 +485,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -551,24 +507,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadBinaryU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -586,7 +524,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -609,15 +547,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -626,7 +555,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -648,15 +577,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -665,7 +585,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -688,15 +608,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -705,7 +616,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -723,14 +634,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadCounterScalarF64(task, timeout, &value, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -739,7 +642,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -757,14 +660,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadCounterScalarU32(task, timeout, &value, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -773,7 +668,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -795,15 +690,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -812,7 +698,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -835,15 +721,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -852,7 +729,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -870,14 +747,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadDigitalScalarU32(task, timeout, &value, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_value(value);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -886,7 +755,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -908,24 +777,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -943,7 +794,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -966,15 +817,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samps_per_chan_read));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_read(samps_per_chan_read);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -983,7 +825,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;
@@ -1000,14 +842,6 @@ namespace nidaqmx_grpc {
 
     auto status = library->WaitForNextSampleClock(task, timeout, &is_late);
 
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_is_late(is_late);
-    */
     if (status >= 0)
     {
       response->set_status(status);
@@ -1016,7 +850,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
     return ::grpc::Status::OK;

@@ -279,9 +279,9 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   config = data['config']
   service_class_prefix = config["service_class_prefix"]
   struct_name = common_helpers.get_data_moniker_struct_name(begin_function_name)
+  streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
   request_message_type = common_helpers.get_data_moniker_request_message_type(begin_function_name)
   response_message_type = common_helpers.get_data_moniker_response_message_type(begin_function_name)
-  streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
 %>\
   struct ${struct_name}
   {
@@ -305,50 +305,40 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 
 <%def name="define_moniker_function_body(function_name, functions)">\
 <%
-  config = data['config']
   function_data = functions[function_name]
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
   non_streaming_function_name = function_name.replace("Begin", "")
+  non_streaming_function_parameters = functions[non_streaming_function_name]['parameters']
+  arg_string = service_helpers.create_args(non_streaming_function_parameters)
   streaming_param = common_helpers.get_first_streaming_parameter(function_data['parameters'])
-  streaming_type = streaming_param['type']
-  grpc_streaming_type = streaming_param['grpc_streaming_type']
-  moniker_params = function_data['parameters'][:-1] # skip "moniker" param from Begin API
-  arg_string = service_helpers.create_args(moniker_params)
-  data_type = streaming_type.replace("[]", "")
   c_api_name = service_helpers.get_c_api_name(function_name)
   streaming_params_to_include = common_helpers.get_input_streaming_params(function_data['parameters'])
-  output_parameters = [p for p in functions[non_streaming_function_name]['parameters'] if common_helpers.is_output_parameter(p)]
+  output_parameters = [p for p in non_streaming_function_parameters if common_helpers.is_output_parameter(p)]
 %>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = static_cast<${struct_name}*>(data);
     auto library = function_data->library;
-    auto response = &function_data->response;\
+    auto response = &function_data->response;
 ${initialize_moniker_input_parameters(streaming_params_to_include)}\
 ${initialize_output_params(output_parameters)}\
     % if streaming_param and streaming_param['direction'] == 'in':
-${streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)}\
+${streaming_handle_in_direction(streaming_param)}\
     % endif
 
     auto status = library->${c_api_name}(${arg_string});
 
 % if streaming_param['direction'] == 'out':
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-${populate_response(function_data=function_data, parameters=functions[non_streaming_function_name]['parameters'])}\
-    */
     if (status >= 0)
     {
       response->set_status(status);
-<%block filter="common_helpers.indent(-1)">\
 ${set_response_values(output_parameters=output_parameters, init_method=false)}\
-</%block>\
       packedData.PackFrom(*response);
     }
     else
     {
-      // TODO this is not needed if we make populate_response work which returns error through `AddTrailingMetadata`
+      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
     }
 % endif
@@ -380,14 +370,16 @@ ${initialize_service_output_params(output_params, streaming_param)}\
       return ::grpc::Status::OK;\
 </%def>
 
-<%def name="streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)">
+<%def name="streaming_handle_in_direction(streaming_param)">
 <%
+  streaming_type = streaming_param['type']
+  grpc_streaming_type = streaming_param['grpc_streaming_type']
   is_array = common_helpers.is_array(streaming_type)
 %>\
     ${grpc_streaming_type} ${grpc_streaming_type.lower()}_message;
     packedData.UnpackTo(&${grpc_streaming_type.lower()}_message); // TODO: should unpack to function_data->mutable_request()
 % if is_array:
-    ${streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)}\
+    ${streaming_handle_in_direction_array(grpc_streaming_type, streaming_param)}\
 % else:
     ${streaming_handle_in_direction_scaler(grpc_streaming_type, streaming_type, streaming_param)}\
 % endif
@@ -406,17 +398,18 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 % endif
 </%def>
 
-<%def name="streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)">
+<%def name="streaming_handle_in_direction_array(grpc_streaming_type, streaming_param)">
 <%
    is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
    c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(streaming_param)
    streaming_param_name = common_helpers.camel_to_snake(streaming_param['name'])
-   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"]).replace("const ", "")
+   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"])
+   underlying_param_type_with_no_qualifiers = underlying_param_type.replace("const ", "")
 
 %>\
 % if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
-    std::vector<${data_type}> ${streaming_param_name}(data_array.begin(), data_array.end());
+    std::vector<${underlying_param_type}> ${streaming_param_name}(data_array.begin(), data_array.end());
     auto size = data_array.size();
 % elif is_coerced:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
@@ -436,10 +429,10 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
       });
 % else:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
-% if common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
-    auto ${streaming_param_name} = reinterpret_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
+% if common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type_with_no_qualifiers):
+    auto ${streaming_param_name} = reinterpret_cast<${underlying_param_type}*>(${grpc_streaming_type.lower()}_message.value().data());
 % else:
-    auto ${streaming_param_name} = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
+    auto ${streaming_param_name} = const_cast<${underlying_param_type}*>(${grpc_streaming_type.lower()}_message.value().data());
 % endif
     auto size = data_array.size();
 % endif
@@ -462,7 +455,7 @@ ${initialize_input_param(function_name, param, parameters)}\
 % endfor
 </%def>
 
-<%def name="initialize_moniker_input_parameters(streaming_params_to_include)">
+<%def name="initialize_moniker_input_parameters(streaming_params_to_include)">\
 % for parameter in streaming_params_to_include:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
