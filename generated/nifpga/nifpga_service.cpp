@@ -495,8 +495,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -521,8 +520,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -555,8 +553,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -581,8 +578,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -607,8 +603,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -641,8 +636,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -667,8 +661,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -701,8 +694,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -727,8 +719,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -753,8 +744,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -787,8 +777,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -812,8 +801,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -837,8 +825,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -862,8 +849,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -887,8 +873,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -912,8 +897,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -937,8 +921,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -962,8 +945,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -987,8 +969,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -1012,8 +993,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -1037,8 +1017,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -1062,8 +1041,7 @@ namespace nifpga_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -1077,7 +1055,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayBoolData arraybooldata_message;
-    packedData.UnpackTo(&arraybooldata_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arraybooldata_message);
     
     auto data_array = arraybooldata_message.value();
     std::vector<NiFpga_Bool> array(data_array.begin(), data_array.end());
@@ -1097,7 +1075,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayDoubleData arraydoubledata_message;
-    packedData.UnpackTo(&arraydoubledata_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arraydoubledata_message);
     
     auto data_array = arraydoubledata_message.value();
     auto array = const_cast<double*>(arraydoubledata_message.value().data());
@@ -1117,7 +1095,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayi32data_message);
     
     auto data_array = arrayi32data_message.value();
     auto array = std::vector<int16_t>();
@@ -1149,7 +1127,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayi32data_message);
     
     auto data_array = arrayi32data_message.value();
     auto array = const_cast<int32_t*>(arrayi32data_message.value().data());
@@ -1169,7 +1147,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayI64Data arrayi64data_message;
-    packedData.UnpackTo(&arrayi64data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayi64data_message);
     
     auto data_array = arrayi64data_message.value();
     auto array = const_cast<int64_t*>(arrayi64data_message.value().data());
@@ -1189,7 +1167,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayi32data_message);
     
     auto data_array = arrayi32data_message.value();
     auto array = std::vector<int8_t>();
@@ -1221,7 +1199,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayFloatData arrayfloatdata_message;
-    packedData.UnpackTo(&arrayfloatdata_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayfloatdata_message);
     
     auto data_array = arrayfloatdata_message.value();
     auto array = const_cast<float*>(arrayfloatdata_message.value().data());
@@ -1241,7 +1219,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayu32data_message);
     
     auto data_array = arrayu32data_message.value();
     auto array = std::vector<uint16_t>();
@@ -1273,7 +1251,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayu32data_message);
     
     auto data_array = arrayu32data_message.value();
     auto array = const_cast<uint32_t*>(arrayu32data_message.value().data());
@@ -1293,7 +1271,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayU64Data arrayu64data_message;
-    packedData.UnpackTo(&arrayu64data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayu64data_message);
     
     auto data_array = arrayu64data_message.value();
     auto array = const_cast<uint64_t*>(arrayu64data_message.value().data());
@@ -1313,7 +1291,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayu32data_message);
     
     auto data_array = arrayu32data_message.value();
     auto array = std::vector<uint8_t>();
@@ -1345,7 +1323,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     BoolData booldata_message;
-    packedData.UnpackTo(&booldata_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&booldata_message);
     auto value = booldata_message.value();
 
     auto status = library->WriteBool(session, control, value);
@@ -1362,7 +1340,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     DoubleData doubledata_message;
-    packedData.UnpackTo(&doubledata_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&doubledata_message);
     auto value = doubledata_message.value();
 
     auto status = library->WriteDbl(session, control, value);
@@ -1379,7 +1357,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&i32data_message);
     auto value = i32data_message.value();
     if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
@@ -1400,7 +1378,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&i32data_message);
     auto value = i32data_message.value();
 
     auto status = library->WriteI32(session, control, value);
@@ -1417,7 +1395,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     I64Data i64data_message;
-    packedData.UnpackTo(&i64data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&i64data_message);
     auto value = i64data_message.value();
 
     auto status = library->WriteI64(session, control, value);
@@ -1434,7 +1412,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&i32data_message);
     auto value = i32data_message.value();
     if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
@@ -1455,7 +1433,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     FloatData floatdata_message;
-    packedData.UnpackTo(&floatdata_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&floatdata_message);
     auto value = floatdata_message.value();
 
     auto status = library->WriteSgl(session, control, value);
@@ -1472,7 +1450,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&u32data_message);
     auto value = u32data_message.value();
     if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
@@ -1493,7 +1471,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&u32data_message);
     auto value = u32data_message.value();
 
     auto status = library->WriteU32(session, control, value);
@@ -1510,7 +1488,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     U64Data u64data_message;
-    packedData.UnpackTo(&u64data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&u64data_message);
     auto value = u64data_message.value();
 
     auto status = library->WriteU64(session, control, value);
@@ -1527,7 +1505,7 @@ namespace nifpga_grpc {
     auto control = function_data->control;
 
     U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&u32data_message);
     auto value = u32data_message.value();
     if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");

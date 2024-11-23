@@ -389,8 +389,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -415,8 +414,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -454,8 +452,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -485,8 +482,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -524,8 +520,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -555,8 +550,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -585,8 +579,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -616,8 +609,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -642,8 +634,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -668,8 +659,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -698,8 +688,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -729,8 +718,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -755,8 +743,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -794,8 +781,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -825,8 +811,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -850,8 +835,7 @@ namespace nidaqmx_grpc {
     }
     else
     {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
 }
@@ -870,7 +854,7 @@ namespace nidaqmx_grpc {
     int32 samps_per_chan_written {};
 
     ArrayDoubleData arraydoubledata_message;
-    packedData.UnpackTo(&arraydoubledata_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arraydoubledata_message);
     
     auto data_array = arraydoubledata_message.value();
     auto write_array = const_cast<const float64*>(arraydoubledata_message.value().data());
@@ -892,7 +876,7 @@ namespace nidaqmx_grpc {
     auto reserved = function_data->reserved;
 
     DoubleData doubledata_message;
-    packedData.UnpackTo(&doubledata_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&doubledata_message);
     auto value = doubledata_message.value();
 
     auto status = library->WriteAnalogScalarF64(task, auto_start, timeout, value, reserved);
@@ -914,7 +898,7 @@ namespace nidaqmx_grpc {
     int32 samps_per_chan_written {};
 
     ArrayI16Data arrayi16data_message;
-    packedData.UnpackTo(&arrayi16data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayi16data_message);
     
     auto data_array = arrayi16data_message.value();
     auto write_array = std::vector<int16>();
@@ -951,7 +935,7 @@ namespace nidaqmx_grpc {
     int32 samps_per_chan_written {};
 
     ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayi32data_message);
     
     auto data_array = arrayi32data_message.value();
     auto write_array = reinterpret_cast<const int32*>(arrayi32data_message.value().data());
@@ -976,7 +960,7 @@ namespace nidaqmx_grpc {
     int32 samps_per_chan_written {};
 
     ArrayU16Data arrayu16data_message;
-    packedData.UnpackTo(&arrayu16data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayu16data_message);
     
     auto data_array = arrayu16data_message.value();
     auto write_array = std::vector<uInt16>();
@@ -1013,7 +997,7 @@ namespace nidaqmx_grpc {
     int32 samps_per_chan_written {};
 
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayu32data_message);
     
     auto data_array = arrayu32data_message.value();
     auto write_array = reinterpret_cast<const uInt32*>(arrayu32data_message.value().data());
@@ -1035,7 +1019,7 @@ namespace nidaqmx_grpc {
     auto reserved = function_data->reserved;
 
     U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&u32data_message);
     auto value = u32data_message.value();
 
     auto status = library->WriteDigitalScalarU32(task, auto_start, timeout, value, reserved);
@@ -1057,7 +1041,7 @@ namespace nidaqmx_grpc {
     int32 samps_per_chan_written {};
 
     ArrayU16Data arrayu16data_message;
-    packedData.UnpackTo(&arrayu16data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayu16data_message);
     
     auto data_array = arrayu16data_message.value();
     auto write_array = std::vector<uInt16>();
@@ -1094,7 +1078,7 @@ namespace nidaqmx_grpc {
     int32 samps_per_chan_written {};
 
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&arrayu32data_message);
     
     auto data_array = arrayu32data_message.value();
     auto write_array = reinterpret_cast<const uInt32*>(arrayu32data_message.value().data());

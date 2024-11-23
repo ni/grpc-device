@@ -1275,8 +1275,8 @@ def _is_streaming_param_input_array(streaming_param):
     )
 
 
-def get_input_streaming_params(parameters):
-    """Determine if a parameter should be included based on streaming conditions."""
+def get_non_streaming_input_parameters(parameters):
+    """Determine if a parameter should be passed from Begin streaming API to Moniker function."""
     streaming_param = get_first_streaming_parameter(parameters)
     params = []
     for param in parameters:

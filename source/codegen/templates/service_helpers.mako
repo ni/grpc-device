@@ -279,13 +279,13 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   config = data['config']
   service_class_prefix = config["service_class_prefix"]
   struct_name = common_helpers.get_data_moniker_struct_name(begin_function_name)
-  streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
+  moniker_input_parameters = common_helpers.get_non_streaming_input_parameters(parameters)
   request_message_type = common_helpers.get_data_moniker_request_message_type(begin_function_name)
   response_message_type = common_helpers.get_data_moniker_response_message_type(begin_function_name)
 %>\
   struct ${struct_name}
   {
-% for parameter in streaming_params_to_include:
+% for parameter in moniker_input_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
@@ -308,12 +308,12 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   function_data = functions[function_name]
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
+  moniker_input_parameters = common_helpers.get_non_streaming_input_parameters(function_data['parameters'])
+  streaming_param = common_helpers.get_first_streaming_parameter(function_data['parameters'])
   non_streaming_function_name = function_name.replace("Begin", "")
   non_streaming_function_parameters = functions[non_streaming_function_name]['parameters']
   arg_string = service_helpers.create_args(non_streaming_function_parameters)
-  streaming_param = common_helpers.get_first_streaming_parameter(function_data['parameters'])
   c_api_name = service_helpers.get_c_api_name(function_name)
-  streaming_params_to_include = common_helpers.get_input_streaming_params(function_data['parameters'])
   output_parameters = [p for p in non_streaming_function_parameters if common_helpers.is_output_parameter(p)]
 %>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
@@ -321,7 +321,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
     ${struct_name}* function_data = static_cast<${struct_name}*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
-${initialize_moniker_input_parameters(streaming_params_to_include)}\
+${initialize_moniker_input_parameters(moniker_input_parameters)}\
 ${initialize_output_params(output_parameters)}\
     % if streaming_param and streaming_param['direction'] == 'in':
 ${streaming_handle_in_direction(streaming_param)}\
@@ -329,40 +329,20 @@ ${streaming_handle_in_direction(streaming_param)}\
 
     auto status = library->${c_api_name}(${arg_string});
 
-% if streaming_param['direction'] == 'out':
-    if (status >= 0)
-    {
-      response->set_status(status);
-${set_response_values(output_parameters=output_parameters, init_method=false)}\
-      packedData.PackFrom(*response);
-    }
-    else
-    {
-      // TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`
-      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "Error code: " + status);
-    }
-% endif
+${populate_moniker_response_for_out_functions(output_parameters, streaming_param)}\
     return ::grpc::Status::OK;
 }
 </%def>
 
-<%def name="define_streaming_api_body(function_name, function_data, parameters)">\
+<%def name="define_streaming_api_body(function_name, parameters)">\
 <%
-  config = data['config']
-  output_params = [p for p in parameters if common_helpers.is_output_parameter(p)]
-  service_class_prefix = config["service_class_prefix"]
-  request_param = service_helpers.get_request_param(function_name)
-  response_param = service_helpers.get_response_param(function_name)
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
-  streaming_param = common_helpers.get_first_streaming_parameter(parameters)
-  streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
+  moniker_input_parameters = common_helpers.get_non_streaming_input_parameters(parameters)
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${initialize_streaming_input_param(function_name, streaming_params_to_include, parameters, streaming_param)}
-      auto data = std::make_unique<${struct_name}>();
-${initialize_begin_input_params(streaming_params_to_include, streaming_param)}\
-      data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
-${initialize_service_output_params(output_params, streaming_param)}\
+${initialize_input_params(function_name, moniker_input_parameters)}
+${initialize_moniker_struct(struct_name, moniker_input_parameters, output_parameters)}\
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -377,7 +357,7 @@ ${initialize_service_output_params(output_params, streaming_param)}\
   is_array = common_helpers.is_array(streaming_type)
 %>\
     ${grpc_streaming_type} ${grpc_streaming_type.lower()}_message;
-    packedData.UnpackTo(&${grpc_streaming_type.lower()}_message); // TODO: should unpack to function_data->mutable_request()
+    packedData.UnpackTo(&${grpc_streaming_type.lower()}_message);
 % if is_array:
     ${streaming_handle_in_direction_array(grpc_streaming_type, streaming_param)}\
 % else:
@@ -438,44 +418,54 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 % endif
 </%def>
 
-## Initialize an bgin input parameter for an API call.
-<%def name="initialize_begin_input_params(streaming_params_to_include, streaming_param)">\
-% for parameter in streaming_params_to_include:
+<%def name="populate_moniker_response_for_out_functions(output_parameters, streaming_param)">\
+% if streaming_param['direction'] == 'out':
+    if (status >= 0)
+    {
+      response->set_status(status);
+${set_response_values(output_parameters=output_parameters, init_method=false)}\
+      packedData.PackFrom(*response);
+    }
+    else
+    {
+      ## TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`.
+      ## But that needs `context` parameter which is not available in Moniker functions.
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+% endif
+</%def>
+
+<%def name="initialize_moniker_struct(struct_name, moniker_input_parameters, output_parameters)">\
+<%
+  config = data['config']
+  service_class_prefix = config["service_class_prefix"]
+  output_array_params = [p for p in output_parameters if common_helpers.is_array(p['type'])]
+%>\
+      auto data = std::make_unique<${struct_name}>();
+% for parameter in moniker_input_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
       data->${parameter_name} = ${parameter_name};
 % endfor
-</%def>
+      data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
 
-## Initialize an bgin input parameter for an API call.
-<%def name="initialize_streaming_input_param(function_name, streaming_params_to_include, parameters, streaming_param)">\
-% for param in streaming_params_to_include:
-${initialize_input_param(function_name, param, parameters)}\
+% for param in output_array_params:
+<%
+  grpc_field_name = common_helpers.get_grpc_field_name(param)
+  size_param_name = service_helpers.get_size_param_name(param)
+%>\
+      data->response.mutable_${grpc_field_name}()->Reserve(request->${size_param_name}());
+      data->response.mutable_${grpc_field_name}()->Resize(request->${size_param_name}(), 0);
 % endfor
 </%def>
 
-<%def name="initialize_moniker_input_parameters(streaming_params_to_include)">\
-% for parameter in streaming_params_to_include:
+<%def name="initialize_moniker_input_parameters(moniker_input_parameters)">\
+% for parameter in moniker_input_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
     auto ${parameter_name} = function_data->${parameter_name};
-% endfor
-</%def>
-
-<%def name="initialize_service_output_params(output_params, streaming_param)">\
-<%
-  size_param_name = service_helpers.get_size_param_name(streaming_param)
-%>
-% for param in output_params:
-% if common_helpers.is_array(param['type']):
-<%
-  grpc_field_name = common_helpers.get_grpc_field_name(param)
-%>\
-      data->response.mutable_${grpc_field_name}()->Reserve(request->${size_param_name}());
-      data->response.mutable_${grpc_field_name}()->Resize(request->${size_param_name}(), 0);
-% endif
 % endfor
 </%def>
 
@@ -509,11 +499,11 @@ ${initialize_enum_input_param(function_name, parameter)}
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter, parameters)}
 % elif common_helpers.is_two_dimension_array_param(parameter):
-${initialize_two_dimension_input_param(function_name, parameter, parameters)}
+${initialize_two_dimension_input_param(parameter, parameters)}
 % elif service_helpers.is_size_param_passed_by_ptr(parameter):
 ${initialize_pointer_input_parameter(parameter)}
 % else:
-${initialize_standard_input_param(function_name, parameter)}
+${initialize_standard_input_param(parameter)}
 % endif
 </%def>
 
@@ -740,14 +730,14 @@ ${initialize_standard_input_param(function_name, parameter)}
 </%def>
 
 ## Initialize an input parameter with the 'two-dimension' size mechanism.
-<%def name="initialize_two_dimension_input_param(function_name, parameter, parameters)">\
+<%def name="initialize_two_dimension_input_param(parameter, parameters)">\
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   size_param_name = common_helpers.get_size_param(parameter)
   size_param = common_helpers.get_param_with_name(parameters, size_param_name)
   size_field_name = common_helpers.get_grpc_field_name(size_param)
 %>\
-${initialize_standard_input_param(function_name, parameter)}
+${initialize_standard_input_param(parameter)}
       auto total_length = std::accumulate(request->${size_field_name}().cbegin(), request->${size_field_name}().cend(), 0);
 
       if (total_length != request->${parameter_name}_size()) {
@@ -768,7 +758,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 
 ## Initialize an input parameter for an API call.
-<%def name="initialize_standard_input_param(function_name, parameter)">\
+<%def name="initialize_standard_input_param(parameter)">\
 <%
   config = data['config']
   parameter_name = common_helpers.get_cpp_local_name(parameter)
