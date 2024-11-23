@@ -1222,24 +1222,33 @@ def get_data_moniker_function_name(function_name):
 
 
 def get_data_moniker_struct_name(begin_function_name):
-    """Return the corresponding moniker function name for the given Begin* C API function."""
+    """Return the Moniker function name..
+
+    Input expected is Begin* streaming API name.
+    """
     return f"{begin_function_name.replace('Begin', 'Moniker')}Data"
 
 
 def get_data_moniker_request_message_type(begin_function_name):
-    """Return the request message type for corresponding moniker function name given Begin* C API function."""
+    """Return the request message type for Moniker functions.
+
+    Input expected is Begin* streaming API name.
+    """
     return f"{begin_function_name.replace('Begin', '')}StreamingRequest"
 
 
 def get_data_moniker_response_message_type(begin_function_name):
-    """Return the response message type for corresponding moniker function name given Begin* C API function."""
+    """Return the response message type for Moniker functions.
+
+    Input expected is Begin* streaming API name.
+    """
     return f"{begin_function_name.replace('Begin', '')}StreamingResponse"
 
 
 def get_data_moniker_function_parameters(function):
-    """Given non-streaming function equivalent filter the parameters needed for Moniker APIs for streaming APIs,
-    and split into input/output parameters.
+    """Return moniker function parameters split into input/output.
 
+    Input expected is equivalent non-streaming function.
     Add a default "status" output parameter if there isn't one already.
     """
     parameter_array = filter_parameters_for_grpc_fields(function["parameters"])
